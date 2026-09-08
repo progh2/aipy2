@@ -7,6 +7,27 @@ try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved && saved.
 for(const key of ['complete','answers','journals','projects']) if(!state[key] || typeof state[key]!=='object' || Array.isArray(state[key])) state[key]={};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;};
+// Five expressions have distinct learning roles; guidance remains readable as text.
+const paiLabels={welcome:'반가워요',thinking:'생각 중',idea:'아하!',debug:'오류 탐정',celebrate:'해냈어요'};
+function paiImage(mood,cls='pai-feedback-image'){
+ const img=node('img',cls);img.src=prefix+`assets/mascot/pai-${mood}-v1.webp`;img.alt='';img.width=62;img.height=62;img.decoding='async';return img;
+}
+function paiFeedback(el,text,mood){
+ const copy=node('div','pai-feedback-copy');copy.append(node('b','',`파이 · ${paiLabels[mood]}`),node('p','',text));
+ el.replaceChildren(paiImage(mood),copy);el.classList.add('pai-feedback');el.dataset.paiMood=mood;
+}
+function paiGuide(mood,title,text){
+ const box=$('#pai-run-guide');if(!box)return;
+ box.dataset.paiMood=mood;const img=box.querySelector('img');img.src=prefix+`assets/mascot/pai-${mood}-v1.webp`;img.alt='';
+ box.querySelector('.pai-label').textContent=`파이의 실습 안내 · ${paiLabels[mood]}`;
+ box.querySelector('strong').textContent=title;box.querySelector('p').textContent=text;
+}
+$$('[data-pai-preview]').forEach(button=>button.onclick=()=>{
+ const mood=button.dataset.paiPreview,img=$('.pai-hero-image');if(!paiLabels[mood]||!img)return;
+ img.src=prefix+`assets/mascot/pai-${mood}-v1.webp`;img.alt=button.dataset.paiAlt;
+ $('#pai-mood-title').textContent=paiLabels[mood];$('#pai-mood-description').textContent=button.dataset.paiDescription;
+ $$('[data-pai-preview]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+});
 let toastTimer;
 function toast(text){$('#toast').textContent=text;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').textContent='',4200);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}}
@@ -26,7 +47,12 @@ $$('[data-import]').forEach(input=>input.addEventListener('change',async()=>{
  }catch(error){toast('불러오기 실패: '+error.message);}finally{input.value='';}
 }));
 $$('[data-clear]').forEach(b=>b.addEventListener('click',()=>{if(confirm('이 실습실의 코드·풀이·저널 기록을 지울까요? 먼저 내보내기를 권장합니다.')){try{localStorage.removeItem(KEY);}catch{}location.reload();}}));
-$$('[data-complete]').forEach(box=>{box.checked=!!state.complete[box.dataset.complete];box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save();updateProgress();});});
+$$('[data-complete]').forEach(box=>{
+ box.checked=!!state.complete[box.dataset.complete];
+ const tip=box.closest('.lesson')?.querySelector('.pai-note'),originalMood=tip?.dataset.paiMood,originalLabel=tip?.querySelector('.pai-label').textContent;
+ function showCompletion(){if(!tip)return;const mood=box.checked?'celebrate':originalMood;tip.dataset.paiMood=mood;const img=tip.querySelector('img');img.src=prefix+`assets/mascot/pai-${mood}-v1.webp`;img.alt='';tip.querySelector('.pai-label').textContent=box.checked?'파이 · 설명까지 완료했어요!':originalLabel;}
+ showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save();updateProgress();showCompletion();});
+});
 $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save();});});
 if($('#download-journal'))$('#download-journal').onclick=()=>{let text=`# ${unit}단원 학습 저널\n\n작성일: ${new Date().toLocaleDateString('ko-KR')}\n`;for(const [key,title]of [['learn','이해한 개념'],['error','오류와 해결 근거'],['next','시험 결과와 다음 도전']])text+=`\n## ${title}\n\n${state.journals[`u${unit}-${key}`]||''}\n`;download(`unit${unit}-journal.md`,text);};
 if(!unit)return;
@@ -36,6 +62,7 @@ window.addEventListener('hashchange',remember);remember();
 function stop(reason='실행을 중지했습니다.'){
  if(worker)worker.terminate();worker=null;clearTimeout(timer);
  if(jobOutput)jobOutput(reason+'\n');
+ paiGuide('thinking','잠시 멈추고 조건을 살펴봐요.','반복이 끝나는 조건을 확인하고, 수정한 뒤 다시 실행하세요.');
  if(jobResolve)jobResolve({ok:false,stopped:true});
  jobResolve=null;jobOutput=null;running=false;$('#stop').disabled=true;
 }
@@ -79,6 +106,7 @@ function selectExample(id,scroll=false){
  $('#check-example').textContent=ex.checks?'입력·조건 검사':'PC 실행으로 동작 점검';
  $('#example-note').textContent=(ex.note||'')+(ex.mode==='pc'?' 이 코드는 PC에서 실행하세요. 웹에서는 Python 문법만 확인합니다. ZIP 다운로드 후 예제 폴더를 VS Code로 열고 python main.py를 실행하세요. 필요한 라이브러리는 requirements.txt로 설치합니다.':' 파일을 오가며 편집한 뒤 실행 파일을 선택하세요. 각 실행은 새 가상 프로젝트에서 시작합니다.');
  $('#output').textContent=`${ex.title}\n${ex.mode==='web'?'실행 결과가 여기에 표시됩니다.':'문법 검사는 GUI 라이브러리 설치나 실제 창 동작까지 검사하지 않습니다.'}`;
+ paiGuide('thinking',ex.mode==='web'?'실행 전에 결과를 먼저 예상해 볼까요?':'웹에서 확인한 뒤, PC에서도 시험해요.',ex.mode==='web'?'어떤 파일을 실행하나요? 입력값을 바꾸면 어떤 결과가 나올지 먼저 적어 보세요.':'문법 확인은 첫 단계예요. 다운로드한 앱에서 버튼 클릭·입력·취소까지 확인하세요.');
  if(scroll)$('#lab').scrollIntoView({behavior:'smooth'});
 }
 $('#code-editor').addEventListener('input',stash);
@@ -96,8 +124,14 @@ async function runExample(check=false){
  const ex=data.examples[currentId],entry=$('#entry-file').value;
  if(!entry || !files[entry])return toast('실행할 Python 파일을 선택하세요.');
  const out=$('#output');out.textContent='';
+ paiGuide('thinking','예상한 결과와 실제 출력을 비교할 준비!','실행이 끝나면 출력값뿐 아니라 실행 순서도 확인해 보세요.');
  const result=await execute({files,entry,stdin:$('#stdin').value,args,checks:check?ex.checks:'',syntax:ex.mode!=='web'},s=>out.textContent+=s);
  if(result.ok)out.textContent+='\n실행 완료'+(check?' · 준비된 검사 통과':'')+'\n';
+ if(result.ok){
+  if(ex.mode!=='web')paiGuide('idea','문법 확인을 통과했어요. 다음은 실제 동작!', 'PC에서 창을 띄우고 입력·버튼 클릭·취소 동작을 직접 확인하세요.');
+  else if(check)paiGuide('celebrate','준비된 조건을 통과했어요!', '입력값을 하나 더 바꾸어 보고, 왜 이 결과가 나오는지 내 말로 설명하세요.');
+  else paiGuide('idea','예상했던 결과가 나왔나요?', '출력의 이유를 설명한 다음 숫자나 조건을 하나 바꾸어 다시 실험해 보세요.');
+ }else if(!result.stopped && !result.busy)paiGuide('debug','오류는 원인을 찾을 단서예요.', '마지막 오류 줄 → 파일명과 줄 번호 → 사용한 이름과 값을 순서대로 확인하세요.');
 }
 $('#run').onclick=()=>runExample(false);$('#check-example').onclick=()=>runExample(true);
 // Dependency-free ZIP writer (stored entries, UTF-8 names, CRC32).
@@ -137,21 +171,21 @@ function questionCard(q){
  }
  const actions=node('div','actions'),check=node('button','primary',q.kind==='서술'?'설명 저장':q.starter?'실행하고 검사':'답 확인');
  const retry=node('button','','다시 풀기');actions.append(check,retry);card.append(actions);
- const feedback=node('div','feedback'+(record.status==='done'?' success':record.status==='retry'?' retry':''),record.feedback||'먼저 스스로 풀어 보세요.');feedback.setAttribute('role','status');card.append(feedback);
+ const feedback=node('div','feedback'+(record.status==='done'?' success':record.status==='retry'?' retry':''),record.feedback||'먼저 스스로 풀어 보세요.');feedback.setAttribute('role','status');paiFeedback(feedback,record.feedback||'실행하기 전에 결과를 예상하세요. 막히면 힌트를 하나씩 열어 보세요.',record.status==='done'?'celebrate':record.status==='retry'?'debug':'thinking');card.append(feedback);
  function detail(title,text){const d=node('details'),s=node('summary','',title);d.append(s,node('pre','',text));card.append(d);}
  detail('힌트 1 · 방향 잡기',q.hint);detail('힌트 2 · 점검할 원리',q.explain);detail('정답 예시와 해설',(Array.isArray(q.answer)?q.answer.join('\n'):q.answer)+'\n\n'+q.explain);
  if(q.kind==='서술'){
-  const self=node('label','completion'),box=node('input');box.type='checkbox';box.checked=record.status==='done';self.append(box,node('span','','해설과 비교하고 근거를 포함했는지 스스로 점검했습니다.'));box.onchange=()=>{storeAnswer(q,{value:answer(),status:box.checked?'done':'todo',feedback:box.checked?'자기 점검 완료 · 자동 채점 점수가 아닙니다.':'자기 점검을 진행하세요.'});};card.append(self);
+  const self=node('label','completion'),box=node('input');box.type='checkbox';box.checked=record.status==='done';self.append(box,node('span','','해설과 비교하고 근거를 포함했는지 스스로 점검했습니다.'));box.onchange=()=>{storeAnswer(q,{value:answer(),status:box.checked?'done':'todo',feedback:box.checked?'자기 점검 완료 · 자동 채점 점수가 아닙니다.':'자기 점검을 진행하세요.'});paiFeedback(feedback,box.checked?'설명과 근거를 스스로 확인했어요. 다른 예에도 적용해 보세요.':'해설과 내 설명을 비교하며 빠진 근거를 채워 보세요.',box.checked?'celebrate':'thinking');};card.append(self);
  }
  check.onclick=async()=>{
   const value=answer();if(!value || (typeof value==='string'&&!value.trim()))return toast('답안을 먼저 입력하세요.');
   if(running&&q.starter)return toast('다른 실행을 마치거나 중지하세요.');
-  if(q.kind==='서술'){storeAnswer(q,{value,feedback:'설명을 저장했습니다. 해설과 비교한 뒤 자기 점검하세요.'});feedback.textContent='설명을 저장했습니다. 해설과 비교한 뒤 자기 점검하세요.';return;}
+  if(q.kind==='서술'){storeAnswer(q,{value,feedback:'설명을 저장했습니다. 해설과 비교한 뒤 자기 점검하세요.'});paiFeedback(feedback,'설명을 저장했습니다. 해설과 비교하며 근거가 충분한지 확인하세요.','idea');return;}
   check.disabled=true;let ok=false,trace='';
   if(q.starter){feedback.textContent='';const result=await execute({files:{'main.py':value},entry:'main.py',args:[],stdin:'',checks:q.checks},s=>{trace+=s;feedback.textContent=trace;});if(result.busy){check.disabled=false;return;}ok=!!(result.ok&&result.checked);}
   else ok=q.kind==='순서'?JSON.stringify(value)===JSON.stringify(q.answer):norm(value)===norm(q.answer);
   const text=ok?'확인 완료! '+q.explain:'다시 살펴보세요. '+q.hint+(q.starter?'\n'+trace:'\n다른 올바른 표현일 수 있으니 정답 예시와 비교하세요.');
-  feedback.textContent=text;feedback.className='feedback '+(ok?'success':'retry');
+  feedback.className='feedback '+(ok?'success':'retry');paiFeedback(feedback,text,ok?'celebrate':'debug');
   storeAnswer(q,{value,status:ok?'done':'retry',attempts:(record.attempts||0)+1,feedback:text});check.disabled=false;
  };
  retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save();renderQuestions(false);}};

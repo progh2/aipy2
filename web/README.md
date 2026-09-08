@@ -50,3 +50,16 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 실제 GUI 검증: 6종 인사 앱의 인사·초기화, tkinter/PySide6 위젯·레이아웃·프로젝트, 기본·개선 메모장 한글 저장/열기/취소/미저장 확인. Linux 가상 디스플레이에서 검사했으며 Windows/macOS 외형은 다를 수 있습니다.
 
 스크린샷: `assets/screenshots/`. 제공 예제의 실제 실행 화면을 `tools/web/capture_gui.py`로 촬영했습니다. 캡처 환경의 글꼴은 Noto Sans CJK KR입니다. Kivy는 기본 글꼴 지원을 위해 영어 문구를 사용했습니다.
+
+## 대표 캐릭터 파이
+
+금빛 아기 비단뱀 ‘파이’를 과목의 학습 친구로 사용합니다. 반가움·생각·발견·디버깅·성취의 5가지 표정을 각각 다른 학습 단계에 연결했습니다.
+
+- 소개 및 원본 다운로드: `mascot.html`
+- 원본 PNG / 웹 표시 WebP: `assets/mascot/pai-*-v1.*`
+- 5종 원본 ZIP: `downloads/pai-character-pack.zip`
+- 생성 도구와 전체 프롬프트: `assets/mascot/CREATION.md`
+- 소단원별 개념 안내: `tools/web/mascot.py`
+- 대문 표정 선택, 문제 피드백, 학습 완료, 실행 결과 안내: `assets/app.js`
+
+이미지의 대사는 그림에 굽지 않고 HTML 텍스트로 제공합니다. 각 표정의 의미와 학습 안내를 글로 함께 읽을 수 있으며, 캐릭터가 코드·버튼을 덮는 떠다니는 UI는 사용하지 않습니다. 원본은 흰 배경 PNG이고, 웹용 WebP는 원본을 보존한 압축본입니다. built-in image_gen으로 제작했으며 CLI fallback은 사용하지 않았습니다.
