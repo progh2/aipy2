@@ -35,7 +35,7 @@ TIPS = {
  }
 }
 def image(prefix,mood='welcome',loading='lazy',cls='pai-image'):
- return f'<img class="{cls}" src="{prefix}assets/mascot/pai-{mood}-v1.webp" width="1254" height="1254" loading="{loading}" decoding="async" alt="{MOODS[mood][1]}">'
+ return f'<img class="{cls}" src="{prefix}assets/mascot/pai-{mood}-v1.webp?v=girl2" width="1254" height="1254" loading="{loading}" decoding="async" alt="{MOODS[mood][1]}">'
 def card(prefix,mood,title,text,kind='lesson'):
  return f'<aside class="pai-note pai-note--{kind}" data-pai-mood="{mood}" aria-label="파이의 학습 안내">{image(prefix,mood)}<div><span class="pai-label">파이의 한 줄 힌트 · {MOODS[mood][0]}</span><strong>{esc(title)}</strong><p>{esc(text)}</p></div></aside>'
 def lesson_tip(u,id,prefix):
@@ -44,10 +44,10 @@ def lesson_tip(u,id,prefix):
 def hero():
  return '<aside class="pai-hero" aria-labelledby="pai-hello"><div class="pai-hero-copy"><span class="pai-label">우리 과목의 학습 친구</span><h2 id="pai-hello">안녕하세요, <em>파이</em>예요!</h2><p>같이 생각하고, 오류를 찾고,<br>작은 성공을 쌓아 가요.</p></div>'+image('','welcome','eager','pai-hero-image')+'<div class="pai-speech" role="status" aria-live="polite"><b id="pai-mood-title">반가워요</b><p id="pai-mood-description">'+MOODS['welcome'][2]+'</p></div><div class="pai-mood-buttons" role="group" aria-label="파이의 표정과 학습 안내">'+''.join(f'<button data-pai-preview="{mood}" data-pai-description="{esc(info[2],quote=True)}" data-pai-alt="{esc(info[1],quote=True)}" aria-pressed="{str(mood=="welcome").lower()}">{info[0]}</button>' for mood,info in MOODS.items())+'</div><a class="pai-about" href="mascot.html">파이를 소개합니다 · 캐릭터 내려받기 ↗</a></aside>'
 def intro_page():
- body='<main id="main" class="source-page mascot-page"><p class="eyebrow">MEET PAI / OUR PYTHON COMPANION</p><h1>함께 배우는 친구, 파이</h1><p class="lead">호기심 많은 아기 비단뱀 파이는 인공지능 파이썬 실무의 대표 캐릭터입니다. 정답을 대신 풀어 주기보다, 스스로 생각할 질문과 확인할 순서를 알려 줘요.</p><div class="pai-intro">'+image('','welcome','eager')+'<div><h2>작은 한 번의 실험이<br>큰 이해로 이어져요.</h2><p>파이썬에서 따온 이름, 파이. 금빛 몸과 네이비 후드, 민트색 끈, 동그랗게 말린 꼬리가 특징이에요. 후드 주머니의 꺾쇠 모양은 코딩을 좋아하는 마음을 담았어요.</p><p>표정과 대사는 학습 단계에 맞춰 바뀝니다. 색이나 표정을 구별하지 않아도, 함께 적힌 안내를 읽고 학습할 수 있어요.</p><a class="button primary" href="downloads/pai-character-pack.zip">캐릭터 5종 원본 묶음 ↓</a></div></div><h2>표정에 담긴 학습 약속</h2><div class="pai-sheet">'
+ body='<main id="main" class="source-page mascot-page"><p class="eyebrow">MEET PAI / OUR PYTHON COMPANION</p><h1>함께 배우는 친구, 파이</h1><p class="lead">개발자를 꿈꾸는 여학생 파이는 인공지능 파이썬 실무의 대표 캐릭터입니다. 정답을 대신 풀어 주기보다, 스스로 생각할 질문과 확인할 순서를 알려 줘요.</p><div class="pai-intro">'+image('','welcome','eager')+'<div><h2>작은 한 번의 실험이<br>큰 이해로 이어져요.</h2><p>파이썬에서 따온 이름, 파이. 갈색 단발머리와 민트색 머리핀, 네이비 후드가 특징이에요. 친구들에게 도움이 되는 프로그램을 만드는 개발자가 되고 싶어요. 후드 주머니의 꺾쇠 모양은 코딩을 좋아하는 마음을 담았어요.</p><p>표정과 대사는 학습 단계에 맞춰 바뀝니다. 색이나 표정을 구별하지 않아도, 함께 적힌 안내를 읽고 학습할 수 있어요.</p><a class="button primary" href="downloads/pai-character-pack.zip?v=girl2">캐릭터 5종 원본 묶음 ↓</a></div></div><h2>표정에 담긴 학습 약속</h2><div class="pai-sheet">'
  for mood,(label,alt,description) in MOODS.items():
-  body+='<article>'+image('',mood)+f'<h3>{label}</h3><p>{description}</p><a href="assets/mascot/pai-{mood}-v1.png" download>원본 PNG ↓</a></article>'
- body+='</div><h2>수업 자료에 사용하는 방법</h2><p>개념 설명에는 전구를 든 파이, 결과 예상에는 생각하는 파이, 오류 원인 찾기에는 돋보기를 든 파이를 배치해 보세요. 옆에는 학생이 지금 할 일을 한두 문장으로 적어 주세요.</p><p>캐릭터는 이 과목을 위해 새로 제작했으며, 교과서 원문에 등장하는 인물이나 Python 공식 로고가 아닙니다. 원본은 흰 배경 PNG이고 웹에서는 압축한 WebP를 사용합니다.</p><p><a href="assets/mascot/CREATION.md">제작 도구와 전체 프롬프트 기록</a></p><div class="actions"><a class="button" href="units/unit01/index.html">1단원에서 파이 만나기 →</a><a class="button" href="units/unit02/index.html">2단원에서 파이 만나기 →</a></div></main>'
+  body+='<article>'+image('',mood)+f'<h3>{label}</h3><p>{description}</p><a href="assets/mascot/pai-{mood}-v1.png?v=girl2" download>원본 PNG ↓</a></article>'
+ body+='</div><h2>수업 자료에 사용하는 방법</h2><p>개념 설명에는 전구 옆에서 아이디어를 설명하는 파이, 결과 예상에는 생각하는 파이, 오류 원인 찾기에는 돋보기를 든 파이를 배치해 보세요. 옆에는 학생이 지금 할 일을 한두 문장으로 적어 주세요.</p><p>캐릭터는 이 과목을 위해 새로 제작했으며, 교과서 원문에 등장하는 인물이나 Python 공식 로고가 아닙니다. 원본은 흰 배경 PNG이고 웹에서는 압축한 WebP를 사용합니다.</p><p><a href="assets/mascot/CREATION.md">제작 도구와 전체 프롬프트 기록</a></p><div class="actions"><a class="button" href="units/unit01/index.html">1단원에서 파이 만나기 →</a><a class="button" href="units/unit02/index.html">2단원에서 파이 만나기 →</a></div></main>'
  return body
 def runtime_guide(u):
  text = ('파일을 오가며 코드를 바꾼 뒤 실행 파일을 확인하세요. 실행 전에는 결과를 먼저 예상해 보세요.' if u==1 else '웹에서는 GUI 코드의 문법을 확인해요. 실제 창·버튼 동작은 ZIP을 내려받아 PC에서 실행해 보세요.')
