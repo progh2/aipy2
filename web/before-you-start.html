@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VS Code + Copilot 개발 환경 만들기 · 인공지능 파이썬 실무</title>
+<meta name="description" content="미림마이스터고 지능형소프트웨어과 · 교과서 소스를 실행하기 위한 VS Code, Python, GitHub Copilot 설정 안내">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0D1226;
+  --navy:#1E2761;
+  --navy-2:#2C3878;
+  --paper:#F4F6FC;
+  --card:#FFFFFF;
+  --line:#DCE2F0;
+  --gold:#FFC933;
+  --gold-d:#8A6300;
+  --teal:#0E6E64;
+  --teal-bg:#EAF6F3;
+  --red:#B3241F;
+  --red-bg:#FDF0EF;
+  --text:#171C2E;
+  --muted:#5A6485;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Malgun Gothic',sans-serif;
+  --bar-h:34px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{
+  margin:0;background:var(--paper);color:var(--text);
+  font-family:var(--sans);font-size:16px;line-height:1.75;
+  padding-bottom:calc(var(--bar-h) + 8px);
+  -webkit-text-size-adjust:100%;
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+}
+a{color:var(--navy);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:4px}
+
+/* ---------- 히어로 ---------- */
+.hero{background:var(--ink);color:#fff;padding:64px 0 56px;position:relative;overflow:hidden}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:100% 28px;
+}
+.wrap{width:min(1180px,92vw);margin:0 auto}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;position:relative;z-index:1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--gold);margin:0 0 18px;text-transform:uppercase}
+.hero h1{
+  font-size:clamp(30px,4.6vw,54px);line-height:1.16;margin:0 0 18px;
+  font-weight:800;letter-spacing:-.02em;
+}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{color:#B9C3E4;font-size:17px;margin:0 0 26px;max-width:46ch}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--mono);font-size:12px}
+.hero__meta span{border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 12px;color:#D6DDF5}
+
+/* 터미널 (시그니처 - 도착점 미리보기) */
+.term{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#070B1A;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.term__bar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#141B36;border-bottom:1px solid rgba(255,255,255,.08)}
+.term__dot{width:11px;height:11px;border-radius:50%}
+.term__title{font-family:var(--mono);font-size:11.5px;color:#8E9AC4;margin-left:8px}
+.term__body{padding:18px 18px 20px;font-family:var(--mono);font-size:13px;line-height:1.85;color:#D7DEF6;white-space:pre-wrap;word-break:break-all}
+.term__body .p{color:var(--gold)}
+.term__body .c{color:#6E7BA8}
+.term__body .ok{color:#6EE7B7}
+.caret{display:inline-block;width:8px;height:15px;background:var(--gold);vertical-align:-2px;animation:blink 1.1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- 본문 레이아웃 ---------- */
+.layout{display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;align-items:start;padding:44px 0 80px}
+#main{min-width:0}
+.rail{position:sticky;top:20px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 14px}
+.rail h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin:0 0 12px;text-transform:uppercase}
+.rail ol{list-style:none;margin:0;padding:0}
+.rail a{display:flex;gap:9px;align-items:baseline;padding:6px 8px;border-radius:7px;text-decoration:none;color:var(--text);font-size:13.5px;line-height:1.45}
+.rail a:hover{background:#EEF2FB}
+.rail a.on{background:var(--navy);color:#fff}
+.rail a.on .rail__n{color:var(--gold)}
+.rail__n{font-family:var(--mono);font-size:11px;color:var(--muted);flex:none;min-width:20px;white-space:nowrap}
+.rail a.done .rail__n::after{content:"✓";color:var(--teal);margin-left:2px;font-weight:700}
+.rail a.on.done .rail__n::after{color:var(--gold)}
+.rail__reset{margin-top:14px;width:100%;border:1px solid var(--line);background:#fff;color:var(--muted);
+  font-family:var(--mono);font-size:11.5px;padding:8px;border-radius:7px;cursor:pointer}
+.rail__reset:hover{border-color:var(--red);color:var(--red)}
+
+.toc-m{display:none}
+
+/* ---------- 스텝 ---------- */
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px 26px;margin:0 0 22px;scroll-margin-top:20px}
+.step__head{display:flex;gap:16px;align-items:flex-start;margin-bottom:6px}
+.step__n{
+  font-family:var(--mono);font-weight:700;font-size:13px;color:var(--gold-d);
+  background:#FFF4D4;border:1px solid #F2DC9C;border-radius:8px;padding:6px 9px;flex:none;line-height:1
+}
+.step h2{font-size:24px;margin:0;letter-spacing:-.01em;font-weight:800;line-height:1.35}
+.step__lead{color:var(--muted);margin:2px 0 22px 56px;font-size:15px}
+.step h3{font-size:17px;margin:26px 0 10px;font-weight:700;letter-spacing:-.01em}
+.step h3:first-of-type{margin-top:8px}
+.step p{margin:0 0 12px}
+.step ul,.step ol{margin:0 0 14px;padding-left:22px}
+.step li{margin-bottom:6px}
+.step img{max-width:100%}
+
+/* 키캡 */
+kbd{
+  font-family:var(--mono);font-size:12px;background:#fff;color:var(--navy);
+  border:1px solid #C9D2E8;border-bottom-width:2px;border-radius:5px;padding:2px 6px;white-space:nowrap;
+}
+code:not(pre code){
+  font-family:var(--mono);font-size:.88em;background:#EEF2FB;color:var(--navy);
+  padding:2px 6px;border-radius:5px;word-break:break-word;
+}
+
+/* 코드 블록 */
+.code{border-radius:10px;overflow:hidden;margin:0 0 16px;border:1px solid #232B4D}
+.code__bar{display:flex;justify-content:space-between;align-items:center;background:#232B4D;padding:7px 12px}
+.code__name{font-family:var(--mono);font-size:11.5px;color:var(--gold);font-weight:500}
+.code__copy{font-family:var(--mono);font-size:11px;background:transparent;border:1px solid rgba(255,255,255,.28);
+  color:#C7D0EE;border-radius:5px;padding:3px 9px;cursor:pointer}
+.code__copy:hover{background:rgba(255,255,255,.12);color:#fff}
+.code pre{margin:0;background:#0D1226;color:#DCE3F8;padding:15px 16px;overflow-x:auto}
+.code code{font-family:var(--mono);font-size:12.6px;line-height:1.75;white-space:pre}
+
+/* 확인 · 주의 · 팁 */
+.box{border-radius:10px;padding:15px 17px;margin:0 0 16px;font-size:14.5px;line-height:1.7}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+.box__t{font-weight:700;font-size:13px;margin:0 0 7px;font-family:var(--mono);letter-spacing:.04em}
+.box--ok{background:var(--teal-bg);border:1px solid #B6DBD2}
+.box--ok .box__t{color:var(--teal)}
+.box--warn{background:var(--red-bg);border:1px solid #EFC4C1}
+.box--warn .box__t{color:var(--red)}
+.box--tip{background:#FFF9E8;border:1px solid #EFDCA4}
+.box--tip .box__t{color:var(--gold-d)}
+.box--note{background:#EEF2FB;border:1px solid var(--line)}
+.box--note .box__t{color:var(--navy)}
+
+/* 체크박스 과제 */
+.tasks{border-top:1px dashed var(--line);margin-top:24px;padding-top:16px}
+.tasks__t{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted);margin:0 0 10px;text-transform:uppercase}
+.task{display:flex;gap:11px;align-items:flex-start;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:14.5px}
+.task:hover{background:#F5F8FE}
+.task input{position:absolute;opacity:0;width:0;height:0}
+.task__box{
+  flex:none;width:19px;height:19px;margin-top:3px;border:2px solid #B6C0DC;border-radius:5px;background:#fff;
+  display:grid;place-items:center;transition:all .12s ease;
+}
+.task__box::after{content:"";width:9px;height:5px;border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;
+  transform:rotate(-45deg) scale(.4);opacity:0;transition:all .12s ease}
+.task input:checked + .task__box{background:var(--teal);border-color:var(--teal)}
+.task input:checked + .task__box::after{opacity:1;transform:rotate(-45deg) scale(1)}
+.task input:focus-visible + .task__box{outline:3px solid var(--gold);outline-offset:2px}
+.task input:checked ~ .task__label{color:var(--muted);text-decoration:line-through;text-decoration-color:#B6C0DC}
+
+/* 서버 주소 입력칸 */
+.hostbox{background:#EEF2FB;border:1px solid var(--line);border-left:4px solid var(--navy);
+  border-radius:10px;padding:15px 17px;margin:0 0 16px}
+.hostbox__label{display:block;font-size:14px;font-weight:600;margin-bottom:10px;color:var(--navy)}
+.hostbox__row{display:flex;gap:8px;flex-wrap:wrap}
+.hostbox input{flex:1;min-width:220px;font-family:var(--mono);font-size:13.5px;color:var(--ink);
+  border:1px solid #B6C0DC;border-radius:7px;padding:9px 11px;background:#fff}
+.hostbox input:focus{border-color:var(--navy)}
+.hostbox button{font-family:var(--mono);font-size:12px;border:1px solid #B6C0DC;background:#fff;
+  color:var(--muted);border-radius:7px;padding:9px 14px;cursor:pointer}
+.hostbox button:hover{border-color:var(--navy);color:var(--navy)}
+.hostbox__hint{margin:9px 0 0;font-size:13px;color:var(--muted)}
+.ohost{color:var(--gold);font-weight:500}
+.box .code .ohost,.code .ohost{color:var(--gold)}
+
+/* 표 */
+table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:var(--navy);color:#fff;font-weight:600;font-size:13px}
+tbody tr:nth-child(even){background:#F7F9FE}
+td code{font-size:.9em}
+
+/* 수료 카드 */
+.finish{background:var(--ink);color:#fff;border-radius:14px;padding:34px 32px;text-align:center;opacity:.45}
+.finish.on{opacity:1;box-shadow:0 0 0 3px var(--gold)}
+.finish h2{margin:0 0 8px;font-size:22px;color:var(--gold)}
+.finish p{color:#B9C3E4;margin:0 auto;max-width:52ch;font-size:15px}
+.finish__pct{font-family:var(--mono);font-size:44px;font-weight:700;line-height:1;margin:0 0 10px}
+
+/* 상태 표시줄 (시그니처) */
+.statusbar{
+  position:fixed;left:0;right:0;bottom:0;height:var(--bar-h);z-index:50;
+  background:var(--navy);color:#DCE3F8;display:flex;align-items:center;gap:0;
+  font-family:var(--mono);font-size:11.5px;box-shadow:0 -2px 12px rgba(13,18,38,.28)
+}
+.statusbar.done{background:var(--gold);color:#3A2A00}
+.sb{padding:0 12px;height:100%;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.sb--grow{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;color:#9AA6D0}
+.statusbar.done .sb--grow{color:#7A5D00}
+.sb--accent{background:rgba(255,255,255,.12)}
+.statusbar.done .sb--accent{background:rgba(0,0,0,.1)}
+.sb__meter{width:120px;height:6px;border-radius:3px;background:rgba(255,255,255,.22);overflow:hidden}
+.statusbar.done .sb__meter{background:rgba(0,0,0,.18)}
+.sb__fill{height:100%;width:0;background:var(--gold);transition:width .3s ease}
+.statusbar.done .sb__fill{background:#3A2A00}
+.sb__cop{opacity:.4}
+.sb__cop.live{opacity:1;color:var(--gold)}
+.statusbar.done .sb__cop.live{color:#3A2A00}
+
+footer{background:var(--ink);color:#8E9AC4;padding:28px 0 34px;font-size:13px}
+footer a{color:#B9C3E4}
+
+@media (max-width:900px){
+  .hero{padding:44px 0 40px}
+  .hero__grid{grid-template-columns:1fr;gap:30px}
+  .layout{grid-template-columns:minmax(0,1fr);gap:0;padding:26px 0 60px}
+  .rail{display:none}
+  .toc-m{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:20px}
+  .toc-m summary{cursor:pointer;font-weight:700;font-size:15px}
+  .toc-m ol{margin:12px 0 4px;padding-left:20px;font-size:14px}
+  .toc-m a{text-decoration:none}
+  .step{padding:24px 20px 20px;border-radius:12px}
+  .step__lead{margin-left:0}
+  .step h2{font-size:20px}
+  .sb--hide-m{display:none}
+  table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{white-space:normal;min-width:132px}
+  .hostbox input{min-width:0}
+}
+</style>
+</head>
+<body>
+<nav style="padding:12px 4%;background:#fff"><a href="index.html">← 실습실 대문</a> · 시작하기 전에 · <a href="units/unit02/index.html#pyside">PySide6 실습</a></nav>
+<section style="margin:20px auto;padding:24px;max-width:1100px;background:white;border:1px solid #dce2f0;border-radius:12px"><h2>2단원 GUI 실행 준비</h2><p>터미널에서 <code>python -m tkinter</code>로 Tk 창이 뜨는지 확인하세요. 일부 Linux 배포판은 <code>python3-tk</code> 설치가 필요합니다.</p><p>PySide6는 프로젝트 가상환경을 활성화한 뒤 <code>python -m pip install PySide6</code>로 설치합니다. VS Code에서도 같은 가상환경의 인터프리터를 선택하세요.</p><p><a href="units/unit02/index.html#pyside">가상환경·PySide6·Designer 안내 →</a> · <a href="units/unit02/index.html#gallery">GUI 실행 화면 비교 →</a></p></section>
+
+
+<header class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <p class="eyebrow">인공지능 파이썬 실무 · 개발 환경 안내</p>
+      <h1>교과서 코드를 내 컴퓨터에서<br><em>돌아가게</em> 만들자</h1>
+      <p>Python과 VS Code를 설치하고, Git과 실습 폴더를 정리하고, GitHub 학생 인증으로 Copilot을 켜고, 디버깅까지 할 수 있는 상태로 만듭니다. 순서대로 따라가면서 각 단계 아래 체크 상자를 눌러 진행도를 기록하세요.</p>
+      <div class="hero__meta">
+        <span>15단계 + 부록</span><span>예상 120분</span><span>Windows · macOS</span><span>진행도 자동 저장</span>
+      </div>
+    </div>
+    <div class="term" aria-label="완료 시 보게 될 터미널 화면 예시">
+      <div class="term__bar">
+        <span class="term__dot" style="background:#FF5F57"></span>
+        <span class="term__dot" style="background:#FEBC2E"></span>
+        <span class="term__dot" style="background:#28C840"></span>
+        <span class="term__title">터미널 — 여기까지 나오면 성공</span>
+      </div>
+<div class="term__body"><span class="c"># 다 끝나면 이 화면이 나옵니다</span>
+<span class="p">&gt;</span> python check_env.py
+<span class="ok">[OK]</span> 파이썬 3.12.4
+<span class="ok">[OK]</span> 실행 위치  ~/aipyprojects/ch01-module
+<span class="ok">[OK]</span> tkinter 사용 가능
+<span class="ok">[OK]</span> Git 설정됨 - Gildong Hong
+<span class="ok">[OK]</span> 준비 완료. 교과서 실습을 시작하세요.
+<span class="p">&gt;</span> <span class="caret"></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <nav class="rail" aria-label="단계 목차">
+    <h2>진행 단계</h2>
+    <ol id="railList"></ol>
+    <button class="rail__reset" id="resetBtn" type="button">진행도 모두 지우기</button>
+  </nav>
+
+  <main id="main">
+  <details class="toc-m"><summary>단계 목차 보기</summary><ol id="tocM"></ol></details>
+  <!-- 01 -->
+  <section class="step" id="s01" data-title="시작 전 준비">
+    <div class="step__head"><span class="step__n">01</span><h2>시작 전에 준비할 것</h2></div>
+    <p class="step__lead">설치 도중에 막히는 대부분의 이유는 준비가 안 된 상태로 시작해서입니다. 세 가지만 먼저 확인하세요.</p>
+
+    <h3>내 컴퓨터에 프로그램을 설치할 수 있나요?</h3>
+    <p>학교 실습실 PC는 설치가 제한된 경우가 있습니다. 설치 창에서 "관리자 권한이 필요합니다"가 뜨면 선생님께 말씀드리세요. 개인 노트북이라면 대부분 문제없습니다.</p>
+
+    <h3>내 계정 이름에 한글이 들어 있나요?</h3>
+    <p>Windows 계정 이름이 한글이면 홈 디렉터리 경로에 한글이 섞입니다(<code>C:\Users\홍길동</code>). 대부분은 문제없지만 일부 라이브러리에서 오류가 납니다. 아래 명령으로 미리 확인해 두세요.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Windows 명령 프롬프트</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>echo %USERPROFILE%</code></pre>
+    </div>
+    <p>한글이 나온다면 지금 당장 바꿀 필요는 없습니다. 나중에 이상한 오류가 나면 이 점을 선생님께 말씀드리세요. 실습 폴더는 08단계에서 함께 만듭니다.</p>
+
+    <h3>GitHub 계정에 쓸 이메일을 정하세요</h3>
+    <ul>
+      <li><strong>학교 이메일</strong>이 있다면 그것으로 가입하세요. 학생 인증이 훨씬 빨리 끝납니다.</li>
+      <li>학교 이메일이 없으면 개인 이메일로 가입한 뒤, 학생증 사진으로 인증합니다.</li>
+      <li>학교에서 관리하는 조직(Organization) 계정이 아니라 <strong>개인 계정</strong>으로 가입해야 합니다.</li>
+    </ul>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="a1"><span class="task__box"></span><span class="task__label">프로그램 설치 권한이 있는 것을 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="a2"><span class="task__box"></span><span class="task__label">내 홈 디렉터리 경로를 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="a3"><span class="task__box"></span><span class="task__label">GitHub 가입에 쓸 이메일을 정했다</span></label>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="step" id="s02" data-title="GitHub 계정과 학생 인증">
+    <div class="step__head"><span class="step__n">02</span><h2>GitHub 계정 만들고 학생 인증받기</h2></div>
+    <p class="step__lead">학생 인증(Student Developer Pack)을 받으면 Copilot을 비롯한 여러 유료 도구를 무료로 씁니다. 심사에 하루에서 며칠이 걸리므로 <strong>가장 먼저</strong> 신청해 두고 나머지 설치를 진행하세요.</p>
+
+    <h3>1. 계정 만들기</h3>
+    <ol>
+      <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>에서 가입합니다.</li>
+      <li>사용자 이름은 앞으로 계속 쓰게 됩니다. 포트폴리오에 그대로 노출되니 진지하게 정하세요. (예: <code>gildong-kim</code>)</li>
+      <li>가입 후 메일함에서 인증 링크를 눌러 이메일 확인을 마칩니다.</li>
+      <li>2단계 인증(2FA)을 켜라고 나오면 켜 두세요. 나중에 필수가 됩니다.</li>
+    </ol>
+
+    <h3>2. 학생 인증 신청하기</h3>
+    <ol>
+      <li><a href="https://education.github.com/pack" target="_blank" rel="noopener">education.github.com/pack</a>에 접속해 신청을 시작합니다.</li>
+      <li>역할은 <strong>Student</strong>를 선택합니다.</li>
+      <li>학교 이름은 <strong>Mirim Meister High School</strong>처럼 영문으로 입력합니다. 목록에 없으면 직접 입력하세요.</li>
+      <li>학교 이메일이 없다면 <strong>학생증 사진</strong>을 올립니다. 이름, 학교명, 현재 연도가 또렷하게 보여야 합니다.</li>
+      <li>"어떻게 GitHub를 사용할 계획인가요?"에는 영어로 두세 문장 적으면 충분합니다.</li>
+    </ol>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">신청서에 적을 문장 예시</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>I am a student at Mirim Meister High School, majoring in
+intelligent software. I use GitHub to store my Python class
+projects, practice version control, and share small tools
+I build with my classmates.</code></pre>
+    </div>
+
+    <div class="box box--warn">
+      <p class="box__t">거절되는 흔한 이유</p>
+      <ul>
+        <li>학생증 사진이 흐리거나 잘려서 이름·학교명이 안 보임</li>
+        <li>발급 연도나 유효 기간이 없어서 재학 중인지 확인 불가</li>
+        <li>사진 속 이름과 GitHub 프로필 이름이 다름</li>
+      </ul>
+      <p>거절되면 사유가 메일로 오고, 사진을 다시 찍어 재신청할 수 있습니다. 여러 번 신청해도 불이익은 없습니다.</p>
+    </div>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>승인되면 <a href="https://github.com/settings/billing" target="_blank" rel="noopener">GitHub 설정 → Billing</a> 화면에 <strong>GitHub Pro</strong> 표시가 뜨고, 프로필에 학생 배지가 붙습니다. 승인 메일도 옵니다.</p>
+    </div>
+
+    <div class="box box--note">
+      <p class="box__t">Copilot 무료 혜택은 시기에 따라 달라집니다</p>
+      <p>학생용 Copilot 정책은 2026년에도 여러 번 바뀌었습니다. 신청 시점에 어떤 등급이 열려 있는지는 <a href="https://education.github.com/pack" target="_blank" rel="noopener">Student Pack 페이지</a>와 GitHub 계정의 Copilot 설정에서 직접 확인하세요. 승인만 되어 있으면 정책이 바뀔 때 자동으로 적용됩니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="b1"><span class="task__box"></span><span class="task__label">GitHub 계정을 만들고 이메일 인증을 마쳤다</span></label>
+      <label class="task"><input type="checkbox" data-id="b2"><span class="task__box"></span><span class="task__label">Student Developer Pack을 신청했다</span></label>
+      <label class="task"><input type="checkbox" data-id="b3"><span class="task__box"></span><span class="task__label">승인 메일을 받았거나 Billing 화면에서 Pro를 확인했다</span></label>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="step" id="s03" data-title="Python 설치">
+    <div class="step__head"><span class="step__n">03</span><h2>Python 설치하기</h2></div>
+    <p class="step__lead">VS Code는 편집기일 뿐, 코드를 실제로 실행하는 것은 파이썬입니다. 파이썬을 먼저 설치합니다.</p>
+
+    <h3>Windows</h3>
+    <ol>
+      <li><a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org/downloads</a>에서 3.12 이상 버전을 내려받습니다.</li>
+      <li>설치 프로그램 첫 화면 맨 아래 <strong>Add python.exe to PATH</strong>에 반드시 체크합니다.</li>
+      <li><strong>Install Now</strong>를 누릅니다.</li>
+      <li>마지막 화면에 <strong>Disable path length limit</strong> 버튼이 보이면 눌러 줍니다.</li>
+    </ol>
+    <div class="box box--warn">
+      <p class="box__t">PATH 체크를 놓쳤다면</p>
+      <p>설치 파일을 다시 실행 → <strong>Modify</strong> → 다음 → <strong>Add Python to environment variables</strong>에 체크하고 다시 설치하면 됩니다. 지우고 다시 깔 필요 없습니다.</p>
+    </div>
+
+    <h3>macOS</h3>
+    <p>python.org 설치 파일을 받아 그대로 설치하거나, Homebrew가 있다면 <code>brew install python@3.12</code>로 설치합니다. macOS에 원래 들어 있는 파이썬은 버전이 낮으니 새로 설치하세요.</p>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>Windows는 <kbd>Win</kbd>+<kbd>R</kbd> → <code>cmd</code>, macOS는 터미널을 열고 아래를 입력하세요. 버전 번호가 나오면 성공입니다.</p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">명령 프롬프트 / 터미널</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code>python --version
+pip --version</code></pre>
+      </div>
+      <p style="margin-top:8px">macOS에서 아무 반응이 없거나 버전이 2.x로 나오면 <code>python3 --version</code>으로 확인하세요.</p>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">"'python'은(는) 내부 또는 외부 명령이 아닙니다"</p>
+      <p>PATH 설정이 안 된 것입니다. 위의 Modify 방법으로 다시 설정한 뒤, <strong>열려 있던 명령 프롬프트 창을 닫고 새로 여세요.</strong> 창을 새로 열지 않으면 변경이 반영되지 않습니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="c1"><span class="task__box"></span><span class="task__label">Add python.exe to PATH에 체크하고 설치했다</span></label>
+      <label class="task"><input type="checkbox" data-id="c2"><span class="task__box"></span><span class="task__label">python --version 으로 3.12 이상이 나오는 것을 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="c3"><span class="task__box"></span><span class="task__label">pip --version 도 정상 출력된다</span></label>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="step" id="s04" data-title="VS Code 설치">
+    <div class="step__head"><span class="step__n">04</span><h2>VS Code 설치하기</h2></div>
+    <p class="step__lead">Visual Studio Code는 무료 코드 편집기입니다. 이름이 비슷한 Visual Studio(뒤에 Code가 없는 것)와는 다른 프로그램이니 헷갈리지 마세요.</p>
+
+    <ol>
+      <li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a>에서 내려받습니다. 화면이 알아서 내 운영체제에 맞는 버튼을 보여 줍니다.</li>
+      <li>Windows 설치 중 <strong>추가 작업 선택</strong> 화면에서 아래 항목에 체크하세요.
+        <ul>
+          <li>파일 상황에 맞는 메뉴에 "Code(으)로 열기" 작업 추가</li>
+          <li>디렉터리 상황에 맞는 메뉴에 "Code(으)로 열기" 작업 추가</li>
+          <li>PATH에 추가 (기본으로 체크되어 있습니다)</li>
+        </ul>
+      </li>
+      <li>macOS는 내려받은 앱을 <strong>응용 프로그램 폴더로 옮긴 뒤</strong> 실행합니다.</li>
+    </ol>
+
+    <div class="box box--tip">
+      <p class="box__t">아직 폴더는 열지 마세요</p>
+      <p>VS Code는 파일 하나가 아니라 <strong>폴더를 여는</strong> 방식으로 씁니다. 어떤 폴더를 열지는 08단계에서 실습 폴더를 만든 다음에 정합니다. 지금은 설치만 하고 넘어가세요.</p>
+    </div>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>명령 프롬프트에서 <code>code --version</code>을 입력했을 때 버전이 나오면 PATH 등록까지 끝난 것입니다. 앞으로 어느 폴더에서든 <code>code .</code> 한 줄로 그 폴더를 열 수 있습니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="d1"><span class="task__box"></span><span class="task__label">VS Code를 설치하고 실행했다</span></label>
+      <label class="task"><input type="checkbox" data-id="d2"><span class="task__box"></span><span class="task__label">설치 중 "Code(으)로 열기" 항목에 체크했다</span></label>
+      <label class="task"><input type="checkbox" data-id="d3"><span class="task__box"></span><span class="task__label">code --version 이 동작한다</span></label>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="step" id="s05" data-title="한국어로 바꾸기">
+    <div class="step__head"><span class="step__n">05</span><h2>화면을 한국어로 바꾸기</h2></div>
+    <p class="step__lead">메뉴가 영어라서 헤매는 시간을 줄입니다. 다만 오류 메시지 검색은 영어가 훨씬 잘 나오니, 익숙해지면 영어로 되돌리는 것도 방법입니다.</p>
+
+    <h3>방법</h3>
+    <ol>
+      <li>왼쪽 세로 막대에서 네모 네 개 모양의 <strong>확장(Extensions)</strong> 아이콘을 누릅니다. 단축키는 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>입니다.</li>
+      <li>검색창에 <code>Korean Language Pack</code>을 입력합니다.</li>
+      <li>Microsoft가 만든 <strong>Korean Language Pack for Visual Studio Code</strong>를 설치합니다.</li>
+      <li>설치가 끝나면 오른쪽 아래에 다시 시작하겠냐는 알림이 뜹니다. <strong>Restart</strong>를 누릅니다.</li>
+    </ol>
+
+    <h3>알림을 놓쳤을 때</h3>
+    <p><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>로 <strong>명령 팔레트</strong>를 열고 아래를 입력한 뒤 <code>ko</code>를 고릅니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">명령 팔레트 (Ctrl+Shift+P)</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>Configure Display Language</code></pre>
+    </div>
+
+    <div class="box box--tip">
+      <p class="box__t">명령 팔레트가 이 안내서의 핵심 도구입니다</p>
+      <p>VS Code의 거의 모든 기능은 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>에서 이름을 검색해 실행할 수 있습니다. 메뉴 위치가 버전마다 달라져도 명령 이름은 잘 바뀌지 않으니, 앞으로 "어디에 있더라?" 싶을 때는 여기서 검색하세요.</p>
+    </div>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>다시 시작한 뒤 상단 메뉴가 <strong>파일 / 편집 / 선택 영역 / 보기</strong>로 보이면 성공입니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="e1"><span class="task__box"></span><span class="task__label">Korean Language Pack을 설치했다</span></label>
+      <label class="task"><input type="checkbox" data-id="e2"><span class="task__box"></span><span class="task__label">다시 시작 후 메뉴가 한국어로 보인다</span></label>
+      <label class="task"><input type="checkbox" data-id="e3"><span class="task__box"></span><span class="task__label">Ctrl+Shift+P로 명령 팔레트를 열어 봤다</span></label>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="step" id="s06" data-title="확장 프로그램 설치">
+    <div class="step__head"><span class="step__n">06</span><h2>확장 프로그램 설치하기</h2></div>
+    <p class="step__lead">VS Code는 처음엔 텅 빈 편집기입니다. 확장을 깔아야 파이썬 문법 검사, 자동 완성, 디버깅이 동작합니다. 확장 화면(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>)에서 아래 ID를 검색해 설치하세요.</p>
+
+    <h3>반드시 설치</h3>
+    <table>
+      <thead><tr><th style="width:34%">확장 이름</th><th style="width:30%">검색용 ID</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><td>Python</td><td><code>ms-python.python</code></td><td>파이썬 실행, 인터프리터 선택, 테스트. 설치하면 아래 두 개가 함께 깔립니다.</td></tr>
+        <tr><td>Pylance</td><td><code>ms-python.vscode-pylance</code></td><td>자동 완성과 타입 검사. 오타를 미리 잡아 줍니다.</td></tr>
+        <tr><td>Python Debugger</td><td><code>ms-python.debugpy</code></td><td>중단점을 걸고 한 줄씩 실행하는 디버깅 기능.</td></tr>
+        <tr><td>Korean Language Pack</td><td><code>MS-CEINTL.vscode-language-pack-ko</code></td><td>05단계에서 이미 설치했습니다.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>있으면 편한 것</h3>
+    <table>
+      <thead><tr><th style="width:34%">확장 이름</th><th style="width:30%">검색용 ID</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><td>Error Lens</td><td><code>usernamehw.errorlens</code></td><td>오류를 코드 줄 옆에 바로 띄워 줍니다. 초보자에게 특히 도움이 됩니다.</td></tr>
+        <tr><td>indent-rainbow</td><td><code>oderwat.indent-rainbow</code></td><td>들여쓰기 단계를 색으로 구분합니다. 파이썬 들여쓰기 실수를 줄여 줍니다.</td></tr>
+        <tr><td>autoDocstring</td><td><code>njpwerner.autodocstring</code></td><td>함수 위에서 <code>"""</code>를 치면 설명 틀을 자동으로 만들어 줍니다.</td></tr>
+        <tr><td>Path Intellisense</td><td><code>christian-kohler.path-intellisense</code></td><td>파일 경로를 자동 완성해 줍니다.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box--warn">
+      <p class="box__t">Code Runner는 지금 설치하지 마세요</p>
+      <p>실행 버튼이 하나 더 생겨서 편해 보이지만, VS Code가 고른 인터프리터를 무시하고 다른 파이썬으로 실행하는 일이 잦습니다. "분명 설치했는데 모듈을 못 찾는다"는 문제의 단골 원인입니다. 수업에서는 기본 실행 버튼만 씁니다.</p>
+    </div>
+
+    <div class="box box--tip">
+      <p class="box__t">설치한 확장을 다른 PC로 옮기기</p>
+      <p>왼쪽 아래 계정 아이콘 → <strong>설정 동기화 켜기</strong>에서 GitHub 계정으로 로그인하면, 집 컴퓨터와 실습실 PC의 확장·설정·단축키가 자동으로 같아집니다.</p>
+    </div>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>확장 화면 왼쪽 위 <strong>설치됨</strong> 목록에 Python, Pylance, Python Debugger가 모두 보이면 됩니다. 확장 이름 옆에 톱니바퀴가 아니라 경고 표시가 있다면 다시 로드가 필요한 상태이니 VS Code를 껐다 켜세요.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="f1"><span class="task__box"></span><span class="task__label">Python 확장을 설치했다</span></label>
+      <label class="task"><input type="checkbox" data-id="f2"><span class="task__box"></span><span class="task__label">Pylance와 Python Debugger가 설치됨 목록에 보인다</span></label>
+      <label class="task"><input type="checkbox" data-id="f3"><span class="task__box"></span><span class="task__label">Error Lens 등 편의 확장을 골라 설치했다</span></label>
+    </div>
+  </section>
+  <!-- GIT -->
+  <section class="step" id="sGit" data-title="Git 설치와 최초 설정">
+    <div class="step__head"><span class="step__n">07</span><h2>Git 설치하고 최초 설정하기</h2></div>
+    <p class="step__lead">Git은 코드의 변경 이력을 기록하는 프로그램이고, GitHub은 그 기록을 인터넷에 올려 두는 곳입니다. 둘은 다른 것입니다. Git을 설치하고, <strong>내가 누구인지 알려 주는 최초 설정</strong>을 해야 첫 커밋을 만들 수 있습니다.</p>
+
+    <h3>1. 이미 깔려 있는지 먼저 확인</h3>
+    <p>터미널(<kbd>Ctrl</kbd>+<kbd>`</kbd>)이나 명령 프롬프트에서 확인합니다. 버전이 나오면 설치는 이미 끝난 것이니 2번은 건너뛰세요.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git --version</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">이렇게 나오면 설치됨</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git version 2.47.1.windows.1</code></pre>
+    </div>
+
+    <h3>2. 설치하기</h3>
+    <ul>
+      <li><strong>Windows</strong> — <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com/download/win</a>에서 내려받아 설치합니다. 선택 항목이 아주 많이 나오는데 <strong>전부 기본값</strong>으로 두고 Next만 눌러도 됩니다.</li>
+      <li><strong>macOS</strong> — 터미널에 <code>git --version</code>을 치면 설치 안내 창이 뜹니다. 또는 <code>xcode-select --install</code>을 실행하세요. Homebrew가 있다면 <code>brew install git</code>도 됩니다.</li>
+    </ul>
+    <div class="box box--warn">
+      <p class="box__t">설치 후에도 <code>git</code>을 못 찾는다면</p>
+      <p>열려 있던 터미널과 VS Code를 <strong>완전히 닫고 다시 열어야</strong> 새 PATH가 반영됩니다. 그래도 안 되면 재부팅하세요.</p>
+    </div>
+
+    <h3>3. 지금 설정이 되어 있는지 확인</h3>
+    <p>Git의 전역 설정은 <code>.gitconfig</code>라는 파일 하나에 저장됩니다. 아래 명령으로 그 내용을 확인합니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --list --global</code></pre>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">이런 반응이면 아직 설정이 없는 것입니다</p>
+      <ul>
+        <li>아무것도 출력되지 않고 그냥 다음 줄로 넘어감</li>
+        <li><code>fatal: unable to read config file '...': No such file or directory</code></li>
+        <li><code>user.name</code>과 <code>user.email</code> 두 줄이 목록에 없음</li>
+      </ul>
+      <p>셋 중 하나라면 4번으로 진행하세요.</p>
+    </div>
+    <p>값 하나만 콕 집어 확인하려면 이렇게 씁니다. 설정이 없으면 아무것도 출력되지 않습니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global user.name
+git config --global user.email</code></pre>
+    </div>
+
+    <h3>4. 최초 설정하기</h3>
+    <p>아래 두 줄이 <strong>반드시 필요한 설정</strong>입니다. 커밋 하나하나에 이 이름과 이메일이 기록으로 남습니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널 — 따옴표 안을 자기 것으로 바꿔서 실행</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global user.name "Gildong Hong"
+git config --global user.email "gildong@e-mirim.hs.kr"</code></pre>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">이메일은 GitHub 계정과 같은 것으로</p>
+      <p>다른 이메일로 커밋하면 GitHub에 올렸을 때 <strong>내 잔디밭에 기록이 남지 않습니다.</strong> 02단계에서 GitHub에 가입할 때 쓴 이메일을 그대로 넣으세요.</p>
+      <p style="margin-top:8px">이메일을 공개하기 싫다면 GitHub이 주는 비공개 주소를 쓸 수 있습니다. <a href="https://github.com/settings/emails" target="_blank" rel="noopener">github.com/settings/emails</a>에서 <strong>Keep my email addresses private</strong>를 켜면 <code>12345678+아이디@users.noreply.github.com</code> 형태의 주소가 나옵니다. 그 주소를 <code>user.email</code>에 넣으세요.</p>
+    </div>
+
+    <p>다음 세 줄은 필수는 아니지만 넣어 두면 나중에 겪을 문제를 미리 막아 줍니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널 — 권장 설정</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global init.defaultBranch main
+git config --global core.quotepath false
+git config --global pull.rebase false</code></pre>
+    </div>
+    <table>
+      <thead><tr><th style="width:34%">설정</th><th>하는 일</th></tr></thead>
+      <tbody>
+        <tr><td><code>init.defaultBranch main</code></td><td>새 저장소의 기본 브랜치 이름을 <code>main</code>으로 맞춥니다. GitHub 기본값과 같아져 헷갈리지 않습니다.</td></tr>
+        <tr><td><code>core.quotepath false</code></td><td>한글 파일 이름이 <code>\355\225\234</code>처럼 깨져 보이는 것을 막습니다.</td></tr>
+        <tr><td><code>pull.rebase false</code></td><td><code>git pull</code>을 할 때 어떻게 합칠지 물어보는 경고를 없앱니다.</td></tr>
+      </tbody>
+    </table>
+    <p>운영체제에 따라 줄바꿈 문자 처리도 맞춰 둡니다. 이걸 안 하면 팀 작업에서 "고친 게 없는데 파일 전체가 바뀐 것으로 보이는" 현상이 생깁니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Windows에서만</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global core.autocrlf true</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">macOS · 리눅스에서만</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global core.autocrlf input</code></pre>
+    </div>
+
+    <h3>5. .gitconfig 파일을 직접 열어 보기</h3>
+    <p>설정은 결국 텍스트 파일 하나입니다. 아래 명령으로 VS Code에서 바로 열 수 있습니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global --edit</code></pre>
+    </div>
+    <table>
+      <thead><tr><th style="width:26%">운영체제</th><th>파일 위치</th></tr></thead>
+      <tbody>
+        <tr><td>Windows</td><td><code>C:\Users\사용자이름\.gitconfig</code></td></tr>
+        <tr><td>macOS · 리눅스</td><td><code>~/.gitconfig</code></td></tr>
+      </tbody>
+    </table>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">.gitconfig — 설정을 마친 뒤의 모습</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>[user]
+	name = Gildong Hong
+	email = gildong@e-mirim.hs.kr
+[init]
+	defaultBranch = main
+[core]
+	quotepath = false
+	autocrlf = true
+[pull]
+	rebase = false</code></pre>
+    </div>
+    <div class="box box--tip">
+      <p class="box__t">파일을 직접 고쳐도 됩니다</p>
+      <p>명령어로 설정하든 이 파일을 편집기로 고치든 결과는 같습니다. 다만 대괄호 <code>[user]</code> 같은 묶음 이름과 들여쓰기를 지켜야 합니다. 헷갈리면 명령어 쪽을 쓰세요.</p>
+    </div>
+
+    <h3>6. 잘못 넣었을 때 고치기</h3>
+    <p>같은 명령을 다시 실행하면 <strong>덮어쓰기</strong> 됩니다. 지우려면 <code>--unset</code>을 씁니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git config --global user.name "새 이름"        # 그냥 다시 실행하면 덮어씀
+git config --global --unset user.email        # 값을 지움</code></pre>
+    </div>
+    <div class="box box--note">
+      <p class="box__t">전역 설정과 저장소별 설정</p>
+      <p><code>--global</code>을 붙이면 내 컴퓨터 전체에 적용되고, 특정 프로젝트 폴더 안에서 <code>--global</code> 없이 실행하면 그 프로젝트에만 적용됩니다. 실습실 공용 PC에서 여러 명이 번갈아 쓴다면, 각자 프로젝트 폴더에서 <code>--global</code> 없이 설정하는 편이 안전합니다.</p>
+    </div>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p><code>git config --list --global</code>을 실행했을 때 아래처럼 <code>user.name</code>과 <code>user.email</code>이 보이면 됩니다.</p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">기대하는 출력</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code>user.name=Gildong Hong
+user.email=gildong@e-mirim.hs.kr
+init.defaultbranch=main
+core.quotepath=false
+core.autocrlf=true
+pull.rebase=false</code></pre>
+      </div>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="git1"><span class="task__box"></span><span class="task__label">git --version 으로 설치를 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="git2"><span class="task__box"></span><span class="task__label">user.name과 user.email을 GitHub 계정과 맞춰 설정했다</span></label>
+      <label class="task"><input type="checkbox" data-id="git3"><span class="task__box"></span><span class="task__label">git config --list --global 로 설정 내용을 확인했다</span></label>
+    </div>
+  </section>
+
+  <!-- DIR -->
+  <section class="step" id="sDir" data-title="실습 폴더 만들기">
+    <div class="step__head"><span class="step__n">08</span><h2>실습 폴더 만들기</h2></div>
+    <p class="step__lead">앞으로 만들 파일이 수십 개가 됩니다. 처음에 자리를 정해 두지 않으면 나중에 "그 파일 어디 갔지"로 시간을 다 씁니다. 홈 디렉터리 아래에 <code>aipyprojects</code> 하나를 만들고, 그 안에 실습별로 폴더를 나눕니다.</p>
+
+    <h3>1. 홈 디렉터리가 어디인지 알기</h3>
+    <p>홈 디렉터리는 내 계정의 기본 폴더입니다. 터미널을 열면 보통 여기서 시작합니다.</p>
+    <table>
+      <thead><tr><th style="width:26%">운영체제</th><th>홈 디렉터리 위치</th></tr></thead>
+      <tbody>
+        <tr><td>Windows</td><td><code>C:\Users\사용자이름</code></td></tr>
+        <tr><td>macOS</td><td><code>/Users/사용자이름</code></td></tr>
+      </tbody>
+    </table>
+    <p>줄여서 <code>~</code>(물결표)로 씁니다. 이 안내서에서 <code>~/aipyprojects</code>라고 쓰면 Windows에서는 <code>C:\Users\사용자이름\aipyprojects</code>를 뜻합니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">내 홈 디렉터리 확인하기</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>Windows (명령 프롬프트)   echo %USERPROFILE%
+Windows (PowerShell)     echo $HOME
+macOS · 리눅스            echo $HOME</code></pre>
+    </div>
+
+    <h3>2. 폴더 만들기</h3>
+    <p>터미널에 아래를 그대로 붙여 넣고 실행하세요. 홈으로 이동한 뒤 <code>aipyprojects</code>와 첫 실습 폴더를 한 번에 만듭니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Windows — 명령 프롬프트</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>cd %USERPROFILE%
+mkdir aipyprojects
+cd aipyprojects
+mkdir ch01-module
+cd ch01-module</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">macOS · 리눅스 — 터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>cd ~
+mkdir -p aipyprojects/ch01-module
+cd aipyprojects/ch01-module</code></pre>
+    </div>
+    <p>탐색기나 Finder에서 마우스로 만들어도 똑같습니다. 다만 명령으로 만들면 오타가 나도 바로 알 수 있고, 앞으로 쓸 <code>cd</code> 명령에도 익숙해집니다.</p>
+
+    <h3>3. 이렇게 나눠 씁니다</h3>
+    <p>실습마다 폴더를 새로 만드세요. 1단원에서 배웠듯 파이썬은 <strong>현재 작업 디렉터리</strong>부터 모듈을 찾기 때문에, 관련 있는 파일끼리 한 폴더에 모여 있어야 임포트가 됩니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">폴더 구조</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>~/aipyprojects/
+    ch01-module/          1단원 모듈과 패키지
+        greet.py
+        greetmain.py
+        nature/
+            __init__.py
+            animals/
+                __init__.py
+                bird.py
+    ch02-gui/             2단원 GUI 프로그래밍
+        memo.py
+        gui_test.py
+    sandbox/              그냥 이것저것 해 보는 곳
+        check_env.py</code></pre>
+    </div>
+    <div class="box box--tip">
+      <p class="box__t">폴더 이름 정하는 규칙</p>
+      <ul>
+        <li>영문 소문자, 숫자, 붙임표(<code>-</code>)만 씁니다. <code>ch02-gui</code>처럼요.</li>
+        <li><strong>한글과 공백은 넣지 않습니다.</strong> <code>2단원 실습</code> 같은 이름은 일부 도구에서 오류가 납니다.</li>
+        <li>번호를 앞에 붙이면 순서대로 정렬돼서 찾기 쉽습니다.</li>
+      </ul>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">바탕화면이나 문서 폴더에 만들지 마세요</p>
+      <p>Windows에서 바탕화면·문서·사진 폴더는 <strong>OneDrive와 자동 동기화</strong>되는 경우가 많습니다. 파이썬이 파일을 쓰는 도중 OneDrive가 끼어들면 저장이 실패하거나 파일이 중복 생성됩니다. 홈 디렉터리 바로 아래에 만드는 이유가 이것입니다.</p>
+    </div>
+
+    <h3>4. VS Code로 열기</h3>
+    <p>VS Code는 파일 하나가 아니라 <strong>폴더를 여는</strong> 방식으로 씁니다. 지금 만든 실습 폴더 안에서 아래를 실행하세요. 마지막 점(<code>.</code>)은 "지금 이 폴더"라는 뜻입니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>code .</code></pre>
+    </div>
+    <p>메뉴로 열려면 <strong>파일 → 폴더 열기</strong>, 단축키는 <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>O</kbd>입니다.</p>
+    <div class="box box--warn">
+      <p class="box__t">aipyprojects 전체를 열지 마세요</p>
+      <p><code>aipyprojects</code>를 통째로 열면 파이썬의 작업 디렉터리가 그 상위 폴더가 되어, <code>import greet</code>이 <code>ModuleNotFoundError</code>로 실패합니다. <strong>실습 폴더 하나만</strong>(예: <code>ch01-module</code>) 여는 것이 규칙입니다.</p>
+    </div>
+
+    <h3>5. Git 저장소로 만들기 (선택)</h3>
+    <p>07단계에서 Git 설정을 마쳤다면, 실습 폴더를 저장소로 만들어 변경 이력을 남길 수 있습니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널 — 실습 폴더 안에서</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>git init
+git add .
+git commit -m "첫 실습 시작"</code></pre>
+    </div>
+    <p>커밋하기 전에 올리지 않을 파일 목록을 만들어 두세요. 파이썬이 자동으로 만드는 캐시 폴더 같은 것들입니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">.gitignore</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>__pycache__/
+*.pyc
+.venv/
+.env
+*.prof
+.vscode/</code></pre>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">Author identity unknown 오류가 난다면</p>
+      <p>커밋할 때 아래 메시지가 나오면 07단계의 <code>user.name</code>·<code>user.email</code> 설정이 빠진 것입니다. 되돌아가서 설정한 뒤 다시 커밋하세요.</p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">오류 메시지</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code>Author identity unknown
+*** Please tell me who you are.</code></pre>
+      </div>
+    </div>
+
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <ul>
+        <li>VS Code 왼쪽 위 탐색기에 <strong>CH01-MODULE</strong>처럼 실습 폴더 이름이 보인다</li>
+        <li>터미널(<kbd>Ctrl</kbd>+<kbd>`</kbd>)을 열면 프롬프트 경로가 그 폴더로 되어 있다</li>
+        <li>터미널에 <code>cd</code>(Windows) 또는 <code>pwd</code>(macOS)를 치면 <code>...\aipyprojects\ch01-module</code>이 나온다</li>
+      </ul>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="dir1"><span class="task__box"></span><span class="task__label">홈 디렉터리 아래에 aipyprojects 폴더를 만들었다</span></label>
+      <label class="task"><input type="checkbox" data-id="dir2"><span class="task__box"></span><span class="task__label">그 안에 ch01-module 실습 폴더를 만들었다</span></label>
+      <label class="task"><input type="checkbox" data-id="dir3"><span class="task__box"></span><span class="task__label">실습 폴더 하나만 VS Code로 열었다</span></label>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="step" id="s07" data-title="첫 실행과 환경 점검">
+    <div class="step__head"><span class="step__n">09</span><h2>첫 실행하고 환경 점검하기</h2></div>
+    <p class="step__lead">여기서 한 번에 성공하면 나머지는 쉽습니다. 인터프리터를 고르고, 점검 스크립트를 돌려 봅니다.</p>
+
+    <h3>1. 인터프리터 고르기</h3>
+    <p>컴퓨터에 파이썬이 여러 개 깔려 있을 수 있어서, VS Code에 "이 파이썬으로 실행해"라고 알려 줘야 합니다.</p>
+    <ol>
+      <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>를 누릅니다.</li>
+      <li><code>Python: Select Interpreter</code>를 입력하고 실행합니다.</li>
+      <li>목록에서 3.12 이상 버전을 고릅니다.</li>
+    </ol>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>VS Code 창 <strong>오른쪽 아래 상태 표시줄</strong>에 <code>3.12.4</code> 같은 버전이 표시됩니다. 이 안내서 맨 아래에 있는 파란 막대와 같은 위치입니다.</p>
+    </div>
+
+    <h3>2. 점검 스크립트 만들기</h3>
+    <p>08단계에서 만든 실습 폴더에 <code>check_env.py</code>라는 새 파일을 만들고 아래 코드를 붙여 넣으세요. 파일을 새로 만들 때는 탐색기 영역에서 <strong>새 파일</strong> 아이콘을 누르거나 <kbd>Ctrl</kbd>+<kbd>N</kbd> 후 저장하면 됩니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">check_env.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>import sys
+import os
+import subprocess
+
+print("[OK] 파이썬", sys.version.split()[0])
+print("[OK] 실행 위치 ", os.getcwd())
+
+try:
+    import tkinter
+    print("[OK] tkinter 사용 가능")
+except ImportError:
+    print("[!!] tkinter 없음 - 2단원 GUI 실습이 안 됩니다")
+
+try:
+    name = subprocess.run(["git", "config", "--global", "user.name"],
+                          capture_output=True, text=True).stdout.strip()
+    if name:
+        print("[OK] Git 설정됨 -", name)
+    else:
+        print("[!!] Git 사용자 이름이 없습니다. 07단계를 다시 하세요.")
+except FileNotFoundError:
+    print("[!!] Git이 설치되어 있지 않습니다. 07단계를 확인하세요.")
+
+if sys.version_info &lt; (3, 10):
+    print("[!!] 파이썬이 너무 낮습니다. 3.12 이상을 설치하세요.")
+else:
+    print("[OK] 준비 완료. 교과서 실습을 시작하세요.")</code></pre>
+    </div>
+
+    <h3>3. 실행하기</h3>
+    <p>편집기 오른쪽 위의 <strong>▷ 삼각형 버튼</strong>을 누르거나, <kbd>Ctrl</kbd>+<kbd>F5</kbd>를 누릅니다. 아래쪽에 터미널이 열리며 결과가 나옵니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">기대하는 출력</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>[OK] 파이썬 3.12.4
+[OK] 실행 위치  C:\Users\mirim\aipyprojects\ch01-module
+[OK] tkinter 사용 가능
+[OK] Git 설정됨 - Gildong Hong
+[OK] 준비 완료. 교과서 실습을 시작하세요.</code></pre>
+    </div>
+
+    <div class="box box--warn">
+      <p class="box__t">"tkinter 없음"이 뜬다면</p>
+      <p>Windows·macOS의 python.org 설치본에는 tkinter가 기본 포함입니다. 리눅스를 쓰거나 이 메시지가 나오면 아래를 실행하세요.</p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">리눅스 (Ubuntu 계열)</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code>sudo apt install python3-tk</code></pre>
+      </div>
+    </div>
+
+    <div class="box box--tip">
+      <p class="box__t">터미널을 여는 단축키</p>
+      <p><kbd>Ctrl</kbd>+<kbd>`</kbd> (숫자 1 왼쪽의 키)로 아래쪽 터미널을 열고 닫습니다. 앞으로 <code>pip install</code> 같은 명령은 전부 여기에 입력합니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="g1"><span class="task__box"></span><span class="task__label">인터프리터를 선택해 상태 표시줄에 버전이 보인다</span></label>
+      <label class="task"><input type="checkbox" data-id="g2"><span class="task__box"></span><span class="task__label">check_env.py를 만들어 실행했다</span></label>
+      <label class="task"><input type="checkbox" data-id="g3"><span class="task__box"></span><span class="task__label">[OK] 네 줄이 모두 나왔다</span></label>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section class="step" id="s08" data-title="교과서 소스로 테스트">
+    <div class="step__head"><span class="step__n">10</span><h2>교과서 소스로 동작 테스트하기</h2></div>
+    <p class="step__lead">환경이 잘 잡혔는지는 실제 수업 코드로 확인하는 게 가장 확실합니다. 1단원의 모듈 임포트와 2단원의 GUI 창을 각각 돌려 봅니다.</p>
+
+    <h3>테스트 1 · 1단원 모듈 임포트</h3>
+    <p><code>ch01-module</code> 폴더에 파일 두 개를 <strong>같은 위치에</strong> 만듭니다. 폴더가 다르면 임포트에 실패합니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">greet.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>def hello():
+    print("안녕하세요")
+
+def bye():
+    print("안녕히 가세요")
+
+if __name__ == "__main__":
+    print("greet 모듈을 직접 실행했습니다.")</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">greetmain.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>import greet
+
+greet.hello()
+greet.bye()
+print("__name__ 값:", __name__)</code></pre>
+    </div>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p><code>greetmain.py</code>를 실행했을 때 아래 세 줄이 나오면 성공입니다. 1단원에서 배운 대로 <code>greet.py</code>의 <code>if __name__</code> 아래 문장은 실행되지 <strong>않습니다.</strong></p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">기대하는 출력</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code>안녕하세요
+안녕히 가세요
+__name__ 값: __main__</code></pre>
+      </div>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">ModuleNotFoundError: No module named 'greet'</p>
+      <p>두 파일이 다른 폴더에 있거나, VS Code가 다른 폴더를 열어 둔 상태입니다. 왼쪽 탐색기에서 두 파일이 같은 폴더에 나란히 보이는지 확인하세요.</p>
+    </div>
+
+    <h3>테스트 2 · 2단원 GUI 창</h3>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">gui_test.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>import tkinter as tk
+
+def say_hello():
+    label.config(text="환경 설정 성공!")
+    print("버튼이 눌렸습니다")
+
+window = tk.Tk()
+window.title("환경 테스트")
+window.geometry("360x180")
+
+label = tk.Label(window, text="아래 버튼을 눌러 보세요", font=("맑은 고딕", 13))
+label.pack(expand=1)
+
+btn = tk.Button(window, text="클릭", command=say_hello)
+btn.pack(pady=16)
+
+window.mainloop()</code></pre>
+    </div>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <ul>
+        <li>360×180 크기의 창이 뜬다</li>
+        <li>클릭 버튼을 누르면 글자가 "환경 설정 성공!"으로 바뀐다</li>
+        <li>터미널에도 "버튼이 눌렸습니다"가 출력된다</li>
+      </ul>
+      <p>세 가지가 모두 되면 2단원 GUI 실습을 진행할 수 있는 상태입니다. 창은 오른쪽 위 X로 닫습니다.</p>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">창이 떴다가 바로 사라진다면</p>
+      <p>맨 마지막 줄 <code>window.mainloop()</code>가 빠졌거나 들여쓰기 안으로 들어간 것입니다. 2단원에서 배운 그대로, mainloop가 없으면 프로그램이 곧바로 끝납니다.</p>
+    </div>
+
+    <h3>테스트 3 · 패키지 구조</h3>
+    <p>1단원 후반의 패키지 실습이 되는지도 확인해 둡니다. 아래 구조로 폴더와 파일을 만드세요.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">폴더 구조</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>ch01-module/
+    main_nature.py
+    nature/
+        __init__.py
+        animals/
+            __init__.py
+            bird.py</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">nature/animals/bird.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>def wild():
+    print("새는 동물입니다.")</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">main_nature.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>from nature.animals import bird
+
+bird.wild()</code></pre>
+    </div>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p><code>새는 동물입니다.</code>가 출력되면 성공입니다. <code>__init__.py</code>는 내용이 비어 있어도 됩니다. 파일 이름을 <code>init.py</code>처럼 밑줄 없이 만들면 안 됩니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="h1"><span class="task__box"></span><span class="task__label">모듈 임포트 테스트가 성공했다</span></label>
+      <label class="task"><input type="checkbox" data-id="h2"><span class="task__box"></span><span class="task__label">GUI 창이 뜨고 버튼이 동작했다</span></label>
+      <label class="task"><input type="checkbox" data-id="h3"><span class="task__box"></span><span class="task__label">패키지 임포트 테스트가 성공했다</span></label>
+    </div>
+  </section>
+  <!-- 09 -->
+  <section class="step" id="s09" data-title="디버깅 기초">
+    <div class="step__head"><span class="step__n">11</span><h2>디버깅 기초 — 코드를 멈춰 세우고 들여다보기</h2></div>
+    <p class="step__lead"><code>print()</code>를 여기저기 넣어 값을 찍어 보는 대신, 코드를 원하는 줄에서 멈춰 세우고 그 순간의 변수를 전부 살펴보는 방법입니다. 익히면 오류 찾는 시간이 크게 줄어듭니다.</p>
+
+    <h3>연습용 코드</h3>
+    <p>일부러 결과가 틀리게 만든 코드입니다. 어디가 잘못됐는지 눈으로 찾지 말고 디버거로 찾아보세요.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">debug_practice.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>def average(numbers):
+    total = 0
+    for n in numbers:
+        total = n          # &lt;- 여기에 문제가 있습니다
+    return total / len(numbers)
+
+
+def grade(score):
+    if score &gt;= 90:
+        return "A"
+    elif score &gt;= 80:
+        return "B"
+    elif score &gt;= 70:
+        return "C"
+    else:
+        return "D"
+
+
+scores = [88, 92, 76, 95, 61]
+avg = average(scores)
+print("평균:", avg)
+print("학점:", grade(avg))</code></pre>
+    </div>
+    <p>실행하면 평균이 <code>12.2</code>로 나옵니다. 실제 평균은 82.4여야 하죠.</p>
+
+    <h3>1. 중단점 걸기</h3>
+    <p>코드 줄 번호 <strong>왼쪽 여백</strong>을 클릭하면 빨간 점이 생깁니다. 이것이 중단점(breakpoint)이고, 프로그램은 그 줄을 <strong>실행하기 직전에</strong> 멈춥니다. 키보드로는 커서를 그 줄에 두고 <kbd>F9</kbd>를 누르면 됩니다.</p>
+    <p>연습에서는 <code>total = n</code> 줄에 중단점을 거세요.</p>
+
+    <h3>2. 디버깅 시작하기</h3>
+    <p><kbd>F5</kbd>를 누릅니다. 처음 누르면 어떤 방식으로 실행할지 물어보는데 <strong>Python 파일</strong>을 고르세요. 프로그램이 중단점에서 멈추고 그 줄이 노란색으로 표시됩니다.</p>
+
+    <h3>3. 멈춘 상태에서 보는 것들</h3>
+    <table>
+      <thead><tr><th style="width:26%">영역</th><th>보는 내용</th></tr></thead>
+      <tbody>
+        <tr><td>변수</td><td>지금 살아 있는 모든 변수와 값. <code>numbers</code>, <code>total</code>, <code>n</code>이 보입니다.</td></tr>
+        <tr><td>조사식</td><td>내가 계속 지켜보고 싶은 식을 등록해 둡니다. 예: <code>total / len(numbers)</code></td></tr>
+        <tr><td>호출 스택</td><td>지금 이 줄에 어떤 경로로 도달했는지. <code>average</code> 아래에 <code>&lt;module&gt;</code>이 보입니다.</td></tr>
+        <tr><td>디버그 콘솔</td><td>멈춘 상태에서 아무 파이썬 식이나 입력해 즉석에서 결과를 볼 수 있습니다.</td></tr>
+      </tbody>
+    </table>
+    <div class="box box--tip">
+      <p class="box__t">마우스를 변수 위에 올려 보세요</p>
+      <p>멈춘 상태에서 코드 안의 변수 이름 위에 마우스를 올리면 현재 값이 말풍선으로 뜹니다. 가장 빠른 확인 방법입니다.</p>
+    </div>
+
+    <h3>4. 한 줄씩 진행하기</h3>
+    <table>
+      <thead><tr><th style="width:20%">단축키</th><th style="width:22%">이름</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>F10</kbd></td><td>단위 실행</td><td>다음 줄로 넘어갑니다. 함수 호출은 안으로 들어가지 않고 통째로 실행합니다.</td></tr>
+        <tr><td><kbd>F11</kbd></td><td>한 단계씩 코드 실행</td><td>함수 호출을 만나면 그 함수 안으로 들어갑니다.</td></tr>
+        <tr><td><kbd>Shift</kbd>+<kbd>F11</kbd></td><td>프로시저 나가기</td><td>지금 함수를 끝까지 실행하고 호출한 자리로 돌아옵니다.</td></tr>
+        <tr><td><kbd>F5</kbd></td><td>계속</td><td>다음 중단점까지 쭉 실행합니다.</td></tr>
+        <tr><td><kbd>Shift</kbd>+<kbd>F5</kbd></td><td>중지</td><td>디버깅을 끝냅니다.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box--ok">
+      <p class="box__t">직접 해 보기</p>
+      <p><kbd>F5</kbd>로 멈춘 뒤 <kbd>F10</kbd>을 여러 번 누르면서 <strong>변수</strong> 영역의 <code>total</code>을 지켜보세요. 반복할 때마다 값이 쌓이지 않고 <code>88 → 92 → 76</code>처럼 <strong>덮어써지는</strong> 것이 보입니다. 원인을 찾았습니다. <code>total = n</code>을 <code>total = total + n</code>으로 고치고 다시 실행하면 평균 <code>82.4</code>, 학점 <code>B</code>가 나옵니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="i1"><span class="task__box"></span><span class="task__label">중단점을 걸고 F5로 프로그램을 멈춰 세웠다</span></label>
+      <label class="task"><input type="checkbox" data-id="i2"><span class="task__box"></span><span class="task__label">F10으로 한 줄씩 진행하며 변수 값 변화를 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="i3"><span class="task__box"></span><span class="task__label">디버거로 버그를 찾아 평균 82.4가 나오게 고쳤다</span></label>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="step" id="s10" data-title="디버깅 심화">
+    <div class="step__head"><span class="step__n">12</span><h2>디버깅 심화 — 조건, 로그, 예외, 실행 설정</h2></div>
+    <p class="step__lead">반복문이 1000번 도는데 <kbd>F10</kbd>을 1000번 누를 수는 없습니다. 원하는 순간에만 멈추게 만드는 방법을 배웁니다.</p>
+
+    <h3>조건부 중단점</h3>
+    <p>중단점(빨간 점)을 <strong>오른쪽 클릭</strong> → <strong>중단점 편집</strong>을 고르면 조건을 입력할 수 있습니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">조건식 예시</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>n &gt; 90          # n이 90보다 클 때만 멈춤
+name == "홍길동"  # 특정 값일 때만 멈춤
+i % 100 == 0    # 100번마다 한 번씩 멈춤</code></pre>
+    </div>
+    <p>같은 메뉴의 <strong>적중 횟수</strong>를 쓰면 "5번째로 이 줄에 왔을 때만 멈춰"도 가능합니다.</p>
+
+    <h3>로그 지점</h3>
+    <p>멈추지는 않고 메시지만 출력하는 중단점입니다. <code>print()</code>를 코드에 넣었다가 지우는 수고를 없애 줍니다. 중단점 오른쪽 클릭 → <strong>로그 지점 추가</strong>를 고르고 아래처럼 적습니다. 중괄호 안은 식으로 계산됩니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">로그 지점 메시지</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>지금 n={n}, total={total}</code></pre>
+    </div>
+    <div class="box box--tip">
+      <p class="box__t">로그 지점의 진짜 장점</p>
+      <p>코드 파일을 전혀 건드리지 않습니다. 제출용 코드에 디버깅용 print가 남아 감점되는 일이 없어집니다.</p>
+    </div>
+
+    <h3>예외에서 멈추기</h3>
+    <p>실행 및 디버그 화면(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd>) 아래쪽 <strong>중단점</strong> 영역에 체크 상자가 있습니다.</p>
+    <ul>
+      <li><strong>Uncaught Exceptions</strong> — 처리되지 않은 오류가 났을 때 그 자리에서 멈춥니다. 오류 메시지만 보고 원인을 못 찾을 때 켜세요.</li>
+      <li><strong>Raised Exceptions</strong> — <code>try/except</code>로 잡히는 오류에서도 멈춥니다. 켜 두면 자주 멈추니 필요할 때만 씁니다.</li>
+    </ul>
+    <p>1단원 예외 처리 단원의 코드를 이걸 켜고 돌려 보면, <code>except</code>가 어떤 순간에 동작하는지 눈으로 볼 수 있습니다.</p>
+
+    <h3>launch.json — 실행 방법을 저장해 두기</h3>
+    <p>매번 같은 파일을 같은 옵션으로 실행한다면 설정을 파일로 저장해 둘 수 있습니다. 실행 및 디버그 화면에서 <strong>launch.json 파일 만들기</strong>를 누르면 <code>.vscode/launch.json</code>이 생깁니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">.vscode/launch.json</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "현재 파일 실행",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "sysmodule 실습 (인자 전달)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/sysmodule.py",
+      "args": ["param1", "param2"],
+      "console": "integratedTerminal"
+    }
+  ]
+}</code></pre>
+    </div>
+    <table>
+      <thead><tr><th style="width:26%">항목</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td><code>program</code></td><td>실행할 파일. <code>${file}</code>은 지금 열어 둔 파일, <code>${workspaceFolder}</code>는 작업 폴더입니다.</td></tr>
+        <tr><td><code>args</code></td><td>1단원 <code>sys.argv</code> 실습에서 쓰는 실행 인자입니다. 여기 적어 두면 매번 입력할 필요가 없습니다.</td></tr>
+        <tr><td><code>console</code></td><td><code>integratedTerminal</code>로 두어야 <code>input()</code>으로 값을 받을 수 있습니다.</td></tr>
+        <tr><td><code>justMyCode</code></td><td><code>true</code>면 내가 쓴 코드에서만 멈춥니다. 라이브러리 내부까지 보려면 <code>false</code>로 바꿉니다.</td></tr>
+      </tbody>
+    </table>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>실행 및 디버그 화면 위쪽 드롭다운에 방금 적은 이름(<strong>현재 파일 실행</strong>, <strong>sysmodule 실습</strong>)이 보이면 됩니다. 골라서 <kbd>F5</kbd>를 누르면 그 설정으로 실행됩니다.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="j1"><span class="task__box"></span><span class="task__label">조건부 중단점으로 특정 값일 때만 멈춰 봤다</span></label>
+      <label class="task"><input type="checkbox" data-id="j2"><span class="task__box"></span><span class="task__label">로그 지점으로 print 없이 값을 출력해 봤다</span></label>
+      <label class="task"><input type="checkbox" data-id="j3"><span class="task__box"></span><span class="task__label">launch.json을 만들고 실행 설정을 골라 실행했다</span></label>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="step" id="s11" data-title="실행 속도 재기">
+    <div class="step__head"><span class="step__n">13</span><h2>실행 속도 재기와 프로파일링</h2></div>
+    <p class="step__lead">"왜 이렇게 느리지?"를 감으로 추측하지 않고 숫자로 확인하는 방법입니다. 어느 함수가 시간을 잡아먹는지 정확히 알려 줍니다.</p>
+
+    <h3>연습용 코드</h3>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">slow_search.py</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>import random
+
+
+def make_data(n):
+    return [random.randint(1, 1000000) for _ in range(n)]
+
+
+def slow_contains(data, target):
+    """리스트를 처음부터 끝까지 훑는다."""
+    for item in data:
+        if item == target:
+            return True
+    return False
+
+
+def fast_contains(data_set, target):
+    """집합에서 바로 찾는다."""
+    return target in data_set
+
+
+def main():
+    data = make_data(200000)
+    data_set = set(data)
+    targets = make_data(300)
+
+    found_slow = sum(slow_contains(data, t) for t in targets)
+    found_fast = sum(fast_contains(data_set, t) for t in targets)
+    print("느린 방법 결과:", found_slow)
+    print("빠른 방법 결과:", found_fast)
+
+
+if __name__ == "__main__":
+    main()</code></pre>
+    </div>
+
+    <h3>1. 가장 간단한 방법 — 시간 재기</h3>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">time.perf_counter 사용</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>import time
+
+start = time.perf_counter()
+main()
+print(f"걸린 시간: {time.perf_counter() - start:.3f}초")</code></pre>
+    </div>
+    <p>전체 시간은 알 수 있지만 <strong>어디가</strong> 느린지는 모릅니다. 그럴 때 프로파일러를 씁니다.</p>
+
+    <h3>2. cProfile — 함수별로 시간 쪼개 보기</h3>
+    <p>터미널(<kbd>Ctrl</kbd>+<kbd>`</kbd>)에서 실행합니다. 파이썬에 기본 내장이라 설치가 필요 없습니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>python -m cProfile -s cumtime slow_search.py</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">출력 읽는 법 (일부 발췌)</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    3.412    3.412 slow_search.py:22(main)
+      300    3.180    0.011    3.180    0.011 slow_search.py:9(slow_contains)
+      300    0.000    0.000    0.000    0.000 slow_search.py:16(fast_contains)</code></pre>
+    </div>
+    <table>
+      <thead><tr><th style="width:22%">항목</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td><code>ncalls</code></td><td>몇 번 호출됐는지</td></tr>
+        <tr><td><code>tottime</code></td><td>그 함수 자체에서 쓴 시간 (안에서 부른 다른 함수 제외)</td></tr>
+        <tr><td><code>cumtime</code></td><td>그 함수가 끝날 때까지 걸린 총 시간 (안에서 부른 것 포함)</td></tr>
+      </tbody>
+    </table>
+    <div class="box box--ok">
+      <p class="box__t">여기서 읽어 낼 것</p>
+      <p><code>slow_contains</code>가 <code>tottime</code> 3.18초로 전체의 대부분을 차지합니다. <code>fast_contains</code>는 같은 횟수를 돌고도 0초에 가깝습니다. 리스트 탐색과 집합 탐색의 차이를 숫자로 확인한 것입니다.</p>
+    </div>
+
+    <h3>3. 결과를 그림으로 보기 — snakeviz</h3>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>pip install snakeviz
+python -m cProfile -o result.prof slow_search.py
+snakeviz result.prof</code></pre>
+    </div>
+    <p>브라우저가 열리면서 어느 함수가 시간을 얼마나 차지하는지 면적으로 보여 줍니다. 숫자표보다 한눈에 들어옵니다.</p>
+
+    <h3>4. 짧은 코드 두 개 비교 — timeit</h3>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>python -m timeit -s "d=list(range(100000))" "99999 in d"
+python -m timeit -s "d=set(range(100000))"  "99999 in d"</code></pre>
+    </div>
+    <p>같은 일을 하는 두 코드의 속도를 자동으로 여러 번 돌려 평균을 내 줍니다. 결과 차이가 수백 배까지 벌어지는 것을 볼 수 있습니다.</p>
+
+    <div class="box box--tip">
+      <p class="box__t">언제 쓰면 되나요</p>
+      <p>수업 예제 수준에서는 속도가 문제되지 않습니다. 하지만 3단원 머신러닝처럼 데이터가 커지면 "돌아가긴 하는데 10분이 걸린다" 같은 상황이 옵니다. 그때 감으로 코드를 뜯어고치지 말고 먼저 재 보세요.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="k1"><span class="task__box"></span><span class="task__label">cProfile을 실행해 함수별 시간을 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="k2"><span class="task__box"></span><span class="task__label">tottime과 cumtime의 차이를 설명할 수 있다</span></label>
+      <label class="task"><input type="checkbox" data-id="k3"><span class="task__box"></span><span class="task__label">timeit으로 리스트와 집합의 속도를 비교해 봤다</span></label>
+    </div>
+  </section>
+  <!-- 12 -->
+  <section class="step" id="s12" data-title="Copilot 켜고 쓰기">
+    <div class="step__head"><span class="step__n">14</span><h2>GitHub Copilot 켜고 제대로 쓰기</h2></div>
+    <p class="step__lead">02단계의 학생 인증이 승인되어 있어야 합니다. Copilot은 코드를 대신 써 주는 도구가 아니라, 내가 이해한 것을 빨리 옮기고 모르는 것을 물어보는 도구입니다.</p>
+
+    <h3>1. 설치하고 로그인하기</h3>
+    <ol>
+      <li>확장 화면에서 <code>GitHub Copilot</code>을 검색해 설치합니다. <strong>GitHub Copilot Chat</strong>도 함께 설치하세요.</li>
+      <li>왼쪽 아래 <strong>계정 아이콘</strong>을 눌러 <strong>GitHub에 로그인</strong>을 고릅니다.</li>
+      <li>브라우저가 열리면 학생 인증을 받은 그 계정으로 로그인하고 권한을 승인합니다.</li>
+      <li>VS Code로 돌아오면 자동으로 연결됩니다.</li>
+    </ol>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>오른쪽 아래 상태 표시줄에 <strong>Copilot 아이콘</strong>이 나타납니다. 아이콘을 눌렀을 때 "사용 중"으로 보이면 정상이고, 빗금이 그어져 있으면 꺼져 있거나 로그인이 안 된 상태입니다.</p>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">로그인은 됐는데 제안이 안 뜬다면</p>
+      <ul>
+        <li>학생 인증이 아직 심사 중일 수 있습니다. <a href="https://github.com/settings/copilot" target="_blank" rel="noopener">github.com/settings/copilot</a>에서 상태를 확인하세요.</li>
+        <li>학생용 Copilot 정책은 자주 바뀝니다. 제공 등급과 사용량 한도는 위 설정 화면의 안내를 기준으로 삼으세요.</li>
+        <li>학교 네트워크가 막고 있을 수 있습니다. 개인 테더링으로 한 번 시도해 보면 원인을 가릴 수 있습니다.</li>
+      </ul>
+    </div>
+
+    <h3>2. 인라인 제안 — 타이핑하면서 받는 도움</h3>
+    <p>코드를 치고 있으면 회색 글씨로 이어질 코드가 미리 보입니다.</p>
+    <table>
+      <thead><tr><th style="width:28%">단축키</th><th>동작</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Tab</kbd></td><td>제안을 받아들입니다</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>제안을 무시합니다</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>]</kbd> / <kbd>Alt</kbd>+<kbd>[</kbd></td><td>다른 제안으로 넘기기</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>→</kbd></td><td>제안을 단어 하나씩만 받아들이기</td></tr>
+      </tbody>
+    </table>
+    <div class="box box--tip">
+      <p class="box__t">주석으로 지시하면 잘 알아듣습니다</p>
+      <p>아래처럼 한글 주석을 쓰고 줄을 바꾸면 Copilot이 함수 본문을 제안합니다. 무엇을 만들지 <strong>내가 먼저 정하고</strong> 시키는 것이 핵심입니다.</p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">copilot_test.py</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code># 반지름을 받아 원의 넓이를 반환하는 함수. 원주율은 math.pi를 쓴다.
+def circle_area(r):
+    </code></pre>
+      </div>
+    </div>
+
+    <h3>3. Copilot Chat — 물어보기</h3>
+    <p><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd>로 채팅 화면을 열거나, 코드를 선택한 뒤 <kbd>Ctrl</kbd>+<kbd>I</kbd>로 그 자리에서 바로 물어봅니다. 아래 명령을 앞에 붙이면 의도가 정확히 전달됩니다.</p>
+    <table>
+      <thead><tr><th style="width:24%">명령</th><th>쓰는 상황</th></tr></thead>
+      <tbody>
+        <tr><td><code>/explain</code></td><td>선택한 코드가 무슨 일을 하는지 설명받기. 교과서 코드를 이해할 때 유용합니다.</td></tr>
+        <tr><td><code>/fix</code></td><td>오류가 나는 코드를 고쳐 달라고 하기</td></tr>
+        <tr><td><code>/tests</code></td><td>내가 쓴 함수의 테스트 코드를 만들어 달라고 하기</td></tr>
+        <tr><td><code>/doc</code></td><td>함수 설명(독스트링)을 붙여 달라고 하기</td></tr>
+        <tr><td><code>@workspace</code></td><td>지금 폴더 전체를 참고해서 답하게 하기. "이 프로젝트에서 greet 모듈을 어디서 쓰지?"</td></tr>
+        <tr><td><code>#file:파일명</code></td><td>특정 파일을 콕 집어 참고시키기</td></tr>
+      </tbody>
+    </table>
+
+    <h3>4. 수업에서 쓸 만한 질문 예시</h3>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Copilot Chat에 그대로 붙여 넣어 보세요</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>/explain 이 코드에서 if __name__ == "__main__" 이 하는 일을
+        중학생도 알아듣게 설명해 줘
+
+이 오류가 왜 나는지 원인만 먼저 말해 줘. 코드는 아직 고치지 마.
+ModuleNotFoundError: No module named 'greet'
+
+tkinter로 만든 이 창에 "저장" 버튼을 하나 더 넣고 싶어.
+전체 코드를 다시 주지 말고 추가할 줄만 알려 줘.
+
+/tests average 함수에 대한 테스트를 만들어 줘</code></pre>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">이건 하지 마세요</p>
+      <ul>
+        <li><strong>과제 전체를 통째로 맡기기.</strong> 코드는 나오지만 설명은 못 합니다. 평가는 설명으로 합니다.</li>
+        <li><strong>이해 못 한 코드를 그대로 붙여 넣기.</strong> 최소한 <code>/explain</code>으로 한 번은 읽고 넘어가세요.</li>
+        <li><strong>개인정보·비밀번호·API 키를 채팅에 붙여 넣기.</strong> 학번, 주민번호, 계정 정보는 절대 넣지 않습니다.</li>
+        <li><strong>Copilot 답을 검증 없이 믿기.</strong> 없는 함수 이름을 지어내는 일이 자주 있습니다. 반드시 실행해서 확인하세요.</li>
+      </ul>
+    </div>
+    <div class="box box--tip">
+      <p class="box__t">잘 쓰는 방법 세 가지</p>
+      <ul>
+        <li><strong>먼저 내가 30분 붙잡아 본 뒤</strong> 물어보면 답을 이해할 수 있습니다. 처음부터 물으면 답을 읽어도 남는 게 없습니다.</li>
+        <li>"고쳐 줘" 대신 <strong>"왜 틀렸는지 알려 줘"</strong>라고 물으면 다음에 스스로 고칠 수 있게 됩니다.</li>
+        <li>받은 코드는 <strong>중단점을 걸고 한 줄씩</strong> 돌려 보세요. 09단계에서 배운 디버깅이 여기서 쓰입니다.</li>
+      </ul>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="cop1" data-copilot="1"><span class="task__box"></span><span class="task__label">Copilot과 Copilot Chat을 설치하고 GitHub에 로그인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="cop2" data-copilot="1"><span class="task__box"></span><span class="task__label">주석을 쓰고 Tab으로 인라인 제안을 받아 봤다</span></label>
+      <label class="task"><input type="checkbox" data-id="cop3" data-copilot="1"><span class="task__box"></span><span class="task__label">교과서 코드에 /explain을 써서 설명을 들어 봤다</span></label>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="step" id="s13" data-title="다른 AI 모델 연결">
+    <div class="step__head"><span class="step__n">15</span><h2>다른 AI 모델(LLM) 연결하기</h2></div>
+    <p class="step__lead">Copilot 말고 다른 모델을 쓰거나, 인터넷 없이 내 컴퓨터에서 도는 모델을 붙이는 방법입니다. 필수는 아니지만 원리를 알아 두면 도구 선택의 폭이 넓어집니다.</p>
+
+    <h3>방법 1 · Copilot 안에서 모델 바꾸기</h3>
+    <p>Copilot Chat 입력창 아래에 <strong>모델 선택</strong> 메뉴가 있습니다. 요금제에 따라 고를 수 있는 모델이 다릅니다.</p>
+    <div class="box box--note">
+      <p class="box__t">학생 무료 등급에서는 선택지가 제한될 수 있습니다</p>
+      <p>2026년 들어 학생용 무료 등급은 모델을 자동으로 배정하고 수동 선택은 막아 두는 방향으로 바뀌었습니다. 정책이 계속 바뀌고 있으니, 내 계정에서 무엇이 가능한지는 <a href="https://github.com/settings/copilot" target="_blank" rel="noopener">Copilot 설정 화면</a>에서 직접 확인하세요. 메뉴가 안 보이면 지금 등급에서 지원하지 않는 것입니다.</p>
+    </div>
+
+    <h3>방법 2 · 내 API 키로 다른 회사 모델 붙이기</h3>
+    <p>OpenAI, Anthropic, Google 등에서 발급받은 API 키를 VS Code에 등록해 쓰는 방식입니다. 채팅 모델 선택 메뉴의 <strong>모델 관리</strong>에서 제공자를 고르고 키를 넣습니다.</p>
+    <div class="box box--warn">
+      <p class="box__t">API 키는 돈이 나가는 열쇠입니다</p>
+      <ul>
+        <li>사용한 만큼 요금이 청구됩니다. 학생 개인이 쓸 때는 결제 한도를 반드시 걸어 두세요.</li>
+        <li>API 키를 <strong>코드 안에 적어서 GitHub에 올리면 안 됩니다.</strong> 공개 저장소에 올라간 키는 몇 분 안에 도용됩니다.</li>
+        <li>수업 실습에서는 학교 계정·개인 키를 섞어 쓰지 말고, 선생님 안내를 따르세요.</li>
+      </ul>
+    </div>
+    <p>코드에서 키를 쓸 때는 환경 변수로 분리합니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">.env (이 파일은 절대 커밋하지 않습니다)</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>MY_API_KEY=여기에_키를_붙여넣기</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">.gitignore</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>.env
+.venv/
+__pycache__/
+*.prof</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">키를 안전하게 읽는 코드</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>import os
+
+key = os.environ.get("MY_API_KEY")
+if not key:
+    print("환경 변수 MY_API_KEY가 설정되지 않았습니다.")
+else:
+    print("키를 정상적으로 읽었습니다. 길이:", len(key))</code></pre>
+    </div>
+
+    <h3>방법 3 · 내 컴퓨터에서 도는 모델 (Ollama)</h3>
+    <p>인터넷 연결이나 요금 없이, 내 컴퓨터 안에서 모델을 직접 돌리는 방법입니다. PC 사양을 꽤 탑니다.</p>
+    <ol>
+      <li><a href="https://ollama.com" target="_blank" rel="noopener">ollama.com</a>에서 설치합니다.</li>
+      <li>터미널에서 모델을 내려받아 실행해 봅니다.</li>
+    </ol>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>ollama run qwen2.5-coder:7b</code></pre>
+    </div>
+    <p>그다음 VS Code에 <strong>Continue</strong> 확장(<code>Continue.continue</code>)을 설치하고 설정에서 제공자를 <code>ollama</code>로 지정하면, Copilot과 비슷한 채팅·자동 완성을 로컬 모델로 쓸 수 있습니다.</p>
+    <h3>방법 4 · 학교 Ollama 서버에 접속하기</h3>
+    <p>선생님이 학교에 Ollama 서버를 만들어 두셨다면, 내 PC 사양과 상관없이 그 서버의 모델을 가져다 쓸 수 있습니다. 설치할 것도 거의 없습니다. <strong>내려받는 곳만 내 컴퓨터에서 학교 서버로 바꾸는 것</strong>이 전부입니다.</p>
+
+    <h3>1. 선생님께 받아야 할 정보</h3>
+    <table>
+      <thead><tr><th style="width:26%">항목</th><th style="width:34%">예시</th><th>설명</th></tr></thead>
+      <tbody>
+        <tr><td>서버 주소</td><td><code>192.168.0.50</code></td><td>학교 내부망 주소이거나 <code>ollama.e-mirim.hs.kr</code> 같은 이름일 수 있습니다.</td></tr>
+        <tr><td>포트</td><td><code>11434</code></td><td>Ollama 기본 포트입니다. 다르게 열어 두셨다면 그 번호를 받으세요.</td></tr>
+        <tr><td>쓸 수 있는 모델</td><td><code>qwen2.5-coder:7b</code></td><td>서버에 미리 받아 둔 모델만 쓸 수 있습니다. 이름을 정확히 받아 적으세요.</td></tr>
+        <tr><td>접속 조건</td><td>교내 와이파이만</td><td>보통 학교 안에서만 접속됩니다. 집에서는 안 될 수 있습니다.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="hostbox">
+      <label class="hostbox__label" for="ollamaHost">선생님께 받은 서버 주소를 여기에 적어 두세요. 아래 예제 코드에 자동으로 반영됩니다.</label>
+      <div class="hostbox__row">
+        <input id="ollamaHost" type="text" spellcheck="false" autocomplete="off"
+               placeholder="http://192.168.0.50:11434">
+        <button type="button" id="hostReset">기본값</button>
+      </div>
+      <p class="hostbox__hint"><code>http://</code>까지 포함해서 적습니다. 이 값은 이 브라우저에만 저장됩니다.</p>
+    </div>
+
+    <h3>2. 접속되는지 먼저 확인</h3>
+    <p>설정을 만지기 전에 <strong>서버가 살아 있는지</strong>부터 봅니다. 브라우저 주소창에 아래를 그대로 입력하세요.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">브라우저 주소창</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code><span class="ohost">http://192.168.0.50:11434</span></code></pre>
+    </div>
+    <p><code>Ollama is running</code>이라는 짧은 글자만 보이면 연결에 성공한 것입니다. 이번엔 어떤 모델이 올라가 있는지 봅니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">브라우저 주소창 — 모델 목록</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code><span class="ohost">http://192.168.0.50:11434</span>/api/tags</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">이런 모양이 나옵니다 (일부)</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>{"models":[{"name":"qwen2.5-coder:7b", ... },
+           {"name":"llama3.1:8b", ... }]}</code></pre>
+    </div>
+    <p>여기 보이는 <code>name</code> 값이 내가 설정에 적을 모델 이름입니다. 터미널에서 확인하려면 아래를 씁니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>curl <span class="ohost">http://192.168.0.50:11434</span>/api/tags</code></pre>
+    </div>
+    <div class="box box--note">
+      <p class="box__t">Windows PowerShell에서는</p>
+      <p>PowerShell의 <code>curl</code>은 다른 명령이라 결과가 이상하게 보일 수 있습니다. <code>curl.exe</code>로 정확히 지정하거나 아래를 쓰세요.</p>
+      <div class="code" style="margin-top:10px">
+        <div class="code__bar"><span class="code__name">PowerShell</span><button class="code__copy" type="button">복사</button></div>
+        <pre><code>Invoke-RestMethod <span class="ohost">http://192.168.0.50:11434</span>/api/tags</code></pre>
+      </div>
+    </div>
+
+    <h3>3. 터미널에서 서버 모델 쓰기</h3>
+    <p>Ollama 프로그램을 설치했다면, 명령이 어디를 바라볼지 <code>OLLAMA_HOST</code> 환경 변수로 정할 수 있습니다. 지금 열어 둔 터미널에서만 적용되는 임시 설정입니다.</p>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Windows — 명령 프롬프트</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>set OLLAMA_HOST=<span class="ohost">http://192.168.0.50:11434</span>
+ollama list
+ollama run qwen2.5-coder:7b</code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">macOS · 리눅스 — 터미널</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>export OLLAMA_HOST=<span class="ohost">http://192.168.0.50:11434</span>
+ollama list
+ollama run qwen2.5-coder:7b</code></pre>
+    </div>
+    <div class="box box--tip">
+      <p class="box__t">터미널을 닫아도 유지하려면</p>
+      <p>Windows는 <code>setx OLLAMA_HOST "주소"</code>를 한 번 실행한 뒤 터미널을 새로 엽니다. macOS·리눅스는 <code>~/.zshrc</code>나 <code>~/.bashrc</code> 맨 아래에 위의 <code>export</code> 줄을 추가합니다. 다만 <strong>집에 가면 접속이 안 되니</strong> 그때는 이 설정을 지우거나 주석 처리하세요.</p>
+    </div>
+    <div class="box box--warn">
+      <p class="box__t">서버에서는 모델을 함부로 받지 마세요</p>
+      <p><code>OLLAMA_HOST</code>를 학교 서버로 맞춘 상태에서 <code>ollama pull</code>이나 <code>ollama rm</code>을 실행하면 <strong>내 컴퓨터가 아니라 학교 서버</strong>가 바뀝니다. 모델을 추가하고 싶다면 선생님께 먼저 여쭤보세요.</p>
+    </div>
+
+    <h3>4. VS Code에 붙이기 (Continue 확장)</h3>
+    <ol>
+      <li>확장 화면에서 <strong>Continue</strong>(<code>Continue.continue</code>)를 설치합니다.</li>
+      <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → <code>Continue: Open Config</code>를 실행해 설정 파일을 엽니다.</li>
+      <li>아래 내용을 참고해 모델을 추가하고 저장합니다.</li>
+    </ol>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Continue 설정 (config.yaml 형식)</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>models:
+  - name: 학교 서버 코더
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: <span class="ohost">http://192.168.0.50:11434</span></code></pre>
+    </div>
+    <div class="code">
+      <div class="code__bar"><span class="code__name">Continue 설정 (config.json 형식)</span><button class="code__copy" type="button">복사</button></div>
+      <pre><code>{
+  "models": [
+    {
+      "title": "학교 서버 코더",
+      "provider": "ollama",
+      "model": "qwen2.5-coder:7b",
+      "apiBase": "<span class="ohost">http://192.168.0.50:11434</span>"
+    }
+  ]
+}</code></pre>
+    </div>
+    <div class="box box--note">
+      <p class="box__t">설정 파일 형식은 버전에 따라 다릅니다</p>
+      <p>Continue는 <code>config.json</code>에서 <code>config.yaml</code>로 형식을 바꿔 왔습니다. 위 두 가지 중 <strong>지금 열린 파일과 같은 형식</strong>을 골라 쓰세요. 어느 쪽이든 필요한 값은 똑같습니다.</p>
+      <ul>
+        <li><code>provider</code> — <code>ollama</code> 고정</li>
+        <li><code>model</code> — 2번에서 확인한 모델 이름</li>
+        <li><code>apiBase</code> — 선생님께 받은 서버 주소</li>
+      </ul>
+      <p>확장의 모델 추가 화면(<strong>+ Add model</strong>)에서 Ollama를 고르고 주소를 넣는 방법도 있습니다. 파일 편집이 부담되면 그쪽이 더 쉽습니다.</p>
+    </div>
+    <div class="box box--ok">
+      <p class="box__t">제대로 됐는지 확인</p>
+      <p>Continue 채팅 창을 열고 모델 선택 목록에 <strong>학교 서버 코더</strong>가 보이면 됩니다. <code>파이썬에서 리스트와 튜플의 차이를 세 줄로 설명해 줘</code> 정도를 물어보고 답이 오면 연결 성공입니다.</p>
+    </div>
+
+    <h3>5. 연결이 안 될 때</h3>
+    <table>
+      <thead><tr><th style="width:38%">증상</th><th>확인할 것</th></tr></thead>
+      <tbody>
+        <tr><td>브라우저에서 사이트에 연결할 수 없음</td><td>학교 와이파이에 연결되어 있는지, 주소와 포트를 정확히 적었는지 확인합니다. 개인 테더링을 쓰고 있으면 접속되지 않습니다.</td></tr>
+        <tr><td><code>Connection refused</code></td><td>서버는 찾았지만 Ollama가 꺼져 있거나 그 포트로 열려 있지 않습니다. 선생님께 서버 상태를 여쭤보세요.</td></tr>
+        <tr><td>한참 기다리다 시간 초과</td><td>방화벽이 막고 있을 가능성이 큽니다. 학교 담당 선생님께 포트 개방을 요청해야 합니다.</td></tr>
+        <tr><td><code>model not found</code></td><td>서버에 없는 모델 이름을 적었습니다. <code>/api/tags</code>로 목록을 다시 확인하세요.</td></tr>
+        <tr><td>답이 오다가 자꾸 끊김</td><td>여러 명이 동시에 쓰면 순서를 기다리게 됩니다. 잠시 뒤 다시 시도하세요.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box--warn">
+      <p class="box__t">공용 서버를 쓸 때의 약속</p>
+      <ul>
+        <li>학급 전체가 한 대를 나눠 씁니다. 장난삼아 긴 글을 반복 생성시키면 다른 친구들이 못 씁니다.</li>
+        <li>서버 로그에 질문이 남을 수 있습니다. <strong>개인정보나 남의 이야기를 넣지 마세요.</strong></li>
+        <li>받은 주소를 학교 밖에 공유하지 않습니다.</li>
+      </ul>
+    </div>
+    <div class="box box--note">
+      <p class="box__t">선생님용 메모</p>
+      <p>서버 쪽 Ollama는 기본적으로 자기 컴퓨터에서만 접속을 받습니다. 다른 PC에서 붙게 하려면 서버에서 <code>OLLAMA_HOST=0.0.0.0:11434</code>로 실행해야 하고, 방화벽에서 해당 포트를 교내망에 한해 열어 두어야 합니다. 인터넷 전체에 노출하지 않도록 주의하세요.</p>
+    </div>
+
+    <table>
+      <thead><tr><th style="width:22%">구분</th><th>장점</th><th>단점</th></tr></thead>
+      <tbody>
+        <tr><td>Copilot</td><td>설정이 가장 간단하고 품질이 안정적</td><td>인터넷 필요, 계정·요금제에 묶임</td></tr>
+        <tr><td>API 키 연결</td><td>원하는 모델을 골라 쓸 수 있음</td><td>비용 발생, 키 관리 부담</td></tr>
+        <tr><td>Ollama (내 PC)</td><td>무료, 인터넷 불필요, 코드가 밖으로 안 나감</td><td>PC 사양을 많이 탐, 품질이 낮을 수 있음</td></tr>
+        <tr><td>Ollama (학교 서버)</td><td>내 PC 사양과 무관, 설치가 거의 없음, 반 전체가 같은 모델을 씀</td><td>교내망에서만 접속, 여러 명이 동시에 쓰면 느려짐</td></tr>
+      </tbody>
+    </table>
+    <div class="box box--tip">
+      <p class="box__t">사양 기준</p>
+      <p>내 PC에서 직접 돌린다면 7B 크기 모델은 RAM 16GB 정도면 동작하지만 CPU만으로는 느립니다. 그래픽카드(VRAM 8GB 이상)가 있으면 훨씬 쾌적합니다. 실습실 PC에서 설치하기 전에는 먼저 선생님께 여쭤보세요.</p>
+    </div>
+
+    <div class="tasks">
+      <p class="tasks__t">확인</p>
+      <label class="task"><input type="checkbox" data-id="l1"><span class="task__box"></span><span class="task__label">Copilot의 모델 선택 메뉴 위치를 확인했다</span></label>
+      <label class="task"><input type="checkbox" data-id="l2"><span class="task__box"></span><span class="task__label">.gitignore에 .env를 넣어야 하는 이유를 설명할 수 있다</span></label>
+      <label class="task"><input type="checkbox" data-id="l4"><span class="task__box"></span><span class="task__label">학교 Ollama 서버가 있다면 접속을 확인했고, 없다면 접속 방법을 읽어 두었다</span></label>
+      <label class="task"><input type="checkbox" data-id="l3"><span class="task__box"></span><span class="task__label">네 가지 연결 방법의 장단점을 비교해 봤다</span></label>
+    </div>
+  </section>
+
+  <!-- 부록 -->
+  <section class="step" id="s14" data-title="자주 겪는 문제">
+    <div class="step__head"><span class="step__n">부록</span><h2>자주 겪는 문제와 단축키</h2></div>
+    <p class="step__lead">막혔을 때 여기부터 찾아보세요. 대부분 아래 표에 있습니다.</p>
+
+    <h3>문제 해결</h3>
+    <table>
+      <thead><tr><th style="width:38%">증상</th><th>해결</th></tr></thead>
+      <tbody>
+        <tr><td><code>'python'은(는) 내부 또는 외부 명령이 아닙니다</code></td><td>PATH 미설정. 03단계의 Modify 방법으로 다시 설정하고, 터미널을 껐다 새로 엽니다.</td></tr>
+        <tr><td><code>ModuleNotFoundError: No module named 'xxx'</code></td><td>① 파일이 다른 폴더에 있음 ② 인터프리터가 다른 것으로 선택됨 ③ 진짜로 설치가 안 됨. 순서대로 확인하세요.</td></tr>
+        <tr><td><code>IndentationError</code></td><td>탭과 공백이 섞였습니다. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → <code>Convert Indentation to Spaces</code>로 통일합니다.</td></tr>
+        <tr><td><code>SyntaxError: invalid character</code></td><td>한글 따옴표(“ ”)나 전각 괄호가 섞였습니다. 영문 따옴표로 다시 입력하세요.</td></tr>
+        <tr><td><code>UnicodeDecodeError</code></td><td>파일을 열 때 <code>encoding='utf-8'</code>을 빠뜨렸습니다. 2단원 메모장 실습에서 자주 납니다.</td></tr>
+        <tr><td>GUI 창이 떴다 바로 사라짐</td><td><code>mainloop()</code>가 없거나 들여쓰기 안으로 들어갔습니다.</td></tr>
+        <tr><td>실행 버튼을 눌러도 예전 결과가 나옴</td><td>파일을 저장하지 않았습니다. <kbd>Ctrl</kbd>+<kbd>S</kbd> 후 다시 실행하세요.</td></tr>
+        <tr><td>터미널 한글이 깨짐</td><td>터미널에서 <code>chcp 65001</code>을 실행하거나, VS Code 설정에서 터미널 인코딩을 UTF-8로 바꿉니다.</td></tr>
+        <tr><td>Copilot 제안이 안 뜸</td><td>상태 표시줄 아이콘 확인 → 로그인 상태 확인 → 학생 인증 승인 여부 확인 순서로 점검합니다.</td></tr>
+        <tr><td><code>'git'은(는) 내부 또는 외부 명령이 아닙니다</code></td><td>Git이 없거나 PATH가 안 잡혔습니다. 07단계에서 설치하고 터미널을 새로 여세요.</td></tr>
+        <tr><td><code>Author identity unknown</code></td><td>커밋할 이름·이메일이 없습니다. 07단계의 <code>user.name</code>, <code>user.email</code>을 설정하세요.</td></tr>
+        <tr><td>커밋했는데 GitHub 잔디에 안 찍힘</td><td><code>user.email</code>이 GitHub 계정 이메일과 다릅니다. <code>git config --global user.email</code>로 확인하세요.</td></tr>
+        <tr><td>Git에서 한글 파일명이 <code>\355\225\234</code>로 보임</td><td><code>git config --global core.quotepath false</code>를 실행합니다.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>꼭 외울 단축키</h3>
+    <table>
+      <thead><tr><th style="width:30%">단축키</th><th>기능</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd></td><td>명령 팔레트 — 이것만 알면 나머지는 검색으로 찾습니다</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>`</kbd></td><td>터미널 열기·닫기</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>F5</kbd></td><td>디버깅 없이 실행</td></tr>
+        <tr><td><kbd>F5</kbd> / <kbd>F9</kbd> / <kbd>F10</kbd> / <kbd>F11</kbd></td><td>디버깅 시작 · 중단점 · 다음 줄 · 함수 안으로</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>/</kbd></td><td>선택한 줄 주석 처리·해제</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>↑</kbd> / <kbd>↓</kbd></td><td>현재 줄을 위아래로 옮기기</td></tr>
+        <tr><td><kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd></td><td>코드 자동 정렬</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>같은 단어를 하나씩 추가 선택해 한꺼번에 수정</td></tr>
+        <tr><td><kbd>F2</kbd></td><td>변수·함수 이름을 쓰인 곳 전부 한 번에 바꾸기</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>I</kbd></td><td>Copilot Chat 열기</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box--note">
+      <p class="box__t">그래도 안 되면</p>
+      <p>오류 메시지의 <strong>마지막 줄</strong>을 그대로 복사해서 검색하거나 Copilot에 물어보세요. 앞부분은 호출 경로라 사람마다 다르고, 진짜 원인은 마지막 줄에 있습니다. 그래도 안 풀리면 화면 캡처와 오류 전문을 가지고 선생님께 오세요.</p>
+    </div>
+  </section>
+
+  <section class="finish" id="finish">
+    <p class="finish__pct"><span id="pctText">0</span><span style="font-size:20px">%</span></p>
+    <h2 id="finishTitle">아직 진행 중입니다</h2>
+    <p id="finishMsg">체크 상자를 눌러 진행도를 기록하세요. 브라우저에 저장되므로 창을 닫았다 열어도 그대로 남습니다.</p>
+  </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0 0 6px">인공지능 파이썬 실무 · 개발 환경 설정 안내 &nbsp;|&nbsp; 미림마이스터고등학교 지능형소프트웨어과</p>
+    <p style="margin:0">화면 구성이나 메뉴 이름은 VS Code 버전에 따라 달라질 수 있습니다. 메뉴를 못 찾으면 <kbd style="background:#1E2761;color:#DCE3F8;border-color:#3A4680">Ctrl</kbd> + <kbd style="background:#1E2761;color:#DCE3F8;border-color:#3A4680">Shift</kbd> + <kbd style="background:#1E2761;color:#DCE3F8;border-color:#3A4680">P</kbd> 명령 팔레트에서 이름으로 검색하세요.</p>
+  </div>
+</footer>
+
+<div class="statusbar" id="statusbar" role="status" aria-live="polite">
+  <span class="sb sb--accent" id="sbSection">개발 환경 설정</span>
+  <span class="sb"><span class="sb__meter"><span class="sb__fill" id="sbFill"></span></span><span id="sbCount">0/46</span></span>
+  <span class="sb sb--grow sb--hide-m" id="sbHint">체크 상자를 눌러 진행도를 기록하세요</span>
+  <span class="sb sb--hide-m">Python 3.12</span>
+  <span class="sb sb__cop" id="sbCop">◍ Copilot</span>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // 진행도 저장소. 브라우저가 막아 두면 메모리에만 보관한다.
+  var store = (function () {
+    try {
+      localStorage.setItem("__probe", "1");
+      localStorage.removeItem("__probe");
+      return localStorage;
+    } catch (e) {
+      var mem = {};
+      return {
+        getItem: function (k) { return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+        setItem: function (k, v) { mem[k] = String(v); },
+        removeItem: function (k) { delete mem[k]; }
+      };
+    }
+  })();
+
+  var KEY = "vscode-setup-progress-v1";
+  var boxes = Array.prototype.slice.call(document.querySelectorAll(".task input"));
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section.step"));
+
+  // ---- 목차 만들기 ----
+  var railList = document.getElementById("railList");
+  var tocM = document.getElementById("tocM");
+  sections.forEach(function (sec) {
+    var num = sec.querySelector(".step__n").textContent;
+    var title = sec.dataset.title;
+    var li = document.createElement("li");
+    li.innerHTML = '<a href="#' + sec.id + '" data-for="' + sec.id + '">' +
+      '<span class="rail__n">' + num + '</span><span>' + title + '</span></a>';
+    railList.appendChild(li);
+    var li2 = document.createElement("li");
+    li2.innerHTML = '<a href="#' + sec.id + '">' + title + '</a>';
+    tocM.appendChild(li2);
+  });
+  var railLinks = Array.prototype.slice.call(railList.querySelectorAll("a"));
+
+  // ---- 저장 · 복원 ----
+  function load() {
+    try { return JSON.parse(store.getItem(KEY) || "{}"); } catch (e) { return {}; }
+  }
+  function save(state) { store.setItem(KEY, JSON.stringify(state)); }
+
+  var state = load();
+  boxes.forEach(function (b) { b.checked = !!state[b.dataset.id]; });
+
+  // ---- 화면 갱신 ----
+  var fill = document.getElementById("sbFill");
+  var count = document.getElementById("sbCount");
+  var bar = document.getElementById("statusbar");
+  var cop = document.getElementById("sbCop");
+  var hint = document.getElementById("sbHint");
+  var pctText = document.getElementById("pctText");
+  var finish = document.getElementById("finish");
+  var finishTitle = document.getElementById("finishTitle");
+  var finishMsg = document.getElementById("finishMsg");
+  var copBoxes = boxes.filter(function (b) { return b.dataset.copilot; });
+
+  function render() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    var total = boxes.length;
+    var pct = total ? Math.round(done / total * 100) : 0;
+
+    fill.style.width = pct + "%";
+    count.textContent = done + "/" + total;
+    pctText.textContent = pct;
+    bar.classList.toggle("done", done === total && total > 0);
+
+    var copOn = copBoxes.length > 0 && copBoxes.every(function (b) { return b.checked; });
+    cop.classList.toggle("live", copOn);
+    cop.textContent = copOn ? "◉ Copilot 사용 중" : "◍ Copilot";
+
+    if (done === total && total > 0) {
+      finish.classList.add("on");
+      finishTitle.textContent = "설정 완료. 이제 수업 코드를 쓰면 됩니다";
+      finishMsg.textContent = "교과서 1단원 모듈 실습부터 바로 시작할 수 있는 상태입니다. 이 화면을 캡처해 제출하세요.";
+      hint.textContent = "모든 단계 완료";
+    } else {
+      finish.classList.remove("on");
+      finishTitle.textContent = "아직 진행 중입니다";
+      finishMsg.textContent = "체크 상자를 눌러 진행도를 기록하세요. 브라우저에 저장되므로 창을 닫았다 열어도 그대로 남습니다.";
+      hint.textContent = "남은 항목 " + (total - done) + "개";
+    }
+
+    sections.forEach(function (sec) {
+      var inSec = Array.prototype.slice.call(sec.querySelectorAll(".task input"));
+      var link = railLinks.filter(function (a) { return a.dataset.for === sec.id; })[0];
+      if (!link) return;
+      var ok = inSec.length > 0 && inSec.every(function (b) { return b.checked; });
+      link.classList.toggle("done", ok);
+    });
+  }
+
+  boxes.forEach(function (b) {
+    b.addEventListener("change", function () {
+      state[b.dataset.id] = b.checked;
+      save(state);
+      render();
+    });
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function () {
+    if (!confirm("체크한 진행도를 모두 지웁니다. 계속할까요?")) return;
+    state = {};
+    store.removeItem(KEY);
+    boxes.forEach(function (b) { b.checked = false; });
+    render();
+  });
+
+  // ---- 코드 복사 ----
+  document.querySelectorAll(".code__copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var pre = btn.closest(".code").querySelector("code");
+      var text = pre.innerText;
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = "복사됨";
+        setTimeout(function () { btn.textContent = old; }, 1200);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+      } else {
+        fallback(text, done);
+      }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); } catch (e) { /* 무시 */ }
+    document.body.removeChild(ta);
+  }
+
+  // ---- 학교 Ollama 서버 주소 반영 ----
+  var HOST_KEY = "ollama-host-v1";
+  var DEFAULT_HOST = "http://192.168.0.50:11434";
+  var hostInput = document.getElementById("ollamaHost");
+  var hostSpans = Array.prototype.slice.call(document.querySelectorAll(".ohost"));
+
+  function applyHost(v) {
+    var text = (v || "").trim() || DEFAULT_HOST;
+    hostSpans.forEach(function (el) { el.textContent = text; });
+  }
+  if (hostInput) {
+    var savedHost = store.getItem(HOST_KEY);
+    if (savedHost) { hostInput.value = savedHost; applyHost(savedHost); }
+    hostInput.addEventListener("input", function () {
+      store.setItem(HOST_KEY, hostInput.value);
+      applyHost(hostInput.value);
+    });
+    document.getElementById("hostReset").addEventListener("click", function () {
+      hostInput.value = "";
+      store.removeItem(HOST_KEY);
+      applyHost("");
+      hostInput.focus();
+    });
+  }
+
+  // ---- 현재 보고 있는 섹션 표시 ----
+  var sbSection = document.getElementById("sbSection");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = en.target.id;
+        railLinks.forEach(function (a) { a.classList.toggle("on", a.dataset.for === id); });
+        var n = en.target.querySelector(".step__n").textContent;
+        sbSection.textContent = n + " " + en.target.dataset.title;
+      });
+    }, { rootMargin: "-15% 0px -70% 0px" });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

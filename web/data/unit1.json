@@ -1,0 +1,1739 @@
+{
+  "unit": 1,
+  "lessons": [
+    {
+      "id": "overview",
+      "title": "모듈과 패키지가 필요한 이유",
+      "pages": "8–13",
+      "lead": "복사해 둔 함수가 열 군데 있다면, 오류 하나를 어디에서 고쳐야 할까요?",
+      "paragraphs": [
+        "모듈은 함수·클래스·변수·실행문 등을 담은 파이썬 파일입니다. calculator.py의 모듈 이름은 calculator입니다. import는 다른 모듈의 이름을 현재 코드에서 사용할 수 있도록 연결합니다. 함수를 복사하는 대신 모듈을 불러오면 공통 기능을 한 곳에서 관리할 수 있습니다.",
+        "모듈의 이점은 코드 중복 감소, 재사용, 기능별 구조화, 네임스페이스 분리입니다. 서로 다른 모듈에 add라는 함수가 있어도 calculator.add와 another.add로 구별합니다. 너무 잘게 나누면 파일 사이 의존성을 따라가기 어려우므로 기능을 기준으로 묶습니다.",
+        "패키지는 관련 모듈을 폴더 계층으로 묶습니다. nature/animals/bird.py처럼 주제별로 분류하면 새 기능을 넣을 위치를 찾기 쉽습니다. 라이브러리는 재사용 가능한 코드 묶음을 가리키는 넓은 표현입니다. 모든 라이브러리가 반드시 여러 패키지로 구성되는 것은 아닙니다.",
+        "생각 열기: 이미지 편집·게임·웹 서비스에 쓰이는 파이썬 패키지를 하나 조사하세요. 어떤 기능을 직접 구현하지 않아도 되는지 설명하세요."
+      ],
+      "examples": [
+        "reuse"
+      ],
+      "tasks": [
+        "모듈과 패키지를 파일과 폴더에 대응하여 설명하세요.",
+        "한 파일과 여러 모듈 방식의 장단점을 각각 적으세요.",
+        "13쪽 확인학습: 두 수를 입력받아 합을 반환하는 모듈을 만드세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "define",
+      "title": "실행문·함수·클래스로 모듈 정의하기",
+      "pages": "15–16",
+      "lead": "import 한 줄인데 왜 두 번 출력될까요?",
+      "paragraphs": [
+        "파일을 저장하면 모듈을 만들 수 있습니다. 실행문만 있는 circle은 처음 불러올 때 계산과 출력이 이루어집니다. 함수 정의만 있는 circle_area는 함수를 호출해야 함수 본문이 실행됩니다.",
+        "함수 정의와 호출이 섞인 circle_area2를 임포트하면 반지름 4의 결과가 먼저 출력됩니다. 이어서 main.py가 반지름 3으로 호출하므로 두 결과가 나옵니다. 함수 정의 자체와 함수 호출의 실행 시점을 구별하세요.",
+        "클래스도 모듈에 정의하여 불러올 수 있습니다. 추가 예제에서는 Circle 인스턴스에 반지름을 저장하고 area 메서드가 넓이를 반환합니다. 반환한 값은 다른 계산에도 재사용할 수 있습니다."
+      ],
+      "examples": [
+        "sum-input",
+        "circle-top",
+        "circle-function",
+        "circle-mixed",
+        "class-module"
+      ],
+      "tasks": [
+        "실행 전에 출력되는 줄 수와 순서를 예상하세요.",
+        "원의 반지름을 바꾸고 계산 결과를 확인하세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "entrypoint",
+      "title": "__name__과 __main__",
+      "pages": "17–18",
+      "lead": "실행 파일 선택을 바꾸어 같은 모듈의 두 역할을 관찰하세요.",
+      "paragraphs": [
+        "직접 실행하는 파일의 __name__은 \"__main__\"입니다. 다른 파일에서 임포트하면 모듈 이름이 됩니다. if __name__ == \"__main__\": 아래에 시험용 호출을 넣으면 임포트할 때 시험 출력이 섞이지 않습니다.",
+        "웹 실행창에서 main.py와 circle_area3.py를 번갈아 실행하세요. 모듈 최상위의 print는 임포트 때도 실행되지만 if 안의 호출은 직접 실행할 때만 실행됩니다.",
+        "보강: 같은 인터프리터에서 이미 로드한 모듈을 다시 import하면 보통 sys.modules의 캐시를 재사용합니다. 아래 실습창은 실행마다 학습 파일을 새 폴더에 준비하고 이전 학습 모듈을 정리합니다."
+      ],
+      "examples": [
+        "main-guard",
+        "rectangle"
+      ],
+      "tasks": [
+        "rectEx1의 조건문을 제거했을 때와 있을 때의 출력을 비교하세요.",
+        "__main__이 파일 이름이라는 설명이 왜 틀렸는지 적으세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "imports",
+      "title": "임포트 문과 호출법 연결하기",
+      "pages": "19–21",
+      "lead": "불러온 이름이 무엇인지 알면 호출법도 결정됩니다.",
+      "paragraphs": [
+        "import greet는 greet라는 이름을 만듭니다. 따라서 greet.hello()로 호출합니다. from greet import hello는 hello를 현재 공간에 연결하므로 hello()로 호출합니다. from 문도 모듈을 로드하며 필요한 함수 부분만 따로 실행하는 것은 아닙니다.",
+        "import greet as g는 현재 코드에서 g라는 별칭을 사용합니다. 원래 파일명이 바뀌는 것은 아닙니다. 이 코드만 실행한 상태에서는 greet라는 이름을 연결하지 않았으므로 greet.bye()는 NameError입니다.",
+        "from greet import *는 공개 이름들을 가져옵니다. __all__이 없으면 밑줄로 시작하지 않는 이름이 대상입니다. 이름의 출처가 흐려지고 같은 이름이 덮어써질 수 있으므로 직접 작성하는 앱에서는 명시적 임포트를 우선하세요."
+      ],
+      "examples": [
+        "import-0",
+        "import-1",
+        "import-2",
+        "import-3",
+        "import-4"
+      ],
+      "tasks": [
+        "같은 hello 함수를 네 가지 방식으로 호출하세요.",
+        "두 모듈에 같은 함수가 있을 때 이름을 구별해 호출하세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "packages",
+      "title": "패키지 구조와 __all__",
+      "pages": "21–25, 35",
+      "lead": "폴더 트리의 점(.)은 어떤 경로를 가리킬까요?",
+      "paragraphs": [
+        "패키지 경로는 점으로 구분합니다. nature.animals.bird는 nature/animals/bird.py에 대응합니다. 일반 패키지에는 __init__.py를 둡니다. Python에는 이 파일 없이 구성하는 네임스페이스 패키지도 있지만 이번 실습은 일반 패키지로 통일합니다.",
+        "패키지의 모듈 가져오기, 별칭, 특정 함수 가져오기, 모듈의 별표 임포트, 전체 경로 임포트의 다섯 방식을 비교하세요. from nature.animals.bird import *와 from nature.animals import *는 대상이 다릅니다.",
+        "__init__.py의 __all__은 from 패키지 import *로 가져올 이름을 지정합니다. 외부 접근을 차단하는 보안 설정이 아닙니다. __all__에 없는 flower도 명시적으로 임포트할 수 있습니다.",
+        "교과서 보완: 25쪽 탐구의 설명과 정답편은 특정 함수 임포트/모듈 임포트 표현이 일치하지 않습니다. 예제는 from star import makestar와 import star as s를 각각 보여주며, 함수 별칭은 from star import makestar as s로 따로 연습할 수 있습니다."
+      ],
+      "examples": [
+        "package-0",
+        "package-1",
+        "package-2",
+        "package-3",
+        "package-4",
+        "all",
+        "animal-check",
+        "stars"
+      ],
+      "tasks": [
+        "__all__에 flower를 추가하고 달라진 결과를 확인하세요.",
+        "animals 패키지에 새 모듈을 추가하고 불러오세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "os-sys",
+      "title": "os와 sys로 실행 환경 살펴보기",
+      "pages": "26–28",
+      "lead": "파일을 찾는 위치와 프로그램에 전달되는 값을 확인하세요.",
+      "paragraphs": [
+        "os는 운영체제와 파일·폴더 관련 기능을 제공합니다. os.name, os.getcwd(), os.system()의 역할을 구별하세요. 웹 실습에서는 os.listdir()로 가상 폴더 목록을 확인합니다. 셸 명령은 PC에서 실행합니다.",
+        "sys는 파이썬 인터프리터와 관련된 기능을 제공합니다. sys.argv[0]은 실행 파일명이며 그 뒤는 문자열 인자입니다. sys.exit()는 SystemExit를 발생시켜 실행을 끝냅니다. 뒤의 출력문이 실행되지 않는지 확인하세요.",
+        "교과서의 PyCharm Run with Parameters 설명에 대응하여 VS Code 터미널에서는 python main.py param1 param2로 실행합니다. 웹에서는 실행 인자를 JSON 배열로 입력합니다. 공백이 포함된 값도 하나의 문자열로 전달할 수 있습니다.",
+        "보강: 모듈 탐색은 sys.modules 캐시, 내장 모듈 처리, sys.path 등의 경로를 사용합니다. 현재 작업 폴더와 실행 스크립트 폴더는 항상 같은 것은 아닙니다. ModuleNotFoundError가 나면 파일명·실행 위치·환경을 순서대로 확인하세요."
+      ],
+      "examples": [
+        "os",
+        "os-pc",
+        "sys"
+      ],
+      "tasks": [
+        "실행 인자를 0개·1개·2개로 바꿔 보세요.",
+        "sys.exit 앞뒤에 출력문을 넣고 순서를 설명하세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "math",
+      "title": "math · 계산을 함수로 표현하기",
+      "pages": "29",
+      "lead": "함수 이름을 외우기 전에 어떤 계산이 필요한지 판단하세요.",
+      "paragraphs": [
+        "pi와 e는 상수이므로 괄호를 붙이지 않습니다. ceil은 주어진 수 이상인 최소 정수, floor는 주어진 수 이하인 최대 정수입니다. 음수에서는 0에 가까운 쪽이 올림이 됩니다.",
+        "factorial(n)은 1부터 n까지의 곱이며 0!은 1입니다. gcd는 최대 공약수입니다. math.pow(2, 10)은 실수 1024.0을 반환합니다. 정수 거듭제곱이 필요하면 2 ** 10과 비교해 보세요."
+      ],
+      "examples": [
+        "math"
+      ],
+      "tasks": [
+        "3.5 대신 -3.5를 사용해 올림과 내림을 설명하세요.",
+        "math.pi를 활용하는 원 넓이 함수를 작성하세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "random",
+      "title": "random · 결과보다 조건 확인하기",
+      "pages": "30–31, 33, 37",
+      "lead": "매번 결과가 달라도 올바른 프로그램인지 판단할 수 있습니다.",
+      "paragraphs": [
+        "random()은 0 이상 1 미만의 실수입니다. randrange(stop)은 끝을 제외하며 randrange(start, stop, step)은 range와 같은 후보에서 선택합니다. 주사위 1~n은 randrange(1, n+1)로 구현합니다.",
+        "choice는 요소 하나, sample은 지정 개수의 항목을 비복원 추출합니다. 원본에 같은 값이 여러 번 있으면 sample 결과에도 같은 값이 나올 수 있습니다. 고유한 명단을 주어야 사람 중복을 막을 수 있습니다.",
+        "shuffle은 원본 리스트를 직접 섞고 None을 반환합니다. result = random.shuffle(names)의 result를 추첨 결과로 쓰면 안 됩니다. 원본을 보존하려면 복사하거나 sample을 사용하세요.",
+        "교과서 보완: uniform(a, b)의 끝 값 b는 부동소수점 반올림에 따라 포함될 수도 있습니다. 무조건 끝 미만이라고 단정하지 않습니다. 추가 실습에서는 시드를 고정해 재현하고, 범위·개수·구성원을 검사합니다."
+      ],
+      "examples": [
+        "random",
+        "dice",
+        "gift"
+      ],
+      "tasks": [
+        "중복 없는 명단에서 2명을 뽑고 원본이 유지되는지 확인하세요.",
+        "주사위 결과가 특정 숫자여야 한다는 검사가 부적절한 이유를 적으세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "datetime",
+      "title": "datetime · 날짜를 계산하는 프로그램",
+      "pages": "31–33, 38",
+      "lead": "날짜를 문자열로 빼지 않고 날짜 객체로 계산합니다.",
+      "paragraphs": [
+        "datetime.now()로 현재 날짜와 시각을 얻습니다. year, month, day, hour, minute, second는 속성입니다. weekday()는 메서드이며 월요일 0부터 일요일 6까지 반환합니다. datetime 모듈과 그 안의 datetime 클래스 이름이 같다는 점에 주의하세요.",
+        "날짜·시각끼리 빼면 timedelta가 됩니다. .days로 일수를 읽을 수 있습니다. 시각을 포함하면 24시간 미만 부분은 정수 일수에 포함되지 않으므로 달력 날짜 차이가 목적이면 date를 사용하세요.",
+        "교과서의 고정된 2025년 날짜는 당시 실행 예입니다. 오늘 날짜는 실행 환경에 따라 달라집니다. 다음 크리스마스 예제는 당일에는 0, 지난 후에는 다음 해를 선택하도록 보완했습니다."
+      ],
+      "examples": [
+        "datetime",
+        "christmas"
+      ],
+      "tasks": [
+        "2026-12-24, 2026-12-25, 2026-12-26을 기준으로 각각 시험하세요.",
+        "현재 날짜와 요일을 한글 문장으로 출력하세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "thirdparty",
+      "title": "PyPI와 서드파티 패키지",
+      "pages": "32–33",
+      "lead": "필요한 기능을 찾고, 설치 이름과 임포트 이름을 확인하세요.",
+      "paragraphs": [
+        "표준 라이브러리는 파이썬과 함께 제공되고, 서드파티 패키지는 별도로 설치합니다. PyPI는 파이썬 패키지를 찾는 저장소이며 pip는 설치 도구입니다. PC 터미널에서 python -m venv .venv로 환경을 만들고 활성화한 뒤 python -m pip install 패키지명을 실행하세요.",
+        "교과서의 8종: Beautiful Soup(HTML/XML 정보 추출, 설치 beautifulsoup4·임포트 bs4), Pillow(이미지 처리, pillow·PIL), Peewee(데이터베이스 ORM, peewee), Scrapy(크롤링, scrapy), Pygame(게임, pygame), NumPy(배열·수치 계산, numpy), Django와 Flask(웹 개발, django·flask). 모두를 설치할 필요는 없으며 목적을 설명하고 필요한 패키지를 선택합니다.",
+        "교과서의 pip install bs4 대신 실제 배포 패키지 이름인 beautifulsoup4를 사용합니다. pip 명령은 Python 코드 입력창이 아니라 터미널에서 실행합니다. 설치한 환경과 실행하는 VS Code 인터프리터가 같은지 확인하세요.",
+        "보강: python -m pip show 패키지명으로 정보를 확인하고 requirements.txt에 의존성을 기록합니다. 웹 실습 환경은 PC의 pip·GUI와 지원 범위가 다르므로 설치 실습은 PC에서 수행합니다."
+      ],
+      "examples": [
+        "thirdparty"
+      ],
+      "tasks": [
+        "이미지 크기 변경·게임·웹페이지에서 제목 추출에 맞는 패키지를 고르세요.",
+        "설치 이름과 import 이름이 다른 예를 두 개 적으세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "review",
+      "title": "단원 마무리와 종합 평가",
+      "pages": "13, 34–39",
+      "lead": "정답을 본 뒤에는 숫자와 조건을 바꾸어 다시 풀어 보세요.",
+      "paragraphs": [
+        "핵심 지도: 파일의 기능을 모듈로 분리 → import 방식에 맞춰 호출 → 폴더를 패키지로 구성 → 표준·서드파티 기능 선택 → 동작 검증입니다. 아래 연습실에서 교과서 연계 문항과 보강 문항을 유형별로 풀 수 있습니다.",
+        "종합 평가의 목표 8가지: 모듈 정의 판단, 필요성 판단, student.study 호출법, nature.plants.grass 호출법, sample 사용, n면 주사위 구현, 날짜·요일 출력, 임포트 시 출력 추적입니다. 35쪽 패키지 확인학습은 앞의 동물 패키지 실습과 연결됩니다.",
+        "정답편 대조 및 보완: 39쪽 코드를 실행하면 합 4, 합 8, 차 5 순서입니다. 정답편 201쪽의 마지막 9는 코드와 맞지 않습니다. 아래에서 직접 실행하여 확인하세요."
+      ],
+      "examples": [
+        "final-output"
+      ],
+      "tasks": [
+        "힌트 없이 두 파일을 만들고 import하여 호출하세요.",
+        "단원 연습에서 틀린 문제를 다시 풀고 오류 원인을 저널에 남기세요."
+      ],
+      "extra": false
+    },
+    {
+      "id": "project",
+      "title": "1단원 프로젝트 · 우리 반 기능 패키지",
+      "pages": "보강 · 수행평가 연결",
+      "lead": "GUI 없이도 시험할 수 있는 기능부터 만듭니다.",
+      "paragraphs": [
+        "core/logic.py에 주사위, 날짜 계산, 명단 추첨 함수를 작성하세요. 함수는 결과를 반환하고 main.py에서 출력합니다. 화면·입력·계산을 분리하면 다음 단원에서 GUI만 추가할 수 있습니다.",
+        "기본: 제공된 기능을 실행하고 인자를 바꿉니다. 도전: 중복 명단 정리와 잘못된 입력을 처리합니다. 확장: 새 기능을 하나 추가하고 테스트 입력 3개를 설명합니다."
+      ],
+      "examples": [
+        "core"
+      ],
+      "tasks": [
+        "파일 트리와 각 파일의 역할을 제출 설명에 적으세요.",
+        "정상 입력·경계 입력·잘못된 입력을 하나씩 시험하세요."
+      ],
+      "extra": true
+    }
+  ],
+  "examples": {
+    "reuse": {
+      "id": "reuse",
+      "title": "한 번 만든 함수를 두 프로그램에서 사용하기",
+      "files": {
+        "main.py": "import calculator\nprint(calculator.add(3, 5))\nprint(calculator.add(10, -2))\n",
+        "calculator.py": "def add(a, b):\n    return a + b\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert calculator.add(0, 4) == 4\nassert calculator.add(-2, 5) == 3\n",
+      "note": ""
+    },
+    "sum-input": {
+      "id": "sum-input",
+      "title": "확인학습 · 두 수의 합",
+      "files": {
+        "main.py": "from sumnummod import sumnum\nprint(\"두 수의 합 :\", sumnum())\n",
+        "sumnummod.py": "def sumnum():\n    n1 = int(input(\"첫 번째 수: \"))\n    n2 = int(input(\"두 번째 수: \"))\n    return n1 + n2\n\nif __name__ == \"__main__\":\n    print(sumnum())\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "3\n5",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "circle-top": {
+      "id": "circle-top",
+      "title": "실행문만 있는 모듈",
+      "files": {
+        "main.py": "import circle\n",
+        "circle.py": "PI = 3.14\nr = 3\nprint(\"반지름이 {}인 원의 둘레: {}\".format(r, r * 2 * PI))\nprint(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "circle-function": {
+      "id": "circle-function",
+      "title": "함수 정의와 호출 분리",
+      "files": {
+        "main.py": "import circle_area\ncircle_area.circlearea(3)\n",
+        "circle_area.py": "PI = 3.14\n\ndef circlearea(r):\n    print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "circle-mixed": {
+      "id": "circle-mixed",
+      "title": "함수와 실행문이 함께 있을 때",
+      "files": {
+        "main.py": "import circle_area2\ncircle_area2.circlearea(3)\n",
+        "circle_area2.py": "PI = 3.14\n\ndef circlearea(r):\n    print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))\n\ncirclearea(4)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "class-module": {
+      "id": "class-module",
+      "title": "보강 · 클래스를 담은 모듈",
+      "files": {
+        "main.py": "from shapes import Circle\nprint(Circle(3).area())\n",
+        "shapes.py": "import math\n\nclass Circle:\n    def __init__(self, radius):\n        self.radius = radius\n\n    def area(self):\n        return math.pi * self.radius ** 2\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "main-guard": {
+      "id": "main-guard",
+      "title": "직접 실행과 임포트 비교",
+      "files": {
+        "main.py": "import circle_area3\nprint(\"main.py의 이름:\", __name__)\ncircle_area3.circlearea(3)\n",
+        "circle_area3.py": "PI = 3.14\nprint(\"circle_area3의 이름:\", __name__)\n\ndef circlearea(r):\n    print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))\n\nif __name__ == \"__main__\":\n    circlearea(4)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "rectangle": {
+      "id": "rectangle",
+      "title": "탐구 활동 · 사각형 모듈",
+      "files": {
+        "main.py": "import rectEx1\nrectEx1.rect(2, 4)\n",
+        "rectEx1.py": "def rect(width, height):\n    print(\"가로가 {} 세로가 {}인 사각형의 넓이: {}\".format(width, height, width*height))\n\nif __name__ == \"__main__\":\n    rect(3, 5)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "import-0": {
+      "id": "import-0",
+      "title": "모듈 전체",
+      "files": {
+        "main.py": "import greet\ngreet.hello()\ngreet.bye()\n",
+        "greet.py": "def hello():\n    print(\"안녕하세요\")\n\ndef bye():\n    print(\"안녕히 가세요\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "import-1": {
+      "id": "import-1",
+      "title": "특정 함수",
+      "files": {
+        "main.py": "from greet import hello\nhello()\n",
+        "greet.py": "def hello():\n    print(\"안녕하세요\")\n\ndef bye():\n    print(\"안녕히 가세요\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "import-2": {
+      "id": "import-2",
+      "title": "여러 함수",
+      "files": {
+        "main.py": "from greet import hello, bye\nhello()\nbye()\n",
+        "greet.py": "def hello():\n    print(\"안녕하세요\")\n\ndef bye():\n    print(\"안녕히 가세요\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "import-3": {
+      "id": "import-3",
+      "title": "별표",
+      "files": {
+        "main.py": "from greet import *\nhello()\nbye()\n",
+        "greet.py": "def hello():\n    print(\"안녕하세요\")\n\ndef bye():\n    print(\"안녕히 가세요\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "import-4": {
+      "id": "import-4",
+      "title": "별칭",
+      "files": {
+        "main.py": "import greet as g\ng.bye()\n",
+        "greet.py": "def hello():\n    print(\"안녕하세요\")\n\ndef bye():\n    print(\"안녕히 가세요\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "package-0": {
+      "id": "package-0",
+      "title": "패키지 임포트 1",
+      "files": {
+        "main.py": "from nature.animals import bird\nbird.wild()\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "package-1": {
+      "id": "package-1",
+      "title": "패키지 임포트 2",
+      "files": {
+        "main.py": "from nature.animals import bird as b\nb.wild()\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "package-2": {
+      "id": "package-2",
+      "title": "패키지 임포트 3",
+      "files": {
+        "main.py": "from nature.animals.bird import wild\nwild()\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "package-3": {
+      "id": "package-3",
+      "title": "패키지 임포트 4",
+      "files": {
+        "main.py": "from nature.animals.bird import *\nwild()\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "package-4": {
+      "id": "package-4",
+      "title": "패키지 임포트 5",
+      "files": {
+        "main.py": "import nature.animals.bird\nnature.animals.bird.wild()\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "all": {
+      "id": "all",
+      "title": "__all__의 영향 실험",
+      "files": {
+        "main.py": "from nature.plants import *\ntree.wild()\n# flower.wild()  # 주석을 해제하고 실행하세요.\n# from nature.plants import flower  # 명시적 임포트는 가능합니다.\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "animal-check": {
+      "id": "animal-check",
+      "title": "35쪽 확인학습 · 동물 패키지",
+      "files": {
+        "main.py": "from nature.animals import *\nbird.wild()\nlion.wild()\n",
+        "mainanimal2.py": "from nature.animals.lion import wild\nwild()\n",
+        "nature/__init__.py": "# 자연 패키지\n",
+        "nature/animals/__init__.py": "__all__ = [\"bird\", \"lion\"]\n",
+        "nature/plants/__init__.py": "__all__ = [\"tree\"]\n",
+        "nature/animals/bird.py": "def wild():\n    print(\"새는 동물입니다.\")\n",
+        "nature/animals/lion.py": "def wild():\n    print(\"사자는 동물입니다.\")\n",
+        "nature/plants/tree.py": "def wild():\n    print(\"나무는 식물입니다.\")\n",
+        "nature/plants/flower.py": "def wild():\n    print(\"꽃은 식물입니다.\")\n",
+        "nature/plants/grass.py": "def wild():\n    print(\"풀은 식물입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "stars": {
+      "id": "stars",
+      "title": "25쪽 탐구 · 별 출력",
+      "files": {
+        "main.py": "from star import makestar\nmakestar(4, 3)\nimport star as s\ns.makestar(2, 2)\n",
+        "star.py": "def makestar(c, r):\n    for i in range(r):\n        print(\"*\" * c)\n\nif __name__ == \"__main__\":\n    makestar(4, 3)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "os": {
+      "id": "os",
+      "title": "os · 가상 작업 폴더",
+      "files": {
+        "main.py": "import os\nprint(\"운영체제:\", os.name)\nprint(\"현재 폴더:\", os.getcwd())\nos.makedirs(\"practice\", exist_ok=True)\nwith open(\"practice/note.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"모듈 실습\")\nprint(os.listdir(\"practice\"))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "웹의 폴더는 브라우저 메모리 안의 가상 파일입니다. PC 파일을 직접 읽지 않습니다."
+    },
+    "os-pc": {
+      "id": "os-pc",
+      "title": "교과서 os 예제 · PC 명령",
+      "files": {
+        "main.py": "import os\nprint(\"현재 운영체제 :\", os.name)\nprint(\"현재 작업 디렉터리 :\", os.getcwd())\nos.system(\"dir\" if os.name == \"nt\" else \"ls\")\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "교과서의 dir는 Windows 명령입니다. 이 예제는 macOS/Linux에서 ls를 선택하도록 보완했습니다."
+    },
+    "sys": {
+      "id": "sys",
+      "title": "실행 인자와 종료",
+      "files": {
+        "main.py": "import sys\nprint(\"실행 파일명 :\", sys.argv[0])\nfor i, value in enumerate(sys.argv[1:], start=1):\n    print(\"인자\", i, \":\", value)\nsys.exit()\nprint(\"이 줄은 실행되지 않습니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "[\"param1\", \"param2\"]",
+      "checks": "",
+      "note": ""
+    },
+    "math": {
+      "id": "math",
+      "title": "math의 상수와 함수",
+      "files": {
+        "main.py": "import math\nprint(\"파이:\", math.pi)\nprint(\"e:\", math.e)\nprint(\"올림:\", math.ceil(3.5))\nprint(\"내림:\", math.floor(3.5))\nprint(\"팩토리얼:\", math.factorial(5))\nprint(\"최대 공약수:\", math.gcd(28, 70))\nprint(\"거듭제곱:\", math.pow(2, 10))\nprint(\"음수의 올림·내림:\", math.ceil(-3.5), math.floor(-3.5))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "random": {
+      "id": "random",
+      "title": "random · 범위·선택·섞기",
+      "files": {
+        "main.py": "import random\nprint(random.random())\nprint(random.uniform(2.5, 10.0))\nprint(random.randrange(10))\nprint(random.randrange(1, 7, 2))\nseason = [\"봄\", \"여름\", \"가을\", \"겨울\"]\nprint(random.choice(season))\nletters = [\"가\", \"나\", \"다\", \"라\", \"마\"]\nresult = random.shuffle(letters)\nprint(\"원본:\", letters, \"반환값:\", result)\nprint(random.sample(list(range(1, 10)), 3))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "dice": {
+      "id": "dice",
+      "title": "종합 평가 · n면 주사위",
+      "files": {
+        "main.py": "import random\nn = int(input(\"주사위 면 수: \"))\nif n < 1:\n    print(\"면 수는 1 이상이어야 합니다.\")\nelse:\n    print(\"주사위 값:\", random.randrange(1, n + 1))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "6",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "gift": {
+      "id": "gift",
+      "title": "탐구 · 선물 하나 고르기",
+      "files": {
+        "main.py": "import random\npresents = [\"문구용품\", \"과자\", \"인형\"]\nprint(random.choice(presents))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "datetime": {
+      "id": "datetime",
+      "title": "날짜·시각·요일",
+      "files": {
+        "main.py": "from datetime import datetime\nnow = datetime.now()\nprint(now)\nprint(now.year, now.month, now.day)\nprint(now.hour, now.minute, now.second)\nprint(\"요일 번호:\", now.weekday())\nweek = \"월화수목금토일\"[now.weekday()]\nprint(f\"오늘은 {now.year}년 {now.month}월 {now.day}일 {week}요일입니다.\")\nstart = datetime(now.year, 1, 1)\nprint(\"올해 지난 시간:\", now - start)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "christmas": {
+      "id": "christmas",
+      "title": "다음 크리스마스까지",
+      "files": {
+        "main.py": "from datetime import date\ntoday = date.today()\ntarget = date(today.year, 12, 25)\nif target < today:\n    target = date(today.year + 1, 12, 25)\nprint(\"다음 크리스마스까지\", (target - today).days, \"일\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "thirdparty": {
+      "id": "thirdparty",
+      "title": "PC · NumPy 첫 실습",
+      "files": {
+        "main.py": "import numpy as np\nscores = np.array([70, 80, 90])\nprint(scores.mean())\n",
+        "requirements.txt": "numpy\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "가상환경에서 python -m pip install -r requirements.txt를 실행하세요."
+    },
+    "final-output": {
+      "id": "final-output",
+      "title": "종합 평가 8 · 출력 추적",
+      "files": {
+        "main.py": "import addcal\nimport subcal\nprint(\"두 수의 합 :\", addcal.addnum(5, 3))\nprint(\"두 수의 차 :\", subcal.subnum(7, 2))\n",
+        "addcal.py": "def addnum(a, b):\n    return a + b\nprint(\"두 수의 합 :\", addnum(1, 3))\n",
+        "subcal.py": "def subnum(a, b):\n    return a - b\nif __name__ == \"__main__\":\n    print(\"두 수의 차 :\", subnum(4, 1))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "core": {
+      "id": "core",
+      "title": "프로젝트 · 기능 모듈을 웹에서 검사",
+      "files": {
+        "main.py": "from core.logic import roll, days_left, draw\nfrom datetime import date\nprint(\"주사위:\", roll(6))\nprint(\"남은 날짜:\", days_left(\"2026-12-25\", date(2026, 12, 24)))\nprint(\"추첨:\", draw([\"민지\", \"수빈\", \"하늘\"], 2))\n",
+        "core/__init__.py": "# GUI와 독립적인 기능\n",
+        "core/logic.py": "from datetime import date\nimport random\n\ndef roll(sides):\n    if sides < 1:\n        raise ValueError(\"면 수는 1 이상이어야 합니다.\")\n    return random.randint(1, sides)\n\ndef days_left(target, today=None):\n    today = today or date.today()\n    return (date.fromisoformat(target) - today).days\n\ndef draw(names, count):\n    names = list(dict.fromkeys(name.strip() for name in names if name.strip()))\n    if not 1 <= count <= len(names):\n        raise ValueError(\"추첨 수를 명단 인원 안에서 정하세요.\")\n    return random.sample(names, count)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert days_left(\"2026-12-25\", date(2026,12,24)) == 1\nassert 1 <= roll(6) <= 6\nassert len(draw([\"A\", \"A\", \"B\"], 2)) == 2\n",
+      "note": ""
+    }
+  },
+  "questions": [
+    {
+      "id": "u1-q001",
+      "unit": 1,
+      "topic": "overview",
+      "kind": "선택",
+      "prompt": "모듈에 대한 설명으로 틀린 것을 고르세요.",
+      "answer": "저장한 Python 파일은 모듈이 될 수 없습니다.",
+      "hint": "모듈의 가장 기본적인 단위를 떠올리세요.",
+      "explain": "Python 파일은 모듈로 사용할 수 있습니다.",
+      "options": [
+        "파일 이름은 모듈 이름의 기준입니다.",
+        "함수를 담을 수 있습니다.",
+        "변수와 실행문도 담을 수 있습니다.",
+        "저장한 Python 파일은 모듈이 될 수 없습니다.",
+        "기능별로 코드를 나눌 수 있습니다."
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 36쪽 1"
+    },
+    {
+      "id": "u1-q002",
+      "unit": 1,
+      "topic": "overview",
+      "kind": "선택",
+      "prompt": "모듈화의 목적과 가장 거리가 먼 것은?",
+      "answer": "아무 이름이나 더 많이 만들기",
+      "hint": "이름의 수보다 역할이 중요합니다.",
+      "explain": "모듈화는 코드의 재사용과 관리를 돕습니다.",
+      "options": [
+        "중복 줄이기",
+        "코드 재사용",
+        "유지보수",
+        "아무 이름이나 더 많이 만들기",
+        "구조화"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 36쪽 2"
+    },
+    {
+      "id": "u1-q003",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "함수·변수·클래스 등을 담은 Python 파일은?",
+      "answer": "모듈",
+      "hint": "파일 단위입니다.",
+      "explain": "모듈은 하나의 파일에 관련 기능을 묶습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q004",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "관련 모듈을 폴더 계층으로 묶은 구조는?",
+      "answer": "패키지",
+      "hint": "nature/animals를 떠올리세요.",
+      "explain": "패키지는 관련 모듈을 분류합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q005",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "다른 모듈을 가져오는 키워드는?",
+      "answer": "import",
+      "hint": "영어로 가져오기입니다.",
+      "explain": "import로 모듈을 연결합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q006",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "직접 실행한 파일의 __name__ 값은?",
+      "answer": "__main__",
+      "hint": "앞뒤 밑줄이 각각 두 개입니다.",
+      "explain": "임포트된 경우에는 모듈 이름입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q007",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "if __name__ == \"____\": 의 빈칸을 채우세요.",
+      "answer": "__main__",
+      "hint": "직접 실행일 때만 시험 코드를 실행합니다.",
+      "explain": "조건 안의 코드는 임포트 시 실행되지 않습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q008",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "import greet as g 이후 인사 함수 호출은?",
+      "answer": "g.hello()",
+      "hint": "별칭을 통해 접근합니다.",
+      "explain": "파일명이 아니라 현재 연결된 이름 g를 사용합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q009",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "from greet import hello 이후 호출은?",
+      "answer": "hello()",
+      "hint": "모듈 접두어가 필요 없습니다.",
+      "explain": "hello라는 이름을 직접 가져왔습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q010",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "일반 패키지의 초기화 파일 이름은?",
+      "answer": "__init__.py",
+      "hint": "밑줄 두 개를 앞뒤에 씁니다.",
+      "explain": "일반 패키지와 네임스페이스 패키지를 구분하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q011",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "별표 임포트로 공개할 이름 목록을 지정하는 변수는?",
+      "answer": "__all__",
+      "hint": "all 앞뒤에 밑줄 두 개입니다.",
+      "explain": "__all__은 별표 임포트의 목록을 지정합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q012",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "현재 작업 폴더를 반환하는 os 함수 호출은?",
+      "answer": "os.getcwd()",
+      "hint": "get current working directory입니다.",
+      "explain": "실행 스크립트 위치와 항상 같지는 않습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q013",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "실행 인자를 저장하는 sys 속성은?",
+      "answer": "sys.argv",
+      "hint": "argument vector입니다.",
+      "explain": "첫 항목은 실행 파일명입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q014",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "프로그램을 종료하는 sys 함수 호출은?",
+      "answer": "sys.exit()",
+      "hint": "exit를 사용합니다.",
+      "explain": "SystemExit를 발생시킵니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q015",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "math의 원주율 상수는?",
+      "answer": "math.pi",
+      "hint": "상수에는 호출 괄호가 없습니다.",
+      "explain": "pi는 실수 상수입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q016",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "목록에서 요소 하나를 고르는 random 함수 이름은?",
+      "answer": "choice",
+      "hint": "선택을 뜻합니다.",
+      "explain": "choice(sequence)는 요소 하나를 반환합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q017",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "목록 자체를 섞는 함수 이름은?",
+      "answer": "shuffle",
+      "hint": "반환값은 None입니다.",
+      "explain": "원본 리스트를 수정합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q018",
+      "unit": 1,
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "날짜 객체의 요일을 얻는 메서드 호출은?",
+      "answer": "weekday()",
+      "hint": "속성과 메서드를 구분하세요.",
+      "explain": "월요일은 0, 일요일은 6입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q019",
+      "unit": 1,
+      "topic": "imports",
+      "kind": "빈칸",
+      "prompt": "from student import study\n위 코드 다음에 study 함수를 호출하세요.",
+      "answer": "study()",
+      "hint": "현재 연결된 이름을 확인하세요.",
+      "explain": "임포트 방식에 맞춰 함수에 접근합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 36쪽 3"
+    },
+    {
+      "id": "u1-q020",
+      "unit": 1,
+      "topic": "imports",
+      "kind": "빈칸",
+      "prompt": "import student\n위 코드 다음에 study 함수를 호출하세요.",
+      "answer": "student.study()",
+      "hint": "현재 연결된 이름을 확인하세요.",
+      "explain": "임포트 방식에 맞춰 함수에 접근합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 36쪽 3"
+    },
+    {
+      "id": "u1-q021",
+      "unit": 1,
+      "topic": "imports",
+      "kind": "빈칸",
+      "prompt": "import student as s\n위 코드 다음에 study 함수를 호출하세요.",
+      "answer": "s.study()",
+      "hint": "현재 연결된 이름을 확인하세요.",
+      "explain": "임포트 방식에 맞춰 함수에 접근합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 36쪽 3"
+    },
+    {
+      "id": "u1-q022",
+      "unit": 1,
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "from nature.plants import grass as g\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "g.wild()",
+      "hint": "모듈을 가져왔는지 함수를 가져왔는지 확인하세요.",
+      "explain": "접두어가 필요한지는 현재 네임스페이스의 이름으로 결정됩니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 37쪽 4"
+    },
+    {
+      "id": "u1-q023",
+      "unit": 1,
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "from nature.plants.grass import wild\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "wild()",
+      "hint": "모듈을 가져왔는지 함수를 가져왔는지 확인하세요.",
+      "explain": "접두어가 필요한지는 현재 네임스페이스의 이름으로 결정됩니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 37쪽 4"
+    },
+    {
+      "id": "u1-q024",
+      "unit": 1,
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "from nature.plants.grass import *\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "wild()",
+      "hint": "모듈을 가져왔는지 함수를 가져왔는지 확인하세요.",
+      "explain": "접두어가 필요한지는 현재 네임스페이스의 이름으로 결정됩니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 37쪽 4"
+    },
+    {
+      "id": "u1-q025",
+      "unit": 1,
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "import nature.plants.grass\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "nature.plants.grass.wild()",
+      "hint": "모듈을 가져왔는지 함수를 가져왔는지 확인하세요.",
+      "explain": "접두어가 필요한지는 현재 네임스페이스의 이름으로 결정됩니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 37쪽 4"
+    },
+    {
+      "id": "u1-q026",
+      "unit": 1,
+      "topic": "random",
+      "kind": "선택",
+      "prompt": "고유한 항목의 리스트 L에서 중복 없이 2개를 뽑는 코드는?",
+      "answer": "random.sample(L, 2)",
+      "hint": "모집단과 개수를 함께 전달합니다.",
+      "explain": "sample은 비복원 추출입니다.",
+      "options": [
+        "random.random()",
+        "random.sample()",
+        "random.randrange()",
+        "random.randrange(2)",
+        "random.sample(L, 2)"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 37쪽 5"
+    },
+    {
+      "id": "u1-q027",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "print(__name__)을 직접 실행했을 때 출력은?",
+      "answer": "__main__",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "실행 진입점의 이름입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q028",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.ceil(-3.5))",
+      "answer": "-3",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "-3.5 이상인 최소 정수입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q029",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.floor(-3.5))",
+      "answer": "-4",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "-3.5 이하인 최대 정수입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q030",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.factorial(0))",
+      "answer": "1",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "0!은 1입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q031",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.gcd(28,70))",
+      "answer": "14",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "28과 70을 모두 나누는 가장 큰 양의 정수입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q032",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.pow(2,10))",
+      "answer": "1024.0",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "math.pow는 실수를 반환합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q033",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import random\na=[1,2,3]\nprint(random.shuffle(a))",
+      "answer": "None",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "shuffle은 제자리 변경 후 None을 반환합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q034",
+      "unit": 1,
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "from datetime import date\nprint(date(2026,12,25).weekday())",
+      "answer": "4",
+      "hint": "손으로 먼저 계산한 뒤 실습창에서 확인하세요.",
+      "explain": "2026년 12월 25일은 금요일입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q035",
+      "unit": 1,
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "from pkg import *에서 __all__에 없는 이름은 명시적으로 import할 수 없나요?",
+      "answer": "명시적으로 가져올 수 있습니다.",
+      "hint": "별표 임포트의 범위를 정하는 설정입니다.",
+      "explain": "__all__은 접근 제어 장치가 아닙니다.",
+      "options": [
+        "항상 금지됩니다.",
+        "명시적으로 가져올 수 있습니다.",
+        "파일이 삭제됩니다.",
+        "폴더 이름이 바뀝니다.",
+        "Python이 종료됩니다."
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q036",
+      "unit": 1,
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "random.randrange(1,7,2)의 후보는?",
+      "answer": "1, 3, 5",
+      "hint": "range와 같은 범위입니다.",
+      "explain": "끝 7은 포함하지 않습니다.",
+      "options": [
+        "1, 2, 3",
+        "1, 3, 5",
+        "1, 3, 5, 7",
+        "2, 4, 6",
+        "1, 7"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q037",
+      "unit": 1,
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "uniform(2.5,10.0)의 끝 값 설명으로 정확한 것은?",
+      "answer": "반올림에 따라 10.0이 포함될 수도 있습니다.",
+      "hint": "부동소수점 연산을 고려하세요.",
+      "explain": "교과서의 끝 미만 설명을 보완합니다.",
+      "options": [
+        "항상 10.0 미만입니다.",
+        "항상 10.0입니다.",
+        "정수만 나옵니다.",
+        "반올림에 따라 10.0이 포함될 수도 있습니다.",
+        "2.5는 제외합니다."
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q038",
+      "unit": 1,
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "이미지 크기를 바꾸는 패키지는?",
+      "answer": "Pillow",
+      "hint": "이미지 처리 도구입니다.",
+      "explain": "설치 이름 pillow와 임포트 이름 PIL이 다릅니다.",
+      "options": [
+        "Pillow",
+        "Flask",
+        "Django",
+        "Peewee",
+        "Scrapy"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q039",
+      "unit": 1,
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "HTML에서 제목을 추출할 때 선택할 도구는?",
+      "answer": "Beautiful Soup",
+      "hint": "HTML/XML 파싱을 돕습니다.",
+      "explain": "beautifulsoup4를 설치하고 bs4를 임포트합니다.",
+      "options": [
+        "Pygame",
+        "Beautiful Soup",
+        "NumPy",
+        "Peewee",
+        "tkinter"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q040",
+      "unit": 1,
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "설치 성공 후 import가 실패할 때 먼저 확인할 것은?",
+      "answer": "설치 환경과 실행 인터프리터",
+      "hint": "python -m pip를 사용한 이유입니다.",
+      "explain": "다른 가상환경에 설치했을 수 있습니다.",
+      "options": [
+        "키보드 색상",
+        "설치 환경과 실행 인터프리터",
+        "모니터 크기",
+        "파일 확장자를 jpg로 변경",
+        "함수 이름을 모두 변경"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q041",
+      "unit": 1,
+      "topic": "define",
+      "kind": "구현",
+      "prompt": "add(a,b)가 합을 반환하게 완성하세요.",
+      "answer": "def add(a,b):\n    return a+b",
+      "hint": "print와 return을 구분하세요.",
+      "explain": "반환값을 검사하므로 출력만 하면 통과하지 않습니다.",
+      "options": null,
+      "starter": "def add(a,b):\n    pass\n",
+      "checks": "assert add(3,5)==8\nassert add(-2,5)==3\nassert add(0,0)==0\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q042",
+      "unit": 1,
+      "topic": "math",
+      "kind": "구현",
+      "prompt": "radius가 반지름인 원의 넓이를 반환하세요.",
+      "answer": "import math\ndef area(radius):\n    return math.pi * radius ** 2",
+      "hint": "원의 넓이는 πr²입니다.",
+      "explain": "여러 반지름으로 검사합니다.",
+      "options": null,
+      "starter": "import math\ndef area(radius):\n    pass\n",
+      "checks": "import math\nassert math.isclose(area(3), math.pi*9)\nassert area(0)==0\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q043",
+      "unit": 1,
+      "topic": "random",
+      "kind": "오류 수정",
+      "prompt": "roll(n)이 1부터 n 사이 정수를 반환하게 하세요.",
+      "answer": "import random\ndef roll(n):\n    return random.randrange(1,n+1)",
+      "hint": "끝 값은 제외됩니다.",
+      "explain": "0이 나오지 않아야 하며 1면 주사위는 항상 1입니다.",
+      "options": null,
+      "starter": "import random\ndef roll(n):\n    return random.randrange(n)\n",
+      "checks": "assert roll(1)==1\nfor _ in range(100):\n    x=roll(6)\n    assert isinstance(x,int) and 1<=x<=6\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q044",
+      "unit": 1,
+      "topic": "random",
+      "kind": "구현",
+      "prompt": "pick(names)가 서로 다른 2명을 반환하고 원본을 보존하게 만드세요.",
+      "answer": "import random\ndef pick(names):\n    return random.sample(names,2)",
+      "hint": "sample을 사용할 수 있습니다.",
+      "explain": "반환 개수·중복·원본 보존을 검사합니다.",
+      "options": null,
+      "starter": "import random\ndef pick(names):\n    pass\n",
+      "checks": "names=[\"A\",\"B\",\"C\"]\na=pick(names)\nassert len(a)==2 and len(set(a))==2\nassert set(a)<=set(names)\nassert names==[\"A\",\"B\",\"C\"]\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q045",
+      "unit": 1,
+      "topic": "datetime",
+      "kind": "구현",
+      "prompt": "두 ISO 날짜 사이 일수를 반환하세요.",
+      "answer": "from datetime import date\ndef days(start,end):\n    return (date.fromisoformat(end)-date.fromisoformat(start)).days",
+      "hint": "문자열을 date로 바꾸세요.",
+      "explain": "윤년·역순 날짜도 검사합니다.",
+      "options": null,
+      "starter": "from datetime import date\ndef days(start,end):\n    pass\n",
+      "checks": "assert days(\"2026-12-24\",\"2026-12-25\")==1\nassert days(\"2026-12-25\",\"2026-12-24\")==-1\nassert days(\"2024-02-28\",\"2024-03-01\")==2\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q046",
+      "unit": 1,
+      "topic": "imports",
+      "kind": "오류 수정",
+      "prompt": "별칭을 사용한 코드를 고치세요.",
+      "answer": "import math as m\nvalue = m.sqrt(81)",
+      "hint": "현재 사용할 수 있는 이름은 m입니다.",
+      "explain": "명시적으로 연결하지 않은 math 이름을 호출했습니다.",
+      "options": null,
+      "starter": "import math as m\nvalue = math.sqrt(81)\n",
+      "checks": "assert value==9\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q047",
+      "unit": 1,
+      "topic": "random",
+      "kind": "오류 수정",
+      "prompt": "원본을 섞되 함수가 섞인 리스트를 반환하도록 고치세요.",
+      "answer": "import random\ndef mix(values):\n    random.shuffle(values)\n    return values",
+      "hint": "shuffle의 반환값을 떠올리세요.",
+      "explain": "변경된 원본 리스트를 반환합니다.",
+      "options": null,
+      "starter": "import random\ndef mix(values):\n    return random.shuffle(values)\n",
+      "checks": "values=[1,2,3]\nr=mix(values)\nassert sorted(r)==[1,2,3] and r is values\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q048",
+      "unit": 1,
+      "topic": "datetime",
+      "kind": "구현",
+      "prompt": "날짜의 한글 요일 한 글자를 반환하세요.",
+      "answer": "from datetime import date\ndef weekday_name(value):\n    return \"월화수목금토일\"[date.fromisoformat(value).weekday()]",
+      "hint": "weekday()는 월요일 0입니다.",
+      "explain": "숫자를 요일 목록의 인덱스로 사용합니다.",
+      "options": null,
+      "starter": "from datetime import date\ndef weekday_name(value):\n    pass\n",
+      "checks": "assert weekday_name(\"2026-12-25\")==\"금\"\nassert weekday_name(\"2026-12-27\")==\"일\"\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q049",
+      "unit": 1,
+      "topic": "packages",
+      "kind": "순서",
+      "prompt": "모듈을 만들고 실행하는 순서로 배열하세요.",
+      "answer": [
+        "프로젝트 폴더 만들기",
+        "tools.py에 함수 저장",
+        "main.py에서 tools 임포트",
+        "tools의 함수 호출",
+        "main.py 실행"
+      ],
+      "hint": "파일을 먼저 준비합니다.",
+      "explain": "만들기→연결하기→호출하기→실행하기 순서입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q050",
+      "unit": 1,
+      "topic": "main",
+      "kind": "순서",
+      "prompt": "addcal에 최상위 print가 있고 subcal 시험 코드에는 main 가드가 있습니다. main의 실행 순서를 배열하세요.",
+      "answer": [
+        "addcal 최상위 출력",
+        "subcal 정의 로드",
+        "main의 덧셈 호출",
+        "main의 뺄셈 호출"
+      ],
+      "hint": "임포트된 모듈의 최상위부터 확인하세요.",
+      "explain": "main 가드 안의 subcal 시험 출력은 건너뜁니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q051",
+      "unit": 1,
+      "topic": "overview",
+      "kind": "서술",
+      "prompt": "모듈과 패키지의 개념 및 필요성을 각각 설명하세요.",
+      "answer": "모듈은 관련 코드를 담은 파일이며 패키지는 관련 모듈의 계층입니다. 중복 감소·재사용·구조화·이름 충돌 구분에 유용합니다.",
+      "hint": "파일과 폴더 예를 한 개씩 넣으세요.",
+      "explain": "파일/폴더 구분과 구체적인 장점 두 가지를 포함했는지 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 10·12·13쪽"
+    },
+    {
+      "id": "u1-q052",
+      "unit": 1,
+      "topic": "main",
+      "kind": "서술",
+      "prompt": "__main__ 가드가 필요한 이유와 실행 결과 차이를 설명하세요.",
+      "answer": "직접 실행할 때만 시험 코드를 돌려서 임포트하는 프로그램에 불필요한 출력과 동작이 섞이지 않도록 합니다.",
+      "hint": "임포트도 최상위 코드를 실행합니다.",
+      "explain": "조건 유무에 따른 출력 차이를 설명했는지 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q053",
+      "unit": 1,
+      "topic": "project",
+      "kind": "서술",
+      "prompt": "기능 모듈을 GUI와 분리하면 어떤 점을 쉽게 검사할 수 있나요?",
+      "answer": "화면 없이 함수에 여러 입력을 전달하여 결과와 예외를 검사하고 두 GUI에서 같은 기능을 재사용할 수 있습니다.",
+      "hint": "core.logic의 역할을 떠올리세요.",
+      "explain": "테스트와 재사용 두 관점을 포함하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q054",
+      "unit": 1,
+      "topic": "review",
+      "kind": "서술",
+      "prompt": "39쪽 마지막 출력이 5인 이유를 설명하세요.",
+      "answer": "subnum(7,2)는 7-2를 반환하므로 5입니다. subcal의 시험 호출은 임포트 시 실행되지 않습니다.",
+      "hint": "정답편 숫자보다 코드를 추적하세요.",
+      "explain": "출력 순서는 합 4, 합 8, 차 5입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 39쪽 8 · 정답편 보완"
+    },
+    {
+      "id": "u1-q055",
+      "unit": 1,
+      "topic": "define",
+      "kind": "오류 수정",
+      "prompt": "둘레 함수를 출력 대신 반환하도록 수정하세요.",
+      "answer": "def perimeter(w,h):\n    return 2*(w+h)",
+      "hint": "다른 함수가 사용할 결과가 필요합니다.",
+      "explain": "print의 반환값은 None입니다.",
+      "options": null,
+      "starter": "def perimeter(w,h):\n    print(2*(w+h))\n",
+      "checks": "assert perimeter(2,4)==12\nassert perimeter(0,3)==6\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q056",
+      "unit": 1,
+      "topic": "math",
+      "kind": "오류 수정",
+      "prompt": "한 상자에 4개씩 담을 때 필요한 상자 수를 반환하세요.",
+      "answer": "import math\ndef boxes(n):\n    return math.ceil(n/4)",
+      "hint": "남는 물건에도 상자 하나가 필요합니다.",
+      "explain": "올림 또는 동등한 정수 계산을 사용할 수 있습니다.",
+      "options": null,
+      "starter": "import math\ndef boxes(n):\n    return n//4\n",
+      "checks": "assert boxes(5)==2\nassert boxes(4)==1\nassert boxes(0)==0\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q057",
+      "unit": 1,
+      "topic": "datetime",
+      "kind": "오류 수정",
+      "prompt": "올해 12월 25일이 지났으면 다음 해를 선택하세요.",
+      "answer": "from datetime import date\ndef christmas(today):\n    target=date(today.year,12,25)\n    if target<today:\n        target=date(today.year+1,12,25)\n    return target",
+      "hint": "당일은 올해 날짜를 유지합니다.",
+      "explain": "경계 날짜를 검사해야 연도 전환 오류를 찾습니다.",
+      "options": null,
+      "starter": "from datetime import date\ndef christmas(today):\n    return date(today.year,12,25)\n",
+      "checks": "assert christmas(date(2026,12,24))==date(2026,12,25)\nassert christmas(date(2026,12,25))==date(2026,12,25)\nassert christmas(date(2026,12,26))==date(2027,12,25)\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q058",
+      "unit": 1,
+      "topic": "random",
+      "kind": "오류 수정",
+      "prompt": "공백·중복 이름을 정리하고 입력 순서를 유지하세요.",
+      "answer": "def clean(names):\n    return list(dict.fromkeys(n.strip() for n in names if n.strip()))",
+      "hint": "문자열 정리 후 중복을 제거하세요.",
+      "explain": "중복 값이 있는 모집단은 추첨에서 같은 사람이 중복될 수 있습니다.",
+      "options": null,
+      "starter": "def clean(names):\n    return names\n",
+      "checks": "assert clean([\" A \",\"A\",\"\",\"B\"])==[\"A\",\"B\"]\nassert clean([])==[]\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q059",
+      "unit": 1,
+      "topic": "sys",
+      "kind": "오류 수정",
+      "prompt": "문자열 실행 인자 두 개의 합을 반환하세요.",
+      "answer": "def sum_args(args):\n    return int(args[0])+int(args[1])",
+      "hint": "sys.argv의 요소는 문자열입니다.",
+      "explain": "정수 변환 없이 더하면 문자열 연결입니다.",
+      "options": null,
+      "starter": "def sum_args(args):\n    return args[0]+args[1]\n",
+      "checks": "assert sum_args([\"3\",\"5\"])==8\nassert sum_args([\"-1\",\"2\"])==1\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u1-q060",
+      "unit": 1,
+      "topic": "thirdparty",
+      "kind": "선택",
+      "prompt": "관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?",
+      "answer": "Peewee",
+      "hint": "교과서의 패키지 목록을 확인하세요.",
+      "explain": "Peewee는 데이터베이스 모델과 쿼리를 Python 객체로 다루도록 돕습니다.",
+      "options": [
+        "Peewee",
+        "Pillow",
+        "Pygame",
+        "Kivy",
+        "math"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 33쪽"
+    }
+  ],
+  "pairs": []
+}
