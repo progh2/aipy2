@@ -22,12 +22,30 @@ function paiGuide(mood,title,text){
  box.querySelector('.pai-label').textContent=`파이의 실습 안내 · ${paiLabels[mood]}`;
  box.querySelector('strong').textContent=title;box.querySelector('p').textContent=text;
 }
-$$('[data-pai-preview]').forEach(button=>button.onclick=()=>{
- const mood=button.dataset.paiPreview,img=$('.pai-hero-image');if(!paiLabels[mood]||!img)return;
- img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt=button.dataset.paiAlt;
- $('#pai-mood-title').textContent=paiLabels[mood];$('#pai-mood-description').textContent=button.dataset.paiDescription;
- $$('[data-pai-preview]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
-});
+const moodButtons=$$('[data-pai-preview]');
+if(moodButtons.length){
+ const hero=$('.pai-hero'),toggle=$('#pai-auto'),motion=matchMedia('(prefers-reduced-motion: reduce)');
+ let index=0,automatic=!motion.matches,moodTimer;
+ function showMood(next){
+  index=next;const button=moodButtons[index],mood=button.dataset.paiPreview,img=$('.pai-hero-image');
+  img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt=button.dataset.paiAlt;
+  $('#pai-mood-title').textContent=paiLabels[mood];$('#pai-mood-description').textContent=button.dataset.paiDescription;
+  moodButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ }
+ function scheduleMood(){
+  clearTimeout(moodTimer);toggle.setAttribute('aria-pressed',String(automatic));
+  toggle.textContent=automatic?'자동 전환 일시정지':'자동 전환 시작';
+  if(automatic&&!document.hidden&&!hero.matches(':hover')&&!hero.contains(document.activeElement))
+   moodTimer=setTimeout(()=>{showMood((index+1)%moodButtons.length);scheduleMood();},6000);
+ }
+ moodButtons.forEach((button,i)=>button.onclick=()=>{showMood(i);scheduleMood();});
+ toggle.onclick=()=>{automatic=!automatic;scheduleMood();};
+ for(const event of ['mouseenter','mouseleave','focusin'])hero.addEventListener(event,scheduleMood);
+ hero.addEventListener('focusout',()=>setTimeout(scheduleMood,0));
+ document.addEventListener('visibilitychange',scheduleMood);
+ motion.addEventListener('change',()=>{automatic=!motion.matches;scheduleMood();});
+ scheduleMood();
+}
 let toastTimer;
 function toast(text){$('#toast').textContent=text;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').textContent='',4200);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}}
@@ -92,8 +110,14 @@ function renderFiles(){
  const entry=$('#entry-file'),old=entry.value;entry.replaceChildren();Object.keys(files).filter(n=>n.endsWith('.py')).forEach(n=>{const opt=node('option','',n);opt.value=n;entry.append(opt);});if(files[old]!==undefined)entry.value=old;
  $('#file-name').textContent=fileName;
 }
-function selectExample(id,scroll=false){
- if(!data.examples[id])return;if(currentId)stash();currentId=id;const ex=data.examples[id],saved=state.projects[id];
+function selectExample(id,scroll=false,workspace=null){
+ if(running){$('#example-select').value=currentId;toast('현재 실행을 마치거나 중지한 뒤 예제를 바꾸세요.');return;}
+ if(!data.examples[id])return;
+ const lab=$('#lab'),active=lab.closest('[data-workspace]');
+ const owner=workspace || (active && data.lessons.find(l=>l.id===active.dataset.workspace)?.examples.includes(id) ? active : $$('[data-workspace]').find(el=>data.lessons.find(l=>l.id===el.dataset.workspace)?.examples.includes(id)));
+ if(owner){owner.querySelector('.editor-mount').append(lab);$('#lab h2').textContent='바로 실습 · '+data.lessons.find(l=>l.id===owner.dataset.workspace).title;}
+ $$('[data-example]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.example===id&&b.closest('[data-workspace]')===owner)));
+if(currentId)stash();currentId=id;const ex=data.examples[id],saved=state.projects[id];
  files=JSON.parse(JSON.stringify(ex.files));
  if(saved && saved.files && typeof saved.files==='object' && Object.entries(saved.files).every(([n,s])=>validName(n)&&typeof s==='string') && Object.keys(saved.files).some(n=>n.endsWith('.py')))files={...saved.files};
  fileName=files[ex.entry]!==undefined?ex.entry:Object.keys(files)[0];
@@ -113,12 +137,12 @@ function selectExample(id,scroll=false){
 $('#code-editor').addEventListener('input',stash);
 $('#code-editor').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=e.target,s=a.selectionStart,end=a.selectionEnd;a.setRangeText('    ',s,end,'end');stash();}});
 for(const id of ['stdin','argv','entry-file'])$('#'+id).addEventListener('change',stash);
-$('#example-select').onchange=e=>selectExample(e.target.value);
+$('#example-select').onchange=e=>selectExample(e.target.value,true);
 $('#add-file').onclick=()=>{const name=prompt('파일 경로를 입력하세요. 예: utils.py 또는 nature/bird.py');if(name===null)return;if(!validName(name)||Object.hasOwn(files,name))return toast('중복되지 않는 상대 경로를 입력하세요.');stash();files[name]=name.endsWith('.py')?'# 새 기능을 작성하세요.\n':'';fileName=name;$('#code-editor').value=files[name];renderFiles();stash();};
 $('#delete-file').onclick=()=>{if(Object.keys(files).length===1 || (fileName.endsWith('.py')&&Object.keys(files).filter(n=>n.endsWith('.py')).length===1))return toast('Python 파일 하나는 남겨 두세요.');if(!confirm(fileName+' 파일을 지울까요?'))return;delete files[fileName];fileName=Object.keys(files)[0];$('#code-editor').value=files[fileName];renderFiles();stash();};
 $('#copy-code').onclick=()=>copy($('#code-editor').value);
 $('#download-file').onclick=()=>download(fileName.split('/').pop(),$('#code-editor').value);
-$('#reset-code').onclick=()=>{if(confirm('이 예제의 수정 내용을 원본으로 되돌릴까요?')){const id=currentId;currentId=null;delete state.projects[id];save();selectExample(id);}};
+$('#reset-code').onclick=()=>{if(running)return toast('실행을 마치거나 중지한 뒤 원본으로 복원하세요.');if(confirm('이 예제의 수정 내용을 원본으로 되돌릴까요?')){const id=currentId;currentId=null;delete state.projects[id];save();selectExample(id);}};
 async function runExample(check=false){
  if(running)return toast('현재 실행을 마치거나 중지하세요.');stash();let args;
  try{args=JSON.parse($('#argv').value||'[]');if(!Array.isArray(args)||!args.every(x=>typeof x==='string'))throw Error();}catch{return toast('실행 인자는 ["값1", "값2"] 형식으로 입력하세요.');}
@@ -222,7 +246,7 @@ fetch(prefix+`data/unit${unit}.json`).then(r=>{if(!r.ok)throw Error(r.status);re
  data=d;
  for(const ex of Object.values(data.examples)){const opt=node('option','',ex.title);opt.value=ex.id;$('#example-select').append(opt);}
  for(const kind of new Set(data.questions.map(q=>q.kind))){const opt=node('option','',kind);opt.value=kind;$('#question-kind').append(opt);}
- $$('[data-example]').forEach(b=>b.onclick=()=>selectExample(b.dataset.example,true));
+ $$('[data-example]').forEach(b=>b.onclick=()=>selectExample(b.dataset.example,true,b.closest('[data-workspace]')));
  selectExample(Object.keys(data.examples)[0]);renderQuestions();initGUI();
 }).catch(error=>{$('#output').textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');});
 })();

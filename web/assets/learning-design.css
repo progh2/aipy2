@@ -20,3 +20,9 @@
 .rail .book-toc li {margin:10px 0}.rail .book-toc p {font-size:.8rem}
 .projecting .teacher-page>.book-toc {display:none}
 @media print {.teacher-page>.book-toc {display:none}.book-location {break-inside:avoid}}
+.lesson-workspace {margin:24px 0;border-top:2px solid #b8d8d2;padding-top:22px;min-width:0}
+.lesson-workspace .lab {padding:20px 0;margin:12px 0 0;border:0;box-shadow:none;border-radius:0;background:transparent;scroll-margin-top:100px}
+.lesson-workspace .lab h2 {font-size:22px}
+.example-links button[aria-pressed=true] {border-color:#117365;background:#e9f7f2;color:#114e43}
+.lesson-workspace .editor-layout {grid-template-columns:145px minmax(0,1fr)}
+@media(max-width:700px){.lesson-workspace .editor-layout{grid-template-columns:1fr}.lesson-workspace .lab h2{font-size:19px}.lesson-workspace .editor-bar{flex-wrap:wrap}}
