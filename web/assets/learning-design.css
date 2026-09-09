@@ -5,3 +5,18 @@
 .science-picture{display:block;background:white;border-radius:12px;padding:12px;margin:15px 0 24px;text-decoration:none}.science-picture img{width:100%;height:auto;max-height:350px;object-fit:contain}.science-picture span{font-size:.8rem;display:block;color:#506481;text-align:center}.projecting .science-picture img{max-height:260px}
 
 .comparison-flow li:after,.comparison-flow .flow-number{display:none}.dependency-map{display:flex;align-items:center;gap:12px;margin:24px 0}.dependency-map>div{background:white;padding:20px 12px;border:1px solid #c4d2e4;border-radius:12px;flex:1;min-width:0}.dependency-map span{display:block;font-size:.85rem;margin-top:8px;overflow-wrap:anywhere}.dependency-map .shared-module{background:#daf4eb;border:2px solid #22897c}.dependency-map>b{color:#22897c;font-size:24px}.set-map{padding:18px;border:2px solid #344c81;background:#e7eefb;border-radius:14px;font-weight:700;margin-bottom:22px}.set-map>div{margin:12px 0 0 35px;padding:18px;border:2px solid #28867b;border-radius:12px;background:#ddf3e9}.set-map>div>div{margin:12px 0 0 35px;padding:18px;border:2px solid #d4b04a;border-radius:12px;background:#fff1bc}@media(max-width:700px){.dependency-map{flex-direction:column}.dependency-map>div{width:100%}.dependency-map>b{transform:rotate(90deg)}.set-map>div,.set-map>div>div{margin-left:12px}}
+
+/* Textbook hierarchy: book numbering is independent of web activity order. */
+.book-toc {margin:24px 0;padding:20px;border:1px solid var(--line,#cbd5e1);border-radius:16px;background:var(--surface,#fff)}
+.book-toc h2 {font-size:1.25rem}.book-toc h3 {font-size:1.05rem;margin-bottom:4px}
+.book-toc ol,.book-toc ul {list-style:none;padding:0}.book-toc ol>li {margin:16px 0;padding-left:12px;border-left:3px solid #148575}
+.book-toc ul {margin-top:6px}.book-pages {display:block;font-size:.85rem;color:#475569}
+.book-middle+.book-middle {border-top:1px solid #cbd5e1;margin-top:16px;padding-top:8px}
+.book-review {font-size:.85rem;color:#475569}.book-extra a {display:block;margin:8px 0}
+.book-location {padding:12px 16px;border-left:4px solid #148575;background:#eef8f5;border-radius:8px;margin-bottom:20px;color:#163d39}
+.book-location p {margin:5px 0}.book-location span,.book-topic-pages {font-size:.85rem}
+.rail .book-toc {padding:0;border:0;background:transparent;margin-top:12px}.rail .book-toc h2 {font-size:1rem}
+.rail .book-toc h3 {font-size:.92rem}.rail .book-toc strong {font-size:.86rem}.rail .book-toc a {font-size:.82rem;padding:7px 0}
+.rail .book-toc li {margin:10px 0}.rail .book-toc p {font-size:.8rem}
+.projecting .teacher-page>.book-toc {display:none}
+@media print {.teacher-page>.book-toc {display:none}.book-location {break-inside:avoid}}

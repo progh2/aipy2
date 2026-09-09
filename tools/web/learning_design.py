@@ -1,6 +1,7 @@
 """Shared visual explanations and separate teacher notes, all authored for this course."""
 from html import escape as esc
-META={1:('모듈과 패키지 활용','8–39','기능을 나누고 연결하기'),2:('GUI 프로그래밍','40–59','입력·이벤트·출력 연결하기'),3:('파이썬과 머신러닝','60–131','데이터로 학습하고 새 데이터로 평가하기'),4:('파이썬과 컴퓨터 비전','132–195','픽셀에서 특징과 검출까지')}
+import textbook
+META={1:('모듈과 패키지 활용','6–39','기능을 나누고 연결하기'),2:('GUI 프로그래밍','40–59','입력·이벤트·출력 연결하기'),3:('파이썬과 머신러닝','60–131','데이터로 학습하고 새 데이터로 평가하기'),4:('파이썬과 컴퓨터 비전','132–195','픽셀에서 특징과 검출까지')}
 # title, process cards, table headings, table rows. Diagram labels are also readable text.
 VISUALS={
 'overview':('파일과 폴더로 보는 재사용',['main.py｜기능을 사용하는 입구','calculator.py｜add 함수를 정의','다른 앱｜같은 함수를 다시 사용'],['구조','비유','예'],[['모듈','기능 상자','calculator.py'],['패키지','상자를 묶은 서랍','nature/animals/'],['라이브러리','재사용 도구 모음','표준 라이브러리']]),
@@ -79,17 +80,19 @@ CAUTIONS={
 def teacher_pages(web,layout,units,notes):
  root=web/'teacher';root.mkdir(exist_ok=True)
  home='<main id="main" class="teacher-page"><p class="eyebrow">TEACHER DESK</p><h1>교사용 수업 요약</h1><p class="lead">단원별 설명 흐름, 시연 포인트, 오개념, 평가 연결을 한곳에서 확인합니다. 수업 화면 보기를 누르면 학생에게 보여 줄 개념 도식만 한 장씩 표시합니다.</p><div class="learning-map">'
- for u in units:home+=f'<a href="unit0{u}.html"><b>0{u}</b><span>{META[u][0]}</span><small>{len(units[u])}개 개념 화면</small></a>'
+ for u in units:home+=f'<a href="unit0{u}.html"><b>{textbook.ROMAN[u]}</b><span>{META[u][0]}</span><small>교과서 {textbook.BOOK[u][1]}쪽 · {len(units[u])}개 개념 화면</small></a>'
  home+='</div><h2>자료 사용 순서</h2>'+flow(['교사용 요약에서 목표·오개념 확인','수업 화면으로 구조 설명','학생용 실습 링크로 전환','결과·설명·저널 확인'])+'<section class="teacher-note"><h2>차시와 평가의 기준</h2><p>평가 항목은 제공된 2026학년도 2학기 운영 계획 _g에 근거합니다. 아래 시간 배분은 50분 수업 운영 제안이며 확정 시수나 평가 기준을 변경하지 않습니다. 기존 학생 화면의 일률적인 “6차시” 표기는 제거했습니다.</p><p>성취기준·세부 점수 부여와 실제 제출 경로는 학교의 확정 문서에 따릅니다. 웹 연습 완료·자동 검사는 공식 성적이 아닙니다.</p></section><a href="../index.html">학생용 대문으로 →</a></main>'
  (root/'index.html').write_text(layout('교사용 수업 요약',home,'../'))
  for u,ls in units.items():
   title=META[u][0]
-  s=f'<main id="main" class="teacher-page"><p class="eyebrow">TEACHER / UNIT 0{u}</p><h1>{u}단원 수업 요약 · {title}</h1><p class="lead">교과서 {META[u][1]}쪽 · 도식 → 시연 → 학생 실험 → 설명 확인</p><div class="slide-toolbar"><a href="index.html">교사 대문</a><button id="present-toggle">수업 화면으로 보기</button><button id="slide-prev">← 이전</button><span id="slide-position"></span><button id="slide-next">다음 →</button><button id="print-summary">도식 인쇄 / PDF</button><a href="../units/unit0{u}/index.html">학생 실습실 →</a></div><section class="teacher-overview"><h2>50분 수업 운영 제안</h2>'+table(['단계','시간','교사 확인'],[['도입·결과 예상','5분','정답 전에 입력·출력 예상 받기'],['구조 설명·시연','10분','도식과 코드의 각 부분 연결'],['학생 코드 변형','25분','정상·경계·오류 조건 확인'],['설명·저널','10분','결과 이유와 수정 근거 확인']])+ '<h2>평가 연결</h2>'+table(['항목','관찰할 증거','배점/연결'],RUBRICS[u])+'</section><details class="teacher-note"><summary>교과서 대조·지도 유의사항</summary><ul>'+''.join('<li>'+esc(p)+'</li>' for p in CAUTIONS[u])+''.join('<li>'+esc(title+': '+p)+'</li>' for title,p in notes[u])+'</ul></details>'
-  summary=f'<main id="main" class="summary-page"><p class="eyebrow">VISUAL SUMMARY / UNIT 0{u}</p><h1>{title} · 그림으로 정리</h1><p class="lead">흐름도와 표를 보고 각 단계를 내 말로 설명하세요.</p><a href="index.html">단원 실습으로 돌아가기 →</a>'
+  s=f'<main id="main" class="teacher-page"><p class="eyebrow">TEACHER / UNIT 0{u}</p><h1>{textbook.unit_label(u)} · 수업 요약</h1><p class="lead">교과서 {META[u][1]}쪽 · 도식 → 시연 → 학생 실험 → 설명 확인</p><div class="slide-toolbar"><a href="index.html">교사 대문</a><button id="present-toggle">수업 화면으로 보기</button><button id="slide-prev">← 이전</button><span id="slide-position"></span><button id="slide-next">다음 →</button><button id="print-summary">도식 인쇄 / PDF</button><a href="../units/unit0{u}/index.html">학생 실습실 →</a></div><section class="teacher-overview"><h2>50분 수업 운영 제안</h2>'+table(['단계','시간','교사 확인'],[['도입·결과 예상','5분','정답 전에 입력·출력 예상 받기'],['구조 설명·시연','10분','도식과 코드의 각 부분 연결'],['학생 코드 변형','25분','정상·경계·오류 조건 확인'],['설명·저널','10분','결과 이유와 수정 근거 확인']])+ '<h2>평가 연결</h2>'+table(['항목','관찰할 증거','배점/연결'],RUBRICS[u])+'</section><details class="teacher-note"><summary>교과서 대조·지도 유의사항</summary><ul>'+''.join('<li>'+esc(p)+'</li>' for p in CAUTIONS[u])+''.join('<li>'+esc(title+': '+p)+'</li>' for title,p in notes[u])+'</ul></details>'
+  summary=f'<main id="main" class="summary-page"><p class="eyebrow">VISUAL SUMMARY / UNIT 0{u}</p><h1>{textbook.unit_label(u)} · 그림으로 정리</h1><p class="lead">흐름도와 표를 보고 각 단계를 내 말로 설명하세요.</p><a href="index.html">단원 실습으로 돌아가기 →</a>'
+  s+=textbook.toc(u,ls)
+  summary+=textbook.toc(u,ls)
   for i,l in enumerate(ls):
    fig=visual(u,l,"../")
-   s+=f'<section class="teaching-slide" id="{l["id"]}"><p class="eyebrow">{i+1:02} / 교과서 {l["pages"]}</p><h2>{esc(l["title"])}</h2><p class="lesson-lead">{esc(l["lead"])}</p>'+fig+f'<a href="../units/unit0{u}/index.html#{l["id"]}">이 개념 실습으로 →</a><details class="teacher-note"><summary>시연·발문·확인</summary><p><b>발문:</b> {esc(l["lead"])}</p><p><b>시연:</b> '+('연결 예제를 실행하기 전에 결과를 예상하게 하고 입력·조건 하나를 바꿔 비교합니다.' if l['examples'] else '표의 예시를 학생의 학교생활 사례로 바꾸어 입력과 출력을 구별하게 합니다.')+'</p><p><b>확인:</b> '+esc(l['tasks'][0] if l['tasks'] else '각 단계의 입력과 출력을 설명할 수 있는지 확인합니다.')+'</p></details></section>'
-   summary+=f'<section class="teaching-slide" id="{l["id"]}"><h2>{i+1:02}. {esc(l["title"])}</h2>'+visual(u,l)+f'<a href="index.html#{l["id"]}">실습하기 →</a></section>'
+   s+=f'<section class="teaching-slide" id="{l["id"]}">{textbook.badge(u,l)}<p class="eyebrow">웹 학습 주제 {i+1:02}</p><h2>{esc(l["title"])}</h2><p class="lesson-lead">{esc(l["lead"])}</p>'+fig+f'<a href="../units/unit0{u}/index.html#{l["id"]}">이 개념 실습으로 →</a><details class="teacher-note"><summary>시연·발문·확인</summary><p><b>발문:</b> {esc(l["lead"])}</p><p><b>시연:</b> '+('연결 예제를 실행하기 전에 결과를 예상하게 하고 입력·조건 하나를 바꿔 비교합니다.' if l['examples'] else '표의 예시를 학생의 학교생활 사례로 바꾸어 입력과 출력을 구별하게 합니다.')+'</p><p><b>확인:</b> '+esc(l['tasks'][0] if l['tasks'] else '각 단계의 입력과 출력을 설명할 수 있는지 확인합니다.')+'</p></details></section>'
+   summary+=f'<section class="teaching-slide" id="{l["id"]}">{textbook.badge(u,l)}<h2>{esc(l["title"])}</h2>'+visual(u,l)+f'<a href="index.html#{l["id"]}">실습하기 →</a></section>'
   s+='</main>';summary+='</main>'
   (root/f'unit0{u}.html').write_text(layout(title+' · 교사용',s,'../'))
   (web/f'units/unit0{u}/summary.html').write_text(layout(title+' · 시각 요약',summary,'../../'))

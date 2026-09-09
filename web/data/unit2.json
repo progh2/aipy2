@@ -16,7 +16,15 @@
         "좋은 UI와 불편한 UI 사례를 한 가지씩 설명하세요.",
         "버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요."
       ],
-      "extra": false
+      "extra": false,
+      "textbook": [
+        {
+          "middle": "01. GUI 프로그래밍 개요",
+          "middle_pages": "42–48",
+          "small": "01. 사용자 인터페이스",
+          "pages": "43–44"
+        }
+      ]
     },
     {
       "id": "libraries",
@@ -42,7 +50,15 @@
         "같은 앱을 학교 실습용과 터치 키오스크용으로 만들 때 선택 근거를 비교하세요.",
         "48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요."
       ],
-      "extra": false
+      "extra": false,
+      "textbook": [
+        {
+          "middle": "01. GUI 프로그래밍 개요",
+          "middle_pages": "42–48",
+          "small": "02. 파이썬 GUI",
+          "pages": "45–46"
+        }
+      ]
     },
     {
       "id": "widgets",
@@ -62,7 +78,15 @@
         "회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.",
         "체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요."
       ],
-      "extra": false
+      "extra": false,
+      "textbook": [
+        {
+          "middle": "02. GUI 프로그래밍 작성",
+          "middle_pages": "49–57",
+          "small": "01. tkinter의 구성 요소",
+          "pages": "50–51"
+        }
+      ]
     },
     {
       "id": "layout",
@@ -82,7 +106,15 @@
         "창을 좁게·넓게 바꾸어 잘리는 요소를 찾으세요.",
         "웹 배치 체험에서 수평·수직·격자를 비교하세요."
       ],
-      "extra": false
+      "extra": false,
+      "textbook": [
+        {
+          "middle": "02. GUI 프로그래밍 작성",
+          "middle_pages": "49–57",
+          "small": "01. tkinter의 구성 요소",
+          "pages": "50–51"
+        }
+      ]
     },
     {
       "id": "events",
@@ -102,7 +134,21 @@
         "인사 버튼에 빈 이름을 넣어도 동작하도록 만드세요.",
         "버튼을 두 번 눌렀을 때 상태가 어떻게 바뀌는지 추적하세요."
       ],
-      "extra": false
+      "extra": false,
+      "textbook": [
+        {
+          "middle": "02. GUI 프로그래밍 작성",
+          "middle_pages": "49–57",
+          "small": "01. tkinter의 구성 요소",
+          "pages": "50–51"
+        },
+        {
+          "middle": "02. GUI 프로그래밍 작성",
+          "middle_pages": "49–57",
+          "small": "02. GUI 앱 개발",
+          "pages": "52–55"
+        }
+      ]
     },
     {
       "id": "memo",
@@ -128,7 +174,15 @@
         "파일 열기 코드의 순서를 섞은 뒤 다시 배열하세요.",
         "메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?"
       ],
-      "extra": false
+      "extra": false,
+      "textbook": [
+        {
+          "middle": "02. GUI 프로그래밍 작성",
+          "middle_pages": "49–57",
+          "small": "02. GUI 앱 개발",
+          "pages": "52–55"
+        }
+      ]
     },
     {
       "id": "pyside",
@@ -149,7 +203,8 @@
         "Designer의 objectName과 화면에 보이는 text가 다른 속성임을 확인하세요.",
         "tkinter의 이벤트와 Qt 시그널을 자신의 말로 비교하세요."
       ],
-      "extra": true
+      "extra": true,
+      "textbook": []
     },
     {
       "id": "project",
@@ -170,7 +225,8 @@
         "빈 입력, 0면 주사위, 잘못된 날짜, 중복 이름을 시험하세요.",
         "프로젝트 ZIP과 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
       ],
-      "extra": true
+      "extra": true,
+      "textbook": []
     },
     {
       "id": "review",
@@ -186,7 +242,8 @@
         "예제 없이 창·버튼·콜백·이벤트 루프를 작성하세요.",
         "교과서 확인학습과 종합평가 연계 문제를 풀고 틀린 이유를 기록하세요."
       ],
-      "extra": false
+      "extra": false,
+      "textbook": []
     }
   ],
   "examples": {
