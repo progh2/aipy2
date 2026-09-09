@@ -1,0 +1,1411 @@
+{
+  "unit": 4,
+  "lessons": [
+    {
+      "id": "cv-overview",
+      "title": "컴퓨터 비전과 영상 처리",
+      "pages": "134–139",
+      "lead": "사진을 다듬는 것과 사진의 의미를 판단하는 것을 구별하세요.",
+      "paragraphs": [
+        "영상 처리는 밝기·잡음·크기처럼 이미지 표현을 바꾸는 작업입니다. 컴퓨터 비전은 영상에서 물체·위치·행동 등 의미 있는 정보를 추론합니다. 전처리는 비전 시스템의 일부로 쓰일 수 있습니다.",
+        "스마트폰, 교통, 제조, 보안, 의료 보조 등에서 활용하지만 조명·가림·각도·데이터 분포 변화로 오류가 생길 수 있습니다. 인간은 맥락을 활용하고 컴퓨터는 수치 연산으로 반복 분석합니다. 촬영 자료의 이용 범위와 오판 영향을 생각하며 실습은 제공 도형과 사용 허락을 받은 자료로 진행하세요."
+      ],
+      "examples": [],
+      "tasks": [
+        "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "컴퓨터 비전과 영상 처리 · 한눈에 보기",
+        [
+          "영상 입력",
+          "화질·크기 처리",
+          "특징·객체 분석",
+          "결과 표시·사람의 확인"
+        ],
+        [
+          "작업",
+          "출력",
+          "구분"
+        ],
+        [
+          [
+            "블러",
+            "새 이미지",
+            "영상 처리"
+          ],
+          [
+            "객체 검출",
+            "위치와 클래스",
+            "컴퓨터 비전"
+          ],
+          [
+            "사람의 검토",
+            "맥락에 따른 판단",
+            "시스템 활용"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-pixels",
+      "title": "픽셀·해상도·RGB·그레이스케일",
+      "pages": "140–141",
+      "lead": "숫자 행렬이 그림이 되는 과정을 살펴보세요.",
+      "paragraphs": [
+        "이미지는 픽셀의 격자입니다. 너비×높이가 해상도이고, 8비트 채널 하나는 보통 0~255 값을 사용합니다. RGB는 빨강·초록·파랑 채널이고 그레이스케일은 밝기 한 채널입니다.",
+        "NumPy 이미지의 shape는 보통 (높이, 너비, 채널)입니다. 배열의 size는 채널을 포함한 원소 수이므로 컬러 이미지의 픽셀 수와 다릅니다. 예를 들어 (2,3,3)은 픽셀 6개, 채널 값 18개입니다."
+      ],
+      "examples": [
+        "cv-pixels"
+      ],
+      "tasks": [
+        "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "픽셀·해상도·RGB·그레이스케일 · 한눈에 보기",
+        [
+          "숫자 하나｜한 채널 값",
+          "RGB 3개｜컬러 픽셀",
+          "행과 열｜이미지",
+          "연속된 이미지｜영상"
+        ],
+        [
+          "표현",
+          "예",
+          "의미"
+        ],
+        [
+          [
+            "shape",
+            "(2,3,3)",
+            "높이2·너비3·채널3"
+          ],
+          [
+            "픽셀 수",
+            "2×3=6",
+            "위치의 개수"
+          ],
+          [
+            "원소 수 size",
+            "2×3×3=18",
+            "채널 값의 개수"
+          ],
+          [
+            "OpenCV 기본 순서",
+            "B,G,R",
+            "RGB 표시 전 변환"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-pipeline",
+      "title": "알고리즘·처리 과정·평가 기준",
+      "pages": "142–146",
+      "lead": "정확도뿐 아니라 처리 시간도 비교하세요.",
+      "paragraphs": [
+        "패턴 매칭은 정해진 모양과의 유사성, 특징점 검출은 모서리 같은 위치 단서, 머신러닝은 학습한 특징 관계, 딥러닝은 다층 신경망의 표현을 활용합니다. 목적과 입력 조건에 따라 도구를 고릅니다.",
+        "입력 → 전처리 → 특징 추출·검출 → 해석 → 출력으로 구성할 수 있습니다. 같은 대상도 조명과 각도가 바뀌면 결과가 달라집니다. 정확도·속도·실시간 지연·조건 변화에 대한 안정성을 함께 비교하세요."
+      ],
+      "examples": [],
+      "tasks": [
+        "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요."
+      ],
+      "extra": false,
+      "visual": [
+        "알고리즘·처리 과정·평가 기준 · 한눈에 보기",
+        [
+          "입력",
+          "전처리",
+          "특징과 위치",
+          "의미 해석",
+          "출력·평가"
+        ],
+        [
+          "기준",
+          "질문"
+        ],
+        [
+          [
+            "정확성",
+            "무엇을 놓치거나 잘못 찾나?"
+          ],
+          [
+            "처리 시간",
+            "한 장에 몇 ms인가?"
+          ],
+          [
+            "실시간성",
+            "입력부터 출력까지 얼마나 늦나?"
+          ],
+          [
+            "안정성",
+            "조명·가림·각도 변화에도 유지되나?"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-libraries",
+      "title": "OpenCV·Pillow·Matplotlib·scikit-image",
+      "pages": "147–154",
+      "lead": "입출력·편집·표시·분석 도구를 구별해 보세요.",
+      "paragraphs": [
+        "OpenCV는 영상 입출력과 처리·검출, Pillow는 이미지 편집·형식 변환, Matplotlib은 결과 비교와 그래프, scikit-image는 필터와 과학적 이미지 분석을 제공합니다.",
+        "OpenCV의 기본 컬러 읽기는 BGR이며 Pillow는 보통 RGB를 사용합니다. Pillow size의 (너비, 높이)와 NumPy shape의 (높이, 너비)를 구별하세요. 화면 표시 방식도 라이브러리별로 다릅니다."
+      ],
+      "examples": [
+        "cv-pillow",
+        "cv-skimage"
+      ],
+      "tasks": [
+        "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요."
+      ],
+      "extra": false,
+      "visual": [
+        "OpenCV·Pillow·Matplotlib·scikit-image · 한눈에 보기",
+        [
+          "입력 읽기",
+          "배열/이미지 객체",
+          "처리 도구 적용",
+          "표시·저장"
+        ],
+        [
+          "도구",
+          "설치 이름",
+          "핵심 호출"
+        ],
+        [
+          [
+            "OpenCV",
+            "opencv-python",
+            "cv2.imread / cv2.imwrite"
+          ],
+          [
+            "Pillow",
+            "pillow",
+            "Image.open / resize / save"
+          ],
+          [
+            "Matplotlib",
+            "matplotlib",
+            "imshow / subplots"
+          ],
+          [
+            "scikit-image",
+            "scikit-image",
+            "filters.sobel"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-io",
+      "title": "이미지 읽기·표시·변환·저장",
+      "pages": "155–162",
+      "lead": "파일을 못 읽었을 때 무엇부터 확인할까요?",
+      "paragraphs": [
+        "imread가 실패하면 None을 반환하므로 shape를 읽기 전에 확인합니다. cvtColor는 색 공간을, resize는 크기를 바꿉니다. getRotationMatrix2D와 warpAffine은 지정한 중심과 각도로 회전시킵니다.",
+        "OpenCV 창은 imshow로 표시하고 waitKey로 키 입력과 창 처리를 기다린 뒤 destroyAllWindows로 정리합니다. 저장 폴더를 먼저 만들고 imwrite의 성공 여부도 확인하세요. 고정 크기로 바꾸면 비율이 달라질 수 있고 회전 출력 영역 밖은 잘릴 수 있습니다."
+      ],
+      "examples": [
+        "cv-io",
+        "cv-display"
+      ],
+      "tasks": [
+        "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "이미지 읽기·표시·변환·저장 · 한눈에 보기",
+        [
+          "imread → None 확인",
+          "색상·크기·회전",
+          "imshow + waitKey",
+          "imwrite 성공 확인",
+          "창 정리"
+        ],
+        [
+          "변환",
+          "입력",
+          "주의"
+        ],
+        [
+          [
+            "resize",
+            "(너비,높이)",
+            "shape 순서와 반대"
+          ],
+          [
+            "cvtColor",
+            "변환 코드",
+            "BGR↔RGB / GRAY"
+          ],
+          [
+            "warpAffine",
+            "행렬·출력 크기",
+            "잘림과 빈 영역"
+          ],
+          [
+            "imwrite",
+            "경로·이미지",
+            "폴더 먼저 생성"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-filters",
+      "title": "블러·에지·이진화",
+      "pages": "163–168",
+      "lead": "밝기를 부드럽게 할까요, 경계를 찾을까요?",
+      "paragraphs": [
+        "평균 블러는 주변 평균, 가우시안 블러는 가중 평균, 중앙값 블러는 주변 중앙값으로 잡음을 줄입니다. 커널이 커지면 세부 정보가 더 사라질 수 있습니다. Canny는 밝기 변화의 경계를 찾으며 두 임계값이 연결되는 에지의 선택에 영향을 줍니다.",
+        "고정 이진화는 한 기준, Otsu는 밝기 분포를 이용해 자동 선택한 기준, 적응형은 주변 영역별 기준을 사용합니다. THRESH_BINARY에서는 값이 기준보다 클 때 255이고 같거나 작으면 0입니다. 조명이 고르지 않으면 방법별 차이가 커집니다."
+      ],
+      "examples": [
+        "cv-filters"
+      ],
+      "tasks": [
+        "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "블러·에지·이진화 · 한눈에 보기",
+        [
+          "원본",
+          "블러로 잡음 완화",
+          "그레이스케일",
+          "에지 또는 이진화",
+          "조건별 결과 비교"
+        ],
+        [
+          "기법",
+          "목적",
+          "바꿀 값"
+        ],
+        [
+          [
+            "블러",
+            "잡음 완화",
+            "커널 크기"
+          ],
+          [
+            "Canny",
+            "경계 찾기",
+            "하한·상한"
+          ],
+          [
+            "고정/Otsu",
+            "전역 이진화",
+            "고정/자동 임계값"
+          ],
+          [
+            "적응형",
+            "영역별 이진화",
+            "홀수 blockSize·C"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-transform",
+      "title": "원근 변환과 마우스 이벤트",
+      "pages": "168–172",
+      "lead": "원본 네 점과 목적지 네 점의 순서를 맞춰 보세요.",
+      "paragraphs": [
+        "원근 변환은 기울어진 평면의 네 꼭짓점을 새 사각형의 네 꼭짓점에 대응시킵니다. getPerspectiveTransform으로 행렬을 구하고 warpPerspective로 새 이미지에 매핑합니다.",
+        "마우스 콜백은 클릭 좌표를 모으고, 네 점을 모으면 변환합니다. 두 목록의 순서를 일치시키고 교차되거나 한 직선 위에 놓인 점을 피하세요. ESC 취소와 읽기 실패도 처리합니다."
+      ],
+      "examples": [
+        "cv-perspective",
+        "cv-click-card"
+      ],
+      "tasks": [
+        "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "원근 변환과 마우스 이벤트 · 한눈에 보기",
+        [
+          "왼쪽 위",
+          "오른쪽 위",
+          "오른쪽 아래",
+          "왼쪽 아래",
+          "대응 행렬 → 새 이미지"
+        ],
+        [
+          "단계",
+          "OpenCV",
+          "주의"
+        ],
+        [
+          [
+            "클릭 연결",
+            "setMouseCallback",
+            "이벤트 종류 확인"
+          ],
+          [
+            "행렬",
+            "getPerspectiveTransform",
+            "float32·점 순서"
+          ],
+          [
+            "변환",
+            "warpPerspective",
+            "출력 (너비,높이)"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-features",
+      "title": "에지·코너·윤곽선으로 중요한 부분 찾기",
+      "pages": "173–176",
+      "lead": "선·점·닫힌 경계 중 무엇이 필요한가요?",
+      "paragraphs": [
+        "에지는 밝기가 급변하는 경계, 코너는 여러 방향으로 밝기가 바뀌는 위치, 윤곽선은 이진 영역의 경계를 잇는 점 집합입니다. 파노라마의 대응 위치, 도형 개수, 크기 측정 등 목적에 따라 선택합니다.",
+        "코너가 없으면 반환값이 None일 수 있습니다. 윤곽선은 이진화 결과와 잡음에 영향을 받으므로 면적 등으로 걸러야 합니다. 단순히 에지를 찾았다고 물체의 종류나 신원을 안 것은 아닙니다."
+      ],
+      "examples": [
+        "cv-features"
+      ],
+      "tasks": [
+        "네모와 원에서 코너 수가 왜 다른지 관찰하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "에지·코너·윤곽선으로 중요한 부분 찾기 · 한눈에 보기",
+        [
+          "그레이스케일",
+          "에지 / 코너 / 이진화",
+          "윤곽·위치·면적",
+          "그림에 표시"
+        ],
+        [
+          "도구",
+          "결과",
+          "활용"
+        ],
+        [
+          [
+            "Canny",
+            "경계 픽셀",
+            "형태 단서"
+          ],
+          [
+            "goodFeaturesToTrack",
+            "코너 좌표",
+            "영상 간 대응"
+          ],
+          [
+            "findContours",
+            "경계 점 목록",
+            "영역·면적·개수"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-haar",
+      "title": "얼굴·눈·웃음 검출과 웹캠",
+      "pages": "177–184",
+      "lead": "얼굴의 위치를 찾는 것과 누구인지 아는 것은 달라요.",
+      "paragraphs": [
+        "Haar Cascade는 밝기 패턴과 단계적 판별로 특정 대상의 후보 영역을 찾습니다. 얼굴을 찾은 뒤 그 영역(ROI) 안에서 눈·웃음 패턴을 탐색하면 계산 범위를 줄일 수 있습니다. 웃음 패턴 검출만으로 감정을 단정할 수 없습니다.",
+        "scaleFactor는 크기 탐색 간격, minNeighbors는 후보 유지 조건에 영향을 줍니다. 값에 따른 속도·누락·오탐을 실제로 비교하세요. VideoCapture → read → 처리·표시 → 종료 흐름에서 실패를 확인하고 finally로 release와 창 정리를 보장합니다."
+      ],
+      "examples": [
+        "cv-haar",
+        "cv-camera"
+      ],
+      "tasks": [
+        "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "얼굴·눈·웃음 검출과 웹캠 · 한눈에 보기",
+        [
+          "분류기·카메라 확인",
+          "프레임 읽기",
+          "얼굴 → ROI 속 눈/웃음",
+          "사각형 표시",
+          "종료·자원 해제"
+        ],
+        [
+          "문제",
+          "시도",
+          "기록"
+        ],
+        [
+          [
+            "놓친 얼굴",
+            "크기 간격·조명 조절",
+            "누락 수"
+          ],
+          [
+            "잘못 찾은 얼굴",
+            "minNeighbors 조절",
+            "오탐 수"
+          ],
+          [
+            "느린 처리",
+            "프레임 축소",
+            "처리 시간"
+          ],
+          [
+            "눈 좌표",
+            "ROI 원점 더하기",
+            "전체 화면 위치"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-yolo",
+      "title": "YOLOv8 객체 탐지와 개수 표시",
+      "pages": "185–191",
+      "lead": "박스·클래스·신뢰도를 읽고 프레임별 개수를 세어 보세요.",
+      "paragraphs": [
+        "YOLO 예제는 사전 학습된 yolov8n.pt로 이미지 속 여러 클래스의 위치와 점수를 반환합니다. 이 단원은 교과서의 YOLOv8 경로를 다루며 특정 버전을 최신이라고 단정하지 않습니다. conf 기준을 바꾸면 출력되는 후보 수가 달라집니다.",
+        "검출 결과의 boxes.cls는 클래스 번호, conf는 모델 점수, xyxy는 박스 좌표입니다. 프레임마다 Counter를 새로 만들어 현재 개수를 셉니다. 여러 프레임의 합계는 고유 객체 수가 아니며, 누적 통행량에는 추적과 중복 처리 설계가 더 필요합니다. 보안·교통·매장·농업·운전 보조 등 응용에서는 해당 대상의 학습 범위와 실패 조건도 확인해야 합니다."
+      ],
+      "examples": [
+        "cv-yolo",
+        "cv-yolo-count",
+        "cv-count"
+      ],
+      "tasks": [
+        "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "YOLOv8 객체 탐지와 개수 표시 · 한눈에 보기",
+        [
+          "모델·입력 준비",
+          "추론",
+          "클래스·좌표·점수",
+          "현재 프레임 개수",
+          "표시·조건 비교"
+        ],
+        [
+          "Haar",
+          "YOLO",
+          "선택 기준"
+        ],
+        [
+          [
+            "특정 패턴 분류기",
+            "다중 클래스 모델",
+            "찾을 대상"
+          ],
+          [
+            "명암 패턴 기반",
+            "학습 가중치 기반",
+            "입력 조건"
+          ],
+          [
+            "CPU에서 비교적 가벼운 구성",
+            "모델·해상도별 비용 차이",
+            "실측 속도와 오류"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "cv-project",
+      "title": "컴퓨터 비전 프로젝트와 단원 정리",
+      "pages": "192–195 + 확장",
+      "lead": "입력·처리·출력을 나누어 완성하세요.",
+      "paragraphs": [
+        "문서 스캔은 원근 보정 → 잡음 완화 → 대비 조정 → 이진화 흐름을 실험할 수 있습니다. 항상 한 순서가 모든 이미지에 최선인 것은 아니므로 같은 입력에서 결과를 비교하세요. 정적 이미지로 검증한 뒤 카메라 입력으로 확장합니다.",
+        "라이브러리 선택, 블러·이진화·에지의 목적, 얼굴 검출과 개인 식별의 차이, Haar 코드의 분류기·detectMultiScale·imshow를 점검하세요. 이미지와 오류 조건, 결과 비교표, 처리 시간과 한계를 함께 제출합니다."
+      ],
+      "examples": [
+        "cv-perspective",
+        "cv-features"
+      ],
+      "tasks": [
+        "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "컴퓨터 비전 프로젝트와 단원 정리 · 한눈에 보기",
+        [
+          "입력 자료·목표",
+          "처리 함수 모듈",
+          "오류·조건별 결과",
+          "GUI 또는 카메라 연결",
+          "비교표·저널"
+        ],
+        [
+          "프로젝트",
+          "핵심 처리",
+          "확인"
+        ],
+        [
+          [
+            "문서 스캔",
+            "원근·대비·이진화",
+            "글자와 경계 보존"
+          ],
+          [
+            "도형 계수",
+            "이진화·윤곽",
+            "잡음 제외"
+          ],
+          [
+            "객체 탐지",
+            "Haar / YOLO",
+            "오탐·누락·속도"
+          ]
+        ]
+      ]
+    }
+  ],
+  "examples": {
+    "cv-pixels": {
+      "id": "cv-pixels",
+      "title": "작은 이미지의 픽셀·반전·이진화",
+      "files": {
+        "main.py": "pixels = [[0, 64, 128], [192, 224, 255]]\nthreshold = 128\ninverted = [[255-v for v in row] for row in pixels]\nbinary = [[255 if v > threshold else 0 for v in row] for row in pixels]\nprint(\"height, width:\", len(pixels), len(pixels[0]))\nprint(\"Inverted:\", inverted)\nprint(\"Binary:\", binary)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert binary[0] == [0,0,0]\nassert inverted[1][-1] == 0\n",
+      "note": ""
+    },
+    "cv-pillow": {
+      "id": "cv-pillow",
+      "title": "Pillow로 만들기·크기 변경·회전·저장",
+      "files": {
+        "main.py": "from PIL import Image, ImageDraw\nimg = Image.new(\"RGB\", (240, 160), \"white\")\ndraw = ImageDraw.Draw(img)\ndraw.rectangle((30, 30, 130, 110), fill=\"navy\")\ndraw.ellipse((145, 40, 215, 110), fill=\"orange\")\nimg.save(\"original.png\")\nsmall = img.resize((120, 80))\nsmall.save(\"small.png\")\nimg.rotate(30, expand=True).save(\"rotated.png\")\nprint(\"size (width, height):\", img.size)\n",
+        "requirements.txt": "pillow\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert small.size == (120,80)\n",
+      "note": ""
+    },
+    "cv-skimage": {
+      "id": "cv-skimage",
+      "title": "scikit-image Sobel과 이미지 비교",
+      "files": {
+        "main.py": "import numpy as np\nfrom skimage import filters\nimport matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nimg = np.zeros((48, 64))\nimg[10:35, 15:45] = 1\nedges = filters.sobel(img)\nfig, axes = plt.subplots(1, 2)\naxes[0].imshow(img, cmap=\"gray\")\naxes[0].set_title(\"Original\")\naxes[1].imshow(edges, cmap=\"gray\")\naxes[1].set_title(\"Sobel\")\nplt.savefig(\"sobel.png\")\nprint(\"Edge maximum:\", edges.max())\n",
+        "requirements.txt": "numpy\nscikit-image\nmatplotlib\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": ""
+    },
+    "cv-io": {
+      "id": "cv-io",
+      "title": "OpenCV 읽기·색상·크기·회전·저장",
+      "files": {
+        "main.py": "import cv2\nimport numpy as np\nfrom pathlib import Path\nPath(\"result\").mkdir(exist_ok=True)\nimg = np.full((180, 260, 3), 235, dtype=np.uint8)\ncv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)\ncv2.circle(img, (190, 90), 35, (40, 160, 40), -1)\ncv2.imwrite(\"scene.png\", img)\nloaded = cv2.imread(\"scene.png\")\nif loaded is None:\n    raise FileNotFoundError(\"scene.png\")\nprint(\"shape:\", loaded.shape, \"size:\", loaded.size)\ngray = cv2.cvtColor(loaded, cv2.COLOR_BGR2GRAY)\nsmall = cv2.resize(loaded, (130, 90))\ncenter = (loaded.shape[1] / 2, loaded.shape[0] / 2)\nmatrix = cv2.getRotationMatrix2D(center, 30, 1.0)\nrotated = cv2.warpAffine(loaded, matrix, (260, 180))\nfor name, data in [(\"gray\", gray), (\"small\", small), (\"rotated\", rotated)]:\n    assert cv2.imwrite(f\"result/{name}.png\", data)\nprint(\"Saved:\", sorted(str(p) for p in Path(\"result\").glob(\"*.png\")))\n",
+        "requirements.txt": "numpy\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. "
+    },
+    "cv-display": {
+      "id": "cv-display",
+      "title": "PC 창에서 이미지 보기",
+      "files": {
+        "main.py": "import cv2\nimport numpy as np\nfrom pathlib import Path\nPath(\"result\").mkdir(exist_ok=True)\nimg = np.full((180, 260, 3), 235, dtype=np.uint8)\ncv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)\ncv2.circle(img, (190, 90), 35, (40, 160, 40), -1)\ncv2.imwrite(\"scene.png\", img)\ncv2.imshow(\"Scene\", img)\ncv2.waitKey(0)\ncv2.destroyAllWindows()\n",
+        "requirements.txt": "numpy\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. 창을 닫기 전에 키를 누릅니다. 화면 표시가 가능한 PC 환경이 필요합니다."
+    },
+    "cv-filters": {
+      "id": "cv-filters",
+      "title": "블러·Canny·세 가지 이진화 비교",
+      "files": {
+        "main.py": "import cv2\nimport numpy as np\nfrom pathlib import Path\nPath(\"result\").mkdir(exist_ok=True)\nimg = np.full((180, 260, 3), 235, dtype=np.uint8)\ncv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)\ncv2.circle(img, (190, 90), 35, (40, 160, 40), -1)\ncv2.imwrite(\"scene.png\", img)\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\noutputs = {\"mean\": cv2.blur(img, (7,7)), \"gaussian\": cv2.GaussianBlur(img,(7,7),0), \"median\": cv2.medianBlur(img,7), \"canny\": cv2.Canny(gray,50,150)}\noutputs[\"equalized\"] = cv2.equalizeHist(gray)\noutputs[\"clahe\"] = cv2.createCLAHE(clipLimit=2.0,tileGridSize=(8,8)).apply(gray)\n_, outputs[\"fixed\"] = cv2.threshold(gray,127,255,cv2.THRESH_BINARY)\notsu, outputs[\"otsu\"] = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)\noutputs[\"adaptive\"] = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,7)\nfor name, data in outputs.items():\n    cv2.imwrite(f\"result/{name}.png\", data)\nprint(\"Otsu threshold:\", otsu)\n",
+        "requirements.txt": "numpy\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. "
+    },
+    "cv-perspective": {
+      "id": "cv-perspective",
+      "title": "네 점으로 원근 변환",
+      "files": {
+        "main.py": "import cv2\nimport numpy as np\nfrom pathlib import Path\nPath(\"result\").mkdir(exist_ok=True)\nimg = np.full((180, 260, 3), 235, dtype=np.uint8)\ncv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)\ncv2.circle(img, (190, 90), 35, (40, 160, 40), -1)\ncv2.imwrite(\"scene.png\", img)\nsrc = np.float32([[30,30],[220,15],[240,150],[15,160]])\ndst = np.float32([[0,0],[199,0],[199,119],[0,119]])\nM = cv2.getPerspectiveTransform(src, dst)\nresult = cv2.warpPerspective(img, M, (200,120))\ncv2.imwrite(\"result/rectified.png\", result)\nprint(\"Output:\", result.shape)\n",
+        "requirements.txt": "numpy\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. "
+    },
+    "cv-click-card": {
+      "id": "cv-click-card",
+      "title": "마우스로 카드 네 꼭짓점 선택",
+      "files": {
+        "main.py": "import cv2\nimport numpy as np\nfrom pathlib import Path\nPath(\"result\").mkdir(exist_ok=True)\nimg = np.full((180, 260, 3), 235, dtype=np.uint8)\ncv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)\ncv2.circle(img, (190, 90), 35, (40, 160, 40), -1)\ncv2.imwrite(\"scene.png\", img)\npoints = []\npreview = img.copy()\ndef clicked(event, x, y, flags, param):\n    if event == cv2.EVENT_LBUTTONDOWN and len(points) < 4:\n        points.append([x,y])\n        cv2.circle(preview,(x,y),4,(0,0,255),-1)\ncv2.namedWindow(\"Click TL TR BR BL\")\ncv2.setMouseCallback(\"Click TL TR BR BL\", clicked)\ntry:\n    while len(points) < 4:\n        cv2.imshow(\"Click TL TR BR BL\", preview)\n        if cv2.waitKey(20) & 0xFF == 27:\n            break\n    if len(points) == 4:\n        src = np.float32(points)\n        dst = np.float32([[0,0],[199,0],[199,119],[0,119]])\n        if abs(cv2.contourArea(src)) < 10:\n            raise ValueError(\"사각형을 이루는 네 꼭짓점을 순서대로 선택하세요.\")\n        M = cv2.getPerspectiveTransform(src,dst)\n        cv2.imwrite(\"result/clicked-card.png\",cv2.warpPerspective(img,M,(200,120)))\nfinally:\n    cv2.destroyAllWindows()\n",
+        "requirements.txt": "numpy\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. 왼쪽 위→오른쪽 위→오른쪽 아래→왼쪽 아래 순서로 클릭하세요. ESC는 취소입니다."
+    },
+    "cv-features": {
+      "id": "cv-features",
+      "title": "에지·코너·윤곽선 비교",
+      "files": {
+        "main.py": "import cv2\nimport numpy as np\nfrom pathlib import Path\nPath(\"result\").mkdir(exist_ok=True)\nimg = np.full((180, 260, 3), 235, dtype=np.uint8)\ncv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)\ncv2.circle(img, (190, 90), 35, (40, 160, 40), -1)\ncv2.imwrite(\"scene.png\", img)\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nedges = cv2.Canny(gray,50,150)\ncorners = cv2.goodFeaturesToTrack(gray,50,0.01,10)\nmarked = img.copy()\nif corners is not None:\n    for corner in corners:\n        x,y = corner.ravel().astype(int)\n        cv2.circle(marked,(int(x),int(y)),4,(0,0,255),-1)\n_, binary = cv2.threshold(gray,180,255,cv2.THRESH_BINARY_INV)\ncontours,_ = cv2.findContours(binary,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)\noutlined = img.copy()\ncv2.drawContours(outlined,contours,-1,(0,180,0),2)\nfor contour in contours:\n    print(\"area:\",cv2.contourArea(contour),\"box:\",cv2.boundingRect(contour))\nfor name,data in [(\"edges\",edges),(\"corners\",marked),(\"contours\",outlined)]:\n    cv2.imwrite(f\"result/{name}.png\",data)\n",
+        "requirements.txt": "numpy\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. "
+    },
+    "cv-haar": {
+      "id": "cv-haar",
+      "title": "Haar 얼굴·눈·웃음 검출 · 정적 이미지",
+      "files": {
+        "main.py": "import cv2\nfrom pathlib import Path\nimage_path = \"photo.jpg\"  # 사용 허락을 받은 사진을 이 폴더에 넣으세요.\nimg = cv2.imread(image_path)\nif img is None:\n    raise FileNotFoundError(\"photo.jpg 파일을 예제 폴더에 넣으세요.\")\ngray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)\nface = cv2.CascadeClassifier(cv2.data.haarcascades + \"haarcascade_frontalface_default.xml\")\neye = cv2.CascadeClassifier(cv2.data.haarcascades + \"haarcascade_eye.xml\")\nsmile = cv2.CascadeClassifier(cv2.data.haarcascades + \"haarcascade_smile.xml\")\nif any(c.empty() for c in [face,eye,smile]):\n    raise RuntimeError(\"분류기 XML 파일을 확인하세요.\")\nfaces = face.detectMultiScale(gray,scaleFactor=1.1,minNeighbors=5)\nfor x,y,w,h in faces:\n    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)\n    roi = gray[y:y+h,x:x+w]\n    for classifier,color,neighbors in [(eye,(0,255,0),5),(smile,(0,0,255),20)]:\n        for a,b,c,d in classifier.detectMultiScale(roi,1.1,neighbors):\n            cv2.rectangle(img,(x+a,y+b),(x+a+c,y+b+d),color,2)\nPath(\"result\").mkdir(exist_ok=True)\ncv2.imwrite(\"result/faces.png\",img)\nprint(\"Faces:\",len(faces))\n",
+        "requirements.txt": "opencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "photo.jpg는 직접 준비합니다. 얼굴 위치를 찾는 예제이며 개인의 신원이나 감정을 판정하지 않습니다."
+    },
+    "cv-camera": {
+      "id": "cv-camera",
+      "title": "실시간 얼굴 검출과 자원 정리",
+      "files": {
+        "main.py": "import cv2\nface = cv2.CascadeClassifier(cv2.data.haarcascades + \"haarcascade_frontalface_default.xml\")\nif face.empty():\n    raise RuntimeError(\"분류기 로드 실패\")\ncap = cv2.VideoCapture(0)\ntry:\n    if not cap.isOpened():\n        raise RuntimeError(\"카메라 연결과 사용 권한을 확인하세요.\")\n    while True:\n        ok, frame = cap.read()\n        if not ok:\n            break\n        gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)\n        for x,y,w,h in face.detectMultiScale(gray,1.1,5):\n            cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),2)\n        cv2.imshow(\"Faces - press q to quit\",frame)\n        if cv2.waitKey(1) & 0xFF == ord(\"q\"):\n            break\nfinally:\n    cap.release()\n    cv2.destroyAllWindows()\n",
+        "requirements.txt": "opencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "실제 카메라는 PC에서 직접 실행할 때만 사용합니다. 영상은 저장하지 않습니다."
+    },
+    "cv-yolo": {
+      "id": "cv-yolo",
+      "title": "YOLOv8 객체 검출 · 이미지 한 장",
+      "files": {
+        "main.py": "from ultralytics import YOLO\nfrom pathlib import Path\nsource = Path(\"photo.jpg\")\nif not source.is_file():\n    raise FileNotFoundError(\"사용 허락을 받은 photo.jpg를 준비하세요.\")\nmodel = YOLO(\"yolov8n.pt\")\nresult = model(str(source), device=\"cpu\", conf=0.5)[0]\nresult.save(filename=\"detected.jpg\")\nfor box in result.boxes:\n    cls = int(box.cls.item())\n    print(result.names[cls], round(float(box.conf.item()),3), box.xyxy.tolist())\n",
+        "requirements.txt": "ultralytics\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "교과서의 YOLOv8 모델을 사용합니다. 첫 실행에 가중치를 내려받으므로 네트워크·디스크 공간이 필요합니다."
+    },
+    "cv-yolo-count": {
+      "id": "cv-yolo-count",
+      "title": "YOLO 웹캠 프레임별 객체 개수",
+      "files": {
+        "main.py": "import cv2\nfrom ultralytics import YOLO\nfrom collections import Counter\nmodel = YOLO(\"yolov8n.pt\")\ncap = cv2.VideoCapture(0)\ntry:\n    if not cap.isOpened():\n        raise RuntimeError(\"카메라를 확인하세요.\")\n    while True:\n        ok, frame = cap.read()\n        if not ok:\n            break\n        result = model(frame,device=\"cpu\",conf=0.5,verbose=False)[0]\n        counts = Counter(result.names[int(box.cls.item())] for box in result.boxes)\n        view = result.plot()\n        for row,(name,count) in enumerate(sorted(counts.items())):\n            cv2.putText(view,f\"{name}: {count}\",(10,30+25*row),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,255,0),2)\n        cv2.imshow(\"Frame counts - q to quit\",view)\n        if cv2.waitKey(1) & 0xFF == ord(\"q\"):\n            break\nfinally:\n    cap.release()\n    cv2.destroyAllWindows()\n",
+        "requirements.txt": "ultralytics\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "한 프레임 안의 개수입니다. 프레임 합계를 누적 통행 인원으로 해석하지 마세요."
+    },
+    "cv-count": {
+      "id": "cv-count",
+      "title": "검출 결과 목록으로 개수 세기",
+      "files": {
+        "main.py": "from collections import Counter\nframes = [[\"person\", \"car\", \"person\"], [\"person\", \"car\"]]\nfor i, names in enumerate(frames):\n    print(\"Frame\", i, dict(Counter(names)))\n# 같은 객체가 다음 프레임에 다시 등장할 수 있으므로 합계는 고유 객체 수가 아닙니다.\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert Counter(frames[0])[\"person\"] == 2\n",
+      "note": ""
+    }
+  },
+  "questions": [
+    {
+      "id": "u4-q001",
+      "unit": 4,
+      "topic": "기본",
+      "kind": "선택",
+      "prompt": "이미지 밝기를 부드럽게 만드는 작업은?",
+      "answer": "영상 처리",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "픽셀 값을 바꾸는 처리입니다.",
+      "options": [
+        "개인 식별",
+        "영상 처리"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 146쪽 1"
+    },
+    {
+      "id": "u4-q002",
+      "unit": 4,
+      "topic": "픽셀",
+      "kind": "선택",
+      "prompt": "shape가 (2,3,3)인 이미지의 픽셀 수는?",
+      "answer": "6",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "높이×너비이며 채널 수는 곱하지 않습니다.",
+      "options": [
+        "18",
+        "6"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 140–141쪽"
+    },
+    {
+      "id": "u4-q003",
+      "unit": 4,
+      "topic": "픽셀",
+      "kind": "선택",
+      "prompt": "같은 배열의 size 값은?",
+      "answer": "18",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "size는 채널을 포함한 전체 원소 수입니다.",
+      "options": [
+        "18",
+        "6"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 150쪽 보완"
+    },
+    {
+      "id": "u4-q004",
+      "unit": 4,
+      "topic": "색상",
+      "kind": "선택",
+      "prompt": "OpenCV imread의 기본 컬러 순서는?",
+      "answer": "BGR",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "Pillow 및 일반 RGB 표시와 순서가 다릅니다.",
+      "options": [
+        "RGB",
+        "BGR"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 155–156쪽"
+    },
+    {
+      "id": "u4-q005",
+      "unit": 4,
+      "topic": "입출력",
+      "kind": "선택",
+      "prompt": "imread가 파일을 못 읽으면 보통 무엇을 반환하나요?",
+      "answer": "None",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "shape 전에 None을 확인합니다.",
+      "options": [
+        "None",
+        "빈 문자열"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 155쪽"
+    },
+    {
+      "id": "u4-q006",
+      "unit": 4,
+      "topic": "크기",
+      "kind": "선택",
+      "prompt": "cv2.resize(img,(80,60))의 결과 높이와 너비는?",
+      "answer": "높이 60, 너비 80",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "크기 인자는 (너비, 높이)입니다.",
+      "options": [
+        "높이 80, 너비 60",
+        "높이 60, 너비 80"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 157쪽"
+    },
+    {
+      "id": "u4-q007",
+      "unit": 4,
+      "topic": "이진화",
+      "kind": "선택",
+      "prompt": "THRESH_BINARY 기준 127에서 값 127의 결과는?",
+      "answer": "0",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "기준보다 커야 흰색입니다.",
+      "options": [
+        "0",
+        "255"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 167–168쪽"
+    },
+    {
+      "id": "u4-q008",
+      "unit": 4,
+      "topic": "이진화",
+      "kind": "선택",
+      "prompt": "그림자가 있는 문서에서 영역별 기준을 적용하는 것은?",
+      "answer": "적응형 이진화",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "주변 영역의 정보를 사용합니다.",
+      "options": [
+        "적응형 이진화",
+        "고정 이진화"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 172쪽 탐구"
+    },
+    {
+      "id": "u4-q009",
+      "unit": 4,
+      "topic": "특징",
+      "kind": "선택",
+      "prompt": "파노라마에서 공통 위치 단서로 쓰기 좋은 것은?",
+      "answer": "코너",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "여러 방향의 변화가 있는 코너를 대응할 수 있습니다.",
+      "options": [
+        "전체 이미지 평균",
+        "코너"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 176쪽"
+    },
+    {
+      "id": "u4-q010",
+      "unit": 4,
+      "topic": "특징",
+      "kind": "선택",
+      "prompt": "물체의 면적과 외곽 경계를 구할 때 활용할 것은?",
+      "answer": "윤곽선",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "이진 영역의 경계 점으로 면적 등을 계산합니다.",
+      "options": [
+        "윤곽선",
+        "키보드 이벤트"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 173–176쪽"
+    },
+    {
+      "id": "u4-q011",
+      "unit": 4,
+      "topic": "얼굴",
+      "kind": "선택",
+      "prompt": "Haar 얼굴 검출 결과만으로 사람의 이름을 알 수 있나요?",
+      "answer": "알 수 없다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "얼굴 위치 검출과 개인 식별은 다릅니다.",
+      "options": [
+        "자동으로 알 수 있다",
+        "알 수 없다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 177–184쪽 보완"
+    },
+    {
+      "id": "u4-q012",
+      "unit": 4,
+      "topic": "얼굴",
+      "kind": "선택",
+      "prompt": "얼굴 ROI의 눈 좌표를 원본 위치로 바꾸려면?",
+      "answer": "얼굴 원점 좌표를 더한다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "지역 좌표를 전역 좌표로 옮깁니다.",
+      "options": [
+        "이미지 너비를 곱한다",
+        "얼굴 원점 좌표를 더한다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 181–182쪽"
+    },
+    {
+      "id": "u4-q013",
+      "unit": 4,
+      "topic": "YOLO",
+      "kind": "선택",
+      "prompt": "각 프레임의 person 수를 합하면 고유 방문자 수인가요?",
+      "answer": "아니다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "같은 사람이 여러 프레임에 반복될 수 있습니다.",
+      "options": [
+        "아니다",
+        "항상 맞다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 188–190쪽 보강"
+    },
+    {
+      "id": "u4-q014",
+      "unit": 4,
+      "topic": "평가",
+      "kind": "선택",
+      "prompt": "비전 시스템에서 처리 속도 외에 확인할 것은?",
+      "answer": "오탐·누락과 조건별 안정성",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "빠르게 틀리는 시스템은 적합하지 않습니다.",
+      "options": [
+        "오탐·누락과 조건별 안정성",
+        "창의 배경색만"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 144쪽"
+    },
+    {
+      "id": "u4-q015",
+      "unit": 4,
+      "topic": "도구",
+      "kind": "선택",
+      "prompt": "실시간 영상 입출력과 검출을 함께 다루는 대표 도구는?",
+      "answer": "OpenCV",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "비디오 프레임과 검출 기능을 제공합니다.",
+      "options": [
+        "OpenCV",
+        "pandas"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 195쪽 4"
+    },
+    {
+      "id": "u4-q016",
+      "unit": 4,
+      "topic": "도구",
+      "kind": "선택",
+      "prompt": "픽셀 단위 영역 분석 도구를 고를 때 고려할 것은?",
+      "answer": "scikit-image의 분석 기능",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "측정과 분석 기능을 목적에 맞게 선택합니다.",
+      "options": [
+        "scikit-image의 분석 기능",
+        "random의 주사위 기능"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 195쪽 4"
+    },
+    {
+      "id": "u4-q017",
+      "unit": 4,
+      "topic": "검출",
+      "kind": "빈칸",
+      "prompt": "CascadeClassifier에 사용하는 정면 얼굴 파일 이름은?",
+      "answer": "haarcascade_frontalface_default.xml",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "OpenCV의 haarcascades 폴더에 있습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 195쪽 3①"
+    },
+    {
+      "id": "u4-q018",
+      "unit": 4,
+      "topic": "검출",
+      "kind": "빈칸",
+      "prompt": "face_cascade.____(gray,1.1,5)에서 빈칸은?",
+      "answer": "detectMultiScale",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "여러 크기로 얼굴 영역을 찾습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 195쪽 3②"
+    },
+    {
+      "id": "u4-q019",
+      "unit": 4,
+      "topic": "입출력",
+      "kind": "빈칸",
+      "prompt": "cv2.____(\"Result\",img)로 화면을 표시합니다.",
+      "answer": "imshow",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "키 입력 처리는 waitKey로 합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 195쪽 3③"
+    },
+    {
+      "id": "u4-q020",
+      "unit": 4,
+      "topic": "입출력",
+      "kind": "빈칸",
+      "prompt": "cv2.____(\"photo.jpg\")로 이미지를 읽습니다.",
+      "answer": "imread",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "읽기 실패 시 None을 확인합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 162쪽"
+    },
+    {
+      "id": "u4-q021",
+      "unit": 4,
+      "topic": "변환",
+      "kind": "빈칸",
+      "prompt": "cv2.____(img,cv2.COLOR_BGR2GRAY)로 회색조 변환합니다.",
+      "answer": "cvtColor",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "색 공간 변환입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 162쪽"
+    },
+    {
+      "id": "u4-q022",
+      "unit": 4,
+      "topic": "반전",
+      "kind": "빈칸",
+      "prompt": "8비트 밝기 40의 반전 값은?",
+      "answer": "215",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "255-40입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q023",
+      "unit": 4,
+      "topic": "문서 스캔",
+      "kind": "순서",
+      "prompt": "기울고 어두운 문서의 처리 경로 예를 배열하세요.",
+      "answer": [
+        "원근 변환",
+        "가우시안 블러",
+        "대비 조정",
+        "이진화"
+      ],
+      "hint": "입력이 준비되어야 다음 작업을 할 수 있습니다.",
+      "explain": "교과서 194쪽 2의 경로입니다. 실제 최적 순서는 입력을 비교해 정합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q024",
+      "unit": 4,
+      "topic": "카메라",
+      "kind": "순서",
+      "prompt": "카메라 프로그램의 기본 순서를 정하세요.",
+      "answer": [
+        "카메라 열기",
+        "연결 성공 확인",
+        "프레임 읽고 처리",
+        "종료 입력 확인",
+        "카메라·창 자원 해제"
+      ],
+      "hint": "입력이 준비되어야 다음 작업을 할 수 있습니다.",
+      "explain": "실패해도 자원을 정리합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q025",
+      "unit": 4,
+      "topic": "이진화",
+      "kind": "구현",
+      "prompt": "binary(values,t)가 OpenCV THRESH_BINARY와 같은 기준으로 0/255 목록을 반환하게 하세요.",
+      "answer": "def binary(values,t):\n    return [255 if v>t else 0 for v in values]",
+      "hint": "기준과 같으면 0입니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def binary(values,t):\n    pass\n",
+      "checks": "assert binary([0,127,128,255],127)==[0,0,255,255]\nassert binary([255],255)==[0]\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q026",
+      "unit": 4,
+      "topic": "색상",
+      "kind": "구현",
+      "prompt": "bgr_to_rgb(pixel)이 채널 순서를 바꾼 튜플을 반환하게 만드세요.",
+      "answer": "def bgr_to_rgb(pixel):\n    b,g,r=pixel\n    return (r,g,b)",
+      "hint": "가운데 G는 유지합니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def bgr_to_rgb(pixel):\n    pass\n",
+      "checks": "assert bgr_to_rgb((20,80,240))==(240,80,20)\nassert bgr_to_rgb((0,0,0))==(0,0,0)\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q027",
+      "unit": 4,
+      "topic": "좌표",
+      "kind": "구현",
+      "prompt": "global_point(origin,local)이 ROI 좌표를 원본 좌표로 바꾸게 만드세요.",
+      "answer": "def global_point(origin,local):\n    return (origin[0]+local[0],origin[1]+local[1])",
+      "hint": "두 좌표는 모두 (x,y)입니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def global_point(origin,local):\n    pass\n",
+      "checks": "assert global_point((100,50),(20,10))==(120,60)\nassert global_point((0,0),(4,5))==(4,5)\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q028",
+      "unit": 4,
+      "topic": "계수",
+      "kind": "구현",
+      "prompt": "counts(names)가 현재 프레임의 클래스별 개수 딕셔너리를 반환하게 만드세요.",
+      "answer": "def counts(names):\n    result={}\n    for name in names:\n        result[name]=result.get(name,0)+1\n    return result",
+      "hint": "매 호출마다 새 딕셔너리를 만듭니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def counts(names):\n    pass\n",
+      "checks": "assert counts([\"person\",\"car\",\"person\"])=={\"person\":2,\"car\":1}\nassert counts([])=={}\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u4-q029",
+      "unit": 4,
+      "topic": "컴퓨터 비전과 영상 처리",
+      "kind": "서술",
+      "prompt": "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요.",
+      "answer": "예: 도서관 빈자리 안내는 좌석 정보를 쉽게 보여 주지만 가방을 사람으로 잘못 찾으면 자리가 틀리게 표시될 수 있습니다. 사람의 신원을 저장하지 않고 오탐과 가림 조건을 시험합니다.",
+      "hint": "영상 입력에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 134–139 연계·확장"
+    },
+    {
+      "id": "u4-q030",
+      "unit": 4,
+      "topic": "픽셀·해상도·RGB·그레이스케일",
+      "kind": "서술",
+      "prompt": "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요.",
+      "answer": "THRESH_BINARY는 값이 기준보다 클 때만 255입니다. 값 128과 기준 128은 같으므로 검정 0이 됩니다.",
+      "hint": "숫자 하나｜한 채널 값에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 140–141 연계·확장"
+    },
+    {
+      "id": "u4-q031",
+      "unit": 4,
+      "topic": "알고리즘·처리 과정·평가 기준",
+      "kind": "서술",
+      "prompt": "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요.",
+      "answer": "카메라 입력 → 번호판 영역 검출 → 해당 영역의 문자 인식 → 문자열 결과입니다. 검출은 위치를 찾고 OCR은 글자 내용을 읽으므로 두 단계의 오류를 따로 점검합니다.",
+      "hint": "입력에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 142–146 연계·확장"
+    },
+    {
+      "id": "u4-q032",
+      "unit": 4,
+      "topic": "OpenCV·Pillow·Matplotlib·scikit-image",
+      "kind": "서술",
+      "prompt": "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요.",
+      "answer": "Pillow.size는 (240,160), OpenCV의 3채널 shape는 (160,240,3)입니다. 픽셀은 38400개, 채널 원소는 115200개입니다.",
+      "hint": "입력 읽기에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 147–154 연계·확장"
+    },
+    {
+      "id": "u4-q033",
+      "unit": 4,
+      "topic": "이미지 읽기·표시·변환·저장",
+      "kind": "서술",
+      "prompt": "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요.",
+      "answer": "260×180 컬러 이미지를 130×90으로 축소하면 픽셀 수는 11700개, 원소 수는 35100개이며 shape는 (90,130,3)입니다.",
+      "hint": "imread → None 확인에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 155–162 연계·확장"
+    },
+    {
+      "id": "u4-q034",
+      "unit": 4,
+      "topic": "블러·에지·이진화",
+      "kind": "서술",
+      "prompt": "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요.",
+      "answer": "커널을 3에서 15로 늘리면 잡음뿐 아니라 세부 경계도 더 흐려질 수 있습니다. 고정 이진화 기준을 80에서 180으로 올리면 흰색으로 남는 픽셀은 줄거나 같습니다.",
+      "hint": "원본에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 163–168 연계·확장"
+    },
+    {
+      "id": "u4-q035",
+      "unit": 4,
+      "topic": "원근 변환과 마우스 이벤트",
+      "kind": "서술",
+      "prompt": "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요.",
+      "answer": "두 대응 목록에서 한쪽만 순서를 바꾸면 잘못된 꼭짓점으로 매핑되어 결과가 뒤틀리거나 뒤집힐 수 있습니다. 양쪽을 왼쪽 위부터 같은 방향으로 맞춥니다.",
+      "hint": "왼쪽 위에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 168–172 연계·확장"
+    },
+    {
+      "id": "u4-q036",
+      "unit": 4,
+      "topic": "에지·코너·윤곽선으로 중요한 부분 찾기",
+      "kind": "서술",
+      "prompt": "네모와 원에서 코너 수가 왜 다른지 관찰하세요.",
+      "answer": "네모의 꼭짓점은 여러 방향의 변화가 강해 코너로 잡히기 쉽습니다. 원의 곡선은 설정과 해상도에 따라 코너가 적거나 다르게 잡힙니다. 결과 개수는 고정 정답이 아니므로 그림과 조건을 함께 기록합니다.",
+      "hint": "그레이스케일에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 173–176 연계·확장"
+    },
+    {
+      "id": "u4-q037",
+      "unit": 4,
+      "topic": "얼굴·눈·웃음 검출과 웹캠",
+      "kind": "서술",
+      "prompt": "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요.",
+      "answer": "같은 사진에서 minNeighbors=3,5,7로 실행하고 실제 얼굴 수·검출 수·오탐 수·누락 수를 표로 비교합니다. 더 엄격한 기준은 오탐을 줄일 수 있지만 실제 얼굴을 놓칠 수도 있습니다.",
+      "hint": "분류기·카메라 확인에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 177–184 연계·확장"
+    },
+    {
+      "id": "u4-q038",
+      "unit": 4,
+      "topic": "YOLOv8 객체 탐지와 개수 표시",
+      "kind": "서술",
+      "prompt": "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요.",
+      "answer": "같은 이미지에서 conf=0.3과 0.7을 비교합니다. 기준을 높이면 낮은 점수의 후보가 제외되어 검출 수가 줄 수 있고, 오탐 감소와 실제 객체 누락을 함께 확인해야 합니다.",
+      "hint": "모델·입력 준비에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 185–191 연계·확장"
+    },
+    {
+      "id": "u4-q039",
+      "unit": 4,
+      "topic": "컴퓨터 비전 프로젝트와 단원 정리",
+      "kind": "서술",
+      "prompt": "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요.",
+      "answer": "이미지 열기 버튼 → 입력 경로 확인 → 별도 처리 모듈의 함수 호출 → 결과 미리보기 → 저장 버튼으로 구성합니다. GUI 이벤트 코드와 배열 처리 코드를 분리하고 취소·잘못된 경로도 처리합니다.",
+      "hint": "입력 자료·목표에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 192–195 + 확장 연계·확장"
+    }
+  ],
+  "pairs": []
+}

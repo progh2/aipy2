@@ -63,3 +63,19 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 - 대문 표정 선택, 문제 피드백, 학습 완료, 실행 결과 안내: `assets/app.js`
 
 이미지의 대사는 그림에 굽지 않고 HTML 텍스트로 제공합니다. 각 표정의 의미와 학습 안내를 글로 함께 읽을 수 있으며, 캐릭터가 코드·버튼을 덮는 떠다니는 UI는 사용하지 않습니다. 원본은 흰 배경 PNG이고, 웹용 WebP는 원본을 보존한 압축본입니다. built-in image_gen으로 제작했으며 CLI fallback은 사용하지 않았습니다.
+
+## 학생·교사 분리와 3·4단원
+
+- 학생 본문: 45개 주제의 구조도와 표, 접어서 읽는 설명, 코드 실습.
+- 학생 시각 요약: `units/unit01/summary.html`부터 `unit04/summary.html`.
+- 교사용: `teacher/index.html`, 단원별 요약·발문·시연·오개념·평가 연결.
+- 교사 화면의 ‘수업 화면으로 보기’는 설명용 도식만 표시합니다. 방향키로 이동하고 ESC로 전체 보기에 돌아옵니다. 인쇄에서는 교사 메모를 제외합니다.
+- 3단원: 데이터·전처리·분류·회귀·군집·교차 검증·튜닝·평가·학습 곡선.
+- 4단원: 픽셀·라이브러리·입출력·필터·원근·특징·Haar·YOLOv8.
+- 수학·픽셀 조작은 JavaScript 학습 모형으로 표시합니다. Python 실습은 Pyodide에서 실행하며 생성 PNG를 결과 아래에 표시합니다.
+- PC 표시 예제는 문법 확인만 제공합니다. 카메라·개인 사진·YOLO 가중치는 PC에서 준비하며 자동으로 켜거나 업로드하지 않습니다.
+- 도형 기반 OpenCV 및 과학 그래프는 `tools/web/render_science.py`로 실제 생성했습니다. 필요 패키지: numpy, pandas, scikit-learn, matplotlib, pillow, opencv-python, scikit-image, seaborn, openpyxl.
+- 기본 검증: `python -m pip install numpy pandas scikit-learn matplotlib pillow` 후 `python tools/web/verify.py`.
+- 3·4단원은 원문을 웹 학습용으로 재구성했습니다. 일부 예제는 내장·합성 자료를 사용하고, 원문의 외부 데이터·카메라 경로는 PC 예제로 구분했습니다.
+
+브라우저 성능을 위해 scikit-learn·SciPy·OpenCV·Ultralytics 전체 코드는 PC 경로로 제공합니다. 웹에서 k-NN·최소제곱 직선·K-평균·전처리·혼동행렬·교차 검증 구조를 작은 자료로 직접 계산하는 별도 Python 예제를 제공합니다.

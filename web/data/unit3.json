@@ -1,0 +1,1647 @@
+{
+  "unit": 3,
+  "lessons": [
+    {
+      "id": "ml-overview",
+      "title": "AI·머신러닝·딥러닝의 관계",
+      "pages": "62–67",
+      "lead": "규칙을 직접 쓰는 것과 데이터에서 규칙을 배우는 것은 어떻게 다를까요?",
+      "paragraphs": [
+        "인공지능은 지능적인 문제 해결 기술의 넓은 범위입니다. 머신러닝은 데이터에서 패턴을 학습하는 접근이며, 딥러닝은 여러 층의 신경망을 사용하는 머신러닝의 한 종류입니다. 모든 AI가 머신러닝인 것은 아닙니다.",
+        "초기의 규칙 중심 연구는 지식 입력과 계산 자원의 한계를 겪었습니다. 이후 데이터·계산 장치·학습 알고리즘의 발전이 함께 영향을 주었습니다. 1956년 다트머스 워크숍, 1997년 딥 블루의 체스 승리, 2012년 ImageNet의 딥러닝 성과는 서로 다른 접근의 발전 사례입니다. 딥 블루를 현대 딥러닝 모델과 같은 것으로 보지 마세요."
+      ],
+      "examples": [],
+      "tasks": [
+        "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "AI·머신러닝·딥러닝의 관계 · 한눈에 보기",
+        [
+          "인공지능｜가장 넓은 범위",
+          "머신러닝｜데이터로 학습",
+          "딥러닝｜여러 층의 신경망"
+        ],
+        [
+          "접근",
+          "규칙의 출처",
+          "예"
+        ],
+        [
+          [
+            "규칙 기반",
+            "사람이 조건 작성",
+            "비밀번호 길이 검사"
+          ],
+          [
+            "머신러닝",
+            "데이터와 학습 알고리즘",
+            "스팸 분류"
+          ],
+          [
+            "딥러닝",
+            "다층 신경망의 학습",
+            "이미지 특징 학습"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-use",
+      "title": "머신러닝이 필요한 문제와 활용",
+      "pages": "68–70",
+      "lead": "정확한 규칙을 쓰기 어려운 문제를 찾아보세요.",
+      "paragraphs": [
+        "추천, 이미지 분류, 음성 처리처럼 복잡한 패턴이 있는 문제에서 머신러닝을 활용합니다. 규칙이 명확한 사칙연산이나 간단한 유효성 검사에는 일반 프로그램이 더 간단할 수 있습니다.",
+        "학습 데이터가 현실을 충분히 대표하지 않으면 특정 조건에서 오류가 늘어납니다. 예측을 사실로 단정하지 말고, 데이터의 범위·오류 비용·사람의 확인 절차를 함께 설명하세요."
+      ],
+      "examples": [],
+      "tasks": [
+        "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요."
+      ],
+      "extra": false,
+      "visual": [
+        "머신러닝이 필요한 문제와 활용 · 한눈에 보기",
+        [
+          "문제 찾기",
+          "입력 데이터 정하기",
+          "예측할 출력 정하기",
+          "오류가 미칠 영향 점검"
+        ],
+        [
+          "서비스",
+          "입력",
+          "예측"
+        ],
+        [
+          [
+            "추천",
+            "이용 기록·항목 특성",
+            "선호 가능성"
+          ],
+          [
+            "제조 검사",
+            "제품 이미지",
+            "정상/결함"
+          ],
+          [
+            "대출량 예상",
+            "과거 대출·요일",
+            "예상 권수"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-process",
+      "title": "문제 해결 과정과 데이터 분할",
+      "pages": "71–75, 101–102",
+      "lead": "모델을 만들기 전에 성공 기준을 정하세요.",
+      "paragraphs": [
+        "문제 정의 → 수집·탐색 → 전처리 → 모델 선택 → 학습·평가 → 해석·응용으로 진행합니다. 실제 프로젝트에서는 결과를 보고 앞 단계로 돌아가 수정하기도 합니다.",
+        "평가용 데이터는 먼저 분리해 둡니다. 평균·스케일·범주 목록처럼 데이터에서 배우는 전처리 값도 훈련 부분에서만 구합니다. 모델 후보는 검증 데이터나 교차 검증으로 비교하고, 최종 테스트는 선택을 마친 뒤 사용합니다."
+      ],
+      "examples": [
+        "ml-split-small"
+      ],
+      "tasks": [
+        "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요."
+      ],
+      "extra": false,
+      "visual": [
+        "문제 해결 과정과 데이터 분할 · 한눈에 보기",
+        [
+          "문제·성공 기준",
+          "수집·탐색",
+          "훈련/테스트 분할",
+          "전처리·학습·검증",
+          "최종 평가·해석"
+        ],
+        [
+          "분할",
+          "역할",
+          "금지할 일"
+        ],
+        [
+          [
+            "훈련",
+            "전처리 값·모델 학습",
+            "정답을 입력 특성에 포함"
+          ],
+          [
+            "검증",
+            "모델·설정 선택",
+            "최종 테스트로 반복 선택"
+          ],
+          [
+            "테스트",
+            "선택 완료 후 최종 확인",
+            "fit / fit_transform 호출"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-terms",
+      "title": "특성·레이블·모델·하이퍼파라미터",
+      "pages": "76–78",
+      "lead": "표의 어느 열을 X로, 어느 열을 y로 사용할까요?",
+      "paragraphs": [
+        "데이터 세트의 한 행은 보통 한 관측입니다. X는 예측 시점에 알 수 있는 특성의 표이며 y는 예측할 정답입니다. 샘플 수와 특성 수를 확인하고 같은 행의 X와 y가 대응하는지 검사합니다.",
+        "모델은 학습한 예측 규칙입니다. 가중치 같은 파라미터는 학습 과정에서 정해지고, k-NN의 k 같은 하이퍼파라미터는 학습 전에 설정합니다. 훈련 성능만 좋고 검증 성능이 낮으면 과대 적합, 둘 다 낮으면 과소 적합을 의심합니다."
+      ],
+      "examples": [],
+      "tasks": [
+        "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "특성·레이블·모델·하이퍼파라미터 · 한눈에 보기",
+        [
+          "행｜샘플 1개",
+          "입력 열 X｜특성 여러 개",
+          "정답 열 y｜레이블",
+          "fit → predict｜학습 후 예측"
+        ],
+        [
+          "기호",
+          "도서 예",
+          "형태"
+        ],
+        [
+          [
+            "X",
+            "요일·최근 대출 수",
+            "(샘플 수, 특성 수)"
+          ],
+          [
+            "y",
+            "다음 날 대출 수",
+            "(샘플 수,)"
+          ],
+          [
+            "하이퍼파라미터",
+            "트리의 최대 깊이",
+            "학습 전에 선택"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-methods",
+      "title": "지도·비지도·강화 학습",
+      "pages": "79–84",
+      "lead": "정답을 배우나요, 구조를 찾나요, 행동의 보상을 배우나요?",
+      "paragraphs": [
+        "지도 학습은 입력과 정답의 관계를 학습합니다. 범주를 예측하면 분류, 연속적인 수치를 예측하면 회귀입니다. 비지도 학습은 정답 없이 군집이나 낮은 차원의 구조를 찾습니다.",
+        "강화 학습에서는 에이전트가 상태를 보고 행동하며 환경에서 보상을 받습니다. 정책은 행동 선택 전략이고 장기 누적 보상을 높이는 방향으로 배웁니다. Q-learning은 여러 강화 학습 알고리즘 중 하나입니다."
+      ],
+      "examples": [],
+      "tasks": [
+        "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "지도·비지도·강화 학습 · 한눈에 보기",
+        [
+          "정답 있음｜지도 학습",
+          "정답 없음｜비지도 학습",
+          "상태·행동·보상｜강화 학습"
+        ],
+        [
+          "유형",
+          "목표",
+          "예"
+        ],
+        [
+          [
+            "분류",
+            "범주 예측",
+            "스팸 여부"
+          ],
+          [
+            "회귀",
+            "수치 예측",
+            "내일 기온"
+          ],
+          [
+            "군집",
+            "유사한 데이터 묶기",
+            "고객 그룹"
+          ],
+          [
+            "강화",
+            "행동 전략 학습",
+            "미로에서 탈출"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-libraries",
+      "title": "머신러닝 라이브러리와 그래프",
+      "pages": "85–89",
+      "lead": "배열·표·모델·그래프 도구를 연결해 보세요.",
+      "paragraphs": [
+        "NumPy는 다차원 배열과 벡터 연산, pandas는 Series·DataFrame과 표 탐색, scikit-learn은 전처리·학습·평가 도구를 제공합니다. Matplotlib은 그래프 구성, Seaborn은 표 데이터의 통계 시각화를 돕습니다.",
+        "웹에서는 NumPy·pandas·그래프와 작은 원리 실습을 실행합니다. scikit-learn 전체 파이프라인은 PC에서 실행합니다. 필요한 웹 패키지는 처음에 내려받습니다. 실행한 Python이 만든 PNG 그래프는 결과 아래에 표시됩니다. PC에서는 예제 폴더에서 requirements.txt를 설치합니다."
+      ],
+      "examples": [
+        "ml-tools",
+        "ml-chart",
+        "ml-seaborn"
+      ],
+      "tasks": [
+        "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "머신러닝 라이브러리와 그래프 · 한눈에 보기",
+        [
+          "NumPy｜배열",
+          "pandas｜표 정리",
+          "scikit-learn｜학습·평가",
+          "Matplotlib / Seaborn｜시각화"
+        ],
+        [
+          "확인",
+          "코드",
+          "의미"
+        ],
+        [
+          [
+            "앞부분",
+            "df.head()",
+            "표의 실제 값"
+          ],
+          [
+            "구조",
+            "df.info()",
+            "자료형·결측 개수"
+          ],
+          [
+            "통계",
+            "df.describe()",
+            "수치 분포"
+          ],
+          [
+            "배열 크기",
+            "array.shape",
+            "축별 길이"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-preprocess",
+      "title": "결측치·이상치·스케일·범주 처리",
+      "pages": "90–100",
+      "lead": "값을 바꾼 이유와 기준을 남겨 보세요.",
+      "paragraphs": [
+        "CSV는 read_csv, Excel은 read_excel로 읽습니다. 결측치는 isna로 확인한 뒤 dropna로 제거하거나 fillna·SimpleImputer로 채울 수 있습니다. 이상치는 입력 오류인지 드문 정상 관측인지 먼저 확인합니다. 임의 삭제는 데이터의 의미를 바꿀 수 있습니다.",
+        "MinMaxScaler는 훈련 범위를 기준으로 값을 조정하며 새로운 값은 0~1 범위를 벗어날 수 있습니다. StandardScaler는 훈련 평균과 표준편차로 변환하지만 정규분포를 만들어 주지는 않습니다. 범주형 값에는 get_dummies 또는 OneHotEncoder를 사용하며 새 범주 처리 기준도 정합니다."
+      ],
+      "examples": [
+        "ml-scale-small",
+        "ml-clean",
+        "ml-scale"
+      ],
+      "tasks": [
+        "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요."
+      ],
+      "extra": false,
+      "visual": [
+        "결측치·이상치·스케일·범주 처리 · 한눈에 보기",
+        [
+          "불러오기·자료형 확인",
+          "분할 후 훈련 부분 탐색",
+          "결측·이상치 처리 기준",
+          "수치 스케일·범주 인코딩",
+          "테스트에는 transform"
+        ],
+        [
+          "처리",
+          "배우는 기준",
+          "확인"
+        ],
+        [
+          [
+            "결측 채우기",
+            "훈련 중앙값 등",
+            "누락 의미 보존"
+          ],
+          [
+            "정규화",
+            "훈련 최소·최대",
+            "새 값은 범위 밖 가능"
+          ],
+          [
+            "표준화",
+            "훈련 평균·표준편차",
+            "분포 모양 보장 안 함"
+          ],
+          [
+            "원-핫",
+            "훈련 범주 목록",
+            "알 수 없는 범주 대응"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-classification",
+      "title": "분류: k-NN·로지스틱·트리·SVM",
+      "pages": "103–105",
+      "lead": "이름에 회귀가 들어 있어도 범주를 예측하는 모델이 있어요.",
+      "paragraphs": [
+        "k-NN은 가까운 이웃들의 정답을 참고합니다. 로지스틱 회귀는 분류에 사용하는 모델이고, 결정 트리는 조건으로 데이터를 나누며, SVM은 범주 사이의 경계를 학습합니다.",
+        "붓꽃 예제에서 X는 꽃받침·꽃잎의 측정값이고 y는 품종입니다. stratify=y는 분할 시 클래스 비율을 고려합니다. k-NN·SVM 등은 거리나 스케일의 영향을 받으므로 전처리를 파이프라인 안에서 학습합니다."
+      ],
+      "examples": [
+        "ml-knn-small",
+        "ml-classify"
+      ],
+      "tasks": [
+        "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "분류: k-NN·로지스틱·트리·SVM · 한눈에 보기",
+        [
+          "붓꽃 X,y",
+          "분할",
+          "스케일 + 분류기 fit",
+          "새 X로 predict",
+          "정답과 비교"
+        ],
+        [
+          "알고리즘",
+          "핵심",
+          "조절값 예"
+        ],
+        [
+          [
+            "k-NN",
+            "가까운 이웃",
+            "n_neighbors"
+          ],
+          [
+            "로지스틱",
+            "클래스 확률",
+            "C"
+          ],
+          [
+            "결정 트리",
+            "조건 분기",
+            "max_depth"
+          ],
+          [
+            "SVM",
+            "분리 경계",
+            "C / kernel"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-regression",
+      "title": "회귀와 수치 오차",
+      "pages": "106–107, 121–123",
+      "lead": "예측 숫자는 정답에서 얼마나 떨어져 있나요?",
+      "paragraphs": [
+        "회귀는 연속적인 목표값을 예측합니다. 선형 회귀는 특성들의 가중합과 절편으로 값을 예측합니다. 예측한 값과 실제 값의 차이를 잔차라고 부릅니다.",
+        "MAE는 절대 오차 평균, MSE는 제곱 오차 평균입니다. MSE는 큰 오차에 더 큰 벌점을 줍니다. R²는 평균 예측 기준과 비교한 값으로 음수가 될 수 있습니다. 한 지표의 숫자만 보지 말고 목표값의 단위와 오류 사례도 확인하세요."
+      ],
+      "examples": [
+        "ml-line-small",
+        "ml-regression",
+        "ml-housing"
+      ],
+      "tasks": [
+        "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요."
+      ],
+      "extra": false,
+      "visual": [
+        "회귀와 수치 오차 · 한눈에 보기",
+        [
+          "입력 특성",
+          "가중합 + 절편",
+          "예측 숫자",
+          "정답과 오차 계산"
+        ],
+        [
+          "지표",
+          "작을수록?",
+          "의미"
+        ],
+        [
+          [
+            "MAE",
+            "좋음",
+            "원래 목표값 단위"
+          ],
+          [
+            "MSE",
+            "좋음",
+            "큰 오차를 강하게 반영"
+          ],
+          [
+            "R²",
+            "클수록 좋음",
+            "0은 평균 기준, 음수 가능"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-cluster",
+      "title": "K-평균 군집화",
+      "pages": "108–111",
+      "lead": "정답 이름 없이 비슷한 점들을 묶을 수 있을까요?",
+      "paragraphs": [
+        "K-평균은 정한 개수 K의 중심을 이용해 가까운 샘플들을 묶고 중심을 갱신합니다. labels_의 번호는 정답 클래스나 순위가 아니며 실행 조건에 따라 번호가 달라질 수 있습니다.",
+        "데이터의 스케일, K, 초기 중심이 결과에 영향을 줍니다. n_init은 여러 초기화 시도를 제어합니다. 점들의 분포를 보고 군집이 의미 있는지 해석하며, 항상 원형 군집이 존재한다고 가정하지 마세요."
+      ],
+      "examples": [
+        "ml-kmeans-small",
+        "ml-cluster"
+      ],
+      "tasks": [
+        "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "K-평균 군집화 · 한눈에 보기",
+        [
+          "K개 중심 초기화",
+          "가장 가까운 중심에 배정",
+          "그룹 평균으로 중심 갱신",
+          "수렴까지 반복"
+        ],
+        [
+          "속성",
+          "의미"
+        ],
+        [
+          [
+            "labels_",
+            "샘플별 군집 번호"
+          ],
+          [
+            "cluster_centers_",
+            "군집 중심 좌표"
+          ],
+          [
+            "n_clusters",
+            "미리 정하는 그룹 수"
+          ],
+          [
+            "random_state / n_init",
+            "재현 조건 / 초기화 반복"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-metrics",
+      "title": "혼동행렬·정확도·정밀도·재현율",
+      "pages": "117–120",
+      "lead": "어떤 종류의 실수가 더 중요한가요?",
+      "paragraphs": [
+        "양성으로 삼는 클래스를 먼저 정합니다. TP는 실제 양성을 양성으로, TN은 실제 음성을 음성으로 맞힌 수입니다. FP는 음성을 양성으로, FN은 양성을 음성으로 틀린 수입니다.",
+        "정확도는 전체 정답 비율입니다. 정밀도는 양성 예측 중 실제 양성의 비율, 재현율은 실제 양성 중 찾아낸 비율입니다. F1은 정밀도와 재현율의 조화평균입니다. 클래스 불균형이 있으면 정확도만으로 비교하기 어렵습니다."
+      ],
+      "examples": [
+        "ml-confusion-small",
+        "ml-metrics"
+      ],
+      "tasks": [
+        "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "혼동행렬·정확도·정밀도·재현율 · 한눈에 보기",
+        [
+          "양성 의미 정하기",
+          "예측 임계값 선택",
+          "TP·FP·FN·TN 세기",
+          "목표에 맞는 지표 해석"
+        ],
+        [
+          "지표",
+          "계산",
+          "질문"
+        ],
+        [
+          [
+            "정확도",
+            "(TP+TN)/전체",
+            "전체에서 얼마나 맞혔나?"
+          ],
+          [
+            "정밀도",
+            "TP/(TP+FP)",
+            "양성이라고 한 것 중 맞은 비율?"
+          ],
+          [
+            "재현율",
+            "TP/(TP+FN)",
+            "실제 양성 중 찾은 비율?"
+          ],
+          [
+            "F1",
+            "2PR/(P+R)",
+            "두 지표의 균형은?"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-selection",
+      "title": "교차 검증·튜닝·학습 곡선",
+      "pages": "112–116, 124–128",
+      "lead": "한 번 나눈 점수만으로 모델을 선택해도 될까요?",
+      "paragraphs": [
+        "교차 검증은 훈련 자료를 여러 묶음으로 나누어 검증 역할을 번갈아 맡깁니다. GridSearchCV는 설정 후보를 교차 검증으로 비교합니다. 전처리도 각 훈련 묶음에서 다시 학습하도록 Pipeline을 사용합니다.",
+        "학습 곡선은 훈련 샘플 수에 따른 훈련·검증 성능을 함께 보여 줍니다. 두 곡선의 간격과 수준을 보고 데이터 추가, 모델 복잡도 조절, 규제, 특성 개선 등을 검토합니다. 데이터 스케일 정규화와 모델 규제(regularization)는 다른 개념입니다."
+      ],
+      "examples": [
+        "ml-cv-small",
+        "ml-selection",
+        "ml-learning-curve"
+      ],
+      "tasks": [
+        "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "교차 검증·튜닝·학습 곡선 · 한눈에 보기",
+        [
+          "최종 테스트 별도 보관",
+          "훈련 부분에서 교차 검증",
+          "GridSearchCV로 설정 선택",
+          "학습 곡선·오류 분석",
+          "테스트 한 번 평가"
+        ],
+        [
+          "관찰",
+          "가능한 해석",
+          "다음 실험"
+        ],
+        [
+          [
+            "훈련↑ 검증↓",
+            "과대 적합",
+            "복잡도 감소·자료 추가"
+          ],
+          [
+            "훈련↓ 검증↓",
+            "과소 적합",
+            "특성·모델 개선"
+          ],
+          [
+            "분할마다 점수 차이",
+            "불안정한 추정",
+            "평균·편차 함께 보고"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "ml-project",
+      "title": "모델 구현·평가 프로젝트와 단원 정리",
+      "pages": "129–131 + 확장",
+      "lead": "입력부터 결과 설명까지 재현 가능한 보고서를 만드세요.",
+      "paragraphs": [
+        "문제와 목표값, 데이터 출처, 특성, 분할 조건, 전처리, 모델, 평가 결과를 한 흐름으로 연결하세요. 비교 대상과 난수 조건을 기록하고, 점수가 낮아진 사례를 찾아 개선안을 제안합니다.",
+        "스팸 분류의 FP와 정밀도, 가격 같은 수치 예측과 회귀, 정답 없는 고객 군집, AI 포함 관계, 과대 적합 방지, DataFrame.describe를 모두 설명할 수 있는지 확인하세요."
+      ],
+      "examples": [
+        "ml-selection"
+      ],
+      "tasks": [
+        "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요."
+      ],
+      "extra": false,
+      "visual": [
+        "모델 구현·평가 프로젝트와 단원 정리 · 한눈에 보기",
+        [
+          "문제·데이터 카드",
+          "분할·전처리 코드",
+          "모델 비교·선택",
+          "최종 지표·한계",
+          "저널·코드 제출"
+        ],
+        [
+          "산출물",
+          "포함할 것"
+        ],
+        [
+          [
+            "실행 코드",
+            "재현 조건과 패키지"
+          ],
+          [
+            "결과 표",
+            "훈련·검증·테스트 역할"
+          ],
+          [
+            "해석",
+            "오류 사례와 개선 근거"
+          ]
+        ]
+      ]
+    }
+  ],
+  "examples": {
+    "ml-split-small": {
+      "id": "ml-split-small",
+      "title": "웹 원리 · 훈련·검증·테스트 분할",
+      "files": {
+        "main.py": "import random\nsamples = list(range(10))\nrandom.Random(42).shuffle(samples)\ntrain, validation, test = samples[:6], samples[6:8], samples[8:]\nprint(\"Training:\", train)\nprint(\"Validation:\", validation)\nprint(\"Test:\", test)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(train)==6 and len(test)==2\nassert not (set(train)&set(test))\nassert len(set(train+validation+test))==10\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-tools": {
+      "id": "ml-tools",
+      "title": "NumPy·pandas로 표 탐색하기",
+      "files": {
+        "main.py": "import numpy as np\nimport pandas as pd\nvalues = np.array([10, 20, 30])\nprint(values + 5)\nprint(np.concatenate(([1, 2], [3, 4])))\ndf = pd.DataFrame({\"name\": [\"A\", \"B\", \"C\"], \"score\": [75, 90, 85]})\nprint(df.head())\nprint(df.describe())\ndf.info()\n",
+        "requirements.txt": "numpy\npandas\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert df.shape == (3, 2)\n",
+      "note": ""
+    },
+    "ml-chart": {
+      "id": "ml-chart",
+      "title": "빈도표를 막대그래프로",
+      "files": {
+        "main.py": "import matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nfrom collections import Counter\ncounts = Counter([\"apple\", \"banana\", \"apple\", \"pear\", \"banana\", \"apple\"])\nplt.bar(list(counts), list(counts.values()))\nplt.ylabel(\"Count\")\nplt.title(\"Fruit frequency\")\nplt.savefig(\"frequency.png\")\nprint(dict(counts))\n",
+        "requirements.txt": "matplotlib\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "실제 Python이 저장한 PNG를 실행 결과 아래에서 확인할 수 있습니다."
+    },
+    "ml-seaborn": {
+      "id": "ml-seaborn",
+      "title": "Seaborn countplot과 Excel 입출력",
+      "files": {
+        "main.py": "import pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nframe = pd.DataFrame({\"fruit\": [\"apple\", \"banana\", \"apple\"]})\nframe.to_excel(\"fruit.xlsx\", index=False)\nprint(pd.read_excel(\"fruit.xlsx\").head())\nsns.countplot(data=frame, x=\"fruit\")\nplt.savefig(\"fruit.png\")\n",
+        "requirements.txt": "pandas\nseaborn\nmatplotlib\nopenpyxl\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "Excel 입출력과 seaborn 비교 예제입니다. python -m pip install -r requirements.txt 후 PC에서 실행하세요."
+    },
+    "ml-scale-small": {
+      "id": "ml-scale-small",
+      "title": "웹 원리 · 훈련 평균과 스케일",
+      "files": {
+        "main.py": "import math\ntrain = [10, 20, 30]\ntest = [50]\nmean = sum(train)/len(train)\nstd = math.sqrt(sum((v-mean)**2 for v in train)/len(train))\nlow, high = min(train), max(train)\ndef standardize(v):\n    return (v-mean)/std if std else 0\ndef normalize(v):\n    return (v-low)/(high-low) if high!=low else 0\nprint(\"Training mean:\",mean)\nprint(\"Training standardized:\",[round(standardize(v),3) for v in train])\nprint(\"Test standardized:\",[round(standardize(v),3) for v in test])\nprint(\"Test normalized:\",[normalize(v) for v in test])\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert mean==20\nassert normalize(50)==2\nassert standardize(20)==0\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-clean": {
+      "id": "ml-clean",
+      "title": "CSV·결측치·이상치 탐색",
+      "files": {
+        "main.py": "import pandas as pd\nframe = pd.read_csv(\"scores.csv\")\nprint(frame.head())\nprint(\"Missing:\", frame.isna().sum())\nprint(\"Drop missing:\", frame.dropna())\n# 이 예제는 탐색용 표입니다. 예측 모델에서는 분할 후 훈련 데이터로 통계량을 구합니다.\nmedian = frame[\"score\"].median()\nfilled = frame.fillna({\"name\": \"Unknown\", \"score\": median})\nprint(\"Filled:\", filled)\nprint(\"Outside score range:\", filled[(filled.score < 0) | (filled.score > 100)])\n",
+        "scores.csv": "name,score\nA,80\nB,\n,90\nD,1000\n",
+        "requirements.txt": "pandas\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert filled.isna().sum().sum() == 0\n",
+      "note": ""
+    },
+    "ml-scale": {
+      "id": "ml-scale",
+      "title": "훈련 데이터로만 전처리 배우기",
+      "files": {
+        "main.py": "import numpy as np\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder\ntrain = np.array([[10., 1.], [20., np.nan], [30., 3.]])\ntest = np.array([[50., 2.]])\nimputer = SimpleImputer(strategy=\"median\")\ntrain_filled = imputer.fit_transform(train)\ntest_filled = imputer.transform(test)\nfor scaler in [MinMaxScaler(), StandardScaler()]:\n    print(type(scaler).__name__)\n    print(scaler.fit_transform(train_filled))\n    print(\"Test:\", scaler.transform(test_filled))\nencoder = OneHotEncoder(handle_unknown=\"ignore\", sparse_output=False)\nprint(encoder.fit_transform([[\"Seoul\"], [\"Busan\"], [\"Seoul\"]]))\nprint(\"Unseen city:\", encoder.transform([[\"Jeju\"]]))\n",
+        "requirements.txt": "numpy\nscikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert test_filled.shape == (1, 2)\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. "
+    },
+    "ml-knn-small": {
+      "id": "ml-knn-small",
+      "title": "웹 원리 · 가까운 이웃으로 분류",
+      "files": {
+        "main.py": "from collections import Counter\n# 입력값과 클래스가 있는 작은 학습 자료입니다.\ntraining = [(1,\"A\"),(2,\"A\"),(4,\"B\"),(5,\"B\"),(8,\"B\")]\nx = 3.5\nk = 3\nneighbors = sorted(training,key=lambda row:abs(row[0]-x))[:k]\nprediction = Counter(label for _,label in neighbors).most_common(1)[0][0]\nprint(\"Input:\",x,\"k:\",k)\nprint(\"Neighbors:\",neighbors)\nprint(\"Prediction:\",prediction)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(neighbors)==3\nassert prediction==\"B\"\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-classify": {
+      "id": "ml-classify",
+      "title": "붓꽃 분류 모델 네 가지 비교",
+      "files": {
+        "main.py": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.svm import SVC\nfrom sklearn.metrics import accuracy_score\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)\nmodels = [KNeighborsClassifier(5), LogisticRegression(max_iter=1000), DecisionTreeClassifier(max_depth=3, random_state=42), SVC()]\nfor model in models:\n    pipe = make_pipeline(StandardScaler(), model)\n    pipe.fit(X_train, y_train)\n    pred = pipe.predict(X_test)\n    print(type(model).__name__, round(accuracy_score(y_test, pred), 3))\n# 이 비교는 관찰용입니다. 실제 모델 선택은 훈련 부분의 교차 검증으로 합니다.\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(pred) == len(y_test)\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. "
+    },
+    "ml-line-small": {
+      "id": "ml-line-small",
+      "title": "웹 원리 · 최소제곱 직선 학습",
+      "files": {
+        "main.py": "x = [1,2,3,4]\ny = [3,5,7,9]\nmx,my = sum(x)/len(x),sum(y)/len(y)\nw = sum((a-mx)*(b-my) for a,b in zip(x,y))/sum((a-mx)**2 for a in x)\nb = my-w*mx\npred = [w*a+b for a in x]\nmae = sum(abs(a-p) for a,p in zip(y,pred))/len(y)\nprint(\"Learned w, b:\",w,b)\nprint(\"Prediction at 5:\",w*5+b)\nprint(\"Training MAE:\",mae)\n# 훈련 오차 0이 새 데이터에서의 정확성을 보장하지는 않습니다.\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert w==2 and b==1\nassert w*5+b==11\nassert mae==0\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-regression": {
+      "id": "ml-regression",
+      "title": "회귀 예측과 MAE·MSE·R²",
+      "files": {
+        "main.py": "from sklearn.datasets import load_diabetes\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score\nX, y = load_diabetes(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)\nmodel = LinearRegression().fit(X_train, y_train)\npred = model.predict(X_test)\nprint(\"Train R2:\", model.score(X_train, y_train))\nprint(\"Test MAE:\", mean_absolute_error(y_test, pred))\nprint(\"Test MSE:\", mean_squared_error(y_test, pred))\nprint(\"Test R2:\", r2_score(y_test, pred))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert mean_absolute_error(y_test, pred) >= 0\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. 내장 자료로 회귀 원리를 연습하는 예제이며 실제 개인에 대한 예측 용도로 사용하지 않습니다."
+    },
+    "ml-housing": {
+      "id": "ml-housing",
+      "title": "교과서 연결 · 주택 자료 회귀",
+      "files": {
+        "main.py": "from sklearn.datasets import fetch_california_housing\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score\nX, y = fetch_california_housing(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\npred = LinearRegression().fit(X_train, y_train).predict(X_test)\nprint(\"MAE\", mean_absolute_error(y_test, pred))\nprint(\"MSE\", mean_squared_error(y_test, pred))\nprint(\"R2\", r2_score(y_test, pred))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. 첫 실행에 외부 데이터 다운로드가 필요합니다. 네트워크가 없으면 내장 자료 회귀 예제를 사용하세요."
+    },
+    "ml-kmeans-small": {
+      "id": "ml-kmeans-small",
+      "title": "웹 원리 · 군집 중심의 반복 갱신",
+      "files": {
+        "main.py": "values = [1,2,3,8,9,10]\ncenters = [1.,8.]\nfor step in range(4):\n    groups = [[],[]]\n    for value in values:\n        index = min(range(2),key=lambda i:abs(value-centers[i]))\n        groups[index].append(value)\n    new_centers = [sum(group)/len(group) if group else centers[i] for i,group in enumerate(groups)]\n    print(\"Step\",step,\"groups:\",groups,\"centers:\",new_centers)\n    if new_centers == centers:\n        break\n    centers = new_centers\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert centers==[2.,9.]\nassert groups==[[1,2,3],[8,9,10]]\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-cluster": {
+      "id": "ml-cluster",
+      "title": "군집 중심과 산점도",
+      "files": {
+        "main.py": "import matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\nX, _ = make_blobs(n_samples=120, centers=3, random_state=42, cluster_std=0.7)\nmodel = KMeans(n_clusters=3, n_init=10, random_state=42)\nlabels = model.fit_predict(X)\ncenters = model.cluster_centers_\nprint(\"Centers:\", centers)\nplt.scatter(X[:, 0], X[:, 1], c=labels)\nplt.scatter(centers[:, 0], centers[:, 1], marker=\"X\", s=180, c=\"red\")\nplt.title(\"K-means: groups and centers\")\nplt.savefig(\"clusters.png\")\n",
+        "requirements.txt": "scikit-learn\nmatplotlib\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(set(labels)) == 3\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. "
+    },
+    "ml-confusion-small": {
+      "id": "ml-confusion-small",
+      "title": "웹 원리 · 혼동행렬 직접 계산",
+      "files": {
+        "main.py": "truth = [1,0,1,1,0,0]\nprobability = [.9,.8,.6,.4,.3,.1]\nthreshold = .5\npred = [int(p>=threshold) for p in probability]\ntp = sum(a==1 and b==1 for a,b in zip(truth,pred))\nfp = sum(a==0 and b==1 for a,b in zip(truth,pred))\nfn = sum(a==1 and b==0 for a,b in zip(truth,pred))\ntn = sum(a==0 and b==0 for a,b in zip(truth,pred))\nprecision = tp/(tp+fp) if tp+fp else None\nrecall = tp/(tp+fn) if tp+fn else None\nprint(\"TP FP FN TN:\",tp,fp,fn,tn)\nprint(\"Precision:\",precision,\"Recall:\",recall)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert (tp,fp,fn,tn)==(2,1,1,2)\nassert len(pred)==len(truth)\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-metrics": {
+      "id": "ml-metrics",
+      "title": "혼동행렬과 분류 지표",
+      "files": {
+        "main.py": "from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score\ny_true = [1, 0, 1, 1, 0, 0]\ny_pred = [1, 1, 1, 0, 0, 0]\nprint(\"rows=true, columns=predicted; labels=[0,1]\")\nprint(confusion_matrix(y_true, y_pred, labels=[0, 1]))\nfor metric in [accuracy_score, precision_score, recall_score, f1_score]:\n    print(metric.__name__, metric(y_true, y_pred))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert confusion_matrix(y_true, y_pred).tolist() == [[2,1],[1,2]]\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. "
+    },
+    "ml-cv-small": {
+      "id": "ml-cv-small",
+      "title": "웹 원리 · 교차 검증의 역할 바꾸기",
+      "files": {
+        "main.py": "samples = list(range(9))\nfolds = [samples[i:i+3] for i in range(0,9,3)]\nfor i, validation in enumerate(folds):\n    training = [v for j,fold in enumerate(folds) if j!=i for v in fold]\n    print(\"Fold\",i,\"train:\",training,\"validation:\",validation)\n    assert not set(training)&set(validation)\nprint(\"최종 테스트 자료는 이 묶음들과 별도로 보관합니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(folds)==3\nassert sorted(v for fold in folds for v in fold)==samples\n",
+      "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다."
+    },
+    "ml-selection": {
+      "id": "ml-selection",
+      "title": "교차 검증과 GridSearchCV",
+      "files": {
+        "main.py": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)\npipe = make_pipeline(StandardScaler(), KNeighborsClassifier())\nprint(\"CV:\", cross_val_score(pipe, X_train, y_train, cv=3))\nsearch = GridSearchCV(pipe, {\"kneighborsclassifier__n_neighbors\": [3, 5, 7]}, cv=3, scoring=\"accuracy\", n_jobs=1)\nsearch.fit(X_train, y_train)\nprint(\"Best:\", search.best_params_, search.best_score_)\nprint(\"Final test:\", search.score(X_test, y_test))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert search.best_params_[\"kneighborsclassifier__n_neighbors\"] in [3,5,7]\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. "
+    },
+    "ml-learning-curve": {
+      "id": "ml-learning-curve",
+      "title": "학습 곡선으로 과대·과소 적합 살펴보기",
+      "files": {
+        "main.py": "import numpy as np\nimport matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import learning_curve, StratifiedKFold\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nX, y = load_iris(return_X_y=True)\nmodel = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))\ncv = StratifiedKFold(3, shuffle=True, random_state=42)\nsizes, train, valid = learning_curve(model, X, y, train_sizes=[0.4, 0.7, 1.0], cv=cv, shuffle=True, random_state=42, n_jobs=1)\nplt.plot(sizes, train.mean(axis=1), \"o-\", label=\"Training\")\nplt.plot(sizes, valid.mean(axis=1), \"s--\", label=\"Validation\")\nplt.xlabel(\"Training samples\")\nplt.ylabel(\"Accuracy\")\nplt.legend()\nplt.savefig(\"learning-curve.png\")\nprint(\"Sizes:\", sizes)\nprint(\"Validation:\", np.round(valid.mean(axis=1), 3))\n",
+        "requirements.txt": "numpy\nscikit-learn\nmatplotlib\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(sizes)==3\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. "
+    }
+  },
+  "questions": [
+    {
+      "id": "u3-q001",
+      "unit": 3,
+      "topic": "AI 관계",
+      "kind": "선택",
+      "prompt": "올바른 포함 관계는?",
+      "answer": "AI ⊃ 머신러닝 ⊃ 딥러닝",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "AI가 가장 넓고 딥러닝은 ML의 일부입니다.",
+      "options": [
+        "AI ⊃ 머신러닝 ⊃ 딥러닝",
+        "딥러닝 ⊃ AI ⊃ 머신러닝"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 129쪽 3"
+    },
+    {
+      "id": "u3-q002",
+      "unit": 3,
+      "topic": "학습 방식",
+      "kind": "선택",
+      "prompt": "레이블 없이 데이터의 비슷한 구조를 찾는 학습은?",
+      "answer": "비지도 학습",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "정답 없이 패턴을 찾는 것은 비지도 학습입니다.",
+      "options": [
+        "비지도 학습",
+        "지도 학습"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 84쪽 1③"
+    },
+    {
+      "id": "u3-q003",
+      "unit": 3,
+      "topic": "학습 방식",
+      "kind": "선택",
+      "prompt": "예측할 값이 내일의 기온이라면 주된 문제 유형은?",
+      "answer": "회귀",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "연속적인 수치를 예측합니다.",
+      "options": [
+        "회귀",
+        "분류"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 84쪽 2"
+    },
+    {
+      "id": "u3-q004",
+      "unit": 3,
+      "topic": "학습 방식",
+      "kind": "선택",
+      "prompt": "보상에 따라 미로의 행동 전략을 배우는 방식은?",
+      "answer": "강화 학습",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "상태·행동·보상·정책을 구별합니다.",
+      "options": [
+        "강화 학습",
+        "군집화"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 84쪽 3"
+    },
+    {
+      "id": "u3-q005",
+      "unit": 3,
+      "topic": "군집",
+      "kind": "선택",
+      "prompt": "정답 없이 고객을 구매 특성별로 묶는 도구는?",
+      "answer": "KMeans",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "유사한 고객 그룹의 중심을 찾습니다.",
+      "options": [
+        "KMeans",
+        "LinearRegression"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 128쪽 3"
+    },
+    {
+      "id": "u3-q006",
+      "unit": 3,
+      "topic": "특성",
+      "kind": "선택",
+      "prompt": "예측 시점에는 알 수 없는 미래 정답 열을 X에 넣으면?",
+      "answer": "데이터 누수",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "현실 예측 때 없는 정보를 쓰면 평가가 부풀려집니다.",
+      "options": [
+        "데이터 누수",
+        "항상 더 좋은 모델"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q007",
+      "unit": 3,
+      "topic": "전처리",
+      "kind": "선택",
+      "prompt": "StandardScaler.fit을 적용할 데이터는?",
+      "answer": "훈련 데이터",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "평균과 표준편차도 훈련 부분에서만 구합니다.",
+      "options": [
+        "훈련 데이터",
+        "테스트 포함 전체 데이터"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 128쪽 2 보완"
+    },
+    {
+      "id": "u3-q008",
+      "unit": 3,
+      "topic": "pandas",
+      "kind": "선택",
+      "prompt": "문자열 열을 DataFrame에 담을 수 있나요?",
+      "answer": "가능하다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "DataFrame은 수치형과 문자열 등 여러 자료형을 담습니다.",
+      "options": [
+        "불가능하다",
+        "가능하다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 128쪽 1①"
+    },
+    {
+      "id": "u3-q009",
+      "unit": 3,
+      "topic": "분류",
+      "kind": "선택",
+      "prompt": "중요한 정상 메일을 스팸으로 잘못 보내는 경우를 줄일 때 주목할 지표는?",
+      "answer": "정밀도",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "스팸을 양성으로 두면 잘못 스팸 처리한 것은 FP입니다.",
+      "options": [
+        "정밀도",
+        "R²"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 129쪽 1"
+    },
+    {
+      "id": "u3-q010",
+      "unit": 3,
+      "topic": "과대 적합",
+      "kind": "선택",
+      "prompt": "훈련 점수만 높이려고 지나치게 반복 학습하면?",
+      "answer": "과대 적합 위험이 커질 수 있다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "새 데이터의 성능을 함께 확인해야 합니다.",
+      "options": [
+        "일반화가 항상 좋아진다",
+        "과대 적합 위험이 커질 수 있다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 130쪽 4"
+    },
+    {
+      "id": "u3-q011",
+      "unit": 3,
+      "topic": "분류",
+      "kind": "선택",
+      "prompt": "분류 문제에 해당하는 것은?",
+      "answer": "이메일 스팸 여부",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "분류는 범주를 예측합니다.",
+      "options": [
+        "이메일 스팸 여부",
+        "내일 기온 수치"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 130쪽 5"
+    },
+    {
+      "id": "u3-q012",
+      "unit": 3,
+      "topic": "알고리즘",
+      "kind": "선택",
+      "prompt": "지도 학습 알고리즘이 아닌 것은?",
+      "answer": "KMeans",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "KMeans는 비지도 군집화입니다.",
+      "options": [
+        "KMeans",
+        "KNeighborsClassifier"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 130쪽 6"
+    },
+    {
+      "id": "u3-q013",
+      "unit": 3,
+      "topic": "전처리",
+      "kind": "선택",
+      "prompt": "정규화 후 새 데이터의 값이 1.4가 나올 수 있나요?",
+      "answer": "가능하다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "훈련 최댓값을 넘으면 1보다 커질 수 있습니다.",
+      "options": [
+        "절대로 불가능하다",
+        "가능하다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q014",
+      "unit": 3,
+      "topic": "용어",
+      "kind": "선택",
+      "prompt": "k-NN의 n_neighbors는 무엇인가요?",
+      "answer": "하이퍼파라미터",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "학습 전에 정하는 설정입니다.",
+      "options": [
+        "레이블",
+        "하이퍼파라미터"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 78쪽"
+    },
+    {
+      "id": "u3-q015",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "선택",
+      "prompt": "최종 테스트 점수를 보고 k를 계속 고르면?",
+      "answer": "테스트가 모델 선택에 사용된다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "검증을 통해 선택하고 테스트는 마지막에 씁니다.",
+      "options": [
+        "독립적인 최종 평가가 유지된다",
+        "테스트가 모델 선택에 사용된다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q016",
+      "unit": 3,
+      "topic": "회귀",
+      "kind": "선택",
+      "prompt": "R²는 음수가 될 수 있나요?",
+      "answer": "가능하다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "평균 예측보다 오차가 크면 음수가 될 수 있습니다.",
+      "options": [
+        "항상 0 이상이다",
+        "가능하다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 121–123쪽"
+    },
+    {
+      "id": "u3-q017",
+      "unit": 3,
+      "topic": "군집",
+      "kind": "선택",
+      "prompt": "군집 번호 2는 번호 1보다 더 좋은 그룹인가요?",
+      "answer": "번호에 우열 의미가 없다",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "번호는 그룹 식별용입니다.",
+      "options": [
+        "항상 더 좋은 그룹이다",
+        "번호에 우열 의미가 없다"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 108–111쪽"
+    },
+    {
+      "id": "u3-q018",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "선택",
+      "prompt": "정확도·정밀도·재현율은 주로 어떤 모델에 쓰나요?",
+      "answer": "분류",
+      "hint": "개념 표의 입력·출력과 비교하세요.",
+      "explain": "범주 예측과 실제 정답을 비교합니다.",
+      "options": [
+        "분류",
+        "회귀"
+      ],
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 84쪽 1②"
+    },
+    {
+      "id": "u3-q019",
+      "unit": 3,
+      "topic": "pandas",
+      "kind": "빈칸",
+      "prompt": "import pandas as ____",
+      "answer": "pd",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "관례적인 별칭입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 131쪽 7①"
+    },
+    {
+      "id": "u3-q020",
+      "unit": 3,
+      "topic": "pandas",
+      "kind": "빈칸",
+      "prompt": "pd.____(sales_info)로 표를 만듭니다.",
+      "answer": "DataFrame",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "열 이름과 값으로 표를 구성합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 131쪽 7②"
+    },
+    {
+      "id": "u3-q021",
+      "unit": 3,
+      "topic": "pandas",
+      "kind": "빈칸",
+      "prompt": "sales_df.____()로 수치형 요약 통계를 구합니다.",
+      "answer": "describe",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "평균·분위수 등을 확인합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 131쪽 7③"
+    },
+    {
+      "id": "u3-q022",
+      "unit": 3,
+      "topic": "모델",
+      "kind": "빈칸",
+      "prompt": "model.____(X_train,y_train)으로 학습합니다.",
+      "answer": "fit",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "학습 데이터를 전달합니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 105쪽"
+    },
+    {
+      "id": "u3-q023",
+      "unit": 3,
+      "topic": "모델",
+      "kind": "빈칸",
+      "prompt": "model.____(X_test)로 새 입력을 예측합니다.",
+      "answer": "predict",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "테스트 정답은 입력하지 않습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 105쪽"
+    },
+    {
+      "id": "u3-q024",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "빈칸",
+      "prompt": "TP=6, FP=2일 때 정밀도는? 소수로 쓰세요.",
+      "answer": "0.75",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "6/(6+2)입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q025",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "빈칸",
+      "prompt": "실제 [1,3], 예측 [2,2]의 MSE는?",
+      "answer": "1",
+      "hint": "예제의 함수 이름 또는 식을 확인하세요.",
+      "explain": "(1²+1²)/2입니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q026",
+      "unit": 3,
+      "topic": "과정",
+      "kind": "순서",
+      "prompt": "데이터 누수 없이 예측 모델을 구성하는 순서를 정하세요.",
+      "answer": [
+        "입력과 정답 정의",
+        "훈련·테스트 분할",
+        "훈련 데이터로 전처리 학습",
+        "모델 학습·검증",
+        "최종 테스트 평가"
+      ],
+      "hint": "입력이 준비되어야 다음 작업을 할 수 있습니다.",
+      "explain": "테스트에서 평균·스케일을 배우지 않습니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q027",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "순서",
+      "prompt": "설정 후보를 고르고 최종 평가하는 순서를 정하세요.",
+      "answer": [
+        "최종 테스트 보관",
+        "훈련 부분 교차 검증",
+        "설정 선택",
+        "전체 훈련 부분 재학습",
+        "테스트 점수 보고"
+      ],
+      "hint": "입력이 준비되어야 다음 작업을 할 수 있습니다.",
+      "explain": "교차 검증과 테스트의 역할을 나눕니다.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q028",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "구현",
+      "prompt": "mae(actual,pred)가 평균 절대 오차를 반환하게 만드세요.",
+      "answer": "def mae(actual,pred):\n    return sum(abs(a-p) for a,p in zip(actual,pred))/len(actual)",
+      "hint": "길이가 같은 비어 있지 않은 목록을 입력받는다고 가정합니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def mae(actual,pred):\n    pass\n",
+      "checks": "assert mae([1,3],[2,2])==1\nassert mae([0,0],[2,-4])==3\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q029",
+      "unit": 3,
+      "topic": "평가",
+      "kind": "구현",
+      "prompt": "precision(tp,fp)가 정밀도를 반환하게 하세요. 분모 0은 0으로 처리합니다.",
+      "answer": "def precision(tp,fp):\n    return tp/(tp+fp) if tp+fp else 0",
+      "hint": "양성이라고 예측한 전체 개수를 분모로 씁니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def precision(tp,fp):\n    pass\n",
+      "checks": "assert precision(6,2)==0.75\nassert precision(0,0)==0\nassert precision(0,3)==0\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q030",
+      "unit": 3,
+      "topic": "전처리",
+      "kind": "구현",
+      "prompt": "fill(values)가 None을 관측값 평균으로 채운 새 목록을 반환하게 만드세요. 관측값은 한 개 이상입니다.",
+      "answer": "def fill(values):\n    valid=[v for v in values if v is not None]\n    mean=sum(valid)/len(valid)\n    return [mean if v is None else v for v in values]",
+      "hint": "0은 결측값이 아닙니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def fill(values):\n    pass\n",
+      "checks": "v=[0,None,4]\nassert fill(v)==[0,2,4]\nassert v==[0,None,4]\nassert fill([None,6])==[6,6]\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q031",
+      "unit": 3,
+      "topic": "회귀",
+      "kind": "구현",
+      "prompt": "predict(x,w,b)가 선형 예측값을 반환하도록 고치세요.",
+      "answer": "def predict(x,w,b):\n    return w*x+b",
+      "hint": "가중치×입력 + 절편입니다.",
+      "explain": "조건을 바꾸어 검사하고 반환값의 의미를 설명하세요.",
+      "options": null,
+      "starter": "def predict(x,w,b):\n    return x+w+b\n",
+      "checks": "assert predict(3,2,1)==7\nassert predict(-2,3,4)==-2\n",
+      "level": "기본",
+      "ref": "보강"
+    },
+    {
+      "id": "u3-q032",
+      "unit": 3,
+      "topic": "AI·머신러닝·딥러닝의 관계",
+      "kind": "서술",
+      "prompt": "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요.",
+      "answer": "예: 음악 추천의 입력은 이전 청취 기록과 곡 특성, 출력은 추천 순위입니다. 추천 서비스의 일부는 데이터에서 선호 패턴을 학습합니다. 모든 기능이 딥러닝일 필요는 없습니다.",
+      "hint": "인공지능｜가장 넓은 범위에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 62–67 연계·확장"
+    },
+    {
+      "id": "u3-q033",
+      "unit": 3,
+      "topic": "머신러닝이 필요한 문제와 활용",
+      "kind": "서술",
+      "prompt": "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요.",
+      "answer": "날짜·요일·학사 일정·이전 날짜까지의 대출 권수와 다음 날 대출 권수를 모읍니다. 다음 날 대출 권수는 정답이며 예측 시점의 입력에 넣지 않습니다.",
+      "hint": "문제 찾기에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 68–70 연계·확장"
+    },
+    {
+      "id": "u3-q034",
+      "unit": 3,
+      "topic": "문제 해결 과정과 데이터 분할",
+      "kind": "서술",
+      "prompt": "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요.",
+      "answer": "예: 다음 날 총 대출 권수를 예측하고 MAE가 단순 과거 평균 예측보다 낮은지 비교합니다. 시간 순서를 지켜 미래 자료를 테스트로 남기고 오차의 단위는 권으로 적습니다.",
+      "hint": "문제·성공 기준에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 71–75, 101–102 연계·확장"
+    },
+    {
+      "id": "u3-q035",
+      "unit": 3,
+      "topic": "특성·레이블·모델·하이퍼파라미터",
+      "kind": "서술",
+      "prompt": "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요.",
+      "answer": "미래 대출 수는 예측할 정답이므로 실제 예측 때 사용할 수 없습니다. X에 넣으면 테스트 점수가 높아져도 현실에서는 사용할 수 없는 데이터 누수가 됩니다.",
+      "hint": "행｜샘플 1개에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 76–78 연계·확장"
+    },
+    {
+      "id": "u3-q036",
+      "unit": 3,
+      "topic": "지도·비지도·강화 학습",
+      "kind": "서술",
+      "prompt": "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요.",
+      "answer": "예: 출구 도착 +100, 벽 충돌 -10, 이동마다 -1로 보상을 정할 수 있습니다. 제자리 반복이 이득이 되지 않는지 확인하며 정책은 장기 누적 보상을 높이도록 학습합니다.",
+      "hint": "정답 있음｜지도 학습에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 79–84 연계·확장"
+    },
+    {
+      "id": "u3-q037",
+      "unit": 3,
+      "topic": "머신러닝 라이브러리와 그래프",
+      "kind": "서술",
+      "prompt": "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요.",
+      "answer": "banana 항목을 두 개 추가하면 해당 막대의 높이가 2 커집니다. Counter 또는 빈도표의 수와 그래프 높이를 함께 확인합니다.",
+      "hint": "NumPy｜배열에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 85–89 연계·확장"
+    },
+    {
+      "id": "u3-q038",
+      "unit": 3,
+      "topic": "결측치·이상치·스케일·범주 처리",
+      "kind": "서술",
+      "prompt": "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요.",
+      "answer": "시험 만점·입력 단위·원래 기록을 확인하고 1000이 100의 오타인지 묻습니다. 확인 없이 삭제하지 않으며 수정 또는 제외의 근거를 기록합니다.",
+      "hint": "불러오기·자료형 확인에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 90–100 연계·확장"
+    },
+    {
+      "id": "u3-q039",
+      "unit": 3,
+      "topic": "분류: k-NN·로지스틱·트리·SVM",
+      "kind": "서술",
+      "prompt": "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요.",
+      "answer": "같은 분할·같은 스케일 처리에서 n_neighbors만 3과 7로 바꿉니다. 검증 점수와 달라진 오분류를 표로 기록하며 테스트를 반복 선택에 사용하지 않습니다.",
+      "hint": "붓꽃 X,y에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 103–105 연계·확장"
+    },
+    {
+      "id": "u3-q040",
+      "unit": 3,
+      "topic": "회귀와 수치 오차",
+      "kind": "서술",
+      "prompt": "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요.",
+      "answer": "그림의 정답은 y=2x이므로 기울기 2에서 예측과 정답이 겹쳐 MSE=0입니다. 기울기를 1로 바꾸면 네 제곱 오차 평균은 7.5입니다.",
+      "hint": "입력 특성에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 106–107, 121–123 연계·확장"
+    },
+    {
+      "id": "u3-q041",
+      "unit": 3,
+      "topic": "K-평균 군집화",
+      "kind": "서술",
+      "prompt": "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요.",
+      "answer": "K를 늘리면 같은 데이터가 더 많은 그룹으로 나뉘며 중심 위치도 달라집니다. 군집 번호를 정답이나 순위로 해석하지 않고 점 분포와 중심을 근거로 그룹의 의미를 설명합니다.",
+      "hint": "K개 중심 초기화에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 108–111 연계·확장"
+    },
+    {
+      "id": "u3-q042",
+      "unit": 3,
+      "topic": "혼동행렬·정확도·정밀도·재현율",
+      "kind": "서술",
+      "prompt": "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요.",
+      "answer": "임계값을 올리면 양성 예측 수가 줄어 FP는 줄거나 같고 FN은 늘거나 같습니다. 정밀도는 항상 단조롭게 오르는 것은 아니며, 양성 예측이 없으면 분모가 0입니다.",
+      "hint": "양성 의미 정하기에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 117–120 연계·확장"
+    },
+    {
+      "id": "u3-q043",
+      "unit": 3,
+      "topic": "교차 검증·튜닝·학습 곡선",
+      "kind": "서술",
+      "prompt": "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요.",
+      "answer": "best_score_는 훈련 부분 교차 검증의 평균이고 최종 테스트는 따로 보관한 데이터의 점수입니다. 평가에 사용한 데이터와 학습 표본이 달라 점수도 달라질 수 있습니다.",
+      "hint": "최종 테스트 별도 보관에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 112–116, 124–128 연계·확장"
+    },
+    {
+      "id": "u3-q044",
+      "unit": 3,
+      "topic": "모델 구현·평가 프로젝트와 단원 정리",
+      "kind": "서술",
+      "prompt": "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요.",
+      "answer": "후보 k=9를 param_grid에 추가하고 같은 교차 검증 조건에서 비교합니다. 평균 검증 점수로 선택하고 변경 이유·최종 테스트 결과·오류 사례를 저널에 남깁니다.",
+      "hint": "문제·데이터 카드에서 시작해 입력과 출력을 연결하세요.",
+      "explain": "개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.",
+      "options": null,
+      "starter": "",
+      "checks": "",
+      "level": "기본",
+      "ref": "교과서 129–131 + 확장 연계·확장"
+    }
+  ],
+  "pairs": []
+}

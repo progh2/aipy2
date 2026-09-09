@@ -33,10 +33,10 @@ function toast(text){$('#toast').textContent=text;clearTimeout(toastTimer);toast
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}}
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
-function updateProgress(){for(const u of [1,2]){const total=u===1?12:9;const count=Object.entries(state.complete).filter(([k,v])=>k.startsWith(`u${u}-`)&&v).length;const value=Math.min(100,Math.round(count/total*100));$$(`[data-unit-progress="${u}"]`).forEach(e=>e.textContent=`${value}%`);$$(`[data-unit-bar="${u}"]`).forEach(e=>e.value=value);}}
+function updateProgress(){for(const item of $$('[data-unit-progress]')){const u=Number(item.dataset.unitProgress),total=Number(item.dataset.total)||1;const count=Object.entries(state.complete).filter(([k,v])=>k.startsWith(`u${u}-`)&&v).length;const value=Math.min(100,Math.round(count/total*100));item.textContent=`${value}%`;$$(`[data-unit-bar="${u}"]`).forEach(e=>e.value=value);}}
 updateProgress();
 if(!storageWorks)toast('기록을 불러오지 못했습니다. 이 세션의 기록은 내보내기로 보관하세요.');
-if($('#resume') && typeof state.last==='string' && /^units\/unit0[12]\/index\.html#[a-z0-9-]+$/.test(state.last))$('#resume').href=state.last;
+if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/index\.html#[a-z0-9-]+$/.test(state.last))$('#resume').href=state.last;
 $$('[data-export]').forEach(b=>b.addEventListener('click',()=>download('aipy-learning-record.json',JSON.stringify(state,null,2),'application/json')));
 $$('[data-import]').forEach(input=>input.addEventListener('change',async()=>{
  try{
@@ -71,11 +71,11 @@ function execute(payload,onOutput){
  running=true;$('#stop').disabled=false;
  return new Promise(resolve=>{
   jobResolve=resolve;jobOutput=onOutput;
-  if(!worker)worker=new Worker(prefix+'assets/python-worker.js');
-  clearTimeout(timer);timer=setTimeout(()=>stop('실행 엔진 준비 시간이 초과되었습니다. 네트워크를 확인하고 다시 실행하세요.'),90000);
+  if(!worker)worker=new Worker(prefix+'assets/python-worker.js?v=science1');
+  clearTimeout(timer);timer=setTimeout(()=>stop('실행 엔진 준비 시간이 초과되었습니다. 네트워크를 확인하고 다시 실행하세요.'),180000);
   worker.onmessage=({data:m})=>{
    if(m.type==='loading')onOutput(m.text+'\n');
-   if(m.type==='ready'){clearTimeout(timer);timer=setTimeout(()=>stop('15초 실행 제한에 도달했습니다. 반복 조건을 확인하세요.'),15000);}
+   if(m.type==='ready'){clearTimeout(timer);timer=setTimeout(()=>stop('30초 실행 제한에 도달했습니다. 반복 조건을 확인하세요.'),30000);}
    if(m.type==='stdout')onOutput(m.text);
    if(m.type==='done'){clearTimeout(timer);running=false;$('#stop').disabled=true;if(m.error)onOutput(m.error+'\n');jobResolve=null;jobOutput=null;resolve(m);}
   };
@@ -100,13 +100,14 @@ function selectExample(id,scroll=false){
  $('#example-select').value=id;$('#code-editor').value=files[fileName];renderFiles();
  $('#entry-file').value=saved?.entry&&files[saved.entry]!==undefined?saved.entry:ex.entry;
  $('#stdin').value=saved?.stdin??ex.stdin??'';$('#argv').value=saved?.args??ex.args??'[]';if(!$('#argv').value)$('#argv').value='[]';
- $('#run-mode').textContent=ex.mode==='web'?'브라우저 Python 실행':'PC GUI / 터미널 실습';
+ $('#run-mode').textContent=ex.mode==='web'?'브라우저 Python 실행':'PC Python 실습';
  $('#run').textContent=ex.mode==='web'?'▶ Python 실행':'Python 문법 확인';
  $('#check-example').disabled=!ex.checks;
  $('#check-example').textContent=ex.checks?'입력·조건 검사':'PC 실행으로 동작 점검';
  $('#example-note').textContent=(ex.note||'')+(ex.mode==='pc'?' 이 코드는 PC에서 실행하세요. 웹에서는 Python 문법만 확인합니다. ZIP 다운로드 후 예제 폴더를 VS Code로 열고 python main.py를 실행하세요. 필요한 라이브러리는 requirements.txt로 설치합니다.':' 파일을 오가며 편집한 뒤 실행 파일을 선택하세요. 각 실행은 새 가상 프로젝트에서 시작합니다.');
- $('#output').textContent=`${ex.title}\n${ex.mode==='web'?'실행 결과가 여기에 표시됩니다.':'문법 검사는 GUI 라이브러리 설치나 실제 창 동작까지 검사하지 않습니다.'}`;
- paiGuide('thinking',ex.mode==='web'?'실행 전에 결과를 먼저 예상해 볼까요?':'웹에서 확인한 뒤, PC에서도 시험해요.',ex.mode==='web'?'어떤 파일을 실행하나요? 입력값을 바꾸면 어떤 결과가 나올지 먼저 적어 보세요.':'문법 확인은 첫 단계예요. 다운로드한 앱에서 버튼 클릭·입력·취소까지 확인하세요.');
+ $('#plot-output').replaceChildren();
+ $('#output').textContent=`${ex.title}\n${ex.mode==='web'?'실행 결과가 여기에 표시됩니다.':'문법 검사는 패키지 설치·데이터·장치·실제 프로그램 동작까지 검사하지 않습니다.'}`;
+ paiGuide('thinking',ex.mode==='web'?'실행 전에 결과를 먼저 예상해 볼까요?':'웹에서 확인한 뒤, PC에서도 시험해요.',ex.mode==='web'?'어떤 파일을 실행하나요? 입력값을 바꾸면 어떤 결과가 나올지 먼저 적어 보세요.':'문법 확인은 첫 단계예요. 다운로드한 예제를 실행하고 입력·결과·오류 처리를 확인하세요.');
  if(scroll)$('#lab').scrollIntoView({behavior:'smooth'});
 }
 $('#code-editor').addEventListener('input',stash);
@@ -123,12 +124,13 @@ async function runExample(check=false){
  try{args=JSON.parse($('#argv').value||'[]');if(!Array.isArray(args)||!args.every(x=>typeof x==='string'))throw Error();}catch{return toast('실행 인자는 ["값1", "값2"] 형식으로 입력하세요.');}
  const ex=data.examples[currentId],entry=$('#entry-file').value;
  if(!entry || !files[entry])return toast('실행할 Python 파일을 선택하세요.');
- const out=$('#output');out.textContent='';
+ const out=$('#output');out.textContent='';$('#plot-output').replaceChildren();
  paiGuide('thinking','예상한 결과와 실제 출력을 비교할 준비!','실행이 끝나면 출력값뿐 아니라 실행 순서도 확인해 보세요.');
  const result=await execute({files,entry,stdin:$('#stdin').value,args,checks:check?ex.checks:'',syntax:ex.mode!=='web'},s=>out.textContent+=s);
+ if(result.images)for(const picture of result.images){const fig=node('figure'),img=node('img');img.src='data:image/png;base64,'+picture.data;img.alt='Python 실행 결과: '+picture.name;const caption=node('figcaption','',picture.name+' · 실제 실행 결과');const link=node('a','','PNG 저장');link.href=img.src;link.download=picture.name;fig.append(img,caption,link);$('#plot-output').append(fig);}
  if(result.ok)out.textContent+='\n실행 완료'+(check?' · 준비된 검사 통과':'')+'\n';
  if(result.ok){
-  if(ex.mode!=='web')paiGuide('idea','문법 확인을 통과했어요. 다음은 실제 동작!', 'PC에서 창을 띄우고 입력·버튼 클릭·취소 동작을 직접 확인하세요.');
+  if(ex.mode!=='web')paiGuide('idea','문법 확인을 통과했어요. 다음은 실제 동작!', 'PC에서 예제를 실행하고 입력·출력·오류 처리를 직접 확인하세요.');
   else if(check)paiGuide('celebrate','준비된 조건을 통과했어요!', '입력값을 하나 더 바꾸어 보고, 왜 이 결과가 나오는지 내 말로 설명하세요.');
   else paiGuide('idea','예상했던 결과가 나왔나요?', '출력의 이유를 설명한 다음 숫자나 조건을 하나 바꾸어 다시 실험해 보세요.');
  }else if(!result.stopped && !result.busy)paiGuide('debug','오류는 원인을 찾을 단서예요.', '마지막 오류 줄 → 파일명과 줄 번호 → 사용한 이름과 값을 순서대로 확인하세요.');
