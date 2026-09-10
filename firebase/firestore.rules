@@ -1,0 +1,118 @@
+rules_version = '2';
+// 정적 호스팅에는 비밀이 없으므로, 학교 도메인 확인과 반·번호 위조 방지는 모두 이 규칙이 담당합니다.
+// 콘솔 → Firestore Database → 규칙에 붙여넣고 게시하거나, firebase deploy --only firestore:rules 로 배포합니다.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function email() {
+      return request.auth.token.email.lower();
+    }
+
+    // 학교 Google 계정만 데이터에 접근합니다. 개인 계정은 로그인은 되어도 아무것도 읽고 쓸 수 없습니다.
+    function schoolAccount() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email.lower().matches('^[a-z0-9._%+-]+@e-mirim[.]hs[.]kr$');
+    }
+
+    // 교사 권한은 콘솔에서 admins/{학교이메일} 문서를 만들어 부여합니다.
+    function isTeacher() {
+      return schoolAccount()
+        && exists(/databases/$(database)/documents/admins/$(email()));
+    }
+
+    function rosterPath() {
+      return /databases/$(database)/documents/roster/$(email());
+    }
+
+    function listed() {
+      return exists(rosterPath());
+    }
+
+    // 학생은 자기 학번·입학년도·학년·반·번호를 스스로 정하지 못하고, 교사가 등록한 명단 값만 쓸 수 있습니다.
+    // 명단 문서는 인자로 한 번만 넘겨 받습니다. get()은 읽기로 과금되고 호출 횟수 제한도 있습니다.
+    function copiedFrom(entry) {
+      return request.resource.data.studentId == entry.studentId
+        && request.resource.data.admissionYear == entry.admissionYear
+        && request.resource.data.grade == entry.grade
+        && request.resource.data.classroom == entry.classroom
+        // number(출석번호)는 선택 항목이라 없을 수도 있습니다. 없는 필드를 직접 읽으면 규칙이 오류로 거부됩니다.
+        && request.resource.data.get('number', null) == entry.get('number', null);
+    }
+
+    function unassigned() {
+      return request.resource.data.studentId == null
+        && request.resource.data.admissionYear == null
+        && request.resource.data.grade == null
+        && request.resource.data.classroom == null
+        && request.resource.data.get('number', null) == null;
+    }
+
+    function matchesRoster() {
+      return listed() ? copiedFrom(get(rosterPath()).data) : unassigned();
+    }
+
+    function owns(uid) {
+      return request.auth != null && request.auth.uid == uid && schoolAccount();
+    }
+
+    // 교사가 미리 등록하는 명단. 학생은 자기 한 줄만 읽습니다.
+    match /roster/{rosterEmail} {
+      allow get: if schoolAccount() && rosterEmail == email();
+      allow get, list: if isTeacher();
+      // delete 는 request.resource 가 없으므로 검증식과 분리합니다.
+      allow delete: if isTeacher();
+      allow create, update: if isTeacher()
+        && request.resource.data.keys().hasOnly(['email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'updatedAt'])
+        && request.resource.data.email == rosterEmail
+        && request.resource.data.name is string
+        // 학번은 앞자리 0이 지워지지 않도록 문자열로 저장합니다.
+        && request.resource.data.studentId is string
+        && request.resource.data.admissionYear is int
+        && request.resource.data.grade is int
+        && request.resource.data.classroom is int;
+    }
+
+    // 교사 계정 목록. 콘솔에서만 추가·삭제합니다.
+    match /admins/{adminEmail} {
+      allow get: if schoolAccount() && adminEmail == email();
+      allow list, write: if false;
+    }
+
+    match /students/{uid} {
+      allow get: if owns(uid);
+      allow get, list: if isTeacher();
+      allow delete: if isTeacher();
+      allow create, update: if owns(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.email == email()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'updatedAt'])
+        && matchesRoster();
+
+      // 학습 기록 미러: 브라우저 localStorage의 state를 그대로 담습니다. (다음 단계)
+      match /state/{docId} {
+        allow read, write: if owns(uid);
+        allow read: if isTeacher();
+      }
+
+      // 과제 제출물: 소스·입력·채점 결과·출력을 함께 남깁니다. (다음 단계)
+      match /submissions/{taskId} {
+        allow read, create, update: if owns(uid);
+        allow read: if isTeacher();
+        allow delete: if isTeacher();
+      }
+    }
+
+    // 반별 집계용 요약. 교사 관리 페이지는 이 컬렉션만 조회합니다. (다음 단계)
+    match /progress/{uid} {
+      allow get: if owns(uid);
+      allow get, list: if isTeacher();
+      allow create, update: if owns(uid)
+        && request.resource.data.email == email()
+        && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'counts', 'understanding', 'updatedAt'])
+        && matchesRoster();
+    }
+  }
+}
