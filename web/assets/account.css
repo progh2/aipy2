@@ -9,3 +9,23 @@
 .account-chip small{font-size:11px;color:var(--muted)}
 .account-warn{font-size:12px;color:#a33a2a;flex-basis:100%}
 @media (max-width:900px){.account{width:100%;justify-content:flex-start}.account-note{display:none}}
+
+/* 교사용 명단 관리 화면 */
+.admin-page{padding:32px max(5%,calc((100vw - 1100px)/2)) 64px}
+.admin-page h1{margin:8px 0 4px}
+.admin-page .lead{color:var(--muted);max-width:62ch}
+.admin-card{border:1px solid var(--line);border-radius:12px;background:#fff;padding:20px;margin:20px 0}
+.admin-card h2{margin:0 0 10px;font-size:19px}
+.admin-card label{display:block;margin:12px 0 4px;font-size:14px;font-weight:600}
+.admin-card textarea{width:100%;font-family:var(--mono);font-size:13px;padding:10px;border:1px solid var(--line);border-radius:8px}
+.admin-code{display:inline-block;margin:6px 0;padding:6px 10px;border-radius:6px;background:var(--paper);font-family:var(--mono);font-size:13px}
+.admin-table{overflow-x:auto;margin-top:12px}
+.admin-table table{border-collapse:collapse;width:100%;font-size:13px}
+.admin-table th,.admin-table td{border-bottom:1px solid var(--line);padding:6px 9px;text-align:left;white-space:nowrap}
+.admin-table th{background:var(--paper);font-size:12px;color:var(--muted)}
+.admin-table tr.state-new td{background:#f2fbf6}
+.admin-table tr.state-update td{background:#fffaec}
+.admin-table tr.state-error td{background:#fdf1ef}
+.admin-table tr.state-same td{color:var(--muted)}
+.admin-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.admin-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px}
