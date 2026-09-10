@@ -14,15 +14,19 @@ else:
  assert actual==REPO,'Unexpected deployment remote'
  assert not subprocess.check_output(['git','status','--porcelain'],cwd=TARGET,text=True).strip(),'Deployment checkout has pending changes'
  run('git','pull','--ff-only',cwd=TARGET)
-for rel in ['web','tools/web','.github/workflows']:
+OWNED=['web','tools/web','.github/workflows','firebase','docs','README.md']
+for rel in OWNED:
+ source_root=ROOT/rel
+ if source_root.is_file():
+  shutil.copy2(source_root,TARGET/rel);continue
  destination=TARGET/rel
  destination.mkdir(parents=True,exist_ok=True)
  # Copy maintained files without deleting anything outside these owned paths.
- for source in (ROOT/rel).rglob('*'):
+ for source in source_root.rglob('*'):
   if not source.is_file() or '__pycache__' in source.parts:continue
-  target=destination/source.relative_to(ROOT/rel)
+  target=destination/source.relative_to(source_root)
   target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
-run('git','add','web','tools/web','.github/workflows/pages.yml',cwd=TARGET)
+run('git','add','web','tools/web','.github/workflows/pages.yml','firebase','docs','README.md',cwd=TARGET)
 changed=subprocess.run(['git','diff','--cached','--quiet'],cwd=TARGET).returncode
 if changed:
  if subprocess.run(['git','config','--get','user.email'],cwd=TARGET,stdout=subprocess.DEVNULL).returncode:
