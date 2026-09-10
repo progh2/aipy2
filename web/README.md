@@ -43,6 +43,22 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 
 학습 기록 키: `aipy-lab-v1`. 진행·코드·답안·저널은 브라우저 안에만 저장됩니다. 공용 PC에서는 내보내기 후 지우기를 사용하세요. 자동 서버 제출·PC 간 동기화는 없습니다. 저장소 접근 실패 시 메모리에서 동작하며 내보내기를 안내합니다.
 
+## 학교 계정 로그인 (Firebase)
+
+학생은 헤더의 **학교 계정으로 로그인**에서 `@e-mirim.hs.kr` Google 계정으로 로그인합니다.
+반·번호는 교사가 미리 등록한 명단(`roster`)에서 가져오므로 학생이 스스로 바꿀 수 없습니다.
+
+- 설정값: `web/assets/firebase-config.js` (`apiKey`는 비밀키가 아니라 식별자이므로 공개해도 됩니다)
+- 로그인 동작: `web/assets/auth.js` · 표시: `web/assets/account.css`
+- 권한 규칙: `firebase/firestore.rules` · 콘솔 설정 절차: `firebase/README.md`
+- 설정값이 비어 있으면 로그인 UI가 나타나지 않고 사이트는 기존처럼 동작합니다.
+- `before-you-start.html`은 독립 페이지라 계정 영역이 없습니다.
+- 교사용 명단 관리: `teacher/admin.html` · 동작은 `assets/admin.js`. 교사 대문에서 링크됩니다.
+  CSV 열은 `email,studentId,admissionYear,name,grade,classroom,number`이며 번호만 선택입니다.
+
+GitHub Pages는 서버 비밀을 둘 수 없으므로 학교 도메인 확인·반 정보 검증·교사 권한은 모두 Firestore 규칙이 판단합니다.
+브라우저 자동채점 결과는 위조가 가능하므로, 제출물에는 결과와 함께 소스와 출력을 남겨 교사가 확인할 수 있게 설계합니다.
+
 ## 검증
 
 `tools/web/verify.py`: 모든 예제 문법, 웹 예제 실행, 정답 검사 및 미완성 코드 실패, 문항 수, 내부 링크/앵커, ZIP 무결성.
@@ -79,3 +95,5 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 - 3·4단원은 원문을 웹 학습용으로 재구성했습니다. 일부 예제는 내장·합성 자료를 사용하고, 원문의 외부 데이터·카메라 경로는 PC 예제로 구분했습니다.
 
 브라우저 성능을 위해 scikit-learn·SciPy·OpenCV·Ultralytics 전체 코드는 PC 경로로 제공합니다. 웹에서 k-NN·최소제곱 직선·K-평균·전처리·혼동행렬·교차 검증 구조를 작은 자료로 직접 계산하는 별도 Python 예제를 제공합니다.
+
+Windows에서 생성·검증을 실행할 때는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1` 후 실행하세요.
