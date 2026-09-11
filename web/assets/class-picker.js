@@ -71,6 +71,15 @@ export function resolveSelectedClass(email, classes) {
  return classes[0] ? classes[0].id : '';
 }
 
+// 단원 페이지에는 반 선택 UI가 없습니다. 헤더에서 고른 값(window.aipyClass)이
+// 있으면 그걸 쓰고, 없으면 교사 이메일별 localStorage를 읽습니다.
+export function resolveTeacherClassId(email, published) {
+ const live = published && published.classId;
+ if (live && parseClassId(live)) return live;
+ const saved = readSelectedClass(email);
+ return parseClassId(saved) ? saved : '';
+}
+
 export function classDetail(id) {
  const parsed = parseClassId(id);
  if (!parsed) return {classId: '', grade: null, classroom: null, label: ''};

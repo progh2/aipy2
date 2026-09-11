@@ -4,7 +4,7 @@ import {load} from './auth.js';
 import {labelClass} from './class-picker.js';
 import {
  isSessionLive, timestampMillis, countPresence, catalogPages, catalogTopics,
- catalogExamples, sessionFields, expiresAtMillis, wholeNonce, DEFAULT_PAGE
+ catalogExamples, sessionFields, focusWritePayload, expiresAtMillis, wholeNonce, DEFAULT_PAGE
 } from './follow-model.js';
 
 const $ = (id) => document.getElementById(id);
@@ -146,13 +146,10 @@ async function endSession() {
 
 async function sendFocus() {
  if (!classIdValue || !isSessionLive(current)) return;
- const {page, topicAnchor, exampleId} = selectedFocus();
  try {
   const {db, store} = await load();
   await store.updateDoc(store.doc(db, 'sessions', classIdValue), {
-   'focus.page': page,
-   'focus.topicAnchor': topicAnchor || null,
-   'focus.exampleId': exampleId || null,
+   ...focusWritePayload(selectedFocus()),
    'focus.updatedAt': store.serverTimestamp()
   });
   note('초점을 보냈습니다.');

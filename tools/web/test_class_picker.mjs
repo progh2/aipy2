@@ -1,7 +1,8 @@
 /* class-picker 순수 함수 검사. node tools/web/test_class_picker.mjs */
 import {
  classId, parseClassId, labelClass, inClass, classesFromRoster,
- storageKey, readSelectedClass, writeSelectedClass, resolveSelectedClass, classDetail
+ storageKey, readSelectedClass, writeSelectedClass, resolveSelectedClass, classDetail,
+ resolveTeacherClassId
 } from '../../web/assets/class-picker.js';
 
 const store = new Map();
@@ -41,5 +42,9 @@ eq(resolveSelectedClass('t@e-mirim.hs.kr', classes), '2-3', 'resolve saved');
 eq(resolveSelectedClass('other@e-mirim.hs.kr', classes), '2-3', 'resolve first available');
 eq(resolveSelectedClass('t@e-mirim.hs.kr', [{id: '1-1', grade: 1, classroom: 1}]), '1-1', 'resolve stale');
 eq(classDetail('2-3'), {classId: '2-3', grade: 2, classroom: 3, label: '2학년 3반'}, 'classDetail');
+eq(resolveTeacherClassId('t@e-mirim.hs.kr', {classId: '2-4'}), '2-4', 'resolve published class');
+eq(resolveTeacherClassId('t@e-mirim.hs.kr', null), '2-3', 'resolve saved teacher class');
+eq(resolveTeacherClassId('nobody@e-mirim.hs.kr', {classId: ''}), '', 'resolve empty class');
+eq(resolveTeacherClassId('t@e-mirim.hs.kr', {classId: 'nope'}), '2-3', 'resolve invalid published falls back');
 
 console.log('PASS: class-picker helpers');
