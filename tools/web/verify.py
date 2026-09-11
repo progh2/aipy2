@@ -72,7 +72,7 @@ sync=subprocess.run(['node',str(Path(__file__).parent/'test_sync_model.mjs')],ca
 assert sync.returncode==0, sync.stdout+sync.stderr
 board_model=subprocess.run(['node',str(Path(__file__).parent/'test_board_model.mjs')],capture_output=True,text=True)
 assert board_model.returncode==0, board_model.stdout+board_model.stderr
-for name in ['admin.html','board.html','session.html']:
+for name in ['admin.html','board.html','session.html','assignments.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
  assert 'teacher-shell.js' in html, name
@@ -108,6 +108,12 @@ assert 'admins' in teacher_focus
 catalog=json.loads((WEB/'data/catalog.json').read_text())
 assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
+assert len(catalog['questions'])==len(questions)
+assert len(catalog['examples'])==len(examples)
+assert catalog['questions'][0]['id'].startswith('u')
+assert 'kind' in catalog['questions'][0] and 'prompt' in catalog['questions'][0]
+assert catalog['examples']['reuse']['title']
+assert 'unit' in catalog['examples']['reuse']
 rules=(ROOT/'firebase/firestore.rules').read_text()
 assert 'match /sessions/{classroom}' in rules
 assert 'match /presence/{uid}' in rules
@@ -135,6 +141,16 @@ assert "id == request.auth.uid + '_' + request.resource.data.topicId" in rules
 assert 'request.resource.data.topicId == resource.data.topicId' in rules
 assert 'optionalTopic(request.resource.data.get(\'topic\', null))' in rules
 assert 'resource == null' not in rules
+assert 'match /assignments/{id}' in rules
+assert 'function assignmentWriteOk()' in rules
+assert 'function submissionCreateOk(taskId)' in rules
+assert 'function submissionUpdateOk(taskId)' in rules
+assert 'function teacherReviewPatch()' in rules
+assert "request.resource.data.status in ['passed', 'failed']" in rules
+assert "resource.data.classrooms.hasAny([rosterClassId()])" in rules
+assert "reviewStatus == 'reviewed'" in rules
+assignment_model=subprocess.run(['node',str(Path(__file__).parent/'test_assignment_model.mjs')],capture_output=True,text=True)
+assert assignment_model.returncode==0, assignment_model.stdout+assignment_model.stderr
 understanding=subprocess.run(['node',str(Path(__file__).parent/'test_understanding_model.mjs')],capture_output=True,text=True)
 assert understanding.returncode==0, understanding.stdout+understanding.stderr
 help_model=subprocess.run(['node',str(Path(__file__).parent/'test_help_model.mjs')],capture_output=True,text=True)
@@ -208,10 +224,44 @@ assert 'assets/help.js' in unit
 assert 'data-complete="u1-overview"' in unit
 assert 'class="completion"' in unit
 assert 'assets/understanding.js' in (WEB/'index.html').read_text()
+assert 'assets/assignments.js' in unit
+assert 'assets/assignments.js' in (WEB/'index.html').read_text()
+assignments_html=(WEB/'teacher/assignments.html').read_text()
+assert 'teacher-assignments.js' in assignments_html
+assert 'id="assign-form"' in assignments_html
+assert 'id="target-picker"' in assignments_html
+assert 'id="review-panel"' in assignments_html
+assert 'id="submission-list"' in assignments_html
+assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.' in assignments_html
+assert '문제·예제 고르기' in assignments_html
+teacher_assign=(WEB/'assets/teacher-assignments.js').read_text()
+assert "collection(db, 'assignments')" in teacher_assign
+assert "collection(db, 'students'" in teacher_assign
+assert 'submissions' in teacher_assign
+assert 'catalog.json' in teacher_assign
+assign_js=(WEB/'assets/assignments.js').read_text()
+assert "collection(db, 'assignments')" in assign_js
+assert "where('open', '==', true)" in assign_js
+assert "array-contains" in assign_js
+assert '미통과 제출' in assign_js or 'LABEL_FAILED' in assign_js
+assert 'aipy:checked' in assign_js
+assign_model=(WEB/'assets/assignment-model.js').read_text()
+assert '미통과 제출' in assign_model
+assert '지연' in assign_model
+assert '브라우저 채점 결과예요' in assign_model
+assert '마감 후에도 제출할 수 있어요' in assign_model
+teacher_index=(WEB/'teacher/index.html').read_text()
+assert 'assignments.html' in teacher_index
+shell=(WEB/'assets/teacher-shell.js').read_text()
+assert 'assignments.html' in shell
+app_js=(WEB/'assets/app.js').read_text()
+assert 'aipy:checked' in app_js
 account_css=(WEB/'assets/account.css').read_text()
 assert '.topic-signals' in account_css
 assert '.understanding-choices' in account_css
 assert '.help-request' in account_css
+assert '.assignment-panel' in account_css
+assert '.target-picker' in account_css
 sync_js=(WEB/'assets/sync.js').read_text()
 assert 'aipyUnderstanding' in sync_js
 app_js=(WEB/'assets/app.js').read_text()

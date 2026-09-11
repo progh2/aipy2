@@ -77,7 +77,7 @@ function applyRemote(next){
 }
 let lastError='';
 function rememberError(text){lastError=typeof text==='string'?text.replace(/\s+/g,' ').trim().slice(0,300):'';}
-window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;},lastError(){return lastError;}};
+window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;},lastError(){return lastError;},lastCheck:null};
 window.addEventListener('pagehide',()=>{try{window.aipyLearning.saveLocal();}catch{}});
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
@@ -184,6 +184,10 @@ async function runExample(check=false){
  const result=await execute({files,entry,stdin:$('#stdin').value,args,checks:check?ex.checks:'',syntax:ex.mode!=='web'},s=>out.textContent+=s);
  if(result.images)for(const picture of result.images){const fig=node('figure'),img=node('img');img.src='data:image/png;base64,'+picture.data;img.alt='Python 실행 결과: '+picture.name;const caption=node('figcaption','',picture.name+' · 실제 실행 결과');const link=node('a','','PNG 저장');link.href=img.src;link.download=picture.name;fig.append(img,caption,link);$('#plot-output').append(fig);}
  if(result.ok)out.textContent+='\n실행 완료'+(check?' · 준비된 검사 통과':'')+'\n';
+ const saved=state.projects[currentId]||{};
+ const checkInfo={type:'example',id:currentId,ok:!!result.ok,checked:!!check,output:out.textContent,attempts:(Number(saved.attempts)||0)+(check?1:0)};
+ if(check){state.projects[currentId]={...saved,files,entry,stdin:$('#stdin').value,args:$('#argv').value,lastOk:!!result.ok,lastOutput:out.textContent,attempts:checkInfo.attempts};save('answer');}
+ window.aipyLearning.lastCheck=checkInfo;document.dispatchEvent(new CustomEvent('aipy:checked',{detail:checkInfo}));
  if(result.ok){
   if(ex.mode!=='web')paiGuide('idea','문법 확인을 통과했어요. 다음은 실제 동작!', 'PC에서 예제를 실행하고 입력·출력·오류 처리를 직접 확인하세요.');
   else if(check)paiGuide('celebrate','준비된 조건을 통과했어요!', '입력값을 하나 더 바꾸어 보고, 왜 이 결과가 나오는지 내 말로 설명하세요.');
@@ -245,6 +249,8 @@ function questionCard(q){
   feedback.className='feedback '+(ok?'success':'retry');paiFeedback(feedback,text,ok?'celebrate':'debug');
   if(ok)rememberError('');else rememberError(q.starter?(trace.trim().split('\n').filter(Boolean).slice(-1)[0]||text):text);
   storeAnswer(q,{value,status:ok?'done':'retry',attempts:(record.attempts||0)+1,feedback:text});check.disabled=false;
+  const checkInfo={type:'question',id:q.id,ok,checked:true,output:text,attempts:(record.attempts||0)+1};
+  window.aipyLearning.lastCheck=checkInfo;document.dispatchEvent(new CustomEvent('aipy:checked',{detail:checkInfo}));
  };
  retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save('answer');renderQuestions(false);}};
  if(q.starter){const copyButton=node('button','','코드 복사');copyButton.onclick=()=>copy(answer());actions.append(copyButton);const stopButton=node('button','','실행 중지');stopButton.onclick=()=>{if(running)stop();};actions.append(stopButton);}

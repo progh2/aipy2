@@ -385,1317 +385,1989 @@
   },
   "examples": {
     "reuse": {
-      "title": "한 번 만든 함수를 두 프로그램에서 사용하기"
+      "id": "reuse",
+      "title": "한 번 만든 함수를 두 프로그램에서 사용하기",
+      "unit": 1,
+      "mode": "web"
     },
     "sum-input": {
-      "title": "확인학습 · 두 수의 합"
+      "id": "sum-input",
+      "title": "확인학습 · 두 수의 합",
+      "unit": 1,
+      "mode": "web"
     },
     "circle-top": {
-      "title": "실행문만 있는 모듈"
+      "id": "circle-top",
+      "title": "실행문만 있는 모듈",
+      "unit": 1,
+      "mode": "web"
     },
     "circle-function": {
-      "title": "함수 정의와 호출 분리"
+      "id": "circle-function",
+      "title": "함수 정의와 호출 분리",
+      "unit": 1,
+      "mode": "web"
     },
     "circle-mixed": {
-      "title": "함수와 실행문이 함께 있을 때"
+      "id": "circle-mixed",
+      "title": "함수와 실행문이 함께 있을 때",
+      "unit": 1,
+      "mode": "web"
     },
     "class-module": {
-      "title": "보강 · 클래스를 담은 모듈"
+      "id": "class-module",
+      "title": "보강 · 클래스를 담은 모듈",
+      "unit": 1,
+      "mode": "web"
     },
     "main-guard": {
-      "title": "직접 실행과 임포트 비교"
+      "id": "main-guard",
+      "title": "직접 실행과 임포트 비교",
+      "unit": 1,
+      "mode": "web"
     },
     "rectangle": {
-      "title": "탐구 활동 · 사각형 모듈"
+      "id": "rectangle",
+      "title": "탐구 활동 · 사각형 모듈",
+      "unit": 1,
+      "mode": "web"
     },
     "import-0": {
-      "title": "모듈 전체"
+      "id": "import-0",
+      "title": "모듈 전체",
+      "unit": 1,
+      "mode": "web"
     },
     "import-1": {
-      "title": "특정 함수"
+      "id": "import-1",
+      "title": "특정 함수",
+      "unit": 1,
+      "mode": "web"
     },
     "import-2": {
-      "title": "여러 함수"
+      "id": "import-2",
+      "title": "여러 함수",
+      "unit": 1,
+      "mode": "web"
     },
     "import-3": {
-      "title": "별표"
+      "id": "import-3",
+      "title": "별표",
+      "unit": 1,
+      "mode": "web"
     },
     "import-4": {
-      "title": "별칭"
+      "id": "import-4",
+      "title": "별칭",
+      "unit": 1,
+      "mode": "web"
     },
     "package-0": {
-      "title": "패키지 임포트 1"
+      "id": "package-0",
+      "title": "패키지 임포트 1",
+      "unit": 1,
+      "mode": "web"
     },
     "package-1": {
-      "title": "패키지 임포트 2"
+      "id": "package-1",
+      "title": "패키지 임포트 2",
+      "unit": 1,
+      "mode": "web"
     },
     "package-2": {
-      "title": "패키지 임포트 3"
+      "id": "package-2",
+      "title": "패키지 임포트 3",
+      "unit": 1,
+      "mode": "web"
     },
     "package-3": {
-      "title": "패키지 임포트 4"
+      "id": "package-3",
+      "title": "패키지 임포트 4",
+      "unit": 1,
+      "mode": "web"
     },
     "package-4": {
-      "title": "패키지 임포트 5"
+      "id": "package-4",
+      "title": "패키지 임포트 5",
+      "unit": 1,
+      "mode": "web"
     },
     "all": {
-      "title": "__all__의 영향 실험"
+      "id": "all",
+      "title": "__all__의 영향 실험",
+      "unit": 1,
+      "mode": "web"
     },
     "animal-check": {
-      "title": "35쪽 확인학습 · 동물 패키지"
+      "id": "animal-check",
+      "title": "35쪽 확인학습 · 동물 패키지",
+      "unit": 1,
+      "mode": "web"
     },
     "stars": {
-      "title": "25쪽 탐구 · 별 출력"
+      "id": "stars",
+      "title": "25쪽 탐구 · 별 출력",
+      "unit": 1,
+      "mode": "web"
     },
     "os": {
-      "title": "os · 가상 작업 폴더"
+      "id": "os",
+      "title": "os · 가상 작업 폴더",
+      "unit": 1,
+      "mode": "web"
     },
     "os-pc": {
-      "title": "교과서 os 예제 · PC 명령"
+      "id": "os-pc",
+      "title": "교과서 os 예제 · PC 명령",
+      "unit": 1,
+      "mode": "pc"
     },
     "sys": {
-      "title": "실행 인자와 종료"
+      "id": "sys",
+      "title": "실행 인자와 종료",
+      "unit": 1,
+      "mode": "web"
     },
     "math": {
-      "title": "math의 상수와 함수"
+      "id": "math",
+      "title": "math의 상수와 함수",
+      "unit": 1,
+      "mode": "web"
     },
     "random": {
-      "title": "random · 범위·선택·섞기"
+      "id": "random",
+      "title": "random · 범위·선택·섞기",
+      "unit": 1,
+      "mode": "web"
     },
     "dice": {
-      "title": "종합 평가 · n면 주사위"
+      "id": "dice",
+      "title": "종합 평가 · n면 주사위",
+      "unit": 1,
+      "mode": "web"
     },
     "gift": {
-      "title": "탐구 · 선물 하나 고르기"
+      "id": "gift",
+      "title": "탐구 · 선물 하나 고르기",
+      "unit": 1,
+      "mode": "web"
     },
     "datetime": {
-      "title": "날짜·시각·요일"
+      "id": "datetime",
+      "title": "날짜·시각·요일",
+      "unit": 1,
+      "mode": "web"
     },
     "christmas": {
-      "title": "다음 크리스마스까지"
+      "id": "christmas",
+      "title": "다음 크리스마스까지",
+      "unit": 1,
+      "mode": "web"
     },
     "thirdparty": {
-      "title": "PC · NumPy 첫 실습"
+      "id": "thirdparty",
+      "title": "PC · NumPy 첫 실습",
+      "unit": 1,
+      "mode": "pc"
     },
     "final-output": {
-      "title": "종합 평가 8 · 출력 추적"
+      "id": "final-output",
+      "title": "종합 평가 8 · 출력 추적",
+      "unit": 1,
+      "mode": "web"
     },
     "hello-tk": {
-      "title": "인사 앱 · tkinter"
+      "id": "hello-tk",
+      "title": "인사 앱 · tkinter",
+      "unit": 2,
+      "mode": "pc"
     },
     "hello-ttk": {
-      "title": "인사 앱 · tkinter + ttk"
+      "id": "hello-ttk",
+      "title": "인사 앱 · tkinter + ttk",
+      "unit": 2,
+      "mode": "pc"
     },
     "hello-pyside": {
-      "title": "인사 앱 · PySide6"
+      "id": "hello-pyside",
+      "title": "인사 앱 · PySide6",
+      "unit": 2,
+      "mode": "pc"
     },
     "hello-pyqt": {
-      "title": "인사 앱 · PyQt6"
+      "id": "hello-pyqt",
+      "title": "인사 앱 · PyQt6",
+      "unit": 2,
+      "mode": "pc"
     },
     "hello-wx": {
-      "title": "인사 앱 · wxPython"
+      "id": "hello-wx",
+      "title": "인사 앱 · wxPython",
+      "unit": 2,
+      "mode": "pc"
     },
     "hello-kivy": {
-      "title": "인사 앱 · Kivy"
+      "id": "hello-kivy",
+      "title": "인사 앱 · Kivy",
+      "unit": 2,
+      "mode": "pc"
     },
     "widgets-tk": {
-      "title": "tkinter 위젯 9종 체험"
+      "id": "widgets-tk",
+      "title": "tkinter 위젯 9종 체험",
+      "unit": 2,
+      "mode": "pc"
     },
     "widgets-pyside": {
-      "title": "PySide6 위젯과 그리기 공간"
+      "id": "widgets-pyside",
+      "title": "PySide6 위젯과 그리기 공간",
+      "unit": 2,
+      "mode": "pc"
     },
     "layout-tk": {
-      "title": "tkinter · 세 가지 배치"
+      "id": "layout-tk",
+      "title": "tkinter · 세 가지 배치",
+      "unit": 2,
+      "mode": "pc"
     },
     "layout-pyside": {
-      "title": "PySide6 · 수평·수직·격자 배치"
+      "id": "layout-pyside",
+      "title": "PySide6 · 수평·수직·격자 배치",
+      "unit": 2,
+      "mode": "pc"
     },
     "memo-tk": {
-      "title": "교과서 메모장 · tkinter 전체 코드"
+      "id": "memo-tk",
+      "title": "교과서 메모장 · tkinter 전체 코드",
+      "unit": 2,
+      "mode": "pc"
     },
     "memo-pyside": {
-      "title": "메모장 · PySide6 전체 코드"
+      "id": "memo-pyside",
+      "title": "메모장 · PySide6 전체 코드",
+      "unit": 2,
+      "mode": "pc"
     },
     "core": {
-      "title": "프로젝트 · 기능 모듈을 웹에서 검사"
+      "id": "core",
+      "title": "프로젝트 · 기능 모듈을 웹에서 검사",
+      "unit": 2,
+      "mode": "web"
     },
     "project-tk": {
-      "title": "생활 도우미 · tkinter"
+      "id": "project-tk",
+      "title": "생활 도우미 · tkinter",
+      "unit": 2,
+      "mode": "pc"
     },
     "project-pyside": {
-      "title": "생활 도우미 · PySide6"
+      "id": "project-pyside",
+      "title": "생활 도우미 · PySide6",
+      "unit": 2,
+      "mode": "pc"
     },
     "memo-plus-tk": {
-      "title": "개선 메모장 · tkinter"
+      "id": "memo-plus-tk",
+      "title": "개선 메모장 · tkinter",
+      "unit": 2,
+      "mode": "pc"
     },
     "memo-plus-pyside": {
-      "title": "개선 메모장 · PySide6"
+      "id": "memo-plus-pyside",
+      "title": "개선 메모장 · PySide6",
+      "unit": 2,
+      "mode": "pc"
     },
     "ml-tools": {
-      "title": "NumPy·pandas로 표 탐색하기"
+      "id": "ml-tools",
+      "title": "NumPy·pandas로 표 탐색하기",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-chart": {
-      "title": "빈도표를 막대그래프로"
+      "id": "ml-chart",
+      "title": "빈도표를 막대그래프로",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-seaborn": {
-      "title": "Seaborn countplot과 Excel 입출력"
+      "id": "ml-seaborn",
+      "title": "Seaborn countplot과 Excel 입출력",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-clean": {
-      "title": "CSV·결측치·이상치 탐색"
+      "id": "ml-clean",
+      "title": "CSV·결측치·이상치 탐색",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-scale": {
-      "title": "훈련 데이터로만 전처리 배우기"
+      "id": "ml-scale",
+      "title": "훈련 데이터로만 전처리 배우기",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-classify": {
-      "title": "붓꽃 분류 모델 네 가지 비교"
+      "id": "ml-classify",
+      "title": "붓꽃 분류 모델 네 가지 비교",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-regression": {
-      "title": "회귀 예측과 MAE·MSE·R²"
+      "id": "ml-regression",
+      "title": "회귀 예측과 MAE·MSE·R²",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-housing": {
-      "title": "교과서 연결 · 주택 자료 회귀"
+      "id": "ml-housing",
+      "title": "교과서 연결 · 주택 자료 회귀",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-cluster": {
-      "title": "군집 중심과 산점도"
+      "id": "ml-cluster",
+      "title": "군집 중심과 산점도",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-metrics": {
-      "title": "혼동행렬과 분류 지표"
+      "id": "ml-metrics",
+      "title": "혼동행렬과 분류 지표",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-selection": {
-      "title": "교차 검증과 GridSearchCV"
+      "id": "ml-selection",
+      "title": "교차 검증과 GridSearchCV",
+      "unit": 3,
+      "mode": "pc"
     },
     "ml-learning-curve": {
-      "title": "학습 곡선으로 과대·과소 적합 살펴보기"
+      "id": "ml-learning-curve",
+      "title": "학습 곡선으로 과대·과소 적합 살펴보기",
+      "unit": 3,
+      "mode": "pc"
     },
     "cv-pixels": {
-      "title": "작은 이미지의 픽셀·반전·이진화"
+      "id": "cv-pixels",
+      "title": "작은 이미지의 픽셀·반전·이진화",
+      "unit": 4,
+      "mode": "web"
     },
     "cv-pillow": {
-      "title": "Pillow로 만들기·크기 변경·회전·저장"
+      "id": "cv-pillow",
+      "title": "Pillow로 만들기·크기 변경·회전·저장",
+      "unit": 4,
+      "mode": "web"
     },
     "cv-skimage": {
-      "title": "scikit-image Sobel과 이미지 비교"
+      "id": "cv-skimage",
+      "title": "scikit-image Sobel과 이미지 비교",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-io": {
-      "title": "OpenCV 읽기·색상·크기·회전·저장"
+      "id": "cv-io",
+      "title": "OpenCV 읽기·색상·크기·회전·저장",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-display": {
-      "title": "PC 창에서 이미지 보기"
+      "id": "cv-display",
+      "title": "PC 창에서 이미지 보기",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-filters": {
-      "title": "블러·Canny·세 가지 이진화 비교"
+      "id": "cv-filters",
+      "title": "블러·Canny·세 가지 이진화 비교",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-perspective": {
-      "title": "네 점으로 원근 변환"
+      "id": "cv-perspective",
+      "title": "네 점으로 원근 변환",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-click-card": {
-      "title": "마우스로 카드 네 꼭짓점 선택"
+      "id": "cv-click-card",
+      "title": "마우스로 카드 네 꼭짓점 선택",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-features": {
-      "title": "에지·코너·윤곽선 비교"
+      "id": "cv-features",
+      "title": "에지·코너·윤곽선 비교",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-haar": {
-      "title": "Haar 얼굴·눈·웃음 검출 · 정적 이미지"
+      "id": "cv-haar",
+      "title": "Haar 얼굴·눈·웃음 검출 · 정적 이미지",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-camera": {
-      "title": "실시간 얼굴 검출과 자원 정리"
+      "id": "cv-camera",
+      "title": "실시간 얼굴 검출과 자원 정리",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-yolo": {
-      "title": "YOLOv8 객체 검출 · 이미지 한 장"
+      "id": "cv-yolo",
+      "title": "YOLOv8 객체 검출 · 이미지 한 장",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-yolo-count": {
-      "title": "YOLO 웹캠 프레임별 객체 개수"
+      "id": "cv-yolo-count",
+      "title": "YOLO 웹캠 프레임별 객체 개수",
+      "unit": 4,
+      "mode": "pc"
     },
     "cv-count": {
-      "title": "검출 결과 목록으로 개수 세기"
+      "id": "cv-count",
+      "title": "검출 결과 목록으로 개수 세기",
+      "unit": 4,
+      "mode": "web"
     },
     "ml-split-small": {
-      "title": "웹 원리 · 훈련·검증·테스트 분할"
+      "id": "ml-split-small",
+      "title": "웹 원리 · 훈련·검증·테스트 분할",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-scale-small": {
-      "title": "웹 원리 · 훈련 평균과 스케일"
+      "id": "ml-scale-small",
+      "title": "웹 원리 · 훈련 평균과 스케일",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-knn-small": {
-      "title": "웹 원리 · 가까운 이웃으로 분류"
+      "id": "ml-knn-small",
+      "title": "웹 원리 · 가까운 이웃으로 분류",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-line-small": {
-      "title": "웹 원리 · 최소제곱 직선 학습"
+      "id": "ml-line-small",
+      "title": "웹 원리 · 최소제곱 직선 학습",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-kmeans-small": {
-      "title": "웹 원리 · 군집 중심의 반복 갱신"
+      "id": "ml-kmeans-small",
+      "title": "웹 원리 · 군집 중심의 반복 갱신",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-confusion-small": {
-      "title": "웹 원리 · 혼동행렬 직접 계산"
+      "id": "ml-confusion-small",
+      "title": "웹 원리 · 혼동행렬 직접 계산",
+      "unit": 3,
+      "mode": "web"
     },
     "ml-cv-small": {
-      "title": "웹 원리 · 교차 검증의 역할 바꾸기"
+      "id": "ml-cv-small",
+      "title": "웹 원리 · 교차 검증의 역할 바꾸기",
+      "unit": 3,
+      "mode": "web"
     }
   },
   "questions": [
     {
       "id": "u1-q001",
       "unit": 1,
-      "topic": "overview"
+      "topic": "overview",
+      "kind": "선택",
+      "prompt": "모듈에 대한 설명으로 틀린 것을 고르세요."
     },
     {
       "id": "u1-q002",
       "unit": 1,
-      "topic": "overview"
+      "topic": "overview",
+      "kind": "선택",
+      "prompt": "모듈화의 목적과 가장 거리가 먼 것은?"
     },
     {
       "id": "u1-q003",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "함수·변수·클래스 등을 담은 Python 파일은?"
     },
     {
       "id": "u1-q004",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "관련 모듈을 폴더 계층으로 묶은 구조는?"
     },
     {
       "id": "u1-q005",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "다른 모듈을 가져오는 키워드는?"
     },
     {
       "id": "u1-q006",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "직접 실행한 파일의 __name__ 값은?"
     },
     {
       "id": "u1-q007",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "if __name__ == \"____\": 의 빈칸을 채우세요."
     },
     {
       "id": "u1-q008",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "import greet as g 이후 인사 함수 호출은?"
     },
     {
       "id": "u1-q009",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "from greet import hello 이후 호출은?"
     },
     {
       "id": "u1-q010",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "일반 패키지의 초기화 파일 이름은?"
     },
     {
       "id": "u1-q011",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "별표 임포트로 공개할 이름 목록을 지정하는 변수는?"
     },
     {
       "id": "u1-q012",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "현재 작업 폴더를 반환하는 os 함수 호출은?"
     },
     {
       "id": "u1-q013",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "실행 인자를 저장하는 sys 속성은?"
     },
     {
       "id": "u1-q014",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "프로그램을 종료하는 sys 함수 호출은?"
     },
     {
       "id": "u1-q015",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "math의 원주율 상수는?"
     },
     {
       "id": "u1-q016",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "목록에서 요소 하나를 고르는 random 함수 이름은?"
     },
     {
       "id": "u1-q017",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "목록 자체를 섞는 함수 이름은?"
     },
     {
       "id": "u1-q018",
       "unit": 1,
-      "topic": "기초 개념"
+      "topic": "기초 개념",
+      "kind": "빈칸",
+      "prompt": "날짜 객체의 요일을 얻는 메서드 호출은?"
     },
     {
       "id": "u1-q019",
       "unit": 1,
-      "topic": "imports"
+      "topic": "imports",
+      "kind": "빈칸",
+      "prompt": "from student import study\n위 코드 다음에 study 함수를 호출하세요."
     },
     {
       "id": "u1-q020",
       "unit": 1,
-      "topic": "imports"
+      "topic": "imports",
+      "kind": "빈칸",
+      "prompt": "import student\n위 코드 다음에 study 함수를 호출하세요."
     },
     {
       "id": "u1-q021",
       "unit": 1,
-      "topic": "imports"
+      "topic": "imports",
+      "kind": "빈칸",
+      "prompt": "import student as s\n위 코드 다음에 study 함수를 호출하세요."
     },
     {
       "id": "u1-q022",
       "unit": 1,
-      "topic": "packages"
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "from nature.plants import grass as g\nwild 함수 호출 코드를 쓰세요."
     },
     {
       "id": "u1-q023",
       "unit": 1,
-      "topic": "packages"
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "from nature.plants.grass import wild\nwild 함수 호출 코드를 쓰세요."
     },
     {
       "id": "u1-q024",
       "unit": 1,
-      "topic": "packages"
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "from nature.plants.grass import *\nwild 함수 호출 코드를 쓰세요."
     },
     {
       "id": "u1-q025",
       "unit": 1,
-      "topic": "packages"
+      "topic": "packages",
+      "kind": "빈칸",
+      "prompt": "import nature.plants.grass\nwild 함수 호출 코드를 쓰세요."
     },
     {
       "id": "u1-q026",
       "unit": 1,
-      "topic": "random"
+      "topic": "random",
+      "kind": "선택",
+      "prompt": "고유한 항목의 리스트 L에서 중복 없이 2개를 뽑는 코드는?"
     },
     {
       "id": "u1-q027",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "print(__name__)을 직접 실행했을 때 출력은?"
     },
     {
       "id": "u1-q028",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.ceil(-3.5))"
     },
     {
       "id": "u1-q029",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.floor(-3.5))"
     },
     {
       "id": "u1-q030",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.factorial(0))"
     },
     {
       "id": "u1-q031",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.gcd(28,70))"
     },
     {
       "id": "u1-q032",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import math\nprint(math.pow(2,10))"
     },
     {
       "id": "u1-q033",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "import random\na=[1,2,3]\nprint(random.shuffle(a))"
     },
     {
       "id": "u1-q034",
       "unit": 1,
-      "topic": "결과 추적"
+      "topic": "결과 추적",
+      "kind": "예측",
+      "prompt": "from datetime import date\nprint(date(2026,12,25).weekday())"
     },
     {
       "id": "u1-q035",
       "unit": 1,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "from pkg import *에서 __all__에 없는 이름은 명시적으로 import할 수 없나요?"
     },
     {
       "id": "u1-q036",
       "unit": 1,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "random.randrange(1,7,2)의 후보는?"
     },
     {
       "id": "u1-q037",
       "unit": 1,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "uniform(2.5,10.0)의 끝 값 설명으로 정확한 것은?"
     },
     {
       "id": "u1-q038",
       "unit": 1,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "이미지 크기를 바꾸는 패키지는?"
     },
     {
       "id": "u1-q039",
       "unit": 1,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "HTML에서 제목을 추출할 때 선택할 도구는?"
     },
     {
       "id": "u1-q040",
       "unit": 1,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "설치 성공 후 import가 실패할 때 먼저 확인할 것은?"
     },
     {
       "id": "u1-q041",
       "unit": 1,
-      "topic": "define"
+      "topic": "define",
+      "kind": "구현",
+      "prompt": "add(a,b)가 합을 반환하게 완성하세요."
     },
     {
       "id": "u1-q042",
       "unit": 1,
-      "topic": "math"
+      "topic": "math",
+      "kind": "구현",
+      "prompt": "radius가 반지름인 원의 넓이를 반환하세요."
     },
     {
       "id": "u1-q043",
       "unit": 1,
-      "topic": "random"
+      "topic": "random",
+      "kind": "오류 수정",
+      "prompt": "roll(n)이 1부터 n 사이 정수를 반환하게 하세요."
     },
     {
       "id": "u1-q044",
       "unit": 1,
-      "topic": "random"
+      "topic": "random",
+      "kind": "구현",
+      "prompt": "pick(names)가 서로 다른 2명을 반환하고 원본을 보존하게 만드세요."
     },
     {
       "id": "u1-q045",
       "unit": 1,
-      "topic": "datetime"
+      "topic": "datetime",
+      "kind": "구현",
+      "prompt": "두 ISO 날짜 사이 일수를 반환하세요."
     },
     {
       "id": "u1-q046",
       "unit": 1,
-      "topic": "imports"
+      "topic": "imports",
+      "kind": "오류 수정",
+      "prompt": "별칭을 사용한 코드를 고치세요."
     },
     {
       "id": "u1-q047",
       "unit": 1,
-      "topic": "random"
+      "topic": "random",
+      "kind": "오류 수정",
+      "prompt": "원본을 섞되 함수가 섞인 리스트를 반환하도록 고치세요."
     },
     {
       "id": "u1-q048",
       "unit": 1,
-      "topic": "datetime"
+      "topic": "datetime",
+      "kind": "구현",
+      "prompt": "날짜의 한글 요일 한 글자를 반환하세요."
     },
     {
       "id": "u1-q049",
       "unit": 1,
-      "topic": "packages"
+      "topic": "packages",
+      "kind": "순서",
+      "prompt": "모듈을 만들고 실행하는 순서로 배열하세요."
     },
     {
       "id": "u1-q050",
       "unit": 1,
-      "topic": "main"
+      "topic": "main",
+      "kind": "순서",
+      "prompt": "addcal에 최상위 print가 있고 subcal 시험 코드에는 main 가드가 있습니다. main의 실행 순서를 배열하세요."
     },
     {
       "id": "u1-q051",
       "unit": 1,
-      "topic": "overview"
+      "topic": "overview",
+      "kind": "서술",
+      "prompt": "모듈과 패키지의 개념 및 필요성을 각각 설명하세요."
     },
     {
       "id": "u1-q052",
       "unit": 1,
-      "topic": "main"
+      "topic": "main",
+      "kind": "서술",
+      "prompt": "__main__ 가드가 필요한 이유와 실행 결과 차이를 설명하세요."
     },
     {
       "id": "u1-q053",
       "unit": 1,
-      "topic": "project"
+      "topic": "project",
+      "kind": "서술",
+      "prompt": "기능 모듈을 GUI와 분리하면 어떤 점을 쉽게 검사할 수 있나요?"
     },
     {
       "id": "u1-q054",
       "unit": 1,
-      "topic": "review"
+      "topic": "review",
+      "kind": "서술",
+      "prompt": "39쪽 마지막 출력이 5인 이유를 설명하세요."
     },
     {
       "id": "u1-q055",
       "unit": 1,
-      "topic": "define"
+      "topic": "define",
+      "kind": "오류 수정",
+      "prompt": "둘레 함수를 출력 대신 반환하도록 수정하세요."
     },
     {
       "id": "u1-q056",
       "unit": 1,
-      "topic": "math"
+      "topic": "math",
+      "kind": "오류 수정",
+      "prompt": "한 상자에 4개씩 담을 때 필요한 상자 수를 반환하세요."
     },
     {
       "id": "u1-q057",
       "unit": 1,
-      "topic": "datetime"
+      "topic": "datetime",
+      "kind": "오류 수정",
+      "prompt": "올해 12월 25일이 지났으면 다음 해를 선택하세요."
     },
     {
       "id": "u1-q058",
       "unit": 1,
-      "topic": "random"
+      "topic": "random",
+      "kind": "오류 수정",
+      "prompt": "공백·중복 이름을 정리하고 입력 순서를 유지하세요."
     },
     {
       "id": "u1-q059",
       "unit": 1,
-      "topic": "sys"
+      "topic": "sys",
+      "kind": "오류 수정",
+      "prompt": "문자열 실행 인자 두 개의 합을 반환하세요."
     },
     {
       "id": "u2-q001",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "사용자 인터페이스 설명 중 틀린 것은?"
     },
     {
       "id": "u2-q002",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "아이콘을 클릭하여 그림판을 열었습니다. 유형은?"
     },
     {
       "id": "u2-q003",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "운영체제 고유 위젯을 활용하는 라이브러리는?"
     },
     {
       "id": "u2-q004",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "Qt의 공식 Python 바인딩은?"
     },
     {
       "id": "u2-q005",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "IDLE 구현에 사용된 GUI 라이브러리는?"
     },
     {
       "id": "u2-q006",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "배치 관리자가 아닌 것은?"
     },
     {
       "id": "u2-q007",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "버튼 command=say_hello의 실행 시점은?"
     },
     {
       "id": "u2-q008",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "UI의 정의에 가장 가까운 것은?"
     },
     {
       "id": "u2-q009",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 설명 글자 표시에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q010",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Label의 설명 글자 표시 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q011",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 클릭 명령에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q012",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Button의 클릭 명령 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q013",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 한 줄 입력에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q014",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Entry의 한 줄 입력 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q015",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 여러 줄 텍스트에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q016",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Text의 여러 줄 텍스트 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q017",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 독립 선택에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q018",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Checkbutton의 독립 선택 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q019",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 그룹 중 하나 선택에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q020",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Radiobutton의 그룹 중 하나 선택 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q021",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 항목 목록에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q022",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Listbox의 항목 목록 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q023",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 컨테이너에 사용하는 위젯 이름은?"
     },
     {
       "id": "u2-q024",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Frame의 컨테이너 역할을 Qt Widgets로 옮기면?"
     },
     {
       "id": "u2-q025",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "tkinter 기본 창을 만드는 호출은?"
     },
     {
       "id": "u2-q026",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 그림과 도형을 그릴 위젯 이름은?"
     },
     {
       "id": "u2-q027",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "라벨을 순서대로 배치하려면 label.____()의 빈칸은?"
     },
     {
       "id": "u2-q028",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "행과 열을 지정하는 tkinter 배치 메서드는?"
     },
     {
       "id": "u2-q029",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "좌표로 배치하는 tkinter 메서드는?"
     },
     {
       "id": "u2-q030",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "btn = tk.Button(root, command=____)에 함수 greet를 연결하세요."
     },
     {
       "id": "u2-q031",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "button.clicked.connect(____)에 함수 greet를 연결하세요."
     },
     {
       "id": "u2-q032",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "tkinter 이벤트 루프 호출은?"
     },
     {
       "id": "u2-q033",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "Qt 이벤트 루프 호출은?"
     },
     {
       "id": "u2-q034",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "tkinter Text의 처음 위치 문자열은?"
     },
     {
       "id": "u2-q035",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "tkinter Text의 마지막 자동 개행을 빼고 읽는 끝 위치는?"
     },
     {
       "id": "u2-q036",
       "unit": 2,
-      "topic": "기본 코드"
+      "topic": "기본 코드",
+      "kind": "빈칸",
+      "prompt": "Qt 텍스트 편집기의 내용을 문자열로 읽는 메서드는?"
     },
     {
       "id": "u2-q037",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "command=hello()에서 의도하지 않은 즉시 호출을 고치세요."
     },
     {
       "id": "u2-q038",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "button.clicked.connect(hello())를 고치세요."
     },
     {
       "id": "u2-q039",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "editor.text()를 QPlainTextEdit에 맞게 고치세요."
     },
     {
       "id": "u2-q040",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "label.text = \"완료\"를 QLabel에 맞게 고치세요."
     },
     {
       "id": "u2-q041",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "QFileDialog.getOpenFileName 결과를 path 하나로 받았습니다. 두 값을 받는 왼쪽 코드를 쓰세요."
     },
     {
       "id": "u2-q042",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "tkinter Text에서 기존 내용을 제거하는 코드는?"
     },
     {
       "id": "u2-q043",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "Tk 입력창 entry의 한 줄 값을 읽는 코드는?"
     },
     {
       "id": "u2-q044",
       "unit": 2,
-      "topic": "오류 찾기"
+      "topic": "오류 찾기",
+      "kind": "빈칸",
+      "prompt": "Qt 입력창 entry의 한 줄 값을 읽는 코드는?"
     },
     {
       "id": "u2-q045",
       "unit": 2,
-      "topic": "memo"
+      "topic": "memo",
+      "kind": "순서",
+      "prompt": "파일 열기 처리를 순서대로 배열하세요."
     },
     {
       "id": "u2-q046",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "순서",
+      "prompt": "Qt 앱의 기본 실행 순서를 배열하세요."
     },
     {
       "id": "u2-q047",
       "unit": 2,
-      "topic": "memo"
+      "topic": "memo",
+      "kind": "순서",
+      "prompt": "저장 순서를 배열하세요."
     },
     {
       "id": "u2-q048",
       "unit": 2,
-      "topic": "layout"
+      "topic": "layout",
+      "kind": "순서",
+      "prompt": "격자 폼을 만드는 흐름을 배열하세요."
     },
     {
       "id": "u2-q049",
       "unit": 2,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "한 부모 안에서 pack과 grid를 섞으면?"
     },
     {
       "id": "u2-q050",
       "unit": 2,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "파일 대화 상자를 취소했다면?"
     },
     {
       "id": "u2-q051",
       "unit": 2,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "긴 time.sleep을 GUI 콜백에서 실행하면?"
     },
     {
       "id": "u2-q052",
       "unit": 2,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "Designer 생성 파일을 직접 수정할 때의 문제는?"
     },
     {
       "id": "u2-q053",
       "unit": 2,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "웹 GUI 체험 화면의 의미는?"
     },
     {
       "id": "u2-q054",
       "unit": 2,
-      "topic": "응용 판단"
+      "topic": "응용 판단",
+      "kind": "선택",
+      "prompt": "QMainWindow에 편집기를 넣는 방식은?"
     },
     {
       "id": "u2-q055",
       "unit": 2,
-      "topic": "events"
+      "topic": "events",
+      "kind": "구현",
+      "prompt": "빈 이름에는 \"여러분\"을 사용하는 인사 함수를 작성하세요."
     },
     {
       "id": "u2-q056",
       "unit": 2,
-      "topic": "memo"
+      "topic": "memo",
+      "kind": "구현",
+      "prompt": "텍스트의 글자 수와 줄 수를 튜플로 반환하세요. 빈 문서는 (0,0)입니다."
     },
     {
       "id": "u2-q057",
       "unit": 2,
-      "topic": "project"
+      "topic": "project",
+      "kind": "구현",
+      "prompt": "추첨 인원 문자열을 1~total의 정수로 검사하세요. 잘못된 값은 None입니다."
     },
     {
       "id": "u2-q058",
       "unit": 2,
-      "topic": "memo"
+      "topic": "memo",
+      "kind": "오류 수정",
+      "prompt": "저장 취소인 빈 경로에는 False, 유효 경로에는 True를 반환하세요."
     },
     {
       "id": "u2-q059",
       "unit": 2,
-      "topic": "events"
+      "topic": "events",
+      "kind": "오류 수정",
+      "prompt": "상태 n을 1 증가시키되 최대 10을 넘지 않게 하세요."
     },
     {
       "id": "u2-q060",
       "unit": 2,
-      "topic": "memo"
+      "topic": "memo",
+      "kind": "구현",
+      "prompt": "제목에 미저장 표시 *를 붙이는 함수를 작성하세요."
     },
     {
       "id": "u2-q061",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "서술",
+      "prompt": "GUI의 장점과 CLI가 더 편리할 수 있는 상황을 설명하세요."
     },
     {
       "id": "u2-q062",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "서술",
+      "prompt": "NUI를 설명하고 사례를 하나 적으세요."
     },
     {
       "id": "u2-q063",
       "unit": 2,
-      "topic": "project"
+      "topic": "project",
+      "kind": "서술",
+      "prompt": "모듈 구조·이벤트·입력 오류 처리의 구현 근거를 작성하세요."
     },
     {
       "id": "u2-q064",
       "unit": 2,
-      "topic": "libraries"
+      "topic": "libraries",
+      "kind": "서술",
+      "prompt": "학교용 메모장의 라이브러리를 선택하고 이유를 설명하세요."
     },
     {
       "id": "u1-q060",
       "unit": 1,
-      "topic": "thirdparty"
+      "topic": "thirdparty",
+      "kind": "선택",
+      "prompt": "관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?"
     },
     {
       "id": "u2-q065",
       "unit": 2,
-      "topic": "widgets"
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "57쪽 IDLE 코드에서 Frame과 Button 같은 요소를 통칭하는 말은?"
     },
     {
       "id": "u2-q066",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "QLineEdit의 입력 변화 시그널 이름은?"
     },
     {
       "id": "u2-q067",
       "unit": 2,
-      "topic": "pyside"
+      "topic": "pyside",
+      "kind": "빈칸",
+      "prompt": "Qt Designer 실행 명령은?"
     },
     {
       "id": "u2-q068",
       "unit": 2,
-      "topic": "ui"
+      "topic": "ui",
+      "kind": "서술",
+      "prompt": "UI가 사용자 편의성과 어떤 관련이 있는지 설명하세요."
     },
     {
       "id": "u2-q069",
       "unit": 2,
-      "topic": "events"
+      "topic": "events",
+      "kind": "예측",
+      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\nprint(len(calls))"
     },
     {
       "id": "u2-q070",
       "unit": 2,
-      "topic": "events"
+      "topic": "events",
+      "kind": "예측",
+      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))"
     },
     {
       "id": "u3-q001",
       "unit": 3,
-      "topic": "AI 관계"
+      "topic": "AI 관계",
+      "kind": "선택",
+      "prompt": "올바른 포함 관계는?"
     },
     {
       "id": "u3-q002",
       "unit": 3,
-      "topic": "학습 방식"
+      "topic": "학습 방식",
+      "kind": "선택",
+      "prompt": "레이블 없이 데이터의 비슷한 구조를 찾는 학습은?"
     },
     {
       "id": "u3-q003",
       "unit": 3,
-      "topic": "학습 방식"
+      "topic": "학습 방식",
+      "kind": "선택",
+      "prompt": "예측할 값이 내일의 기온이라면 주된 문제 유형은?"
     },
     {
       "id": "u3-q004",
       "unit": 3,
-      "topic": "학습 방식"
+      "topic": "학습 방식",
+      "kind": "선택",
+      "prompt": "보상에 따라 미로의 행동 전략을 배우는 방식은?"
     },
     {
       "id": "u3-q005",
       "unit": 3,
-      "topic": "군집"
+      "topic": "군집",
+      "kind": "선택",
+      "prompt": "정답 없이 고객을 구매 특성별로 묶는 도구는?"
     },
     {
       "id": "u3-q006",
       "unit": 3,
-      "topic": "특성"
+      "topic": "특성",
+      "kind": "선택",
+      "prompt": "예측 시점에는 알 수 없는 미래 정답 열을 X에 넣으면?"
     },
     {
       "id": "u3-q007",
       "unit": 3,
-      "topic": "전처리"
+      "topic": "전처리",
+      "kind": "선택",
+      "prompt": "StandardScaler.fit을 적용할 데이터는?"
     },
     {
       "id": "u3-q008",
       "unit": 3,
-      "topic": "pandas"
+      "topic": "pandas",
+      "kind": "선택",
+      "prompt": "문자열 열을 DataFrame에 담을 수 있나요?"
     },
     {
       "id": "u3-q009",
       "unit": 3,
-      "topic": "분류"
+      "topic": "분류",
+      "kind": "선택",
+      "prompt": "중요한 정상 메일을 스팸으로 잘못 보내는 경우를 줄일 때 주목할 지표는?"
     },
     {
       "id": "u3-q010",
       "unit": 3,
-      "topic": "과대 적합"
+      "topic": "과대 적합",
+      "kind": "선택",
+      "prompt": "훈련 점수만 높이려고 지나치게 반복 학습하면?"
     },
     {
       "id": "u3-q011",
       "unit": 3,
-      "topic": "분류"
+      "topic": "분류",
+      "kind": "선택",
+      "prompt": "분류 문제에 해당하는 것은?"
     },
     {
       "id": "u3-q012",
       "unit": 3,
-      "topic": "알고리즘"
+      "topic": "알고리즘",
+      "kind": "선택",
+      "prompt": "지도 학습 알고리즘이 아닌 것은?"
     },
     {
       "id": "u3-q013",
       "unit": 3,
-      "topic": "전처리"
+      "topic": "전처리",
+      "kind": "선택",
+      "prompt": "정규화 후 새 데이터의 값이 1.4가 나올 수 있나요?"
     },
     {
       "id": "u3-q014",
       "unit": 3,
-      "topic": "용어"
+      "topic": "용어",
+      "kind": "선택",
+      "prompt": "k-NN의 n_neighbors는 무엇인가요?"
     },
     {
       "id": "u3-q015",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "선택",
+      "prompt": "최종 테스트 점수를 보고 k를 계속 고르면?"
     },
     {
       "id": "u3-q016",
       "unit": 3,
-      "topic": "회귀"
+      "topic": "회귀",
+      "kind": "선택",
+      "prompt": "R²는 음수가 될 수 있나요?"
     },
     {
       "id": "u3-q017",
       "unit": 3,
-      "topic": "군집"
+      "topic": "군집",
+      "kind": "선택",
+      "prompt": "군집 번호 2는 번호 1보다 더 좋은 그룹인가요?"
     },
     {
       "id": "u3-q018",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "선택",
+      "prompt": "정확도·정밀도·재현율은 주로 어떤 모델에 쓰나요?"
     },
     {
       "id": "u4-q001",
       "unit": 4,
-      "topic": "기본"
+      "topic": "기본",
+      "kind": "선택",
+      "prompt": "이미지 밝기를 부드럽게 만드는 작업은?"
     },
     {
       "id": "u4-q002",
       "unit": 4,
-      "topic": "픽셀"
+      "topic": "픽셀",
+      "kind": "선택",
+      "prompt": "shape가 (2,3,3)인 이미지의 픽셀 수는?"
     },
     {
       "id": "u4-q003",
       "unit": 4,
-      "topic": "픽셀"
+      "topic": "픽셀",
+      "kind": "선택",
+      "prompt": "같은 배열의 size 값은?"
     },
     {
       "id": "u4-q004",
       "unit": 4,
-      "topic": "색상"
+      "topic": "색상",
+      "kind": "선택",
+      "prompt": "OpenCV imread의 기본 컬러 순서는?"
     },
     {
       "id": "u4-q005",
       "unit": 4,
-      "topic": "입출력"
+      "topic": "입출력",
+      "kind": "선택",
+      "prompt": "imread가 파일을 못 읽으면 보통 무엇을 반환하나요?"
     },
     {
       "id": "u4-q006",
       "unit": 4,
-      "topic": "크기"
+      "topic": "크기",
+      "kind": "선택",
+      "prompt": "cv2.resize(img,(80,60))의 결과 높이와 너비는?"
     },
     {
       "id": "u4-q007",
       "unit": 4,
-      "topic": "이진화"
+      "topic": "이진화",
+      "kind": "선택",
+      "prompt": "THRESH_BINARY 기준 127에서 값 127의 결과는?"
     },
     {
       "id": "u4-q008",
       "unit": 4,
-      "topic": "이진화"
+      "topic": "이진화",
+      "kind": "선택",
+      "prompt": "그림자가 있는 문서에서 영역별 기준을 적용하는 것은?"
     },
     {
       "id": "u4-q009",
       "unit": 4,
-      "topic": "특징"
+      "topic": "특징",
+      "kind": "선택",
+      "prompt": "파노라마에서 공통 위치 단서로 쓰기 좋은 것은?"
     },
     {
       "id": "u4-q010",
       "unit": 4,
-      "topic": "특징"
+      "topic": "특징",
+      "kind": "선택",
+      "prompt": "물체의 면적과 외곽 경계를 구할 때 활용할 것은?"
     },
     {
       "id": "u4-q011",
       "unit": 4,
-      "topic": "얼굴"
+      "topic": "얼굴",
+      "kind": "선택",
+      "prompt": "Haar 얼굴 검출 결과만으로 사람의 이름을 알 수 있나요?"
     },
     {
       "id": "u4-q012",
       "unit": 4,
-      "topic": "얼굴"
+      "topic": "얼굴",
+      "kind": "선택",
+      "prompt": "얼굴 ROI의 눈 좌표를 원본 위치로 바꾸려면?"
     },
     {
       "id": "u4-q013",
       "unit": 4,
-      "topic": "YOLO"
+      "topic": "YOLO",
+      "kind": "선택",
+      "prompt": "각 프레임의 person 수를 합하면 고유 방문자 수인가요?"
     },
     {
       "id": "u4-q014",
       "unit": 4,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "선택",
+      "prompt": "비전 시스템에서 처리 속도 외에 확인할 것은?"
     },
     {
       "id": "u4-q015",
       "unit": 4,
-      "topic": "도구"
+      "topic": "도구",
+      "kind": "선택",
+      "prompt": "실시간 영상 입출력과 검출을 함께 다루는 대표 도구는?"
     },
     {
       "id": "u4-q016",
       "unit": 4,
-      "topic": "도구"
+      "topic": "도구",
+      "kind": "선택",
+      "prompt": "픽셀 단위 영역 분석 도구를 고를 때 고려할 것은?"
     },
     {
       "id": "u3-q019",
       "unit": 3,
-      "topic": "pandas"
+      "topic": "pandas",
+      "kind": "빈칸",
+      "prompt": "import pandas as ____"
     },
     {
       "id": "u3-q020",
       "unit": 3,
-      "topic": "pandas"
+      "topic": "pandas",
+      "kind": "빈칸",
+      "prompt": "pd.____(sales_info)로 표를 만듭니다."
     },
     {
       "id": "u3-q021",
       "unit": 3,
-      "topic": "pandas"
+      "topic": "pandas",
+      "kind": "빈칸",
+      "prompt": "sales_df.____()로 수치형 요약 통계를 구합니다."
     },
     {
       "id": "u3-q022",
       "unit": 3,
-      "topic": "모델"
+      "topic": "모델",
+      "kind": "빈칸",
+      "prompt": "model.____(X_train,y_train)으로 학습합니다."
     },
     {
       "id": "u3-q023",
       "unit": 3,
-      "topic": "모델"
+      "topic": "모델",
+      "kind": "빈칸",
+      "prompt": "model.____(X_test)로 새 입력을 예측합니다."
     },
     {
       "id": "u3-q024",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "빈칸",
+      "prompt": "TP=6, FP=2일 때 정밀도는? 소수로 쓰세요."
     },
     {
       "id": "u3-q025",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "빈칸",
+      "prompt": "실제 [1,3], 예측 [2,2]의 MSE는?"
     },
     {
       "id": "u4-q017",
       "unit": 4,
-      "topic": "검출"
+      "topic": "검출",
+      "kind": "빈칸",
+      "prompt": "CascadeClassifier에 사용하는 정면 얼굴 파일 이름은?"
     },
     {
       "id": "u4-q018",
       "unit": 4,
-      "topic": "검출"
+      "topic": "검출",
+      "kind": "빈칸",
+      "prompt": "face_cascade.____(gray,1.1,5)에서 빈칸은?"
     },
     {
       "id": "u4-q019",
       "unit": 4,
-      "topic": "입출력"
+      "topic": "입출력",
+      "kind": "빈칸",
+      "prompt": "cv2.____(\"Result\",img)로 화면을 표시합니다."
     },
     {
       "id": "u4-q020",
       "unit": 4,
-      "topic": "입출력"
+      "topic": "입출력",
+      "kind": "빈칸",
+      "prompt": "cv2.____(\"photo.jpg\")로 이미지를 읽습니다."
     },
     {
       "id": "u4-q021",
       "unit": 4,
-      "topic": "변환"
+      "topic": "변환",
+      "kind": "빈칸",
+      "prompt": "cv2.____(img,cv2.COLOR_BGR2GRAY)로 회색조 변환합니다."
     },
     {
       "id": "u4-q022",
       "unit": 4,
-      "topic": "반전"
+      "topic": "반전",
+      "kind": "빈칸",
+      "prompt": "8비트 밝기 40의 반전 값은?"
     },
     {
       "id": "u3-q026",
       "unit": 3,
-      "topic": "과정"
+      "topic": "과정",
+      "kind": "순서",
+      "prompt": "데이터 누수 없이 예측 모델을 구성하는 순서를 정하세요."
     },
     {
       "id": "u3-q027",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "순서",
+      "prompt": "설정 후보를 고르고 최종 평가하는 순서를 정하세요."
     },
     {
       "id": "u4-q023",
       "unit": 4,
-      "topic": "문서 스캔"
+      "topic": "문서 스캔",
+      "kind": "순서",
+      "prompt": "기울고 어두운 문서의 처리 경로 예를 배열하세요."
     },
     {
       "id": "u4-q024",
       "unit": 4,
-      "topic": "카메라"
+      "topic": "카메라",
+      "kind": "순서",
+      "prompt": "카메라 프로그램의 기본 순서를 정하세요."
     },
     {
       "id": "u3-q028",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "구현",
+      "prompt": "mae(actual,pred)가 평균 절대 오차를 반환하게 만드세요."
     },
     {
       "id": "u3-q029",
       "unit": 3,
-      "topic": "평가"
+      "topic": "평가",
+      "kind": "구현",
+      "prompt": "precision(tp,fp)가 정밀도를 반환하게 하세요. 분모 0은 0으로 처리합니다."
     },
     {
       "id": "u3-q030",
       "unit": 3,
-      "topic": "전처리"
+      "topic": "전처리",
+      "kind": "구현",
+      "prompt": "fill(values)가 None을 관측값 평균으로 채운 새 목록을 반환하게 만드세요. 관측값은 한 개 이상입니다."
     },
     {
       "id": "u3-q031",
       "unit": 3,
-      "topic": "회귀"
+      "topic": "회귀",
+      "kind": "구현",
+      "prompt": "predict(x,w,b)가 선형 예측값을 반환하도록 고치세요."
     },
     {
       "id": "u4-q025",
       "unit": 4,
-      "topic": "이진화"
+      "topic": "이진화",
+      "kind": "구현",
+      "prompt": "binary(values,t)가 OpenCV THRESH_BINARY와 같은 기준으로 0/255 목록을 반환하게 하세요."
     },
     {
       "id": "u4-q026",
       "unit": 4,
-      "topic": "색상"
+      "topic": "색상",
+      "kind": "구현",
+      "prompt": "bgr_to_rgb(pixel)이 채널 순서를 바꾼 튜플을 반환하게 만드세요."
     },
     {
       "id": "u4-q027",
       "unit": 4,
-      "topic": "좌표"
+      "topic": "좌표",
+      "kind": "구현",
+      "prompt": "global_point(origin,local)이 ROI 좌표를 원본 좌표로 바꾸게 만드세요."
     },
     {
       "id": "u4-q028",
       "unit": 4,
-      "topic": "계수"
+      "topic": "계수",
+      "kind": "구현",
+      "prompt": "counts(names)가 현재 프레임의 클래스별 개수 딕셔너리를 반환하게 만드세요."
     },
     {
       "id": "u3-q032",
       "unit": 3,
-      "topic": "AI·머신러닝·딥러닝의 관계"
+      "topic": "AI·머신러닝·딥러닝의 관계",
+      "kind": "서술",
+      "prompt": "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요."
     },
     {
       "id": "u3-q033",
       "unit": 3,
-      "topic": "머신러닝이 필요한 문제와 활용"
+      "topic": "머신러닝이 필요한 문제와 활용",
+      "kind": "서술",
+      "prompt": "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요."
     },
     {
       "id": "u3-q034",
       "unit": 3,
-      "topic": "문제 해결 과정과 데이터 분할"
+      "topic": "문제 해결 과정과 데이터 분할",
+      "kind": "서술",
+      "prompt": "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요."
     },
     {
       "id": "u3-q035",
       "unit": 3,
-      "topic": "특성·레이블·모델·하이퍼파라미터"
+      "topic": "특성·레이블·모델·하이퍼파라미터",
+      "kind": "서술",
+      "prompt": "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요."
     },
     {
       "id": "u3-q036",
       "unit": 3,
-      "topic": "지도·비지도·강화 학습"
+      "topic": "지도·비지도·강화 학습",
+      "kind": "서술",
+      "prompt": "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요."
     },
     {
       "id": "u3-q037",
       "unit": 3,
-      "topic": "머신러닝 라이브러리와 그래프"
+      "topic": "머신러닝 라이브러리와 그래프",
+      "kind": "서술",
+      "prompt": "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요."
     },
     {
       "id": "u3-q038",
       "unit": 3,
-      "topic": "결측치·이상치·스케일·범주 처리"
+      "topic": "결측치·이상치·스케일·범주 처리",
+      "kind": "서술",
+      "prompt": "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요."
     },
     {
       "id": "u3-q039",
       "unit": 3,
-      "topic": "분류: k-NN·로지스틱·트리·SVM"
+      "topic": "분류: k-NN·로지스틱·트리·SVM",
+      "kind": "서술",
+      "prompt": "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요."
     },
     {
       "id": "u3-q040",
       "unit": 3,
-      "topic": "회귀와 수치 오차"
+      "topic": "회귀와 수치 오차",
+      "kind": "서술",
+      "prompt": "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요."
     },
     {
       "id": "u3-q041",
       "unit": 3,
-      "topic": "K-평균 군집화"
+      "topic": "K-평균 군집화",
+      "kind": "서술",
+      "prompt": "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요."
     },
     {
       "id": "u3-q042",
       "unit": 3,
-      "topic": "혼동행렬·정확도·정밀도·재현율"
+      "topic": "혼동행렬·정확도·정밀도·재현율",
+      "kind": "서술",
+      "prompt": "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요."
     },
     {
       "id": "u3-q043",
       "unit": 3,
-      "topic": "교차 검증·튜닝·학습 곡선"
+      "topic": "교차 검증·튜닝·학습 곡선",
+      "kind": "서술",
+      "prompt": "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요."
     },
     {
       "id": "u3-q044",
       "unit": 3,
-      "topic": "모델 구현·평가 프로젝트와 단원 정리"
+      "topic": "모델 구현·평가 프로젝트와 단원 정리",
+      "kind": "서술",
+      "prompt": "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요."
     },
     {
       "id": "u4-q029",
       "unit": 4,
-      "topic": "컴퓨터 비전과 영상 처리"
+      "topic": "컴퓨터 비전과 영상 처리",
+      "kind": "서술",
+      "prompt": "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요."
     },
     {
       "id": "u4-q030",
       "unit": 4,
-      "topic": "픽셀·해상도·RGB·그레이스케일"
+      "topic": "픽셀·해상도·RGB·그레이스케일",
+      "kind": "서술",
+      "prompt": "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요."
     },
     {
       "id": "u4-q031",
       "unit": 4,
-      "topic": "알고리즘·처리 과정·평가 기준"
+      "topic": "알고리즘·처리 과정·평가 기준",
+      "kind": "서술",
+      "prompt": "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요."
     },
     {
       "id": "u4-q032",
       "unit": 4,
-      "topic": "OpenCV·Pillow·Matplotlib·scikit-image"
+      "topic": "OpenCV·Pillow·Matplotlib·scikit-image",
+      "kind": "서술",
+      "prompt": "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요."
     },
     {
       "id": "u4-q033",
       "unit": 4,
-      "topic": "이미지 읽기·표시·변환·저장"
+      "topic": "이미지 읽기·표시·변환·저장",
+      "kind": "서술",
+      "prompt": "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요."
     },
     {
       "id": "u4-q034",
       "unit": 4,
-      "topic": "블러·에지·이진화"
+      "topic": "블러·에지·이진화",
+      "kind": "서술",
+      "prompt": "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요."
     },
     {
       "id": "u4-q035",
       "unit": 4,
-      "topic": "원근 변환과 마우스 이벤트"
+      "topic": "원근 변환과 마우스 이벤트",
+      "kind": "서술",
+      "prompt": "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요."
     },
     {
       "id": "u4-q036",
       "unit": 4,
-      "topic": "에지·코너·윤곽선으로 중요한 부분 찾기"
+      "topic": "에지·코너·윤곽선으로 중요한 부분 찾기",
+      "kind": "서술",
+      "prompt": "네모와 원에서 코너 수가 왜 다른지 관찰하세요."
     },
     {
       "id": "u4-q037",
       "unit": 4,
-      "topic": "얼굴·눈·웃음 검출과 웹캠"
+      "topic": "얼굴·눈·웃음 검출과 웹캠",
+      "kind": "서술",
+      "prompt": "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요."
     },
     {
       "id": "u4-q038",
       "unit": 4,
-      "topic": "YOLOv8 객체 탐지와 개수 표시"
+      "topic": "YOLOv8 객체 탐지와 개수 표시",
+      "kind": "서술",
+      "prompt": "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요."
     },
     {
       "id": "u4-q039",
       "unit": 4,
-      "topic": "컴퓨터 비전 프로젝트와 단원 정리"
+      "topic": "컴퓨터 비전 프로젝트와 단원 정리",
+      "kind": "서술",
+      "prompt": "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요."
     }
   ]
 }
