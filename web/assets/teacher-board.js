@@ -185,9 +185,11 @@ function paintRoster() {
   if (card.key === selectedKey) btn.classList.add('is-selected');
   btn.setAttribute('aria-label', `${card.label} 상세. 접속 ${card.presenceLabel}. 완료 ${formatRate(card.completeRate)}. 도움 ${card.openHelp}`);
   const head = node('div', 'student-card-head');
+  const who = node('div', 'student-card-who');
   const dot = node('span', `presence-dot${card.online ? ' is-online' : ''}`);
   dot.setAttribute('aria-hidden', 'true');
-  head.append(dot, node('span', 'small', card.presenceLabel), node('strong', '', card.label));
+  who.append(dot, node('strong', '', card.label));
+  head.append(who, node('span', 'small', card.presenceLabel));
   const place = node('p', 'small', card.place || '위치 없음');
   const stats = node('p', 'small', `완료 ${formatRate(card.completeRate)} · 정답 ${cardAccuracyLabel(card)}`);
   const flags = node('p', 'small', [card.openHelp ? `도움 ${card.openHelp}` : '', card.understandingLabel !== '—' ? card.understandingLabel : '', card.lastActivityLabel].filter(Boolean).join(' · '));
