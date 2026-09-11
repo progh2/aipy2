@@ -199,6 +199,13 @@ assert 'id="question-list"' in board
 assert '학생이 보내는 신호예요. 점수·출결에는 안 반영돼요.' in board
 assert '어려워요' in board
 assert 'CSV 내보내기' in board
+assert '이 반 학생의 접속·완료·막힌 곳·도움 요청을 한눈에 봐요.' in board
+assert '여러 반이 동시에 수업해도 이 반만 보여요.' in board
+assert '학번·완료·정답·도움만 내려받아요. 성적용은 아니에요.' in board
+assert '>히트맵<' in board
+assert '주제별로 완료·이해도 색을 봐요.' in board
+assert '조회·집계는 이 반만 대상으로 합니다' not in board
+assert '주제 × 학생' not in board
 assert '준비 중' not in board
 catalog_questions=json.loads((WEB/'data/catalog.json').read_text()).get('questions') or []
 assert catalog_questions and catalog_questions[0]['id'].startswith('u'), 'catalog questions'
