@@ -9,6 +9,7 @@ import {
 
 const PAGES = [
  {id: 'roster', href: 'admin.html', label: '명단'},
+ {id: 'ops', href: 'ops.html', label: '운영'},
  {id: 'board', href: 'board.html', label: '현황 보드'},
  {id: 'session', href: 'session.html', label: '수업 세션'},
  {id: 'assignments', href: 'assignments.html', label: '과제'}

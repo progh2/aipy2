@@ -56,21 +56,35 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == uid && schoolAccount();
     }
 
+    // 진급 때 교사가 학년·반만 맞춥니다. 입학년도·이메일·학번은 바꾸지 못합니다.
+    function teacherIdentityPatch() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['grade', 'classroom', 'number', 'updatedAt'])
+        && request.resource.data.grade is int
+        && request.resource.data.classroom is int
+        && request.resource.data.admissionYear == resource.data.admissionYear
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.studentId == resource.data.studentId;
+    }
+
     // 교사가 미리 등록하는 명단. 학생은 자기 한 줄만 읽습니다.
+    // archived 는 졸업 코호트 보관 표시입니다. 학습 기록 삭제와 무관합니다.
     match /roster/{rosterEmail} {
       allow get: if schoolAccount() && rosterEmail == email();
       allow get, list: if isTeacher();
       // delete 는 request.resource 가 없으므로 검증식과 분리합니다.
       allow delete: if isTeacher();
       allow create, update: if isTeacher()
-        && request.resource.data.keys().hasOnly(['email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'updatedAt', 'archived', 'archivedAt'])
         && request.resource.data.email == rosterEmail
         && request.resource.data.name is string
         // 학번은 앞자리 0이 지워지지 않도록 문자열로 저장합니다.
         && request.resource.data.studentId is string
         && request.resource.data.admissionYear is int
         && request.resource.data.grade is int
-        && request.resource.data.classroom is int;
+        && request.resource.data.classroom is int
+        && (!('archived' in request.resource.data) || request.resource.data.archived is bool)
+        && (!('archivedAt' in request.resource.data) || request.resource.data.archivedAt is timestamp);
     }
 
     // 교사 계정 목록. 콘솔에서만 추가·삭제합니다.
@@ -90,6 +104,8 @@ service cloud.firestore {
         && request.resource.data.name.size() <= 40
         && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'updatedAt'])
         && matchesRoster();
+      // 진급 일괄 반영. 입학년도는 유지하고 학년·반만 고칩니다.
+      allow update: if isTeacher() && teacherIdentityPatch();
 
       // 학습 기록 미러: localStorage의 complete/answers/journals/projects(+ last)를 그대로 담습니다.
       // 항목별 시각은 times, 문서 시각은 updatedAt. 키 제한을 두지 않아 문항·주제가 늘어도 규칙을 고치지 않습니다.
@@ -124,6 +140,7 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'counts', 'understanding', 'updatedAt'])
         && understandingOk(request.resource.data.understanding)
         && matchesRoster();
+      allow update: if isTeacher() && teacherIdentityPatch();
     }
 
     function rosterClassId() {

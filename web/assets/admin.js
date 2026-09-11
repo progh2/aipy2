@@ -2,7 +2,7 @@
    쓰기 권한은 admins/{교사이메일} 문서가 있을 때만 규칙이 허용합니다.
    목록·내보내기는 헤더에서 고른 반(grade-classroom)만 보여 줍니다. */
 import {load, SCHOOL} from './auth.js';
-import {inClass, labelClass} from './class-picker.js';
+import {inClass, labelClass, isArchived} from './class-picker.js';
 
 const $ = (id) => document.getElementById(id);
 const node = (tag, cls, text) => {
@@ -88,10 +88,16 @@ function selectedClassId() {
  return (window.aipyClass && window.aipyClass.classId) || '';
 }
 
+function existingFromCache(email) {
+ if (!cachedRoster) return null;
+ return cachedRoster.find((row) => (row.id || row.email) === email) || null;
+}
+
 function scopedRoster(rows) {
  const id = selectedClassId();
- if (!id) return rows;
- return rows.filter((row) => inClass(row, id));
+ const active = (rows || []).filter((row) => !isArchived(row));
+ if (!id) return active;
+ return active.filter((row) => inClass(row, id));
 }
 
 let bound = false;
@@ -265,6 +271,11 @@ async function apply(db, store) {
      updatedAt: store.serverTimestamp()
     };
     if (entry.number != null) payload.number = entry.number;
+    const before = existingFromCache(entry.email);
+    if (before && before.archived === true) {
+     payload.archived = true;
+     if (before.archivedAt) payload.archivedAt = before.archivedAt;
+    }
     batch.set(store.doc(db, 'roster', entry.email), payload);
    }
    await batch.commit();
@@ -304,10 +315,14 @@ function renderRoster(rows) {
    ? `${labelClass(id)} 명단만 표시합니다. 반을 바꾸면 이 목록도 바뀝니다.`
    : '수업할 반을 위에서 선택하면 그 반 명단만 보입니다.';
  }
- $('roster-count').textContent = id ? `${shown.length}명 · ${labelClass(id)}` : `${rows.length}명`;
+ $('roster-count').textContent = id ? `${shown.length}명 · ${labelClass(id)}` : `${shown.length}명`;
  if (!rows.length) {
   $('roster-list').replaceChildren(node('p', 'small', '등록된 명단이 없습니다.'));
   return;
+ }
+ const archivedCount = rows.filter((row) => isArchived(row)).length;
+ if (archivedCount && scope) {
+  scope.textContent += ` 보관한 ${archivedCount}명은 운영 화면에서 봅니다.`;
  }
  if (id && !shown.length) {
   $('roster-list').replaceChildren(node('p', 'small', `${labelClass(id)}에 등록된 학생이 없습니다.`));

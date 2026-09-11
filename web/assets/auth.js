@@ -3,6 +3,7 @@
    설정이 비어 있으면 아무 UI도 만들지 않고 조용히 종료합니다. */
 import {firebaseConfig, SCHOOL_DOMAIN, SDK, ready} from './firebase-config.js';
 import {UNDERSTANDING_KEY} from './understanding-model.js';
+import {privacyButton, mountPrivacyNotice} from './privacy-model.js';
 
 const slot = document.getElementById('account');
 const node = (tag, cls, text) => {
@@ -47,7 +48,7 @@ function renderSignedOut() {
  button.type = 'button';
  button.addEventListener('click', signIn);
  const note = node('span', 'account-note', `@${SCHOOL_DOMAIN} 계정만 사용합니다.`);
- slot.replaceChildren(button, note);
+ slot.replaceChildren(button, note, privacyButton());
 }
 
 function renderBusy(text) {
@@ -68,7 +69,7 @@ function renderSignedIn(profile) {
  const out = node('button', 'account-signout', '로그아웃');
  out.type = 'button';
  out.addEventListener('click', signOut);
- slot.replaceChildren(chip, out);
+ slot.replaceChildren(chip, out, privacyButton());
  if (!profile.classroom) {
   slot.append(node('span', 'account-warn', '명단에 없는 계정입니다. 선생님께 알려 주세요.'));
  }
@@ -226,7 +227,12 @@ async function handleUser(user) {
  renderSignedIn(profile);
 }
 
-// 모든 선언이 평가된 뒤에 시작합니다.
+function attachPrivacy() {
+ mountPrivacyNotice(document.getElementById('privacy-notice'));
+}
+
+// 모든 선언이 평가된 뒤에 시작합니다. 개인정보 안내는 로그인 설정과 관계없이 붙입니다.
+attachPrivacy();
 if (!slot) {
  console.info('[auth] 계정 영역이 없는 페이지입니다.');
 } else if (!ready) {

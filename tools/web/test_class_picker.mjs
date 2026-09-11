@@ -1,6 +1,6 @@
 /* class-picker 순수 함수 검사. node tools/web/test_class_picker.mjs */
 import {
- classId, parseClassId, labelClass, inClass, classesFromRoster,
+ classId, parseClassId, labelClass, inClass, classesFromRoster, isArchived,
  storageKey, readSelectedClass, writeSelectedClass, resolveSelectedClass, classDetail,
  resolveTeacherClassId
 } from '../../web/assets/class-picker.js';
@@ -33,6 +33,12 @@ const classes = classesFromRoster([
  {name: 'no class'}
 ]);
 eq(classes.map((c) => [c.id, c.count]), [['2-3', 2], ['2-4', 1]], 'classesFromRoster');
+eq(isArchived({archived: true}), true, 'isArchived');
+eq(isArchived({grade: 2, classroom: 3}), false, 'not archived');
+eq(classesFromRoster([
+ {grade: 3, classroom: 1, archived: true, name: '졸업'},
+ {grade: 2, classroom: 3, name: '재학'}
+]).map((c) => c.id), ['2-3'], 'archived omitted from classes');
 
 eq(storageKey('Teacher@e-mirim.hs.kr'), 'aipy-teacher-class:teacher@e-mirim.hs.kr', 'storageKey');
 eq(readSelectedClass('t@e-mirim.hs.kr'), '', 'read empty');

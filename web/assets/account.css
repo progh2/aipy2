@@ -12,6 +12,18 @@
 .account-sync[data-sync="synced"]{color:#176c5f}
 .account-sync[data-sync="error"],.account-sync[data-sync="conflict"]{color:#a33a2a}
 .account-sync[data-sync="pending"],.account-sync[data-sync="syncing"]{color:#7a5b12}
+.account-privacy{font-size:12px;padding:6px 10px}
+.privacy-notice{margin:16px 0 0;border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 16px}
+.privacy-notice summary{cursor:pointer;font-weight:700;font-size:14px}
+.privacy-notice h3{margin:12px 0 6px;font-size:15px}
+.privacy-list{margin:0 0 8px;padding-left:18px}
+.privacy-list li{margin:3px 0;font-size:14px}
+.privacy-dialog .privacy-body{margin:0 0 12px}
+.ops-filters{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:end;margin:8px 0}
+.ops-filters label{margin:0;min-width:8rem}
+.ops-smoke{margin-top:16px}
+.ops-smoke ol{margin:8px 0 0;padding-left:18px}
+.ops-smoke li{margin:4px 0;font-size:14px}
 .sync-overlay{position:fixed;inset:0;z-index:40;background:#10183173;display:flex;align-items:center;justify-content:center;padding:20px}
 .sync-dialog{max-width:720px;width:min(720px,100%);background:#fff;border-radius:14px;padding:22px 22px 18px;box-shadow:0 18px 40px #10183133}
 .sync-dialog h2{margin:0 0 8px;font-size:20px}
@@ -163,7 +175,7 @@ aside.rail .understanding-history h2{font-size:14px}
 }
 
 /* 과제 정의·제출(M6). 교사 폼과 학생 단원 패널을 같은 카드 리듬으로 맞춥니다. */
-.admin-card input[type="text"],.admin-card input[type="search"],.admin-card input[type="datetime-local"],.admin-card select{
+.admin-card input[type="text"],.admin-card input[type="search"],.admin-card input[type="number"],.admin-card input[type="datetime-local"],.admin-card select{
  width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;font:inherit
 }
 .assign-checks,.assign-filters{display:flex;flex-wrap:wrap;gap:8px 14px;margin:8px 0}

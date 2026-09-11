@@ -181,6 +181,7 @@ export function buildStudentCards({roster = [], progress = [], presence = [], he
  const usedProgress = new Set();
  const cards = [];
  for (const row of roster || []) {
+  if (row && row.archived === true) continue;
   if (!inClass(row, classId)) continue;
   const email = emailKey(row);
   const matched = (email && progressByEmail.get(email)) || null;
