@@ -5,10 +5,10 @@ import {isArchived} from './class-picker.js';
 export {isArchived};
 
 export const COHORT_CSV_HEADER = ['email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'archived'];
-export const PROMOTE_NOTE = '입학년도는 그대로 둡니다. 학년·반만 바뀌고 이전 학습 기록이 이어집니다.';
-export const ARCHIVE_NOTE = '보관하면 수업 반 목록에서만 빠집니다. 학습 기록·제출물은 지우지 않습니다.';
-export const REMOVE_NOTE = '명단에서 제거하면 roster 한 줄만 지웁니다. 학습 기록은 남습니다.';
-export const LEARNING_KEEP_NOTE = '학습 기록·제출물·이해도 신호는 일괄 삭제하지 않습니다.';
+export const PROMOTE_NOTE = '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.';
+export const ARCHIVE_NOTE = '보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요.';
+export const REMOVE_NOTE = '명단 한 줄만 지워요. 학습 기록은 남아요.';
+export const LEARNING_KEEP_NOTE = '학습 기록·제출물·이해도 신호는 한꺼번에 지우지 않아요.';
 export const CONFIRM_ARCHIVE_PREFIX = '졸업';
 export const CONFIRM_REMOVE_PREFIX = '명단삭제';
 export const BATCH_LIMIT = 400;
