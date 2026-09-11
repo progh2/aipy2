@@ -136,17 +136,20 @@ understanding=subprocess.run(['node',str(Path(__file__).parent/'test_understandi
 assert understanding.returncode==0, understanding.stdout+understanding.stderr
 help_model=subprocess.run(['node',str(Path(__file__).parent/'test_help_model.mjs')],capture_output=True,text=True)
 assert help_model.returncode==0, help_model.stdout+help_model.stderr
+understanding_model=(WEB/'assets/understanding-model.js').read_text()
+assert '이해했어요' in understanding_model and '조금 어려워요' in understanding_model and '어려워요' in understanding_model
+assert '어디가 막혔나요?' in understanding_model
+assert '평가에 반영되지 않습니다' in understanding_model
 understanding_js=(WEB/'assets/understanding.js').read_text()
-assert '이해했어요' in understanding_js and '조금 어려워요' in understanding_js and '어려워요' in understanding_js
-assert '어디가 막혔나요?' in understanding_js
-assert '평가에 반영되지 않습니다' in understanding_js
 assert "doc(db, 'progress', user.uid)" in understanding_js
 assert "doc(db, 'feedback', id)" in understanding_js
 assert "label.completion [data-complete]" in understanding_js
 assert 'understanding-history' in understanding_js
+assert '평가에 반영되지 않습니다' in understanding_js
+help_model=(WEB/'assets/help-model.js').read_text()
+assert '도움 요청' in help_model
+assert '요청 취소' in help_model
 help_js=(WEB/'assets/help.js').read_text()
-assert '도움 요청' in help_js
-assert '요청 취소' in help_js
 assert "collection(db, 'helpRequests')" in help_js
 assert "where('uid', '==', user.uid)" in help_js
 assert 'status: \'cancelled\'' in help_js or "status: 'cancelled'" in help_js
