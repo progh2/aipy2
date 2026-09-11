@@ -130,6 +130,7 @@ assert "helpStatusPatch('resolved')" in rules
 assert 'function helpCreateOk()' in rules
 assert 'function feedbackPayloadOk()' in rules
 assert "id == request.auth.uid + '_' + request.resource.data.topicId" in rules
+assert 'request.resource.data.topicId == resource.data.topicId' in rules
 assert 'optionalTopic(request.resource.data.get(\'topic\', null))' in rules
 assert 'resource == null' not in rules
 understanding=subprocess.run(['node',str(Path(__file__).parent/'test_understanding_model.mjs')],capture_output=True,text=True)
