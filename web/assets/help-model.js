@@ -8,6 +8,7 @@ export const HELP_ERROR_MAX = 300;
 export const HELP_STATUSES = ['open', 'cancelled', 'resolved'];
 export const HELP_LABEL = '도움 요청';
 export const HELP_CANCEL_LABEL = '요청 취소';
+export const HELP_SENT = '선생님께 보냈어요.';
 export const HELP_KEEP_WORKING = '요청한 뒤에도 계속 시도할 수 있어요.';
 
 export function clipLastError(text) {

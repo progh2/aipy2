@@ -206,7 +206,7 @@ function submitComment(topicId, text) {
  persistLocal();
  paintChoices();
  writeFeedback(topicId, text);
- toast('남겼어요. 평가에 반영되지 않습니다.');
+ toast('남겼어요.');
 }
 
 async function pullCloud() {

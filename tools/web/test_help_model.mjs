@@ -1,6 +1,6 @@
 /* 도움 요청 순수 함수 검사. node tools/web/test_help_model.mjs */
 import {
- HELP_COOLDOWN_MS, HELP_LABEL, HELP_CANCEL_LABEL, HELP_KEEP_WORKING, helpRequestFields,
+ HELP_COOLDOWN_MS, HELP_LABEL, HELP_CANCEL_LABEL, HELP_SENT, HELP_KEEP_WORKING, helpRequestFields,
  canCreateHelp, openHelpForTopic, sortOpenHelp, clipLastError, helpStatusLabel
 } from '../../web/assets/help-model.js';
 
@@ -11,6 +11,7 @@ function eq(actual, expected, label) {
 
 eq(HELP_LABEL, '도움 요청', 'help label');
 eq(HELP_CANCEL_LABEL, '요청 취소', 'cancel label');
+eq(HELP_SENT, '선생님께 보냈어요.', 'help sent');
 eq(HELP_KEEP_WORKING.includes('계속'), true, 'keep working');
 eq(HELP_COOLDOWN_MS >= 3000 && HELP_COOLDOWN_MS <= 10000, true, 'cooldown');
 
