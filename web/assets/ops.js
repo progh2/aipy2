@@ -327,7 +327,7 @@ function startRemove(db, store) {
  }
  askPhrase({
   title: '명단에서만 제거',
-  body: `${year}년 입학 ${rows.length}명을 명단에서 지울까요? ${REMOVE_NOTE} 학습 기록·제출물은 지우지 않습니다.`,
+  body: `${year}년 입학 ${rows.length}명을 명단에서 지울까요? ${REMOVE_NOTE} ${LEARNING_KEEP_NOTE}`,
   expected: removePhrase(year),
   action: '명단에서 제거',
   danger: true

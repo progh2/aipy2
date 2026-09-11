@@ -341,9 +341,16 @@ assert 'id="ops-archive"' in ops_html
 assert 'id="ops-remove"' in ops_html
 assert 'id="ops-export"' in ops_html
 assert '입학년도' in ops_html
+assert '입학년도로 학생을 모아요. 진급 때는 학년·반만 바꾸고, 입학년도와 학습 기록은 그대로 이어져요.' in ops_html
 assert '진급 반영' in ops_html
+assert '요약 CSV 내보내기' in ops_html
+assert '코호트 보관' in ops_html
+assert '명단에서만 제거' in ops_html
 assert '나래 스모크' in ops_html
-assert '학습 기록·제출물·이해도 신호는 일괄 삭제하지 않습니다' in ops_html
+assert '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.' in ops_html
+assert '보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요.' in ops_html
+assert '명단 한 줄만 지워요. 학습 기록은 남아요.' in ops_html
+assert '학습 기록·제출물·이해도 신호는 한꺼번에 지우지 않아요.' in ops_html
 ops_js=(WEB/'assets/ops.js').read_text()
 assert 'ops-model.js' in ops_js
 assert 'admissionYear' in ops_js
@@ -356,18 +363,24 @@ assert 'function bindUi()' in ops_js
 assert 'archivePhrase' in ops_js
 assert 'removePhrase' in ops_js
 ops_model_js=(WEB/'assets/ops-model.js').read_text()
-assert '입학년도는 그대로 둡니다' in ops_model_js
-assert '학습 기록은 남습니다' in ops_model_js
+assert '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.' in ops_model_js
+assert '보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요.' in ops_model_js
+assert '명단 한 줄만 지워요. 학습 기록은 남아요.' in ops_model_js
+assert '학습 기록·제출물·이해도 신호는 한꺼번에 지우지 않아요.' in ops_model_js
 assert "CONFIRM_ARCHIVE_PREFIX = '졸업'" in ops_model_js
 assert "CONFIRM_REMOVE_PREFIX = '명단삭제'" in ops_model_js
 privacy_model=(WEB/'assets/privacy-model.js').read_text()
+assert "PRIVACY_TITLE = '무엇이 저장되나요?'" in privacy_model
+assert "PRIVACY_LEAD = '수업 운영에 필요한 최소 항목만 저장해요.'" in privacy_model
 assert '학교 이메일' in privacy_model
 assert '학번과 입학년도' in privacy_model
 assert '학습 기록(완료·답안·저널·코드)' in privacy_model
 assert '과제 제출물' in privacy_model
 assert '이해도 신호' in privacy_model
 assert '선생님이 보는 것' in privacy_model
+assert '성적·출결에는 들어가지 않아요.' in privacy_model
 assert '본인 학습 기록은 JSON으로 내보낼 수 있어요.' in privacy_model
+assert '실제 보관·동의는 학교 규정을 따릅니다.' in privacy_model
 auth_js=(WEB/'assets/auth.js').read_text()
 assert 'privacy-model.js' in auth_js
 assert 'privacyButton' in auth_js

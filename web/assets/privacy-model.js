@@ -1,7 +1,7 @@
 /* 학생 화면 개인정보 안내. 수집 항목은 PRD F10 최소 목록과 같습니다.
    문구는 계정 패널·학습 기록 영역에 같이 씁니다. */
 export const PRIVACY_TITLE = '무엇이 저장되나요?';
-export const PRIVACY_LEAD = '이 실습실은 수업 운영에 필요한 최소 항목만 둡니다.';
+export const PRIVACY_LEAD = '수업 운영에 필요한 최소 항목만 저장해요.';
 export const PRIVACY_STORED = [
  '학교 이메일',
  '이름',

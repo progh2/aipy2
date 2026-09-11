@@ -2,7 +2,8 @@
 import {
  cohortYears, filterCohort, sortCohort, promotePreview, parsePromoteTarget,
  rosterWriteFields, identityPatch, archivePhrase, removePhrase, phraseMatches,
- cohortCsv, matchByEmail, chunkWrites, countPromoteWrites, isActiveRoster, emailKey
+ cohortCsv, matchByEmail, chunkWrites, countPromoteWrites, isActiveRoster, emailKey,
+ PROMOTE_NOTE, ARCHIVE_NOTE, REMOVE_NOTE, LEARNING_KEEP_NOTE
 } from '../../web/assets/ops-model.js';
 
 function eq(actual, expected, label) {
@@ -16,6 +17,11 @@ const rows = [
  {email: 'c@e-mirim.hs.kr', studentId: '19301', admissionYear: 2024, name: '졸업생', grade: 3, classroom: 1, archived: true},
  {email: 'd@e-mirim.hs.kr', studentId: '19302', admissionYear: 2024, name: '재학', grade: 3, classroom: 2}
 ];
+
+eq(PROMOTE_NOTE, '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.', 'promote note');
+eq(ARCHIVE_NOTE, '보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요.', 'archive note');
+eq(REMOVE_NOTE, '명단 한 줄만 지워요. 학습 기록은 남아요.', 'remove note');
+eq(LEARNING_KEEP_NOTE, '학습 기록·제출물·이해도 신호는 한꺼번에 지우지 않아요.', 'keep note');
 
 eq(cohortYears(rows), [2025, 2024], 'cohortYears desc');
 eq(filterCohort(rows, 2025).map(emailKey), ['a@e-mirim.hs.kr', 'b@e-mirim.hs.kr'], 'filter year');
