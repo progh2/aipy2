@@ -273,6 +273,7 @@ service cloud.firestore {
       allow update: if schoolAccount()
         && resource.data.uid == request.auth.uid
         && request.resource.data.uid == resource.data.uid
+        && request.resource.data.topicId == resource.data.topicId
         && feedbackPayloadOk();
     }
   }
