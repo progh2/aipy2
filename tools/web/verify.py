@@ -85,4 +85,6 @@ assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
 rules=(ROOT/'firebase/firestore.rules').read_text()
 assert 'match /sessions/{classroom}' in rules
 assert 'match /presence/{uid}' in rules
+assert 'wholeNumber(request.resource.data.attention.nonce)' in rules
+assert 'request.resource.data.attention.nonce is int' not in rules
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')

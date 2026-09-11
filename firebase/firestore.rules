@@ -139,9 +139,15 @@ service cloud.firestore {
         && request.resource.data.focus.updatedAt is timestamp;
     }
 
+    // JS SDK는 0 같은 정수를 double로 보내는 경우가 많습니다. `is int`만 쓰면
+    // 세션 생성·increment 갱신이 permission-denied가 됩니다. 정수와 같은 실수만 허용합니다.
+    function wholeNumber(value) {
+      return (value is int || value is float) && value == int(value);
+    }
+
     function sessionAttentionOk() {
       return request.resource.data.attention.keys().hasOnly(['nonce', 'at'])
-        && request.resource.data.attention.nonce is int
+        && wholeNumber(request.resource.data.attention.nonce)
         && request.resource.data.attention.nonce >= 0
         && request.resource.data.attention.at is timestamp
         && (!resource.exists || request.resource.data.attention.nonce >= resource.data.attention.nonce);
