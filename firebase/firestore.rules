@@ -171,6 +171,14 @@ service cloud.firestore {
       return request.resource.data.attention.nonce >= resource.data.attention.nonce;
     }
 
+    // 같은 세션에서 시선 nonce를 되돌리면 학생 쪽 안내가 어긋납니다.
+    // 다만 교사가 세션을 다시 시작할 때(startedAt이 바뀌고 active가 true)는
+    // nonce를 0으로 초기화해도 됩니다. 학생은 sessions에 쓰지 못합니다.
+    function sessionRestart() {
+      return request.resource.data.active == true
+        && request.resource.data.startedAt != resource.data.get('startedAt', request.resource.data.startedAt);
+    }
+
     function sessionPayloadOk() {
       return request.resource.data.keys().hasOnly(['active', 'teacherEmail', 'startedAt', 'expiresAt', 'focus', 'attention'])
         && request.resource.data.active is bool
@@ -183,12 +191,14 @@ service cloud.firestore {
     }
 
     // 수업 세션. 문서 ID는 `{학년}-{반}` (예: 2-3). 학생은 자기 반 문서만 읽고 쓰지 못합니다.
-    // create 와 update 를 나눕니다. nonce 단조성은 기존 문서가 있는 update 에서만 검사합니다.
+    // create 와 update 를 나눕니다. nonce 단조성은 기존 문서가 있는 update 에서만 검사하고,
+    // 교사가 startedAt을 바꿔 다시 시작할 때는 nonce를 초기화할 수 있습니다.
     match /sessions/{classroom} {
       allow get: if schoolAccount() && classIdOk(classroom) && classroom == rosterClassId();
       allow get, list: if isTeacher();
       allow create: if isTeacher() && classIdOk(classroom) && sessionPayloadOk();
-      allow update: if isTeacher() && classIdOk(classroom) && sessionPayloadOk() && sessionNonceMonotonic();
+      allow update: if isTeacher() && classIdOk(classroom) && sessionPayloadOk()
+        && (sessionNonceMonotonic() || sessionRestart());
       allow delete: if isTeacher();
     }
 

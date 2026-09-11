@@ -5,7 +5,8 @@ import {labelClass} from './class-picker.js';
 import {inClass} from './class-picker.js';
 import {
  isSessionLive, timestampMillis, countPresence, catalogPages, catalogTopics,
- catalogExamples, sessionFields, focusWritePayload, expiresAtMillis, wholeNonce, DEFAULT_PAGE
+ catalogExamples, sessionFields, sessionEndFields, existingAttentionNonce,
+ focusWritePayload, expiresAtMillis, wholeNonce, DEFAULT_PAGE
 } from './follow-model.js';
 import {
  choiceQuestions, focusFromQuestion, isQuestionAnchor,
@@ -375,25 +376,53 @@ async function refreshReport() {
  paintReport(report);
 }
 
+function sessionWritePayload(fields, stamps) {
+ return {
+  active: fields.active,
+  teacherEmail: fields.teacherEmail,
+  startedAt: stamps.startedAt,
+  expiresAt: stamps.expiresAt,
+  focus: {
+   page: fields.focus.page,
+   topicAnchor: fields.focus.topicAnchor,
+   exampleId: fields.focus.exampleId,
+   updatedAt: stamps.focusUpdatedAt
+  },
+  attention: {nonce: wholeNonce(fields.attention.nonce), at: stamps.attentionAt}
+ };
+}
+
+async function readExistingSession(store, db) {
+ const ref = store.doc(db, 'sessions', classIdValue);
+ try {
+  const snap = await store.getDoc(ref);
+  if (snap.exists()) return snap.data();
+  return null;
+ } catch (error) {
+  console.warn('[teacher-session] existing session', error);
+  return current;
+ }
+}
+
 async function startSession() {
  if (!classIdValue || !teacherEmail) return;
  const {page, topicAnchor, exampleId} = selectedFocus();
  try {
   const {db, store} = await load();
-  const fields = sessionFields({teacherEmail, page, topicAnchor, exampleId});
-  await store.setDoc(store.doc(db, 'sessions', classIdValue), {
-   active: fields.active,
-   teacherEmail: fields.teacherEmail,
+  const existing = await readExistingSession(store, db);
+  const fields = sessionFields({
+   teacherEmail,
+   page,
+   topicAnchor,
+   exampleId,
+   attentionNonce: existingAttentionNonce(existing)
+  });
+  await store.setDoc(store.doc(db, 'sessions', classIdValue), sessionWritePayload(fields, {
    startedAt: store.serverTimestamp(),
    expiresAt: store.Timestamp.fromMillis(expiresAtMillis()),
-   focus: {
-    page: fields.focus.page,
-    topicAnchor: fields.focus.topicAnchor,
-    exampleId: fields.focus.exampleId,
-    updatedAt: store.serverTimestamp()
-   },
-   attention: {nonce: wholeNonce(fields.attention.nonce), at: store.serverTimestamp()}
-  });
+   focusUpdatedAt: store.serverTimestamp(),
+   attentionAt: store.serverTimestamp()
+  }));
   recordTrail(fields.focus);
   rememberBaseline();
   note('세션을 시작했습니다.');
@@ -407,7 +436,14 @@ async function endSession() {
  if (!classIdValue || !current) return;
  try {
   const {db, store} = await load();
-  await store.updateDoc(store.doc(db, 'sessions', classIdValue), {active: false});
+  const existing = await readExistingSession(store, db) || current;
+  const fields = sessionEndFields(existing, {teacherEmail});
+  await store.setDoc(store.doc(db, 'sessions', classIdValue), sessionWritePayload(fields, {
+   startedAt: existing.startedAt || store.serverTimestamp(),
+   expiresAt: existing.expiresAt || store.Timestamp.fromMillis(expiresAtMillis()),
+   focusUpdatedAt: (existing.focus && existing.focus.updatedAt) || store.serverTimestamp(),
+   attentionAt: (existing.attention && existing.attention.at) || store.serverTimestamp()
+  }));
   note('세션을 종료했습니다.');
  } catch (error) {
   console.error('[teacher-session]', error);
