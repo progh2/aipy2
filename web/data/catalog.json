@@ -883,280 +883,383 @@
       "unit": 1,
       "topic": "overview",
       "kind": "선택",
-      "prompt": "모듈에 대한 설명으로 틀린 것을 고르세요."
+      "prompt": "모듈에 대한 설명으로 틀린 것을 고르세요.",
+      "options": [
+        "파일 이름은 모듈 이름의 기준입니다.",
+        "함수를 담을 수 있습니다.",
+        "변수와 실행문도 담을 수 있습니다.",
+        "저장한 Python 파일은 모듈이 될 수 없습니다.",
+        "기능별로 코드를 나눌 수 있습니다."
+      ],
+      "answer": "저장한 Python 파일은 모듈이 될 수 없습니다."
     },
     {
       "id": "u1-q002",
       "unit": 1,
       "topic": "overview",
       "kind": "선택",
-      "prompt": "모듈화의 목적과 가장 거리가 먼 것은?"
+      "prompt": "모듈화의 목적과 가장 거리가 먼 것은?",
+      "options": [
+        "중복 줄이기",
+        "코드 재사용",
+        "유지보수",
+        "아무 이름이나 더 많이 만들기",
+        "구조화"
+      ],
+      "answer": "아무 이름이나 더 많이 만들기"
     },
     {
       "id": "u1-q003",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "함수·변수·클래스 등을 담은 Python 파일은?"
+      "prompt": "함수·변수·클래스 등을 담은 Python 파일은?",
+      "answer": "모듈"
     },
     {
       "id": "u1-q004",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "관련 모듈을 폴더 계층으로 묶은 구조는?"
+      "prompt": "관련 모듈을 폴더 계층으로 묶은 구조는?",
+      "answer": "패키지"
     },
     {
       "id": "u1-q005",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "다른 모듈을 가져오는 키워드는?"
+      "prompt": "다른 모듈을 가져오는 키워드는?",
+      "answer": "import"
     },
     {
       "id": "u1-q006",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "직접 실행한 파일의 __name__ 값은?"
+      "prompt": "직접 실행한 파일의 __name__ 값은?",
+      "answer": "__main__"
     },
     {
       "id": "u1-q007",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "if __name__ == \"____\": 의 빈칸을 채우세요."
+      "prompt": "if __name__ == \"____\": 의 빈칸을 채우세요.",
+      "answer": "__main__"
     },
     {
       "id": "u1-q008",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "import greet as g 이후 인사 함수 호출은?"
+      "prompt": "import greet as g 이후 인사 함수 호출은?",
+      "answer": "g.hello()"
     },
     {
       "id": "u1-q009",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "from greet import hello 이후 호출은?"
+      "prompt": "from greet import hello 이후 호출은?",
+      "answer": "hello()"
     },
     {
       "id": "u1-q010",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "일반 패키지의 초기화 파일 이름은?"
+      "prompt": "일반 패키지의 초기화 파일 이름은?",
+      "answer": "__init__.py"
     },
     {
       "id": "u1-q011",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "별표 임포트로 공개할 이름 목록을 지정하는 변수는?"
+      "prompt": "별표 임포트로 공개할 이름 목록을 지정하는 변수는?",
+      "answer": "__all__"
     },
     {
       "id": "u1-q012",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "현재 작업 폴더를 반환하는 os 함수 호출은?"
+      "prompt": "현재 작업 폴더를 반환하는 os 함수 호출은?",
+      "answer": "os.getcwd()"
     },
     {
       "id": "u1-q013",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "실행 인자를 저장하는 sys 속성은?"
+      "prompt": "실행 인자를 저장하는 sys 속성은?",
+      "answer": "sys.argv"
     },
     {
       "id": "u1-q014",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "프로그램을 종료하는 sys 함수 호출은?"
+      "prompt": "프로그램을 종료하는 sys 함수 호출은?",
+      "answer": "sys.exit()"
     },
     {
       "id": "u1-q015",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "math의 원주율 상수는?"
+      "prompt": "math의 원주율 상수는?",
+      "answer": "math.pi"
     },
     {
       "id": "u1-q016",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "목록에서 요소 하나를 고르는 random 함수 이름은?"
+      "prompt": "목록에서 요소 하나를 고르는 random 함수 이름은?",
+      "answer": "choice"
     },
     {
       "id": "u1-q017",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "목록 자체를 섞는 함수 이름은?"
+      "prompt": "목록 자체를 섞는 함수 이름은?",
+      "answer": "shuffle"
     },
     {
       "id": "u1-q018",
       "unit": 1,
       "topic": "기초 개념",
       "kind": "빈칸",
-      "prompt": "날짜 객체의 요일을 얻는 메서드 호출은?"
+      "prompt": "날짜 객체의 요일을 얻는 메서드 호출은?",
+      "answer": "weekday()"
     },
     {
       "id": "u1-q019",
       "unit": 1,
       "topic": "imports",
       "kind": "빈칸",
-      "prompt": "from student import study\n위 코드 다음에 study 함수를 호출하세요."
+      "prompt": "from student import study\n위 코드 다음에 study 함수를 호출하세요.",
+      "answer": "study()"
     },
     {
       "id": "u1-q020",
       "unit": 1,
       "topic": "imports",
       "kind": "빈칸",
-      "prompt": "import student\n위 코드 다음에 study 함수를 호출하세요."
+      "prompt": "import student\n위 코드 다음에 study 함수를 호출하세요.",
+      "answer": "student.study()"
     },
     {
       "id": "u1-q021",
       "unit": 1,
       "topic": "imports",
       "kind": "빈칸",
-      "prompt": "import student as s\n위 코드 다음에 study 함수를 호출하세요."
+      "prompt": "import student as s\n위 코드 다음에 study 함수를 호출하세요.",
+      "answer": "s.study()"
     },
     {
       "id": "u1-q022",
       "unit": 1,
       "topic": "packages",
       "kind": "빈칸",
-      "prompt": "from nature.plants import grass as g\nwild 함수 호출 코드를 쓰세요."
+      "prompt": "from nature.plants import grass as g\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "g.wild()"
     },
     {
       "id": "u1-q023",
       "unit": 1,
       "topic": "packages",
       "kind": "빈칸",
-      "prompt": "from nature.plants.grass import wild\nwild 함수 호출 코드를 쓰세요."
+      "prompt": "from nature.plants.grass import wild\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "wild()"
     },
     {
       "id": "u1-q024",
       "unit": 1,
       "topic": "packages",
       "kind": "빈칸",
-      "prompt": "from nature.plants.grass import *\nwild 함수 호출 코드를 쓰세요."
+      "prompt": "from nature.plants.grass import *\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "wild()"
     },
     {
       "id": "u1-q025",
       "unit": 1,
       "topic": "packages",
       "kind": "빈칸",
-      "prompt": "import nature.plants.grass\nwild 함수 호출 코드를 쓰세요."
+      "prompt": "import nature.plants.grass\nwild 함수 호출 코드를 쓰세요.",
+      "answer": "nature.plants.grass.wild()"
     },
     {
       "id": "u1-q026",
       "unit": 1,
       "topic": "random",
       "kind": "선택",
-      "prompt": "고유한 항목의 리스트 L에서 중복 없이 2개를 뽑는 코드는?"
+      "prompt": "고유한 항목의 리스트 L에서 중복 없이 2개를 뽑는 코드는?",
+      "options": [
+        "random.random()",
+        "random.sample()",
+        "random.randrange()",
+        "random.randrange(2)",
+        "random.sample(L, 2)"
+      ],
+      "answer": "random.sample(L, 2)"
     },
     {
       "id": "u1-q027",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "print(__name__)을 직접 실행했을 때 출력은?"
+      "prompt": "print(__name__)을 직접 실행했을 때 출력은?",
+      "answer": "__main__"
     },
     {
       "id": "u1-q028",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "import math\nprint(math.ceil(-3.5))"
+      "prompt": "import math\nprint(math.ceil(-3.5))",
+      "answer": "-3"
     },
     {
       "id": "u1-q029",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "import math\nprint(math.floor(-3.5))"
+      "prompt": "import math\nprint(math.floor(-3.5))",
+      "answer": "-4"
     },
     {
       "id": "u1-q030",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "import math\nprint(math.factorial(0))"
+      "prompt": "import math\nprint(math.factorial(0))",
+      "answer": "1"
     },
     {
       "id": "u1-q031",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "import math\nprint(math.gcd(28,70))"
+      "prompt": "import math\nprint(math.gcd(28,70))",
+      "answer": "14"
     },
     {
       "id": "u1-q032",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "import math\nprint(math.pow(2,10))"
+      "prompt": "import math\nprint(math.pow(2,10))",
+      "answer": "1024.0"
     },
     {
       "id": "u1-q033",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "import random\na=[1,2,3]\nprint(random.shuffle(a))"
+      "prompt": "import random\na=[1,2,3]\nprint(random.shuffle(a))",
+      "answer": "None"
     },
     {
       "id": "u1-q034",
       "unit": 1,
       "topic": "결과 추적",
       "kind": "예측",
-      "prompt": "from datetime import date\nprint(date(2026,12,25).weekday())"
+      "prompt": "from datetime import date\nprint(date(2026,12,25).weekday())",
+      "answer": "4"
     },
     {
       "id": "u1-q035",
       "unit": 1,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "from pkg import *에서 __all__에 없는 이름은 명시적으로 import할 수 없나요?"
+      "prompt": "from pkg import *에서 __all__에 없는 이름은 명시적으로 import할 수 없나요?",
+      "options": [
+        "항상 금지됩니다.",
+        "명시적으로 가져올 수 있습니다.",
+        "파일이 삭제됩니다.",
+        "폴더 이름이 바뀝니다.",
+        "Python이 종료됩니다."
+      ],
+      "answer": "명시적으로 가져올 수 있습니다."
     },
     {
       "id": "u1-q036",
       "unit": 1,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "random.randrange(1,7,2)의 후보는?"
+      "prompt": "random.randrange(1,7,2)의 후보는?",
+      "options": [
+        "1, 2, 3",
+        "1, 3, 5",
+        "1, 3, 5, 7",
+        "2, 4, 6",
+        "1, 7"
+      ],
+      "answer": "1, 3, 5"
     },
     {
       "id": "u1-q037",
       "unit": 1,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "uniform(2.5,10.0)의 끝 값 설명으로 정확한 것은?"
+      "prompt": "uniform(2.5,10.0)의 끝 값 설명으로 정확한 것은?",
+      "options": [
+        "항상 10.0 미만입니다.",
+        "항상 10.0입니다.",
+        "정수만 나옵니다.",
+        "반올림에 따라 10.0이 포함될 수도 있습니다.",
+        "2.5는 제외합니다."
+      ],
+      "answer": "반올림에 따라 10.0이 포함될 수도 있습니다."
     },
     {
       "id": "u1-q038",
       "unit": 1,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "이미지 크기를 바꾸는 패키지는?"
+      "prompt": "이미지 크기를 바꾸는 패키지는?",
+      "options": [
+        "Pillow",
+        "Flask",
+        "Django",
+        "Peewee",
+        "Scrapy"
+      ],
+      "answer": "Pillow"
     },
     {
       "id": "u1-q039",
       "unit": 1,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "HTML에서 제목을 추출할 때 선택할 도구는?"
+      "prompt": "HTML에서 제목을 추출할 때 선택할 도구는?",
+      "options": [
+        "Pygame",
+        "Beautiful Soup",
+        "NumPy",
+        "Peewee",
+        "tkinter"
+      ],
+      "answer": "Beautiful Soup"
     },
     {
       "id": "u1-q040",
       "unit": 1,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "설치 성공 후 import가 실패할 때 먼저 확인할 것은?"
+      "prompt": "설치 성공 후 import가 실패할 때 먼저 확인할 것은?",
+      "options": [
+        "키보드 색상",
+        "설치 환경과 실행 인터프리터",
+        "모니터 크기",
+        "파일 확장자를 jpg로 변경",
+        "함수 이름을 모두 변경"
+      ],
+      "answer": "설치 환경과 실행 인터프리터"
     },
     {
       "id": "u1-q041",
@@ -1296,308 +1399,408 @@
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "사용자 인터페이스 설명 중 틀린 것은?"
+      "prompt": "사용자 인터페이스 설명 중 틀린 것은?",
+      "options": [
+        "UI에는 버튼과 색상이 포함됩니다.",
+        "CLI는 그래픽 버튼으로만 조작합니다.",
+        "GUI는 메뉴를 클릭합니다.",
+        "NUI는 손짓을 사용합니다.",
+        "UI는 상호 작용의 접점입니다."
+      ],
+      "answer": "CLI는 그래픽 버튼으로만 조작합니다."
     },
     {
       "id": "u2-q002",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "아이콘을 클릭하여 그림판을 열었습니다. 유형은?"
+      "prompt": "아이콘을 클릭하여 그림판을 열었습니다. 유형은?",
+      "options": [
+        "CLI",
+        "GUI",
+        "NUI",
+        "API",
+        "TUI"
+      ],
+      "answer": "GUI"
     },
     {
       "id": "u2-q003",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "운영체제 고유 위젯을 활용하는 라이브러리는?"
+      "prompt": "운영체제 고유 위젯을 활용하는 라이브러리는?",
+      "options": [
+        "tkinter",
+        "PyQt6",
+        "wxPython",
+        "Kivy",
+        "Django"
+      ],
+      "answer": "wxPython"
     },
     {
       "id": "u2-q004",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "Qt의 공식 Python 바인딩은?"
+      "prompt": "Qt의 공식 Python 바인딩은?",
+      "options": [
+        "Flask",
+        "NumPy",
+        "PySide6",
+        "Pillow",
+        "Scrapy"
+      ],
+      "answer": "PySide6"
     },
     {
       "id": "u2-q005",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "IDLE 구현에 사용된 GUI 라이브러리는?"
+      "prompt": "IDLE 구현에 사용된 GUI 라이브러리는?",
+      "options": [
+        "Kivy",
+        "tkinter",
+        "Django",
+        "Flask",
+        "Pygame"
+      ],
+      "answer": "tkinter"
     },
     {
       "id": "u2-q006",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "배치 관리자가 아닌 것은?"
+      "prompt": "배치 관리자가 아닌 것은?",
+      "options": [
+        "pack()",
+        "grid()",
+        "place()",
+        "center()",
+        "QGridLayout"
+      ],
+      "answer": "center()"
     },
     {
       "id": "u2-q007",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "버튼 command=say_hello의 실행 시점은?"
+      "prompt": "버튼 command=say_hello의 실행 시점은?",
+      "options": [
+        "버튼 생성 전",
+        "항상 실행하지 않음",
+        "버튼을 클릭할 때",
+        "창 제목 변경 때",
+        "import 때"
+      ],
+      "answer": "버튼을 클릭할 때"
     },
     {
       "id": "u2-q008",
       "unit": 2,
       "topic": "ui",
       "kind": "선택",
-      "prompt": "UI의 정의에 가장 가까운 것은?"
+      "prompt": "UI의 정의에 가장 가까운 것은?",
+      "options": [
+        "DB 테이블 구조",
+        "운영체제 설치 절차",
+        "내부 계산식만",
+        "사용자와 시스템이 상호 작용하는 접점",
+        "CPU 명령 집합"
+      ],
+      "answer": "사용자와 시스템이 상호 작용하는 접점"
     },
     {
       "id": "u2-q009",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 설명 글자 표시에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 설명 글자 표시에 사용하는 위젯 이름은?",
+      "answer": "Label"
     },
     {
       "id": "u2-q010",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Label의 설명 글자 표시 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Label의 설명 글자 표시 역할을 Qt Widgets로 옮기면?",
+      "answer": "QLabel"
     },
     {
       "id": "u2-q011",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 클릭 명령에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 클릭 명령에 사용하는 위젯 이름은?",
+      "answer": "Button"
     },
     {
       "id": "u2-q012",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Button의 클릭 명령 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Button의 클릭 명령 역할을 Qt Widgets로 옮기면?",
+      "answer": "QPushButton"
     },
     {
       "id": "u2-q013",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 한 줄 입력에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 한 줄 입력에 사용하는 위젯 이름은?",
+      "answer": "Entry"
     },
     {
       "id": "u2-q014",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Entry의 한 줄 입력 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Entry의 한 줄 입력 역할을 Qt Widgets로 옮기면?",
+      "answer": "QLineEdit"
     },
     {
       "id": "u2-q015",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 여러 줄 텍스트에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 여러 줄 텍스트에 사용하는 위젯 이름은?",
+      "answer": "Text"
     },
     {
       "id": "u2-q016",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Text의 여러 줄 텍스트 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Text의 여러 줄 텍스트 역할을 Qt Widgets로 옮기면?",
+      "answer": "QPlainTextEdit"
     },
     {
       "id": "u2-q017",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 독립 선택에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 독립 선택에 사용하는 위젯 이름은?",
+      "answer": "Checkbutton"
     },
     {
       "id": "u2-q018",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Checkbutton의 독립 선택 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Checkbutton의 독립 선택 역할을 Qt Widgets로 옮기면?",
+      "answer": "QCheckBox"
     },
     {
       "id": "u2-q019",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 그룹 중 하나 선택에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 그룹 중 하나 선택에 사용하는 위젯 이름은?",
+      "answer": "Radiobutton"
     },
     {
       "id": "u2-q020",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Radiobutton의 그룹 중 하나 선택 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Radiobutton의 그룹 중 하나 선택 역할을 Qt Widgets로 옮기면?",
+      "answer": "QRadioButton"
     },
     {
       "id": "u2-q021",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 항목 목록에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 항목 목록에 사용하는 위젯 이름은?",
+      "answer": "Listbox"
     },
     {
       "id": "u2-q022",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Listbox의 항목 목록 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Listbox의 항목 목록 역할을 Qt Widgets로 옮기면?",
+      "answer": "QListWidget"
     },
     {
       "id": "u2-q023",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "tkinter에서 컨테이너에 사용하는 위젯 이름은?"
+      "prompt": "tkinter에서 컨테이너에 사용하는 위젯 이름은?",
+      "answer": "Frame"
     },
     {
       "id": "u2-q024",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Frame의 컨테이너 역할을 Qt Widgets로 옮기면?"
+      "prompt": "Frame의 컨테이너 역할을 Qt Widgets로 옮기면?",
+      "answer": "QWidget"
     },
     {
       "id": "u2-q025",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "tkinter 기본 창을 만드는 호출은?"
+      "prompt": "tkinter 기본 창을 만드는 호출은?",
+      "answer": "tk.Tk()"
     },
     {
       "id": "u2-q026",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "tkinter에서 그림과 도형을 그릴 위젯 이름은?"
+      "prompt": "tkinter에서 그림과 도형을 그릴 위젯 이름은?",
+      "answer": "Canvas"
     },
     {
       "id": "u2-q027",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "라벨을 순서대로 배치하려면 label.____()의 빈칸은?"
+      "prompt": "라벨을 순서대로 배치하려면 label.____()의 빈칸은?",
+      "answer": "pack"
     },
     {
       "id": "u2-q028",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "행과 열을 지정하는 tkinter 배치 메서드는?"
+      "prompt": "행과 열을 지정하는 tkinter 배치 메서드는?",
+      "answer": "grid"
     },
     {
       "id": "u2-q029",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "좌표로 배치하는 tkinter 메서드는?"
+      "prompt": "좌표로 배치하는 tkinter 메서드는?",
+      "answer": "place"
     },
     {
       "id": "u2-q030",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "btn = tk.Button(root, command=____)에 함수 greet를 연결하세요."
+      "prompt": "btn = tk.Button(root, command=____)에 함수 greet를 연결하세요.",
+      "answer": "greet"
     },
     {
       "id": "u2-q031",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "button.clicked.connect(____)에 함수 greet를 연결하세요."
+      "prompt": "button.clicked.connect(____)에 함수 greet를 연결하세요.",
+      "answer": "greet"
     },
     {
       "id": "u2-q032",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "tkinter 이벤트 루프 호출은?"
+      "prompt": "tkinter 이벤트 루프 호출은?",
+      "answer": "root.mainloop()"
     },
     {
       "id": "u2-q033",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "Qt 이벤트 루프 호출은?"
+      "prompt": "Qt 이벤트 루프 호출은?",
+      "answer": "app.exec()"
     },
     {
       "id": "u2-q034",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "tkinter Text의 처음 위치 문자열은?"
+      "prompt": "tkinter Text의 처음 위치 문자열은?",
+      "answer": "1.0"
     },
     {
       "id": "u2-q035",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "tkinter Text의 마지막 자동 개행을 빼고 읽는 끝 위치는?"
+      "prompt": "tkinter Text의 마지막 자동 개행을 빼고 읽는 끝 위치는?",
+      "answer": "end-1c"
     },
     {
       "id": "u2-q036",
       "unit": 2,
       "topic": "기본 코드",
       "kind": "빈칸",
-      "prompt": "Qt 텍스트 편집기의 내용을 문자열로 읽는 메서드는?"
+      "prompt": "Qt 텍스트 편집기의 내용을 문자열로 읽는 메서드는?",
+      "answer": "toPlainText()"
     },
     {
       "id": "u2-q037",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "command=hello()에서 의도하지 않은 즉시 호출을 고치세요."
+      "prompt": "command=hello()에서 의도하지 않은 즉시 호출을 고치세요.",
+      "answer": "command=hello"
     },
     {
       "id": "u2-q038",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "button.clicked.connect(hello())를 고치세요."
+      "prompt": "button.clicked.connect(hello())를 고치세요.",
+      "answer": "button.clicked.connect(hello)"
     },
     {
       "id": "u2-q039",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "editor.text()를 QPlainTextEdit에 맞게 고치세요."
+      "prompt": "editor.text()를 QPlainTextEdit에 맞게 고치세요.",
+      "answer": "editor.toPlainText()"
     },
     {
       "id": "u2-q040",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "label.text = \"완료\"를 QLabel에 맞게 고치세요."
+      "prompt": "label.text = \"완료\"를 QLabel에 맞게 고치세요.",
+      "answer": "label.setText(\"완료\")"
     },
     {
       "id": "u2-q041",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "QFileDialog.getOpenFileName 결과를 path 하나로 받았습니다. 두 값을 받는 왼쪽 코드를 쓰세요."
+      "prompt": "QFileDialog.getOpenFileName 결과를 path 하나로 받았습니다. 두 값을 받는 왼쪽 코드를 쓰세요.",
+      "answer": "path, _"
     },
     {
       "id": "u2-q042",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "tkinter Text에서 기존 내용을 제거하는 코드는?"
+      "prompt": "tkinter Text에서 기존 내용을 제거하는 코드는?",
+      "answer": "text_area.delete(\"1.0\", tk.END)"
     },
     {
       "id": "u2-q043",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "Tk 입력창 entry의 한 줄 값을 읽는 코드는?"
+      "prompt": "Tk 입력창 entry의 한 줄 값을 읽는 코드는?",
+      "answer": "entry.get()"
     },
     {
       "id": "u2-q044",
       "unit": 2,
       "topic": "오류 찾기",
       "kind": "빈칸",
-      "prompt": "Qt 입력창 entry의 한 줄 값을 읽는 코드는?"
+      "prompt": "Qt 입력창 entry의 한 줄 값을 읽는 코드는?",
+      "answer": "entry.text()"
     },
     {
       "id": "u2-q045",
@@ -1632,42 +1835,90 @@
       "unit": 2,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "한 부모 안에서 pack과 grid를 섞으면?"
+      "prompt": "한 부모 안에서 pack과 grid를 섞으면?",
+      "options": [
+        "항상 자동 변환됩니다.",
+        "배치 충돌 오류가 날 수 있습니다.",
+        "Tk가 Qt로 바뀝니다.",
+        "텍스트만 사라집니다.",
+        "항상 잘 동작합니다."
+      ],
+      "answer": "배치 충돌 오류가 날 수 있습니다."
     },
     {
       "id": "u2-q050",
       "unit": 2,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "파일 대화 상자를 취소했다면?"
+      "prompt": "파일 대화 상자를 취소했다면?",
+      "options": [
+        "빈 경로를 엽니다.",
+        "파일을 삭제합니다.",
+        "함수에서 돌아갑니다.",
+        "아무 파일이나 저장합니다.",
+        "텍스트를 무조건 지웁니다."
+      ],
+      "answer": "함수에서 돌아갑니다."
     },
     {
       "id": "u2-q051",
       "unit": 2,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "긴 time.sleep을 GUI 콜백에서 실행하면?"
+      "prompt": "긴 time.sleep을 GUI 콜백에서 실행하면?",
+      "options": [
+        "자동으로 병렬 실행됩니다.",
+        "더 부드러워집니다.",
+        "화면 반응이 멈출 수 있습니다.",
+        "창 크기가 커집니다.",
+        "코드가 저장됩니다."
+      ],
+      "answer": "화면 반응이 멈출 수 있습니다."
     },
     {
       "id": "u2-q052",
       "unit": 2,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "Designer 생성 파일을 직접 수정할 때의 문제는?"
+      "prompt": "Designer 생성 파일을 직접 수정할 때의 문제는?",
+      "options": [
+        "절대로 실행되지 않습니다.",
+        "재생성하면 변경이 사라질 수 있습니다.",
+        "Qt가 삭제됩니다.",
+        "Python 버전이 바뀝니다.",
+        "파일이 이미지가 됩니다."
+      ],
+      "answer": "재생성하면 변경이 사라질 수 있습니다."
     },
     {
       "id": "u2-q053",
       "unit": 2,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "웹 GUI 체험 화면의 의미는?"
+      "prompt": "웹 GUI 체험 화면의 의미는?",
+      "options": [
+        "임의의 PySide 코드를 실제 실행",
+        "PC 모든 파일에 접근",
+        "예제 동작을 재현한 학습용 시뮬레이션",
+        "실행 검증이 모두 완료됨",
+        "운영체제 자체"
+      ],
+      "answer": "예제 동작을 재현한 학습용 시뮬레이션"
     },
     {
       "id": "u2-q054",
       "unit": 2,
       "topic": "응용 판단",
       "kind": "선택",
-      "prompt": "QMainWindow에 편집기를 넣는 방식은?"
+      "prompt": "QMainWindow에 편집기를 넣는 방식은?",
+      "options": [
+        "window.pack()",
+        "setCentralWidget(editor)",
+        "window.grid()",
+        "editor.mainloop()",
+        "app.setText(editor)"
+      ],
+      "answer": "setCentralWidget(editor)"
     },
     {
       "id": "u2-q055",
@@ -1744,28 +1995,39 @@
       "unit": 1,
       "topic": "thirdparty",
       "kind": "선택",
-      "prompt": "관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?"
+      "prompt": "관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?",
+      "options": [
+        "Peewee",
+        "Pillow",
+        "Pygame",
+        "Kivy",
+        "math"
+      ],
+      "answer": "Peewee"
     },
     {
       "id": "u2-q065",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
-      "prompt": "57쪽 IDLE 코드에서 Frame과 Button 같은 요소를 통칭하는 말은?"
+      "prompt": "57쪽 IDLE 코드에서 Frame과 Button 같은 요소를 통칭하는 말은?",
+      "answer": "위젯"
     },
     {
       "id": "u2-q066",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "QLineEdit의 입력 변화 시그널 이름은?"
+      "prompt": "QLineEdit의 입력 변화 시그널 이름은?",
+      "answer": "textChanged"
     },
     {
       "id": "u2-q067",
       "unit": 2,
       "topic": "pyside",
       "kind": "빈칸",
-      "prompt": "Qt Designer 실행 명령은?"
+      "prompt": "Qt Designer 실행 명령은?",
+      "answer": "pyside6-designer"
     },
     {
       "id": "u2-q068",
@@ -1779,343 +2041,528 @@
       "unit": 2,
       "topic": "events",
       "kind": "예측",
-      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\nprint(len(calls))"
+      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\nprint(len(calls))",
+      "answer": "0"
     },
     {
       "id": "u2-q070",
       "unit": 2,
       "topic": "events",
       "kind": "예측",
-      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))"
+      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))",
+      "answer": "2"
     },
     {
       "id": "u3-q001",
       "unit": 3,
       "topic": "AI 관계",
       "kind": "선택",
-      "prompt": "올바른 포함 관계는?"
+      "prompt": "올바른 포함 관계는?",
+      "options": [
+        "AI ⊃ 머신러닝 ⊃ 딥러닝",
+        "딥러닝 ⊃ AI ⊃ 머신러닝"
+      ],
+      "answer": "AI ⊃ 머신러닝 ⊃ 딥러닝"
     },
     {
       "id": "u3-q002",
       "unit": 3,
       "topic": "학습 방식",
       "kind": "선택",
-      "prompt": "레이블 없이 데이터의 비슷한 구조를 찾는 학습은?"
+      "prompt": "레이블 없이 데이터의 비슷한 구조를 찾는 학습은?",
+      "options": [
+        "비지도 학습",
+        "지도 학습"
+      ],
+      "answer": "비지도 학습"
     },
     {
       "id": "u3-q003",
       "unit": 3,
       "topic": "학습 방식",
       "kind": "선택",
-      "prompt": "예측할 값이 내일의 기온이라면 주된 문제 유형은?"
+      "prompt": "예측할 값이 내일의 기온이라면 주된 문제 유형은?",
+      "options": [
+        "회귀",
+        "분류"
+      ],
+      "answer": "회귀"
     },
     {
       "id": "u3-q004",
       "unit": 3,
       "topic": "학습 방식",
       "kind": "선택",
-      "prompt": "보상에 따라 미로의 행동 전략을 배우는 방식은?"
+      "prompt": "보상에 따라 미로의 행동 전략을 배우는 방식은?",
+      "options": [
+        "강화 학습",
+        "군집화"
+      ],
+      "answer": "강화 학습"
     },
     {
       "id": "u3-q005",
       "unit": 3,
       "topic": "군집",
       "kind": "선택",
-      "prompt": "정답 없이 고객을 구매 특성별로 묶는 도구는?"
+      "prompt": "정답 없이 고객을 구매 특성별로 묶는 도구는?",
+      "options": [
+        "KMeans",
+        "LinearRegression"
+      ],
+      "answer": "KMeans"
     },
     {
       "id": "u3-q006",
       "unit": 3,
       "topic": "특성",
       "kind": "선택",
-      "prompt": "예측 시점에는 알 수 없는 미래 정답 열을 X에 넣으면?"
+      "prompt": "예측 시점에는 알 수 없는 미래 정답 열을 X에 넣으면?",
+      "options": [
+        "데이터 누수",
+        "항상 더 좋은 모델"
+      ],
+      "answer": "데이터 누수"
     },
     {
       "id": "u3-q007",
       "unit": 3,
       "topic": "전처리",
       "kind": "선택",
-      "prompt": "StandardScaler.fit을 적용할 데이터는?"
+      "prompt": "StandardScaler.fit을 적용할 데이터는?",
+      "options": [
+        "훈련 데이터",
+        "테스트 포함 전체 데이터"
+      ],
+      "answer": "훈련 데이터"
     },
     {
       "id": "u3-q008",
       "unit": 3,
       "topic": "pandas",
       "kind": "선택",
-      "prompt": "문자열 열을 DataFrame에 담을 수 있나요?"
+      "prompt": "문자열 열을 DataFrame에 담을 수 있나요?",
+      "options": [
+        "불가능하다",
+        "가능하다"
+      ],
+      "answer": "가능하다"
     },
     {
       "id": "u3-q009",
       "unit": 3,
       "topic": "분류",
       "kind": "선택",
-      "prompt": "중요한 정상 메일을 스팸으로 잘못 보내는 경우를 줄일 때 주목할 지표는?"
+      "prompt": "중요한 정상 메일을 스팸으로 잘못 보내는 경우를 줄일 때 주목할 지표는?",
+      "options": [
+        "정밀도",
+        "R²"
+      ],
+      "answer": "정밀도"
     },
     {
       "id": "u3-q010",
       "unit": 3,
       "topic": "과대 적합",
       "kind": "선택",
-      "prompt": "훈련 점수만 높이려고 지나치게 반복 학습하면?"
+      "prompt": "훈련 점수만 높이려고 지나치게 반복 학습하면?",
+      "options": [
+        "일반화가 항상 좋아진다",
+        "과대 적합 위험이 커질 수 있다"
+      ],
+      "answer": "과대 적합 위험이 커질 수 있다"
     },
     {
       "id": "u3-q011",
       "unit": 3,
       "topic": "분류",
       "kind": "선택",
-      "prompt": "분류 문제에 해당하는 것은?"
+      "prompt": "분류 문제에 해당하는 것은?",
+      "options": [
+        "이메일 스팸 여부",
+        "내일 기온 수치"
+      ],
+      "answer": "이메일 스팸 여부"
     },
     {
       "id": "u3-q012",
       "unit": 3,
       "topic": "알고리즘",
       "kind": "선택",
-      "prompt": "지도 학습 알고리즘이 아닌 것은?"
+      "prompt": "지도 학습 알고리즘이 아닌 것은?",
+      "options": [
+        "KMeans",
+        "KNeighborsClassifier"
+      ],
+      "answer": "KMeans"
     },
     {
       "id": "u3-q013",
       "unit": 3,
       "topic": "전처리",
       "kind": "선택",
-      "prompt": "정규화 후 새 데이터의 값이 1.4가 나올 수 있나요?"
+      "prompt": "정규화 후 새 데이터의 값이 1.4가 나올 수 있나요?",
+      "options": [
+        "절대로 불가능하다",
+        "가능하다"
+      ],
+      "answer": "가능하다"
     },
     {
       "id": "u3-q014",
       "unit": 3,
       "topic": "용어",
       "kind": "선택",
-      "prompt": "k-NN의 n_neighbors는 무엇인가요?"
+      "prompt": "k-NN의 n_neighbors는 무엇인가요?",
+      "options": [
+        "레이블",
+        "하이퍼파라미터"
+      ],
+      "answer": "하이퍼파라미터"
     },
     {
       "id": "u3-q015",
       "unit": 3,
       "topic": "평가",
       "kind": "선택",
-      "prompt": "최종 테스트 점수를 보고 k를 계속 고르면?"
+      "prompt": "최종 테스트 점수를 보고 k를 계속 고르면?",
+      "options": [
+        "독립적인 최종 평가가 유지된다",
+        "테스트가 모델 선택에 사용된다"
+      ],
+      "answer": "테스트가 모델 선택에 사용된다"
     },
     {
       "id": "u3-q016",
       "unit": 3,
       "topic": "회귀",
       "kind": "선택",
-      "prompt": "R²는 음수가 될 수 있나요?"
+      "prompt": "R²는 음수가 될 수 있나요?",
+      "options": [
+        "항상 0 이상이다",
+        "가능하다"
+      ],
+      "answer": "가능하다"
     },
     {
       "id": "u3-q017",
       "unit": 3,
       "topic": "군집",
       "kind": "선택",
-      "prompt": "군집 번호 2는 번호 1보다 더 좋은 그룹인가요?"
+      "prompt": "군집 번호 2는 번호 1보다 더 좋은 그룹인가요?",
+      "options": [
+        "항상 더 좋은 그룹이다",
+        "번호에 우열 의미가 없다"
+      ],
+      "answer": "번호에 우열 의미가 없다"
     },
     {
       "id": "u3-q018",
       "unit": 3,
       "topic": "평가",
       "kind": "선택",
-      "prompt": "정확도·정밀도·재현율은 주로 어떤 모델에 쓰나요?"
+      "prompt": "정확도·정밀도·재현율은 주로 어떤 모델에 쓰나요?",
+      "options": [
+        "분류",
+        "회귀"
+      ],
+      "answer": "분류"
     },
     {
       "id": "u4-q001",
       "unit": 4,
       "topic": "기본",
       "kind": "선택",
-      "prompt": "이미지 밝기를 부드럽게 만드는 작업은?"
+      "prompt": "이미지 밝기를 부드럽게 만드는 작업은?",
+      "options": [
+        "개인 식별",
+        "영상 처리"
+      ],
+      "answer": "영상 처리"
     },
     {
       "id": "u4-q002",
       "unit": 4,
       "topic": "픽셀",
       "kind": "선택",
-      "prompt": "shape가 (2,3,3)인 이미지의 픽셀 수는?"
+      "prompt": "shape가 (2,3,3)인 이미지의 픽셀 수는?",
+      "options": [
+        "18",
+        "6"
+      ],
+      "answer": "6"
     },
     {
       "id": "u4-q003",
       "unit": 4,
       "topic": "픽셀",
       "kind": "선택",
-      "prompt": "같은 배열의 size 값은?"
+      "prompt": "같은 배열의 size 값은?",
+      "options": [
+        "18",
+        "6"
+      ],
+      "answer": "18"
     },
     {
       "id": "u4-q004",
       "unit": 4,
       "topic": "색상",
       "kind": "선택",
-      "prompt": "OpenCV imread의 기본 컬러 순서는?"
+      "prompt": "OpenCV imread의 기본 컬러 순서는?",
+      "options": [
+        "RGB",
+        "BGR"
+      ],
+      "answer": "BGR"
     },
     {
       "id": "u4-q005",
       "unit": 4,
       "topic": "입출력",
       "kind": "선택",
-      "prompt": "imread가 파일을 못 읽으면 보통 무엇을 반환하나요?"
+      "prompt": "imread가 파일을 못 읽으면 보통 무엇을 반환하나요?",
+      "options": [
+        "None",
+        "빈 문자열"
+      ],
+      "answer": "None"
     },
     {
       "id": "u4-q006",
       "unit": 4,
       "topic": "크기",
       "kind": "선택",
-      "prompt": "cv2.resize(img,(80,60))의 결과 높이와 너비는?"
+      "prompt": "cv2.resize(img,(80,60))의 결과 높이와 너비는?",
+      "options": [
+        "높이 80, 너비 60",
+        "높이 60, 너비 80"
+      ],
+      "answer": "높이 60, 너비 80"
     },
     {
       "id": "u4-q007",
       "unit": 4,
       "topic": "이진화",
       "kind": "선택",
-      "prompt": "THRESH_BINARY 기준 127에서 값 127의 결과는?"
+      "prompt": "THRESH_BINARY 기준 127에서 값 127의 결과는?",
+      "options": [
+        "0",
+        "255"
+      ],
+      "answer": "0"
     },
     {
       "id": "u4-q008",
       "unit": 4,
       "topic": "이진화",
       "kind": "선택",
-      "prompt": "그림자가 있는 문서에서 영역별 기준을 적용하는 것은?"
+      "prompt": "그림자가 있는 문서에서 영역별 기준을 적용하는 것은?",
+      "options": [
+        "적응형 이진화",
+        "고정 이진화"
+      ],
+      "answer": "적응형 이진화"
     },
     {
       "id": "u4-q009",
       "unit": 4,
       "topic": "특징",
       "kind": "선택",
-      "prompt": "파노라마에서 공통 위치 단서로 쓰기 좋은 것은?"
+      "prompt": "파노라마에서 공통 위치 단서로 쓰기 좋은 것은?",
+      "options": [
+        "전체 이미지 평균",
+        "코너"
+      ],
+      "answer": "코너"
     },
     {
       "id": "u4-q010",
       "unit": 4,
       "topic": "특징",
       "kind": "선택",
-      "prompt": "물체의 면적과 외곽 경계를 구할 때 활용할 것은?"
+      "prompt": "물체의 면적과 외곽 경계를 구할 때 활용할 것은?",
+      "options": [
+        "윤곽선",
+        "키보드 이벤트"
+      ],
+      "answer": "윤곽선"
     },
     {
       "id": "u4-q011",
       "unit": 4,
       "topic": "얼굴",
       "kind": "선택",
-      "prompt": "Haar 얼굴 검출 결과만으로 사람의 이름을 알 수 있나요?"
+      "prompt": "Haar 얼굴 검출 결과만으로 사람의 이름을 알 수 있나요?",
+      "options": [
+        "자동으로 알 수 있다",
+        "알 수 없다"
+      ],
+      "answer": "알 수 없다"
     },
     {
       "id": "u4-q012",
       "unit": 4,
       "topic": "얼굴",
       "kind": "선택",
-      "prompt": "얼굴 ROI의 눈 좌표를 원본 위치로 바꾸려면?"
+      "prompt": "얼굴 ROI의 눈 좌표를 원본 위치로 바꾸려면?",
+      "options": [
+        "이미지 너비를 곱한다",
+        "얼굴 원점 좌표를 더한다"
+      ],
+      "answer": "얼굴 원점 좌표를 더한다"
     },
     {
       "id": "u4-q013",
       "unit": 4,
       "topic": "YOLO",
       "kind": "선택",
-      "prompt": "각 프레임의 person 수를 합하면 고유 방문자 수인가요?"
+      "prompt": "각 프레임의 person 수를 합하면 고유 방문자 수인가요?",
+      "options": [
+        "아니다",
+        "항상 맞다"
+      ],
+      "answer": "아니다"
     },
     {
       "id": "u4-q014",
       "unit": 4,
       "topic": "평가",
       "kind": "선택",
-      "prompt": "비전 시스템에서 처리 속도 외에 확인할 것은?"
+      "prompt": "비전 시스템에서 처리 속도 외에 확인할 것은?",
+      "options": [
+        "오탐·누락과 조건별 안정성",
+        "창의 배경색만"
+      ],
+      "answer": "오탐·누락과 조건별 안정성"
     },
     {
       "id": "u4-q015",
       "unit": 4,
       "topic": "도구",
       "kind": "선택",
-      "prompt": "실시간 영상 입출력과 검출을 함께 다루는 대표 도구는?"
+      "prompt": "실시간 영상 입출력과 검출을 함께 다루는 대표 도구는?",
+      "options": [
+        "OpenCV",
+        "pandas"
+      ],
+      "answer": "OpenCV"
     },
     {
       "id": "u4-q016",
       "unit": 4,
       "topic": "도구",
       "kind": "선택",
-      "prompt": "픽셀 단위 영역 분석 도구를 고를 때 고려할 것은?"
+      "prompt": "픽셀 단위 영역 분석 도구를 고를 때 고려할 것은?",
+      "options": [
+        "scikit-image의 분석 기능",
+        "random의 주사위 기능"
+      ],
+      "answer": "scikit-image의 분석 기능"
     },
     {
       "id": "u3-q019",
       "unit": 3,
       "topic": "pandas",
       "kind": "빈칸",
-      "prompt": "import pandas as ____"
+      "prompt": "import pandas as ____",
+      "answer": "pd"
     },
     {
       "id": "u3-q020",
       "unit": 3,
       "topic": "pandas",
       "kind": "빈칸",
-      "prompt": "pd.____(sales_info)로 표를 만듭니다."
+      "prompt": "pd.____(sales_info)로 표를 만듭니다.",
+      "answer": "DataFrame"
     },
     {
       "id": "u3-q021",
       "unit": 3,
       "topic": "pandas",
       "kind": "빈칸",
-      "prompt": "sales_df.____()로 수치형 요약 통계를 구합니다."
+      "prompt": "sales_df.____()로 수치형 요약 통계를 구합니다.",
+      "answer": "describe"
     },
     {
       "id": "u3-q022",
       "unit": 3,
       "topic": "모델",
       "kind": "빈칸",
-      "prompt": "model.____(X_train,y_train)으로 학습합니다."
+      "prompt": "model.____(X_train,y_train)으로 학습합니다.",
+      "answer": "fit"
     },
     {
       "id": "u3-q023",
       "unit": 3,
       "topic": "모델",
       "kind": "빈칸",
-      "prompt": "model.____(X_test)로 새 입력을 예측합니다."
+      "prompt": "model.____(X_test)로 새 입력을 예측합니다.",
+      "answer": "predict"
     },
     {
       "id": "u3-q024",
       "unit": 3,
       "topic": "평가",
       "kind": "빈칸",
-      "prompt": "TP=6, FP=2일 때 정밀도는? 소수로 쓰세요."
+      "prompt": "TP=6, FP=2일 때 정밀도는? 소수로 쓰세요.",
+      "answer": "0.75"
     },
     {
       "id": "u3-q025",
       "unit": 3,
       "topic": "평가",
       "kind": "빈칸",
-      "prompt": "실제 [1,3], 예측 [2,2]의 MSE는?"
+      "prompt": "실제 [1,3], 예측 [2,2]의 MSE는?",
+      "answer": "1"
     },
     {
       "id": "u4-q017",
       "unit": 4,
       "topic": "검출",
       "kind": "빈칸",
-      "prompt": "CascadeClassifier에 사용하는 정면 얼굴 파일 이름은?"
+      "prompt": "CascadeClassifier에 사용하는 정면 얼굴 파일 이름은?",
+      "answer": "haarcascade_frontalface_default.xml"
     },
     {
       "id": "u4-q018",
       "unit": 4,
       "topic": "검출",
       "kind": "빈칸",
-      "prompt": "face_cascade.____(gray,1.1,5)에서 빈칸은?"
+      "prompt": "face_cascade.____(gray,1.1,5)에서 빈칸은?",
+      "answer": "detectMultiScale"
     },
     {
       "id": "u4-q019",
       "unit": 4,
       "topic": "입출력",
       "kind": "빈칸",
-      "prompt": "cv2.____(\"Result\",img)로 화면을 표시합니다."
+      "prompt": "cv2.____(\"Result\",img)로 화면을 표시합니다.",
+      "answer": "imshow"
     },
     {
       "id": "u4-q020",
       "unit": 4,
       "topic": "입출력",
       "kind": "빈칸",
-      "prompt": "cv2.____(\"photo.jpg\")로 이미지를 읽습니다."
+      "prompt": "cv2.____(\"photo.jpg\")로 이미지를 읽습니다.",
+      "answer": "imread"
     },
     {
       "id": "u4-q021",
       "unit": 4,
       "topic": "변환",
       "kind": "빈칸",
-      "prompt": "cv2.____(img,cv2.COLOR_BGR2GRAY)로 회색조 변환합니다."
+      "prompt": "cv2.____(img,cv2.COLOR_BGR2GRAY)로 회색조 변환합니다.",
+      "answer": "cvtColor"
     },
     {
       "id": "u4-q022",
       "unit": 4,
       "topic": "반전",
       "kind": "빈칸",
-      "prompt": "8비트 밝기 40의 반전 값은?"
+      "prompt": "8비트 밝기 40의 반전 값은?",
+      "answer": "215"
     },
     {
       "id": "u3-q026",

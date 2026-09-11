@@ -101,7 +101,7 @@ eq(stamped.times.complete['u1-define'], now, 'new item stamped');
 const counts = summarizeProgress({
  complete: {'u1-overview': true, 'u1-define': false, 'u3-ml': true, 'skip': true},
  answers: {
-  a: {status: 'done', attempts: 3},
+  a: {status: 'done', attempts: 3, value: '모듈은 파일입니다.'},
   b: {status: 'retry', attempts: 2},
   c: {status: 'done'}
  }
@@ -109,7 +109,7 @@ const counts = summarizeProgress({
 eq(counts.complete, {1: 1, 2: 0, 3: 1, 4: 0}, 'unit complete counts');
 eq(counts.questions, {attempts: 5, correct: 2}, 'question attempts and correct');
 eq(counts.done, ['u1-overview', 'u3-ml'], 'done topic ids');
-eq(counts.answers.a, {attempts: 3, correct: 1}, 'answer summary done');
+eq(counts.answers.a, {attempts: 3, correct: 1, choice: '모듈은 파일입니다.'}, 'answer summary done');
 eq(counts.answers.b, {attempts: 2, correct: 0}, 'answer summary retry');
 eq(counts.lastActivity, now, 'last activity');
 

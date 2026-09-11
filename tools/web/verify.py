@@ -83,9 +83,22 @@ assert 'id="attention-send"' in session and '시선 모으기' in session
 assert '따라오는 중' in session
 assert '이 반 학생 화면을 같이 따라가게 할 수 있어요' in session
 assert '세션 키' not in session and 'Firestore' not in session
+assert 'id="together-panel"' in session
+assert 'id="together-question"' in session
+assert 'id="together-bars"' in session
+assert '함께 풀기' in session
+assert '이름 없이' in session
+assert 'id="lesson-report"' in session
+assert 'id="report-summary"' in session
+assert '수업 리포트' in session
 teacher_session=(WEB/'assets/teacher-session.js').read_text()
 assert '세션이 없어요. 시작하면 약 2시간 동안 유지돼요.' in teacher_session
 assert '시선을 모았어요. 학생 쪽에 안내만 뜨고, 화면은 안 옮겨요.' in teacher_session
+assert 'lesson-report-model.js' in teacher_session
+assert 'together-send' in teacher_session
+assert 'report-refresh' in teacher_session
+assert '이름 없이' in teacher_session
+assert 'aipySessionDemo' in teacher_session
 follow_js=(WEB/'assets/follow.js').read_text()
 assert '잠깐 혼자 보는 중' in follow_js
 assert '선생님이 여기를 보고 있어요' in follow_js
@@ -112,6 +125,8 @@ assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')
 assert 'kind' in catalog['questions'][0] and 'prompt' in catalog['questions'][0]
+choice_q=next((q for q in catalog['questions'] if q.get('kind')=='선택'), None)
+assert choice_q and choice_q.get('options'), 'catalog choice options'
 assert catalog['examples']['reuse']['title']
 assert 'unit' in catalog['examples']['reuse']
 rules=(ROOT/'firebase/firestore.rules').read_text()
@@ -151,6 +166,10 @@ assert "resource.data.classrooms.hasAny([rosterClassId()])" in rules
 assert "reviewStatus == 'reviewed'" in rules
 assignment_model=subprocess.run(['node',str(Path(__file__).parent/'test_assignment_model.mjs')],capture_output=True,text=True)
 assert assignment_model.returncode==0, assignment_model.stdout+assignment_model.stderr
+regrade_model_test=subprocess.run(['node',str(Path(__file__).parent/'test_regrade_model.mjs')],capture_output=True,text=True)
+assert regrade_model_test.returncode==0, regrade_model_test.stdout+regrade_model_test.stderr
+lesson_report_test=subprocess.run(['node',str(Path(__file__).parent/'test_lesson_report_model.mjs')],capture_output=True,text=True)
+assert lesson_report_test.returncode==0, lesson_report_test.stdout+lesson_report_test.stderr
 understanding=subprocess.run(['node',str(Path(__file__).parent/'test_understanding_model.mjs')],capture_output=True,text=True)
 assert understanding.returncode==0, understanding.stdout+understanding.stderr
 help_model=subprocess.run(['node',str(Path(__file__).parent/'test_help_model.mjs')],capture_output=True,text=True)
@@ -239,8 +258,13 @@ assert 'id="assign-form"' in assignments_html
 assert 'id="target-picker"' in assignments_html
 assert 'id="review-panel"' in assignments_html
 assert 'id="submission-list"' in assignments_html
-assert '다시 채점은 다음 단계에서 붙어요.' in assignments_html
 assert '기존 문제·예제로 과제를 만들고, 반별 제출 소스·출력을 확인해요.' in assignments_html
+assert 'id="reverify-class"' in assignments_html
+assert 'id="reverify-note"' in assignments_html
+assert '이 반 제출 다시 채점' in assignments_html
+assert '브라우저 채점' in assignments_html
+assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.' not in assignments_html
+assert '다시 채점은 다음 단계' not in assignments_html
 assert '문제·예제 고르기' in assignments_html
 teacher_assign=(WEB/'assets/teacher-assignments.js').read_text()
 assert "collection(db, 'assignments')" in teacher_assign
@@ -249,6 +273,18 @@ assert 'submissions' in teacher_assign
 assert 'catalog.json' in teacher_assign
 assert '확인함' in teacher_assign
 assert '짧게 남겨 주세요' in teacher_assign or 'COMMENT_PLACEHOLDER' in teacher_assign
+assert 'python-run.js' in teacher_assign
+assert 'regrade-model.js' in teacher_assign
+assert 'REVERIFY_LABEL' in teacher_assign
+assert 'aipyAssignDemo' in teacher_assign
+assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.' not in teacher_assign
+python_run=(WEB/'assets/python-run.js').read_text()
+assert 'createPythonRunner' in python_run
+assert 'new Worker' in python_run
+regrade_model=(WEB/'assets/regrade-model.js').read_text()
+assert '브라우저 채점' in regrade_model
+assert '저장된 결과와 달라요' in regrade_model
+assert '다음 단계' not in regrade_model
 assign_js=(WEB/'assets/assignments.js').read_text()
 assert "collection(db, 'assignments')" in assign_js
 assert "where('open', '==', true)" in assign_js
@@ -268,7 +304,8 @@ assert "RESUBMIT_LABEL = '다시 제출'" in assign_model
 assert '통과하지 않아도 제출할 수 있어요.' in assign_model
 assert '마감 후에도 제출할 수 있어요. 지연으로 표시돼요.' in assign_model
 assert '브라우저 채점이에요. 성적·출결에는 안 들어가요.' in assign_model
-assert '다시 채점은 다음 단계에서 붙어요.' in assign_model
+assert '다시 채점은 다음 단계에서 붙어요.' not in assign_model
+assert '제출 소스를 이 브라우저에서 다시 실행해 저장된 채점과 비교합니다.' in assign_model
 assert '제출했어요.' in assign_model
 assert '지연으로 제출했어요.' in assign_model
 assert '미통과로 제출했어요.' in assign_model
@@ -286,6 +323,9 @@ assert '.help-request' in account_css
 assert '.assignment-panel' in account_css
 assert '.assignment-chip' in account_css
 assert '.target-picker' in account_css
+assert '.together-bar' in account_css
+assert '.report-grid' in account_css
+assert '.reverify-badge' in account_css
 sync_js=(WEB/'assets/sync.js').read_text()
 assert 'aipyUnderstanding' in sync_js
 app_js=(WEB/'assets/app.js').read_text()

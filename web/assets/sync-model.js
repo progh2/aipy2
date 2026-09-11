@@ -224,7 +224,14 @@ export function summarizeProgress(state, now = Date.now()) {
   attempts += n;
   const ok = record.status === 'done';
   if (ok) correct += 1;
-  if (n || ok || record.status === 'retry') answers[id] = {attempts: n, correct: ok ? 1 : 0};
+  if (n || ok || record.status === 'retry') {
+   const row = {attempts: n, correct: ok ? 1 : 0};
+   if (typeof record.value === 'string') {
+    const choice = record.value.trim().slice(0, 200);
+    if (choice) row.choice = choice;
+   }
+   answers[id] = row;
+  }
  }
  return {complete, questions: {attempts, correct}, done, answers, lastActivity: now};
 }

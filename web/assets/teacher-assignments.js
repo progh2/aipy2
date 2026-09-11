@@ -6,9 +6,15 @@ import {classesFromRoster, inClass, labelClass} from './class-picker.js';
 import {
  assignmentFields, assignmentReady, catalogTargets, filterCatalogTargets, targetTitle,
  targetHref, statusLabel, reviewLabel, teacherReviewFields, formatWhen, toDatetimeLocal,
- fromDatetimeLocal, studentLabel, REGRADE_NOTE, BROWSER_GRADE_NOTE, COMMENT_MAX,
+ fromDatetimeLocal, studentLabel, targetKey, BROWSER_GRADE_NOTE, COMMENT_MAX,
  COMMENT_PLACEHOLDER
 } from './assignment-model.js';
+import {
+ REVERIFY_NOTE, REVERIFY_LABEL, REVERIFY_CLASS_LABEL, REVERIFY_SKIP_MISSING,
+ MATCH_LABEL, MISMATCH_LABEL, localRegrade, pyodidePayload,
+ unitFromTarget, reverifyResultRow, summarizeReverify, submissionMismatchCount
+} from './regrade-model.js';
+import {createPythonRunner} from './python-run.js';
 
 const $ = (id) => document.getElementById(id);
 const prefix = document.body.dataset.prefix || '';
@@ -30,6 +36,10 @@ let editingId = '';
 let selectedAssignmentId = '';
 let detailUid = '';
 let writing = false;
+let reverifyRows = [];
+let reverifying = false;
+const unitCache = {};
+const runner = createPythonRunner({workerUrl: `${prefix}assets/python-worker.js?v=science1`});
 
 function toast(text) {
  const box = document.getElementById('toast');
@@ -258,7 +268,9 @@ function paintSubmissions() {
    node('strong', '', studentLabel(row)),
    node('span', 'small', statusLabel(row))
   );
-  const meta = node('p', 'small', `${formatWhen(row.submittedAt) || ''} · ${reviewLabel(row.reviewStatus)} · ${row.attemptCount || 1}회`);
+  const mismatch = submissionMismatchCount(reverifyRows, row.uid);
+  const meta = node('p', 'small', `${formatWhen(row.submittedAt) || ''} · ${reviewLabel(row.reviewStatus)} · ${row.attemptCount || 1}회${mismatch ? ` · ${MISMATCH_LABEL} ${mismatch}` : ''}`);
+  if (mismatch) card.dataset.reverify = 'mismatch';
   card.append(head, meta);
   card.onclick = () => {
    detailUid = row.uid;
@@ -280,13 +292,20 @@ function paintDetail() {
  }
  const head = node('div');
  head.append(node('h3', '', studentLabel(row)), node('p', 'small', `${statusLabel(row)} · ${reviewLabel(row.reviewStatus)} · ${row.attemptCount || 1}회`));
- const gradeNote = node('p', 'small', BROWSER_GRADE_NOTE);
- const targets = node('div', 'assign-sources');
- for (const [key, target] of Object.entries(row.targets || {})) {
+  const gradeNote = node('p', 'small', BROWSER_GRADE_NOTE);
+  const reverifyNote = node('p', 'small', REVERIFY_NOTE);
+  const targets = node('div', 'assign-sources');
+  for (const [key, target] of Object.entries(row.targets || {})) {
   const card = node('article', 'assign-source');
   const title = targetTitle({type: target.type, id: target.id}, catalog) || key;
+  const result = reverifyRows.find((item) => item.uid === row.uid && item.key === (targetKey(target) || key));
   card.append(node('h4', '', `${target.type === 'example' ? '예제' : '문제'} · ${target.id}`));
   card.append(node('p', 'small', `${title} · ${target.grade && target.grade.ok ? '통과' : '미통과'} · 시도 ${target.attempts || 0}`));
+  if (result) {
+   card.dataset.reverify = result.status;
+   card.append(node('p', 'small reverify-badge', `${result.label}${result.liveOk == null ? '' : ` · 다시 채점 ${result.liveOk ? '통과' : '미통과'}`}`));
+   if (result.output) card.append(node('pre', 'reverify-output', result.output));
+  }
   const href = targetHref(prefix, {type: target.type, id: target.id, unit: target.unit}, catalog);
   if (href) {
    const link = node('a', '', '실습 화면으로');
@@ -315,18 +334,145 @@ function paintDetail() {
  const save = node('button', 'primary', '확인함');
  save.type = 'button';
  save.onclick = () => saveReview(row, input.value);
- const stub = node('p', 'small', REGRADE_NOTE);
- review.append(input, save, stub);
+ const again = node('button', '', REVERIFY_LABEL);
+ again.type = 'button';
+ again.id = 'reverify-one';
+ again.disabled = reverifying;
+ again.onclick = () => reverifySubmission(row);
+ review.append(input, save, again);
+ const parts = [head, gradeNote, reverifyNote, targets, review];
  if (Array.isArray(row.history) && row.history.length) {
   const hist = node('details', 'assign-history');
   hist.append(node('summary', '', `이전 제출 ${row.history.length}회`));
   for (const item of row.history) {
    hist.append(node('p', 'small', `${formatWhen(item.submittedAt) || ''} · ${statusLabel(item)} · ${item.attemptCount || ''}회`));
   }
-  host.replaceChildren(head, gradeNote, targets, review, hist);
+  parts.push(hist);
+ }
+ host.replaceChildren(...parts);
+}
+
+async function loadUnitData(unit) {
+ if (!unit) return null;
+ if (unitCache[unit]) return unitCache[unit];
+ try {
+  unitCache[unit] = await (await fetch(`${prefix}data/unit${unit}.json`)).json();
+  return unitCache[unit];
+ } catch (error) {
+  console.warn('[teacher-assignments] unit', unit, error);
+  return null;
+ }
+}
+
+async function gradeSpecFor(target) {
+ const unit = unitFromTarget(target, catalog);
+ const data = await loadUnitData(unit);
+ if (!data) return null;
+ if (target.type === 'example') return (data.examples && data.examples[target.id]) || null;
+ return ((data.questions || []).find((item) => item.id === target.id)) || null;
+}
+
+function rememberReverify(rows) {
+ const keep = new Map(reverifyRows.map((row) => [`${row.uid}:${row.key}`, row]));
+ for (const row of rows || []) keep.set(`${row.uid}:${row.key}`, row);
+ reverifyRows = [...keep.values()];
+}
+
+function paintReverifySummary() {
+ const el = $('reverify-note');
+ if (!el) return;
+ if (!reverifyRows.length) {
+  el.textContent = REVERIFY_NOTE;
   return;
  }
- host.replaceChildren(head, gradeNote, targets, review);
+ const sum = summarizeReverify(reverifyRows);
+ el.textContent = `브라우저 채점 다시 보기 · 같음 ${sum.match} · 다름 ${sum.mismatch} · 건너뜀 ${sum.skip}${sum.error ? ` · 오류 ${sum.error}` : ''}`;
+}
+
+async function reverifyTarget(row, target) {
+ const spec = await gradeSpecFor(target);
+ const local = localRegrade(spec, target);
+ if (local.skip || local.method !== 'pyodide') {
+  return reverifyResultRow({uid: row.uid, target, live: spec || local.skip ? local : {...local, skip: true, reason: REVERIFY_SKIP_MISSING}});
+ }
+ const payload = pyodidePayload(spec, target);
+ if (!payload) {
+  return reverifyResultRow({uid: row.uid, target, live: {ok: false, checked: false, skip: true, reason: REVERIFY_SKIP_MISSING, method: 'none'}});
+ }
+ let output = '';
+ const result = await runner.run(payload, (text) => { output += text; });
+ const live = {
+  ok: !!(result.ok && (payload.checks ? result.checked : true)),
+  checked: !!result.checked || !payload.checks,
+  skip: false,
+  reason: result.error || '',
+  method: 'pyodide',
+  error: result.error || '',
+  output
+ };
+ return reverifyResultRow({uid: row.uid, target, live, output});
+}
+
+async function reverifySubmission(row) {
+ if (!row || reverifying) return;
+ reverifying = true;
+ paintDetail();
+ paintClassReverify();
+ try {
+  const targets = Object.values(row.targets || {});
+  const rows = [];
+  for (const target of targets) rows.push(await reverifyTarget(row, target));
+  rememberReverify(rows);
+  const sum = summarizeReverify(rows);
+  toast(sum.mismatch ? `${MISMATCH_LABEL} ${sum.mismatch}개` : MATCH_LABEL);
+ } catch (error) {
+  console.error('[teacher-assignments] reverify', error);
+  toast('다시 채점하지 못했습니다. 네트워크를 확인하세요.');
+ } finally {
+  reverifying = false;
+  paintReverifySummary();
+  paintSubmissions();
+  paintDetail();
+  paintClassReverify();
+ }
+}
+
+async function reverifyClass() {
+ if (reverifying || !submissions.length) return;
+ reverifying = true;
+ paintClassReverify();
+ paintDetail();
+ try {
+  let done = 0;
+  const all = [];
+  for (const row of submissions) {
+   note('reverify-note', `브라우저 채점 다시 하는 중… ${done + 1}/${submissions.length}`);
+   for (const target of Object.values(row.targets || {})) {
+    all.push(await reverifyTarget(row, target));
+   }
+   done += 1;
+   rememberReverify(all);
+   paintSubmissions();
+  }
+  const sum = summarizeReverify(all);
+  toast(sum.mismatch ? `${MISMATCH_LABEL} ${sum.mismatch}개` : `이 반 ${sum.match}건이 저장된 결과와 같아요.`);
+ } catch (error) {
+  console.error('[teacher-assignments] reverify-class', error);
+  toast('반 전체 다시 채점을 마치지 못했습니다.');
+ } finally {
+  reverifying = false;
+  paintReverifySummary();
+  paintSubmissions();
+  paintDetail();
+  paintClassReverify();
+ }
+}
+
+function paintClassReverify() {
+ const button = $('reverify-class');
+ if (!button) return;
+ button.textContent = reverifying ? '다시 채점하는 중…' : REVERIFY_CLASS_LABEL;
+ button.disabled = reverifying || !submissions.length;
 }
 
 async function saveAssignment() {
@@ -440,6 +586,7 @@ async function loadSubmissions() {
  submissions = [];
  paintSubmissions();
  paintDetail();
+ paintClassReverify();
  if (!assignment || !classId) return;
  try {
   const {db, store} = await load();
@@ -462,6 +609,8 @@ async function loadSubmissions() {
   submissions.sort((a, b) => studentLabel(a).localeCompare(studentLabel(b), 'ko'));
   paintSubmissions();
   paintDetail();
+  paintClassReverify();
+  paintReverifySummary();
  } catch (error) {
   console.error('[teacher-assignments]', error);
   note('review-note', '제출물을 읽지 못했습니다.');
@@ -483,9 +632,12 @@ function bind() {
  if ($('review-assignment')) {
   $('review-assignment').onchange = () => {
    selectedAssignmentId = $('review-assignment').value;
+   reverifyRows = [];
    loadSubmissions();
   };
  }
+ const reverify = $('reverify-class');
+ if (reverify) reverify.onclick = reverifyClass;
 }
 
 async function review(user) {
@@ -546,6 +698,50 @@ async function start() {
  });
  document.addEventListener('aipy:roster-changed', () => loadRoster());
  if (window.aipyAccount) review(window.aipyAccount.user);
+ if (new URLSearchParams(location.search).get('demo') === '1') renderAssignDemo();
 }
+
+function renderAssignDemo() {
+ const tools = $('assign-tools');
+ if (tools) tools.hidden = false;
+ const gate = $('assign-gate');
+ if (gate) gate.replaceChildren(node('p', '', '미리보기 · 브라우저 채점 다시 보기'));
+ selectedAssignmentId = 'demo';
+ assignments = [{id: 'demo', title: '모듈 과제', open: true, targets: [{type: 'question', id: 'u1-q001'}], classrooms: ['2-3'], dueAt: null}];
+ submissions = [{
+  uid: 'demo-1',
+  name: '홍길동',
+  studentId: '20314',
+  email: '20314@e-mirim.hs.kr',
+  assignmentId: 'demo',
+  status: 'passed',
+  reviewStatus: 'pending',
+  attemptCount: 1,
+  submittedAt: Date.now(),
+  targets: {
+   'question:u1-q001': {
+    type: 'question',
+    id: 'u1-q001',
+    files: {'answer.txt': '저장한 Python 파일은 모듈이 될 수 없습니다.'},
+    grade: {ok: true, checked: true, kind: 'browser'},
+    output: '확인 완료',
+    attempts: 1
+   }
+  }
+ }];
+ detailUid = 'demo-1';
+ reverifyRows = [reverifyResultRow({
+  uid: 'demo-1',
+  target: submissions[0].targets['question:u1-q001'],
+  live: {ok: false, checked: true, skip: false, method: 'text', output: '다시 채점 미통과'}
+ })];
+ paintReviewSelect();
+ paintSubmissions();
+ paintDetail();
+ paintClassReverify();
+ paintReverifySummary();
+}
+
+if (typeof window !== 'undefined') window.aipyAssignDemo = renderAssignDemo;
 
 start();
