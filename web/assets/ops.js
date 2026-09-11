@@ -1,5 +1,6 @@
 /* 교사 운영 도구. 입학년도로 조회하고 진급·졸업 정리를 합니다.
    학습 기록은 일괄 삭제하지 않습니다. 쓰기는 교사 권한이 있을 때만 규칙이 허용합니다. */
+import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {labelClass} from './class-picker.js';
 import {
@@ -23,9 +24,6 @@ function headRow(titles) {
  return thead;
 }
 
-const gate = $('ops-gate');
-if (gate) startOps();
-
 let teacherEmail = '';
 let dbRef = null;
 let storeRef = null;
@@ -37,44 +35,76 @@ let storeBound = false;
 let demoMode = false;
 
 function status(text) {
+ const gate = $('ops-gate');
  if (gate) gate.replaceChildren(node('p', '', text));
 }
 
+function showBootError(error) {
+ console.error('[ops]', error);
+ const tools = $('ops-tools');
+ if (tools) tools.hidden = true;
+ const detail = error && (error.message || error.code) ? String(error.message || error.code) : '';
+ const gate = $('ops-gate');
+ if (!gate) return;
+ const kids = [node('p', '', '운영 화면을 시작하지 못했습니다. 새로고침하세요.')];
+ if (detail) kids.push(node('p', 'small', detail));
+ gate.replaceChildren(...kids);
+}
+
+function denyTeacher(email) {
+ const gate = $('ops-gate');
+ if (!gate) return;
+ gate.replaceChildren(
+  node('p', '', '이 계정에는 교사 권한이 없습니다.'),
+  node('p', 'small', 'Firebase 콘솔 → Firestore → 컬렉션 admins → 문서 ID를 아래 값으로 만들고 필드 role(문자열) = teacher 를 넣으세요.'),
+  node('code', 'admin-code', email)
+ );
+}
+
 async function startOps() {
- bindUi();
- status('로그인과 권한을 확인합니다…');
- document.addEventListener('aipy:account', (event) => review(event.detail.user));
- if (window.aipyAccount) review(window.aipyAccount.user);
+ try {
+  status('로그인과 권한을 확인합니다…');
+  document.addEventListener('aipy:account', (event) => {
+   review(event.detail && event.detail.user).catch(showBootError);
+  });
+  if (window.aipyAccount) await review(window.aipyAccount.user);
+ } catch (error) {
+  showBootError(error);
+ }
 }
 
 async function review(user) {
  const tools = $('ops-tools');
  if (!tools) return;
+ if (demoMode) return;
+ if (!ready) {
+  tools.hidden = true;
+  status('로그인 설정이 없어 운영 도구를 열 수 없습니다.');
+  return;
+ }
  if (!user) {
-  if (demoMode) return;
   tools.hidden = true;
   status('헤더의 “학교 계정으로 로그인”으로 먼저 로그인하세요.');
   return;
  }
  const email = (user.email || '').toLowerCase();
- const {db, store} = await load();
- let teacher = false;
+ let db, store, teacher = false;
  try {
+  ({db, store} = await load());
   teacher = (await store.getDoc(store.doc(db, 'admins', email))).exists();
  } catch (error) {
   console.error('[ops]', error);
+  tools.hidden = true;
+  status('권한을 확인하지 못했습니다. 네트워크를 확인하고 새로고침하세요.');
+  return;
  }
  if (!teacher) {
   tools.hidden = true;
-  gate.replaceChildren(
-   node('p', '', '이 계정에는 교사 권한이 없습니다.'),
-   node('p', 'small', 'Firebase 콘솔 → Firestore → 컬렉션 admins → 문서 ID를 아래 값으로 만들고 필드 role(문자열) = teacher 를 넣으세요.'),
-   node('code', 'admin-code', email)
-  );
+  denyTeacher(email);
   return;
  }
  teacherEmail = email;
- gate.replaceChildren(node('p', '', `교사 권한 확인됨 · ${email}`));
+ status(`교사 권한 확인됨 · ${email}`);
  tools.hidden = false;
  bindUi();
  bindStore(db, store);
@@ -427,7 +457,7 @@ export function renderFixture(data = {}) {
  allRoster = data.roster || [];
  studentDocs = data.students || [];
  progressDocs = data.progress || [];
- if (gate) gate.replaceChildren(node('p', '', '미리보기 · 로그인 없이 표시'));
+ status('미리보기 · 로그인 없이 표시');
  if ($('ops-tools')) $('ops-tools').hidden = false;
  fillYears();
  if (data.year && $('ops-year')) $('ops-year').value = String(data.year);
@@ -435,3 +465,7 @@ export function renderFixture(data = {}) {
 }
 
 if (typeof window !== 'undefined') window.aipyOpsDemo = renderFixture;
+
+// startOps는 모든 let 초기화 뒤에 둡니다. 모듈 평가 중 bindUi가 uiBound를 읽으면 TDZ로 전체가 실패하고
+// HTML 기본 문구(권한을 확인합니다…)만 남습니다.
+if ($('ops-gate')) startOps();
