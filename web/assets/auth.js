@@ -113,15 +113,41 @@ async function signIn() {
  }
 }
 
-async function signOut() {
- // confirm은 클릭 제스처 안에서 동기 호출해야 합니다. await 뒤에 두면 브라우저가 창을 막고 false만 돌려줍니다.
- const clearMsg = '이 브라우저의 학습 기록을 지울까요? 계정에 저장한 기록은 그대로 남아요.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기';
- let clearLocal = false;
- try {
-  clearLocal = window.confirm(clearMsg);
- } catch (error) {
-  console.warn('[auth] 로그아웃 확인창 실패', error);
- }
+function askClearLocalOnLogout() {
+ return new Promise((resolve) => {
+  const existing = document.getElementById('logout-clear-overlay');
+  if (existing) existing.remove();
+  const overlay = node('div', 'sync-overlay');
+  overlay.id = 'logout-clear-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-labelledby', 'logout-clear-title');
+  const box = node('div', 'sync-dialog');
+  box.append(node('h2', '', '로그아웃'));
+  const title = node('p', '', '이 브라우저의 학습 기록을 지울까요? 계정에 저장한 기록은 그대로 남아요.');
+  title.id = 'logout-clear-title';
+  box.append(title);
+  const actions = node('div', 'actions');
+  const clearBtn = node('button', 'primary', '이 컴퓨터 기록만 지우기');
+  const keepBtn = node('button', '', '기록 남기고 로그아웃');
+  const cancelBtn = node('button', '', '취소');
+  clearBtn.type = 'button';
+  keepBtn.type = 'button';
+  cancelBtn.type = 'button';
+  const finish = (value) => { overlay.remove(); resolve(value); };
+  clearBtn.onclick = () => finish('clear');
+  keepBtn.onclick = () => finish('keep');
+  cancelBtn.onclick = () => finish('abort');
+  overlay.addEventListener('click', (event) => { if (event.target === overlay) finish('abort'); });
+  actions.append(clearBtn, keepBtn, cancelBtn);
+  box.append(actions);
+  overlay.append(box);
+  document.body.append(overlay);
+  clearBtn.focus();
+ });
+}
+
+async function finishSignOut(clearLocal) {
  try {
   if (window.aipySync && typeof window.aipySync.flush === 'function') await window.aipySync.flush();
  } catch (error) {
@@ -137,6 +163,13 @@ async function signOut() {
   return;
  }
  toast('로그아웃했습니다. 이 브라우저의 학습 기록은 그대로 남아 있습니다.');
+}
+
+async function signOut() {
+ // 학교/브라우저가 window.confirm을 막거나 즉시 false를 주는 경우가 있어 화면 안 모달을 씁니다.
+ const choice = await askClearLocalOnLogout();
+ if (choice === 'abort') return;
+ await finishSignOut(choice === 'clear');
 }
 
 async function handleUser(user) {

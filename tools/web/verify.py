@@ -133,9 +133,11 @@ assert "save('complete')" in app_js
 assert "save('code')" in app_js
 assert 'applyRemote' in app_js
 auth_js=(WEB/'assets/auth.js').read_text()
-# 로그아웃 confirm은 클릭 제스처에서 동기 window.confirm (await aipySync.confirmClearLocal 경로 제거)
-assert 'window.confirm' in auth_js
+# 로그아웃 로컬 지우기는 화면 안 모달 (window.confirm은 교실 PC에서 막힐 수 있음)
+assert 'logout-clear-overlay' in auth_js
+assert 'askClearLocalOnLogout' in auth_js
 assert '이 브라우저의 학습 기록을 지울까요?' in auth_js
+assert 'window.confirm' not in auth_js
 assert 'aipySync.flush' in auth_js
 assert 'focus.get(\'topicAnchor\', null)' in rules
 assert 'focus.get(\'exampleId\', null)' in rules
