@@ -58,6 +58,10 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 - 교사 관리 뼈대: `teacher/admin.html` · `teacher/board.html` · `teacher/session.html`이
   `assets/teacher-shell.js`로 같은 헤더·반 선택을 씁니다. 반 ID는 `{학년}-{반}`(예: `2-3`)이며
   교사 이메일별 `localStorage`(`aipy-teacher-class:{email}`)에 남습니다. 명단 목록은 선택한 반만 보여 줍니다.
+- 수업 따라가기(M5): `teacher/session.html`에서 세션 시작·종료·초점·시선 모으기.
+  학생 화면은 `assets/follow.js`가 자기 반 `sessions/{학년}-{반}`만 구독합니다.
+  단원·주제 목록은 생성기가 만드는 `data/catalog.json`입니다. Firestore 규칙 배포는
+  `firebase/README.md`를 보세요. 로그인·네트워크 실패 시 따라가기만 꺼지고 학습은 그대로입니다.
 
 GitHub Pages는 서버 비밀을 둘 수 없으므로 학교 도메인 확인·반 정보 검증·교사 권한은 모두 Firestore 규칙이 판단합니다.
 브라우저 자동채점 결과는 위조가 가능하므로, 제출물에는 결과와 함께 소스와 출력을 남겨 교사가 확인할 수 있게 설계합니다.
