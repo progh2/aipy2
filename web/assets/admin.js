@@ -1,6 +1,8 @@
 /* 교사용 명단 관리. 콘솔에서 문서를 손으로 만들지 않도록 CSV로 일괄 등록합니다.
-   쓰기 권한은 admins/{교사이메일} 문서가 있을 때만 규칙이 허용합니다. */
+   쓰기 권한은 admins/{교사이메일} 문서가 있을 때만 규칙이 허용합니다.
+   목록·내보내기는 헤더에서 고른 반(grade-classroom)만 보여 줍니다. */
 import {load, SCHOOL} from './auth.js';
+import {inClass, labelClass} from './class-picker.js';
 
 const $ = (id) => document.getElementById(id);
 const node = (tag, cls, text) => {
@@ -35,6 +37,9 @@ const SAMPLE = [HEADER,
 
 let planned = [];
 let teacherEmail = '';
+let cachedRoster = null;
+let dbRef = null;
+let storeRef = null;
 
 function status(text) {
  gate.replaceChildren(node('p', '', text));
@@ -75,12 +80,25 @@ async function review(user) {
  gate.replaceChildren(node('p', '', `교사 권한 확인됨 · ${email}`));
  tools.hidden = false;
  bind(db, store);
+ listRoster(db, store);
+}
+
+function selectedClassId() {
+ return (window.aipyClass && window.aipyClass.classId) || '';
+}
+
+function scopedRoster(rows) {
+ const id = selectedClassId();
+ if (!id) return rows;
+ return rows.filter((row) => inClass(row, id));
 }
 
 let bound = false;
 function bind(db, store) {
  if (bound) return;
  bound = true;
+ dbRef = db;
+ storeRef = store;
  $('roster-sample').onclick = () => { $('roster-text').value = SAMPLE; };
  $('roster-file').onchange = async (event) => {
   const file = event.target.files[0];
@@ -254,6 +272,7 @@ async function apply(db, store) {
   }
   $('roster-summary').textContent = `${done}명을 반영했습니다. 학생이 다시 로그인하거나 새로고침하면 적용됩니다.`;
   planned = [];
+  document.dispatchEvent(new CustomEvent('aipy:roster-changed'));
   listRoster(db, store);
  } catch (error) {
   console.error('[admin]', error);
@@ -274,25 +293,29 @@ async function fetchRoster(db, store) {
  return rows;
 }
 
-async function listRoster(db, store) {
- $('roster-list').replaceChildren(node('p', 'small', '불러오는 중…'));
- let rows;
- try {
-  rows = await fetchRoster(db, store);
- } catch (error) {
-  console.error('[admin]', error);
-  $('roster-list').replaceChildren(node('p', 'small', '명단을 읽지 못했습니다.'));
-  return;
+function renderRoster(rows) {
+ cachedRoster = rows;
+ const id = selectedClassId();
+ const shown = scopedRoster(rows);
+ const scope = $('roster-scope');
+ if (scope) {
+  scope.textContent = id
+   ? `${labelClass(id)} 명단만 표시합니다. 반을 바꾸면 이 목록도 바뀝니다.`
+   : '수업할 반을 위에서 선택하면 그 반 명단만 보입니다.';
  }
- $('roster-count').textContent = `${rows.length}명`;
+ $('roster-count').textContent = id ? `${shown.length}명 · ${labelClass(id)}` : `${rows.length}명`;
  if (!rows.length) {
   $('roster-list').replaceChildren(node('p', 'small', '등록된 명단이 없습니다.'));
+  return;
+ }
+ if (id && !shown.length) {
+  $('roster-list').replaceChildren(node('p', 'small', `${labelClass(id)}에 등록된 학생이 없습니다.`));
   return;
  }
  const table = node('table');
  table.append(headRow(['학년', '반', '학번', '이름', '입학년도', '번호', '이메일', '']));
  const tbody = node('tbody');
- for (const r of rows) {
+ for (const r of shown) {
   const tr = node('tr');
   [r.grade, r.classroom, r.studentId, r.name, r.admissionYear, r.number ?? '', r.id]
    .forEach((v) => tr.append(node('td', '', String(v ?? ''))));
@@ -302,8 +325,9 @@ async function listRoster(db, store) {
   remove.onclick = async () => {
    if (!confirm(`${r.name}(${r.id})을 명단에서 지울까요? 학습 기록은 남습니다.`)) return;
    try {
-    await store.deleteDoc(store.doc(db, 'roster', r.id));
-    listRoster(db, store);
+    await storeRef.deleteDoc(storeRef.doc(dbRef, 'roster', r.id));
+    document.dispatchEvent(new CustomEvent('aipy:roster-changed'));
+    listRoster(dbRef, storeRef);
    } catch (error) {
     console.error('[admin]', error);
     alert('삭제하지 못했습니다.');
@@ -317,15 +341,34 @@ async function listRoster(db, store) {
  $('roster-list').replaceChildren(table);
 }
 
+async function listRoster(db, store) {
+ $('roster-list').replaceChildren(node('p', 'small', '불러오는 중…'));
+ let rows;
+ try {
+  rows = await fetchRoster(db, store);
+ } catch (error) {
+  console.error('[admin]', error);
+  $('roster-list').replaceChildren(node('p', 'small', '명단을 읽지 못했습니다.'));
+  return;
+ }
+ renderRoster(rows);
+}
+
+document.addEventListener('aipy:class', () => {
+ if (cachedRoster) renderRoster(cachedRoster);
+ else if (bound && dbRef) listRoster(dbRef, storeRef);
+});
+
 async function exportRoster(db, store) {
- const rows = await fetchRoster(db, store);
+ const rows = scopedRoster(await fetchRoster(db, store));
+ const id = selectedClassId();
  const body = rows.map((r) =>
   [r.id, r.studentId, r.admissionYear, r.name, r.grade, r.classroom, r.number ?? ''].join(','));
  const blob = new Blob(['﻿' + [HEADER, ...body].join('\n') + '\n'], {type: 'text/csv;charset=utf-8'});
  const url = URL.createObjectURL(blob);
  const a = node('a');
  a.href = url;
- a.download = 'roster.csv';
+ a.download = id ? `roster-${id}.csv` : 'roster.csv';
  document.body.append(a);
  a.click();
  a.remove();

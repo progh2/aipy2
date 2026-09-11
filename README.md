@@ -58,6 +58,7 @@ Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 - 설정 절차와 보안 근거: [firebase/README.md](firebase/README.md)
 - 권한 규칙: [firebase/firestore.rules](firebase/firestore.rules)
 - 교사용 명단 관리: [web/teacher/admin.html](web/teacher/admin.html) — CSV 일괄 등록·검사·내보내기, 미배정 학생 확인
+- 교사 반 선택: 관리 화면 상단에서 **지금 수업하는 반**을 고르며, 반 ID는 `{학년}-{반}`(예: `2-3`)입니다. 명단·이후 보드·세션이 이 반만 봅니다.
 - 앞으로 만들 기능(참여 현황 모니터링, 수업 따라가기, 과제 제출): [docs/PRD.md](docs/PRD.md)
 
 로그인은 학습의 전제가 아닙니다. 설정이 비어 있거나 네트워크가 끊겨도 사이트는 기존처럼 동작하고,
