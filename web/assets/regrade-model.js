@@ -1,14 +1,14 @@
 /* 교사 브라우저 재검증(M7/F8.3) 순수 헬퍼. Pyodide 호출은 하지 않습니다. */
 import {targetKey} from './assignment-model.js';
 
-export const REVERIFY_NOTE = '제출 소스를 이 브라우저에서 다시 실행해 저장된 채점과 비교합니다. 브라우저 채점이에요.';
-export const REVERIFY_LABEL = '브라우저 채점 다시 하기';
-export const REVERIFY_CLASS_LABEL = '이 반 제출 다시 채점';
+export const REVERIFY_NOTE = '이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.';
+export const REVERIFY_LABEL = '이 제출 다시 채점';
+export const REVERIFY_CLASS_LABEL = '이 반 다시 채점';
 export const REVERIFY_SKIP_ESSAY = '서술형은 자동 재검증하지 않아요.';
 export const REVERIFY_SKIP_MISSING = '검사에 필요한 문제·예제 데이터를 찾지 못했어요.';
 export const MATCH_LABEL = '저장된 결과와 같아요';
 export const MISMATCH_LABEL = '저장된 결과와 달라요';
-export const SKIP_LABEL = '다시 채점하지 않음';
+export const SKIP_LABEL = '다시 채점 안 함';
 export const ERROR_LABEL = '다시 채점하지 못했어요';
 
 export function normAnswer(value) {

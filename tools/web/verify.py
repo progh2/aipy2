@@ -261,8 +261,9 @@ assert 'id="submission-list"' in assignments_html
 assert '기존 문제·예제로 과제를 만들고, 반별 제출 소스·출력을 확인해요.' in assignments_html
 assert 'id="reverify-class"' in assignments_html
 assert 'id="reverify-note"' in assignments_html
-assert '이 반 제출 다시 채점' in assignments_html
-assert '브라우저 채점' in assignments_html
+assert '이 반 다시 채점' in assignments_html
+assert '이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.' in assignments_html
+assert '이 반 제출 다시 채점' not in assignments_html
 assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.' not in assignments_html
 assert '다시 채점은 다음 단계' not in assignments_html
 assert '문제·예제 고르기' in assignments_html
@@ -276,14 +277,22 @@ assert '짧게 남겨 주세요' in teacher_assign or 'COMMENT_PLACEHOLDER' in t
 assert 'python-run.js' in teacher_assign
 assert 'regrade-model.js' in teacher_assign
 assert 'REVERIFY_LABEL' in teacher_assign
+assert '같음' in teacher_assign and '다름' in teacher_assign and '건너뜀' in teacher_assign
 assert 'aipyAssignDemo' in teacher_assign
 assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.' not in teacher_assign
 python_run=(WEB/'assets/python-run.js').read_text()
 assert 'createPythonRunner' in python_run
 assert 'new Worker' in python_run
 regrade_model=(WEB/'assets/regrade-model.js').read_text()
-assert '브라우저 채점' in regrade_model
+assert '이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.' in regrade_model
+assert '이 제출 다시 채점' in regrade_model
+assert '이 반 다시 채점' in regrade_model
+assert '저장된 결과와 같아요' in regrade_model
 assert '저장된 결과와 달라요' in regrade_model
+assert '다시 채점 안 함' in regrade_model
+assert '다시 채점하지 못했어요' in regrade_model
+assert '서술형은 자동 재검증하지 않아요.' in regrade_model
+assert '다시 채점하지 않음' not in regrade_model
 assert '다음 단계' not in regrade_model
 assign_js=(WEB/'assets/assignments.js').read_text()
 assert "collection(db, 'assignments')" in assign_js
@@ -305,7 +314,7 @@ assert '통과하지 않아도 제출할 수 있어요.' in assign_model
 assert '마감 후에도 제출할 수 있어요. 지연으로 표시돼요.' in assign_model
 assert '브라우저 채점이에요. 성적·출결에는 안 들어가요.' in assign_model
 assert '다시 채점은 다음 단계에서 붙어요.' not in assign_model
-assert '제출 소스를 이 브라우저에서 다시 실행해 저장된 채점과 비교합니다.' in assign_model
+assert '이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.' in assign_model
 assert '제출했어요.' in assign_model
 assert '지연으로 제출했어요.' in assign_model
 assert '미통과로 제출했어요.' in assign_model
