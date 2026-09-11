@@ -242,6 +242,7 @@ function onAccount(detail) {
 
 async function start() {
  if (document.getElementById('teacher-shell')) return;
+ if (/\/teacher\//.test(location.pathname || '')) return;
  if (!document.getElementById('account')) return;
  if (!hostParent()) return;
  try {
