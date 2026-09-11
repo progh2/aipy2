@@ -13,8 +13,10 @@ export const UNDERSTANDING_LABELS = {
  hard: '어려워요'
 };
 export const HARD_PROMPT = '어디가 막혔나요?';
-export const NOT_GRADED = '평가에 반영되지 않습니다';
-export const NOT_GRADED_NOTE = '이 신호는 평가에 반영되지 않습니다. 막힌 곳을 찾기 위한 표시예요.';
+export const STUDENT_NOTE = '이해도·도움 요청은 성적에 안 들어가요. 수업 중에만 쓰는 신호예요.';
+export const TEACHER_NOTE = '학생이 보내는 신호예요. 점수·출결에는 안 반영돼요.';
+export const NOT_GRADED = STUDENT_NOTE;
+export const NOT_GRADED_NOTE = STUDENT_NOTE;
 
 export function asMap(value) {
  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};

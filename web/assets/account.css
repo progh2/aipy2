@@ -95,13 +95,15 @@ body.teacher-focus-live .lesson{scroll-margin-top:150px}
 .understanding-choices{display:flex;flex-wrap:wrap;gap:8px}
 .understanding-choices button{padding:7px 12px;font-size:13px}
 .understanding-choices button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
-.hard-comment{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px}
+.hard-comment{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .hard-comment[hidden]{display:none}
-.hard-comment label{display:flex;flex-direction:column;gap:4px;flex:1 1 16rem;margin:0;font-size:13px;font-weight:600}
-.hard-comment input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.hard-comment-field{flex:1 1 100%;margin:0;font-size:13px;font-weight:600}
+.hard-comment input{flex:1 1 16rem;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
 .help-request[aria-pressed="true"]{background:#7a3d00;border-color:#7a3d00;color:#fff8e8}
 .help-slot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
 .understanding-history{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px;margin:0 0 20px}
+aside.rail .understanding-history{margin:16px 0 0;padding:12px;font-size:13px}
+aside.rail .understanding-history h2{font-size:14px}
 .understanding-history h2{margin:0 0 6px;font-size:18px}
 .understanding-history-list{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
 .understanding-history-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}

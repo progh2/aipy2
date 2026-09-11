@@ -1,7 +1,7 @@
 /* 이해도 신호 순수 함수 검사. node tools/web/test_understanding_model.mjs */
 import {
  UNDERSTANDING_KEY, UNDERSTANDING_WRITE_MS, COMMENT_MAX, UNDERSTANDING_LABELS,
- HARD_PROMPT, NOT_GRADED, normalizeUnderstanding, normalizeStore, mergeUnderstanding,
+ HARD_PROMPT, NOT_GRADED, STUDENT_NOTE, TEACHER_NOTE, normalizeUnderstanding, normalizeStore, mergeUnderstanding,
  mergeStores, setUnderstanding, setComment, clipComment, historyItems, topicHref,
  titlesFromCatalog, titlesFromLessons, topicTitle, studentLabel, countUnderstanding,
  groupHardByTopic, shouldWriteAfter, feedbackId, feedbackFields, isTopicId
@@ -18,7 +18,9 @@ eq(UNDERSTANDING_LABELS.understood, '이해했어요', 'label ok');
 eq(UNDERSTANDING_LABELS.somewhat, '조금 어려워요', 'label mid');
 eq(UNDERSTANDING_LABELS.hard, '어려워요', 'label hard');
 eq(HARD_PROMPT, '어디가 막혔나요?', 'hard prompt');
-eq(NOT_GRADED.includes('평가에 반영되지 않습니다'), true, 'not graded');
+eq(STUDENT_NOTE, '이해도·도움 요청은 성적에 안 들어가요. 수업 중에만 쓰는 신호예요.', 'student note');
+eq(TEACHER_NOTE, '학생이 보내는 신호예요. 점수·출결에는 안 반영돼요.', 'teacher note');
+eq(NOT_GRADED, STUDENT_NOTE, 'not graded alias');
 eq(isTopicId('u1-overview'), true, 'topic id');
 eq(isTopicId('overview'), false, 'bare topic rejected');
 eq(normalizeUnderstanding({

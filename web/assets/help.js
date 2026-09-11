@@ -4,7 +4,7 @@ import {load} from './auth.js';
 import {classId} from './class-picker.js';
 import {NOT_GRADED_NOTE, isTopicId} from './understanding-model.js';
 import {
- HELP_LABEL, HELP_CANCEL_LABEL, HELP_KEEP_WORKING, helpRequestFields, canCreateHelp,
+ HELP_LABEL, HELP_CANCEL_LABEL, HELP_SENT, HELP_KEEP_WORKING, helpRequestFields, canCreateHelp,
  openHelpForTopic
 } from './help-model.js';
 
@@ -121,7 +121,7 @@ async function createHelp(topic) {
   lastCreateAt = Date.now();
   mine = [...mine, {id: ref.id, ...payload, status: 'open'}];
   paintButtons();
-  toast(`도움을 요청했습니다. ${HELP_KEEP_WORKING}`);
+  toast(HELP_SENT);
  } catch (error) {
   console.warn('[help]', error);
   toast('요청을 보내지 못했습니다. 학습은 이어서 하면 됩니다.');
