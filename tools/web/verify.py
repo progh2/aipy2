@@ -87,4 +87,6 @@ assert 'match /sessions/{classroom}' in rules
 assert 'match /presence/{uid}' in rules
 assert 'wholeNumber(request.resource.data.attention.nonce)' in rules
 assert 'request.resource.data.attention.nonce is int' not in rules
+assert 'resource == null' in rules
+assert '!resource.exists || request.resource.data.attention.nonce' not in rules
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')

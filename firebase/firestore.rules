@@ -134,8 +134,9 @@ service cloud.firestore {
         && request.resource.data.focus.page is string
         && request.resource.data.focus.page.size() > 0
         && request.resource.data.focus.page.size() <= 200
-        && optionalShort(request.resource.data.focus.topicAnchor, 80)
-        && optionalShort(request.resource.data.focus.exampleId, 80)
+        // 없는 필드를 직접 읽으면 규칙이 오류로 거부됩니다. 주제·예제는 비울 수 있습니다.
+        && optionalShort(request.resource.data.focus.get('topicAnchor', null), 80)
+        && optionalShort(request.resource.data.focus.get('exampleId', null), 80)
         && request.resource.data.focus.updatedAt is timestamp;
     }
 
@@ -150,7 +151,9 @@ service cloud.firestore {
         && wholeNumber(request.resource.data.attention.nonce)
         && request.resource.data.attention.nonce >= 0
         && request.resource.data.attention.at is timestamp
-        && (!resource.exists || request.resource.data.attention.nonce >= resource.data.attention.nonce);
+        // create 때는 resource 가 null 이라 .exists 를 읽으면 Null value error 로 거절됩니다.
+        && (resource == null
+            || request.resource.data.attention.nonce >= resource.data.attention.nonce);
     }
 
     // 수업 세션. 문서 ID는 `{학년}-{반}` (예: 2-3). 학생은 자기 반 문서만 읽고 쓰지 못합니다.
