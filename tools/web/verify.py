@@ -99,11 +99,15 @@ assert 'together-send' in teacher_session
 assert 'report-refresh' in teacher_session
 assert '이름 없이' in teacher_session
 assert 'aipySessionDemo' in teacher_session
+assert 'existingAttentionNonce' in teacher_session
+assert 'sessionEndFields' in teacher_session
+assert 'getDoc' in teacher_session
 follow_js=(WEB/'assets/follow.js').read_text()
 assert '잠깐 혼자 보는 중' in follow_js
 assert '선생님이 여기를 보고 있어요' in follow_js
 assert '선생님 화면을 따라가는 중' in follow_js
 assert '선생님 화면으로' in follow_js
+assert 'sessionStartChanged' in follow_js
 unit=(WEB/'units/unit01/index.html').read_text()
 assert 'assets/follow.js' in unit
 assert 'assets/sync.js' in unit
@@ -136,8 +140,10 @@ assert 'wholeNumber(request.resource.data.attention.nonce)' in rules
 assert 'request.resource.data.attention.nonce is int' not in rules
 assert 'function sessionPayloadOk()' in rules
 assert 'function sessionNonceMonotonic()' in rules
+assert 'function sessionRestart()' in rules
 assert 'allow create: if isTeacher() && classIdOk(classroom) && sessionPayloadOk()' in rules
-assert 'sessionPayloadOk() && sessionNonceMonotonic()' in rules
+assert 'allow update: if isTeacher() && classIdOk(classroom) && sessionPayloadOk()' in rules
+assert 'sessionNonceMonotonic() || sessionRestart()' in rules
 assert 'request.resource.data.focus is map' in rules
 assert 'request.resource.data.attention is map' in rules
 assert 'match /students/{uid}' in rules

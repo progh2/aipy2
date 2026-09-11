@@ -2,7 +2,8 @@
 import {
  isSessionLive, timestampMillis, pageFromPath, samePage, shouldNavigate, focusHref,
  focusKey, topicFromHash, visibleTopic, countPresence, nextAttentionNonce, wholeNonce,
- expiresAtMillis, sessionFields, focusFields, focusWritePayload, focusFromUnitClick,
+ expiresAtMillis, sessionFields, sessionEndFields, existingAttentionNonce, sessionStartChanged,
+ focusFields, focusWritePayload, focusFromUnitClick,
  isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
  DEFAULT_PAGE
@@ -50,6 +51,23 @@ eq(started.focus.topicAnchor, 'overview', 'session topic');
 eq(started.focus.exampleId, null, 'session example default');
 eq(Object.keys(started.focus).sort(), ['exampleId', 'page', 'topicAnchor'], 'focus keys always present');
 eq(started.attention.nonce, 0, 'nonce whole');
+eq(existingAttentionNonce(null), 0, 'missing session nonce');
+eq(existingAttentionNonce({attention: {nonce: 4}}), 4, 'existing nonce');
+eq(existingAttentionNonce({attention: {nonce: 4.8}}), 4, 'existing nonce trunc');
+eq(sessionFields({teacherEmail: 't@e-mirim.hs.kr', attentionNonce: 7}).attention.nonce, 7, 'restart keeps nonce');
+eq(sessionStartChanged({startedAt: 10}, {startedAt: 20}), true, 'startedAt changed');
+eq(sessionStartChanged({startedAt: 10}, {startedAt: 10}), false, 'startedAt same');
+eq(sessionStartChanged(null, {startedAt: 10}), true, 'first start has startedAt');
+const ended = sessionEndFields({
+ teacherEmail: 't@e-mirim.hs.kr',
+ attention: {nonce: 3},
+ focus: {page: 'units/unit01/index.html', topicAnchor: 'overview'}
+});
+eq(ended.active, false, 'end inactive');
+eq(ended.attention.nonce, 3, 'end keeps nonce');
+eq(ended.teacherEmail, 't@e-mirim.hs.kr', 'end keeps teacher');
+eq(ended.focus.page, 'units/unit01/index.html', 'end keeps page');
+eq(Object.keys(ended.focus).sort(), ['exampleId', 'page', 'topicAnchor'], 'end focus keys');
 const bare = sessionFields({teacherEmail: 't@e-mirim.hs.kr'});
 eq(bare.focus.topicAnchor, null, 'topic default null');
 eq(bare.focus.exampleId, null, 'example default null');

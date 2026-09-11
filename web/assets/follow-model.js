@@ -138,12 +138,32 @@ export function focusWritePayload(focus) {
  };
 }
 
-export function sessionFields({teacherEmail, page, topicAnchor, exampleId}) {
+export function existingAttentionNonce(session) {
+ return wholeNonce(session && session.attention && session.attention.nonce);
+}
+
+export function sessionStartChanged(prev, next) {
+ const from = timestampMillis(prev && prev.startedAt);
+ const to = timestampMillis(next && next.startedAt);
+ return Boolean(to) && from !== to;
+}
+
+export function sessionFields({teacherEmail, page, topicAnchor, exampleId, attentionNonce} = {}) {
  return {
   active: true,
   teacherEmail: teacherEmail || '',
   focus: focusFields({page, topicAnchor, exampleId}),
-  attention: {nonce: wholeNonce(0)}
+  attention: {nonce: wholeNonce(attentionNonce)}
+ };
+}
+
+export function sessionEndFields(existing, {teacherEmail} = {}) {
+ const focus = (existing && existing.focus) || {};
+ return {
+  active: false,
+  teacherEmail: (existing && existing.teacherEmail) || teacherEmail || '',
+  focus: focusFields(focus),
+  attention: {nonce: existingAttentionNonce(existing)}
  };
 }
 

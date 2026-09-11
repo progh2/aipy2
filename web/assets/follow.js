@@ -6,7 +6,7 @@ import {classId} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, shouldNavigate, focusHref, focusKey, topicFromHash,
  visibleTopic, presenceFields, readPendingFocus, writePendingFocus, readFollowing,
- writeFollowing, PRESENCE_HEARTBEAT_MS
+ writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS
 } from './follow-model.js';
 
 const prefix = document.body.dataset.prefix || '';
@@ -247,13 +247,14 @@ function onSessionSnap(snapshot) {
   return;
  }
  const first = !liveSession;
+ const restarted = sessionStartChanged(liveSession, data);
  liveSession = data;
  const nonce = data.attention && typeof data.attention.nonce === 'number' ? data.attention.nonce : 0;
- if (first) {
+ if (first || restarted) {
   following = readFollowing(sessionStorage, classroom, data);
   persistFollowing();
   seenNonce = nonce;
-  const pending = readPendingFocus(sessionStorage);
+  const pending = first ? readPendingFocus(sessionStorage) : null;
   paintUi();
   applyFocus((pending && pending.page) ? pending : data.focus, following);
  } else {
