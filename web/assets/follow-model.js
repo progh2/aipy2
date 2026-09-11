@@ -121,17 +121,71 @@ export function expiresAtMillis(now = Date.now()) {
  return now + SESSION_TTL_MS;
 }
 
+export function focusFields({page, topicAnchor, exampleId} = {}) {
+ return {
+  page: normalizePage(page) || DEFAULT_PAGE,
+  topicAnchor: topicAnchor || null,
+  exampleId: exampleId || null
+ };
+}
+
+export function focusWritePayload(focus) {
+ const fields = focusFields(focus || {});
+ return {
+  'focus.page': fields.page,
+  'focus.topicAnchor': fields.topicAnchor,
+  'focus.exampleId': fields.exampleId
+ };
+}
+
 export function sessionFields({teacherEmail, page, topicAnchor, exampleId}) {
  return {
   active: true,
   teacherEmail: teacherEmail || '',
-  focus: {
-   page: normalizePage(page) || DEFAULT_PAGE,
-   topicAnchor: topicAnchor || null,
-   exampleId: exampleId || null
-  },
+  focus: focusFields({page, topicAnchor, exampleId}),
   attention: {nonce: wholeNonce(0)}
  };
+}
+
+export function isUnitLessonPage(page) {
+ return /^units\/unit0[1-4]\/index\.html$/.test(normalizePage(page));
+}
+
+const SKIP_FOCUS_TOPICS = new Set(['main', 'account', 'toast']);
+
+export function resolveHref(href, currentPage) {
+ if (href == null || typeof href !== 'string') return null;
+ const raw = href.trim();
+ if (!raw || raw === '#') return null;
+ if (/^(mailto:|javascript:|tel:)/i.test(raw)) return null;
+ try {
+  const basePage = normalizePage(currentPage) || 'index.html';
+  const url = new URL(raw, `https://progh2.github.io/aipy2/${basePage}`);
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+  return {page: pageFromPath(url.pathname), topicAnchor: topicFromHash(url.hash)};
+ } catch {
+  return null;
+ }
+}
+
+export function focusFromUnitClick({href, exampleId, lessonId, currentPage} = {}) {
+ const page = normalizePage(currentPage);
+ if (exampleId && typeof exampleId === 'string' && exampleId.trim()) {
+  return focusFields({
+   page: page || DEFAULT_PAGE,
+   topicAnchor: lessonId || null,
+   exampleId: exampleId.trim()
+  });
+ }
+ const resolved = resolveHref(href, page);
+ if (!resolved || !isUnitLessonPage(resolved.page)) return null;
+ if (resolved.topicAnchor && SKIP_FOCUS_TOPICS.has(resolved.topicAnchor)) return null;
+ if (!resolved.topicAnchor && samePage(resolved.page, page)) return null;
+ return focusFields({
+  page: resolved.page,
+  topicAnchor: resolved.topicAnchor,
+  exampleId: null
+ });
 }
 
 export function presenceFields({classroom, page, topicAnchor, following}) {

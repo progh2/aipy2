@@ -2,7 +2,8 @@
 import {
  isSessionLive, timestampMillis, pageFromPath, samePage, shouldNavigate, focusHref,
  focusKey, topicFromHash, visibleTopic, countPresence, nextAttentionNonce, wholeNonce,
- expiresAtMillis, sessionFields, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
+ expiresAtMillis, sessionFields, focusFields, focusWritePayload, focusFromUnitClick,
+ isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
  DEFAULT_PAGE
 } from '../../web/assets/follow-model.js';
@@ -81,5 +82,33 @@ eq(catalogExamples(catalog, catalog.topics['units/unit01/index.html'][0])[0],
  {id: 'reuse', title: '재사용'}, 'catalog examples');
 eq(focusKey({page: 'units/unit01/index.html', topicAnchor: 'a', exampleId: null, updatedAt: 9}),
  'units/unit01/index.html|a||9', 'focus key');
+
+eq(isUnitLessonPage('units/unit01/index.html'), true, 'unit lesson page');
+eq(isUnitLessonPage('units/unit01/summary.html'), false, 'unit summary is not lesson');
+eq(focusFields({page: 'units/unit02/index.html', topicAnchor: 'events'}),
+ {page: 'units/unit02/index.html', topicAnchor: 'events', exampleId: null}, 'focus fields');
+eq(focusWritePayload({page: 'units/unit01/index.html', topicAnchor: 'overview', exampleId: 'reuse'}),
+ {'focus.page': 'units/unit01/index.html', 'focus.topicAnchor': 'overview', 'focus.exampleId': 'reuse'},
+ 'focus write payload');
+
+const unit01 = 'units/unit01/index.html';
+eq(focusFromUnitClick({href: '#overview', currentPage: unit01}),
+ {page: unit01, topicAnchor: 'overview', exampleId: null}, 'toc topic click');
+eq(focusFromUnitClick({href: '#lab', currentPage: unit01}),
+ {page: unit01, topicAnchor: 'lab', exampleId: null}, 'lab anchor click');
+eq(focusFromUnitClick({href: '#main', currentPage: unit01}), null, 'skip chrome hash');
+eq(focusFromUnitClick({href: '../../units/unit01/index.html', currentPage: unit01}),
+ null, 'same unit nav without topic');
+eq(focusFromUnitClick({href: '../unit02/index.html', currentPage: unit01}),
+ {page: 'units/unit02/index.html', topicAnchor: null, exampleId: null}, 'next unit page');
+eq(focusFromUnitClick({href: '../unit02/index.html#define', currentPage: unit01}),
+ {page: 'units/unit02/index.html', topicAnchor: 'define', exampleId: null}, 'other unit topic');
+eq(focusFromUnitClick({href: 'summary.html', currentPage: unit01}), null, 'skip summary');
+eq(focusFromUnitClick({href: '../../downloads/unit1-examples.zip', currentPage: unit01}),
+ null, 'skip download');
+eq(focusFromUnitClick({exampleId: 'reuse', lessonId: 'overview', currentPage: unit01}),
+ {page: unit01, topicAnchor: 'overview', exampleId: 'reuse'}, 'example button');
+eq(focusFromUnitClick({href: 'https://www.mtrschool.co.kr/post/3095', currentPage: unit01}),
+ null, 'skip external');
 
 console.log('PASS: follow-model helpers');

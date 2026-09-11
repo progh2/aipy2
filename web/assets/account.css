@@ -65,3 +65,14 @@ body.follow-active .lesson{scroll-margin-top:150px}
  body.follow-active{scroll-padding-top:170px}
 }
 @media print{.follow-ui{display:none!important}}
+
+/* 교사 단원 페이지 초점. 교사+활성 세션일 때만 보입니다. */
+.teacher-focus-ui{position:sticky;top:78px;z-index:18;background:#e9f2ef;color:#176c5f;border-bottom:1px solid #b7d4cb}
+.teacher-focus-status{margin:0;padding:8px max(5%,calc((100vw - 1100px)/2));font-size:13px;font-weight:700}
+body.teacher-focus-live{scroll-padding-top:140px}
+body.teacher-focus-live .lesson{scroll-margin-top:150px}
+@media (max-width:640px){
+ .teacher-focus-ui{top:auto}
+ body.teacher-focus-live{scroll-padding-top:170px}
+}
+@media print{.teacher-focus-ui{display:none!important}}

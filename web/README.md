@@ -60,6 +60,10 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
   교사 이메일별 `localStorage`(`aipy-teacher-class:{email}`)에 남습니다. 명단 목록은 선택한 반만 보여 줍니다.
 - 수업 따라가기(M5): `teacher/session.html`에서 세션 시작·종료·초점·시선 모으기.
   학생 화면은 `assets/follow.js`가 자기 반 `sessions/{학년}-{반}`만 구독합니다.
+  교사가 단원 페이지에서 주제·예제를 누르면 `assets/teacher-focus.js`가 같은
+  `sessions/{반}.focus`를 갱신합니다. 반은 `window.aipyClass`가 있으면 그걸 쓰고,
+  없으면 관리 화면에서 고른 값(`localStorage` `aipy-teacher-class:{email}`)을 씁니다.
+  교사 권한이 없거나 그 반 세션이 없으면 쓰지 않고 학습만 합니다.
   단원·주제 목록은 생성기가 만드는 `data/catalog.json`입니다. Firestore 규칙 배포는
   `firebase/README.md`를 보세요. 로그인·네트워크 실패 시 따라가기만 꺼지고 학습은 그대로입니다.
 

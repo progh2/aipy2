@@ -89,6 +89,16 @@ assert '선생님 화면을 따라가는 중' in follow_js
 assert '선생님 화면으로' in follow_js
 unit=(WEB/'units/unit01/index.html').read_text()
 assert 'assets/follow.js' in unit
+assert 'assets/teacher-focus.js' in unit
+assert 'assets/teacher-focus.js' not in (WEB/'index.html').read_text()
+assert 'assets/teacher-focus.js' not in (WEB/'teacher/session.html').read_text()
+teacher_focus=(WEB/'assets/teacher-focus.js').read_text()
+assert 'resolveTeacherClassId' in teacher_focus
+assert 'focusFromUnitClick' in teacher_focus
+assert 'focusWritePayload' in teacher_focus
+assert '초점을 보냈습니다.' in teacher_focus
+assert '에 초점을 보내요' in teacher_focus
+assert 'admins' in teacher_focus
 catalog=json.loads((WEB/'data/catalog.json').read_text())
 assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
