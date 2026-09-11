@@ -142,7 +142,7 @@ assert 'function sessionPayloadOk()' in rules
 assert 'function sessionNonceMonotonic()' in rules
 assert 'function sessionRestart()' in rules
 assert 'allow create: if isTeacher() && classIdOk(classroom) && sessionPayloadOk()' in rules
-assert 'sessionPayloadOk() && sessionNonceMonotonic()' in rules
+assert 'allow update: if isTeacher() && classIdOk(classroom) && sessionPayloadOk()' in rules
 assert 'sessionNonceMonotonic() || sessionRestart()' in rules
 assert 'request.resource.data.focus is map' in rules
 assert 'request.resource.data.attention is map' in rules
