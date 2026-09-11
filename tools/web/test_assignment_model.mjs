@@ -2,8 +2,10 @@
 import {
  SUBMIT_COOLDOWN_MS, OUTPUT_MAX, LABEL_FAILED, LABEL_LATE, LABEL_PASSED, LABEL_REVIEWED,
  BROWSER_GRADE_NOTE, LATE_NOTE, FAIL_OK_NOTE, REGRADE_NOTE, SUBMIT_LABEL, RESUBMIT_LABEL,
+ COMMENT_PLACEHOLDER, TOAST_OK, TOAST_LATE, TOAST_FAILED,
  targetKey, parseTargetKey, normalizeTargets, normalizeClassrooms, catalogTargets,
  filterCatalogTargets, assignmentVisible, isLate, statusLabel, reviewLabel, submitButtonLabel,
+ statusChips, submitToast,
  assignmentFields, assignmentReady, targetSnapshot, targetsFromState, submissionStatus,
  submissionFields, teacherReviewFields, canSubmit, clipOutput, clipComment, clipFiles,
  appendHistory, targetHref
@@ -14,16 +16,20 @@ function eq(actual, expected, label) {
  if (left !== right) throw new Error(`${label}: ${left} !== ${right}`);
 }
 
-eq(LABEL_FAILED, '미통과 제출', 'failed label');
+eq(LABEL_FAILED, '미통과', 'failed label');
 eq(LABEL_LATE, '지연', 'late label');
 eq(LABEL_PASSED, '통과', 'passed label');
 eq(LABEL_REVIEWED, '확인됨', 'reviewed label');
-eq(BROWSER_GRADE_NOTE.includes('브라우저 채점'), true, 'browser grade');
-eq(LATE_NOTE.includes('지연'), true, 'late note');
-eq(FAIL_OK_NOTE.includes('통과하지 않아도'), true, 'fail ok');
-eq(REGRADE_NOTE.includes('다음 단계'), true, 'regrade stub');
+eq(BROWSER_GRADE_NOTE, '브라우저 채점이에요. 성적·출결에는 안 들어가요.', 'browser grade');
+eq(LATE_NOTE, '마감 후에도 제출할 수 있어요. 지연으로 표시돼요.', 'late note');
+eq(FAIL_OK_NOTE, '통과하지 않아도 제출할 수 있어요.', 'fail ok');
+eq(REGRADE_NOTE, '다시 채점은 다음 단계에서 붙어요.', 'regrade stub');
 eq(SUBMIT_LABEL, '제출', 'submit');
 eq(RESUBMIT_LABEL, '다시 제출', 'resubmit');
+eq(COMMENT_PLACEHOLDER, '짧게 남겨 주세요', 'comment placeholder');
+eq(TOAST_OK, '제출했어요.', 'toast ok');
+eq(TOAST_LATE, '지연으로 제출했어요.', 'toast late');
+eq(TOAST_FAILED, '미통과로 제출했어요.', 'toast failed');
 eq(SUBMIT_COOLDOWN_MS >= 3000 && SUBMIT_COOLDOWN_MS <= 10000, true, 'cooldown');
 
 eq(targetKey({type: 'question', id: 'u1-q041'}), 'question:u1-q041', 'target key');
@@ -65,13 +71,21 @@ eq(assignmentVisible(assignment, '2-3', Date.parse('2026-08-01T12:00:00+09:00'))
 eq(isLate(assignment, Date.parse('2026-09-11T12:00:00+09:00')), true, 'late');
 eq(isLate(assignment, Date.parse('2026-09-09T12:00:00+09:00')), false, 'on time');
 
-eq(statusLabel({status: 'failed', late: false}), '미통과 제출', 'fail label');
-eq(statusLabel({status: 'failed', late: true}), '미통과 제출 · 지연', 'fail late');
+eq(statusLabel({status: 'failed', late: false}), '미통과', 'fail label');
+eq(statusLabel({status: 'failed', late: true}), '미통과 · 지연', 'fail late');
 eq(statusLabel({status: 'passed', late: true}), '지연', 'pass late');
 eq(statusLabel({status: 'passed', late: false}), '통과', 'pass');
 eq(reviewLabel('reviewed'), '확인됨', 'review');
-eq(submitButtonLabel({status: 'failed', hasSubmission: false}), '미통과 제출', 'fail submit');
+eq(submitButtonLabel({status: 'failed', hasSubmission: false}), '제출', 'fail submit');
 eq(submitButtonLabel({status: 'passed', hasSubmission: true}), '다시 제출', 'resubmit pass');
+eq(submitButtonLabel({status: 'failed', hasSubmission: true}), '다시 제출', 'resubmit fail');
+eq(statusChips({status: 'failed', late: false}), ['미통과'], 'chips fail');
+eq(statusChips({status: 'failed', late: true}), ['미통과', '지연'], 'chips fail late');
+eq(statusChips({status: 'passed', late: true}), ['통과', '지연'], 'chips pass late');
+eq(statusChips({status: 'passed', late: false}), ['통과'], 'chips pass');
+eq(submitToast({status: 'passed', late: false}), '제출했어요.', 'toast pass');
+eq(submitToast({status: 'passed', late: true}), '지연으로 제출했어요.', 'toast late pass');
+eq(submitToast({status: 'failed', late: true}), '미통과로 제출했어요.', 'toast fail late');
 
 const fields = assignmentFields({
  title: '  모듈 과제  ',

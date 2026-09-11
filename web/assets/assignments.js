@@ -4,9 +4,9 @@ import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {classId} from './class-picker.js';
 import {
- assignmentVisible, isLate, statusLabel, reviewLabel, submitButtonLabel, targetsFromState,
- submissionFields, submissionStatus, canSubmit, targetTitle, targetHref, formatWhen,
- FAIL_OK_NOTE, LATE_NOTE, BROWSER_GRADE_NOTE, LABEL_FAILED
+ assignmentVisible, isLate, statusLabel, reviewLabel, submitButtonLabel, statusChips,
+ submitToast, targetsFromState, submissionFields, submissionStatus, canSubmit,
+ targetTitle, targetHref, formatWhen, FAIL_OK_NOTE, LATE_NOTE, BROWSER_GRADE_NOTE
 } from './assignment-model.js';
 
 const node = (tag, cls, text) => {
@@ -140,10 +140,15 @@ function paintCard(assignment, now) {
   }
  }
  const actions = node('div', 'actions');
- const button = node('button', status === 'failed' ? '' : 'primary', submitButtonLabel({status, hasSubmission: Boolean(prev)}));
+ const chips = node('span', 'assignment-chips');
+ for (const label of statusChips({status, late})) {
+  chips.append(node('span', 'assignment-chip', label));
+ }
+ const button = node('button', status === 'failed' ? '' : 'primary', submitButtonLabel({hasSubmission: Boolean(prev)}));
  button.type = 'button';
  button.disabled = writing;
  button.onclick = () => submit(assignment, collected, late);
+ if (chips.childNodes.length) actions.append(chips);
  actions.append(button);
  card.append(actions);
  if (Array.isArray(prev && prev.history) && prev.history.length) {
@@ -180,7 +185,7 @@ async function submit(assignment, collected, late) {
   payload.updatedAt = store.serverTimestamp();
   await store.setDoc(store.doc(db, 'students', user.uid, 'submissions', assignment.id), payload);
   lastSubmitAt = Date.now();
-  toast(payload.status === 'failed' ? LABEL_FAILED : (late ? '지연으로 제출했어요.' : '제출했어요.'));
+  toast(submitToast({status: payload.status, late}));
  } catch (error) {
   console.warn('[assignments]', error);
   const denied = error && (error.code === 'permission-denied' || /permission/i.test(String(error.message || '')));

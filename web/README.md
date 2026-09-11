@@ -78,7 +78,7 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
   `teacher/board.html`에서 선택된 반만 구독합니다. 평가에 반영되지 않습니다.
 - 과제와 제출(M6): 교사는 `teacher/assignments.html`에서 기존 문제·예제(`data/catalog.json`)를
   골라 `assignments/{id}`를 만듭니다. 학생은 단원 화면의 과제 패널에서 검사 후 제출하며,
-  통과하지 않아도 `미통과 제출`로 남고 마감 이후는 `지연`입니다. 제출물은
+  통과하지 않아도 `미통과`로 남고 마감 이후는 `지연`입니다. 제출물은
   `students/{uid}/submissions/{과제id}`에 소스·입력·채점 결과·출력이 들어갑니다.
   교사는 같은 화면에서 소스·출력을 보고 확인·한 줄 코멘트를 남깁니다.
   생성기 훅은 `layout()`의 `assignments.js`와 `build.py`의 교사 과제 페이지입니다.

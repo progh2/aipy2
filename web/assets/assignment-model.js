@@ -22,16 +22,20 @@ export const REVIEW_PENDING = 'pending';
 export const REVIEW_DONE = 'reviewed';
 
 export const LABEL_PASSED = '통과';
-export const LABEL_FAILED = '미통과 제출';
+export const LABEL_FAILED = '미통과';
 export const LABEL_LATE = '지연';
 export const LABEL_REVIEWED = '확인됨';
 export const LABEL_PENDING = '확인 대기';
-export const BROWSER_GRADE_NOTE = '브라우저 채점 결과예요. 성적으로 바로 쓰이지 않아요.';
+export const BROWSER_GRADE_NOTE = '브라우저 채점이에요. 성적·출결에는 안 들어가요.';
 export const LATE_NOTE = '마감 후에도 제출할 수 있어요. 지연으로 표시돼요.';
-export const FAIL_OK_NOTE = '검사를 한 뒤 제출할 수 있어요. 통과하지 않아도 제출할 수 있어요.';
-export const REGRADE_NOTE = '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.';
+export const FAIL_OK_NOTE = '통과하지 않아도 제출할 수 있어요.';
+export const REGRADE_NOTE = '다시 채점은 다음 단계에서 붙어요.';
 export const SUBMIT_LABEL = '제출';
 export const RESUBMIT_LABEL = '다시 제출';
+export const COMMENT_PLACEHOLDER = '짧게 남겨 주세요';
+export const TOAST_OK = '제출했어요.';
+export const TOAST_LATE = '지연으로 제출했어요.';
+export const TOAST_FAILED = '미통과로 제출했어요.';
 
 export function clipText(value, max) {
  if (value == null) return '';
@@ -203,9 +207,22 @@ export function reviewLabel(reviewStatus) {
  return reviewStatus === REVIEW_DONE ? LABEL_REVIEWED : LABEL_PENDING;
 }
 
-export function submitButtonLabel({status, hasSubmission} = {}) {
- if (hasSubmission) return status === SUBMIT_FAILED ? `${LABEL_FAILED} · ${RESUBMIT_LABEL}` : RESUBMIT_LABEL;
- return status === SUBMIT_FAILED ? LABEL_FAILED : SUBMIT_LABEL;
+export function submitButtonLabel({hasSubmission} = {}) {
+ return hasSubmission ? RESUBMIT_LABEL : SUBMIT_LABEL;
+}
+
+export function statusChips({status, late} = {}) {
+ const chips = [];
+ if (status === SUBMIT_PASSED) chips.push(LABEL_PASSED);
+ else if (status === SUBMIT_FAILED) chips.push(LABEL_FAILED);
+ if (late) chips.push(LABEL_LATE);
+ return chips;
+}
+
+export function submitToast({status, late} = {}) {
+ if (status === SUBMIT_FAILED) return TOAST_FAILED;
+ if (late) return TOAST_LATE;
+ return TOAST_OK;
 }
 
 export function assignmentFields({title, description, targets, classrooms, openAt, dueAt, open, createdBy} = {}) {
