@@ -232,24 +232,38 @@ assert 'id="assign-form"' in assignments_html
 assert 'id="target-picker"' in assignments_html
 assert 'id="review-panel"' in assignments_html
 assert 'id="submission-list"' in assignments_html
-assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙습니다.' in assignments_html
+assert '다시 채점은 다음 단계에서 붙어요.' in assignments_html
+assert '기존 문제·예제로 과제를 만들고, 반별 제출 소스·출력을 확인해요.' in assignments_html
 assert '문제·예제 고르기' in assignments_html
 teacher_assign=(WEB/'assets/teacher-assignments.js').read_text()
 assert "collection(db, 'assignments')" in teacher_assign
 assert "doc(db, 'students'" in teacher_assign
 assert 'submissions' in teacher_assign
 assert 'catalog.json' in teacher_assign
+assert '확인함' in teacher_assign
+assert '짧게 남겨 주세요' in teacher_assign or 'COMMENT_PLACEHOLDER' in teacher_assign
 assign_js=(WEB/'assets/assignments.js').read_text()
 assert "collection(db, 'assignments')" in assign_js
 assert "where('open', '==', true)" in assign_js
 assert "array-contains" in assign_js
-assert '미통과 제출' in assign_js or 'LABEL_FAILED' in assign_js
+assert 'submitButtonLabel' in assign_js
+assert 'statusChips' in assign_js
+assert 'submitToast' in assign_js
 assert 'aipy:checked' in assign_js
 assign_model=(WEB/'assets/assignment-model.js').read_text()
-assert '미통과 제출' in assign_model
-assert '지연' in assign_model
-assert '브라우저 채점 결과예요' in assign_model
-assert '마감 후에도 제출할 수 있어요' in assign_model
+assert "LABEL_FAILED = '미통과'" in assign_model
+assert "LABEL_PASSED = '통과'" in assign_model
+assert "LABEL_LATE = '지연'" in assign_model
+assert "SUBMIT_LABEL = '제출'" in assign_model
+assert "RESUBMIT_LABEL = '다시 제출'" in assign_model
+assert '통과하지 않아도 제출할 수 있어요.' in assign_model
+assert '마감 후에도 제출할 수 있어요. 지연으로 표시돼요.' in assign_model
+assert '브라우저 채점이에요. 성적·출결에는 안 들어가요.' in assign_model
+assert '다시 채점은 다음 단계에서 붙어요.' in assign_model
+assert '제출했어요.' in assign_model
+assert '지연으로 제출했어요.' in assign_model
+assert '미통과로 제출했어요.' in assign_model
+assert '짧게 남겨 주세요' in assign_model
 teacher_index=(WEB/'teacher/index.html').read_text()
 assert 'assignments.html' in teacher_index
 shell=(WEB/'assets/teacher-shell.js').read_text()
@@ -261,6 +275,7 @@ assert '.topic-signals' in account_css
 assert '.understanding-choices' in account_css
 assert '.help-request' in account_css
 assert '.assignment-panel' in account_css
+assert '.assignment-chip' in account_css
 assert '.target-picker' in account_css
 sync_js=(WEB/'assets/sync.js').read_text()
 assert 'aipyUnderstanding' in sync_js

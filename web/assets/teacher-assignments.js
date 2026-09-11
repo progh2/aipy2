@@ -6,7 +6,8 @@ import {classesFromRoster, inClass, labelClass} from './class-picker.js';
 import {
  assignmentFields, assignmentReady, catalogTargets, filterCatalogTargets, targetTitle,
  targetHref, statusLabel, reviewLabel, teacherReviewFields, formatWhen, toDatetimeLocal,
- fromDatetimeLocal, studentLabel, REGRADE_NOTE, BROWSER_GRADE_NOTE, COMMENT_MAX
+ fromDatetimeLocal, studentLabel, REGRADE_NOTE, BROWSER_GRADE_NOTE, COMMENT_MAX,
+ COMMENT_PLACEHOLDER
 } from './assignment-model.js';
 
 const $ = (id) => document.getElementById(id);
@@ -310,7 +311,7 @@ function paintDetail() {
  input.id = 'review-comment';
  input.maxLength = COMMENT_MAX;
  input.value = row.reviewComment || '';
- input.placeholder = '짧게 남길 말';
+ input.placeholder = COMMENT_PLACEHOLDER;
  const save = node('button', 'primary', '확인함');
  save.type = 'button';
  save.onclick = () => saveReview(row, input.value);
