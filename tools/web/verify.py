@@ -64,4 +64,10 @@ for p in WEB.rglob('*.zip'):
   assert len(z.namelist())==len(set(z.namelist())),('duplicate zip entry',p)
   assert z.testzip() is None
 for name in ['tk','ttk','pyside','pyqt','wx','kivy']:assert (WEB/f'assets/screenshots/{name}.png').stat().st_size>1000
+picker=subprocess.run(['node',str(Path(__file__).parent/'test_class_picker.mjs')],capture_output=True,text=True)
+assert picker.returncode==0, picker.stdout+picker.stderr
+for name in ['admin.html','board.html','session.html']:
+ html=(WEB/'teacher'/name).read_text()
+ assert 'id="teacher-shell"' in html, name
+ assert 'teacher-shell.js' in html, name
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')
