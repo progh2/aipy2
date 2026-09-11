@@ -63,8 +63,9 @@
 .student-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:12px}
 .student-card{display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:left;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff;width:100%}
 .student-card p{margin:0;line-height:1.5}
-.student-card-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.student-card-head strong{font-size:15px}
+.student-card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.student-card-who{display:flex;align-items:center;gap:8px;min-width:0}
+.student-card-who strong{font-size:15px;overflow-wrap:anywhere}
 .student-card[data-help="1"]{border-color:#c46a2d;background:#fff8f0}
 .student-card.is-selected{outline:3px solid #d79400;outline-offset:2px}
 .presence-dot{width:9px;height:9px;border-radius:50%;background:#9aa7bb;flex:none}
@@ -81,7 +82,7 @@
 .heatmap-table{border-collapse:collapse;font-size:11px;min-width:max-content}
 .heatmap-table th,.heatmap-table td{padding:2px;text-align:center;white-space:nowrap}
 .heatmap-table thead th{position:sticky;top:0;background:#fff;z-index:1}
-.heatmap-table tbody th{position:sticky;left:0;background:#fff;text-align:left;padding:2px 8px;font-size:12px;z-index:1}
+.heatmap-table tbody th{position:sticky;left:0;background:#fff;text-align:left;padding:2px 8px;font-size:12px;z-index:1;min-width:7.5rem}
 .heatmap-table thead th:first-child{z-index:2;text-align:left;padding:2px 8px}
 .heatmap-topic{padding:4px 3px;min-width:22px;font:700 10px var(--mono);color:var(--muted)}
 .heatmap-table th.is-filtered,.heatmap-topic[aria-pressed="true"]{background:#e9f2ef;color:#176c5f}
