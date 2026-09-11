@@ -74,6 +74,8 @@ board_model=subprocess.run(['node',str(Path(__file__).parent/'test_board_model.m
 assert board_model.returncode==0, board_model.stdout+board_model.stderr
 ops_model=subprocess.run(['node',str(Path(__file__).parent/'test_ops_model.mjs')],capture_output=True,text=True)
 assert ops_model.returncode==0, ops_model.stdout+ops_model.stderr
+ops_boot=subprocess.run(['node',str(Path(__file__).parent/'test_ops_boot.mjs')],capture_output=True,text=True)
+assert ops_boot.returncode==0, ops_boot.stdout+ops_boot.stderr
 for name in ['admin.html','ops.html','board.html','session.html','assignments.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
@@ -335,6 +337,7 @@ assert 'ops.html' in shell
 assert "{id: 'ops'" in shell or "id: 'ops'" in shell
 ops_html=(WEB/'teacher/ops.html').read_text()
 assert 'ops.js' in ops_html
+assert 'ops.js?v=2' in ops_html
 assert 'id="ops-year"' in ops_html
 assert 'id="ops-promote"' in ops_html
 assert 'id="ops-archive"' in ops_html
@@ -362,6 +365,11 @@ assert 'aipyOpsDemo' in ops_js
 assert 'function bindUi()' in ops_js
 assert 'archivePhrase' in ops_js
 assert 'removePhrase' in ops_js
+assert 'showBootError' in ops_js
+assert '운영 화면을 시작하지 못했습니다. 새로고침하세요.' in ops_js
+assert '권한을 확인하지 못했습니다. 네트워크를 확인하고 새로고침하세요.' in ops_js
+assert "from './firebase-config.js'" in ops_js
+assert ops_js.rfind("if ($('ops-gate')) startOps();") > ops_js.find('let uiBound')
 ops_model_js=(WEB/'assets/ops-model.js').read_text()
 assert '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.' in ops_model_js
 assert '보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요.' in ops_model_js
