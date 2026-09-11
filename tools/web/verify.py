@@ -236,7 +236,7 @@ assert '브라우저에서 다시 채점하는 기능은 다음 단계에서 붙
 assert '문제·예제 고르기' in assignments_html
 teacher_assign=(WEB/'assets/teacher-assignments.js').read_text()
 assert "collection(db, 'assignments')" in teacher_assign
-assert "collection(db, 'students'" in teacher_assign
+assert "doc(db, 'students'" in teacher_assign
 assert 'submissions' in teacher_assign
 assert 'catalog.json' in teacher_assign
 assign_js=(WEB/'assets/assignments.js').read_text()
