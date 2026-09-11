@@ -95,4 +95,17 @@ assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
 rules=(ROOT/'firebase/firestore.rules').read_text()
 assert 'match /sessions/{classroom}' in rules
 assert 'match /presence/{uid}' in rules
+assert 'wholeNumber(request.resource.data.attention.nonce)' in rules
+assert 'request.resource.data.attention.nonce is int' not in rules
+assert 'function sessionPayloadOk()' in rules
+assert 'function sessionNonceMonotonic()' in rules
+assert 'allow create: if isTeacher() && classIdOk(classroom) && sessionPayloadOk()' in rules
+assert 'sessionPayloadOk() && sessionNonceMonotonic()' in rules
+assert 'request.resource.data.focus is map' in rules
+assert 'request.resource.data.attention is map' in rules
+assert 'focus.get(\'topicAnchor\', null)' in rules
+assert 'focus.get(\'exampleId\', null)' in rules
+assert '>= resource.data.attention.nonce' in rules
+assert 'resource == null' not in rules
+assert '!resource.exists' not in rules
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')
