@@ -73,9 +73,9 @@ Firestore `students/{uid}` 문서가 생깁니다. 개인 Google 계정으로 �
 admins/{교사이메일}                   교사 권한 (콘솔에서만 관리)
 roster/{학생이메일}                   교사가 등록한 반·번호 명단
 students/{uid}                        학생 프로필 (반·번호는 명단과 일치해야 저장됨)
-students/{uid}/state/current          학습 기록 미러 (다음 단계)
+students/{uid}/state/current          학습 기록 미러 (complete/answers/journals/projects/last + times)
 students/{uid}/submissions/{과제id}    제출 소스·입력·채점 결과·출력 (다음 단계)
-progress/{uid}                        반별 집계용 요약 (다음 단계)
+progress/{uid}                        반별 집계용 요약 (단원 완료·문항 시도/정답·이해도 자리·updatedAt)
 sessions/{학년}-{반}                   수업 세션(반당 하나). 예: sessions/2-3
 presence/{uid}                        접속·따라가기 상태(90초 하트비트)
 ```

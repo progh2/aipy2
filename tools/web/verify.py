@@ -68,6 +68,8 @@ picker=subprocess.run(['node',str(Path(__file__).parent/'test_class_picker.mjs')
 assert picker.returncode==0, picker.stdout+picker.stderr
 follow=subprocess.run(['node',str(Path(__file__).parent/'test_follow_model.mjs')],capture_output=True,text=True)
 assert follow.returncode==0, follow.stdout+follow.stderr
+sync=subprocess.run(['node',str(Path(__file__).parent/'test_sync_model.mjs')],capture_output=True,text=True)
+assert sync.returncode==0, sync.stdout+sync.stderr
 for name in ['admin.html','board.html','session.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
@@ -89,6 +91,8 @@ assert '선생님 화면을 따라가는 중' in follow_js
 assert '선생님 화면으로' in follow_js
 unit=(WEB/'units/unit01/index.html').read_text()
 assert 'assets/follow.js' in unit
+assert 'assets/sync.js' in unit
+assert 'assets/sync.js' in (WEB/'index.html').read_text()
 assert 'assets/teacher-focus.js' in unit
 assert 'assets/teacher-focus.js' not in (WEB/'index.html').read_text()
 assert 'assets/teacher-focus.js' not in (WEB/'teacher/session.html').read_text()
@@ -113,6 +117,24 @@ assert 'allow create: if isTeacher() && classIdOk(classroom) && sessionPayloadOk
 assert 'sessionPayloadOk() && sessionNonceMonotonic()' in rules
 assert 'request.resource.data.focus is map' in rules
 assert 'request.resource.data.attention is map' in rules
+assert 'match /students/{uid}' in rules
+assert 'match /state/{docId}' in rules
+assert 'match /progress/{uid}' in rules
+assert "keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'counts', 'understanding', 'updatedAt'])" in rules
+sync_js=(WEB/'assets/sync.js').read_text()
+assert "doc(db, 'students', user.uid, 'state', 'current')" in sync_js
+assert "doc(db, 'progress', user.uid)" in sync_js
+assert 'confirmClearLocal' in sync_js
+assert '이 브라우저의 학습 기록을 지울까요?' in sync_js
+assert '어느 코드를 남길까요?' in sync_js
+app_js=(WEB/'assets/app.js').read_text()
+assert 'onLocalChange' in app_js
+assert "save('complete')" in app_js
+assert "save('code')" in app_js
+assert 'applyRemote' in app_js
+auth_js=(WEB/'assets/auth.js').read_text()
+assert 'confirmClearLocal' in auth_js
+assert 'aipySync.flush' in auth_js
 assert 'focus.get(\'topicAnchor\', null)' in rules
 assert 'focus.get(\'exampleId\', null)' in rules
 assert '>= resource.data.attention.nonce' in rules

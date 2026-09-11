@@ -91,7 +91,8 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'updatedAt'])
         && matchesRoster();
 
-      // 학습 기록 미러: 브라우저 localStorage의 state를 그대로 담습니다. (다음 단계)
+      // 학습 기록 미러: localStorage의 complete/answers/journals/projects(+ last)를 그대로 담습니다.
+      // 항목별 시각은 times, 문서 시각은 updatedAt. 키 제한을 두지 않아 문항·주제가 늘어도 규칙을 고치지 않습니다.
       match /state/{docId} {
         allow read, write: if owns(uid);
         allow read: if isTeacher();
@@ -105,7 +106,7 @@ service cloud.firestore {
       }
     }
 
-    // 반별 집계용 요약. 교사 관리 페이지는 이 컬렉션만 조회합니다. (다음 단계)
+    // 반별 집계용 요약. 학생 쓰기는 아래 키만 허용합니다. understanding은 M3에서 채웁니다.
     match /progress/{uid} {
       allow get: if owns(uid);
       allow get, list: if isTeacher();

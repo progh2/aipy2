@@ -114,8 +114,28 @@ async function signIn() {
 }
 
 async function signOut() {
+ let clearLocal = false;
+ try {
+  if (window.aipySync && typeof window.aipySync.confirmClearLocal === 'function') {
+   clearLocal = await window.aipySync.confirmClearLocal();
+  } else {
+   clearLocal = confirm('이 브라우저의 학습 기록을 지울까요?\n클라우드에 저장된 기록은 그대로 남습니다.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기');
+  }
+ } catch {}
+ try {
+  if (window.aipySync && typeof window.aipySync.flush === 'function') await window.aipySync.flush();
+ } catch (error) {
+  console.warn('[auth] 로그아웃 전 동기화 실패', error);
+ }
  const {auth, authMod} = await load();
  await authMod.signOut(auth);
+ if (clearLocal) {
+  const key = (window.aipyLearning && window.aipyLearning.key) || 'aipy-lab-v1';
+  try { localStorage.removeItem(key); } catch {}
+  toast('로그아웃했습니다. 이 브라우저의 학습 기록은 지웠습니다.');
+  location.reload();
+  return;
+ }
  toast('로그아웃했습니다. 이 브라우저의 학습 기록은 그대로 남아 있습니다.');
 }
 
