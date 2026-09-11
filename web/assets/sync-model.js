@@ -1,6 +1,8 @@
 /* 학습 기록 동기화(M2) 순수 헬퍼. Firebase 없이 병합·요약·쓰기 억제를 검사합니다.
    화면이 읽는 complete/answers/journals/projects 모양은 그대로 두고,
-   항목별 시각은 times 맵에만 둡니다. 문항·주제가 늘어도 키를 나열하지 않습니다. */
+   항목별 시각은 times 맵에만 둡니다. 문항·주제가 늘어도 키를 나열하지 않습니다.
+   understanding은 progress 요약에만 두고, 값 모양은 understanding-model이 맞춥니다. */
+import {normalizeUnderstanding} from './understanding-model.js';
 
 export const LEARNING_KEY = 'aipy-lab-v1';
 export const CODE_IDLE_MS = 25000;
@@ -231,7 +233,7 @@ export function progressFields(profile, state, now, understanding) {
   classroom: profile.classroom ?? null,
   number: profile.number ?? null,
   counts,
-  understanding: asMap(understanding)
+  understanding: normalizeUnderstanding(understanding)
  };
 }
 

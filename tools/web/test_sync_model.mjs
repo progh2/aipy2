@@ -114,9 +114,9 @@ const profile = {
  uid: 'u1', email: '20314@e-mirim.hs.kr', studentId: '20314', admissionYear: 2025,
  name: '홍길동', grade: 2, classroom: 3, number: 14
 };
-const progress = progressFields(profile, {complete: {'u1-overview': true}, answers: {}}, now, {topic: 'ok'});
+const progress = progressFields(profile, {complete: {'u1-overview': true}, answers: {}}, now, {'u1-overview': 'hard', skip: 'nope'});
 eq(Object.keys(progress).sort(), ['admissionYear', 'classroom', 'counts', 'email', 'grade', 'name', 'number', 'studentId', 'uid', 'understanding'], 'progress keys');
-eq(progress.understanding, {topic: 'ok'}, 'preserve understanding');
+eq(progress.understanding, {'u1-overview': 'hard'}, 'normalize understanding');
 eq(progress.counts.complete[1], 1, 'progress unit count');
 
 const payload = statePayload(local);

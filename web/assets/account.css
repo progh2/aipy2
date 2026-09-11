@@ -88,3 +88,30 @@ body.teacher-focus-live .lesson{scroll-margin-top:150px}
  body.teacher-focus-live{scroll-padding-top:170px}
 }
 @media print{.teacher-focus-ui{display:none!important}}
+
+/* 주제 끝 이해도·도움 요청. 완료 체크 아래에 JS가 붙입니다. */
+.topic-signals{margin:10px 0 0;display:flex;flex-direction:column;gap:8px}
+.understanding-note{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+.understanding-choices{display:flex;flex-wrap:wrap;gap:8px}
+.understanding-choices button{padding:7px 12px;font-size:13px}
+.understanding-choices button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.hard-comment{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px}
+.hard-comment[hidden]{display:none}
+.hard-comment label{display:flex;flex-direction:column;gap:4px;flex:1 1 16rem;margin:0;font-size:13px;font-weight:600}
+.hard-comment input{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.help-request[aria-pressed="true"]{background:#7a3d00;border-color:#7a3d00;color:#fff8e8}
+.help-slot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.understanding-history{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px;margin:0 0 20px}
+.understanding-history h2{margin:0 0 6px;font-size:18px}
+.understanding-history-list{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.understanding-history-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.understanding-history-tag{font-size:12px;font-weight:700;color:#7a3d00;background:#fff4e5;border-radius:999px;padding:3px 9px}
+.understanding-topic-row,.help-row{align-items:flex-start;flex-wrap:wrap}
+.understanding-topic-row p,.help-row p{margin:4px 0 0;flex-basis:100%}
+@media (max-width:640px){
+ .understanding-choices button{flex:1 1 calc(50% - 8px);justify-content:center}
+ .hard-comment{flex-direction:column;align-items:stretch}
+}
+@media print{
+ .topic-signals,.understanding-history,.help-slot,.help-request{display:none!important}
+}

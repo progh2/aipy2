@@ -121,6 +121,67 @@ assert 'match /students/{uid}' in rules
 assert 'match /state/{docId}' in rules
 assert 'match /progress/{uid}' in rules
 assert "keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'counts', 'understanding', 'updatedAt'])" in rules
+assert 'function understandingOk(value)' in rules
+assert 'understandingOk(request.resource.data.understanding)' in rules
+assert 'match /helpRequests/{id}' in rules
+assert 'match /feedback/{id}' in rules
+assert "helpStatusPatch('cancelled')" in rules
+assert "helpStatusPatch('resolved')" in rules
+assert 'function helpCreateOk()' in rules
+assert 'function feedbackPayloadOk()' in rules
+assert "id == request.auth.uid + '_' + request.resource.data.topicId" in rules
+assert 'optionalTopic(request.resource.data.get(\'topic\', null))' in rules
+assert 'resource == null' not in rules
+understanding=subprocess.run(['node',str(Path(__file__).parent/'test_understanding_model.mjs')],capture_output=True,text=True)
+assert understanding.returncode==0, understanding.stdout+understanding.stderr
+help_model=subprocess.run(['node',str(Path(__file__).parent/'test_help_model.mjs')],capture_output=True,text=True)
+assert help_model.returncode==0, help_model.stdout+help_model.stderr
+understanding_js=(WEB/'assets/understanding.js').read_text()
+assert '이해했어요' in understanding_js and '조금 어려워요' in understanding_js and '어려워요' in understanding_js
+assert '어디가 막혔나요?' in understanding_js
+assert '평가에 반영되지 않습니다' in understanding_js
+assert "doc(db, 'progress', user.uid)" in understanding_js
+assert "doc(db, 'feedback', id)" in understanding_js
+assert "label.completion [data-complete]" in understanding_js
+assert 'understanding-history' in understanding_js
+help_js=(WEB/'assets/help.js').read_text()
+assert '도움 요청' in help_js
+assert '요청 취소' in help_js
+assert "collection(db, 'helpRequests')" in help_js
+assert "where('uid', '==', user.uid)" in help_js
+assert 'status: \'cancelled\'' in help_js or "status: 'cancelled'" in help_js
+assert '#lab' in help_js and '#practice' in help_js
+teacher_board=(WEB/'assets/teacher-board.js').read_text()
+assert "collection(db, 'progress')" in teacher_board
+assert "collection(db, 'helpRequests')" in teacher_board
+assert "where('classId', '==', id)" in teacher_board
+assert "status: 'resolved'" in teacher_board
+assert 'studentLabel' in teacher_board
+board=(WEB/'teacher/board.html').read_text()
+assert 'teacher-board.js' in board
+assert 'id="understanding-board"' in board
+assert 'id="help-board"' in board
+assert 'id="understanding-counts"' in board
+assert 'id="help-list"' in board
+assert '평가에 반영되지 않습니다' in board
+assert '어려워요' in board
+unit=(WEB/'units/unit01/index.html').read_text()
+assert 'assets/understanding.js' in unit
+assert 'assets/help.js' in unit
+assert 'data-complete="u1-overview"' in unit
+assert 'class="completion"' in unit
+assert 'assets/understanding.js' in (WEB/'index.html').read_text()
+account_css=(WEB/'assets/account.css').read_text()
+assert '.topic-signals' in account_css
+assert '.understanding-choices' in account_css
+assert '.help-request' in account_css
+sync_js=(WEB/'assets/sync.js').read_text()
+assert 'aipyUnderstanding' in sync_js
+app_js=(WEB/'assets/app.js').read_text()
+assert 'lastError' in app_js
+assert 'rememberError' in app_js
+auth_js=(WEB/'assets/auth.js').read_text()
+assert 'UNDERSTANDING_KEY' in auth_js
 sync_js=(WEB/'assets/sync.js').read_text()
 assert "doc(db, 'students', user.uid, 'state', 'current')" in sync_js
 assert "doc(db, 'progress', user.uid)" in sync_js

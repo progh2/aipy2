@@ -106,13 +106,19 @@ service cloud.firestore {
       }
     }
 
-    // 반별 집계용 요약. 학생 쓰기는 아래 키만 허용합니다. understanding은 M3에서 채웁니다.
+    // 이해도 맵은 키가 주제마다 늘어나므로 값마다 나열하지 않고, 맵·개수만 제한합니다.
+    function understandingOk(value) {
+      return value is map && value.size() <= 80;
+    }
+
+    // 반별 집계용 요약. 학생 쓰기는 아래 키만 허용합니다. understanding은 짧은 문자열 맵입니다.
     match /progress/{uid} {
       allow get: if owns(uid);
       allow get, list: if isTeacher();
       allow create, update: if owns(uid)
         && request.resource.data.email == email()
         && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'counts', 'understanding', 'updatedAt'])
+        && understandingOk(request.resource.data.understanding)
         && matchesRoster();
     }
 
@@ -195,6 +201,79 @@ service cloud.firestore {
         && optionalShort(request.resource.data.page, 200)
         && optionalShort(request.resource.data.topicAnchor, 80)
         && request.resource.data.updatedAt is timestamp;
+    }
+
+    function helpIdentityOk() {
+      return request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == email()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 40
+        && matchesRoster();
+    }
+
+    function optionalTopic(value) {
+      return value == null || (value is string && value.matches('^u[1-4]-[a-z0-9-]+$') && value.size() <= 40);
+    }
+
+    // create 에서는 resource 를 읽지 않습니다. 상태 변경만 update 에서 검사합니다.
+    function helpCreateOk() {
+      return request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'classId', 'topic', 'example', 'lastError', 'status', 'createdAt', 'updatedAt'])
+        && helpIdentityOk()
+        && request.resource.data.classId is string
+        && classIdOk(request.resource.data.classId)
+        && request.resource.data.classId == rosterClassId()
+        && request.resource.data.status == 'open'
+        && optionalTopic(request.resource.data.get('topic', null))
+        && optionalShort(request.resource.data.get('example', null), 80)
+        && optionalShort(request.resource.data.get('lastError', null), 300)
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    function helpStatusPatch(next) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
+        && resource.data.status == 'open'
+        && request.resource.data.status == next
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /helpRequests/{id} {
+      allow get: if schoolAccount() && resource.data.uid == request.auth.uid;
+      allow get, list: if isTeacher();
+      allow list: if schoolAccount() && resource.data.uid == request.auth.uid;
+      allow create: if schoolAccount() && helpCreateOk();
+      allow update: if schoolAccount() && request.auth.uid == resource.data.uid && helpStatusPatch('cancelled');
+      allow update: if isTeacher() && helpStatusPatch('resolved');
+    }
+
+    function feedbackPayloadOk() {
+      return request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'topicId', 'text', 'createdAt', 'updatedAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == email()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.topicId is string
+        && request.resource.data.topicId.matches('^u[1-4]-[a-z0-9-]+$')
+        && request.resource.data.topicId.size() <= 40
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 200
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp
+        && matchesRoster();
+    }
+
+    match /feedback/{id} {
+      allow get: if schoolAccount() && resource.data.uid == request.auth.uid;
+      allow get, list: if isTeacher();
+      allow create: if schoolAccount()
+        && feedbackPayloadOk()
+        && id == request.auth.uid + '_' + request.resource.data.topicId;
+      allow update: if schoolAccount()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == resource.data.uid
+        && feedbackPayloadOk();
     }
   }
 }
