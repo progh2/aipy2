@@ -70,6 +70,11 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
   생성기 훅은 `tools/web/build.py`의 `layout()`에 `sync.js` 한 줄을 넣는 것이 전부입니다.
   `app.js`는 `save(kind)`와 `window.aipyLearning.onLocalChange` / `getState` / `applyRemote`만 노출합니다.
   완료 체크·정답 확인은 즉시, 코드·저널은 약 25초 유휴와 `pagehide`에 올립니다.
+- 이해도 신호와 도움 요청(M3): `assets/understanding.js` · `assets/help.js`.
+  완료 체크(`.completion`) 옆에 이해했어요/조금 어려워요/어려워요를 붙이고,
+  실습실·문제 영역에 도움 요청을 붙입니다. 값은 `progress/{uid}.understanding`과
+  `feedback`·`helpRequests`에 쓰며, 교사 보드는 `assets/teacher-board.js`가
+  `teacher/board.html`에서 선택된 반만 구독합니다. 평가에 반영되지 않습니다.
 
 GitHub Pages는 서버 비밀을 둘 수 없으므로 학교 도메인 확인·반 정보 검증·교사 권한은 모두 Firestore 규칙이 판단합니다.
 브라우저 자동채점 결과는 위조가 가능하므로, 제출물에는 결과와 함께 소스와 출력을 남겨 교사가 확인할 수 있게 설계합니다.

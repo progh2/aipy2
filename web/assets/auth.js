@@ -2,6 +2,7 @@
    학교 도메인 확인과 반·번호 위조 방지는 Firestore 규칙이 최종 판단합니다.
    설정이 비어 있으면 아무 UI도 만들지 않고 조용히 종료합니다. */
 import {firebaseConfig, SCHOOL_DOMAIN, SDK, ready} from './firebase-config.js';
+import {UNDERSTANDING_KEY} from './understanding-model.js';
 
 const slot = document.getElementById('account');
 const node = (tag, cls, text) => {
@@ -157,7 +158,10 @@ async function finishSignOut(clearLocal) {
  await authMod.signOut(auth);
  if (clearLocal) {
   const key = (window.aipyLearning && window.aipyLearning.key) || 'aipy-lab-v1';
-  try { localStorage.removeItem(key); } catch {}
+  try {
+   localStorage.removeItem(key);
+   localStorage.removeItem(UNDERSTANDING_KEY);
+  } catch {}
   toast('로그아웃했습니다. 이 브라우저의 학습 기록은 지웠습니다.');
   location.reload();
   return;

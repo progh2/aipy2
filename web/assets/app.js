@@ -75,7 +75,9 @@ function applyRemote(next){
  if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/index\.html#[a-z0-9-]+$/.test(state.last))$('#resume').href=state.last;
  if(typeof window.aipyLearning._refreshUnit==='function') window.aipyLearning._refreshUnit();
 }
-window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;}};
+let lastError='';
+function rememberError(text){lastError=typeof text==='string'?text.replace(/\s+/g,' ').trim().slice(0,300):'';}
+window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;},lastError(){return lastError;}};
 window.addEventListener('pagehide',()=>{try{window.aipyLearning.saveLocal();}catch{}});
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
@@ -124,7 +126,7 @@ function execute(payload,onOutput){
    if(m.type==='loading')onOutput(m.text+'\n');
    if(m.type==='ready'){clearTimeout(timer);timer=setTimeout(()=>stop('30초 실행 제한에 도달했습니다. 반복 조건을 확인하세요.'),30000);}
    if(m.type==='stdout')onOutput(m.text);
-   if(m.type==='done'){clearTimeout(timer);running=false;$('#stop').disabled=true;if(m.error)onOutput(m.error+'\n');jobResolve=null;jobOutput=null;resolve(m);}
+   if(m.type==='done'){clearTimeout(timer);running=false;$('#stop').disabled=true;if(m.error){onOutput(m.error+'\n');rememberError(m.error);}else if(m.ok)rememberError('');jobResolve=null;jobOutput=null;resolve(m);}
   };
   worker.onerror=e=>{onOutput('실행 오류: '+e.message+'\n');stop('실행 엔진을 다시 준비합니다.');};
   worker.postMessage(payload);
@@ -186,7 +188,7 @@ async function runExample(check=false){
   if(ex.mode!=='web')paiGuide('idea','문법 확인을 통과했어요. 다음은 실제 동작!', 'PC에서 예제를 실행하고 입력·출력·오류 처리를 직접 확인하세요.');
   else if(check)paiGuide('celebrate','준비된 조건을 통과했어요!', '입력값을 하나 더 바꾸어 보고, 왜 이 결과가 나오는지 내 말로 설명하세요.');
   else paiGuide('idea','예상했던 결과가 나왔나요?', '출력의 이유를 설명한 다음 숫자나 조건을 하나 바꾸어 다시 실험해 보세요.');
- }else if(!result.stopped && !result.busy)paiGuide('debug','오류는 원인을 찾을 단서예요.', '마지막 오류 줄 → 파일명과 줄 번호 → 사용한 이름과 값을 순서대로 확인하세요.');
+ }else if(!result.stopped && !result.busy){if(!lastError)rememberError((out.textContent||'').trim().split('\n').filter(Boolean).slice(-1)[0]||'');paiGuide('debug','오류는 원인을 찾을 단서예요.', '마지막 오류 줄 → 파일명과 줄 번호 → 사용한 이름과 값을 순서대로 확인하세요.');}
 }
 $('#run').onclick=()=>runExample(false);$('#check-example').onclick=()=>runExample(true);
 // Dependency-free ZIP writer (stored entries, UTF-8 names, CRC32).
@@ -241,6 +243,7 @@ function questionCard(q){
   else ok=q.kind==='순서'?JSON.stringify(value)===JSON.stringify(q.answer):norm(value)===norm(q.answer);
   const text=ok?'확인 완료! '+q.explain:'다시 살펴보세요. '+q.hint+(q.starter?'\n'+trace:'\n다른 올바른 표현일 수 있으니 정답 예시와 비교하세요.');
   feedback.className='feedback '+(ok?'success':'retry');paiFeedback(feedback,text,ok?'celebrate':'debug');
+  if(ok)rememberError('');else rememberError(q.starter?(trace.trim().split('\n').filter(Boolean).slice(-1)[0]||text):text);
   storeAnswer(q,{value,status:ok?'done':'retry',attempts:(record.attempts||0)+1,feedback:text});check.disabled=false;
  };
  retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save('answer');renderQuestions(false);}};

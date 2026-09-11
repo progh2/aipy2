@@ -132,8 +132,10 @@ async function flush() {
    const payload = statePayload(merged.state);
    payload.updatedAt = store.serverTimestamp();
    tx.set(stateRef, payload);
-   const understanding = prev.exists() ? prev.data().understanding : {};
-   const progress = progressFields(profile, merged.state, Date.now(), understanding);
+   const liveUnderstanding = (window.aipyUnderstanding && typeof window.aipyUnderstanding.snapshot === 'function')
+    ? window.aipyUnderstanding.snapshot()
+    : (prev.exists() ? prev.data().understanding : {});
+   const progress = progressFields(profile, merged.state, Date.now(), liveUnderstanding);
    progress.updatedAt = store.serverTimestamp();
    tx.set(progressRef, progress);
    return {merged, wrote: true};
