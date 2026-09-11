@@ -1,0 +1,13 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "assignments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "open", "order": "ASCENDING"},
+        {"fieldPath": "classrooms", "arrayConfig": "CONTAINS"}
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -74,7 +74,8 @@ admins/{교사이메일}                   교사 권한 (콘솔에서만 관리
 roster/{학생이메일}                   교사가 등록한 반·번호 명단
 students/{uid}                        학생 프로필 (반·번호는 명단과 일치해야 저장됨)
 students/{uid}/state/current          학습 기록 미러 (complete/answers/journals/projects/last + times)
-students/{uid}/submissions/{과제id}    제출 소스·입력·채점 결과·출력 (다음 단계)
+students/{uid}/submissions/{과제id}    제출 소스·입력·채점 결과·출력·시도·이력·교사 코멘트
+assignments/{과제id}                   과제 정의: 대상 문제·예제, 반, 기간, 공개 여부
 progress/{uid}                        반별 집계용 요약 (단원 완료·문항 시도/정답·이해도 맵·updatedAt)
 sessions/{학년}-{반}                   수업 세션(반당 하나). 예: sessions/2-3
 presence/{uid}                        접속·따라가기 상태(90초 하트비트)
@@ -85,7 +86,9 @@ feedback/{uid}_{주제id}                어려워요 한 줄 코멘트 (progres
 교사가 학생용 단원 페이지에서 주제를 눌러 초점을 보낼 때도 `sessions/{학년}-{반}`을
 갱신합니다. 반은 관리 화면에서 고른 값입니다. 규칙 변경은 없습니다.
 
-`sessions`·`presence`·`helpRequests`·`feedback` 규칙은 [firestore.rules](firestore.rules)에 있습니다.
+`sessions`·`presence`·`helpRequests`·`feedback`·`assignments` 규칙은 [firestore.rules](firestore.rules)에 있습니다.
+학생 과제 목록 조회(`open` + `classrooms` 배열 포함)는 [firestore.indexes.json](firestore.indexes.json) 복합 인덱스가 필요합니다.
+콘솔에서 처음 쿼리가 실패하면 오류에 붙은 링크에서 인덱스를 만들거나, 이 파일을 배포하세요.
 GitHub Pages 배포는 규칙 파일을 게시하지 않습니다. 규칙을 바꾼 뒤에는 콘솔
 **Firestore Database → 규칙**에 파일 내용을 붙여넣고 게시하거나,
 `firebase deploy --only firestore:rules` 로 배포하세요. 규칙이 아직 이전 버전이면

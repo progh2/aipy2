@@ -161,3 +161,34 @@ aside.rail .understanding-history h2{font-size:14px}
 @media print{
  .topic-signals,.understanding-history,.help-slot,.help-request{display:none!important}
 }
+
+/* 과제 정의·제출(M6). 교사 폼과 학생 단원 패널을 같은 카드 리듬으로 맞춥니다. */
+.admin-card input[type="text"],.admin-card input[type="search"],.admin-card input[type="datetime-local"],.admin-card select{
+ width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;font:inherit
+}
+.assign-checks,.assign-filters{display:flex;flex-wrap:wrap;gap:8px 14px;margin:8px 0}
+.assign-check{display:flex;align-items:center;gap:8px;margin:6px 0;font-weight:600}
+.assign-dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.target-picker{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--paper)}
+.assign-row{align-items:flex-start;flex-wrap:wrap}
+.assign-row .actions{margin:8px 0 0}
+.assign-sub-btn{width:100%;text-align:left;background:#fff;cursor:pointer}
+.assign-detail h3{margin:12px 0 4px}
+.assign-sources{display:flex;flex-direction:column;gap:12px;margin:12px 0}
+.assign-source{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--paper)}
+.assign-source h4{margin:0 0 6px;font-size:15px}
+.assign-source pre{margin:6px 0 0;max-height:220px;overflow:auto;white-space:pre-wrap;font-size:12px}
+.assign-review-form input{width:100%;margin:6px 0 10px;padding:8px 10px;border:1px solid var(--line);border-radius:8px}
+.assignment-panel{margin:24px 0}
+.assignment-list{display:flex;flex-direction:column;gap:12px}
+.assignment-card{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px 18px}
+.assignment-card h3{margin:0 0 6px;font-size:18px}
+.assignment-targets{margin:8px 0;padding-left:18px}
+.assignment-targets li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin:4px 0}
+.assignment-comment{margin:8px 0 0;padding:8px 10px;border-radius:8px;background:#e9f2ef;color:#176c5f;font-size:14px}
+@media (max-width:640px){
+ .assign-dates{grid-template-columns:1fr}
+ .target-picker{max-height:220px}
+ .assignment-card{padding:14px}
+}
+@media print{.assignment-panel{break-inside:avoid}}

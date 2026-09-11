@@ -98,10 +98,14 @@ service cloud.firestore {
         allow read: if isTeacher();
       }
 
-      // 과제 제출물: 소스·입력·채점 결과·출력을 함께 남깁니다. (다음 단계)
+      // 과제 제출물: 소스·입력·채점 결과·출력을 함께 남깁니다. 교사는 확인·코멘트만 고칩니다.
       match /submissions/{taskId} {
-        allow read, create, update: if owns(uid);
-        allow read: if isTeacher();
+        allow get: if owns(uid);
+        allow get, list: if isTeacher();
+        allow list: if owns(uid);
+        allow create: if owns(uid) && submissionCreateOk(taskId);
+        allow update: if owns(uid) && submissionUpdateOk(taskId);
+        allow update: if isTeacher() && teacherReviewPatch();
         allow delete: if isTeacher();
       }
     }
@@ -275,6 +279,102 @@ service cloud.firestore {
         && request.resource.data.uid == resource.data.uid
         && request.resource.data.topicId == resource.data.topicId
         && feedbackPayloadOk();
+    }
+
+    function submissionIdentityOk() {
+      return request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == email()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 40
+        && matchesRoster();
+    }
+
+    function submissionCoreOk(taskId) {
+      return request.resource.data.keys().hasOnly(['assignmentId', 'uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'classId', 'status', 'late', 'submittedAt', 'attemptCount', 'targets', 'history', 'reviewStatus', 'reviewComment', 'reviewedAt', 'reviewedBy', 'updatedAt'])
+        && submissionIdentityOk()
+        && request.resource.data.assignmentId == taskId
+        && request.resource.data.classId is string
+        && classIdOk(request.resource.data.classId)
+        && request.resource.data.classId == rosterClassId()
+        && request.resource.data.status in ['passed', 'failed']
+        && request.resource.data.late is bool
+        && wholeNumber(request.resource.data.attemptCount)
+        && request.resource.data.attemptCount >= 1
+        && request.resource.data.attemptCount <= 40
+        && request.resource.data.targets is map
+        && request.resource.data.targets.size() > 0
+        && request.resource.data.targets.size() <= 40
+        && request.resource.data.history is list
+        && request.resource.data.history.size() <= 12
+        && request.resource.data.reviewStatus == 'pending'
+        && request.resource.data.reviewComment is string
+        && request.resource.data.reviewComment.size() <= 80
+        && request.resource.data.submittedAt is timestamp
+        && request.resource.data.updatedAt is timestamp
+        && (request.resource.data.get('reviewedAt', null) == null || request.resource.data.reviewedAt is timestamp)
+        && optionalShort(request.resource.data.get('reviewedBy', null), 80);
+    }
+
+    function submissionCreateOk(taskId) {
+      return submissionCoreOk(taskId)
+        && request.resource.data.attemptCount == 1
+        && request.resource.data.reviewComment == ''
+        && request.resource.data.get('reviewedAt', null) == null
+        && request.resource.data.get('reviewedBy', null) == null;
+    }
+
+    function submissionUpdateOk(taskId) {
+      return submissionCoreOk(taskId)
+        && request.resource.data.attemptCount == resource.data.attemptCount + 1
+        && request.resource.data.reviewComment == resource.data.reviewComment
+        && request.resource.data.get('reviewedBy', null) == resource.data.get('reviewedBy', null)
+        && request.resource.data.get('reviewedAt', null) == resource.data.get('reviewedAt', null);
+    }
+
+    function teacherReviewPatch() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reviewStatus', 'reviewComment', 'reviewedAt', 'reviewedBy'])
+        && request.resource.data.reviewStatus == 'reviewed'
+        && request.resource.data.reviewComment is string
+        && request.resource.data.reviewComment.size() <= 80
+        && request.resource.data.reviewedBy == email()
+        && request.resource.data.reviewedAt is timestamp;
+    }
+
+    function assignmentWriteOk() {
+      return request.resource.data.keys().hasOnly(['title', 'description', 'targets', 'classrooms', 'openAt', 'dueAt', 'open', 'createdAt', 'updatedAt', 'createdBy'])
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 80
+        && request.resource.data.description is string
+        && request.resource.data.description.size() <= 500
+        && request.resource.data.targets is list
+        && request.resource.data.targets.size() > 0
+        && request.resource.data.targets.size() <= 40
+        && request.resource.data.classrooms is list
+        && request.resource.data.classrooms.size() > 0
+        && request.resource.data.classrooms.size() <= 20
+        && request.resource.data.open is bool
+        && request.resource.data.createdBy is string
+        && request.resource.data.createdBy.size() > 0
+        && request.resource.data.createdBy.size() <= 80
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.updatedAt is timestamp
+        && (request.resource.data.openAt == null || request.resource.data.openAt is timestamp)
+        && (request.resource.data.dueAt == null || request.resource.data.dueAt is timestamp);
+    }
+
+    // 과제 정의. 학생은 자기 반에 공개된 과제만 읽고, 교사가 만들고 고칩니다.
+    match /assignments/{id} {
+      allow get, list: if isTeacher();
+      allow get, list: if schoolAccount()
+        && resource.data.open == true
+        && resource.data.classrooms.hasAny([rosterClassId()]);
+      allow create: if isTeacher() && assignmentWriteOk();
+      allow update: if isTeacher() && assignmentWriteOk()
+        && request.resource.data.createdBy == resource.data.createdBy
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if isTeacher();
     }
   }
 }

@@ -55,8 +55,9 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 - `before-you-start.html`은 독립 페이지라 계정 영역이 없습니다.
 - 교사용 명단 관리: `teacher/admin.html` · 동작은 `assets/admin.js`. 교사 대문에서 링크됩니다.
   CSV 열은 `email,studentId,admissionYear,name,grade,classroom,number`이며 번호만 선택입니다.
-- 교사 관리 뼈대: `teacher/admin.html` · `teacher/board.html` · `teacher/session.html`이
-  `assets/teacher-shell.js`로 같은 헤더·반 선택을 씁니다. 반 ID는 `{학년}-{반}`(예: `2-3`)이며
+- 교사 관리 뼈대: `teacher/admin.html` · `teacher/board.html` · `teacher/session.html` ·
+  `teacher/assignments.html`이 `assets/teacher-shell.js`로 같은 헤더·반 선택을 씁니다.
+  반 ID는 `{학년}-{반}`(예: `2-3`)이며
   교사 이메일별 `localStorage`(`aipy-teacher-class:{email}`)에 남습니다. 명단 목록은 선택한 반만 보여 줍니다.
 - 수업 따라가기(M5): `teacher/session.html`에서 세션 시작·종료·초점·시선 모으기.
   학생 화면은 `assets/follow.js`가 자기 반 `sessions/{학년}-{반}`만 구독합니다.
@@ -75,6 +76,12 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
   실습실·문제 영역에 도움 요청을 붙입니다. 값은 `progress/{uid}.understanding`과
   `feedback`·`helpRequests`에 쓰며, 교사 보드는 `assets/teacher-board.js`가
   `teacher/board.html`에서 선택된 반만 구독합니다. 평가에 반영되지 않습니다.
+- 과제와 제출(M6): 교사는 `teacher/assignments.html`에서 기존 문제·예제(`data/catalog.json`)를
+  골라 `assignments/{id}`를 만듭니다. 학생은 단원 화면의 과제 패널에서 검사 후 제출하며,
+  통과하지 않아도 `미통과 제출`로 남고 마감 이후는 `지연`입니다. 제출물은
+  `students/{uid}/submissions/{과제id}`에 소스·입력·채점 결과·출력이 들어갑니다.
+  교사는 같은 화면에서 소스·출력을 보고 확인·한 줄 코멘트를 남깁니다.
+  생성기 훅은 `layout()`의 `assignments.js`와 `build.py`의 교사 과제 페이지입니다.
 - 참여 현황 보드(M4): 같은 `teacher/board.html`에 학생 카드·주제×학생 히트맵·문항 분석·
   접속 신선도·학생 상세·CSV가 붙습니다. 집계 순수 함수는 `assets/board-model.js`.
   `progress`·`presence`·`helpRequests`·`roster`만 읽고 학생 state는 읽지 않습니다.

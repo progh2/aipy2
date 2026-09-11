@@ -81,7 +81,7 @@ def teacher_pages(web,layout,units,notes):
  root=web/'teacher';root.mkdir(exist_ok=True)
  home='<main id="main" class="teacher-page"><p class="eyebrow">TEACHER DESK</p><h1>교사용 수업 요약</h1><p class="lead">단원별 설명 흐름, 시연 포인트, 오개념, 평가 연결을 한곳에서 확인합니다. 수업 화면 보기를 누르면 학생에게 보여 줄 개념 도식만 한 장씩 표시합니다.</p><div class="learning-map">'
  for u in units:home+=f'<a href="unit0{u}.html"><b>{textbook.ROMAN[u]}</b><span>{META[u][0]}</span><small>교과서 {textbook.BOOK[u][1]}쪽 · {len(units[u])}개 개념 화면</small></a>'
- home+='</div><h2>자료 사용 순서</h2>'+flow(['교사용 요약에서 목표·오개념 확인','수업 화면으로 구조 설명','학생용 실습 링크로 전환','결과·설명·저널 확인'])+'<section class="teacher-note"><h2>차시와 평가의 기준</h2><p>평가 항목은 제공된 2026학년도 2학기 운영 계획 _g에 근거합니다. 아래 시간 배분은 50분 수업 운영 제안이며 확정 시수나 평가 기준을 변경하지 않습니다. 기존 학생 화면의 일률적인 “6차시” 표기는 제거했습니다.</p><p>성취기준·세부 점수 부여와 실제 제출 경로는 학교의 확정 문서에 따릅니다. 웹 연습 완료·자동 검사는 공식 성적이 아닙니다.</p></section><p><a href="admin.html">수업 관리 · 명단 →</a> · <a href="board.html">반 현황 보드 →</a> · <a href="session.html">수업 세션 →</a> · <a href="../index.html">학생용 대문으로 →</a></p></main>'
+ home+='</div><h2>자료 사용 순서</h2>'+flow(['교사용 요약에서 목표·오개념 확인','수업 화면으로 구조 설명','학생용 실습 링크로 전환','결과·설명·저널 확인'])+'<section class="teacher-note"><h2>차시와 평가의 기준</h2><p>평가 항목은 제공된 2026학년도 2학기 운영 계획 _g에 근거합니다. 아래 시간 배분은 50분 수업 운영 제안이며 확정 시수나 평가 기준을 변경하지 않습니다. 기존 학생 화면의 일률적인 “6차시” 표기는 제거했습니다.</p><p>성취기준·세부 점수 부여와 실제 제출 경로는 학교의 확정 문서에 따릅니다. 웹 연습 완료·자동 검사는 공식 성적이 아닙니다.</p></section><p><a href="admin.html">수업 관리 · 명단 →</a> · <a href="board.html">반 현황 보드 →</a> · <a href="session.html">수업 세션 →</a> · <a href="assignments.html">과제와 제출 →</a> · <a href="../index.html">학생용 대문으로 →</a></p></main>'
  (root/'index.html').write_text(layout('교사용 수업 요약',home,'../'))
  for u,ls in units.items():
   title=META[u][0]
