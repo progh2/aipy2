@@ -1,6 +1,7 @@
 /* 교사 재검증 순수 함수 검사. node tools/web/test_regrade_model.mjs */
 import {
- REVERIFY_NOTE, REVERIFY_LABEL, MATCH_LABEL, MISMATCH_LABEL, REVERIFY_SKIP_ESSAY,
+ REVERIFY_NOTE, REVERIFY_LABEL, REVERIFY_CLASS_LABEL, REVERIFY_SKIP_ESSAY,
+ MATCH_LABEL, MISMATCH_LABEL, SKIP_LABEL, ERROR_LABEL,
  normAnswer, submittedSource, storedOk, unitFromTarget, localRegrade, pyodidePayload,
  compareTargetGrade, summarizeReverify, reverifyResultRow, submissionMismatchCount
 } from '../../web/assets/regrade-model.js';
@@ -10,10 +11,14 @@ function eq(actual, expected, label) {
  if (left !== right) throw new Error(`${label}: ${left} !== ${right}`);
 }
 
-eq(REVERIFY_NOTE.includes('브라우저 채점'), true, 'browser label');
-eq(REVERIFY_LABEL.includes('브라우저 채점'), true, 'reverify button');
-eq(MATCH_LABEL.includes('같아요'), true, 'match');
-eq(MISMATCH_LABEL.includes('달라요'), true, 'mismatch');
+eq(REVERIFY_NOTE, '이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.', 'reverify note');
+eq(REVERIFY_LABEL, '이 제출 다시 채점', 'reverify button');
+eq(REVERIFY_CLASS_LABEL, '이 반 다시 채점', 'class reverify button');
+eq(REVERIFY_SKIP_ESSAY, '서술형은 자동 재검증하지 않아요.', 'essay skip');
+eq(MATCH_LABEL, '저장된 결과와 같아요', 'match');
+eq(MISMATCH_LABEL, '저장된 결과와 달라요', 'mismatch');
+eq(SKIP_LABEL, '다시 채점 안 함', 'skip');
+eq(ERROR_LABEL, '다시 채점하지 못했어요', 'error');
 
 eq(normAnswer('  Hello  World '), 'HelloWorld', 'norm space');
 eq(normAnswer("it's"), 'it"s', 'norm quote');

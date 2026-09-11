@@ -23,7 +23,7 @@ eq(LABEL_REVIEWED, '확인됨', 'reviewed label');
 eq(BROWSER_GRADE_NOTE, '브라우저 채점이에요. 성적·출결에는 안 들어가요.', 'browser grade');
 eq(LATE_NOTE, '마감 후에도 제출할 수 있어요. 지연으로 표시돼요.', 'late note');
 eq(FAIL_OK_NOTE, '통과하지 않아도 제출할 수 있어요.', 'fail ok');
-eq(REGRADE_NOTE, '제출 소스를 이 브라우저에서 다시 실행해 저장된 채점과 비교합니다.', 'regrade note');
+eq(REGRADE_NOTE, '이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.', 'regrade note');
 eq(REGRADE_NOTE.includes('다음 단계'), false, 'no regrade stub');
 eq(SUBMIT_LABEL, '제출', 'submit');
 eq(RESUBMIT_LABEL, '다시 제출', 'resubmit');
