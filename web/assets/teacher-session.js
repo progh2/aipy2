@@ -541,12 +541,18 @@ function listen(id) {
  });
 }
 
+function isDemo() {
+ return new URLSearchParams(location.search).get('demo') === '1';
+}
+
 function onClass(detail) {
+ if (isDemo()) return;
  classIdValue = (detail && detail.classId) || '';
  listen(classIdValue);
 }
 
 function onAccount(detail) {
+ if (isDemo()) return;
  const user = detail && detail.user;
  teacherEmail = (user && user.email) ? user.email.toLowerCase() : '';
  paintStatus();
@@ -582,7 +588,7 @@ function renderSessionDemo() {
   presence: [{topicAnchor: 'define', page: 'units/unit01/index.html'}],
   trail: [{topicAnchor: 'overview', page: 'units/unit01/index.html'}],
   titles,
-  topicTotal: topics.length || 2,
+  topicTotal: 2,
   assignment: {title: '모듈 과제'},
   submissions: [{email: '20301@e-mirim.hs.kr'}, {email: '20302@e-mirim.hs.kr'}]
  }));

@@ -689,16 +689,23 @@ async function start() {
   }
  }
  paintPicker();
- document.addEventListener('aipy:account', (event) => review(event.detail.user));
+ const demo = new URLSearchParams(location.search).get('demo') === '1';
+ document.addEventListener('aipy:account', (event) => {
+  if (demo) return;
+  review(event.detail.user);
+ });
  document.addEventListener('aipy:class', () => {
+  if (demo) return;
   paintClasses();
   paintAssignmentList();
   paintReviewSelect();
   loadSubmissions();
  });
- document.addEventListener('aipy:roster-changed', () => loadRoster());
- if (window.aipyAccount) review(window.aipyAccount.user);
- if (new URLSearchParams(location.search).get('demo') === '1') renderAssignDemo();
+ document.addEventListener('aipy:roster-changed', () => {
+  if (!demo) loadRoster();
+ });
+ if (demo) renderAssignDemo();
+ else if (window.aipyAccount) review(window.aipyAccount.user);
 }
 
 function renderAssignDemo() {
