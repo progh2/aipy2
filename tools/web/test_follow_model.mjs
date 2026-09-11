@@ -1,7 +1,7 @@
 /* follow-model 순수 함수 검사. node tools/web/test_follow_model.mjs */
 import {
  isSessionLive, timestampMillis, pageFromPath, samePage, shouldNavigate, focusHref,
- focusKey, topicFromHash, visibleTopic, countPresence, nextAttentionNonce,
+ focusKey, topicFromHash, visibleTopic, countPresence, nextAttentionNonce, wholeNonce,
  expiresAtMillis, sessionFields, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
  DEFAULT_PAGE
@@ -39,12 +39,20 @@ eq(countPresence([
  {following: true, updatedAt: now - PRESENCE_STALE_MS - 1}
 ], now), {following: 1, browsing: 1}, 'presence counts skip stale');
 eq(nextAttentionNonce(3), 4, 'nonce');
+eq(wholeNonce(1.9), 1, 'whole nonce truncates');
 eq(expiresAtMillis(now) - now, SESSION_TTL_MS, 'ttl');
 
 const started = sessionFields({teacherEmail: 't@e-mirim.hs.kr', page: 'units/unit01/index.html', topicAnchor: 'overview'});
 eq(started.active, true, 'session active');
 eq(started.focus.page, 'units/unit01/index.html', 'session page');
+eq(started.focus.topicAnchor, 'overview', 'session topic');
 eq(started.focus.exampleId, null, 'session example default');
+eq(Object.keys(started.focus).sort(), ['exampleId', 'page', 'topicAnchor'], 'focus keys always present');
+eq(started.attention.nonce, 0, 'nonce whole');
+const bare = sessionFields({teacherEmail: 't@e-mirim.hs.kr'});
+eq(bare.focus.topicAnchor, null, 'topic default null');
+eq(bare.focus.exampleId, null, 'example default null');
+eq('topicAnchor' in bare.focus && 'exampleId' in bare.focus, true, 'optional focus keys present');
 eq(presenceFields({classroom: '2-3', following: false}).following, false, 'presence following');
 eq(presenceFields({classroom: '2-3'}).following, true, 'presence default following');
 

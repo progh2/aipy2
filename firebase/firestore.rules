@@ -130,7 +130,8 @@ service cloud.firestore {
     }
 
     function sessionFocusOk() {
-      return request.resource.data.focus.keys().hasOnly(['page', 'topicAnchor', 'exampleId', 'updatedAt'])
+      return request.resource.data.focus is map
+        && request.resource.data.focus.keys().hasOnly(['page', 'topicAnchor', 'exampleId', 'updatedAt'])
         && request.resource.data.focus.page is string
         && request.resource.data.focus.page.size() > 0
         && request.resource.data.focus.page.size() <= 200
@@ -146,23 +147,21 @@ service cloud.firestore {
       return (value is int || value is float) && value == int(value);
     }
 
+    // create 경로에서는 resource.data.attention 을 읽지 않습니다.
     function sessionAttentionOk() {
-      return request.resource.data.attention.keys().hasOnly(['nonce', 'at'])
+      return request.resource.data.attention is map
+        && request.resource.data.attention.keys().hasOnly(['nonce', 'at'])
         && wholeNumber(request.resource.data.attention.nonce)
         && request.resource.data.attention.nonce >= 0
-        && request.resource.data.attention.at is timestamp
-        // create 때는 resource 가 null 이라 .exists 를 읽으면 Null value error 로 거절됩니다.
-        && (resource == null
-            || request.resource.data.attention.nonce >= resource.data.attention.nonce);
+        && request.resource.data.attention.at is timestamp;
     }
 
-    // 수업 세션. 문서 ID는 `{학년}-{반}` (예: 2-3). 학생은 자기 반 문서만 읽고 쓰지 못합니다.
-    match /sessions/{classroom} {
-      allow get: if schoolAccount() && classIdOk(classroom) && classroom == rosterClassId();
-      allow get, list: if isTeacher();
-      allow create, update: if isTeacher()
-        && classIdOk(classroom)
-        && request.resource.data.keys().hasOnly(['active', 'teacherEmail', 'startedAt', 'expiresAt', 'focus', 'attention'])
+    function sessionNonceMonotonic() {
+      return request.resource.data.attention.nonce >= resource.data.attention.nonce;
+    }
+
+    function sessionPayloadOk() {
+      return request.resource.data.keys().hasOnly(['active', 'teacherEmail', 'startedAt', 'expiresAt', 'focus', 'attention'])
         && request.resource.data.active is bool
         && request.resource.data.teacherEmail is string
         && request.resource.data.teacherEmail.size() <= 80
@@ -170,6 +169,15 @@ service cloud.firestore {
         && request.resource.data.expiresAt is timestamp
         && sessionFocusOk()
         && sessionAttentionOk();
+    }
+
+    // 수업 세션. 문서 ID는 `{학년}-{반}` (예: 2-3). 학생은 자기 반 문서만 읽고 쓰지 못합니다.
+    // create 와 update 를 나눕니다. nonce 단조성은 기존 문서가 있는 update 에서만 검사합니다.
+    match /sessions/{classroom} {
+      allow get: if schoolAccount() && classIdOk(classroom) && classroom == rosterClassId();
+      allow get, list: if isTeacher();
+      allow create: if isTeacher() && classIdOk(classroom) && sessionPayloadOk();
+      allow update: if isTeacher() && classIdOk(classroom) && sessionPayloadOk() && sessionNonceMonotonic();
       allow delete: if isTeacher();
     }
 

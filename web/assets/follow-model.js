@@ -108,9 +108,13 @@ export function countPresence(rows, now = Date.now(), staleMs = PRESENCE_STALE_M
  return {following, browsing};
 }
 
+export function wholeNonce(value) {
+ const n = Number(value);
+ return Number.isFinite(n) && n >= 0 ? Math.trunc(n) : 0;
+}
+
 export function nextAttentionNonce(current) {
- const n = Number(current);
- return Number.isFinite(n) && n >= 0 ? Math.floor(n) + 1 : 1;
+ return wholeNonce(current) + 1;
 }
 
 export function expiresAtMillis(now = Date.now()) {
@@ -126,7 +130,7 @@ export function sessionFields({teacherEmail, page, topicAnchor, exampleId}) {
    topicAnchor: topicAnchor || null,
    exampleId: exampleId || null
   },
-  attention: {nonce: 0}
+  attention: {nonce: wholeNonce(0)}
  };
 }
 

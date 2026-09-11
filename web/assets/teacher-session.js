@@ -4,7 +4,7 @@ import {load} from './auth.js';
 import {labelClass} from './class-picker.js';
 import {
  isSessionLive, timestampMillis, countPresence, catalogPages, catalogTopics,
- catalogExamples, sessionFields, expiresAtMillis, DEFAULT_PAGE
+ catalogExamples, sessionFields, expiresAtMillis, wholeNonce, DEFAULT_PAGE
 } from './follow-model.js';
 
 const $ = (id) => document.getElementById(id);
@@ -113,11 +113,17 @@ async function startSession() {
   const {db, store} = await load();
   const fields = sessionFields({teacherEmail, page, topicAnchor, exampleId});
   await store.setDoc(store.doc(db, 'sessions', classIdValue), {
-   ...fields,
+   active: fields.active,
+   teacherEmail: fields.teacherEmail,
    startedAt: store.serverTimestamp(),
    expiresAt: store.Timestamp.fromMillis(expiresAtMillis()),
-   focus: {...fields.focus, updatedAt: store.serverTimestamp()},
-   attention: {nonce: 0, at: store.serverTimestamp()}
+   focus: {
+    page: fields.focus.page,
+    topicAnchor: fields.focus.topicAnchor,
+    exampleId: fields.focus.exampleId,
+    updatedAt: store.serverTimestamp()
+   },
+   attention: {nonce: wholeNonce(fields.attention.nonce), at: store.serverTimestamp()}
   });
   note('세션을 시작했습니다.');
  } catch (error) {
@@ -145,8 +151,8 @@ async function sendFocus() {
   const {db, store} = await load();
   await store.updateDoc(store.doc(db, 'sessions', classIdValue), {
    'focus.page': page,
-   'focus.topicAnchor': topicAnchor,
-   'focus.exampleId': exampleId,
+   'focus.topicAnchor': topicAnchor || null,
+   'focus.exampleId': exampleId || null,
    'focus.updatedAt': store.serverTimestamp()
   });
   note('초점을 보냈습니다.');
