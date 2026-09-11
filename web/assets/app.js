@@ -1,4 +1,7 @@
 'use strict';
+/* 학습 UI와 localStorage. 클라우드 미러는 assets/sync.js가 붙습니다.
+   훅: save(kind), window.aipyLearning.{getState,applyRemote,onLocalChange,key}.
+   kind: complete|answer 즉시 동기화, code|journal|draft|nav 는 유휴·이탈. */
 (() => {
 const prefix=document.body.dataset.prefix||'', unit=Number(document.body.dataset.unit||0), KEY='aipy-lab-v1';
 let state={version:1,complete:{},answers:{},journals:{},projects:{},last:''};
@@ -48,8 +51,31 @@ if(moodButtons.length){
 }
 let toastTimer;
 function toast(text){$('#toast').textContent=text;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').textContent='',4200);}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}}
-window.aipyLearning={ready:false,saveLocal(){save();},selectExample(){},currentExample(){return null;}};
+function save(kind){
+ try{localStorage.setItem(KEY,JSON.stringify(state));}
+ catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}
+ if(kind!=='remote'){
+  try{if(typeof window.aipyLearning.onLocalChange==='function')window.aipyLearning.onLocalChange(kind||'save');}catch{}
+ }
+}
+function applyRemote(next){
+ if(!next || typeof next!=='object')return;
+ for(const key of ['complete','answers','journals','projects']){
+  if(next[key] && typeof next[key]==='object' && !Array.isArray(next[key])) state[key]=next[key];
+ }
+ if(typeof next.last==='string') state.last=next.last;
+ if(next.times && typeof next.times==='object') state.times=next.times;
+ save('remote');
+ updateProgress();
+ $$('[data-complete]').forEach(box=>{
+  box.checked=!!state.complete[box.dataset.complete];
+  if(typeof box._paintComplete==='function') box._paintComplete();
+ });
+ $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';});
+ if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/index\.html#[a-z0-9-]+$/.test(state.last))$('#resume').href=state.last;
+ if(typeof window.aipyLearning._refreshUnit==='function') window.aipyLearning._refreshUnit();
+}
+window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;}};
 window.addEventListener('pagehide',()=>{try{window.aipyLearning.saveLocal();}catch{}});
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
@@ -63,21 +89,22 @@ $$('[data-import]').forEach(input=>input.addEventListener('change',async()=>{
   const f=input.files[0];if(!f)return;if(f.size>6000000)throw Error('6MB 이하 기록 파일을 선택하세요.');
   const data=JSON.parse(await f.text());if(data.version!==1 || !['complete','answers','journals','projects'].every(k=>data[k]&&typeof data[k]==='object'&&!Array.isArray(data[k])))throw Error('올바른 학습 기록 파일이 아닙니다.');
   if(!confirm('현재 브라우저 기록을 이 파일의 기록으로 바꿀까요?'))return;
-  state={version:1,complete:data.complete,answers:data.answers,journals:data.journals,projects:data.projects,last:typeof data.last==='string'?data.last:''};save();location.reload();
+  state={version:1,complete:data.complete,answers:data.answers,journals:data.journals,projects:data.projects,last:typeof data.last==='string'?data.last:''};save('import');location.reload();
  }catch(error){toast('불러오기 실패: '+error.message);}finally{input.value='';}
 }));
 $$('[data-clear]').forEach(b=>b.addEventListener('click',()=>{if(confirm('이 실습실의 코드·풀이·저널 기록을 지울까요? 먼저 내보내기를 권장합니다.')){try{localStorage.removeItem(KEY);}catch{}location.reload();}}));
-$$('[data-complete]').forEach(box=>{
+ $$('[data-complete]').forEach(box=>{
  box.checked=!!state.complete[box.dataset.complete];
  const tip=box.closest('.lesson')?.querySelector('.pai-note'),originalMood=tip?.dataset.paiMood,originalLabel=tip?.querySelector('.pai-label').textContent;
  function showCompletion(){if(!tip)return;const mood=box.checked?'celebrate':originalMood;tip.dataset.paiMood=mood;const img=tip.querySelector('img');img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt='';tip.querySelector('.pai-label').textContent=box.checked?'파이 · 설명까지 완료했어요!':originalLabel;}
- showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save();updateProgress();showCompletion();});
+ box._paintComplete=showCompletion;
+ showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save('complete');updateProgress();showCompletion();});
 });
-$$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save();});});
+$$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save('journal');});});
 if($('#download-journal'))$('#download-journal').onclick=()=>{let text=`# ${unit}단원 학습 저널\n\n작성일: ${new Date().toLocaleDateString('ko-KR')}\n`;for(const [key,title]of [['learn','이해한 개념'],['error','오류와 해결 근거'],['next','시험 결과와 다음 도전']])text+=`\n## ${title}\n\n${state.journals[`u${unit}-${key}`]||''}\n`;download(`unit${unit}-journal.md`,text);};
 if(!unit){window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));return;}
 let data, currentId, files={},fileName, worker=null,running=false,timer,jobResolve,jobOutput,exampleDirty=false;
-function remember(){const id=location.hash.slice(1)||'overview';if(/^[a-z0-9-]+$/.test(id)){state.last=`units/unit0${unit}/index.html#${id}`;save();}}
+function remember(){const id=location.hash.slice(1)||'overview';if(/^[a-z0-9-]+$/.test(id)){state.last=`units/unit0${unit}/index.html#${id}`;save('nav');}}
 window.addEventListener('hashchange',remember);remember();
 function stop(reason='실행을 중지했습니다.'){
  if(worker)worker.terminate();worker=null;clearTimeout(timer);
@@ -105,7 +132,7 @@ function execute(payload,onOutput){
 }
 $('#stop').onclick=()=>stop();
 function validName(name){return typeof name==='string' && /^[\w.-]+(?:\/[\w.-]+)*$/.test(name) && !name.split('/').some(p=>p==='.'||p==='..') && name.length<150;}
-function stash(){if(!currentId)return;files[fileName]=$('#code-editor').value;state.projects[currentId]={files,entry:$('#entry-file').value,stdin:$('#stdin').value,args:$('#argv').value};save();}
+function stash(){if(!currentId)return;files[fileName]=$('#code-editor').value;state.projects[currentId]={files,entry:$('#entry-file').value,stdin:$('#stdin').value,args:$('#argv').value};save('code');}
 function renderFiles(){
  const tree=$('#file-tree');tree.replaceChildren();
  Object.keys(files).sort().forEach(name=>{const b=node('button',name===fileName?'active':'',name);b.setAttribute('aria-pressed',String(name===fileName));b.onclick=()=>{stash();fileName=name;$('#code-editor').value=files[name];$('#file-name').textContent=name;renderFiles();};tree.append(b);});
@@ -144,7 +171,7 @@ $('#add-file').onclick=()=>{const name=prompt('파일 경로를 입력하세요.
 $('#delete-file').onclick=()=>{if(Object.keys(files).length===1 || (fileName.endsWith('.py')&&Object.keys(files).filter(n=>n.endsWith('.py')).length===1))return toast('Python 파일 하나는 남겨 두세요.');if(!confirm(fileName+' 파일을 지울까요?'))return;delete files[fileName];fileName=Object.keys(files)[0];$('#code-editor').value=files[fileName];renderFiles();stash();};
 $('#copy-code').onclick=()=>copy($('#code-editor').value);
 $('#download-file').onclick=()=>download(fileName.split('/').pop(),$('#code-editor').value);
-$('#reset-code').onclick=()=>{if(running)return toast('실행을 마치거나 중지한 뒤 원본으로 복원하세요.');if(confirm('이 예제의 수정 내용을 원본으로 되돌릴까요?')){const id=currentId;currentId=null;delete state.projects[id];save();selectExample(id);}};
+$('#reset-code').onclick=()=>{if(running)return toast('실행을 마치거나 중지한 뒤 원본으로 복원하세요.');if(confirm('이 예제의 수정 내용을 원본으로 되돌릴까요?')){const id=currentId;currentId=null;delete state.projects[id];save('code');selectExample(id);}};
 async function runExample(check=false){
  if(running)return toast('현재 실행을 마치거나 중지하세요.');stash();let args;
  try{args=JSON.parse($('#argv').value||'[]');if(!Array.isArray(args)||!args.every(x=>typeof x==='string'))throw Error();}catch{return toast('실행 인자는 ["값1", "값2"] 형식으로 입력하세요.');}
@@ -183,7 +210,7 @@ let page=0,filtered=[];
 const PAGE_SIZE=8;
 function norm(s){return String(s??'').trim().replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/\s+/g,'').replace(/'/g,'"');}
 function answerRecord(q){return state.answers[q.id]||{};}
-function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save();}
+function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save(patch.status!==undefined||patch.attempts!==undefined?'answer':'draft');}
 function questionCard(q){
  const card=node('article','question');card.id=q.id;
  card.append(node('div','question-meta',`${q.id} · ${q.kind} · ${q.ref}`),node('h3','',q.prompt));
@@ -216,7 +243,7 @@ function questionCard(q){
   feedback.className='feedback '+(ok?'success':'retry');paiFeedback(feedback,text,ok?'celebrate':'debug');
   storeAnswer(q,{value,status:ok?'done':'retry',attempts:(record.attempts||0)+1,feedback:text});check.disabled=false;
  };
- retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save();renderQuestions(false);}};
+ retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save('answer');renderQuestions(false);}};
  if(q.starter){const copyButton=node('button','','코드 복사');copyButton.onclick=()=>copy(answer());actions.append(copyButton);const stopButton=node('button','','실행 중지');stopButton.onclick=()=>{if(running)stop();};actions.append(stopButton);}
  return card;
 }
@@ -253,6 +280,10 @@ fetch(prefix+`data/unit${unit}.json`).then(r=>{if(!r.ok)throw Error(r.status);re
  window.aipyLearning.saveLocal=()=>{stash();};
  window.aipyLearning.selectExample=(id)=>{if(data.examples[id])selectExample(id,false);};
  window.aipyLearning.currentExample=()=>currentId||null;
+ window.aipyLearning._refreshUnit=()=>{
+  if(!data || !currentId)return;
+  const id=currentId;currentId=null;selectExample(id,false);renderQuestions(false);
+ };
  window.aipyLearning.ready=true;
  document.dispatchEvent(new CustomEvent('aipy:learning-ready'));
 }).catch(error=>{$('#output').textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));});
