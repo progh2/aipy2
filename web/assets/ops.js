@@ -24,7 +24,6 @@ function headRow(titles) {
 }
 
 const gate = $('ops-gate');
-if (gate) startOps();
 
 let teacherEmail = '';
 let dbRef = null;
@@ -178,9 +177,9 @@ function paint() {
   else if (classId) scope.textContent = `${year}년 입학 · ${labelClass(classId)}만 표시합니다.`;
   else scope.textContent = `${year}년 입학 ${rows.length}명입니다. 진급 때 학년·반만 바꾸고 입학년도는 유지합니다.`;
  }
- $('ops-count').textContent = year ? `${rows.length}명` : '';
- $('ops-promote').disabled = true;
- $('ops-promote-preview-table').replaceChildren();
+ if ($('ops-count')) $('ops-count').textContent = year ? `${rows.length}명` : '';
+ if ($('ops-promote')) $('ops-promote').disabled = true;
+ if ($('ops-promote-preview-table')) $('ops-promote-preview-table').replaceChildren();
  if (!year) {
   $('ops-list').replaceChildren(node('p', 'small', '입학년도를 선택하세요.'));
   return;
@@ -435,3 +434,4 @@ export function renderFixture(data = {}) {
 }
 
 if (typeof window !== 'undefined') window.aipyOpsDemo = renderFixture;
+if (gate) startOps();
