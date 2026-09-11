@@ -245,6 +245,8 @@ assert "where('open', '==', true)" in assign_js
 assert "array-contains" in assign_js
 assert '미통과 제출' in assign_js or 'LABEL_FAILED' in assign_js
 assert 'aipy:checked' in assign_js
+assert 'teacher-shell' in assign_js
+assert 'location.pathname' in assign_js
 assign_model=(WEB/'assets/assignment-model.js').read_text()
 assert '미통과 제출' in assign_model
 assert '지연' in assign_model
