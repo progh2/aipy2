@@ -119,7 +119,7 @@ async function signOut() {
   if (window.aipySync && typeof window.aipySync.confirmClearLocal === 'function') {
    clearLocal = await window.aipySync.confirmClearLocal();
   } else {
-   clearLocal = confirm('이 브라우저의 학습 기록을 지울까요?\n클라우드에 저장된 기록은 그대로 남습니다.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기');
+   clearLocal = confirm('이 브라우저의 학습 기록을 지울까요? 계정에 저장한 기록은 그대로 남아요.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기');
   }
  } catch {}
  try {
@@ -197,3 +197,4 @@ if (!slot) {
 } else {
  start();
 }
+

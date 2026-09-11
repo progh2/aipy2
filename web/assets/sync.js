@@ -19,7 +19,7 @@ const STATUS = {
  local: '로컬만',
  pending: '동기화 대기',
  syncing: '동기화 중',
- synced: '동기화됨',
+ synced: '다른 기기와 맞춤',
  error: '로컬만 · 동기화 실패',
  conflict: '코드 버전 선택'
 };
@@ -175,7 +175,7 @@ async function pullAndMerge() {
   await flush();
  } catch (error) {
   console.warn('[sync]', error);
-  setStatus('error', '클라우드 기록을 읽지 못했습니다. 이 브라우저 기록으로 학습하세요.');
+  setStatus('error', '계정에 저장한 기록을 읽지 못했습니다. 이 브라우저 기록으로 학습하세요.');
  }
 }
 
@@ -263,7 +263,7 @@ function onLocalChange(kind) {
 }
 
 function confirmClearLocal() {
- return confirm('이 브라우저의 학습 기록을 지울까요?\n클라우드에 저장된 기록은 그대로 남습니다.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기');
+ return confirm('이 브라우저의 학습 기록을 지울까요? 계정에 저장한 기록은 그대로 남아요.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기');
 }
 
 function hookLearning() {
@@ -297,3 +297,4 @@ if (!document.getElementById('account')) {
 } else {
  start();
 }
+
