@@ -77,6 +77,16 @@ assert 'teacher-session.js' in session
 assert 'id="session-start"' in session and '세션 시작' in session
 assert 'id="attention-send"' in session and '시선 모으기' in session
 assert '따라오는 중' in session
+assert '이 반 학생 화면을 같이 따라가게 할 수 있어요' in session
+assert '세션 키' not in session and 'Firestore' not in session
+teacher_session=(WEB/'assets/teacher-session.js').read_text()
+assert '세션이 없어요. 시작하면 약 2시간 동안 유지돼요.' in teacher_session
+assert '시선을 모았어요. 학생 쪽에 안내만 뜨고, 화면은 안 옮겨요.' in teacher_session
+follow_js=(WEB/'assets/follow.js').read_text()
+assert '잠깐 혼자 보는 중' in follow_js
+assert '선생님이 여기를 보고 있어요' in follow_js
+assert '선생님 화면을 따라가는 중' in follow_js
+assert '선생님 화면으로' in follow_js
 unit=(WEB/'units/unit01/index.html').read_text()
 assert 'assets/follow.js' in unit
 catalog=json.loads((WEB/'data/catalog.json').read_text())
