@@ -108,6 +108,9 @@ const counts = summarizeProgress({
 }, now);
 eq(counts.complete, {1: 1, 2: 0, 3: 1, 4: 0}, 'unit complete counts');
 eq(counts.questions, {attempts: 5, correct: 2}, 'question attempts and correct');
+eq(counts.done, ['u1-overview', 'u3-ml'], 'done topic ids');
+eq(counts.answers.a, {attempts: 3, correct: 1}, 'answer summary done');
+eq(counts.answers.b, {attempts: 2, correct: 0}, 'answer summary retry');
 eq(counts.lastActivity, now, 'last activity');
 
 const profile = {

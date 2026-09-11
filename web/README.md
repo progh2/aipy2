@@ -75,6 +75,9 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
   실습실·문제 영역에 도움 요청을 붙입니다. 값은 `progress/{uid}.understanding`과
   `feedback`·`helpRequests`에 쓰며, 교사 보드는 `assets/teacher-board.js`가
   `teacher/board.html`에서 선택된 반만 구독합니다. 평가에 반영되지 않습니다.
+- 참여 현황 보드(M4): 같은 `teacher/board.html`에 학생 카드·주제×학생 히트맵·문항 분석·
+  접속 신선도·학생 상세·CSV가 붙습니다. 집계 순수 함수는 `assets/board-model.js`.
+  `progress`·`presence`·`helpRequests`·`roster`만 읽고 학생 state는 읽지 않습니다.
 
 GitHub Pages는 서버 비밀을 둘 수 없으므로 학교 도메인 확인·반 정보 검증·교사 권한은 모두 Firestore 규칙이 판단합니다.
 브라우저 자동채점 결과는 위조가 가능하므로, 제출물에는 결과와 함께 소스와 출력을 남겨 교사가 확인할 수 있게 설계합니다.
