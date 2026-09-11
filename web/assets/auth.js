@@ -114,14 +114,14 @@ async function signIn() {
 }
 
 async function signOut() {
+ // confirm은 클릭 제스처 안에서 동기 호출해야 합니다. await 뒤에 두면 브라우저가 창을 막고 false만 돌려줍니다.
+ const clearMsg = '이 브라우저의 학습 기록을 지울까요? 계정에 저장한 기록은 그대로 남아요.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기';
  let clearLocal = false;
  try {
-  if (window.aipySync && typeof window.aipySync.confirmClearLocal === 'function') {
-   clearLocal = await window.aipySync.confirmClearLocal();
-  } else {
-   clearLocal = confirm('이 브라우저의 학습 기록을 지울까요? 계정에 저장한 기록은 그대로 남아요.\n\n확인: 이 컴퓨터 기록만 지우기\n취소: 이 브라우저에 기록 남기기');
-  }
- } catch {}
+  clearLocal = window.confirm(clearMsg);
+ } catch (error) {
+  console.warn('[auth] 로그아웃 확인창 실패', error);
+ }
  try {
   if (window.aipySync && typeof window.aipySync.flush === 'function') await window.aipySync.flush();
  } catch (error) {
