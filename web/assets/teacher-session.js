@@ -85,7 +85,7 @@ function paintStatus() {
   return;
  }
  if (!current || !isSessionLive(current)) {
-  status.textContent = `${labelClass(classIdValue)} 세션이 없습니다. 세션 시작을 누르면 2시간 동안 유지됩니다.`;
+  status.textContent = '세션이 없어요. 시작하면 약 2시간 동안 유지돼요.';
   end.disabled = true;
   send.disabled = true;
   attention.disabled = true;
@@ -164,7 +164,7 @@ async function sendAttention() {
    'attention.nonce': store.increment(1),
    'attention.at': store.serverTimestamp()
   });
-  note('시선을 모았습니다. 학생 화면에는 배너만 표시됩니다.');
+  note('시선을 모았어요. 학생 쪽에 안내만 뜨고, 화면은 안 옮겨요.');
  } catch (error) {
   console.error('[teacher-session]', error);
   note(`시선 모으기를 보내지 못했습니다. (${error.code || error})`);

@@ -81,7 +81,7 @@ function ensureUi() {
  rejoin.hidden = true;
  rejoin.addEventListener('click', rejoinFocus);
  bar.append(status, rejoin);
- const attention = node('p', 'follow-attention', '선생님이 시선을 모으고 있습니다');
+ const attention = node('p', 'follow-attention', '선생님이 여기를 보고 있어요');
  attention.id = 'follow-attention';
  attention.hidden = true;
  attention.setAttribute('role', 'status');
@@ -114,7 +114,7 @@ function paintUi() {
   status.textContent = '선생님 화면을 따라가는 중';
   rejoin.hidden = true;
  } else {
-  status.textContent = '따로 보는 중';
+  status.textContent = '잠깐 혼자 보는 중';
   rejoin.hidden = false;
  }
 }
