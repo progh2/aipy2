@@ -70,6 +70,8 @@ follow=subprocess.run(['node',str(Path(__file__).parent/'test_follow_model.mjs')
 assert follow.returncode==0, follow.stdout+follow.stderr
 sync=subprocess.run(['node',str(Path(__file__).parent/'test_sync_model.mjs')],capture_output=True,text=True)
 assert sync.returncode==0, sync.stdout+sync.stderr
+board_model=subprocess.run(['node',str(Path(__file__).parent/'test_board_model.mjs')],capture_output=True,text=True)
+assert board_model.returncode==0, board_model.stdout+board_model.stderr
 for name in ['admin.html','board.html','session.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
@@ -163,17 +165,41 @@ assert '#lab' in help_js and '#practice' in help_js
 teacher_board=(WEB/'assets/teacher-board.js').read_text()
 assert "collection(db, 'progress')" in teacher_board
 assert "collection(db, 'helpRequests')" in teacher_board
+assert "collection(db, 'presence')" in teacher_board
+assert "collection(db, 'roster')" in teacher_board
 assert "where('classId', '==', id)" in teacher_board
+assert "where('classroom', '==', id)" in teacher_board
 assert "status: 'resolved'" in teacher_board
 assert 'studentLabel' in teacher_board
+assert 'board-model.js' in teacher_board
+assert 'board-export' in teacher_board
+assert 'student-detail' in teacher_board
+board_model=(WEB/'assets/board-model.js').read_text()
+assert 'CSV 내보내기' not in board_model
+assert '학번' in board_model
+assert '1분 이내' in board_model and '3분 이내' in board_model
+assert "collection(db, 'students'" not in board_model
+assert "collection(db, 'students'" not in teacher_board
 board=(WEB/'teacher/board.html').read_text()
 assert 'teacher-board.js' in board
 assert 'id="understanding-board"' in board
 assert 'id="help-board"' in board
 assert 'id="understanding-counts"' in board
 assert 'id="help-list"' in board
+assert 'id="roster-board"' in board
+assert 'id="heatmap-board"' in board
+assert 'id="question-board"' in board
+assert 'id="student-detail"' in board
+assert 'id="board-export"' in board
+assert 'id="roster-list"' in board
+assert 'id="heatmap-wrap"' in board
+assert 'id="question-list"' in board
 assert '학생이 보내는 신호예요. 점수·출결에는 안 반영돼요.' in board
 assert '어려워요' in board
+assert 'CSV 내보내기' in board
+assert '준비 중' not in board
+catalog_questions=json.loads((WEB/'data/catalog.json').read_text()).get('questions') or []
+assert catalog_questions and catalog_questions[0]['id'].startswith('u'), 'catalog questions'
 unit=(WEB/'units/unit01/index.html').read_text()
 assert 'assets/understanding.js' in unit
 assert 'assets/help.js' in unit

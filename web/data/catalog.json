@@ -630,5 +630,1072 @@
     "ml-cv-small": {
       "title": "웹 원리 · 교차 검증의 역할 바꾸기"
     }
-  }
+  },
+  "questions": [
+    {
+      "id": "u1-q001",
+      "unit": 1,
+      "topic": "overview"
+    },
+    {
+      "id": "u1-q002",
+      "unit": 1,
+      "topic": "overview"
+    },
+    {
+      "id": "u1-q003",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q004",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q005",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q006",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q007",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q008",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q009",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q010",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q011",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q012",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q013",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q014",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q015",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q016",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q017",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q018",
+      "unit": 1,
+      "topic": "기초 개념"
+    },
+    {
+      "id": "u1-q019",
+      "unit": 1,
+      "topic": "imports"
+    },
+    {
+      "id": "u1-q020",
+      "unit": 1,
+      "topic": "imports"
+    },
+    {
+      "id": "u1-q021",
+      "unit": 1,
+      "topic": "imports"
+    },
+    {
+      "id": "u1-q022",
+      "unit": 1,
+      "topic": "packages"
+    },
+    {
+      "id": "u1-q023",
+      "unit": 1,
+      "topic": "packages"
+    },
+    {
+      "id": "u1-q024",
+      "unit": 1,
+      "topic": "packages"
+    },
+    {
+      "id": "u1-q025",
+      "unit": 1,
+      "topic": "packages"
+    },
+    {
+      "id": "u1-q026",
+      "unit": 1,
+      "topic": "random"
+    },
+    {
+      "id": "u1-q027",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q028",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q029",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q030",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q031",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q032",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q033",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q034",
+      "unit": 1,
+      "topic": "결과 추적"
+    },
+    {
+      "id": "u1-q035",
+      "unit": 1,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u1-q036",
+      "unit": 1,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u1-q037",
+      "unit": 1,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u1-q038",
+      "unit": 1,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u1-q039",
+      "unit": 1,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u1-q040",
+      "unit": 1,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u1-q041",
+      "unit": 1,
+      "topic": "define"
+    },
+    {
+      "id": "u1-q042",
+      "unit": 1,
+      "topic": "math"
+    },
+    {
+      "id": "u1-q043",
+      "unit": 1,
+      "topic": "random"
+    },
+    {
+      "id": "u1-q044",
+      "unit": 1,
+      "topic": "random"
+    },
+    {
+      "id": "u1-q045",
+      "unit": 1,
+      "topic": "datetime"
+    },
+    {
+      "id": "u1-q046",
+      "unit": 1,
+      "topic": "imports"
+    },
+    {
+      "id": "u1-q047",
+      "unit": 1,
+      "topic": "random"
+    },
+    {
+      "id": "u1-q048",
+      "unit": 1,
+      "topic": "datetime"
+    },
+    {
+      "id": "u1-q049",
+      "unit": 1,
+      "topic": "packages"
+    },
+    {
+      "id": "u1-q050",
+      "unit": 1,
+      "topic": "main"
+    },
+    {
+      "id": "u1-q051",
+      "unit": 1,
+      "topic": "overview"
+    },
+    {
+      "id": "u1-q052",
+      "unit": 1,
+      "topic": "main"
+    },
+    {
+      "id": "u1-q053",
+      "unit": 1,
+      "topic": "project"
+    },
+    {
+      "id": "u1-q054",
+      "unit": 1,
+      "topic": "review"
+    },
+    {
+      "id": "u1-q055",
+      "unit": 1,
+      "topic": "define"
+    },
+    {
+      "id": "u1-q056",
+      "unit": 1,
+      "topic": "math"
+    },
+    {
+      "id": "u1-q057",
+      "unit": 1,
+      "topic": "datetime"
+    },
+    {
+      "id": "u1-q058",
+      "unit": 1,
+      "topic": "random"
+    },
+    {
+      "id": "u1-q059",
+      "unit": 1,
+      "topic": "sys"
+    },
+    {
+      "id": "u2-q001",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q002",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q003",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q004",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q005",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q006",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q007",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q008",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q009",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q010",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q011",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q012",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q013",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q014",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q015",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q016",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q017",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q018",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q019",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q020",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q021",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q022",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q023",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q024",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q025",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q026",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q027",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q028",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q029",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q030",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q031",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q032",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q033",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q034",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q035",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q036",
+      "unit": 2,
+      "topic": "기본 코드"
+    },
+    {
+      "id": "u2-q037",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q038",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q039",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q040",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q041",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q042",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q043",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q044",
+      "unit": 2,
+      "topic": "오류 찾기"
+    },
+    {
+      "id": "u2-q045",
+      "unit": 2,
+      "topic": "memo"
+    },
+    {
+      "id": "u2-q046",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q047",
+      "unit": 2,
+      "topic": "memo"
+    },
+    {
+      "id": "u2-q048",
+      "unit": 2,
+      "topic": "layout"
+    },
+    {
+      "id": "u2-q049",
+      "unit": 2,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u2-q050",
+      "unit": 2,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u2-q051",
+      "unit": 2,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u2-q052",
+      "unit": 2,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u2-q053",
+      "unit": 2,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u2-q054",
+      "unit": 2,
+      "topic": "응용 판단"
+    },
+    {
+      "id": "u2-q055",
+      "unit": 2,
+      "topic": "events"
+    },
+    {
+      "id": "u2-q056",
+      "unit": 2,
+      "topic": "memo"
+    },
+    {
+      "id": "u2-q057",
+      "unit": 2,
+      "topic": "project"
+    },
+    {
+      "id": "u2-q058",
+      "unit": 2,
+      "topic": "memo"
+    },
+    {
+      "id": "u2-q059",
+      "unit": 2,
+      "topic": "events"
+    },
+    {
+      "id": "u2-q060",
+      "unit": 2,
+      "topic": "memo"
+    },
+    {
+      "id": "u2-q061",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q062",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q063",
+      "unit": 2,
+      "topic": "project"
+    },
+    {
+      "id": "u2-q064",
+      "unit": 2,
+      "topic": "libraries"
+    },
+    {
+      "id": "u1-q060",
+      "unit": 1,
+      "topic": "thirdparty"
+    },
+    {
+      "id": "u2-q065",
+      "unit": 2,
+      "topic": "widgets"
+    },
+    {
+      "id": "u2-q066",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q067",
+      "unit": 2,
+      "topic": "pyside"
+    },
+    {
+      "id": "u2-q068",
+      "unit": 2,
+      "topic": "ui"
+    },
+    {
+      "id": "u2-q069",
+      "unit": 2,
+      "topic": "events"
+    },
+    {
+      "id": "u2-q070",
+      "unit": 2,
+      "topic": "events"
+    },
+    {
+      "id": "u3-q001",
+      "unit": 3,
+      "topic": "AI 관계"
+    },
+    {
+      "id": "u3-q002",
+      "unit": 3,
+      "topic": "학습 방식"
+    },
+    {
+      "id": "u3-q003",
+      "unit": 3,
+      "topic": "학습 방식"
+    },
+    {
+      "id": "u3-q004",
+      "unit": 3,
+      "topic": "학습 방식"
+    },
+    {
+      "id": "u3-q005",
+      "unit": 3,
+      "topic": "군집"
+    },
+    {
+      "id": "u3-q006",
+      "unit": 3,
+      "topic": "특성"
+    },
+    {
+      "id": "u3-q007",
+      "unit": 3,
+      "topic": "전처리"
+    },
+    {
+      "id": "u3-q008",
+      "unit": 3,
+      "topic": "pandas"
+    },
+    {
+      "id": "u3-q009",
+      "unit": 3,
+      "topic": "분류"
+    },
+    {
+      "id": "u3-q010",
+      "unit": 3,
+      "topic": "과대 적합"
+    },
+    {
+      "id": "u3-q011",
+      "unit": 3,
+      "topic": "분류"
+    },
+    {
+      "id": "u3-q012",
+      "unit": 3,
+      "topic": "알고리즘"
+    },
+    {
+      "id": "u3-q013",
+      "unit": 3,
+      "topic": "전처리"
+    },
+    {
+      "id": "u3-q014",
+      "unit": 3,
+      "topic": "용어"
+    },
+    {
+      "id": "u3-q015",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u3-q016",
+      "unit": 3,
+      "topic": "회귀"
+    },
+    {
+      "id": "u3-q017",
+      "unit": 3,
+      "topic": "군집"
+    },
+    {
+      "id": "u3-q018",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u4-q001",
+      "unit": 4,
+      "topic": "기본"
+    },
+    {
+      "id": "u4-q002",
+      "unit": 4,
+      "topic": "픽셀"
+    },
+    {
+      "id": "u4-q003",
+      "unit": 4,
+      "topic": "픽셀"
+    },
+    {
+      "id": "u4-q004",
+      "unit": 4,
+      "topic": "색상"
+    },
+    {
+      "id": "u4-q005",
+      "unit": 4,
+      "topic": "입출력"
+    },
+    {
+      "id": "u4-q006",
+      "unit": 4,
+      "topic": "크기"
+    },
+    {
+      "id": "u4-q007",
+      "unit": 4,
+      "topic": "이진화"
+    },
+    {
+      "id": "u4-q008",
+      "unit": 4,
+      "topic": "이진화"
+    },
+    {
+      "id": "u4-q009",
+      "unit": 4,
+      "topic": "특징"
+    },
+    {
+      "id": "u4-q010",
+      "unit": 4,
+      "topic": "특징"
+    },
+    {
+      "id": "u4-q011",
+      "unit": 4,
+      "topic": "얼굴"
+    },
+    {
+      "id": "u4-q012",
+      "unit": 4,
+      "topic": "얼굴"
+    },
+    {
+      "id": "u4-q013",
+      "unit": 4,
+      "topic": "YOLO"
+    },
+    {
+      "id": "u4-q014",
+      "unit": 4,
+      "topic": "평가"
+    },
+    {
+      "id": "u4-q015",
+      "unit": 4,
+      "topic": "도구"
+    },
+    {
+      "id": "u4-q016",
+      "unit": 4,
+      "topic": "도구"
+    },
+    {
+      "id": "u3-q019",
+      "unit": 3,
+      "topic": "pandas"
+    },
+    {
+      "id": "u3-q020",
+      "unit": 3,
+      "topic": "pandas"
+    },
+    {
+      "id": "u3-q021",
+      "unit": 3,
+      "topic": "pandas"
+    },
+    {
+      "id": "u3-q022",
+      "unit": 3,
+      "topic": "모델"
+    },
+    {
+      "id": "u3-q023",
+      "unit": 3,
+      "topic": "모델"
+    },
+    {
+      "id": "u3-q024",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u3-q025",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u4-q017",
+      "unit": 4,
+      "topic": "검출"
+    },
+    {
+      "id": "u4-q018",
+      "unit": 4,
+      "topic": "검출"
+    },
+    {
+      "id": "u4-q019",
+      "unit": 4,
+      "topic": "입출력"
+    },
+    {
+      "id": "u4-q020",
+      "unit": 4,
+      "topic": "입출력"
+    },
+    {
+      "id": "u4-q021",
+      "unit": 4,
+      "topic": "변환"
+    },
+    {
+      "id": "u4-q022",
+      "unit": 4,
+      "topic": "반전"
+    },
+    {
+      "id": "u3-q026",
+      "unit": 3,
+      "topic": "과정"
+    },
+    {
+      "id": "u3-q027",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u4-q023",
+      "unit": 4,
+      "topic": "문서 스캔"
+    },
+    {
+      "id": "u4-q024",
+      "unit": 4,
+      "topic": "카메라"
+    },
+    {
+      "id": "u3-q028",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u3-q029",
+      "unit": 3,
+      "topic": "평가"
+    },
+    {
+      "id": "u3-q030",
+      "unit": 3,
+      "topic": "전처리"
+    },
+    {
+      "id": "u3-q031",
+      "unit": 3,
+      "topic": "회귀"
+    },
+    {
+      "id": "u4-q025",
+      "unit": 4,
+      "topic": "이진화"
+    },
+    {
+      "id": "u4-q026",
+      "unit": 4,
+      "topic": "색상"
+    },
+    {
+      "id": "u4-q027",
+      "unit": 4,
+      "topic": "좌표"
+    },
+    {
+      "id": "u4-q028",
+      "unit": 4,
+      "topic": "계수"
+    },
+    {
+      "id": "u3-q032",
+      "unit": 3,
+      "topic": "AI·머신러닝·딥러닝의 관계"
+    },
+    {
+      "id": "u3-q033",
+      "unit": 3,
+      "topic": "머신러닝이 필요한 문제와 활용"
+    },
+    {
+      "id": "u3-q034",
+      "unit": 3,
+      "topic": "문제 해결 과정과 데이터 분할"
+    },
+    {
+      "id": "u3-q035",
+      "unit": 3,
+      "topic": "특성·레이블·모델·하이퍼파라미터"
+    },
+    {
+      "id": "u3-q036",
+      "unit": 3,
+      "topic": "지도·비지도·강화 학습"
+    },
+    {
+      "id": "u3-q037",
+      "unit": 3,
+      "topic": "머신러닝 라이브러리와 그래프"
+    },
+    {
+      "id": "u3-q038",
+      "unit": 3,
+      "topic": "결측치·이상치·스케일·범주 처리"
+    },
+    {
+      "id": "u3-q039",
+      "unit": 3,
+      "topic": "분류: k-NN·로지스틱·트리·SVM"
+    },
+    {
+      "id": "u3-q040",
+      "unit": 3,
+      "topic": "회귀와 수치 오차"
+    },
+    {
+      "id": "u3-q041",
+      "unit": 3,
+      "topic": "K-평균 군집화"
+    },
+    {
+      "id": "u3-q042",
+      "unit": 3,
+      "topic": "혼동행렬·정확도·정밀도·재현율"
+    },
+    {
+      "id": "u3-q043",
+      "unit": 3,
+      "topic": "교차 검증·튜닝·학습 곡선"
+    },
+    {
+      "id": "u3-q044",
+      "unit": 3,
+      "topic": "모델 구현·평가 프로젝트와 단원 정리"
+    },
+    {
+      "id": "u4-q029",
+      "unit": 4,
+      "topic": "컴퓨터 비전과 영상 처리"
+    },
+    {
+      "id": "u4-q030",
+      "unit": 4,
+      "topic": "픽셀·해상도·RGB·그레이스케일"
+    },
+    {
+      "id": "u4-q031",
+      "unit": 4,
+      "topic": "알고리즘·처리 과정·평가 기준"
+    },
+    {
+      "id": "u4-q032",
+      "unit": 4,
+      "topic": "OpenCV·Pillow·Matplotlib·scikit-image"
+    },
+    {
+      "id": "u4-q033",
+      "unit": 4,
+      "topic": "이미지 읽기·표시·변환·저장"
+    },
+    {
+      "id": "u4-q034",
+      "unit": 4,
+      "topic": "블러·에지·이진화"
+    },
+    {
+      "id": "u4-q035",
+      "unit": 4,
+      "topic": "원근 변환과 마우스 이벤트"
+    },
+    {
+      "id": "u4-q036",
+      "unit": 4,
+      "topic": "에지·코너·윤곽선으로 중요한 부분 찾기"
+    },
+    {
+      "id": "u4-q037",
+      "unit": 4,
+      "topic": "얼굴·눈·웃음 검출과 웹캠"
+    },
+    {
+      "id": "u4-q038",
+      "unit": 4,
+      "topic": "YOLOv8 객체 탐지와 개수 표시"
+    },
+    {
+      "id": "u4-q039",
+      "unit": 4,
+      "topic": "컴퓨터 비전 프로젝트와 단원 정리"
+    }
+  ]
 }

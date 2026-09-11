@@ -206,19 +206,27 @@ export function mapsChanged(a, b) {
 
 export function summarizeProgress(state, now = Date.now()) {
  const complete = {1: 0, 2: 0, 3: 0, 4: 0};
+ const done = [];
  for (const [key, value] of Object.entries(asMap(state && state.complete))) {
   if (!value) continue;
   const match = /^u([1-4])-/.exec(key);
-  if (match) complete[Number(match[1])] += 1;
+  if (match) {
+   complete[Number(match[1])] += 1;
+   done.push(key);
+  }
  }
  let attempts = 0;
  let correct = 0;
- for (const record of Object.values(asMap(state && state.answers))) {
+ const answers = {};
+ for (const [id, record] of Object.entries(asMap(state && state.answers))) {
   if (!record || typeof record !== 'object') continue;
-  attempts += Number(record.attempts) || 0;
-  if (record.status === 'done') correct += 1;
+  const n = Number(record.attempts) || 0;
+  attempts += n;
+  const ok = record.status === 'done';
+  if (ok) correct += 1;
+  if (n || ok || record.status === 'retry') answers[id] = {attempts: n, correct: ok ? 1 : 0};
  }
- return {complete, questions: {attempts, correct}, lastActivity: now};
+ return {complete, questions: {attempts, correct}, done, answers, lastActivity: now};
 }
 
 export function progressFields(profile, state, now, understanding) {
