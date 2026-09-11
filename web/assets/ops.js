@@ -32,13 +32,16 @@ let storeRef = null;
 let allRoster = [];
 let studentDocs = [];
 let progressDocs = [];
-let bound = false;
+let uiBound = false;
+let storeBound = false;
+let demoMode = false;
 
 function status(text) {
  if (gate) gate.replaceChildren(node('p', '', text));
 }
 
 async function startOps() {
+ bindUi();
  status('로그인과 권한을 확인합니다…');
  document.addEventListener('aipy:account', (event) => review(event.detail.user));
  if (window.aipyAccount) review(window.aipyAccount.user);
@@ -48,6 +51,7 @@ async function review(user) {
  const tools = $('ops-tools');
  if (!tools) return;
  if (!user) {
+  if (demoMode) return;
   tools.hidden = true;
   status('헤더의 “학교 계정으로 로그인”으로 먼저 로그인하세요.');
   return;
@@ -72,7 +76,8 @@ async function review(user) {
  teacherEmail = email;
  gate.replaceChildren(node('p', '', `교사 권한 확인됨 · ${email}`));
  tools.hidden = false;
- bind(db, store);
+ bindUi();
+ bindStore(db, store);
  loadAll(db, store);
 }
 
@@ -96,21 +101,29 @@ function currentRows() {
  });
 }
 
-function bind(db, store) {
- if (bound) return;
- bound = true;
+function bindUi() {
+ if (uiBound) return;
+ uiBound = true;
+ if ($('ops-year')) $('ops-year').onchange = paint;
+ if ($('ops-include-archived')) $('ops-include-archived').onchange = paint;
+ if ($('ops-class-only')) $('ops-class-only').onchange = paint;
+ if ($('ops-promote-preview')) $('ops-promote-preview').onclick = showPromotePreview;
+ if ($('ops-promote')) $('ops-promote').onclick = () => {
+  if (!dbRef || !storeRef) { $('ops-promote-note').textContent = '로그인한 교사만 반영할 수 있습니다.'; return; }
+  applyPromote(dbRef, storeRef);
+ };
+ if ($('ops-export')) $('ops-export').onclick = exportSummary;
+ if ($('ops-archive')) $('ops-archive').onclick = () => startArchive(dbRef, storeRef);
+ if ($('ops-remove')) $('ops-remove').onclick = () => startRemove(dbRef, storeRef);
+ document.addEventListener('aipy:class', paint);
+}
+
+function bindStore(db, store) {
+ if (storeBound) return;
+ storeBound = true;
  dbRef = db;
  storeRef = store;
- $('ops-load').onclick = () => loadAll(db, store);
- $('ops-year').onchange = paint;
- $('ops-include-archived').onchange = paint;
- $('ops-class-only').onchange = paint;
- $('ops-promote-preview').onclick = showPromotePreview;
- $('ops-promote').onclick = () => applyPromote(db, store);
- $('ops-export').onclick = exportSummary;
- $('ops-archive').onclick = () => startArchive(db, store);
- $('ops-remove').onclick = () => startRemove(db, store);
- document.addEventListener('aipy:class', paint);
+ if ($('ops-load')) $('ops-load').onclick = () => loadAll(db, store);
  document.addEventListener('aipy:roster-changed', () => loadAll(db, store));
 }
 
@@ -298,7 +311,11 @@ function startArchive(db, store) {
   body: `${year}년 입학 ${rows.length}명을 보관할까요? ${ARCHIVE_NOTE} ${LEARNING_KEEP_NOTE}`,
   expected: archivePhrase(year),
   action: '보관'
- }).then((ok) => { if (ok) applyArchive(db, store, rows); });
+ }).then((ok) => {
+  if (!ok) return;
+  if (!db || !store) { $('ops-archive-note').textContent = '미리보기에서는 확인 문구만 검사합니다. 실제 보관은 교사 로그인 후 합니다.'; return; }
+  applyArchive(db, store, rows);
+ });
 }
 
 function startRemove(db, store) {
@@ -314,7 +331,11 @@ function startRemove(db, store) {
   expected: removePhrase(year),
   action: '명단에서 제거',
   danger: true
- }).then((ok) => { if (ok) applyRemove(db, store, rows); });
+ }).then((ok) => {
+  if (!ok) return;
+  if (!db || !store) { $('ops-archive-note').textContent = '미리보기에서는 확인 문구만 검사합니다. 실제 제거는 교사 로그인 후 합니다.'; return; }
+  applyRemove(db, store, rows);
+ });
 }
 
 function askPhrase({title, body, expected, action, danger}) {
@@ -401,6 +422,8 @@ async function applyRemove(db, store, rows) {
 }
 
 export function renderFixture(data = {}) {
+ demoMode = true;
+ bindUi();
  allRoster = data.roster || [];
  studentDocs = data.students || [];
  progressDocs = data.progress || [];

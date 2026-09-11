@@ -352,6 +352,7 @@ assert "collection(db, 'roster')" in ops_js
 assert "collection(db, 'students')" in ops_js
 assert "collection(db, 'progress')" in ops_js
 assert 'aipyOpsDemo' in ops_js
+assert 'function bindUi()' in ops_js
 assert 'archivePhrase' in ops_js
 assert 'removePhrase' in ops_js
 ops_model_js=(WEB/'assets/ops-model.js').read_text()
