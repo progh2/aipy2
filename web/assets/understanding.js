@@ -69,16 +69,24 @@ function paintChoices() {
  paintHistory();
 }
 
+function historyHost() {
+ const rail = document.querySelector('aside.rail');
+ if (rail) return rail;
+ const record = document.querySelector('section.record');
+ if (record) return record;
+ if (document.querySelector('section.lesson')) return document.getElementById('main');
+ return null;
+}
+
 function paintHistory() {
  const items = historyItems(store.values);
  let root = document.getElementById('understanding-history');
  if (!root) {
-  const host = document.querySelector('section.record')
-   || (document.querySelector('section.lesson') && document.getElementById('main'));
+  const host = historyHost();
   if (!host) return;
   root = node('section', 'understanding-history');
   root.id = 'understanding-history';
-  if (host.id === 'main') host.prepend(root);
+  if (host.matches('aside.rail')) host.append(root);
   else host.prepend(root);
  }
  if (!items.length) {
@@ -123,8 +131,10 @@ function mountSignals() {
   }
   const comment = node('div', 'hard-comment');
   comment.hidden = true;
-  const field = node('label', '', HARD_PROMPT);
+  const field = node('label', 'hard-comment-field', HARD_PROMPT);
+  field.setAttribute('for', `hard-comment-${topicId}`);
   const input = node('input');
+  input.id = `hard-comment-${topicId}`;
   input.type = 'text';
   input.maxLength = COMMENT_MAX;
   input.autocomplete = 'off';
@@ -139,8 +149,7 @@ function mountSignals() {
     submitComment(topicId, input.value);
    }
   });
-  field.append(input);
-  comment.append(field, save);
+  comment.append(field, input, save);
   root.append(note, group, comment);
   label.after(root);
  });

@@ -145,6 +145,8 @@ assert "doc(db, 'progress', user.uid)" in understanding_js
 assert "doc(db, 'feedback', id)" in understanding_js
 assert "label.completion [data-complete]" in understanding_js
 assert 'understanding-history' in understanding_js
+assert 'aside.rail' in understanding_js
+assert 'section.record' in understanding_js
 assert '평가에 반영되지 않습니다' in understanding_js
 help_model=(WEB/'assets/help-model.js').read_text()
 assert '도움 요청' in help_model
