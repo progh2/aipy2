@@ -473,6 +473,23 @@ function onClass(detail) {
  listen((detail && detail.classId) || '');
 }
 
+export function renderFixture(data = {}) {
+ if (progressUnsub || helpUnsub || presenceUnsub || rosterUnsub) stop();
+ classIdValue = data.classId || '2-3';
+ rosterRows = data.roster || [];
+ progressRows = data.progress || [];
+ presenceRows = data.presence || [];
+ helpRows = data.help || [];
+ if (data.titles) titles = data.titles;
+ if (data.topics) topics = data.topics;
+ if (data.questions) questions = data.questions;
+ paintUnderstanding();
+ paintHelp();
+ paintBoard();
+}
+
+if (typeof window !== 'undefined') window.aipyBoardRender = renderFixture;
+
 function bindUi() {
  const exportBtn = $('board-export');
  if (exportBtn) exportBtn.onclick = exportCsv;

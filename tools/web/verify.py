@@ -174,6 +174,8 @@ assert 'studentLabel' in teacher_board
 assert 'board-model.js' in teacher_board
 assert 'board-export' in teacher_board
 assert 'student-detail' in teacher_board
+assert 'aipyBoardRender' in teacher_board
+assert 'renderFixture' in teacher_board
 board_model=(WEB/'assets/board-model.js').read_text()
 assert 'CSV 내보내기' not in board_model
 assert '학번' in board_model
