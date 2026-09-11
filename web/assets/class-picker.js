@@ -3,6 +3,10 @@
 
 export const CLASS_STORAGE_PREFIX = 'aipy-teacher-class:';
 
+export function isArchived(entry) {
+ return Boolean(entry && entry.archived === true);
+}
+
 export function classId(entry) {
  if (!entry || entry.grade == null || entry.classroom == null) return '';
  const grade = Number(entry.grade), classroom = Number(entry.classroom);
@@ -30,6 +34,7 @@ export function inClass(entry, id) {
 export function classesFromRoster(rows) {
  const map = new Map();
  for (const row of rows || []) {
+  if (isArchived(row)) continue;
   const id = classId(row);
   if (!id) continue;
   const prev = map.get(id);

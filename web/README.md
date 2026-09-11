@@ -55,7 +55,11 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 - `before-you-start.html`은 독립 페이지라 계정 영역이 없습니다.
 - 교사용 명단 관리: `teacher/admin.html` · 동작은 `assets/admin.js`. 교사 대문에서 링크됩니다.
   CSV 열은 `email,studentId,admissionYear,name,grade,classroom,number`이며 번호만 선택입니다.
-- 교사 관리 뼈대: `teacher/admin.html` · `teacher/board.html` · `teacher/session.html` ·
+- 입학년도 운영(M8): `teacher/ops.html` · `assets/ops.js` · `assets/ops-model.js`.
+  코호트 조회·진급(학년·반만 갱신, 입학년도 유지)·졸업 보관(roster `archived`)·명단 한 줄 제거.
+  학습 기록은 일괄 삭제하지 않습니다. 학생 화면 개인정보 안내는 `assets/privacy-model.js`가
+  헤더 버튼과 대문·저널의 `#privacy-notice`에 붙입니다. JSON 내보내기는 그대로입니다.
+- 교사 관리 뼈대: `teacher/admin.html` · `teacher/ops.html` · `teacher/board.html` · `teacher/session.html` ·
   `teacher/assignments.html`이 `assets/teacher-shell.js`로 같은 헤더·반 선택을 씁니다.
   반 ID는 `{학년}-{반}`(예: `2-3`)이며
   교사 이메일별 `localStorage`(`aipy-teacher-class:{email}`)에 남습니다. 명단 목록은 선택한 반만 보여 줍니다.

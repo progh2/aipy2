@@ -590,7 +590,7 @@ async function loadSubmissions() {
  if (!assignment || !classId) return;
  try {
   const {db, store} = await load();
-  const students = rosterRows.filter((row) => inClass(row, classId));
+  const students = rosterRows.filter((row) => inClass(row, classId) && row.archived !== true);
   const progressSnap = await store.getDocs(store.collection(db, 'progress'));
   const byEmail = new Map();
   progressSnap.forEach((doc) => {

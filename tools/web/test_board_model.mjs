@@ -87,6 +87,13 @@ const cards = buildStudentCards({
  ]
 });
 eq(cards.length, 3, 'class cards only');
+eq(buildStudentCards({
+ classId: '2-3', topics, now,
+ roster: [
+  {email: 'a@e-mirim.hs.kr', studentId: '20314', name: '홍길동', grade: 2, classroom: 3},
+  {email: 'z@e-mirim.hs.kr', studentId: '20399', name: '보관', grade: 2, classroom: 3, archived: true}
+ ]
+}).map((c) => c.name), ['홍길동'], 'archived roster omitted');
 const byName = Object.fromEntries(cards.map((c) => [c.name, c]));
 eq(byName['홍길동'].openHelp, 1, 'help on card');
 eq(byName['홍길동'].online, true, 'presence online');

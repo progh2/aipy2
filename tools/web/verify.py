@@ -72,7 +72,9 @@ sync=subprocess.run(['node',str(Path(__file__).parent/'test_sync_model.mjs')],ca
 assert sync.returncode==0, sync.stdout+sync.stderr
 board_model=subprocess.run(['node',str(Path(__file__).parent/'test_board_model.mjs')],capture_output=True,text=True)
 assert board_model.returncode==0, board_model.stdout+board_model.stderr
-for name in ['admin.html','board.html','session.html','assignments.html']:
+ops_model=subprocess.run(['node',str(Path(__file__).parent/'test_ops_model.mjs')],capture_output=True,text=True)
+assert ops_model.returncode==0, ops_model.stdout+ops_model.stderr
+for name in ['admin.html','ops.html','board.html','session.html','assignments.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
  assert 'teacher-shell.js' in html, name
@@ -329,6 +331,60 @@ teacher_index=(WEB/'teacher/index.html').read_text()
 assert 'assignments.html' in teacher_index
 shell=(WEB/'assets/teacher-shell.js').read_text()
 assert 'assignments.html' in shell
+assert 'ops.html' in shell
+assert "{id: 'ops'" in shell or "id: 'ops'" in shell
+ops_html=(WEB/'teacher/ops.html').read_text()
+assert 'ops.js' in ops_html
+assert 'id="ops-year"' in ops_html
+assert 'id="ops-promote"' in ops_html
+assert 'id="ops-archive"' in ops_html
+assert 'id="ops-remove"' in ops_html
+assert 'id="ops-export"' in ops_html
+assert '입학년도' in ops_html
+assert '진급 반영' in ops_html
+assert '나래 스모크' in ops_html
+assert '학습 기록·제출물·이해도 신호는 일괄 삭제하지 않습니다' in ops_html
+ops_js=(WEB/'assets/ops.js').read_text()
+assert 'ops-model.js' in ops_js
+assert 'admissionYear' in ops_js
+assert 'archived' in ops_js
+assert "collection(db, 'roster')" in ops_js
+assert "collection(db, 'students')" in ops_js
+assert "collection(db, 'progress')" in ops_js
+assert 'aipyOpsDemo' in ops_js
+assert 'function bindUi()' in ops_js
+assert 'archivePhrase' in ops_js
+assert 'removePhrase' in ops_js
+ops_model_js=(WEB/'assets/ops-model.js').read_text()
+assert '입학년도는 그대로 둡니다' in ops_model_js
+assert '학습 기록은 남습니다' in ops_model_js
+assert "CONFIRM_ARCHIVE_PREFIX = '졸업'" in ops_model_js
+assert "CONFIRM_REMOVE_PREFIX = '명단삭제'" in ops_model_js
+privacy_model=(WEB/'assets/privacy-model.js').read_text()
+assert '학교 이메일' in privacy_model
+assert '학번과 입학년도' in privacy_model
+assert '학습 기록(완료·답안·저널·코드)' in privacy_model
+assert '과제 제출물' in privacy_model
+assert '이해도 신호' in privacy_model
+assert '선생님이 보는 것' in privacy_model
+assert '본인 학습 기록은 JSON으로 내보낼 수 있어요.' in privacy_model
+auth_js=(WEB/'assets/auth.js').read_text()
+assert 'privacy-model.js' in auth_js
+assert 'privacyButton' in auth_js
+assert 'mountPrivacyNotice' in auth_js
+home=(WEB/'index.html').read_text()
+assert 'id="privacy-notice"' in home
+assert 'data-export' in home
+assert '학습 기록 내보내기' in home
+unit_home=(WEB/'units/unit01/index.html').read_text()
+assert 'id="privacy-notice"' in unit_home
+assert 'data-export' in unit_home
+teacher_index=(WEB/'teacher/index.html').read_text()
+assert 'ops.html' in teacher_index
+assert 'function teacherIdentityPatch()' in rules
+assert 'archived' in rules
+assert 'archivedAt' in rules
+assert 'allow update: if isTeacher() && teacherIdentityPatch()' in rules
 app_js=(WEB/'assets/app.js').read_text()
 assert 'aipy:checked' in app_js
 account_css=(WEB/'assets/account.css').read_text()
@@ -341,6 +397,9 @@ assert '.target-picker' in account_css
 assert '.together-bar' in account_css
 assert '.report-grid' in account_css
 assert '.reverify-badge' in account_css
+assert '.privacy-notice' in account_css
+assert '.account-privacy' in account_css
+assert '.ops-filters' in account_css
 sync_js=(WEB/'assets/sync.js').read_text()
 assert 'aipyUnderstanding' in sync_js
 app_js=(WEB/'assets/app.js').read_text()
