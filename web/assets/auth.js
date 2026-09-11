@@ -166,7 +166,7 @@ async function finishSignOut(clearLocal) {
 }
 
 async function signOut() {
- // 학교/브라우저가 window.confirm을 막거나 즉시 false를 주는 경우가 있어 화면 안 모달을 씁니다.
+ // 학교/브라우저가 네이티브 확인창을 막거나 즉시 거절하는 경우가 있어 화면 안 모달을 씁니다.
  const choice = await askClearLocalOnLogout();
  if (choice === 'abort') return;
  await finishSignOut(choice === 'clear');
