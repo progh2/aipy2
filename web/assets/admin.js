@@ -53,6 +53,7 @@ async function startAdmin() {
 
 async function review(user) {
  const tools = $('admin-tools');
+ if (!tools) return;
  if (!user) {
   tools.hidden = true;
   status('헤더의 “학교 계정으로 로그인”으로 먼저 로그인하세요.');

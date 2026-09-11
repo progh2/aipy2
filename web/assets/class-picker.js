@@ -81,7 +81,11 @@ export function paintClassContext(detail) {
  const label = (detail && detail.label) || '반 미선택';
  const id = (detail && detail.classId) || '';
  document.querySelectorAll('[data-class-label]').forEach((el) => { el.textContent = label; });
- document.querySelectorAll('[data-class-id]').forEach((el) => { el.textContent = id; });
+ // body에도 data-class-id를 두므로, 표시용 노드만 고친다. body.textContent를 바꾸면 페이지가 비워진다.
+ document.querySelectorAll('[data-class-id]').forEach((el) => {
+  if (el === document.body) return;
+  el.textContent = id;
+ });
  if (document.body) document.body.dataset.classId = id;
 }
 
