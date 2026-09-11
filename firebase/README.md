@@ -24,6 +24,7 @@ GitHub Pages는 정적 호스팅이므로 서버 비밀을 둘 수 없습니다.
 1. **Firestore Database → 데이터베이스 만들기**. 위치는 `asia-northeast3`(서울), **프로덕션 모드**로 시작합니다.
 2. **규칙** 탭에 [firestore.rules](firestore.rules) 내용을 그대로 붙여넣고 **게시**합니다.
 3. 규칙을 고칠 때는 이 파일을 수정하고 다시 게시하세요. 콘솔에서만 고치면 저장소와 어긋납니다.
+   `sessions`·`presence`를 추가한 뒤에도 같은 방법으로 게시해야 수업 따라가기가 동작합니다.
 
 ## 4. 교사 계정 등록
 
@@ -75,7 +76,15 @@ students/{uid}                        학생 프로필 (반·번호는 명단과
 students/{uid}/state/current          학습 기록 미러 (다음 단계)
 students/{uid}/submissions/{과제id}    제출 소스·입력·채점 결과·출력 (다음 단계)
 progress/{uid}                        반별 집계용 요약 (다음 단계)
+sessions/{학년}-{반}                   수업 세션(반당 하나). 예: sessions/2-3
+presence/{uid}                        접속·따라가기 상태(90초 하트비트)
 ```
+
+`sessions`와 `presence` 규칙은 [firestore.rules](firestore.rules)에 있습니다.
+GitHub Pages 배포는 규칙 파일을 게시하지 않습니다. 규칙을 바꾼 뒤에는 콘솔
+**Firestore Database → 규칙**에 파일 내용을 붙여넣고 게시하거나,
+`firebase deploy --only firestore:rules` 로 배포하세요. 규칙이 아직 이전 버전이면
+세션 쓰기는 거부되고, 학습 화면은 따라가기 UI 없이 기존처럼 동작합니다.
 
 ## 설정값을 공개 저장소에 커밋해도 되는가
 

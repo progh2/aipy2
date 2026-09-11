@@ -66,8 +66,23 @@ for p in WEB.rglob('*.zip'):
 for name in ['tk','ttk','pyside','pyqt','wx','kivy']:assert (WEB/f'assets/screenshots/{name}.png').stat().st_size>1000
 picker=subprocess.run(['node',str(Path(__file__).parent/'test_class_picker.mjs')],capture_output=True,text=True)
 assert picker.returncode==0, picker.stdout+picker.stderr
+follow=subprocess.run(['node',str(Path(__file__).parent/'test_follow_model.mjs')],capture_output=True,text=True)
+assert follow.returncode==0, follow.stdout+follow.stderr
 for name in ['admin.html','board.html','session.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
  assert 'teacher-shell.js' in html, name
+session=(WEB/'teacher/session.html').read_text()
+assert 'teacher-session.js' in session
+assert 'id="session-start"' in session and '세션 시작' in session
+assert 'id="attention-send"' in session and '시선 모으기' in session
+assert '따라오는 중' in session
+unit=(WEB/'units/unit01/index.html').read_text()
+assert 'assets/follow.js' in unit
+catalog=json.loads((WEB/'data/catalog.json').read_text())
+assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
+assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
+rules=(ROOT/'firebase/firestore.rules').read_text()
+assert 'match /sessions/{classroom}' in rules
+assert 'match /presence/{uid}' in rules
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')

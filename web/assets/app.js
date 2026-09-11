@@ -49,6 +49,8 @@ if(moodButtons.length){
 let toastTimer;
 function toast(text){$('#toast').textContent=text;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').textContent='',4200);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}}
+window.aipyLearning={ready:false,saveLocal(){save();},selectExample(){},currentExample(){return null;}};
+window.addEventListener('pagehide',()=>{try{window.aipyLearning.saveLocal();}catch{}});
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
 function updateProgress(){for(const item of $$('[data-unit-progress]')){const u=Number(item.dataset.unitProgress),total=Number(item.dataset.total)||1;const count=Object.entries(state.complete).filter(([k,v])=>k.startsWith(`u${u}-`)&&v).length;const value=Math.min(100,Math.round(count/total*100));item.textContent=`${value}%`;$$(`[data-unit-bar="${u}"]`).forEach(e=>e.value=value);}}
@@ -73,7 +75,7 @@ $$('[data-complete]').forEach(box=>{
 });
 $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save();});});
 if($('#download-journal'))$('#download-journal').onclick=()=>{let text=`# ${unit}단원 학습 저널\n\n작성일: ${new Date().toLocaleDateString('ko-KR')}\n`;for(const [key,title]of [['learn','이해한 개념'],['error','오류와 해결 근거'],['next','시험 결과와 다음 도전']])text+=`\n## ${title}\n\n${state.journals[`u${unit}-${key}`]||''}\n`;download(`unit${unit}-journal.md`,text);};
-if(!unit)return;
+if(!unit){window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));return;}
 let data, currentId, files={},fileName, worker=null,running=false,timer,jobResolve,jobOutput,exampleDirty=false;
 function remember(){const id=location.hash.slice(1)||'overview';if(/^[a-z0-9-]+$/.test(id)){state.last=`units/unit0${unit}/index.html#${id}`;save();}}
 window.addEventListener('hashchange',remember);remember();
@@ -248,5 +250,10 @@ fetch(prefix+`data/unit${unit}.json`).then(r=>{if(!r.ok)throw Error(r.status);re
  for(const kind of new Set(data.questions.map(q=>q.kind))){const opt=node('option','',kind);opt.value=kind;$('#question-kind').append(opt);}
  $$('[data-example]').forEach(b=>b.onclick=()=>selectExample(b.dataset.example,true,b.closest('[data-workspace]')));
  selectExample(Object.keys(data.examples)[0]);renderQuestions();initGUI();
-}).catch(error=>{$('#output').textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');});
+ window.aipyLearning.saveLocal=()=>{stash();};
+ window.aipyLearning.selectExample=(id)=>{if(data.examples[id])selectExample(id,false);};
+ window.aipyLearning.currentExample=()=>currentId||null;
+ window.aipyLearning.ready=true;
+ document.dispatchEvent(new CustomEvent('aipy:learning-ready'));
+}).catch(error=>{$('#output').textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));});
 })();

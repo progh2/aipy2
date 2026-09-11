@@ -114,5 +114,69 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'admissionYear', 'name', 'grade', 'classroom', 'number', 'counts', 'understanding', 'updatedAt'])
         && matchesRoster();
     }
+
+    function rosterClassId() {
+      return listed()
+        ? string(get(rosterPath()).data.grade) + '-' + string(get(rosterPath()).data.classroom)
+        : '';
+    }
+
+    function classIdOk(id) {
+      return id is string && id.matches('^[0-9]+-[0-9]+$');
+    }
+
+    function optionalShort(value, max) {
+      return value == null || (value is string && value.size() <= max);
+    }
+
+    function sessionFocusOk() {
+      return request.resource.data.focus.keys().hasOnly(['page', 'topicAnchor', 'exampleId', 'updatedAt'])
+        && request.resource.data.focus.page is string
+        && request.resource.data.focus.page.size() > 0
+        && request.resource.data.focus.page.size() <= 200
+        && optionalShort(request.resource.data.focus.topicAnchor, 80)
+        && optionalShort(request.resource.data.focus.exampleId, 80)
+        && request.resource.data.focus.updatedAt is timestamp;
+    }
+
+    function sessionAttentionOk() {
+      return request.resource.data.attention.keys().hasOnly(['nonce', 'at'])
+        && request.resource.data.attention.nonce is int
+        && request.resource.data.attention.nonce >= 0
+        && request.resource.data.attention.at is timestamp
+        && (!resource.exists || request.resource.data.attention.nonce >= resource.data.attention.nonce);
+    }
+
+    // 수업 세션. 문서 ID는 `{학년}-{반}` (예: 2-3). 학생은 자기 반 문서만 읽고 쓰지 못합니다.
+    match /sessions/{classroom} {
+      allow get: if schoolAccount() && classIdOk(classroom) && classroom == rosterClassId();
+      allow get, list: if isTeacher();
+      allow create, update: if isTeacher()
+        && classIdOk(classroom)
+        && request.resource.data.keys().hasOnly(['active', 'teacherEmail', 'startedAt', 'expiresAt', 'focus', 'attention'])
+        && request.resource.data.active is bool
+        && request.resource.data.teacherEmail is string
+        && request.resource.data.teacherEmail.size() <= 80
+        && request.resource.data.startedAt is timestamp
+        && request.resource.data.expiresAt is timestamp
+        && sessionFocusOk()
+        && sessionAttentionOk();
+      allow delete: if isTeacher();
+    }
+
+    // 접속·따라가기 상태. 학생은 자기 문서만 쓰고, 반은 명단 값과 같아야 합니다.
+    match /presence/{uid} {
+      allow get: if owns(uid);
+      allow get, list: if isTeacher();
+      allow delete: if owns(uid);
+      allow create, update: if owns(uid)
+        && request.resource.data.keys().hasOnly(['classroom', 'page', 'topicAnchor', 'following', 'updatedAt'])
+        && classIdOk(request.resource.data.classroom)
+        && request.resource.data.classroom == rosterClassId()
+        && request.resource.data.following is bool
+        && optionalShort(request.resource.data.page, 200)
+        && optionalShort(request.resource.data.topicAnchor, 80)
+        && request.resource.data.updatedAt is timestamp;
+    }
   }
 }

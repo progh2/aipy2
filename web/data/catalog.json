@@ -1,0 +1,634 @@
+{
+  "pages": [
+    {
+      "id": "units/unit01/index.html",
+      "label": "Ⅰ 모듈과 패키지 활용",
+      "unit": 1
+    },
+    {
+      "id": "units/unit02/index.html",
+      "label": "Ⅱ GUI 프로그래밍",
+      "unit": 2
+    },
+    {
+      "id": "units/unit03/index.html",
+      "label": "Ⅲ 파이썬과 머신러닝",
+      "unit": 3
+    },
+    {
+      "id": "units/unit04/index.html",
+      "label": "Ⅳ 파이썬과 컴퓨터 비전",
+      "unit": 4
+    }
+  ],
+  "topics": {
+    "units/unit01/index.html": [
+      {
+        "id": "overview",
+        "title": "모듈과 패키지가 필요한 이유",
+        "examples": [
+          "reuse"
+        ]
+      },
+      {
+        "id": "define",
+        "title": "실행문·함수·클래스로 모듈 정의하기",
+        "examples": [
+          "sum-input",
+          "circle-top",
+          "circle-function",
+          "circle-mixed",
+          "class-module"
+        ]
+      },
+      {
+        "id": "entrypoint",
+        "title": "__name__과 __main__",
+        "examples": [
+          "main-guard",
+          "rectangle"
+        ]
+      },
+      {
+        "id": "imports",
+        "title": "임포트 문과 호출법 연결하기",
+        "examples": [
+          "import-0",
+          "import-1",
+          "import-2",
+          "import-3",
+          "import-4"
+        ]
+      },
+      {
+        "id": "packages",
+        "title": "패키지 구조와 __all__",
+        "examples": [
+          "package-0",
+          "package-1",
+          "package-2",
+          "package-3",
+          "package-4",
+          "all",
+          "animal-check",
+          "stars"
+        ]
+      },
+      {
+        "id": "os-sys",
+        "title": "os와 sys로 실행 환경 살펴보기",
+        "examples": [
+          "os",
+          "os-pc",
+          "sys"
+        ]
+      },
+      {
+        "id": "math",
+        "title": "math · 계산을 함수로 표현하기",
+        "examples": [
+          "math"
+        ]
+      },
+      {
+        "id": "random",
+        "title": "random · 결과보다 조건 확인하기",
+        "examples": [
+          "random",
+          "dice",
+          "gift"
+        ]
+      },
+      {
+        "id": "datetime",
+        "title": "datetime · 날짜를 계산하는 프로그램",
+        "examples": [
+          "datetime",
+          "christmas"
+        ]
+      },
+      {
+        "id": "thirdparty",
+        "title": "PyPI와 서드파티 패키지",
+        "examples": [
+          "thirdparty"
+        ]
+      },
+      {
+        "id": "review",
+        "title": "단원 마무리와 종합 평가",
+        "examples": [
+          "final-output"
+        ]
+      },
+      {
+        "id": "project",
+        "title": "1단원 프로젝트 · 우리 반 기능 패키지",
+        "examples": [
+          "core"
+        ]
+      }
+    ],
+    "units/unit02/index.html": [
+      {
+        "id": "ui",
+        "title": "사용자 인터페이스 · CLI, GUI, NUI",
+        "examples": []
+      },
+      {
+        "id": "libraries",
+        "title": "GUI 라이브러리 비교 갤러리",
+        "examples": [
+          "hello-tk",
+          "hello-ttk",
+          "hello-pyside",
+          "hello-pyqt",
+          "hello-wx",
+          "hello-kivy"
+        ]
+      },
+      {
+        "id": "widgets",
+        "title": "창과 위젯 · 화면을 구성하는 부품",
+        "examples": [
+          "widgets-tk",
+          "widgets-pyside"
+        ]
+      },
+      {
+        "id": "layout",
+        "title": "배치 관리자와 반응하는 화면",
+        "examples": [
+          "layout-tk",
+          "layout-pyside"
+        ]
+      },
+      {
+        "id": "events",
+        "title": "이벤트 · 사용자의 행동에 반응하기",
+        "examples": [
+          "hello-tk",
+          "hello-pyside"
+        ]
+      },
+      {
+        "id": "memo",
+        "title": "교과서 메모장 · 여덟 단계로 완성",
+        "examples": [
+          "memo-tk",
+          "memo-pyside",
+          "memo-plus-tk",
+          "memo-plus-pyside"
+        ]
+      },
+      {
+        "id": "pyside",
+        "title": "PySide6 시작과 Qt Designer",
+        "examples": [
+          "hello-pyside",
+          "memo-pyside"
+        ]
+      },
+      {
+        "id": "project",
+        "title": "통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
+        "examples": [
+          "core",
+          "project-tk",
+          "project-pyside"
+        ]
+      },
+      {
+        "id": "review",
+        "title": "2단원 마무리 · 개념에서 앱까지",
+        "examples": []
+      }
+    ],
+    "units/unit03/index.html": [
+      {
+        "id": "ml-overview",
+        "title": "AI·머신러닝·딥러닝의 관계",
+        "examples": []
+      },
+      {
+        "id": "ml-use",
+        "title": "머신러닝이 필요한 문제와 활용",
+        "examples": []
+      },
+      {
+        "id": "ml-process",
+        "title": "문제 해결 과정과 데이터 분할",
+        "examples": [
+          "ml-split-small"
+        ]
+      },
+      {
+        "id": "ml-terms",
+        "title": "특성·레이블·모델·하이퍼파라미터",
+        "examples": []
+      },
+      {
+        "id": "ml-methods",
+        "title": "지도·비지도·강화 학습",
+        "examples": []
+      },
+      {
+        "id": "ml-libraries",
+        "title": "머신러닝 라이브러리와 그래프",
+        "examples": [
+          "ml-tools",
+          "ml-chart",
+          "ml-seaborn"
+        ]
+      },
+      {
+        "id": "ml-preprocess",
+        "title": "결측치·이상치·스케일·범주 처리",
+        "examples": [
+          "ml-scale-small",
+          "ml-clean",
+          "ml-scale"
+        ]
+      },
+      {
+        "id": "ml-classification",
+        "title": "분류: k-NN·로지스틱·트리·SVM",
+        "examples": [
+          "ml-knn-small",
+          "ml-classify"
+        ]
+      },
+      {
+        "id": "ml-regression",
+        "title": "회귀와 수치 오차",
+        "examples": [
+          "ml-line-small",
+          "ml-regression",
+          "ml-housing"
+        ]
+      },
+      {
+        "id": "ml-cluster",
+        "title": "K-평균 군집화",
+        "examples": [
+          "ml-kmeans-small",
+          "ml-cluster"
+        ]
+      },
+      {
+        "id": "ml-metrics",
+        "title": "혼동행렬·정확도·정밀도·재현율",
+        "examples": [
+          "ml-confusion-small",
+          "ml-metrics"
+        ]
+      },
+      {
+        "id": "ml-selection",
+        "title": "교차 검증·튜닝·학습 곡선",
+        "examples": [
+          "ml-cv-small",
+          "ml-selection",
+          "ml-learning-curve"
+        ]
+      },
+      {
+        "id": "ml-project",
+        "title": "모델 구현·평가 프로젝트와 단원 정리",
+        "examples": [
+          "ml-selection"
+        ]
+      }
+    ],
+    "units/unit04/index.html": [
+      {
+        "id": "cv-overview",
+        "title": "컴퓨터 비전과 영상 처리",
+        "examples": []
+      },
+      {
+        "id": "cv-pixels",
+        "title": "픽셀·해상도·RGB·그레이스케일",
+        "examples": [
+          "cv-pixels"
+        ]
+      },
+      {
+        "id": "cv-pipeline",
+        "title": "알고리즘·처리 과정·평가 기준",
+        "examples": []
+      },
+      {
+        "id": "cv-libraries",
+        "title": "OpenCV·Pillow·Matplotlib·scikit-image",
+        "examples": [
+          "cv-pillow",
+          "cv-skimage"
+        ]
+      },
+      {
+        "id": "cv-io",
+        "title": "이미지 읽기·표시·변환·저장",
+        "examples": [
+          "cv-io",
+          "cv-display"
+        ]
+      },
+      {
+        "id": "cv-filters",
+        "title": "블러·에지·이진화",
+        "examples": [
+          "cv-filters"
+        ]
+      },
+      {
+        "id": "cv-transform",
+        "title": "원근 변환과 마우스 이벤트",
+        "examples": [
+          "cv-perspective",
+          "cv-click-card"
+        ]
+      },
+      {
+        "id": "cv-features",
+        "title": "에지·코너·윤곽선으로 중요한 부분 찾기",
+        "examples": [
+          "cv-features"
+        ]
+      },
+      {
+        "id": "cv-haar",
+        "title": "얼굴·눈·웃음 검출과 웹캠",
+        "examples": [
+          "cv-haar",
+          "cv-camera"
+        ]
+      },
+      {
+        "id": "cv-yolo",
+        "title": "YOLOv8 객체 탐지와 개수 표시",
+        "examples": [
+          "cv-yolo",
+          "cv-yolo-count",
+          "cv-count"
+        ]
+      },
+      {
+        "id": "cv-project",
+        "title": "컴퓨터 비전 프로젝트와 단원 정리",
+        "examples": [
+          "cv-perspective",
+          "cv-features"
+        ]
+      }
+    ]
+  },
+  "examples": {
+    "reuse": {
+      "title": "한 번 만든 함수를 두 프로그램에서 사용하기"
+    },
+    "sum-input": {
+      "title": "확인학습 · 두 수의 합"
+    },
+    "circle-top": {
+      "title": "실행문만 있는 모듈"
+    },
+    "circle-function": {
+      "title": "함수 정의와 호출 분리"
+    },
+    "circle-mixed": {
+      "title": "함수와 실행문이 함께 있을 때"
+    },
+    "class-module": {
+      "title": "보강 · 클래스를 담은 모듈"
+    },
+    "main-guard": {
+      "title": "직접 실행과 임포트 비교"
+    },
+    "rectangle": {
+      "title": "탐구 활동 · 사각형 모듈"
+    },
+    "import-0": {
+      "title": "모듈 전체"
+    },
+    "import-1": {
+      "title": "특정 함수"
+    },
+    "import-2": {
+      "title": "여러 함수"
+    },
+    "import-3": {
+      "title": "별표"
+    },
+    "import-4": {
+      "title": "별칭"
+    },
+    "package-0": {
+      "title": "패키지 임포트 1"
+    },
+    "package-1": {
+      "title": "패키지 임포트 2"
+    },
+    "package-2": {
+      "title": "패키지 임포트 3"
+    },
+    "package-3": {
+      "title": "패키지 임포트 4"
+    },
+    "package-4": {
+      "title": "패키지 임포트 5"
+    },
+    "all": {
+      "title": "__all__의 영향 실험"
+    },
+    "animal-check": {
+      "title": "35쪽 확인학습 · 동물 패키지"
+    },
+    "stars": {
+      "title": "25쪽 탐구 · 별 출력"
+    },
+    "os": {
+      "title": "os · 가상 작업 폴더"
+    },
+    "os-pc": {
+      "title": "교과서 os 예제 · PC 명령"
+    },
+    "sys": {
+      "title": "실행 인자와 종료"
+    },
+    "math": {
+      "title": "math의 상수와 함수"
+    },
+    "random": {
+      "title": "random · 범위·선택·섞기"
+    },
+    "dice": {
+      "title": "종합 평가 · n면 주사위"
+    },
+    "gift": {
+      "title": "탐구 · 선물 하나 고르기"
+    },
+    "datetime": {
+      "title": "날짜·시각·요일"
+    },
+    "christmas": {
+      "title": "다음 크리스마스까지"
+    },
+    "thirdparty": {
+      "title": "PC · NumPy 첫 실습"
+    },
+    "final-output": {
+      "title": "종합 평가 8 · 출력 추적"
+    },
+    "hello-tk": {
+      "title": "인사 앱 · tkinter"
+    },
+    "hello-ttk": {
+      "title": "인사 앱 · tkinter + ttk"
+    },
+    "hello-pyside": {
+      "title": "인사 앱 · PySide6"
+    },
+    "hello-pyqt": {
+      "title": "인사 앱 · PyQt6"
+    },
+    "hello-wx": {
+      "title": "인사 앱 · wxPython"
+    },
+    "hello-kivy": {
+      "title": "인사 앱 · Kivy"
+    },
+    "widgets-tk": {
+      "title": "tkinter 위젯 9종 체험"
+    },
+    "widgets-pyside": {
+      "title": "PySide6 위젯과 그리기 공간"
+    },
+    "layout-tk": {
+      "title": "tkinter · 세 가지 배치"
+    },
+    "layout-pyside": {
+      "title": "PySide6 · 수평·수직·격자 배치"
+    },
+    "memo-tk": {
+      "title": "교과서 메모장 · tkinter 전체 코드"
+    },
+    "memo-pyside": {
+      "title": "메모장 · PySide6 전체 코드"
+    },
+    "core": {
+      "title": "프로젝트 · 기능 모듈을 웹에서 검사"
+    },
+    "project-tk": {
+      "title": "생활 도우미 · tkinter"
+    },
+    "project-pyside": {
+      "title": "생활 도우미 · PySide6"
+    },
+    "memo-plus-tk": {
+      "title": "개선 메모장 · tkinter"
+    },
+    "memo-plus-pyside": {
+      "title": "개선 메모장 · PySide6"
+    },
+    "ml-tools": {
+      "title": "NumPy·pandas로 표 탐색하기"
+    },
+    "ml-chart": {
+      "title": "빈도표를 막대그래프로"
+    },
+    "ml-seaborn": {
+      "title": "Seaborn countplot과 Excel 입출력"
+    },
+    "ml-clean": {
+      "title": "CSV·결측치·이상치 탐색"
+    },
+    "ml-scale": {
+      "title": "훈련 데이터로만 전처리 배우기"
+    },
+    "ml-classify": {
+      "title": "붓꽃 분류 모델 네 가지 비교"
+    },
+    "ml-regression": {
+      "title": "회귀 예측과 MAE·MSE·R²"
+    },
+    "ml-housing": {
+      "title": "교과서 연결 · 주택 자료 회귀"
+    },
+    "ml-cluster": {
+      "title": "군집 중심과 산점도"
+    },
+    "ml-metrics": {
+      "title": "혼동행렬과 분류 지표"
+    },
+    "ml-selection": {
+      "title": "교차 검증과 GridSearchCV"
+    },
+    "ml-learning-curve": {
+      "title": "학습 곡선으로 과대·과소 적합 살펴보기"
+    },
+    "cv-pixels": {
+      "title": "작은 이미지의 픽셀·반전·이진화"
+    },
+    "cv-pillow": {
+      "title": "Pillow로 만들기·크기 변경·회전·저장"
+    },
+    "cv-skimage": {
+      "title": "scikit-image Sobel과 이미지 비교"
+    },
+    "cv-io": {
+      "title": "OpenCV 읽기·색상·크기·회전·저장"
+    },
+    "cv-display": {
+      "title": "PC 창에서 이미지 보기"
+    },
+    "cv-filters": {
+      "title": "블러·Canny·세 가지 이진화 비교"
+    },
+    "cv-perspective": {
+      "title": "네 점으로 원근 변환"
+    },
+    "cv-click-card": {
+      "title": "마우스로 카드 네 꼭짓점 선택"
+    },
+    "cv-features": {
+      "title": "에지·코너·윤곽선 비교"
+    },
+    "cv-haar": {
+      "title": "Haar 얼굴·눈·웃음 검출 · 정적 이미지"
+    },
+    "cv-camera": {
+      "title": "실시간 얼굴 검출과 자원 정리"
+    },
+    "cv-yolo": {
+      "title": "YOLOv8 객체 검출 · 이미지 한 장"
+    },
+    "cv-yolo-count": {
+      "title": "YOLO 웹캠 프레임별 객체 개수"
+    },
+    "cv-count": {
+      "title": "검출 결과 목록으로 개수 세기"
+    },
+    "ml-split-small": {
+      "title": "웹 원리 · 훈련·검증·테스트 분할"
+    },
+    "ml-scale-small": {
+      "title": "웹 원리 · 훈련 평균과 스케일"
+    },
+    "ml-knn-small": {
+      "title": "웹 원리 · 가까운 이웃으로 분류"
+    },
+    "ml-line-small": {
+      "title": "웹 원리 · 최소제곱 직선 학습"
+    },
+    "ml-kmeans-small": {
+      "title": "웹 원리 · 군집 중심의 반복 갱신"
+    },
+    "ml-confusion-small": {
+      "title": "웹 원리 · 혼동행렬 직접 계산"
+    },
+    "ml-cv-small": {
+      "title": "웹 원리 · 교차 검증의 역할 바꾸기"
+    }
+  }
+}
