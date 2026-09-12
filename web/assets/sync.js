@@ -189,7 +189,7 @@ async function flush() {
  } catch (error) {
   console.warn('[sync]', error);
   const denied = error && (error.code === 'permission-denied' || /permission/i.test(String(error.message || '')));
-  setStatus('error', denied ? '저장 권한이 없어 이 브라우저에만 기록합니다.' : '네트워크를 확인하세요. 학습은 이 브라우저에서 이어집니다.');
+  setStatus('error', denied ? '로그인은 유지됩니다. 저장 권한이 없어 이 브라우저에만 기록합니다.' : '네트워크를 확인하세요. 학습은 이 브라우저에서 이어집니다.');
  } finally {
   writing = false;
  }

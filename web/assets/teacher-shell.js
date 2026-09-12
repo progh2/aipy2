@@ -1,7 +1,8 @@
 /* 교사 관리 화면의 공통 뼈대. 헤더 아래 반 선택과 명단/보드/세션/과제 내비게이션을 붙입니다.
    이 스크립트는 관리 페이지에만 넣습니다. 로그인·설정 실패는 학습을 막지 않습니다. */
 import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {load, readTeacherFlag} from './auth.js';
+import {teacherPickerEmpty} from './auth-model.js';
 import {
  classesFromRoster, resolveSelectedClass, writeSelectedClass, publishClass,
  mountClassPicker, paintClassContext
@@ -65,16 +66,6 @@ function setPicker(options) {
  });
 }
 
-async function isTeacher(email) {
- const {db, store} = await load();
- try {
-  return (await store.getDoc(store.doc(db, 'admins', email))).exists();
- } catch (error) {
-  console.error('[teacher-shell]', error);
-  return false;
- }
-}
-
 async function fetchRosterRows() {
  const {db, store} = await load();
  const snapshot = await store.getDocs(store.collection(db, 'roster'));
@@ -98,26 +89,35 @@ export async function refreshTeacherClasses() {
   publishClass(selected);
  } catch (error) {
   console.error('[teacher-shell]', error);
-  setPicker({classes: [], disabled: true, emptyText: '명단을 읽지 못했습니다'});
+  setPicker({
+   classes: [],
+   disabled: true,
+   emptyText: teacherPickerEmpty({ready: true, user: {email: teacherEmail}, teacher: true, error})
+  });
  }
 }
 
 async function review(user) {
  if (!ready) {
-  setPicker({classes: [], disabled: true, emptyText: '로그인 설정이 없어 반을 고를 수 없습니다'});
+  setPicker({classes: [], disabled: true, emptyText: teacherPickerEmpty({ready: false})});
   publishClass('');
   return;
  }
  if (!user) {
   teacherEmail = '';
-  setPicker({classes: [], disabled: true, emptyText: '로그인하면 반을 선택할 수 있습니다'});
+  setPicker({classes: [], disabled: true, emptyText: teacherPickerEmpty({ready: true, user: null})});
   publishClass('');
   return;
  }
  const email = (user.email || '').toLowerCase();
  teacherEmail = email;
- if (!(await isTeacher(email))) {
-  setPicker({classes: [], disabled: true, emptyText: '교사 권한이 확인되면 반을 고를 수 있습니다'});
+ const {teacher, error} = await readTeacherFlag(email);
+ if (!teacher) {
+  setPicker({
+   classes: [],
+   disabled: true,
+   emptyText: teacherPickerEmpty({ready: true, user, teacher: false, error})
+  });
   publishClass('');
   return;
  }

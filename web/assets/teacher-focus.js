@@ -2,7 +2,8 @@
    주제 앵커·예제 클릭으로 sessions/{반}.focus를 갱신합니다. 아니면 기존 학습만 합니다.
    반은 window.aipyClass, 없으면 aipy-teacher-class:{email} localStorage에서 읽습니다. */
 import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {load, readTeacherFlag} from './auth.js';
+import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload
@@ -94,7 +95,7 @@ async function sendFocus(focus) {
   toast('초점을 보냈습니다.');
  } catch (error) {
   console.warn('[teacher-focus]', error);
-  toast(`초점을 보내지 못했습니다. (${error.code || error})`);
+  toast(dataFailureNote(error, `초점을 보내지 못했습니다. (${error.code || error})`));
  }
 }
 
@@ -157,13 +158,8 @@ function resolveClass() {
 }
 
 async function isTeacher(email) {
- const {db, store} = await load();
- try {
-  return (await store.getDoc(store.doc(db, 'admins', email))).exists();
- } catch (error) {
-  console.warn('[teacher-focus]', error);
-  return false;
- }
+ const {teacher} = await readTeacherFlag(email);
+ return teacher;
 }
 
 async function onAccount(detail) {
