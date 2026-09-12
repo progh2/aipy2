@@ -47,8 +47,19 @@ export function shouldSignOutForeignAccount(user, domain) {
 
 export function googleCustomParameters(domain, {forceChooser = false} = {}) {
  const params = {hd: domain};
+ // 일반 로그인에는 prompt를 넣지 않습니다. select_account는 “다른 계정”을
+ // 눌렀거나, 방금 개인 계정을 걸러 낸 뒤에만 씁니다.
  if (forceChooser) params.prompt = 'select_account';
  return params;
+}
+
+export function shouldWriteStudentProfile(rosterReadOk) {
+ return rosterReadOk === true;
+}
+
+export function missingRosterWarning({classroom, teacher = false, rosterReadOk = true} = {}) {
+ if (teacher || !rosterReadOk || classroom) return '';
+ return '명단에 없는 계정입니다. 선생님께 알려 주세요.';
 }
 
 export function markChooserNext(storage) {
