@@ -2,8 +2,13 @@
 import {
  LEARNING_KEY, CODE_IDLE_MS, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
  summarizeProgress, progressFields, statePayload, cloudToState, projectNeedsChoice,
- projectPreview, emptyState, normalizeState
+ projectPreview, emptyState, normalizeState, projectCodeEqual, keepProjectRecord,
+ projectConflictSignature, CHOICE_KEY
 } from '../../web/assets/sync-model.js';
+
+function code(text, extra = {}) {
+ return {files: {'main.py': text}, entry: 'main.py', stdin: '', args: '[]', ...extra};
+}
 
 function eq(actual, expected, label) {
  const left = JSON.stringify(actual), right = JSON.stringify(expected);
@@ -65,14 +70,27 @@ eq(merged.state.journals['u1-error'], '클라우드 오류', 'journal cloud-only
 eq(merged.state.last, 'units/unit02/index.html#hello', 'last newer cloud');
 eq(merged.state.projects.reuse.files['main.py'], 'print(1)', 'same project no conflict');
 eq(merged.state.projects.extra.files['main.py'], 'print(9)', 'project cloud-only');
-eq(merged.unresolved.map((item) => item.id), ['math'], 'project conflict listed');
-eq(merged.state.projects.math.files['main.py'], 'print("local")', 'unresolved keeps local');
+eq(merged.unresolved, [], 'newer cloud project auto-picked');
+eq(merged.state.projects.math.files['main.py'], 'print("cloud")', 'newer cloud project wins');
 
-const pickedCloud = mergeStates(local, cloud, {math: 'cloud'}, now);
+const sameTimeLocal = normalizeState({
+ projects: {math: code('print("local")')},
+ times: {projects: {math: now}}
+});
+const sameTimeCloud = normalizeState({
+ projects: {math: code('print("cloud")')},
+ times: {projects: {math: now}}
+});
+const tied = mergeStates(sameTimeLocal, sameTimeCloud, {}, now);
+eq(tied.unresolved.map((item) => item.id), ['math'], 'same-time project asks once');
+eq(tied.state.projects.math.files['main.py'], 'print("local")', 'unresolved keeps local');
+
+const pickedCloud = mergeStates(sameTimeLocal, sameTimeCloud, {math: 'cloud'}, now);
 eq(pickedCloud.unresolved, [], 'choice resolves');
 eq(pickedCloud.state.projects.math.files['main.py'], 'print("cloud")', 'keep cloud project');
-const pickedLocal = mergeStates(local, cloud, {math: 'local'}, now);
+const pickedLocal = mergeStates(sameTimeLocal, sameTimeCloud, {math: 'local'}, now);
 eq(pickedLocal.state.projects.math.files['main.py'], 'print("local")', 'keep local project');
+eq(pickedLocal.unresolved, [], 'same choice stays resolved');
 
 const untimedLocal = normalizeState({
  projects: {math: {files: {'main.py': 'print("old")'}, entry: 'main.py', stdin: '', args: '[]'}}
@@ -85,10 +103,17 @@ const auto = mergeStates(untimedLocal, timedCloud, {}, now);
 eq(auto.unresolved, [], 'untimed local loses to timed cloud without prompt');
 eq(auto.state.projects.math.files['main.py'], 'print("new")', 'timed cloud project wins');
 
-eq(projectNeedsChoice({a: 1}, {a: 1}, 1, 2), false, 'equal values no choice');
-eq(projectNeedsChoice({a: 1}, {a: 2}, 0, 5), false, 'one-sided time no choice');
-eq(projectNeedsChoice({a: 1}, {a: 2}, 5, 6), true, 'both timed differ');
-eq(projectNeedsChoice({a: 1}, {a: 2}, 0, 0), true, 'both untimed differ');
+eq(projectNeedsChoice(code('a'), code('a'), 1, 2), false, 'equal values no choice');
+eq(projectNeedsChoice(code('a'), code('b'), 0, 5), false, 'one-sided time no choice');
+eq(projectNeedsChoice(code('a'), code('b'), 5, 6), false, 'newer cloud no prompt');
+eq(projectNeedsChoice(code('a'), code('b'), 6, 5), false, 'newer local no prompt');
+eq(projectNeedsChoice(code('a'), code('b'), 0, 0), true, 'both untimed differ');
+eq(projectNeedsChoice(code('a'), code('b'), 5, 5), true, 'same time differ asks');
+eq(projectNeedsChoice(code('print(1)'), code('print(1)', {lastOk: true, attempts: 2}), 5, 6), false, 'check metadata is not a source conflict');
+eq(projectCodeEqual(code('print(1)'), {files: {'main.py': 'print(1)'}, entry: 'main.py', stdin: '', args: '[]', lastOutput: 'ok'}), true, 'code equal ignores extra fields');
+eq(keepProjectRecord(code('print(1)'), code('print(1)', {attempts: 3, lastOk: true})).attempts, 3, 'keep richer project record');
+eq(projectConflictSignature('math', code('a'), code('b')), projectConflictSignature('math', code('a'), code('b')), 'conflict signature stable');
+eq(CHOICE_KEY, 'aipy-sync-choices-v1', 'choice store key');
 
 const stamped = stampChanged(
  {complete: {'u1-overview': true}, times: {complete: {'u1-overview': 10}}},
@@ -97,6 +122,14 @@ const stamped = stampChanged(
 );
 eq(stamped.times.complete['u1-overview'], 10, 'unchanged keeps time');
 eq(stamped.times.complete['u1-define'], now, 'new item stamped');
+
+const stampedProject = stampChanged(
+ {projects: {math: code('print(1)', {attempts: 2, lastOk: true})}, times: {projects: {math: 10}}},
+ {projects: {math: code('print(1)')}},
+ now
+);
+eq(stampedProject.times.projects.math, 10, 'same source does not restamp');
+eq(stampedProject.projects.math.attempts, 2, 'stash without check fields keeps richer record');
 
 const counts = summarizeProgress({
  complete: {'u1-overview': true, 'u1-define': false, 'u3-ml': true, 'skip': true},

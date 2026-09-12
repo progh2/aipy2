@@ -434,6 +434,11 @@ assert "doc(db, 'progress', user.uid)" in sync_js
 assert 'confirmClearLocal' in sync_js
 assert '이 브라우저의 학습 기록을 지울까요?' in sync_js
 assert '어느 코드를 남길까요?' in sync_js
+assert 'rememberedChoice' in sync_js
+assert 'projectCodeEqual' in (WEB/'assets/sync-model.js').read_text()
+assert 'aipy-sync-choices-v1' in (WEB/'assets/sync-model.js').read_text()
+assert "exampleDirty" in app_js
+assert 'markCode' in app_js
 app_js=(WEB/'assets/app.js').read_text()
 assert 'onLocalChange' in app_js
 assert "save('complete')" in app_js
