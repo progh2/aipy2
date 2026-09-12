@@ -6,7 +6,8 @@ import {UNDERSTANDING_KEY} from './understanding-model.js';
 import {privacyButton, mountPrivacyNotice} from './privacy-model.js';
 import {
  userEmail, shouldSignOutForeignAccount, googleCustomParameters,
- markChooserNext, consumeChooserFlag, isPermissionDenied, needsReauth
+ markChooserNext, consumeChooserFlag, isPermissionDenied, needsReauth,
+ shouldWriteStudentProfile, missingRosterWarning
 } from './auth-model.js';
 
 const slot = document.getElementById('account');
@@ -88,9 +89,12 @@ function publish(user, profile) {
 function renderSignedOut() {
  const button = node('button', 'account-signin', `학교 계정으로 로그인`);
  button.type = 'button';
- button.addEventListener('click', signIn);
+ button.addEventListener('click', () => signIn(false));
+ const switchBtn = node('button', 'account-switch', '다른 계정');
+ switchBtn.type = 'button';
+ switchBtn.addEventListener('click', () => signIn(true));
  const note = node('span', 'account-note', `@${SCHOOL_DOMAIN} 계정만 사용합니다.`);
- slot.replaceChildren(button, note, privacyButton());
+ slot.replaceChildren(button, switchBtn, note, privacyButton());
 }
 
 function renderBusy(text) {
@@ -104,7 +108,7 @@ export function describe(profile) {
  return {identity: identity || profile.email, place};
 }
 
-function renderSignedIn(profile) {
+function renderSignedIn(profile, extra = {}) {
  const chip = node('span', 'account-chip');
  const {identity, place} = describe(profile);
  chip.append(node('b', '', identity), node('small', '', place || profile.email));
@@ -112,9 +116,12 @@ function renderSignedIn(profile) {
  out.type = 'button';
  out.addEventListener('click', signOut);
  slot.replaceChildren(chip, out, privacyButton());
- if (!profile.classroom) {
-  slot.append(node('span', 'account-warn', '명단에 없는 계정입니다. 선생님께 알려 주세요.'));
- }
+ const warn = missingRosterWarning({
+  classroom: profile.classroom,
+  teacher: extra.teacher,
+  rosterReadOk: extra.rosterReadOk !== false
+ });
+ if (warn) slot.append(node('span', 'account-warn', warn));
 }
 
 async function start() {
@@ -135,14 +142,14 @@ function chooserStore() {
  try { return window.sessionStorage; } catch { return null; }
 }
 
-async function signIn() {
+async function signIn(forceChooser = false) {
  renderBusy('로그인 창을 확인하세요…');
  try {
   const {auth, authMod} = await load();
   const provider = new authMod.GoogleAuthProvider();
-  // hd는 학교 계정을 먼저 보여 주는 힌트입니다. 계정 선택창은 로그아웃·계정 전환 뒤에만 엽니다.
+  // hd는 학교 계정 힌트입니다. 계정 선택창은 “다른 계정” 또는 개인 계정을 걸러 낸 뒤에만 엽니다.
   provider.setCustomParameters(googleCustomParameters(SCHOOL_DOMAIN, {
-   forceChooser: consumeChooserFlag(chooserStore())
+   forceChooser: Boolean(forceChooser) || consumeChooserFlag(chooserStore())
   }));
   await authMod.signInWithPopup(auth, provider);
  } catch (error) {
@@ -205,7 +212,6 @@ async function finishSignOut(clearLocal) {
  } catch (error) {
   console.warn('[auth] 로그아웃 전 동기화 실패', error);
  }
- markChooserNext(chooserStore());
  const {auth, authMod} = await load();
  await authMod.signOut(auth);
  if (clearLocal) {
@@ -257,20 +263,18 @@ async function handleUser(user) {
  const {db, store} = await load();
  if (seq !== handleSeq) return;
  let entry = null;
+ let rosterReadOk = true;
  try {
   const snapshot = await store.getDoc(store.doc(db, 'roster', email));
   if (snapshot.exists()) entry = snapshot.data();
  } catch (error) {
+  rosterReadOk = false;
   console.warn('[auth] 명단을 읽지 못했습니다.', error);
   if (needsReauth(error)) {
-   markChooserNext(chooserStore());
    toast('로그인 세션이 만료되었습니다. 학교 계정으로 다시 로그인해 주세요.');
    publish(null, null);
    renderSignedOut();
    return;
-  }
-  if (isPermissionDenied(error)) {
-   toast('로그인은 유지됩니다. 명단을 읽지 못했지만 다시 로그인할 필요는 없습니다.');
   }
  }
  if (seq !== handleSeq) return;
@@ -287,28 +291,33 @@ async function handleUser(user) {
   classroom: fromRoster('classroom'),
   number: fromRoster('number')
  };
- try {
-  await store.setDoc(
-   store.doc(db, 'students', user.uid),
-   {...profile, updatedAt: store.serverTimestamp()},
-   {merge: true}
-  );
- } catch (error) {
-  console.error('[auth] 프로필 저장 실패', error);
-  if (needsReauth(error)) {
-   markChooserNext(chooserStore());
-   toast('로그인 세션이 만료되었습니다. 학교 계정으로 다시 로그인해 주세요.');
-   publish(null, null);
-   renderSignedOut();
-   return;
+ // 명단 읽기에 실패했는데 빈 값으로 쓰면, 명단에 있는 학생은 규칙이 거절하고
+ // 매 페이지마다 권한 오류가 납니다. 읽기 성공한 뒤에만 저장합니다.
+ if (shouldWriteStudentProfile(rosterReadOk)) {
+  try {
+   await store.setDoc(
+    store.doc(db, 'students', user.uid),
+    {...profile, updatedAt: store.serverTimestamp()},
+    {merge: true}
+   );
+  } catch (error) {
+   console.error('[auth] 프로필 저장 실패', error);
+   if (needsReauth(error)) {
+    toast('로그인 세션이 만료되었습니다. 학교 계정으로 다시 로그인해 주세요.');
+    publish(null, null);
+    renderSignedOut();
+    return;
+   }
+   if (!isPermissionDenied(error)) {
+    toast('로그인은 되었지만 학습 정보를 저장하지 못했습니다. 선생님께 알려 주세요.');
+   }
   }
-  toast(isPermissionDenied(error)
-   ? '로그인은 유지됩니다. 학습 정보 저장 권한이 없습니다. 선생님께 알려 주세요.'
-   : '로그인은 되었지만 학습 정보를 저장하지 못했습니다. 선생님께 알려 주세요.');
  }
  if (seq !== handleSeq) return;
+ const {teacher} = await readTeacherFlag(email);
+ if (seq !== handleSeq) return;
  publish(user, profile);
- renderSignedIn(profile);
+ renderSignedIn(profile, {teacher, rosterReadOk});
 }
 
 function attachPrivacy() {

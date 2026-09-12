@@ -463,6 +463,9 @@ assert 'browserSessionPersistence' in auth_js
 assert 'authStateReady' in auth_js
 assert 'readTeacherFlag' in auth_js
 assert 'googleCustomParameters' in auth_js
+assert 'account-switch' in auth_js
+assert 'shouldWriteStudentProfile' in auth_js
+assert 'missingRosterWarning' in auth_js
 assert "prompt: 'select_account'" not in auth_js
 assert 'setPersistence' not in auth_js
 auth_model_js=(WEB/'assets/auth-model.js').read_text()
@@ -470,7 +473,11 @@ assert "params.prompt = 'select_account'" in auth_model_js
 assert 'forceChooser' in auth_model_js
 assert 'shouldSignOutForeignAccount' in auth_model_js
 assert 'isPermissionDenied' in auth_model_js
+assert 'shouldWriteStudentProfile' in auth_model_js
+assert 'missingRosterWarning' in auth_model_js
 assert '다시 로그인할 필요는 없습니다' in auth_model_js
+account_css=(WEB/'assets/account.css').read_text()
+assert '.account-switch' in account_css
 # 로그아웃 로컬 지우기는 화면 안 모달 (네이티브 확인창은 교실 PC에서 막힐 수 있음)
 assert 'logout-clear-overlay' in auth_js
 assert 'askClearLocalOnLogout' in auth_js

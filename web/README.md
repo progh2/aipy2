@@ -51,7 +51,8 @@ GUI와 OS 셸·pip 예제는 PC 실행용으로 표시합니다. 웹은 Python �
 - 설정값: `web/assets/firebase-config.js` (`apiKey`는 비밀키가 아니라 식별자이므로 공개해도 됩니다)
 - 로그인 동작: `web/assets/auth.js` · 세션 판정: `web/assets/auth-model.js` · 표시: `web/assets/account.css`
   한 번 로그인하면 같은 브라우저·오리진에서 IndexedDB/localStorage로 유지합니다.
-  Google 계정 선택창은 로그아웃·다른 계정 전환 뒤에만 엽니다. Firestore 권한 거부는 재로그인이 아닙니다.
+  Google 계정 선택창은 “다른 계정”을 눌렀거나 개인 계정을 걸러 낸 뒤에만 엽니다.
+  Firestore 권한 거부는 재로그인이 아닙니다.
 - 권한 규칙: `firebase/firestore.rules` · 콘솔 설정 절차: `firebase/README.md`
 - 설정값이 비어 있으면 로그인 UI가 나타나지 않고 사이트는 기존처럼 동작합니다.
 - `before-you-start.html`은 독립 페이지라 계정 영역이 없습니다.

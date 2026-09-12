@@ -3,6 +3,7 @@ import {
  userEmail, isSchoolEmail, shouldSignOutForeignAccount, googleCustomParameters,
  markChooserNext, consumeChooserFlag, isPermissionDenied, needsReauth,
  teacherAccessMessage, teacherPickerEmpty, dataFailureNote,
+ shouldWriteStudentProfile, missingRosterWarning,
  AUTH_CHOOSER_KEY, SIGNED_OUT_GATE, PERMISSION_GATE, PERMISSION_ACTION
 } from '../../web/assets/auth-model.js';
 
@@ -58,5 +59,11 @@ eq(teacherPickerEmpty({user: null}), '로그인하면 반을 선택할 수 있�
 eq(teacherPickerEmpty({user: {}, error: {code: 'permission-denied'}}).includes('다시 로그인'), false, 'picker no relogin');
 eq(dataFailureNote({code: 'permission-denied'}), PERMISSION_ACTION, 'action denied');
 eq(dataFailureNote({code: 'auth/invalid-user-token'}), SIGNED_OUT_GATE, 'action reauth');
+eq(shouldWriteStudentProfile(true), true, 'write after roster ok');
+eq(shouldWriteStudentProfile(false), false, 'skip write after roster fail');
+eq(missingRosterWarning({classroom: null, teacher: true}), '', 'teacher no roster warn');
+eq(missingRosterWarning({classroom: null, rosterReadOk: false}), '', 'failed read no warn');
+eq(missingRosterWarning({classroom: null}), '명단에 없는 계정입니다. 선생님께 알려 주세요.', 'student missing');
+eq(missingRosterWarning({classroom: 3}), '', 'listed student');
 
 console.log('PASS auth-model');
