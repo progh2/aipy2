@@ -121,7 +121,7 @@ async function start() {
  renderBusy('로그인 상태를 확인합니다…');
  try {
   const {auth, authMod} = await load();
-  // 매 페이지에서 setPersistence를 다시 걸면 IndexedDB에 남은 세션을
+  // 매 페이지에서 persistence를 다시 바꾸면 IndexedDB에 남은 세션을
   // localStorage로 옮기다가 한동안 currentUser가 null이 됩니다.
   if (typeof auth.authStateReady === 'function') await auth.authStateReady();
   authMod.onAuthStateChanged(auth, handleUser);

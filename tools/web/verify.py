@@ -377,7 +377,8 @@ assert 'archivePhrase' in ops_js
 assert 'removePhrase' in ops_js
 assert 'showBootError' in ops_js
 assert '운영 화면을 시작하지 못했습니다. 새로고침하세요.' in ops_js
-assert '권한을 확인하지 못했습니다. 네트워크를 확인하고 새로고침하세요.' in ops_js
+assert 'teacherAccessMessage' in ops_js
+assert '권한을 확인하지 못했습니다. 네트워크를 확인하고 새로고침하세요.' in (WEB/'assets/auth-model.js').read_text()
 assert "from './firebase-config.js'" in ops_js
 assert ops_js.rfind("if ($('ops-gate')) startOps();") > ops_js.find('let uiBound')
 ops_model_js=(WEB/'assets/ops-model.js').read_text()
@@ -465,7 +466,7 @@ assert 'googleCustomParameters' in auth_js
 assert "prompt: 'select_account'" not in auth_js
 assert 'setPersistence' not in auth_js
 auth_model_js=(WEB/'assets/auth-model.js').read_text()
-assert "prompt: 'select_account'" in auth_model_js
+assert "params.prompt = 'select_account'" in auth_model_js
 assert 'forceChooser' in auth_model_js
 assert 'shouldSignOutForeignAccount' in auth_model_js
 assert 'isPermissionDenied' in auth_model_js
