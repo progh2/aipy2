@@ -41,6 +41,39 @@ export function deepEqual(a, b) {
  return JSON.stringify(a) === JSON.stringify(b);
 }
 
+export function projectCode(project) {
+ const raw = project && typeof project === 'object' && !Array.isArray(project) ? project : {};
+ const files = asMap(raw.files);
+ const names = Object.keys(files).sort();
+ const out = {};
+ for (const name of names) out[name] = typeof files[name] === 'string' ? files[name] : String(files[name] ?? '');
+ return {
+  files: out,
+  entry: typeof raw.entry === 'string' ? raw.entry : '',
+  stdin: typeof raw.stdin === 'string' ? raw.stdin : '',
+  args: typeof raw.args === 'string' ? raw.args : '[]'
+ };
+}
+
+export function projectCodeEqual(a, b) {
+ return deepEqual(projectCode(a), projectCode(b));
+}
+
+export function projectMetaScore(project) {
+ const raw = project && typeof project === 'object' ? project : {};
+ return (Number(raw.attempts) || 0) + (raw.lastOk != null || raw.lastOutput != null ? 1 : 0);
+}
+
+export function keepProjectRecord(a, b) {
+ return projectMetaScore(b) > projectMetaScore(a) ? b : a;
+}
+
+export function projectConflictSignature(id, local, cloud) {
+ return `${id}:${JSON.stringify(projectCode(local))}:${JSON.stringify(projectCode(cloud))}`;
+}
+
+export const CHOICE_KEY = 'aipy-sync-choices-v1';
+
 export function itemTime(times, bucket, key) {
  const n = Number(times?.[bucket]?.[key]);
  return Number.isFinite(n) ? n : 0;
@@ -69,7 +102,12 @@ export function stampChanged(prev, next, now) {
     delete to.times[bucket][key];
     continue;
    }
-   if (!had || !deepEqual(from[bucket][key], to[bucket][key])) to.times[bucket][key] = now;
+   if (!had || !deepEqual(from[bucket][key], to[bucket][key])) {
+    if (bucket === 'projects' && had && projectCodeEqual(from[bucket][key], to[bucket][key])) {
+     to[bucket][key] = keepProjectRecord(from[bucket][key], to[bucket][key]);
+     to.times[bucket][key] = itemTime(from.times, bucket, key) || now;
+    } else to.times[bucket][key] = now;
+   }
    else if (!itemTime(to.times, bucket, key)) to.times[bucket][key] = itemTime(from.times, bucket, key) || now;
   }
  }
@@ -110,9 +148,10 @@ export function mergeBucket(localMap, cloudMap, localTimes, cloudTimes, bucket, 
 }
 
 export function projectNeedsChoice(localValue, cloudValue, localTime, cloudTime) {
- if (deepEqual(localValue, cloudValue)) return false;
- // 시각이 한쪽만 있으면 그쪽으로 정합니다. 둘 다 있거나 둘 다 없으면 학생에게 묻습니다.
- return localTime === cloudTime || (localTime > 0 && cloudTime > 0);
+ if (projectCodeEqual(localValue, cloudValue)) return false;
+ // 소스(파일·진입점·입력)만 비교합니다. 검사 횟수·출력 같은 부가 정보는 충돌이 아닙니다.
+ // 시각이 다르면 늦은 쪽을 따릅니다(기기 전환). 같은 시각에만 학생에게 묻습니다.
+ return localTime === cloudTime;
 }
 
 export function mergeProjects(localProjects, cloudProjects, localTimes, cloudTimes, choices, now) {
@@ -137,8 +176,8 @@ export function mergeProjects(localProjects, cloudProjects, localTimes, cloudTim
    times[key] = ct;
    continue;
   }
-  if (deepEqual(local[key], cloud[key])) {
-   map[key] = local[key];
+  if (projectCodeEqual(local[key], cloud[key])) {
+   map[key] = keepProjectRecord(local[key], cloud[key]);
    times[key] = Math.max(lt, ct);
    continue;
   }

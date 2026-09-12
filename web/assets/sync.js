@@ -4,9 +4,10 @@
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {
- LEARNING_KEY, CODE_IDLE_MS, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
- progressFields, statePayload, cloudToState, cloneState, projectPreview, emptyState
-} from './sync-model.js';
+ LEARNING_KEY, CODE_IDLE_MS, CHOICE_KEY, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
+ progressFields, statePayload, cloudToState, cloneState, projectPreview, emptyState,
+ projectConflictSignature
+} from './sync-model.js?v=conflict2';
 
 const node = (tag, cls, text) => {
  const el = document.createElement(tag);
@@ -48,6 +49,41 @@ function liveState() {
   return JSON.parse(localStorage.getItem(LEARNING_KEY) || 'null') || emptyState();
  } catch {
   return emptyState();
+ }
+}
+
+function choiceStoreKey() {
+ return user ? `${CHOICE_KEY}:${user.uid}` : CHOICE_KEY;
+}
+
+function readChoiceStore() {
+ try { return JSON.parse(localStorage.getItem(choiceStoreKey()) || '{}') || {}; } catch { return {}; }
+}
+
+function rememberedChoice(id, localProject, cloudProject) {
+ const value = readChoiceStore()[projectConflictSignature(id, localProject, cloudProject)];
+ return value === 'local' || value === 'cloud' ? value : '';
+}
+
+function rememberChoice(id, localProject, cloudProject, choice) {
+ if (choice !== 'local' && choice !== 'cloud') return;
+ try {
+  const store = readChoiceStore();
+  store[projectConflictSignature(id, localProject, cloudProject)] = choice;
+  localStorage.setItem(choiceStoreKey(), JSON.stringify(store));
+ } catch {}
+}
+
+function clearChoiceStore() {
+ try { if (user) localStorage.removeItem(choiceStoreKey()); } catch {}
+}
+
+function applyRememberedChoices(local, cloud) {
+ const ids = new Set([...Object.keys(local.projects || {}), ...Object.keys(cloud.projects || {})]);
+ for (const id of ids) {
+  if (choices[id]) continue;
+  const remembered = rememberedChoice(id, local.projects?.[id], cloud.projects?.[id]);
+  if (remembered) choices[id] = remembered;
  }
 }
 
@@ -127,6 +163,7 @@ async function flush() {
    const snap = await tx.get(stateRef);
    const prev = await tx.get(progressRef);
    const cloud = snap.exists() ? cloudToState(snap.data()) : emptyState();
+   applyRememberedChoices(local, cloud);
    const merged = mergeStates(local, cloud, choices, Date.now());
    if (merged.unresolved.length) return {merged, wrote: false};
    const payload = statePayload(merged.state);
@@ -166,6 +203,7 @@ async function pullAndMerge() {
   const snap = await store.getDoc(store.doc(db, 'students', user.uid, 'state', 'current'));
   const cloud = snap.exists() ? cloudToState(snap.data()) : emptyState();
   const local = stampNow('save');
+  applyRememberedChoices(local, cloud);
   const merged = mergeStates(local, cloud, choices, Date.now());
   if (mapsChanged(local, merged.state)) applyToUi(merged.state);
   lastLocal = cloneState(merged.state);
@@ -201,7 +239,7 @@ function askConflict(id, localProject, cloudProject, localTime, cloudTime) {
   overlay.setAttribute('aria-labelledby', 'sync-conflict-title');
   const box = node('div', 'sync-dialog');
   box.append(node('h2', '', '어느 코드를 남길까요?'));
-  const title = node('p', '', `예제 “${id}” 코드가 이 브라우저와 다른 기기에서 서로 다릅니다. 고르지 않은 쪽은 이 기록에서 사라집니다.`);
+  const title = node('p', '', `예제 “${id}” 코드가 이 브라우저와 다른 기기에서 같은 시각에 서로 다릅니다. 고르지 않은 쪽은 이 기록에서 사라집니다.`);
   title.id = 'sync-conflict-title';
   box.append(title);
   const grid = node('div', 'sync-choices');
@@ -225,7 +263,13 @@ function askConflict(id, localProject, cloudProject, localTime, cloudTime) {
 async function resolveConflicts(conflicts, local) {
  for (const item of conflicts) {
   if (choices[item.id]) continue;
+  const remembered = rememberedChoice(item.id, item.local, item.cloud);
+  if (remembered) {
+   choices[item.id] = remembered;
+   continue;
+  }
   choices[item.id] = await askConflict(item.id, item.local, item.cloud, item.localTime, item.cloudTime);
+  rememberChoice(item.id, item.local, item.cloud, choices[item.id]);
  }
  // 고른 뒤 클라우드 원본을 다시 읽어 같은 선택으로 병합합니다.
  try {
@@ -247,6 +291,7 @@ async function onAccount(detail) {
  const nextUser = detail && detail.user;
  const nextProfile = detail && detail.profile;
  if (!nextUser || !nextProfile) {
+  clearChoiceStore();
   user = null;
   profile = null;
   choices = {};
