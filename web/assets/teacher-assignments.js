@@ -1,7 +1,8 @@
 /* 교사용 과제 정의·제출 확인. 헤더에서 고른 반(window.aipyClass)을 기본으로 씁니다.
    문항·예제 목록은 data/catalog.json이며 항목을 코드에 적지 않습니다. */
 import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {load, readTeacherFlag} from './auth.js';
+import {teacherAccessMessage, dataFailureNote} from './auth-model.js';
 import {classesFromRoster, inClass, labelClass} from './class-picker.js';
 import {
  assignmentFields, assignmentReady, catalogTargets, filterCatalogTargets, targetTitle,
@@ -61,13 +62,7 @@ function status(text) {
 }
 
 async function isTeacher(email) {
- const {db, store} = await load();
- try {
-  return (await store.getDoc(store.doc(db, 'admins', email))).exists();
- } catch (error) {
-  console.error('[teacher-assignments]', error);
-  return false;
- }
+ return readTeacherFlag(email);
 }
 
 function formTargets() {
@@ -506,7 +501,7 @@ async function saveAssignment() {
   await loadAssignments();
  } catch (error) {
   console.error('[teacher-assignments]', error);
-  toast('과제를 저장하지 못했습니다. 권한과 네트워크를 확인하세요.');
+  toast(dataFailureNote(error, '과제를 저장하지 못했습니다. 권한과 네트워크를 확인하세요.'));
  } finally {
   writing = false;
  }
@@ -537,7 +532,7 @@ async function deleteAssignment() {
   await loadAssignments();
  } catch (error) {
   console.error('[teacher-assignments]', error);
-  toast('과제를 지우지 못했습니다.');
+  toast(dataFailureNote(error, '과제를 지우지 못했습니다.'));
  } finally {
   writing = false;
  }
@@ -555,7 +550,7 @@ async function saveReview(row, comment) {
   await loadSubmissions();
  } catch (error) {
   console.error('[teacher-assignments]', error);
-  toast('확인을 저장하지 못했습니다.');
+  toast(dataFailureNote(error, '확인을 저장하지 못했습니다.'));
  } finally {
   writing = false;
  }
@@ -613,7 +608,7 @@ async function loadSubmissions() {
   paintReverifySummary();
  } catch (error) {
   console.error('[teacher-assignments]', error);
-  note('review-note', '제출물을 읽지 못했습니다.');
+  note('review-note', dataFailureNote(error, '제출물을 읽지 못했습니다.'));
  }
 }
 
@@ -645,19 +640,21 @@ async function review(user) {
  if (!tools) return;
  if (!ready) {
   tools.hidden = true;
-  status('로그인 설정이 없어 과제를 만들 수 없습니다.');
+  status(teacherAccessMessage({ready: false, user}).text);
   return;
  }
  if (!user) {
   teacherEmail = '';
   tools.hidden = true;
-  status('헤더의 “학교 계정으로 로그인”으로 먼저 로그인하세요.');
+  status(teacherAccessMessage({user: null}).text);
   return;
  }
  const email = (user.email || '').toLowerCase();
- if (!(await isTeacher(email))) {
+ const {teacher, error} = await isTeacher(email);
+ const gateState = teacherAccessMessage({ready: true, user, teacher, error});
+ if (gateState.kind !== 'ok') {
   tools.hidden = true;
-  status('이 계정에는 교사 권한이 없습니다.');
+  status(gateState.text);
   return;
  }
  teacherEmail = email;

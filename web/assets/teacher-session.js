@@ -1,6 +1,7 @@
 /* 교사 수업 세션. 헤더에서 고른 반(window.aipyClass)의 sessions/{학년}-{반}을 만들고 초점을 보냅니다. */
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
+import {dataFailureNote} from './auth-model.js';
 import {labelClass} from './class-picker.js';
 import {inClass} from './class-picker.js';
 import {
@@ -233,7 +234,7 @@ async function sendTogether() {
   await refreshTogether(false);
  } catch (error) {
   console.error('[teacher-session]', error);
-  togetherNote(`함께 풀기를 보내지 못했습니다. (${error.code || error})`);
+  togetherNote(dataFailureNote(error, `함께 풀기를 보내지 못했습니다. (${error.code || error})`));
  }
 }
 
@@ -428,7 +429,7 @@ async function startSession() {
   note('세션을 시작했습니다.');
  } catch (error) {
   console.error('[teacher-session]', error);
-  note(`세션을 시작하지 못했습니다. (${error.code || error})`);
+  note(dataFailureNote(error, `세션을 시작하지 못했습니다. (${error.code || error})`));
  }
 }
 
@@ -447,7 +448,7 @@ async function endSession() {
   note('세션을 종료했습니다.');
  } catch (error) {
   console.error('[teacher-session]', error);
-  note(`세션을 종료하지 못했습니다. (${error.code || error})`);
+  note(dataFailureNote(error, `세션을 종료하지 못했습니다. (${error.code || error})`));
  }
 }
 
@@ -463,7 +464,7 @@ async function sendFocus() {
   note('초점을 보냈습니다.');
  } catch (error) {
   console.error('[teacher-session]', error);
-  note(`초점을 보내지 못했습니다. (${error.code || error})`);
+  note(dataFailureNote(error, `초점을 보내지 못했습니다. (${error.code || error})`));
  }
 }
 
@@ -478,7 +479,7 @@ async function sendAttention() {
   note('시선을 모았어요. 학생 쪽에 안내만 뜨고, 화면은 안 옮겨요.');
  } catch (error) {
   console.error('[teacher-session]', error);
-  note(`시선 모으기를 보내지 못했습니다. (${error.code || error})`);
+  note(dataFailureNote(error, `시선 모으기를 보내지 못했습니다. (${error.code || error})`));
  }
 }
 

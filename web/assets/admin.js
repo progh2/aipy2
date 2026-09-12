@@ -1,7 +1,8 @@
 /* 교사용 명단 관리. 콘솔에서 문서를 손으로 만들지 않도록 CSV로 일괄 등록합니다.
    쓰기 권한은 admins/{교사이메일} 문서가 있을 때만 규칙이 허용합니다.
    목록·내보내기는 헤더에서 고른 반(grade-classroom)만 보여 줍니다. */
-import {load, SCHOOL} from './auth.js';
+import {load, SCHOOL, readTeacherFlag} from './auth.js';
+import {teacherAccessMessage} from './auth-model.js';
 import {inClass, labelClass, isArchived} from './class-picker.js';
 
 const $ = (id) => document.getElementById(id);
@@ -56,25 +57,25 @@ async function review(user) {
  if (!tools) return;
  if (!user) {
   tools.hidden = true;
-  status('헤더의 “학교 계정으로 로그인”으로 먼저 로그인하세요.');
+  status(teacherAccessMessage({user: null}).text);
   return;
  }
  const email = (user.email || '').toLowerCase();
  const {db, store} = await load();
- let teacher = false;
- try {
-  teacher = (await store.getDoc(store.doc(db, 'admins', email))).exists();
- } catch (error) {
-  console.error('[admin]', error);
- }
- if (!teacher) {
+ const {teacher, error} = await readTeacherFlag(email);
+ const gateState = teacherAccessMessage({user, teacher, error});
+ if (gateState.kind !== 'ok') {
   tools.hidden = true;
-  gate.replaceChildren(
-   node('p', '', '이 계정에는 교사 권한이 없습니다.'),
-   node('p', 'small', 'Firebase 콘솔 → Firestore → 컬렉션 admins → 문서 ID를 아래 값으로 만들고 필드 role(문자열) = teacher 를 넣으세요.'),
-   node('code', 'admin-code', email),
-   node('p', 'small', '보안을 위해 이 문서는 웹에서 만들 수 없습니다. 웹에서 가능하다면 학생도 스스로 교사가 될 수 있기 때문입니다.')
-  );
+  if (gateState.kind === 'not-teacher') {
+   gate.replaceChildren(
+    node('p', '', gateState.text),
+    node('p', 'small', 'Firebase 콘솔 → Firestore → 컬렉션 admins → 문서 ID를 아래 값으로 만들고 필드 role(문자열) = teacher 를 넣으세요.'),
+    node('code', 'admin-code', email),
+    node('p', 'small', '보안을 위해 이 문서는 웹에서 만들 수 없습니다. 웹에서 가능하다면 학생도 스스로 교사가 될 수 있기 때문입니다.')
+   );
+   return;
+  }
+  status(gateState.text);
   return;
  }
  teacherEmail = email;

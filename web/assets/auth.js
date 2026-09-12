@@ -4,6 +4,10 @@
 import {firebaseConfig, SCHOOL_DOMAIN, SDK, ready} from './firebase-config.js';
 import {UNDERSTANDING_KEY} from './understanding-model.js';
 import {privacyButton, mountPrivacyNotice} from './privacy-model.js';
+import {
+ userEmail, shouldSignOutForeignAccount, googleCustomParameters,
+ markChooserNext, consumeChooserFlag, isPermissionDenied, needsReauth
+} from './auth-model.js';
 
 const slot = document.getElementById('account');
 const node = (tag, cls, text) => {
@@ -24,16 +28,54 @@ function toast(text) {
 export const SCHOOL = SCHOOL_DOMAIN;
 
 let fb = null;
+let loading = null;
+let handleSeq = 0;
+
+function createAuth(authMod, instance) {
+ try {
+  return authMod.initializeAuth(instance, {
+   persistence: [
+    authMod.indexedDBLocalPersistence,
+    authMod.browserLocalPersistence,
+    authMod.browserSessionPersistence
+   ],
+   popupRedirectResolver: authMod.browserPopupRedirectResolver
+  });
+ } catch {
+  return authMod.getAuth(instance);
+ }
+}
+
 export async function load() {
  if (fb) return fb;
- const [app, authMod, store] = await Promise.all([
-  import(`${SDK}/firebase-app.js`),
-  import(`${SDK}/firebase-auth.js`),
-  import(`${SDK}/firebase-firestore.js`)
- ]);
- const instance = app.initializeApp(firebaseConfig);
- fb = {authMod, store, auth: authMod.getAuth(instance), db: store.getFirestore(instance)};
- return fb;
+ if (loading) return loading;
+ loading = (async () => {
+  const [app, authMod, store] = await Promise.all([
+   import(`${SDK}/firebase-app.js`),
+   import(`${SDK}/firebase-auth.js`),
+   import(`${SDK}/firebase-firestore.js`)
+  ]);
+  const instance = app.initializeApp(firebaseConfig);
+  const value = {authMod, store, auth: createAuth(authMod, instance), db: store.getFirestore(instance)};
+  fb = value;
+  return value;
+ })().catch((error) => {
+  loading = null;
+  throw error;
+ });
+ return loading;
+}
+
+export async function readTeacherFlag(email) {
+ if (!email) return {teacher: false, error: null};
+ const {db, store} = await load();
+ try {
+  const snap = await store.getDoc(store.doc(db, 'admins', email));
+  return {teacher: snap.exists(), error: null};
+ } catch (error) {
+  console.warn('[auth] 교사 권한 확인 실패', error);
+  return {teacher: false, error};
+ }
 }
 
 function publish(user, profile) {
@@ -79,7 +121,9 @@ async function start() {
  renderBusy('로그인 상태를 확인합니다…');
  try {
   const {auth, authMod} = await load();
-  await authMod.setPersistence(auth, authMod.browserLocalPersistence).catch(() => {});
+  // 매 페이지에서 setPersistence를 다시 걸면 IndexedDB에 남은 세션을
+  // localStorage로 옮기다가 한동안 currentUser가 null이 됩니다.
+  if (typeof auth.authStateReady === 'function') await auth.authStateReady();
   authMod.onAuthStateChanged(auth, handleUser);
  } catch (error) {
   console.error('[auth]', error);
@@ -87,13 +131,19 @@ async function start() {
  }
 }
 
+function chooserStore() {
+ try { return window.sessionStorage; } catch { return null; }
+}
+
 async function signIn() {
  renderBusy('로그인 창을 확인하세요…');
  try {
   const {auth, authMod} = await load();
   const provider = new authMod.GoogleAuthProvider();
-  // hd는 학교 계정을 먼저 보여 주는 힌트일 뿐이며, 실제 차단은 규칙이 담당합니다.
-  provider.setCustomParameters({hd: SCHOOL_DOMAIN, prompt: 'select_account'});
+  // hd는 학교 계정을 먼저 보여 주는 힌트입니다. 계정 선택창은 로그아웃·계정 전환 뒤에만 엽니다.
+  provider.setCustomParameters(googleCustomParameters(SCHOOL_DOMAIN, {
+   forceChooser: consumeChooserFlag(chooserStore())
+  }));
   await authMod.signInWithPopup(auth, provider);
  } catch (error) {
   const code = error && error.code;
@@ -155,6 +205,7 @@ async function finishSignOut(clearLocal) {
  } catch (error) {
   console.warn('[auth] 로그아웃 전 동기화 실패', error);
  }
+ markChooserNext(chooserStore());
  const {auth, authMod} = await load();
  await authMod.signOut(auth);
  if (clearLocal) {
@@ -178,28 +229,51 @@ async function signOut() {
 }
 
 async function handleUser(user) {
+ const seq = ++handleSeq;
  if (!user) {
   publish(null, null);
   renderSignedOut();
   return;
  }
- const email = (user.email || '').toLowerCase();
- if (!email.endsWith(`@${SCHOOL_DOMAIN}`)) {
-  // 규칙에서도 막히지만, 안내는 여기서 먼저 합니다.
+ let email = userEmail(user);
+ if (!email && typeof user.reload === 'function') {
+  try { await user.reload(); } catch {}
+  if (seq !== handleSeq) return;
+  email = userEmail(user);
+ }
+ if (shouldSignOutForeignAccount({...user, email}, SCHOOL_DOMAIN)) {
+  markChooserNext(chooserStore());
   const {auth, authMod} = await load();
+  if (seq !== handleSeq) return;
   await authMod.signOut(auth);
   toast(`학교 계정(@${SCHOOL_DOMAIN})으로 로그인하세요. 개인 계정은 사용할 수 없습니다.`);
   return;
  }
+ if (!email) {
+  renderBusy('계정 이메일을 확인합니다…');
+  return;
+ }
  renderBusy('명단을 확인합니다…');
  const {db, store} = await load();
+ if (seq !== handleSeq) return;
  let entry = null;
  try {
   const snapshot = await store.getDoc(store.doc(db, 'roster', email));
   if (snapshot.exists()) entry = snapshot.data();
  } catch (error) {
   console.warn('[auth] 명단을 읽지 못했습니다.', error);
+  if (needsReauth(error)) {
+   markChooserNext(chooserStore());
+   toast('로그인 세션이 만료되었습니다. 학교 계정으로 다시 로그인해 주세요.');
+   publish(null, null);
+   renderSignedOut();
+   return;
+  }
+  if (isPermissionDenied(error)) {
+   toast('로그인은 유지됩니다. 명단을 읽지 못했지만 다시 로그인할 필요는 없습니다.');
+  }
  }
+ if (seq !== handleSeq) return;
  // 명단 값만 사용합니다. 명단에 없으면 학번·학년·반을 비워 둡니다(규칙에서도 그것만 허용).
  const fromRoster = (key) => (entry && entry[key] != null ? entry[key] : null);
  const profile = {
@@ -221,8 +295,18 @@ async function handleUser(user) {
   );
  } catch (error) {
   console.error('[auth] 프로필 저장 실패', error);
-  toast('로그인은 되었지만 학습 정보를 저장하지 못했습니다. 선생님께 알려 주세요.');
+  if (needsReauth(error)) {
+   markChooserNext(chooserStore());
+   toast('로그인 세션이 만료되었습니다. 학교 계정으로 다시 로그인해 주세요.');
+   publish(null, null);
+   renderSignedOut();
+   return;
+  }
+  toast(isPermissionDenied(error)
+   ? '로그인은 유지됩니다. 학습 정보 저장 권한이 없습니다. 선생님께 알려 주세요.'
+   : '로그인은 되었지만 학습 정보를 저장하지 못했습니다. 선생님께 알려 주세요.');
  }
+ if (seq !== handleSeq) return;
  publish(user, profile);
  renderSignedIn(profile);
 }

@@ -119,6 +119,14 @@ assert 'assets/sync.js' in (WEB/'index.html').read_text()
 assert 'assets/teacher-focus.js' in unit
 assert 'assets/teacher-focus.js' not in (WEB/'index.html').read_text()
 assert 'assets/teacher-focus.js' not in (WEB/'teacher/session.html').read_text()
+teacher_shell=(WEB/'assets/teacher-shell.js').read_text()
+assert 'teacherPickerEmpty' in teacher_shell
+assert 'readTeacherFlag' in teacher_shell
+ops_js=(WEB/'assets/ops.js').read_text()
+assert 'teacherAccessMessage' in ops_js
+assert 'dataFailureNote' in ops_js
+admin_js=(WEB/'assets/admin.js').read_text()
+assert 'teacherAccessMessage' in admin_js
 teacher_focus=(WEB/'assets/teacher-focus.js').read_text()
 assert 'resolveTeacherClassId' in teacher_focus
 assert 'focusFromUnitClick' in teacher_focus
@@ -184,6 +192,8 @@ understanding=subprocess.run(['node',str(Path(__file__).parent/'test_understandi
 assert understanding.returncode==0, understanding.stdout+understanding.stderr
 help_model=subprocess.run(['node',str(Path(__file__).parent/'test_help_model.mjs')],capture_output=True,text=True)
 assert help_model.returncode==0, help_model.stdout+help_model.stderr
+auth_model=subprocess.run(['node',str(Path(__file__).parent/'test_auth_model.mjs')],capture_output=True,text=True)
+assert auth_model.returncode==0, auth_model.stdout+auth_model.stderr
 understanding_model=(WEB/'assets/understanding-model.js').read_text()
 assert '이해했어요' in understanding_model and '조금 어려워요' in understanding_model and '어려워요' in understanding_model
 assert '어디가 막혔나요?' in understanding_model
@@ -445,6 +455,21 @@ assert "save('complete')" in app_js
 assert "save('code')" in app_js
 assert 'applyRemote' in app_js
 auth_js=(WEB/'assets/auth.js').read_text()
+assert 'auth-model.js' in auth_js
+assert 'initializeAuth' in auth_js
+assert 'indexedDBLocalPersistence' in auth_js
+assert 'browserSessionPersistence' in auth_js
+assert 'authStateReady' in auth_js
+assert 'readTeacherFlag' in auth_js
+assert 'googleCustomParameters' in auth_js
+assert "prompt: 'select_account'" not in auth_js
+assert 'setPersistence' not in auth_js
+auth_model_js=(WEB/'assets/auth-model.js').read_text()
+assert "prompt: 'select_account'" in auth_model_js
+assert 'forceChooser' in auth_model_js
+assert 'shouldSignOutForeignAccount' in auth_model_js
+assert 'isPermissionDenied' in auth_model_js
+assert '다시 로그인할 필요는 없습니다' in auth_model_js
 # 로그아웃 로컬 지우기는 화면 안 모달 (네이티브 확인창은 교실 PC에서 막힐 수 있음)
 assert 'logout-clear-overlay' in auth_js
 assert 'askClearLocalOnLogout' in auth_js

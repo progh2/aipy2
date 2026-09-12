@@ -1,7 +1,8 @@
 /* 교사 운영 도구. 입학년도로 조회하고 진급·졸업 정리를 합니다.
    학습 기록은 일괄 삭제하지 않습니다. 쓰기는 교사 권한이 있을 때만 규칙이 허용합니다. */
 import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {load, readTeacherFlag} from './auth.js';
+import {teacherAccessMessage, dataFailureNote} from './auth-model.js';
 import {labelClass} from './class-picker.js';
 import {
  filterCohort, sortCohort, cohortYears, promotePreview, rosterWriteFields,
@@ -79,28 +80,30 @@ async function review(user) {
  if (demoMode) return;
  if (!ready) {
   tools.hidden = true;
-  status('로그인 설정이 없어 운영 도구를 열 수 없습니다.');
+  status(teacherAccessMessage({ready: false, user}).text);
   return;
  }
  if (!user) {
   tools.hidden = true;
-  status('헤더의 “학교 계정으로 로그인”으로 먼저 로그인하세요.');
+  status(teacherAccessMessage({user: null}).text);
   return;
  }
  const email = (user.email || '').toLowerCase();
- let db, store, teacher = false;
+ let db, store;
  try {
   ({db, store} = await load());
-  teacher = (await store.getDoc(store.doc(db, 'admins', email))).exists();
  } catch (error) {
   console.error('[ops]', error);
   tools.hidden = true;
-  status('권한을 확인하지 못했습니다. 네트워크를 확인하고 새로고침하세요.');
+  status(teacherAccessMessage({user, error}).text);
   return;
  }
- if (!teacher) {
+ const {teacher, error} = await readTeacherFlag(email);
+ const gateState = teacherAccessMessage({ready: true, user, teacher, error});
+ if (gateState.kind !== 'ok') {
   tools.hidden = true;
-  denyTeacher(email);
+  if (gateState.kind === 'not-teacher') denyTeacher(email);
+  else status(gateState.text);
   return;
  }
  teacherEmail = email;
@@ -173,7 +176,7 @@ async function loadAll(db, store) {
   progressSnap.forEach((d) => progressDocs.push({id: d.id, uid: d.data().uid || d.id, ...d.data()}));
  } catch (error) {
   console.error('[ops]', error);
-  $('ops-list').replaceChildren(node('p', 'small', '명단을 읽지 못했습니다. 권한과 네트워크를 확인하세요.'));
+  $('ops-list').replaceChildren(node('p', 'small', dataFailureNote(error, '명단을 읽지 못했습니다. 권한과 네트워크를 확인하세요.')));
   return;
  }
  fillYears();
@@ -308,7 +311,7 @@ async function applyPromote(db, store) {
   await loadAll(db, store);
  } catch (error) {
   console.error('[ops]', error);
-  $('ops-promote-note').textContent = `반영 중 오류가 발생했습니다: ${error.code || error}. ${done}건까지 반영되었습니다.`;
+  $('ops-promote-note').textContent = `${dataFailureNote(error, `반영 중 오류가 발생했습니다: ${error.code || error}.`)} ${done}건까지 반영되었습니다.`;
   $('ops-promote').disabled = false;
  }
 }
@@ -428,7 +431,7 @@ async function applyArchive(db, store, rows) {
   await loadAll(db, store);
  } catch (error) {
   console.error('[ops]', error);
-  $('ops-archive-note').textContent = `보관 중 오류가 발생했습니다: ${error.code || error}.`;
+  $('ops-archive-note').textContent = dataFailureNote(error, `보관 중 오류가 발생했습니다: ${error.code || error}.`);
  }
 }
 
@@ -447,7 +450,7 @@ async function applyRemove(db, store, rows) {
   await loadAll(db, store);
  } catch (error) {
   console.error('[ops]', error);
-  $('ops-archive-note').textContent = `제거 중 오류가 발생했습니다: ${error.code || error}.`;
+  $('ops-archive-note').textContent = dataFailureNote(error, `제거 중 오류가 발생했습니다: ${error.code || error}.`);
  }
 }
 
