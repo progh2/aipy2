@@ -1,13 +1,14 @@
 """Unit II pre_api/glossary fill for #53. Applied after unit2_density.
 
 Adds or completes code-before cards for examples that introduce a new
-function/attribute/widget option. Does not seed history/youtube (#58),
-screenshots (#54), or wx/Kivy appendix APIs (#55–#56).
+function/attribute/widget option. Does not seed history/youtube (#58)
+or Kivy appendix APIs (#56). wxPython appendix APIs are filled in
+wx_appendix.py (#55).
 """
 from content import examples, units
 from slots import api_items, glossary_items
 
-SKIP_TOOLKIT = frozenset({'hello-wx', 'hello-kivy'})
+SKIP_TOOLKIT = frozenset({'hello-kivy'})
 
 
 def _ex(eid):
@@ -201,7 +202,7 @@ def _complete_example_api():
 
 
 def unit2_pre_coverage():
-    """Examples that must show a code-before card. wx/Kivy appendix is deferred."""
+    """Examples that must show a code-before card. Kivy appendix is deferred."""
     ids = []
     for lesson in units[2]:
         for eid in lesson['examples']:

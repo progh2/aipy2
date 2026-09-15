@@ -68,7 +68,8 @@
         "PySide6와 PyQt6는 Qt 6를 파이썬에서 사용하는 서로 다른 바인딩입니다. 이 과정의 추가 실습은 Qt 공식 바인딩인 PySide6의 Qt Widgets를 사용합니다. 두 라이브러리의 외형은 같은 Qt 스타일을 쓰면 비슷하며 화면만으로 구분하기 어렵습니다.",
         "wxPython은 wxWidgets 기반으로 운영체제의 위젯을 활용합니다. Kivy는 자체 그리기 방식으로 터치와 여러 플랫폼의 인터페이스를 구성합니다. 배포 대상·필요 위젯·학습 자료·환경 지원을 기준으로 선택하세요.",
         "갤러리의 화면은 제공하는 코드를 실행한 캡처입니다. OS와 테마에 따라 외형은 달라집니다. PyQt와 PySide는 배포 조건이 다르므로 실제 배포 전 각 공식 라이선스 안내를 확인하는 습관을 갖습니다.",
-        "좀 더 알아보기: IDLE은 tkinter를 사용하는 실제 파이썬 프로그램입니다. IDLE의 메뉴·버튼·입력창이 어떤 위젯으로 구성될지 관찰하세요. 라이브러리를 선택한 이유는 기능과 사용자를 함께 근거로 적으세요."
+        "좀 더 알아보기: IDLE은 tkinter를 사용하는 실제 파이썬 프로그램입니다. IDLE의 메뉴·버튼·입력창이 어떤 위젯으로 구성될지 관찰하세요. 라이브러리를 선택한 이유는 기능과 사용자를 함께 근거로 적으세요.",
+        "위젯·배치·이벤트·메모장을 wxPython으로 다시 만드는 과정은 부록 주제에서 이어집니다. 본편 tkinter/PySide6 경로는 그대로입니다."
       ],
       "examples": [
         "hello-tk",
@@ -500,6 +501,67 @@
         }
       ],
       "textbook": []
+    },
+    {
+      "id": "wx",
+      "title": "부록 · wxPython으로 같은 앱 다시 만들기",
+      "pages": "부록 · 확장 학습",
+      "lead": "본편에서 익힌 창·위젯·배치·이벤트·메모장을 운영체제 위젯으로 옮깁니다.",
+      "paragraphs": [
+        "이 페이지는 본편 tkinter/PySide6 경로를 대체하지 않습니다. 같은 인사·위젯 도감·배치·이벤트·메모장·생활 도우미를 wxPython으로 다시 구성합니다. 수행평가의 기본 도구는 여전히 tkinter입니다.",
+        "브라우저의 Pyodide에는 wxPython이 포함되지 않습니다. 웹 실습실은 문법을 확인하고, 아래 코드와 실행 화면으로 역할을 배웁니다. 실제 창·버튼·파일 대화 상자는 PC에서 확인하세요. 가상환경을 켠 뒤 python -m pip install wxPython 을 실행하고 python main.py로 엽니다. Windows PowerShell은 .venv\\Scripts\\Activate.ps1, macOS/Linux는 source .venv/bin/activate입니다.",
+        "실행 순서는 wx.App() → Frame → Panel → Sizer → Bind → Show → MainLoop입니다. tkinter의 Tk·pack·command·mainloop, Qt의 QApplication·Layout·connect·exec를 역할로 옮기세요. 단어만 바꾸면 event 인자나 Panel/Sizer에서 막힙니다.",
+        "위젯 이름은 Label→StaticText, Entry→TextCtrl, Text→TextCtrl(TE_MULTILINE), Checkbutton→CheckBox, Radiobutton→RadioButton(첫 항목에 RB_GROUP), Listbox→ListBox, Button→Button입니다. 체크 상태는 BooleanVar가 아니라 GetValue()로 읽습니다.",
+        "배치는 BoxSizer(VERTICAL/HORIZONTAL)와 FlexGridSizer입니다. Add의 두 번째 숫자가 남는 공간 비율이고, EXPAND는 받은 칸을 채웁니다. 이벤트는 Bind(wx.EVT_BUTTON, greet)처럼 함수 자체를 맡깁니다. greet()를 넘기면 창을 만들 때 이미 실행됩니다.",
+        "메모장은 여러 줄 TextCtrl과 MenuBar, FileDialog로 본편과 같은 열기·저장·취소 분기를 만듭니다. 생활 도우미는 같은 core.logic을 Choice에 연결합니다. 빈 입력·0면 주사위·잘못된 날짜를 시험하세요."
+      ],
+      "examples": [
+        "first-wx",
+        "hello-wx",
+        "widgets-label-entry-wx",
+        "widgets-choice-wx",
+        "widgets-wx",
+        "layout-wx",
+        "events-wx",
+        "memo-window-wx",
+        "memo-wx",
+        "project-wx"
+      ],
+      "tasks": [
+        "본편 위젯 하나를 골라 wx 이름을 짝 짓고, 값을 읽는 메서드를 적으세요.",
+        "열기 대화 상자에서 취소를 눌렀을 때 기존 글이 남는지 설명하세요.",
+        "웹에서 실행 버튼이 창을 열지 않는 이유를 한 문장으로 적으세요."
+      ],
+      "extra": true,
+      "pre_api": [
+        {
+          "name": "실행 순서",
+          "signature": "wx.App → Frame·Panel·Sizer → Bind → Show → MainLoop",
+          "note": "본편 Tk·pack·command·mainloop를 wx 이름으로 옮긴 순서입니다. 브라우저에서는 창이 뜨지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "부록",
+          "meaning": "본편을 다시 배우는 길이 아닙니다. 같은 앱을 세 번째 툴킷으로 대조하는 확장입니다."
+        },
+        {
+          "term": "Pyodide",
+          "meaning": "사이트 안의 Python입니다. C 확장인 wxPython을 불러올 수 없어 PC 실습으로 표시합니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "widgets-wx.png",
+          "alt": "wxPython 위젯 도감 실행 화면",
+          "caption": "본편에서 고른 위젯을 wx 이름으로 옮긴 뒤 값을 읽어 보세요. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ],
+      "textbook": []
     }
   ],
   "examples": {
@@ -780,9 +842,49 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "wx.App",
+          "signature": "app = wx.App()",
+          "note": "앱 객체입니다. 창보다 먼저 만듭니다."
+        },
+        {
+          "name": "wx.Frame",
+          "signature": "window = wx.Frame(None, title=\"제목\", size=(480, 300))",
+          "note": "제목 줄이 있는 창입니다. 위젯은 Panel 위에 올립니다."
+        },
+        {
+          "name": "BoxSizer",
+          "signature": "layout = wx.BoxSizer(wx.VERTICAL)\nlayout.Add(위젯, 0, wx.ALL, 12)",
+          "note": "위에서 아래로 붙입니다. pack() 대신 Sizer가 자리를 정합니다."
+        },
+        {
+          "name": "TextCtrl",
+          "signature": "entry = wx.TextCtrl(panel)\nentry.GetValue()  ·  entry.SetValue(\"\")",
+          "note": "한 줄 입력입니다. tkinter Entry의 get/delete에 대응합니다."
+        },
+        {
+          "name": "Bind",
+          "signature": "button.Bind(wx.EVT_BUTTON, greet)",
+          "note": "클릭 사건에 함수를 맡깁니다. Bind(..., greet())처럼 괄호를 붙이면 지금 실행됩니다. greet는 event 인자를 받습니다."
+        },
+        {
+          "name": "MainLoop",
+          "signature": "window.Show()\napp.MainLoop()",
+          "note": "이벤트 루프입니다. Show 뒤에 호출합니다. tkinter mainloop / Qt exec에 대응합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "wxPython",
+          "meaning": "wxWidgets의 파이썬 바인딩입니다. 운영체제의 버튼·입력창을 그대로 활용합니다."
+        },
+        {
+          "term": "event 인자",
+          "meaning": "처리 함수의 첫 매개변수입니다. 쓰지 않아도 선언해야 TypeError가 나지 않습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -2264,6 +2366,448 @@
           "src": "review-scratch-tk.png",
           "alt": "확인학습 · 창·버튼·콜백만 있는 최소 GUI",
           "caption": "Tk → Label → Button(command) → mainloop를 다시 타이핑하는 창입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
+    },
+    "first-wx": {
+      "id": "first-wx",
+      "title": "wxPython · 최소 창 실행 순서",
+      "files": {
+        "main.py": "import wx\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"첫 창 · wxPython\", size=(360, 160))\npanel = wx.Panel(window)\nlayout = wx.BoxSizer(wx.VERTICAL)\nlayout.Add(wx.StaticText(panel, label=\"wx.App → Frame → Show → MainLoop\"), 0, wx.ALL, 24)\npanel.SetSizer(layout)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "wx.App",
+          "signature": "app = wx.App()",
+          "note": "앱 객체입니다. 창보다 먼저 만듭니다. tkinter의 Tk()가 창과 앱을 겸하는 것과 다릅니다."
+        },
+        {
+          "name": "wx.Frame / Panel",
+          "signature": "window = wx.Frame(None, title=\"제목\", size=(360, 160))\npanel = wx.Panel(window)",
+          "note": "Frame은 제목 줄이 있는 창입니다. 위젯은 보통 Panel 위에 올립니다. None은 최상위 창이라는 뜻입니다."
+        },
+        {
+          "name": "Show / MainLoop",
+          "signature": "window.Show()\napp.MainLoop()",
+          "note": "Show로 창을 보여 주고 MainLoop로 클릭·입력을 기다립니다. tkinter의 mainloop, Qt의 exec에 대응합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Phoenix",
+          "meaning": "지금 쓰는 wxPython 4의 이름입니다. import wx로 불러옵니다."
+        },
+        {
+          "term": "브라우저 실행",
+          "meaning": "Pyodide에는 wx가 없습니다. 이 페이지는 코드와 캡처로 가르치고, 실제 창은 PC에서 엽니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "first-wx.png",
+          "alt": "wxPython 최소 창 · App → Frame → Show → MainLoop",
+          "caption": "위젯을 더하기 전의 빈 창입니다. 이 예제를 Linux에서 실행해 캡처했습니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
+    },
+    "widgets-label-entry-wx": {
+      "id": "widgets-label-entry-wx",
+      "title": "StaticText·TextCtrl · 한 줄 읽고 보여 주기",
+      "files": {
+        "main.py": "import wx\n\ndef show_name(event):\n    name = entry.GetValue().strip() or \"이름 없음\"\n    result.SetLabel(f\"입력한 이름: {name}\")\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"StaticText와 TextCtrl\", size=(420, 180))\npanel = wx.Panel(window)\nlayout = wx.BoxSizer(wx.VERTICAL)\nlayout.Add(wx.StaticText(panel, label=\"이름을 입력하세요.\"), 0, wx.ALL, 8)\nentry = wx.TextCtrl(panel)\nlayout.Add(entry, 0, wx.EXPAND | wx.ALL, 12)\nbutton = wx.Button(panel, label=\"표시\")\nbutton.Bind(wx.EVT_BUTTON, show_name)\nlayout.Add(button, 0, wx.ALL, 8)\nresult = wx.StaticText(panel, label=\"아직 입력이 없습니다.\")\nlayout.Add(result, 0, wx.ALL, 8)\npanel.SetSizer(layout)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "StaticText",
+          "signature": "wx.StaticText(panel, label=\"설명\")",
+          "note": "짧은 글을 보여 줍니다. tkinter Label, Qt QLabel에 대응합니다. 나중에 SetLabel로 바꿉니다."
+        },
+        {
+          "name": "TextCtrl.GetValue",
+          "signature": "entry = wx.TextCtrl(panel)\nentry.GetValue()",
+          "note": "한 줄 입력의 현재 문자열을 읽습니다. Entry.get() / QLineEdit.text()와 같습니다."
+        },
+        {
+          "name": "SetLabel",
+          "signature": "result.SetLabel(새글자)",
+          "note": "이미 만든 라벨의 글자만 바꿉니다. 새 StaticText를 또 만들면 화면에 겹칩니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "한 줄 입력",
+          "meaning": "이름·아이디처럼 줄바꿈이 없는 값입니다. 여러 줄 메모는 style=wx.TE_MULTILINE을 씁니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "widgets-label-entry-wx.png",
+          "alt": "StaticText·TextCtrl 창 · 이름 입력 후 표시 버튼",
+          "caption": "한 줄 입력과 SetLabel로 같은 이름을 다시 보여 줍니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "widgets-choice-wx": {
+      "id": "widgets-choice-wx",
+      "title": "CheckBox·RadioButton · 선택 값 읽기",
+      "files": {
+        "main.py": "import wx\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"체크와 라디오\", size=(420, 240))\npanel = wx.Panel(window)\nlayout = wx.BoxSizer(wx.VERTICAL)\ndone = wx.CheckBox(panel, label=\"오늘 실습 완료\")\nlayout.Add(done, 0, wx.ALL, 8)\nradios = []\nfor i, value in enumerate([\"1학년\", \"2학년\", \"3학년\"]):\n    style = wx.RB_GROUP if i == 0 else 0\n    radio = wx.RadioButton(panel, label=value, style=style)\n    radios.append(radio)\n    layout.Add(radio, 0, wx.LEFT | wx.BOTTOM, 12)\nresult = wx.StaticText(panel, label=\"체크는 여러 개, 라디오는 하나.\")\nlayout.Add(result, 0, wx.ALL, 8)\n\ndef show_choice(event):\n    extra = \"완료\" if done.GetValue() else \"미완료\"\n    grade = next((item.GetLabel() for item in radios if item.GetValue()), \"?\")\n    result.SetLabel(f\"{grade} · {extra}\")\n\nbutton = wx.Button(panel, label=\"선택 확인\")\nbutton.Bind(wx.EVT_BUTTON, show_choice)\nlayout.Add(button, 0, wx.ALL, 8)\npanel.SetSizer(layout)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "CheckBox",
+          "signature": "done = wx.CheckBox(panel, label=\"오늘 실습 완료\")\ndone.GetValue()",
+          "note": "서로 독립적으로 켜고 끌 수 있습니다. GetValue()가 True 또는 False입니다. BooleanVar가 따로 없습니다."
+        },
+        {
+          "name": "RadioButton / RB_GROUP",
+          "signature": "wx.RadioButton(panel, label=\"1학년\", style=wx.RB_GROUP)",
+          "note": "묶음의 첫 라디오에만 RB_GROUP을 줍니다. 그 다음 라디오는 같은 그룹에서 하나만 선택됩니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "제어 변수 없음",
+          "meaning": "tkinter는 BooleanVar에 상태를 둡니다. wx는 위젯 자체에서 GetValue()로 읽습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "widgets-choice-wx.png",
+          "alt": "체크·라디오 창 · 학년과 완료 여부",
+          "caption": "CheckBox.GetValue와 RadioButton 묶음으로 선택 값을 읽습니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "widgets-wx": {
+      "id": "widgets-wx",
+      "title": "wxPython 위젯 도감",
+      "files": {
+        "main.py": "import wx\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"wxPython 위젯 도감\", size=(420, 520))\npanel = wx.Panel(window)\nlayout = wx.BoxSizer(wx.VERTICAL)\nlayout.Add(wx.StaticText(panel, label=\"StaticText: 설명을 표시합니다\"), 0, wx.ALL, 8)\nlayout.Add(wx.TextCtrl(panel), 0, wx.EXPAND | wx.ALL, 8)\nmulti = wx.TextCtrl(panel, style=wx.TE_MULTILINE, size=(-1, 64))\nlayout.Add(multi, 0, wx.EXPAND | wx.ALL, 8)\nchecked = wx.CheckBox(panel, label=\"학습 완료\")\nlayout.Add(checked, 0, wx.ALL, 8)\nfor i, value in enumerate([\"A\", \"B\"]):\n    style = wx.RB_GROUP if i == 0 else 0\n    layout.Add(wx.RadioButton(panel, label=value, style=style), 0, wx.LEFT, 12)\nlistbox = wx.ListBox(panel, choices=[\"모듈\", \"패키지\", \"GUI\"], size=(-1, 72))\nlayout.Add(listbox, 0, wx.EXPAND | wx.ALL, 8)\ncanvas = wx.Panel(panel, size=(-1, 48))\ncanvas.SetBackgroundColour(\"gold\")\nlayout.Add(canvas, 0, wx.EXPAND | wx.ALL, 8)\nbutton = wx.Button(panel, label=\"상태 출력\")\nbutton.Bind(wx.EVT_BUTTON, lambda event: print(checked.GetValue()))\nlayout.Add(button, 0, wx.ALL, 8)\npanel.SetSizer(layout)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "TE_MULTILINE",
+          "signature": "wx.TextCtrl(panel, style=wx.TE_MULTILINE)",
+          "note": "여러 줄 입력입니다. 한 줄은 기본 TextCtrl, 여러 줄은 이 스타일입니다. tkinter Text에 대응합니다."
+        },
+        {
+          "name": "ListBox",
+          "signature": "wx.ListBox(panel, choices=[\"모듈\", \"패키지\"])",
+          "note": "목록에서 고릅니다. tkinter Listbox.insert 대신 만들 때 choices를 넣을 수 있습니다."
+        },
+        {
+          "name": "Panel 배경",
+          "signature": "canvas.SetBackgroundColour(\"gold\")",
+          "note": "도형 Canvas와 일대일은 아닙니다. 색 있는 Panel로 “그리기 자리”를 표시합니다. 실제 그림은 EVT_PAINT에서 그립니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "이름 대응",
+          "meaning": "Label→StaticText, Entry→TextCtrl, Text→TE_MULTILINE, Check→CheckBox, List→ListBox입니다. 역할로 외우세요."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "widgets-wx.png",
+          "alt": "wxPython 위젯 도감 · 설명·입력·선택·목록",
+          "caption": "본편 위젯 도감을 운영체제 위젯 이름으로 대응합니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "layout-wx": {
+      "id": "layout-wx",
+      "title": "wxPython · 상자 배치와 격자 폼",
+      "files": {
+        "main.py": "import wx\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"wx 레이아웃\", size=(520, 260))\npanel = wx.Panel(window)\nvertical = wx.BoxSizer(wx.VERTICAL)\nhorizontal = wx.BoxSizer(wx.HORIZONTAL)\nfor name in [\"열기\", \"저장\", \"종료\"]:\n    horizontal.Add(wx.Button(panel, label=name), 1, wx.EXPAND | wx.ALL, 4)\nvertical.Add(horizontal, 0, wx.EXPAND | wx.ALL, 8)\ngrid = wx.FlexGridSizer(2, 2, 8, 8)\ngrid.AddGrowableCol(1, 1)\ngrid.Add(wx.StaticText(panel, label=\"아이디\"), 0, wx.ALIGN_CENTER_VERTICAL)\ngrid.Add(wx.TextCtrl(panel), 0, wx.EXPAND)\ngrid.Add(wx.StaticText(panel, label=\"비밀번호\"), 0, wx.ALIGN_CENTER_VERTICAL)\nsecret = wx.TextCtrl(panel, style=wx.TE_PASSWORD)\ngrid.Add(secret, 0, wx.EXPAND)\nvertical.Add(grid, 0, wx.EXPAND | wx.ALL, 8)\npanel.SetSizer(vertical)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "BoxSizer",
+          "signature": "vertical = wx.BoxSizer(wx.VERTICAL)\nhorizontal = wx.BoxSizer(wx.HORIZONTAL)",
+          "note": "세로 묶음과 가로 묶음입니다. pack / QVBoxLayout·QHBoxLayout에 대응합니다."
+        },
+        {
+          "name": "Add 비율",
+          "signature": "sizer.Add(위젯, 1, wx.EXPAND | wx.ALL, 4)",
+          "note": "두 번째 숫자 1은 남는 공간을 받겠다는 뜻입니다. 0이면 내용 크기만 씁니다. EXPAND는 받은 칸을 채웁니다."
+        },
+        {
+          "name": "FlexGridSizer",
+          "signature": "grid = wx.FlexGridSizer(2, 2, 8, 8)\ngrid.AddGrowableCol(1, 1)",
+          "note": "행·열 격자입니다. AddGrowableCol(1)은 둘째 열(입력칸)이 창과 함께 늘어나게 합니다. tkinter grid+weight와 같습니다."
+        },
+        {
+          "name": "TE_PASSWORD",
+          "signature": "wx.TextCtrl(panel, style=wx.TE_PASSWORD)",
+          "note": "입력 글자를 가립니다. Entry의 show=\"*\" / QLineEdit EchoMode.Password와 같은 목적입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Sizer",
+          "meaning": "위젯의 자리를 정하는 배치 관리자입니다. Frame이 아니라 Panel에 SetSizer로 붙입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "layout-wx.png",
+          "alt": "BoxSizer·FlexGridSizer 배치 창",
+          "caption": "세로 상자 안에 가로 버튼과 격자 폼을 올립니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "events-wx": {
+      "id": "events-wx",
+      "title": "Bind · EVT_BUTTON과 EVT_TEXT",
+      "files": {
+        "main.py": "import wx\n\ndef greet(event):\n    name = entry.GetValue().strip() or \"여러분\"\n    result.SetLabel(f\"{name}님, 안녕하세요!\")\n\ndef preview(event):\n    text = entry.GetValue()\n    result.SetLabel(f\"미리보기: {text or '빈 칸'}\")\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"이벤트 · wxPython\", size=(420, 200))\npanel = wx.Panel(window)\nlayout = wx.BoxSizer(wx.VERTICAL)\nentry = wx.TextCtrl(panel)\nentry.Bind(wx.EVT_TEXT, preview)\nlayout.Add(entry, 0, wx.EXPAND | wx.ALL, 12)\nbutton = wx.Button(panel, label=\"인사하기\")\nbutton.Bind(wx.EVT_BUTTON, greet)\nlayout.Add(button, 0, wx.ALL, 8)\nresult = wx.StaticText(panel, label=\"글자를 쓰면 미리보기가 바뀝니다.\")\nlayout.Add(result, 0, wx.ALL, 12)\npanel.SetSizer(layout)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "Bind",
+          "signature": "button.Bind(wx.EVT_BUTTON, greet)",
+          "note": "사건에 함수를 맡깁니다. command= / clicked.connect에 대응합니다. Bind(..., greet())처럼 괄호를 붙이면 지금 실행됩니다."
+        },
+        {
+          "name": "EVT_BUTTON",
+          "signature": "button.Bind(wx.EVT_BUTTON, greet)",
+          "note": "버튼 클릭입니다. 처리 함수는 event 인자 하나를 받습니다. 쓰지 않아도 매개변수는 있어야 합니다."
+        },
+        {
+          "name": "EVT_TEXT",
+          "signature": "entry.Bind(wx.EVT_TEXT, preview)",
+          "note": "한 글자가 바뀔 때마다 preview(event)를 호출합니다. Qt textChanged와 같습니다."
+        },
+        {
+          "name": "event 인자",
+          "signature": "def greet(event):",
+          "note": "wx는 항상 이벤트 객체를 넘깁니다. tkinter command는 인자가 없습니다. 함수 머리를 그대로 옮기면 TypeError가 납니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "이벤트 테이블",
+          "meaning": "위젯과 사건과 함수의 연결입니다. Bind가 한 줄을 추가합니다."
+        },
+        {
+          "term": "지금 호출",
+          "meaning": "Bind(wx.EVT_BUTTON, greet())는 창을 만들 때 이미 실행됩니다. 함수 이름만 넘기세요."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "events-wx.png",
+          "alt": "EVT_BUTTON·EVT_TEXT 연결 창",
+          "caption": "글자를 쓰면 미리보기가 바뀌고, 버튼은 인사를 확정합니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "memo-window-wx": {
+      "id": "memo-window-wx",
+      "title": "메모장 ① · 창과 여러 줄 TextCtrl만",
+      "files": {
+        "main.py": "import wx\n\napp = wx.App()\nwindow = wx.Frame(None, title=\"나만의 메모장 · 창만\", size=(640, 420))\npanel = wx.Panel(window)\neditor = wx.TextCtrl(panel, style=wx.TE_MULTILINE)\nlayout = wx.BoxSizer(wx.VERTICAL)\nlayout.Add(editor, 1, wx.EXPAND)\npanel.SetSizer(layout)\nwindow.Show()\napp.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "Frame size",
+          "signature": "wx.Frame(None, title=\"제목\", size=(640, 420))",
+          "note": "처음 창 크기입니다. tkinter geometry(\"640x420\")에 대응합니다."
+        },
+        {
+          "name": "TE_MULTILINE + 비율 1",
+          "signature": "layout.Add(editor, 1, wx.EXPAND)",
+          "note": "여러 줄 편집기가 남는 공간을 채웁니다. pack(expand=True, fill=\"both\")와 같은 의도입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "단계 1",
+          "meaning": "창과 편집기만 있으면 메모장의 뼈대입니다. 열기·저장은 다음 예제입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "memo-window-wx.png",
+          "alt": "메모장 뼈대 · 창과 여러 줄 TextCtrl만",
+          "caption": "메뉴·파일 대화 상자 전의 최소 화면입니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "memo-wx": {
+      "id": "memo-wx",
+      "title": "교과서 메모장 · wxPython 전체 코드",
+      "files": {
+        "main.py": "import wx\nfrom pathlib import Path\n\nclass MemoFrame(wx.Frame):\n    def __init__(self):\n        super().__init__(None, title=\"나만의 메모장 · wxPython\", size=(640, 420))\n        panel = wx.Panel(self)\n        self.editor = wx.TextCtrl(panel, style=wx.TE_MULTILINE)\n        layout = wx.BoxSizer(wx.VERTICAL)\n        layout.Add(self.editor, 1, wx.EXPAND)\n        panel.SetSizer(layout)\n        menubar = wx.MenuBar()\n        file_menu = wx.Menu()\n        open_item = file_menu.Append(wx.ID_OPEN, \"열기\tCtrl+O\")\n        save_item = file_menu.Append(wx.ID_SAVE, \"저장\tCtrl+S\")\n        file_menu.AppendSeparator()\n        exit_item = file_menu.Append(wx.ID_EXIT, \"종료\")\n        menubar.Append(file_menu, \"파일\")\n        self.SetMenuBar(menubar)\n        self.Bind(wx.EVT_MENU, self.open_file, open_item)\n        self.Bind(wx.EVT_MENU, self.save_file, save_item)\n        self.Bind(wx.EVT_MENU, self.on_exit, exit_item)\n\n    def open_file(self, event):\n        with wx.FileDialog(self, \"열기\", wildcard=\"텍스트 (*.txt)|*.txt|모든 파일 (*.*)|*.*\",\n                           style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dialog:\n            if dialog.ShowModal() == wx.ID_CANCEL:\n                return\n            path = dialog.GetPath()\n        try:\n            self.editor.SetValue(Path(path).read_text(encoding=\"utf-8\"))\n        except (OSError, UnicodeError) as error:\n            wx.MessageBox(str(error), \"열기 실패\", wx.OK | wx.ICON_WARNING)\n\n    def save_file(self, event):\n        with wx.FileDialog(self, \"저장\", wildcard=\"텍스트 (*.txt)|*.txt\",\n                           defaultFile=\"memo.txt\",\n                           style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as dialog:\n            if dialog.ShowModal() == wx.ID_CANCEL:\n                return\n            path = dialog.GetPath()\n        try:\n            Path(path).write_text(self.editor.GetValue(), encoding=\"utf-8\")\n        except (OSError, UnicodeError) as error:\n            wx.MessageBox(str(error), \"저장 실패\", wx.OK | wx.ICON_WARNING)\n\n    def on_exit(self, event):\n        self.Close()\n\nif __name__ == \"__main__\":\n    app = wx.App()\n    window = MemoFrame()\n    window.Show()\n    app.MainLoop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "MenuBar / Menu",
+          "signature": "menubar = wx.MenuBar()\nfile_menu.Append(wx.ID_OPEN, \"열기\")\nself.SetMenuBar(menubar)",
+          "note": "창 위쪽 메뉴 줄입니다. tkinter Menu.add_cascade, Qt QAction에 대응합니다."
+        },
+        {
+          "name": "EVT_MENU",
+          "signature": "self.Bind(wx.EVT_MENU, self.open_file, open_item)",
+          "note": "메뉴 항목에 함수를 연결합니다. 세 번째 인자로 어떤 항목인지 지정합니다."
+        },
+        {
+          "name": "FileDialog",
+          "signature": "with wx.FileDialog(self, \"열기\", style=wx.FD_OPEN) as dialog:\n    if dialog.ShowModal() == wx.ID_CANCEL:\n        return\n    path = dialog.GetPath()",
+          "note": "ShowModal()이 ID_CANCEL이면 취소를 누른 것입니다. 빈 경로를 열지 마세요. QFileDialog의 빈 경로 검사와 같습니다."
+        },
+        {
+          "name": "SetValue / GetValue",
+          "signature": "editor.SetValue(글)\neditor.GetValue()",
+          "note": "여러 줄 텍스트를 넣거나 읽습니다. setPlainText/toPlainText, Text.insert/get에 대응합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "ID_OPEN / ID_SAVE",
+          "meaning": "운영체제가 아는 표준 메뉴 번호입니다. 단축키와 아이콘을 기본으로 붙일 수 있습니다."
+        },
+        {
+          "term": "취소 시험",
+          "meaning": "열기·저장에서 취소를 눌러 보세요. 기존 글이 그대로면 분기가 맞은 것입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "memo-wx.png",
+          "alt": "메모장 · wxPython 메뉴와 편집기",
+          "caption": "여러 줄 TextCtrl과 파일 메뉴를 붙인 완성본입니다. 이 예제를 Linux에서 실행해 캡처했습니다."
+        }
+      ]
+    },
+    "project-wx": {
+      "id": "project-wx",
+      "title": "생활 도우미 · wxPython",
+      "files": {
+        "main.py": "import wx\nfrom core.logic import roll, days_left, draw\n\nclass HelperFrame(wx.Frame):\n    def __init__(self):\n        super().__init__(None, title=\"우리 반 생활 도우미 · wxPython\", size=(520, 280))\n        panel = wx.Panel(self)\n        layout = wx.BoxSizer(wx.VERTICAL)\n        self.mode = wx.Choice(panel, choices=[\"주사위\", \"D-day\", \"추첨\"])\n        self.mode.SetSelection(0)\n        layout.Add(self.mode, 0, wx.EXPAND | wx.ALL, 8)\n        layout.Add(wx.StaticText(panel, label=\"면 수 / YYYY-MM-DD / 쉼표로 나눈 이름\"), 0, wx.ALL, 8)\n        self.entry = wx.TextCtrl(panel, value=\"6\")\n        layout.Add(self.entry, 0, wx.EXPAND | wx.ALL, 8)\n        button = wx.Button(panel, label=\"실행\")\n        button.Bind(wx.EVT_BUTTON, self.run_task)\n        layout.Add(button, 0, wx.ALL, 8)\n        self.result = wx.StaticText(panel, label=\"결과가 여기에 표시됩니다.\")\n        layout.Add(self.result, 0, wx.ALL, 8)\n        panel.SetSizer(layout)\n\n    def run_task(self, event):\n        try:\n            value = self.entry.GetValue()\n            mode = self.mode.GetStringSelection()\n            if mode == \"주사위\":\n                output = str(roll(int(value)))\n            elif mode == \"D-day\":\n                output = str(days_left(value)) + \"일\"\n            else:\n                output = \", \".join(draw(value.split(\",\"), 1))\n            self.result.SetLabel(output)\n        except ValueError as error:\n            wx.MessageBox(str(error), \"입력 확인\", wx.OK | wx.ICON_WARNING)\n\nif __name__ == \"__main__\":\n    app = wx.App()\n    window = HelperFrame()\n    window.Show()\n    app.MainLoop()\n",
+        "core/__init__.py": "# GUI와 독립적인 기능\n",
+        "core/logic.py": "from datetime import date\nimport random\n\ndef roll(sides):\n    if sides < 1:\n        raise ValueError(\"면 수는 1 이상이어야 합니다.\")\n    return random.randint(1, sides)\n\ndef days_left(target, today=None):\n    today = today or date.today()\n    return (date.fromisoformat(target) - today).days\n\ndef draw(names, count):\n    names = list(dict.fromkeys(name.strip() for name in names if name.strip()))\n    if not 1 <= count <= len(names):\n        raise ValueError(\"추첨 수를 명단 인원 안에서 정하세요.\")\n    return random.sample(names, count)\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "브라우저(Pyodide)에는 wxPython이 없어 창이 뜨지 않습니다. 웹에서는 문법 확인과 코드·실행 화면으로 배우고, PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.",
+      "pre_api": [
+        {
+          "name": "from core.logic import roll",
+          "signature": "from core.logic import roll, days_left, draw",
+          "note": "화면 파일은 계산을 직접 쓰지 않습니다. 웹의 core 예제·tk/PySide 생활 도우미와 같은 함수입니다."
+        },
+        {
+          "name": "Choice",
+          "signature": "self.mode = wx.Choice(panel, choices=[\"주사위\", \"D-day\", \"추첨\"])\nself.mode.GetStringSelection()",
+          "note": "드롭다운으로 모드를 고릅니다. tkinter 라디오, Qt QComboBox를 한 위젯으로 대신합니다."
+        },
+        {
+          "name": "MessageBox",
+          "signature": "wx.MessageBox(메시지, \"입력 확인\", wx.OK | wx.ICON_WARNING)",
+          "note": "잘못된 입력을 창으로 알립니다. messagebox.showwarning / QMessageBox.warning에 대응합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "화면과 기능 분리",
+          "meaning": "core에는 wx가 없습니다. 같은 roll을 세 GUI에서 부를 수 있습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "project-wx.png",
+          "alt": "생활 도우미 · wxPython Choice와 실행 버튼",
+          "caption": "같은 core.logic을 주사위·D-day·추첨에 연결합니다. 이 예제를 Linux에서 실행해 캡처했습니다."
         }
       ]
     }

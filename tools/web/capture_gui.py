@@ -10,8 +10,8 @@ Usage:
   python tools/web/capture_gui.py --list
 
 Needs a display (Xvfb is fine), python3-tk, ImageMagick `import` for Tk,
-and PySide6 plus libEGL/libGL for Qt examples. Gallery hello shots keep
-toolkit filenames. Qt: `apt install libegl1` if import fails on libEGL.so.1.
+PySide6 plus libEGL/libGL for Qt, and wxPython for appendix shots.
+Gallery hello shots keep toolkit filenames. Qt: `apt install libegl1` if import fails on libEGL.so.1.
 """
 import os, sys, tempfile, subprocess, time
 from pathlib import Path
@@ -86,6 +86,64 @@ def tk_root(ns):
         return app.root
     import tkinter as tk
     return tk._default_root
+
+
+def wx_window(ns):
+    if ns.get('window') is not None:
+        return ns['window']
+    import wx
+    frames = [w for w in wx.GetTopLevelWindows() if w]
+    if not frames:
+        raise RuntimeError('no wx Frame')
+    return frames[0]
+
+
+def wx_ui_font():
+    import wx
+    for name in (FONT, 'NanumGothic', '나눔고딕', 'WenQuanYi Micro Hei', 'Noto Sans CJK JP'):
+        font = wx.Font(11, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, name)
+        if font.IsOk() and font.GetFaceName():
+            return font
+    return wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+
+
+def apply_wx_font(widget, font):
+    widget.SetFont(font)
+    for child in widget.GetChildren():
+        apply_wx_font(child, font)
+
+
+def capture_wx(window, output):
+    import wx
+    apply_wx_font(window, wx_ui_font())
+    window.Show()
+    try:
+        window.Raise()
+    except Exception:
+        pass
+    width, height = window.GetSize()
+    if width > 900 or height > 700 or width < 120 or height < 80:
+        window.SetSize((520, 280))
+    window.Layout()
+    window.Update()
+    wx.Yield()
+    time.sleep(0.25)
+    wx.Yield()
+    width, height = window.GetClientSize()
+    if width < 80 or height < 40:
+        width, height = 520, 260
+        window.SetClientSize((width, height))
+        window.Update()
+        wx.Yield()
+        width, height = window.GetClientSize()
+    bitmap = wx.Bitmap(width, height)
+    memory = wx.MemoryDC(bitmap)
+    memory.Blit(0, 0, width, height, wx.ClientDC(window), 0, 0)
+    memory.SelectObject(wx.NullBitmap)
+    ok = bitmap.SaveFile(str(output), wx.BITMAP_TYPE_PNG)
+    assert ok and output.is_file() and output.stat().st_size > 1000, (output, output.stat().st_size if output.is_file() else 0)
+    # A desktop wallpaper blit is usually hundreds of KB; GUI shots stay small.
+    assert output.stat().st_size < 80000, ('wx shot too large', output, output.stat().st_size)
 
 
 def qt_window(ns):
@@ -211,6 +269,34 @@ def demo_memo_qt(ns):
         editor.setPlainText(MEMO)
 
 
+def demo_wx_label_entry(ns):
+    ns['entry'].SetValue('민지')
+    ns['show_name'](None)
+
+
+def demo_wx_choice(ns):
+    ns['done'].SetValue(True)
+    ns['show_choice'](None)
+
+
+def demo_wx_events(ns):
+    ns['entry'].SetValue('파이썬')
+    ns['greet'](None)
+
+
+def demo_wx_memo(ns):
+    editor = ns.get('editor')
+    if editor is None and ns.get('window') is not None:
+        editor = getattr(ns['window'], 'editor', None)
+    if editor is not None:
+        editor.SetValue(MEMO)
+
+
+def demo_wx_project(ns):
+    ns['window'].entry.SetValue('6')
+    ns['window'].run_task(None)
+
+
 DEMO = {
     'widgets-label-entry-tk': demo_label_entry,
     'widgets-choice-tk': demo_choice,
@@ -230,6 +316,12 @@ DEMO = {
     'memo-plus-tk': demo_memo_tk,
     'memo-pyside': demo_memo_qt,
     'memo-plus-pyside': demo_memo_qt,
+    'widgets-label-entry-wx': demo_wx_label_entry,
+    'widgets-choice-wx': demo_wx_choice,
+    'events-wx': demo_wx_events,
+    'memo-window-wx': demo_wx_memo,
+    'memo-wx': demo_wx_memo,
+    'project-wx': demo_wx_project,
 }
 
 
@@ -347,8 +439,14 @@ def capture_example(eid):
             window.show()
             capture_qt(window, app, output)
             window.close()
+        elif kind == 'wx':
+            import wx
+            window = wx_window(ns)
+            wx.Yield()
+            capture_wx(window, output)
+            window.Destroy()
         else:
-            raise SystemExit(f'{eid}: wx/Kivy appendix captures stay on the hello gallery')
+            raise SystemExit(f'{eid}: Kivy appendix captures stay on the hello gallery')
     finally:
         sys.path = [p for p in sys.path if p != str(work)]
         os.chdir(cwd)
