@@ -2317,7 +2317,7 @@
         }
       ],
       "tips": {
-        "history": "",
+        "history": "기능 모듈을 화면보다 먼저 만드는 순서는 GUI 단원의 생활 도우미와 같습니다. 1단원에서는 return 값만 검사합니다.",
         "youtube": []
       },
       "screenshots": []

@@ -8,6 +8,8 @@ from content import examples,questions,units
 import questions as bank
 import later_units
 import slots as content_slots
+import unit1_pre_api
+import unit1_tips
 import unit2_pre_api
 import unit2_tips
 import os
@@ -321,6 +323,79 @@ assert '역사 한 줄' in (WEB/'units/unit02/events.html').read_text()
 assert '역사 한 줄' in (WEB/'units/unit02/memo.html').read_text()
 assert '역사 한 줄' in (WEB/'units/unit02/project.html').read_text()
 assert '역사 한 줄' in (WEB/'units/unit02/review.html').read_text()
+# #59: Unit I density · pre_api · history/youtube (CLI screenshots stay empty).
+unit1={lesson['id']:lesson for lesson in units[1]}
+assert len(unit1['overview']['examples'])>=3
+assert len(unit1['imports']['examples'])>=6
+assert len(unit1['os-sys']['examples'])>=4
+assert len(unit1['math']['examples'])>=3
+assert len(unit1['random']['examples'])>=4
+assert len(unit1['datetime']['examples'])>=3
+assert len(unit1['thirdparty']['examples'])>=3
+assert len(unit1['project']['examples'])>=2
+assert len(unit1['review']['examples'])>=2
+assert 'copy-twice' in unit1['overview']['examples'] and 'two-adds' in unit1['overview']['examples']
+assert 'import-clash' in unit1['imports']['examples']
+assert 'sys-modules' in unit1['os-sys']['examples']
+assert 'math-circle' in unit1['math']['examples'] and 'math-signed' in unit1['math']['examples']
+assert 'random-seed' in unit1['random']['examples'] and 'random-sample' in unit1['random']['examples']
+assert 'weekday-fixed' in unit1['datetime']['examples']
+assert 'pypi-names' in unit1['thirdparty']['examples'] and 'stdlib-json' in unit1['thirdparty']['examples']
+assert 'project-roll' in unit1['project']['examples']
+assert 'review-two-files' in unit1['review']['examples']
+for eid in unit1_pre_api.unit1_pre_coverage():
+ assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit1 pre_api/glossary', eid)
+ assert examples[eid]['pre_api'], ('unit1 pre_api', eid)
+for lesson in units[1]:
+ page=(WEB/f'units/unit01/{lesson["id"]}.html').read_text()
+ assert '코드 전에 알아 두기' in page, lesson['id']
+ for eid in lesson['examples']:
+  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+for lid in unit1_tips.unit1_history_lessons():
+ assert unit1[lid]['tips']['history'], ('unit1 history', lid)
+for lid in unit1_tips.unit1_youtube_lessons():
+ assert unit1[lid]['tips']['youtube'], ('unit1 youtube', lid)
+assert not unit1['math']['tips']['youtube']
+assert not unit1['project']['tips']['youtube']
+assert not unit1['review']['tips']['youtube']
+overview_page=(WEB/'units/unit01/overview.html').read_text()
+assert 'id="example-guides"' in overview_page
+assert 'id="pre-api-reuse"' in overview_page
+assert 'id="pre-api-copy-twice"' in overview_page
+assert 'id="content-tips"' in overview_page
+assert '더 알아보는 팁' in overview_page
+assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' in overview_page
+assert 'Python 1.5' in overview_page
+math_page=(WEB/'units/unit01/math.html').read_text()
+assert 'id="pre-api-math-signed"' in math_page
+assert 'math-circle' in math_page and 'math-signed' in math_page
+assert '역사 한 줄' in math_page
+assert 'https://www.youtube.com/' not in math_page
+entrypoint_page=(WEB/'units/unit01/entrypoint.html').read_text()
+assert 'https://www.youtube.com/watch?v=sugvnHA7ElY' in entrypoint_page
+thirdparty_page=(WEB/'units/unit01/thirdparty.html').read_text()
+assert 'pypi-names' in thirdparty_page and 'stdlib-json' in thirdparty_page
+assert 'https://www.youtube.com/watch?v=U2ZN104hIcc' in thirdparty_page
+assert 'id="pre-api-pypi-names"' in thirdparty_page
+packages_page=(WEB/'units/unit01/packages.html').read_text()
+assert 'https://www.youtube.com/watch?v=HGOBQPFzWKo' in packages_page
+random_page=(WEB/'units/unit01/random.html').read_text()
+assert 'https://www.youtube.com/watch?v=KzqSDvzOFNA' in random_page
+assert 'random-seed' in random_page
+datetime_page=(WEB/'units/unit01/datetime.html').read_text()
+assert 'https://www.youtube.com/watch?v=eirjjyP2qcQ' in datetime_page
+assert 'weekday-fixed' in datetime_page
+os_page=(WEB/'units/unit01/os-sys.html').read_text()
+assert 'https://www.youtube.com/watch?v=tJxcKyFMTGo' in os_page
+assert 'sys-modules' in os_page
+project1=(WEB/'units/unit01/project.html').read_text()
+assert 'project-roll' in project1 and 'id="pre-api-project-roll"' in project1
+assert 'id="pre-api-core"' in project1
+review1=(WEB/'units/unit01/review.html').read_text()
+assert 'review-two-files' in review1
+assert '역사 한 줄' in review1
+assert '실행하면 이렇게 보여요' not in overview_page
+assert '실행하면 이렇게 보여요' not in math_page
 assert 'id="pre-api"' in libraries
 assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
 assert 'id="pre-api-hello-ttk"' in libraries
