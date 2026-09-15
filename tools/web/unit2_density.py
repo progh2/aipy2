@@ -1,15 +1,13 @@
 """Unit II extra examples for #52. Imported at the end of content.py.
 
 Adds focused tk/PySide labs so widgets·layout·events·memo (and nearby topics)
-are independently complete. New APIs use pre_api/glossary; screenshots stay
-empty unless an existing web/assets/screenshots/ file fits.
+are independently complete. New APIs use pre_api/glossary. Example screenshots
+are attached later by unit2_shots (#54).
 """
 from content import ex, units, core
 
 SHOT_TK = [{'src': 'tk.png', 'alt': 'tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼',
             'caption': '같은 인사를 GUI로 만들면 이런 창이 됩니다. OS·테마에 따라 외형은 달라집니다.'}]
-SHOT_PS = [{'src': 'pyside.png', 'alt': 'PySide6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼',
-            'caption': '같은 인사를 Qt Widgets로 만든 실행 화면입니다. OS·테마에 따라 외형은 달라집니다.'}]
 
 
 def _lesson(lesson_id):
@@ -286,8 +284,7 @@ root.mainloop()'''}, mode='pc',
         {'name': 'bind', 'signature': 'entry.bind("<Return>", greet)', 'note': '특정 사건(여기선 Enter)이 나면 greet을 호출합니다. command는 버튼 클릭 전용, bind는 키·마우스 등 여러 사건에 씁니다.'},
         {'name': 'event 인자', 'signature': 'def greet(event=None):', 'note': 'bind는 이벤트 정보를 첫 인자로 넘깁니다. command는 인자를 넘기지 않으므로 기본값 None을 두면 버튼과 키를 한 함수로 받을 수 있습니다.'},
         {'name': '<Return>', 'signature': '"<Return>"', 'note': 'Enter 키의 이벤트 이름입니다. 문자열 "Return"이 아니라 꺾쇠를 포함한 이름입니다.'},
-    ],
-    screenshots=SHOT_TK)
+    ])
 
 ex('events-after-tk', 'after · 이벤트 루프를 막지 않는 타이머', {'main.py': '''import tkinter as tk
 
@@ -341,8 +338,7 @@ sys.exit(app.exec())'''}, mode='pc',
         {'name': 'clicked.connect', 'signature': 'button.clicked.connect(greet)', 'note': '버튼의 클릭 시그널에 함수를 연결합니다. connect(greet())처럼 괄호를 붙이면 지금 실행되고 반환값이 연결됩니다.'},
         {'name': 'textChanged', 'signature': 'entry.textChanged.connect(preview)', 'note': '한 글자가 바뀔 때마다 preview(text)를 호출합니다. 미리보기·실시간 검사에 씁니다.'},
         {'name': 'app.exec', 'signature': 'sys.exit(app.exec())', 'note': 'Qt의 이벤트 루프입니다. tkinter의 mainloop에 대응합니다. show() 뒤에 호출합니다.'},
-    ],
-    screenshots=SHOT_PS)
+    ])
 
 ex('memo-window-tk', '메모장 ① · 창과 Text만', {'main.py': '''import tkinter as tk
 
