@@ -32,7 +32,7 @@
 tools/web/     ← 사람이 고치는 원본. 레슨·예제·문제·도식이 Python 데이터로 들어 있습니다
 web/           ← 생성된 결과물. 이 폴더가 그대로 배포됩니다
 firebase/      ← 학교 계정 로그인·권한 규칙과 콘솔 설정 절차
-docs/          ← 제품 요구사항 문서(PRD)
+docs/          ← 제품 요구사항(PRD), 콘텐츠 갭 감사
 ```
 
 `web/`의 HTML은 **생성물이므로 직접 고치지 않습니다.** `tools/web/`을 고치고 다시 생성하세요.
@@ -73,6 +73,7 @@ Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 | 문서 | 내용 |
 | --- | --- |
 | [docs/PRD.md](docs/PRD.md) | 수업 관리 기능의 요구사항·데이터 모델·로드맵 |
+| [docs/content-gap-audit.md](docs/content-gap-audit.md) | 교과서 TOC↔웹 주제·예제·스샷·팁 갭 감사 (이슈 #50) |
 | [web/README.md](web/README.md) | 사이트 구조와 수정·재생성·검증 방법 |
 | [firebase/README.md](firebase/README.md) | Firebase 콘솔 설정, 권한 모델, 공개 설정값의 보안 |
 | [web/sources.html](web/sources.html) | 교과서 목차 대응표와 참고 자료 |
