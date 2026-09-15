@@ -14,6 +14,8 @@ import unit2_pre_api
 import unit2_tips
 import unit3_pre_api
 import unit3_tips
+import unit4_pre_api
+import unit4_tips
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -475,6 +477,90 @@ assert examples['ml-learning-curve']['screenshots']
 assert not examples['ml-rule-vs-learn']['screenshots']
 assert not examples['ml-report-card']['screenshots']
 assert not unit3['ml-overview']['screenshots']
+# #61: Unit IV density · pre_api · history/youtube (console shots stay empty unless a real science render exists).
+unit4={lesson['id']:lesson for lesson in units[4]}
+assert len(unit4['cv-overview']['examples'])>=3
+assert len(unit4['cv-pixels']['examples'])>=3
+assert len(unit4['cv-pipeline']['examples'])>=3
+assert len(unit4['cv-filters']['examples'])>=2
+assert len(unit4['cv-features']['examples'])>=2
+assert len(unit4['cv-haar']['examples'])>=3
+assert len(unit4['cv-yolo']['examples'])>=3
+assert len(unit4['cv-project']['examples'])>=2
+assert 'cv-process-vs-vision' in unit4['cv-overview']['examples'] and 'cv-use-fields' in unit4['cv-overview']['examples']
+assert 'cv-shape-size' in unit4['cv-pixels']['examples'] and 'cv-bgr-rgb' in unit4['cv-pixels']['examples']
+assert 'cv-pipeline-steps' in unit4['cv-pipeline']['examples'] and 'cv-plate-stages' in unit4['cv-pipeline']['examples']
+assert 'cv-threshold-kinds' in unit4['cv-filters']['examples']
+assert 'cv-feature-kinds' in unit4['cv-features']['examples']
+assert 'cv-haar-vs-id' in unit4['cv-haar']['examples']
+assert 'cv-scan-card' in unit4['cv-project']['examples']
+for eid in unit4_pre_api.unit4_pre_coverage():
+ assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit4 pre_api/glossary', eid)
+ assert examples[eid]['pre_api'], ('unit4 pre_api', eid)
+for lesson in units[4]:
+ page=(WEB/f'units/unit04/{lesson["id"]}.html').read_text()
+ assert '코드 전에 알아 두기' in page, lesson['id']
+ for eid in lesson['examples']:
+  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+for lid in unit4_tips.unit4_history_lessons():
+ assert unit4[lid]['tips']['history'], ('unit4 history', lid)
+for lid in unit4_tips.unit4_youtube_lessons():
+ assert unit4[lid]['tips']['youtube'], ('unit4 youtube', lid)
+assert not unit4['cv-transform']['tips']['youtube']
+assert not unit4['cv-project']['tips']['youtube']
+overview4=(WEB/'units/unit04/cv-overview.html').read_text()
+assert 'id="example-guides"' in overview4
+assert 'id="pre-api-cv-process-vs-vision"' in overview4
+assert 'id="pre-api-cv-use-fields"' in overview4
+assert 'id="content-tips"' in overview4
+assert '더 알아보는 팁' in overview4
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in overview4
+assert 'MIT' in overview4 or '여름' in overview4
+assert '실행하면 이렇게 보여요' not in overview4
+pixels4=(WEB/'units/unit04/cv-pixels.html').read_text()
+assert 'cv-shape-size' in pixels4 and 'cv-bgr-rgb' in pixels4
+assert 'id="pre-api-cv-shape-size"' in pixels4
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in pixels4
+pipeline4=(WEB/'units/unit04/cv-pipeline.html').read_text()
+assert 'cv-plate-stages' in pipeline4 and 'cv-eval-criteria' in pipeline4
+assert '역사 한 줄' in pipeline4
+transform4=(WEB/'units/unit04/cv-transform.html').read_text()
+assert '역사 한 줄' in transform4
+assert 'https://www.youtube.com/' not in transform4
+assert 'assets/science/cv-perspective.png' in transform4
+assert 'id="screenshots-cv-perspective"' in transform4
+filters4=(WEB/'units/unit04/cv-filters.html').read_text()
+assert 'cv-threshold-kinds' in filters4
+assert 'https://www.youtube.com/watch?v=C_zFhWdM4ic' in filters4
+assert 'assets/science/cv-filters.png' in filters4
+assert 'id="screenshots-cv-filters"' in filters4
+features4=(WEB/'units/unit04/cv-features.html').read_text()
+assert 'cv-feature-kinds' in features4
+assert 'https://www.youtube.com/watch?v=uihBwtPIBxM' in features4
+assert 'assets/science/cv-features.png' in features4
+libraries4=(WEB/'units/unit04/cv-libraries.html').read_text()
+assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in libraries4
+assert 'assets/science/cv-sobel.png' in libraries4
+assert 'id="screenshots-cv-skimage"' in libraries4
+io4=(WEB/'units/unit04/cv-io.html').read_text()
+assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in io4
+assert 'assets/science/cv-io.png' in io4
+haar4=(WEB/'units/unit04/cv-haar.html').read_text()
+assert 'cv-haar-vs-id' in haar4 and 'id="pre-api-cv-haar-vs-id"' in haar4
+assert 'https://www.youtube.com/watch?v=uEJ71VlUmMQ' in haar4
+yolo4=(WEB/'units/unit04/cv-yolo.html').read_text()
+assert 'cv-count' in yolo4
+assert 'https://www.youtube.com/watch?v=Cgxsv1riJhI' in yolo4
+project4=(WEB/'units/unit04/cv-project.html').read_text()
+assert 'cv-scan-card' in project4 and 'id="pre-api-cv-scan-card"' in project4
+assert '역사 한 줄' in project4
+assert 'https://www.youtube.com/' not in project4
+assert examples['cv-io']['screenshots'] and examples['cv-filters']['screenshots']
+assert examples['cv-features']['screenshots'] and examples['cv-perspective']['screenshots']
+assert examples['cv-skimage']['screenshots']
+assert not examples['cv-process-vs-vision']['screenshots']
+assert not examples['cv-scan-card']['screenshots']
+assert not unit4['cv-overview']['screenshots']
 assert 'id="pre-api"' in libraries
 assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
 assert 'id="pre-api-hello-ttk"' in libraries

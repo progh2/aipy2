@@ -8,18 +8,40 @@
       "lead": "사진을 다듬는 것과 사진의 의미를 판단하는 것을 구별하세요.",
       "paragraphs": [
         "영상 처리는 밝기·잡음·크기처럼 이미지 표현을 바꾸는 작업입니다. 컴퓨터 비전은 영상에서 물체·위치·행동 등 의미 있는 정보를 추론합니다. 전처리는 비전 시스템의 일부로 쓰일 수 있습니다.",
-        "스마트폰, 교통, 제조, 보안, 의료 보조 등에서 활용하지만 조명·가림·각도·데이터 분포 변화로 오류가 생길 수 있습니다. 인간은 맥락을 활용하고 컴퓨터는 수치 연산으로 반복 분석합니다. 촬영 자료의 이용 범위와 오판 영향을 생각하며 실습은 제공 도형과 사용 허락을 받은 자료로 진행하세요."
+        "스마트폰, 교통, 제조, 보안, 의료 보조 등에서 활용하지만 조명·가림·각도·데이터 분포 변화로 오류가 생길 수 있습니다. 인간은 맥락을 활용하고 컴퓨터는 수치 연산으로 반복 분석합니다. 촬영 자료의 이용 범위와 오판 영향을 생각하며 실습은 제공 도형과 사용 허락을 받은 자료로 진행하세요.",
+        "사진을 부드럽게 만드는 일과 사진 속 물체의 위치·이름을 적는 일을 나란히 보세요. 사서·교통·검사원 역할에서는 이점과 오판을 한 카드에 쓰고, 사람은 맥락을 보지만 프로그램은 숫자만 봅니다. 아래는 처리 vs 비전 → 활용 카드 → 사람 vs 컴퓨터 순서입니다."
       ],
-      "examples": [],
+      "examples": [
+        "cv-process-vs-vision",
+        "cv-use-fields",
+        "cv-human-vs-computer"
+      ],
       "tasks": [
         "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "두 작업",
+          "signature": "영상 처리 → 새 이미지  ·  비전 → 위치·의미",
+          "note": "블러는 그림을 바꾸고, 검출은 이름과 상자를 줍니다. 아래는 처리 vs 비전을 같은 페이지에서 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "오판 비용",
+          "meaning": "빈자리를 틀리게 안내하거나 먼지를 결함으로 보면 사람이 피해를 봅니다. 이점과 함께 적습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "1966년 MIT 여름 비전 프로젝트는 “여름이면 컴퓨터가 볼 수 있다”고 너무 쉽게 보았습니다. 사진을 저장하는 일과 장면을 이해하는 일은 그 뒤에도 따로 발전했습니다.",
+        "youtube": [
+          {
+            "title": "Computer Vision: Crash Course Computer Science #35",
+            "url": "https://www.youtube.com/watch?v=-4E2-0sxVUM",
+            "note": "영어 공개 강의(약 11분)입니다. 사진을 찍는 것과 장면을 이해하는 것, 픽셀·필터·얼굴 검출만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -75,20 +97,40 @@
       "lead": "숫자 행렬이 그림이 되는 과정을 살펴보세요.",
       "paragraphs": [
         "이미지는 픽셀의 격자입니다. 너비×높이가 해상도이고, 8비트 채널 하나는 보통 0~255 값을 사용합니다. RGB는 빨강·초록·파랑 채널이고 그레이스케일은 밝기 한 채널입니다.",
-        "NumPy 이미지의 shape는 보통 (높이, 너비, 채널)입니다. 배열의 size는 채널을 포함한 원소 수이므로 컬러 이미지의 픽셀 수와 다릅니다. 예를 들어 (2,3,3)은 픽셀 6개, 채널 값 18개입니다."
+        "NumPy 이미지의 shape는 보통 (높이, 너비, 채널)입니다. 배열의 size는 채널을 포함한 원소 수이므로 컬러 이미지의 픽셀 수와 다릅니다. 예를 들어 (2,3,3)은 픽셀 6개, 채널 값 18개입니다.",
+        "shape의 앞 두 칸을 곱하면 픽셀 수이고, 채널까지 곱하면 size입니다. OpenCV 기본 컬러는 BGR이라 화면 RGB와 빨강·파랑이 뒤바뀔 수 있습니다. 값 128과 기준 128은 검정입니다."
       ],
       "examples": [
-        "cv-pixels"
+        "cv-pixels",
+        "cv-shape-size",
+        "cv-bgr-rgb"
       ],
       "tasks": [
         "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "격자",
+          "signature": "픽셀 (행, 열)  ·  채널 0~255",
+          "note": "한 칸의 숫자 하나가 한 채널 값입니다. RGB는 세 채널, 그레이스케일은 밝기 하나입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "해상도",
+          "meaning": "너비×높이입니다. 배열 size는 채널을 포함한 원소 수라서 픽셀 수와 다릅니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "디지털 이미지는 1960년대부터 밝기 격자로 저장되었습니다. 한 칸의 0~255 값과 RGB 세 채널은 그 표현을 교실에서 다루는 기본 단위입니다.",
+        "youtube": [
+          {
+            "title": "Computer Vision: Crash Course Computer Science #35",
+            "url": "https://www.youtube.com/watch?v=-4E2-0sxVUM",
+            "note": "영어 공개 강의입니다. 이미지가 숫자 격자라는 앞부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -143,18 +185,40 @@
       "lead": "정확도뿐 아니라 처리 시간도 비교하세요.",
       "paragraphs": [
         "패턴 매칭은 정해진 모양과의 유사성, 특징점 검출은 모서리 같은 위치 단서, 머신러닝은 학습한 특징 관계, 딥러닝은 다층 신경망의 표현을 활용합니다. 목적과 입력 조건에 따라 도구를 고릅니다.",
-        "입력 → 전처리 → 특징 추출·검출 → 해석 → 출력으로 구성할 수 있습니다. 같은 대상도 조명과 각도가 바뀌면 결과가 달라집니다. 정확도·속도·실시간 지연·조건 변화에 대한 안정성을 함께 비교하세요."
+        "입력 → 전처리 → 특징 추출·검출 → 해석 → 출력으로 구성할 수 있습니다. 같은 대상도 조명과 각도가 바뀌면 결과가 달라집니다. 정확도·속도·실시간 지연·조건 변화에 대한 안정성을 함께 비교하세요.",
+        "입력부터 평가까지를 한 줄로 적은 뒤, 번호판처럼 위치 찾기와 글자 읽기를 다른 단계로 나누세요. 맞춤 개수만 보지 말고 처리 시간과 조명 변화도 같은 표에 둡니다."
       ],
-      "examples": [],
+      "examples": [
+        "cv-pipeline-steps",
+        "cv-plate-stages",
+        "cv-eval-criteria"
+      ],
       "tasks": [
         "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "한 줄 과정",
+          "signature": "입력 → 전처리 → 특징 → 해석 → 출력·평가",
+          "note": "번호판 위치와 글자 내용은 다른 단계입니다. 정확도·시간·지연·안정성을 같이 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "도구 선택",
+          "meaning": "패턴 매칭·특징점·머신러닝·딥러닝은 목적과 입력 조건에 따라 고릅니다. 한 방법이 항상 최선은 아닙니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "1982년 마어(Marr)는 시각을 입력에서 표현을 단계적으로 만드는 계산 문제로 정리했습니다. 한 단계의 오류가 다음 해석을 흔드는 이유입니다.",
+        "youtube": [
+          {
+            "title": "Computer Vision: Crash Course Computer Science #35",
+            "url": "https://www.youtube.com/watch?v=-4E2-0sxVUM",
+            "note": "영어 공개 강의입니다. 작은 영역(커널)을 보며 특징을 쌓는 부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -205,7 +269,8 @@
       "lead": "입출력·편집·표시·분석 도구를 구별해 보세요.",
       "paragraphs": [
         "OpenCV는 영상 입출력과 처리·검출, Pillow는 이미지 편집·형식 변환, Matplotlib은 결과 비교와 그래프, scikit-image는 필터와 과학적 이미지 분석을 제공합니다.",
-        "OpenCV의 기본 컬러 읽기는 BGR이며 Pillow는 보통 RGB를 사용합니다. Pillow size의 (너비, 높이)와 NumPy shape의 (높이, 너비)를 구별하세요. 화면 표시 방식도 라이브러리별로 다릅니다."
+        "OpenCV의 기본 컬러 읽기는 BGR이며 Pillow는 보통 RGB를 사용합니다. Pillow size의 (너비, 높이)와 NumPy shape의 (높이, 너비)를 구별하세요. 화면 표시 방식도 라이브러리별로 다릅니다.",
+        "OpenCV는 입출력·검출, Pillow는 편집·형식, Matplotlib은 비교 그림, scikit-image는 분석 필터입니다. 웹에서는 Pillow로 만들고 크기를 바꾸고, Sobel 비교는 PC에서 봅니다."
       ],
       "examples": [
         "cv-pillow",
@@ -215,11 +280,28 @@
         "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "도구 역할",
+          "signature": "OpenCV 입출력  ·  Pillow 편집  ·  그래프  ·  scikit-image 분석",
+          "note": "설치 이름과 import 이름이 다릅니다. opencv-python → cv2, pillow → PIL."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "크기 표기",
+          "meaning": "Pillow.size는 (너비, 높이), NumPy/OpenCV shape는 (높이, 너비, 채널)입니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "OpenCV는 2000년 인텔에서 시작되었고, Pillow는 PIL의 후속입니다. 입출력·편집·표시·분석 도구가 파이썬에서 나란히 쓰이게 되었습니다.",
+        "youtube": [
+          {
+            "title": "OpenCV Course - Full Tutorial with Python (freeCodeCamp)",
+            "url": "https://www.youtube.com/watch?v=oXlwWbU8l2o",
+            "note": "영어 공개 강의입니다. 이미지 읽기·크기 변경 앞부분만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -274,7 +356,8 @@
       "lead": "파일을 못 읽었을 때 무엇부터 확인할까요?",
       "paragraphs": [
         "imread가 실패하면 None을 반환하므로 shape를 읽기 전에 확인합니다. cvtColor는 색 공간을, resize는 크기를 바꿉니다. getRotationMatrix2D와 warpAffine은 지정한 중심과 각도로 회전시킵니다.",
-        "OpenCV 창은 imshow로 표시하고 waitKey로 키 입력과 창 처리를 기다린 뒤 destroyAllWindows로 정리합니다. 저장 폴더를 먼저 만들고 imwrite의 성공 여부도 확인하세요. 고정 크기로 바꾸면 비율이 달라질 수 있고 회전 출력 영역 밖은 잘릴 수 있습니다."
+        "OpenCV 창은 imshow로 표시하고 waitKey로 키 입력과 창 처리를 기다린 뒤 destroyAllWindows로 정리합니다. 저장 폴더를 먼저 만들고 imwrite의 성공 여부도 확인하세요. 고정 크기로 바꾸면 비율이 달라질 수 있고 회전 출력 영역 밖은 잘릴 수 있습니다.",
+        "imread가 None이면 shape를 읽지 않습니다. resize의 (너비, 높이)는 shape 순서와 반대입니다. 창은 imshow → waitKey → destroyAllWindows 순으로 정리하고, 저장 폴더는 먼저 만듭니다."
       ],
       "examples": [
         "cv-io",
@@ -284,11 +367,28 @@
         "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "읽기 확인",
+          "signature": "img = cv2.imread(path)  →  None이면 중단",
+          "note": "실패하면 shape를 읽지 않습니다. 경로·권한·파일 형식을 먼저 봅니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "창 정리",
+          "meaning": "imshow 뒤에는 waitKey로 키를 기다리고, destroyAllWindows로 창을 닫습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "파일을 숫자 배열로 읽는 습관은 디지털 사진 형식(JPEG·PNG)과 함께 자리 잡았습니다. 읽기 실패를 None으로 확인하는 것은 OpenCV의 오랜 약속입니다.",
+        "youtube": [
+          {
+            "title": "OpenCV Course - Full Tutorial with Python (freeCodeCamp)",
+            "url": "https://www.youtube.com/watch?v=oXlwWbU8l2o",
+            "note": "영어 공개 강의입니다. 이미지 읽기·크기 변경 앞부분만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -344,20 +444,39 @@
       "lead": "밝기를 부드럽게 할까요, 경계를 찾을까요?",
       "paragraphs": [
         "평균 블러는 주변 평균, 가우시안 블러는 가중 평균, 중앙값 블러는 주변 중앙값으로 잡음을 줄입니다. 커널이 커지면 세부 정보가 더 사라질 수 있습니다. Canny는 밝기 변화의 경계를 찾으며 두 임계값이 연결되는 에지의 선택에 영향을 줍니다.",
-        "고정 이진화는 한 기준, Otsu는 밝기 분포를 이용해 자동 선택한 기준, 적응형은 주변 영역별 기준을 사용합니다. THRESH_BINARY에서는 값이 기준보다 클 때 255이고 같거나 작으면 0입니다. 조명이 고르지 않으면 방법별 차이가 커집니다."
+        "고정 이진화는 한 기준, Otsu는 밝기 분포를 이용해 자동 선택한 기준, 적응형은 주변 영역별 기준을 사용합니다. THRESH_BINARY에서는 값이 기준보다 클 때 255이고 같거나 작으면 0입니다. 조명이 고르지 않으면 방법별 차이가 커집니다.",
+        "커널이 커지면 잡음과 함께 세부 경계도 흐려질 수 있습니다. 고정·Otsu·적응형 이진화를 같은 밝기 목록에서 비교한 뒤, PC 예제에서 실제 PNG를 여세요."
       ],
       "examples": [
+        "cv-threshold-kinds",
         "cv-filters"
       ],
       "tasks": [
         "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "부드럽게 / 경계 / 두 값",
+          "signature": "블러  ·  Canny  ·  threshold",
+          "note": "커널이 크면 세부 정보도 사라질 수 있습니다. 이진화 기준과 값이 같으면 0입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Otsu / 적응형",
+          "meaning": "Otsu는 밝기 분포로 전역 기준을 고르고, 적응형은 주변 영역별 기준을 씁니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "가우시안 흐림은 19세기 통계의 정규분포에서, Canny 에지는 1986년 John Canny의 논문에서 이어집니다. 커널이 커지면 잡음과 함께 세부도 사라질 수 있습니다.",
+        "youtube": [
+          {
+            "title": "How Blurs & Filters Work - Computerphile",
+            "url": "https://www.youtube.com/watch?v=C_zFhWdM4ic",
+            "note": "영어 공개 강의입니다. 평균 블러와 가우시안 커널만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -413,7 +532,8 @@
       "lead": "원본 네 점과 목적지 네 점의 순서를 맞춰 보세요.",
       "paragraphs": [
         "원근 변환은 기울어진 평면의 네 꼭짓점을 새 사각형의 네 꼭짓점에 대응시킵니다. getPerspectiveTransform으로 행렬을 구하고 warpPerspective로 새 이미지에 매핑합니다.",
-        "마우스 콜백은 클릭 좌표를 모으고, 네 점을 모으면 변환합니다. 두 목록의 순서를 일치시키고 교차되거나 한 직선 위에 놓인 점을 피하세요. ESC 취소와 읽기 실패도 처리합니다."
+        "마우스 콜백은 클릭 좌표를 모으고, 네 점을 모으면 변환합니다. 두 목록의 순서를 일치시키고 교차되거나 한 직선 위에 놓인 점을 피하세요. ESC 취소와 읽기 실패도 처리합니다.",
+        "원본 네 점과 목적지 네 점의 순서를 왼쪽 위부터 같게 맞춥니다. 한쪽만 바꾸면 결과가 뒤틀립니다. ESC는 취소이고, 한 직선 위의 점은 사각형이 아닙니다."
       ],
       "examples": [
         "cv-perspective",
@@ -423,10 +543,21 @@
         "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "네 점 대응",
+          "signature": "getPerspectiveTransform(src, dst)  →  warpPerspective",
+          "note": "왼쪽 위→오른쪽 위→오른쪽 아래→왼쪽 아래 순서를 양쪽에서 같게 맞춥니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "잘림",
+          "meaning": "회전·변환의 출력 크기를 작게 잡으면 영역 밖이 잘립니다. 출력 (너비, 높이)를 확인합니다."
+        }
+      ],
       "tips": {
-        "history": "",
+        "history": "원근 변환은 사영기하의 호모그래피입니다. 평면의 네 점을 새 사각형에 대응시키는 방법은 사진 측량과 문서 스캔에서 오래 쓰였습니다.",
         "youtube": []
       },
       "screenshots": [],
@@ -478,20 +609,39 @@
       "lead": "선·점·닫힌 경계 중 무엇이 필요한가요?",
       "paragraphs": [
         "에지는 밝기가 급변하는 경계, 코너는 여러 방향으로 밝기가 바뀌는 위치, 윤곽선은 이진 영역의 경계를 잇는 점 집합입니다. 파노라마의 대응 위치, 도형 개수, 크기 측정 등 목적에 따라 선택합니다.",
-        "코너가 없으면 반환값이 None일 수 있습니다. 윤곽선은 이진화 결과와 잡음에 영향을 받으므로 면적 등으로 걸러야 합니다. 단순히 에지를 찾았다고 물체의 종류나 신원을 안 것은 아닙니다."
+        "코너가 없으면 반환값이 None일 수 있습니다. 윤곽선은 이진화 결과와 잡음에 영향을 받으므로 면적 등으로 걸러야 합니다. 단순히 에지를 찾았다고 물체의 종류나 신원을 안 것은 아닙니다.",
+        "목적이 경계인지, 대응점인지, 면적인지 먼저 고릅니다. 네모 꼭짓점은 코너로 잡히기 쉽고, 원은 설정에 따라 코너가 적습니다. 개수는 고정 정답이 아닙니다."
       ],
       "examples": [
+        "cv-feature-kinds",
         "cv-features"
       ],
       "tasks": [
         "네모와 원에서 코너 수가 왜 다른지 관찰하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "중요한 부분",
+          "signature": "Canny  ·  goodFeaturesToTrack  ·  findContours",
+          "note": "선·점·닫힌 경계 중 목적이 있는 것을 고릅니다. 코너가 없으면 None일 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "면적 걸러 내기",
+          "meaning": "윤곽선은 잡음 점에도 생깁니다. contourArea로 작은 영역을 제외합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "Sobel(1968)과 Canny(1986)는 경계를, Harris(1988) 계열은 코너를 찾습니다. 윤곽선은 이진 영역의 둘레를 잇는 고전적인 측정입니다.",
+        "youtube": [
+          {
+            "title": "Finding the Edges (Sobel Operator) - Computerphile",
+            "url": "https://www.youtube.com/watch?v=uihBwtPIBxM",
+            "note": "영어 공개 강의입니다. 밝기가 급변하는 곳을 경계로 보는 부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -541,9 +691,11 @@
       "lead": "얼굴의 위치를 찾는 것과 누구인지 아는 것은 달라요.",
       "paragraphs": [
         "Haar Cascade는 밝기 패턴과 단계적 판별로 특정 대상의 후보 영역을 찾습니다. 얼굴을 찾은 뒤 그 영역(ROI) 안에서 눈·웃음 패턴을 탐색하면 계산 범위를 줄일 수 있습니다. 웃음 패턴 검출만으로 감정을 단정할 수 없습니다.",
-        "scaleFactor는 크기 탐색 간격, minNeighbors는 후보 유지 조건에 영향을 줍니다. 값에 따른 속도·누락·오탐을 실제로 비교하세요. VideoCapture → read → 처리·표시 → 종료 흐름에서 실패를 확인하고 finally로 release와 창 정리를 보장합니다."
+        "scaleFactor는 크기 탐색 간격, minNeighbors는 후보 유지 조건에 영향을 줍니다. 값에 따른 속도·누락·오탐을 실제로 비교하세요. VideoCapture → read → 처리·표시 → 종료 흐름에서 실패를 확인하고 finally로 release와 창 정리를 보장합니다.",
+        "상자는 얼굴이 있을 법한 위치입니다. 누구인지는 알 수 없고, 웃음 패턴만으로 감정을 단정하지 않습니다. 눈 좌표는 ROI 원점에 얼굴 (x, y)를 더해 원본으로 옮깁니다. finally에서 카메라와 창을 닫습니다."
       ],
       "examples": [
+        "cv-haar-vs-id",
         "cv-haar",
         "cv-camera"
       ],
@@ -551,11 +703,28 @@
         "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "위치만",
+          "signature": "detectMultiScale(gray, scaleFactor, minNeighbors)",
+          "note": "얼굴 상자를 찾습니다. 이름·감정은 나오지 않습니다. scaleFactor는 크기 간격, minNeighbors는 후보 유지입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "카메라 자원",
+          "meaning": "VideoCapture → read 성공 확인 → 처리 → finally에서 release와 창 닫기입니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "2001년 Viola와 Jones는 Haar-like 특징과 단계적 분류로 얼굴을 빠르게 찾았습니다. 위치 검출이지 개인 식별이 아닙니다.",
+        "youtube": [
+          {
+            "title": "Detecting Faces (Viola Jones Algorithm) - Computerphile",
+            "url": "https://www.youtube.com/watch?v=uEJ71VlUmMQ",
+            "note": "영어 공개 강의입니다. 밝기 패턴으로 얼굴 위치를 찾는 아이디어만 보면 됩니다. 누구인지 알아내는 이야기가 아닙니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -611,22 +780,40 @@
       "lead": "박스·클래스·신뢰도를 읽고 프레임별 개수를 세어 보세요.",
       "paragraphs": [
         "YOLO 예제는 사전 학습된 yolov8n.pt로 이미지 속 여러 클래스의 위치와 점수를 반환합니다. 이 단원은 교과서의 YOLOv8 경로를 다루며 특정 버전을 최신이라고 단정하지 않습니다. conf 기준을 바꾸면 출력되는 후보 수가 달라집니다.",
-        "검출 결과의 boxes.cls는 클래스 번호, conf는 모델 점수, xyxy는 박스 좌표입니다. 프레임마다 Counter를 새로 만들어 현재 개수를 셉니다. 여러 프레임의 합계는 고유 객체 수가 아니며, 누적 통행량에는 추적과 중복 처리 설계가 더 필요합니다. 보안·교통·매장·농업·운전 보조 등 응용에서는 해당 대상의 학습 범위와 실패 조건도 확인해야 합니다."
+        "검출 결과의 boxes.cls는 클래스 번호, conf는 모델 점수, xyxy는 박스 좌표입니다. 프레임마다 Counter를 새로 만들어 현재 개수를 셉니다. 여러 프레임의 합계는 고유 객체 수가 아니며, 누적 통행량에는 추적과 중복 처리 설계가 더 필요합니다. 보안·교통·매장·농업·운전 보조 등 응용에서는 해당 대상의 학습 범위와 실패 조건도 확인해야 합니다.",
+        "한 프레임의 클래스별 개수를 먼저 세고, 합계를 방문자 수로 읽지 마세요. conf를 높이면 낮은 점수 후보가 빠져 검출 수가 줄 수 있습니다. 오탐 감소와 누락을 같이 적습니다."
       ],
       "examples": [
+        "cv-count",
         "cv-yolo",
-        "cv-yolo-count",
-        "cv-count"
+        "cv-yolo-count"
       ],
       "tasks": [
         "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "한 장 검출",
+          "signature": "boxes.cls  ·  conf  ·  xyxy",
+          "note": "클래스 번호, 점수, 상자 좌표입니다. 프레임마다 Counter를 새로 만들어 현재 개수만 셉니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "합계 ≠ 방문자",
+          "meaning": "같은 사람이 여러 프레임에 다시 나옵니다. 누적 통행량에는 추적이 필요합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "2016년 Redmon 등의 YOLO는 상자와 클래스 점수를 한 번에 예측했습니다. 이 단원은 교과서의 YOLOv8 경로를 다루며, 특정 버전을 최신이라고 부르지 않습니다.",
+        "youtube": [
+          {
+            "title": "How computers learn to recognize objects instantly (Joseph Redmon, TED)",
+            "url": "https://www.youtube.com/watch?v=Cgxsv1riJhI",
+            "note": "영어 공개 강의(약 7분)입니다. 상자와 클래스 이름을 한 번에 찾는 아이디어만 보면 됩니다. 교과서의 YOLOv8과는 버전이 다릅니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -677,20 +864,32 @@
       "lead": "입력·처리·출력을 나누어 완성하세요.",
       "paragraphs": [
         "문서 스캔은 원근 보정 → 잡음 완화 → 대비 조정 → 이진화 흐름을 실험할 수 있습니다. 항상 한 순서가 모든 이미지에 최선인 것은 아니므로 같은 입력에서 결과를 비교하세요. 정적 이미지로 검증한 뒤 카메라 입력으로 확장합니다.",
-        "라이브러리 선택, 블러·이진화·에지의 목적, 얼굴 검출과 개인 식별의 차이, Haar 코드의 분류기·detectMultiScale·imshow를 점검하세요. 이미지와 오류 조건, 결과 비교표, 처리 시간과 한계를 함께 제출합니다."
+        "라이브러리 선택, 블러·이진화·에지의 목적, 얼굴 검출과 개인 식별의 차이, Haar 코드의 분류기·detectMultiScale·imshow를 점검하세요. 이미지와 오류 조건, 결과 비교표, 처리 시간과 한계를 함께 제출합니다.",
+        "입력·처리 순서·비교·한계를 한 카드에 적으세요. 아래 스캔 카드로 항목을 채운 뒤, 같은 사진에서 원근 변환 순서를 바꾸고 글자가 살아 있는지 비교합니다."
       ],
       "examples": [
-        "cv-perspective",
-        "cv-features"
+        "cv-scan-card",
+        "cv-perspective"
       ],
       "tasks": [
         "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "보고서 한 장",
+          "signature": "입력 · 처리 순서 · 비교 표 · 한계",
+          "note": "같은 사진에서 순서를 바꿔 글자와 경계가 살아 있는지 봅니다. GUI는 함수 호출만 담당합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "수행 저널",
+          "meaning": "이미지·오류 조건·처리 시간·한계를 코드와 함께 제출합니다. 한 순서가 항상 최선은 아닙니다."
+        }
+      ],
       "tips": {
-        "history": "",
+        "history": "실험 조건을 한 장에 남기는 형식은 실험실 노트에서 왔습니다. 입력·처리 순서·비교·한계를 적으면 같은 사진을 다시 돌릴 수 있습니다.",
         "youtube": []
       },
       "screenshots": [],
@@ -730,6 +929,104 @@
     }
   ],
   "examples": {
+    "cv-process-vs-vision": {
+      "id": "cv-process-vs-vision",
+      "title": "사진을 다듬기 vs 의미를 판단하기",
+      "files": {
+        "main.py": "def blur_value(center, neighbors):\n    return round((center + sum(neighbors)) / (1 + len(neighbors)))\n\ndetections = [\n    {\"이름\": \"네모\", \"상자\": (30, 30, 90, 100)},\n    {\"이름\": \"원\", \"상자\": (155, 55, 70, 70)},\n]\nprint(\"영상 처리 · 가운데 밝기:\", blur_value(200, [180, 190, 210]))\nprint(\"컴퓨터 비전 · 찾은 것:\", [(row[\"이름\"], row[\"상자\"]) for row in detections])\nprint(\"다듬은 이미지는 새 그림이고, 검출 결과는 위치와 이름입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert blur_value(200, [180, 190, 210]) == 195\nassert detections[0][\"이름\"] == \"네모\"\nassert len(detections) == 2\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "영상 처리",
+          "signature": "blur_value(center, neighbors)",
+          "note": "밝기·잡음·크기처럼 표현을 바꿉니다. 결과는 보통 새 이미지입니다."
+        },
+        {
+          "name": "컴퓨터 비전",
+          "signature": "{\"이름\": \"네모\", \"상자\": (x, y, w, h)}",
+          "note": "물체·위치처럼 의미를 추론합니다. 전처리는 비전 시스템의 한 단계로 쓰일 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "사람의 확인",
+          "meaning": "검출 결과를 사실로 단정하지 않습니다. 오판이 있으면 사람이 한 번 더 봅니다."
+        }
+      ],
+      "tips": {
+        "history": "영상 처리는 화질을 바꾸는 일에, 컴퓨터 비전은 장면에서 기호를 읽는 일에 가깝습니다. 두 단어가 섞여 쓰이던 시절부터 교실에서는 출력을 보고 구별합니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-use-fields": {
+      "id": "cv-use-fields",
+      "title": "사서·교통·검사원 역할 · 이점과 오판",
+      "files": {
+        "main.py": "fields = [\n    {\"역할\": \"사서\", \"곳\": \"도서관\", \"이점\": \"빈자리 안내\", \"오판\": \"가방을 사람으로\"},\n    {\"역할\": \"교통 보조\", \"곳\": \"교차로\", \"이점\": \"보행·차량 위치\", \"오판\": \"그늘을 차로\"},\n    {\"역할\": \"검사원\", \"곳\": \"제조 라인\", \"이점\": \"흠집 후보\", \"오판\": \"먼지를 결함으로\"},\n]\nfor row in fields:\n    print(f\"{row['역할']}: {row['이점']}  →  오판 예: {row['오판']}\")\nprint(\"촬영 자료의 이용 범위와 틀린 경우의 비용을 함께 적으세요.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert fields[0][\"오판\"].startswith(\"가방\")\nassert fields[2][\"역할\"] == \"검사원\"\nassert len(fields) == 3\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "활용 카드",
+          "signature": "이점  ·  오판",
+          "note": "어디에 쓰면 편한지만 쓰지 않습니다. 잘못 찾았을 때 누가 피해를 보는지도 한 줄로 적습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "이용 허락",
+          "meaning": "실습은 제공 도형과 사용 허락을 받은 자료로 합니다. 개인 사진은 당사자 동의 없이 올리지 않습니다."
+        }
+      ],
+      "tips": {
+        "history": "공장 검사와 교통 안내는 비전을 일찍 쓴 분야입니다. 이점만 적고 오판을 빼면 수업 설계가 기울어집니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-human-vs-computer": {
+      "id": "cv-human-vs-computer",
+      "title": "사람은 맥락, 컴퓨터는 숫자",
+      "files": {
+        "main.py": "scene = {\n    \"픽셀\": [[40, 40, 200], [40, 40, 200]],\n    \"사람\": \"오른쪽 밝은 덩어리를 컵으로 봄\",\n    \"컴퓨터\": \"값 200이 모인 칸의 좌표만 계산\",\n}\nprint(\"격자:\", scene[\"픽셀\"])\nprint(\"사람:\", scene[\"사람\"])\nprint(\"컴퓨터:\", scene[\"컴퓨터\"])\nprint(\"조명·가림·각도가 바뀌면 같은 컵도 다른 숫자가 됩니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert scene[\"픽셀\"][0][2] == 200\nassert \"컵\" in scene[\"사람\"]\nassert \"좌표\" in scene[\"컴퓨터\"]\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "맥락과 수치",
+          "signature": "사람: 장면 이해  ·  컴퓨터: 픽셀 연산",
+          "note": "사람은 가려진 물건도 추측합니다. 프로그램은 지금 격자의 값만 봅니다. 조건이 바뀌면 결과가 달라집니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "조건 변화",
+          "meaning": "조명·가림·각도·데이터 분포가 바뀌면 같은 대상도 놓치거나 잘못 찾을 수 있습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
     "cv-pixels": {
       "id": "cv-pixels",
       "title": "작은 이미지의 픽셀·반전·이진화",
@@ -742,8 +1039,189 @@
       "args": "",
       "checks": "assert binary[0] == [0,0,0]\nassert inverted[1][-1] == 0\n",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "반전",
+          "signature": "255 - v",
+          "note": "8비트 한 채널에서 밝기를 뒤집습니다. 255는 0이 됩니다."
+        },
+        {
+          "name": "이진화",
+          "signature": "255 if v > threshold else 0",
+          "note": "OpenCV THRESH_BINARY와 같습니다. 기준과 같으면 0입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "기준과 같은 값",
+          "meaning": "128이 기준 128이면 검정입니다. 픽셀 실험실에서 확인해 보세요."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-shape-size": {
+      "id": "cv-shape-size",
+      "title": "shape의 픽셀 수와 size의 원소 수",
+      "files": {
+        "main.py": "shape = (2, 3, 3)\nheight, width, channels = shape\npixels = height * width\nsize = height * width * channels\nprint(\"shape:\", shape, \"→ 높이\", height, \"너비\", width, \"채널\", channels)\nprint(\"픽셀 수:\", pixels)\nprint(\"원소 수 size:\", size)\nprint(\"Pillow.size는 (너비, 높이)이고, OpenCV shape는 (높이, 너비, 채널)입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert pixels == 6 and size == 18\nassert shape == (2, 3, 3)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "shape",
+          "signature": "(높이, 너비, 채널)",
+          "note": "NumPy 이미지의 축 순서입니다. (2, 3, 3)은 행 2·열 3·채널 3입니다."
+        },
+        {
+          "name": "픽셀 수 / size",
+          "signature": "높이×너비  ·  높이×너비×채널",
+          "note": "픽셀은 위치의 개수입니다. size는 채널 값을 모두 센 원소 수라서 컬러면 더 큽니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Pillow.size",
+          "meaning": "(너비, 높이)입니다. OpenCV의 shape와 앞뒤가 반대이므로 나란히 적습니다."
+        }
+      ],
+      "tips": {
+        "history": "배열의 size와 화면의 픽셀 수를 헷갈리는 일은 컬러 채널이 생기면서 늘었습니다. 교과서 150쪽도 이 구별을 요구합니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-bgr-rgb": {
+      "id": "cv-bgr-rgb",
+      "title": "OpenCV BGR과 화면 RGB",
+      "files": {
+        "main.py": "bgr = (20, 80, 240)\n\ndef bgr_to_rgb(pixel):\n    b, g, r = pixel\n    return (r, g, b)\n\nrgb = bgr_to_rgb(bgr)\nprint(\"OpenCV 기본 읽기 BGR:\", bgr)\nprint(\"화면·Pillow RGB:\", rgb)\nprint(\"가운데 G는 그대로입니다. 순서를 바꾸지 않으면 빨강과 파랑이 뒤바뀝니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert bgr_to_rgb((20, 80, 240)) == (240, 80, 20)\nassert bgr_to_rgb((0, 0, 0)) == (0, 0, 0)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "채널 순서",
+          "signature": "BGR (B, G, R)  →  RGB (R, G, B)",
+          "note": "OpenCV imread의 기본 컬러는 BGR입니다. Matplotlib·Pillow는 보통 RGB를 기대합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "cvtColor",
+          "meaning": "색 공간을 바꿉니다. BGR↔RGB, BGR→GRAY처럼 변환 코드를 명시합니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-pipeline-steps": {
+      "id": "cv-pipeline-steps",
+      "title": "입력부터 평가까지 한 줄로",
+      "files": {
+        "main.py": "steps = [\"입력\", \"전처리\", \"특징·위치\", \"의미 해석\", \"출력·평가\"]\nexample = {\n    \"입력\": \"교차로 카메라 한 장\",\n    \"전처리\": \"크기 축소·회색조\",\n    \"특징·위치\": \"차량 상자\",\n    \"의미 해석\": \"차선 안 정차\",\n    \"출력·평가\": \"표시 + 오탐·누락 수\",\n}\nfor name in steps:\n    print(f\"{name}: {example[name]}\")\nprint(\"한 단계가 틀리면 다음 단계도 같이 흔들립니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert steps[0] == \"입력\" and steps[-1] == \"출력·평가\"\nassert example[\"특징·위치\"] == \"차량 상자\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "처리 과정",
+          "signature": "입력 → 전처리 → 특징 → 해석 → 출력",
+          "note": "패턴 매칭·특징점·학습 모델은 도구입니다. 목적과 입력 조건에 따라 고릅니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "전처리",
+          "meaning": "특징을 찾기 쉽게 이미지를 다듬는 단계입니다. 그 자체로 물체의 종류를 아는 것은 아닙니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-plate-stages": {
+      "id": "cv-plate-stages",
+      "title": "번호판 위치와 글자는 다른 단계",
+      "files": {
+        "main.py": "plate = {\"상자\": (40, 80, 120, 36), \"글자\": \"12가3456\"}\nprint(\"검출 단계 · 위치:\", plate[\"상자\"])\nprint(\"인식 단계 · 내용:\", plate[\"글자\"])\nprint(\"위치를 잘 찾아도 글자를 잘못 읽을 수 있습니다. 오류를 단계별로 셉니다.\")\nfound_box = plate[\"상자\"][2] > 0\nread_text = len(plate[\"글자\"]) >= 4\nprint(\"검출 성공?\", found_box, \"/ 인식 길이 OK?\", read_text)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert plate[\"상자\"] == (40, 80, 120, 36)\nassert plate[\"글자\"] == \"12가3456\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "검출",
+          "signature": "상자 (x, y, w, h)",
+          "note": "어디 있는지만 찾습니다. 글자 내용과는 다른 문제입니다."
+        },
+        {
+          "name": "인식(OCR)",
+          "signature": "글자 문자열",
+          "note": "상자 안을 읽어 번호를 만듭니다. 검출 오류와 인식 오류를 한 숫자로 합치지 마세요."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "단계별 평가",
+          "meaning": "검출 누락과 오인식은 원인이 다릅니다. 같은 사진에서 두 표를 따로 적습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-eval-criteria": {
+      "id": "cv-eval-criteria",
+      "title": "정확도만으로 고르지 않기",
+      "files": {
+        "main.py": "candidates = [\n    {\"이름\": \"느린 정확\", \"맞춤\": 19, \"장당_ms\": 400, \"조명변화\": \"약함\"},\n    {\"이름\": \"빠른 대충\", \"맞춤\": 12, \"장당_ms\": 20, \"조명변화\": \"보통\"},\n    {\"이름\": \"균형\", \"맞춤\": 17, \"장당_ms\": 80, \"조명변화\": \"보통\"},\n]\nprint(\"20장 시험\")\nfor row in candidates:\n    print(row[\"이름\"], \"맞춤\", row[\"맞춤\"], \"/ 시간\", row[\"장당_ms\"], \"ms / 조명\", row[\"조명변화\"])\nprint(\"실시간 안내면 지연도 보고, 교실 조명이 바뀌면 안정성도 봅니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert candidates[0][\"맞춤\"] == 19\nassert candidates[1][\"장당_ms\"] == 20\nassert len(candidates) == 3\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "비교 기준",
+          "signature": "정확성 · 처리 시간 · 실시간 지연 · 안정성",
+          "note": "빠르게 틀리는 시스템은 교실·교차로에 맞지 않습니다. 무엇을 놓치고 잘못 찾는지 함께 적습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "실시간성",
+          "meaning": "한 장을 처리하는 시간과, 입력부터 화면에 나오기까지의 지연은 다를 수 있습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -763,11 +1241,33 @@
       "args": "",
       "checks": "assert small.size == (120,80)\n",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "Image.new",
+          "signature": "Image.new(\"RGB\", (너비, 높이), \"white\")",
+          "note": "빈 그림을 만듭니다. size는 (너비, 높이)입니다."
+        },
+        {
+          "name": "resize / rotate",
+          "signature": "img.resize((120, 80))\nimg.rotate(30, expand=True)",
+          "note": "크기를 바꾸거나 돌립니다. expand=True면 잘리지 않게 캔버스를 늘립니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "제공 도형",
+          "meaning": "외부 사진 없이 네모와 원을 그려 저장합니다. 웹에서도 실행할 수 있습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "PIL은 1990년대 파이썬 이미지 편집의 기본 도구였고, Pillow가 그 인터페이스를 이어 받았습니다.",
+        "youtube": [
+          {
+            "title": "OpenCV Course - Full Tutorial with Python (freeCodeCamp)",
+            "url": "https://www.youtube.com/watch?v=oXlwWbU8l2o",
+            "note": "영어 공개 강의입니다. 이미지 읽기·크기 변경 앞부분만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": []
     },
@@ -784,13 +1284,30 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "filters.sobel",
+          "signature": "edges = filters.sobel(img)",
+          "note": "밝기 변화의 경계를 강조합니다. 원본과 나란히 그려 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Agg",
+          "meaning": "화면 창 없이 그림을 파일로 저장하는 Matplotlib 백엔드입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "assets/science/cv-sobel.png",
+          "alt": "원본과 Sobel 에지 비교",
+          "caption": "제공 예제를 실행해 저장한 비교 그림입니다. 오른쪽이 밝기 변화의 경계입니다."
+        }
+      ]
     },
     "cv-io": {
       "id": "cv-io",
@@ -805,13 +1322,35 @@
       "args": "",
       "checks": "",
       "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "imread / imwrite",
+          "signature": "cv2.imread(\"scene.png\")\ncv2.imwrite(경로, 이미지)",
+          "note": "읽기 실패는 None입니다. 저장 전에 result 폴더를 만들고 성공 여부를 확인합니다."
+        },
+        {
+          "name": "cvtColor / resize / 회전",
+          "signature": "COLOR_BGR2GRAY  ·  resize((너비,높이))  ·  warpAffine",
+          "note": "resize 인자는 (너비, 높이)입니다. 회전 행렬은 중심과 각도로 만듭니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "scene.png",
+          "meaning": "예제가 도형 이미지를 직접 만듭니다. 교과서 원본 사진 파일이 없어도 됩니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "assets/science/cv-io.png",
+          "alt": "원본·회색조·축소·회전 결과",
+          "caption": "제공 예제가 만든 scene.png와 result 폴더의 실제 결과입니다. 가짜 콘솔 화면이 아닙니다."
+        }
+      ]
     },
     "cv-display": {
       "id": "cv-display",
@@ -826,8 +1365,50 @@
       "args": "",
       "checks": "",
       "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. 창을 닫기 전에 키를 누릅니다. 화면 표시가 가능한 PC 환경이 필요합니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "창 표시",
+          "signature": "imshow → waitKey(0) → destroyAllWindows",
+          "note": "waitKey가 키 입력과 창 이벤트를 처리합니다. 화면이 있는 PC에서만 실행합니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-threshold-kinds": {
+      "id": "cv-threshold-kinds",
+      "title": "고정·분포·주변으로 이진화하기",
+      "files": {
+        "main.py": "values = [40, 90, 127, 128, 200]\nfixed_t = 127\nfixed = [255 if v > fixed_t else 0 for v in values]\notsu_t = 100\notsu = [255 if v > otsu_t else 0 for v in values]\nblock = [40, 90, 200]\nlocal_t = sum(block) / len(block) - 7\nadaptive_center = 255 if block[1] > local_t else 0\nprint(\"고정 127:\", fixed)\nprint(\"Otsu 예 100:\", otsu, \"(실제 Otsu는 분포로 기준을 고름)\")\nprint(\"적응형 가운데:\", adaptive_center, \"지역 기준\", round(local_t, 1))\nprint(\"THRESH_BINARY는 기준과 같으면 0입니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert fixed == [0, 0, 0, 255, 255]\nassert otsu[1] == 0 and otsu[2] == 255\nassert adaptive_center in (0, 255)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "THRESH_BINARY",
+          "signature": "v > t  →  255   /   그 외 0",
+          "note": "값이 기준보다 클 때만 흰색입니다. 127과 기준 127은 검정 0입니다."
+        },
+        {
+          "name": "세 가지 기준",
+          "signature": "고정  ·  Otsu(분포)  ·  적응형(주변)",
+          "note": "그림자가 있으면 전역 한 줄보다 영역별 기준이 나을 수 있습니다. 실제 Otsu 값은 OpenCV가 계산합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "blockSize",
+          "meaning": "적응형에서 주변을 보는 홀수 칸입니다. C는 그 평균에서 빼는 값입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -847,13 +1428,41 @@
       "args": "",
       "checks": "",
       "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "세 블러",
+          "signature": "blur  ·  GaussianBlur  ·  medianBlur",
+          "note": "평균·가중 평균·중앙값입니다. 커널이 홀수여야 하는 함수가 있습니다."
+        },
+        {
+          "name": "Canny / 이진화",
+          "signature": "Canny(gray, 50, 150)\nthreshold / adaptiveThreshold",
+          "note": "Canny는 하한·상한 두 기준입니다. Otsu는 0을 넣고 플래그로 자동 기준을 받습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "CLAHE",
+          "meaning": "영역별로 대비를 조절합니다. 전역 equalizeHist와 결과가 다를 수 있습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "같은 사진에 여러 필터를 나란히 두는 비교는 교재의 기본 습관입니다. 커널과 임계값을 바꾸고 표를 남깁니다.",
+        "youtube": [
+          {
+            "title": "How Blurs & Filters Work - Computerphile",
+            "url": "https://www.youtube.com/watch?v=C_zFhWdM4ic",
+            "note": "영어 공개 강의입니다. 평균 블러와 가우시안 커널만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "assets/science/cv-filters.png",
+          "alt": "블러·에지·세 이진화의 실제 결과",
+          "caption": "같은 도형 이미지에 가우시안·Canny·고정·Otsu·적응형을 적용한 실행 결과입니다."
+        }
+      ]
     },
     "cv-perspective": {
       "id": "cv-perspective",
@@ -868,13 +1477,30 @@
       "args": "",
       "checks": "",
       "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "원근 행렬",
+          "signature": "src, dst = float32 네 점\ngetPerspectiveTransform → warpPerspective",
+          "note": "점 순서가 같아야 합니다. 출력 크기는 (너비, 높이)입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "float32",
+          "meaning": "변환 행렬을 구하는 점은 실수 배열이어야 합니다. 정수 목록을 그대로 넣지 않습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "assets/science/cv-perspective.png",
+          "alt": "원본과 원근 변환 결과",
+          "caption": "제공 예제의 네 점 대응으로 만든 변환 결과입니다. 점 순서가 바뀌면 그림이 뒤틀립니다."
+        }
+      ]
     },
     "cv-click-card": {
       "id": "cv-click-card",
@@ -889,8 +1515,50 @@
       "args": "",
       "checks": "",
       "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. 왼쪽 위→오른쪽 위→오른쪽 아래→왼쪽 아래 순서로 클릭하세요. ESC는 취소입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "마우스 콜백",
+          "signature": "setMouseCallback(창, clicked)",
+          "note": "왼쪽 클릭마다 점을 모읍니다. 네 점이 되면 변환하고, ESC는 취소입니다."
+        },
+        {
+          "name": "사각형 검사",
+          "signature": "contourArea(src)",
+          "note": "한 직선 위의 점은 면적이 거의 0입니다. 순서대로 네 꼭짓점을 고릅니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-feature-kinds": {
+      "id": "cv-feature-kinds",
+      "title": "선·점·닫힌 경계 고르기",
+      "files": {
+        "main.py": "jobs = [\n    (\"밝기가 급변하는 경계\", \"에지\"),\n    (\"여러 방향으로 바뀌는 위치\", \"코너\"),\n    (\"이진 영역의 둘레와 면적\", \"윤곽선\"),\n]\nneed = \"도형 개수와 면적\"\npicked = next(name for goal, name in jobs if \"면적\" in goal)\nprint(\"목적:\", need)\nprint(\"고른 도구:\", picked)\nfor goal, name in jobs:\n    print(f\"{name}: {goal}\")\nprint(\"에지를 찾았다고 물체의 종류나 신원을 안 것은 아닙니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert picked == \"윤곽선\"\nassert jobs[1][1] == \"코너\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "세 단서",
+          "signature": "에지 · 코너 · 윤곽선",
+          "note": "파노라마 대응은 코너, 개수·면적은 윤곽선, 형태 스케치는 에지에 가깝습니다. 목적부터 고릅니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "None",
+          "meaning": "코너가 없으면 goodFeaturesToTrack이 None을 줄 수 있습니다. 그리기 전에 확인합니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -910,11 +1578,76 @@
       "args": "",
       "checks": "",
       "note": "제공 코드가 실습용 도형 이미지를 직접 생성합니다. result 폴더의 PNG를 열어 결과를 비교하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "Canny / 코너 / 윤곽",
+          "signature": "Canny  ·  goodFeaturesToTrack  ·  findContours",
+          "note": "코너는 None일 수 있습니다. 윤곽을 그리기 전에 이진화와 면적을 확인합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "CHAIN_APPROX_SIMPLE",
+          "meaning": "윤곽의 꼭짓점만 남겨 점을 줄입니다. 모든 경계 픽셀이 필요하지 않을 때 씁니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "경계·꼭짓점·둘레를 한 장에 비교하는 방법은 특징 검출 장의 고전입니다. 그림의 점 개수는 설정에 따라 달라집니다.",
+        "youtube": [
+          {
+            "title": "Finding the Edges (Sobel Operator) - Computerphile",
+            "url": "https://www.youtube.com/watch?v=uihBwtPIBxM",
+            "note": "영어 공개 강의입니다. 밝기가 급변하는 곳을 경계로 보는 부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
+      },
+      "screenshots": [
+        {
+          "src": "assets/science/cv-features.png",
+          "alt": "에지·코너·윤곽선의 차이",
+          "caption": "같은 도형에서 경계·꼭짓점·둘레를 그린 실행 결과입니다. 코너 개수는 고정 정답이 아닙니다."
+        }
+      ]
+    },
+    "cv-haar-vs-id": {
+      "id": "cv-haar-vs-id",
+      "title": "얼굴 상자 ≠ 누구인지",
+      "files": {
+        "main.py": "faces = [(100, 50, 80, 90), (220, 40, 70, 80)]\nprint(\"찾은 얼굴 수:\", len(faces))\nfor i, (x, y, w, h) in enumerate(faces):\n    print(f\"상자 {i}: 원점 ({x}, {y}) 크기 {w}×{h}\")\nprint(\"위치만 있습니다. 이름·감정은 이 결과로 단정하지 않습니다.\")\neye_in_roi = (12, 18)\norigin = faces[0][:2]\neye_on_image = (origin[0] + eye_in_roi[0], origin[1] + eye_in_roi[1])\nprint(\"ROI 눈 좌표\", eye_in_roi, \"→ 원본\", eye_on_image)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(faces) == 2\nassert eye_on_image == (112, 68)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "검출 상자",
+          "signature": "(x, y, w, h)",
+          "note": "얼굴이 있을 법한 사각형입니다. 개인을 식별하거나 웃음을 감정으로 읽지 않습니다."
+        },
+        {
+          "name": "ROI 좌표",
+          "signature": "원본 = 얼굴 원점 + ROI 좌표",
+          "note": "눈·웃음은 얼굴 잘라 낸 그림에서 찾습니다. 전체 화면에 그리려면 얼굴의 (x, y)를 더합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Haar Cascade",
+          "meaning": "밝기 패턴과 단계적 판별로 후보 영역을 찾습니다. 학습한 다중 클래스 검출기와는 역할이 다릅니다."
+        }
+      ],
+      "tips": {
+        "history": "얼굴이 있는 칸을 찾는 일과 신원을 맞히는 일은 연구도 제품도 오래 분리되어 있었습니다. 교실 예제는 앞쪽만 다룹니다.",
+        "youtube": [
+          {
+            "title": "Detecting Faces (Viola Jones Algorithm) - Computerphile",
+            "url": "https://www.youtube.com/watch?v=uEJ71VlUmMQ",
+            "note": "영어 공개 강의입니다. 밝기 패턴으로 얼굴 위치를 찾는 아이디어만 보면 됩니다. 누구인지 알아내는 이야기가 아닙니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": []
     },
@@ -931,8 +1664,24 @@
       "args": "",
       "checks": "",
       "note": "photo.jpg는 직접 준비합니다. 얼굴 위치를 찾는 예제이며 개인의 신원이나 감정을 판정하지 않습니다.",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "CascadeClassifier",
+          "signature": "cv2.data.haarcascades + \"haarcascade_frontalface_default.xml\"",
+          "note": "empty()이면 XML 경로를 확인합니다. 얼굴 영역(ROI) 안에서 눈·웃음 패턴을 찾습니다."
+        },
+        {
+          "name": "detectMultiScale",
+          "signature": "detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)",
+          "note": "값에 따라 속도와 오탐·누락이 달라집니다. 같은 사진에서 표를 만들어 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "photo.jpg",
+          "meaning": "사용 허락을 받은 사진을 예제 폴더에 직접 넣습니다. 신원 확인용이 아닙니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -952,49 +1701,13 @@
       "args": "",
       "checks": "",
       "note": "실제 카메라는 PC에서 직접 실행할 때만 사용합니다. 영상은 저장하지 않습니다.",
-      "pre_api": [],
-      "glossary": [],
-      "tips": {
-        "history": "",
-        "youtube": []
-      },
-      "screenshots": []
-    },
-    "cv-yolo": {
-      "id": "cv-yolo",
-      "title": "YOLOv8 객체 검출 · 이미지 한 장",
-      "files": {
-        "main.py": "from ultralytics import YOLO\nfrom pathlib import Path\nsource = Path(\"photo.jpg\")\nif not source.is_file():\n    raise FileNotFoundError(\"사용 허락을 받은 photo.jpg를 준비하세요.\")\nmodel = YOLO(\"yolov8n.pt\")\nresult = model(str(source), device=\"cpu\", conf=0.5)[0]\nresult.save(filename=\"detected.jpg\")\nfor box in result.boxes:\n    cls = int(box.cls.item())\n    print(result.names[cls], round(float(box.conf.item()),3), box.xyxy.tolist())\n",
-        "requirements.txt": "ultralytics\n"
-      },
-      "mode": "pc",
-      "entry": "main.py",
-      "stdin": "",
-      "args": "",
-      "checks": "",
-      "note": "교과서의 YOLOv8 모델을 사용합니다. 첫 실행에 가중치를 내려받으므로 네트워크·디스크 공간이 필요합니다.",
-      "pre_api": [],
-      "glossary": [],
-      "tips": {
-        "history": "",
-        "youtube": []
-      },
-      "screenshots": []
-    },
-    "cv-yolo-count": {
-      "id": "cv-yolo-count",
-      "title": "YOLO 웹캠 프레임별 객체 개수",
-      "files": {
-        "main.py": "import cv2\nfrom ultralytics import YOLO\nfrom collections import Counter\nmodel = YOLO(\"yolov8n.pt\")\ncap = cv2.VideoCapture(0)\ntry:\n    if not cap.isOpened():\n        raise RuntimeError(\"카메라를 확인하세요.\")\n    while True:\n        ok, frame = cap.read()\n        if not ok:\n            break\n        result = model(frame,device=\"cpu\",conf=0.5,verbose=False)[0]\n        counts = Counter(result.names[int(box.cls.item())] for box in result.boxes)\n        view = result.plot()\n        for row,(name,count) in enumerate(sorted(counts.items())):\n            cv2.putText(view,f\"{name}: {count}\",(10,30+25*row),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,255,0),2)\n        cv2.imshow(\"Frame counts - q to quit\",view)\n        if cv2.waitKey(1) & 0xFF == ord(\"q\"):\n            break\nfinally:\n    cap.release()\n    cv2.destroyAllWindows()\n",
-        "requirements.txt": "ultralytics\nopencv-python\n"
-      },
-      "mode": "pc",
-      "entry": "main.py",
-      "stdin": "",
-      "args": "",
-      "checks": "",
-      "note": "한 프레임 안의 개수입니다. 프레임 합계를 누적 통행 인원으로 해석하지 마세요.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "VideoCapture",
+          "signature": "cap = cv2.VideoCapture(0)\nok, frame = cap.read()",
+          "note": "열기와 읽기 실패를 확인합니다. q로 종료하고 finally에서 release합니다. 이 예제는 영상을 저장하지 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1014,10 +1727,122 @@
       "args": "",
       "checks": "assert Counter(frames[0])[\"person\"] == 2\n",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "Counter",
+          "signature": "Counter([\"person\", \"car\", \"person\"])",
+          "note": "지금 목록의 이름별 개수입니다. 다음 프레임에 같은 이름이 다시 나올 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "현재 프레임",
+          "meaning": "지금 목록만 셉니다. 통행 인원·방문자 수로 해석하지 않습니다."
+        }
+      ],
+      "tips": {
+        "history": "프레임마다 다시 세는 습관은 실시간 검출 시연에서 왔습니다. 합계를 방문자 수로 읽으면 같은 사람을 여러 번 셉니다.",
+        "youtube": [
+          {
+            "title": "How computers learn to recognize objects instantly (Joseph Redmon, TED)",
+            "url": "https://www.youtube.com/watch?v=Cgxsv1riJhI",
+            "note": "영어 공개 강의(약 7분)입니다. 상자와 클래스 이름을 한 번에 찾는 아이디어만 보면 됩니다. 교과서의 YOLOv8과는 버전이 다릅니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
+      },
+      "screenshots": []
+    },
+    "cv-yolo": {
+      "id": "cv-yolo",
+      "title": "YOLOv8 객체 검출 · 이미지 한 장",
+      "files": {
+        "main.py": "from ultralytics import YOLO\nfrom pathlib import Path\nsource = Path(\"photo.jpg\")\nif not source.is_file():\n    raise FileNotFoundError(\"사용 허락을 받은 photo.jpg를 준비하세요.\")\nmodel = YOLO(\"yolov8n.pt\")\nresult = model(str(source), device=\"cpu\", conf=0.5)[0]\nresult.save(filename=\"detected.jpg\")\nfor box in result.boxes:\n    cls = int(box.cls.item())\n    print(result.names[cls], round(float(box.conf.item()),3), box.xyxy.tolist())\n",
+        "requirements.txt": "ultralytics\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "교과서의 YOLOv8 모델을 사용합니다. 첫 실행에 가중치를 내려받으므로 네트워크·디스크 공간이 필요합니다.",
+      "pre_api": [
+        {
+          "name": "YOLO",
+          "signature": "YOLO(\"yolov8n.pt\")\nresult = model(경로, device=\"cpu\", conf=0.5)",
+          "note": "교과서의 YOLOv8 경로입니다. 첫 실행에 가중치를 내려받습니다. 최신 버전이라고 단정하지 않습니다."
+        },
+        {
+          "name": "boxes",
+          "signature": "cls  ·  conf  ·  xyxy",
+          "note": "클래스 번호, 점수, 상자입니다. names[cls]로 이름을 읽습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "conf",
+          "meaning": "이 점수 아래 후보는 버립니다. 높이면 검출 수가 줄 수 있고, 놓치는 물체도 늘 수 있습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-yolo-count": {
+      "id": "cv-yolo-count",
+      "title": "YOLO 웹캠 프레임별 객체 개수",
+      "files": {
+        "main.py": "import cv2\nfrom ultralytics import YOLO\nfrom collections import Counter\nmodel = YOLO(\"yolov8n.pt\")\ncap = cv2.VideoCapture(0)\ntry:\n    if not cap.isOpened():\n        raise RuntimeError(\"카메라를 확인하세요.\")\n    while True:\n        ok, frame = cap.read()\n        if not ok:\n            break\n        result = model(frame,device=\"cpu\",conf=0.5,verbose=False)[0]\n        counts = Counter(result.names[int(box.cls.item())] for box in result.boxes)\n        view = result.plot()\n        for row,(name,count) in enumerate(sorted(counts.items())):\n            cv2.putText(view,f\"{name}: {count}\",(10,30+25*row),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,255,0),2)\n        cv2.imshow(\"Frame counts - q to quit\",view)\n        if cv2.waitKey(1) & 0xFF == ord(\"q\"):\n            break\nfinally:\n    cap.release()\n    cv2.destroyAllWindows()\n",
+        "requirements.txt": "ultralytics\nopencv-python\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "한 프레임 안의 개수입니다. 프레임 합계를 누적 통행 인원으로 해석하지 마세요.",
+      "pre_api": [
+        {
+          "name": "프레임별 개수",
+          "signature": "Counter(이름 for box in result.boxes)",
+          "note": "매 프레임 새 Counter입니다. 여러 프레임을 더해도 고유 객체 수가 아닙니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "cv-scan-card": {
+      "id": "cv-scan-card",
+      "title": "문서 스캔 보고서 카드",
+      "files": {
+        "main.py": "report = {\n    \"입력\": \"기울고 어두운 문서 한 장\",\n    \"목표\": \"글자가 읽히는 이진 이미지\",\n    \"처리\": [\"원근 보정\", \"가우시안 블러\", \"대비 조정\", \"이진화\"],\n    \"비교\": \"순서 하나 빼고 같은 입력으로 다시 실행\",\n    \"확인\": \"경계가 살아 있는지, 글자가 뭉개지지 않는지\",\n    \"한계\": \"한 순서가 모든 사진에 최선은 아님\",\n    \"확장\": \"정적 이미지로 검증한 뒤 카메라 입력\",\n}\nfor key, value in report.items():\n    print(f\"{key}: {value}\")\nprint(\"GUI 버튼은 처리 함수만 호출하고, 배열 코드와 창 코드를 나눕니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert report[\"처리\"][0] == \"원근 보정\"\nassert \"카메라\" in report[\"확장\"]\nassert report[\"한계\"].startswith(\"한 순서\")\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "남길 항목",
+          "signature": "입력 · 처리 순서 · 비교 · 한계",
+          "note": "결과 그림만 제출하지 않습니다. 같은 입력에서 순서를 바꿔 본 표가 보고서입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "모듈 분리",
+          "meaning": "2단원 GUI의 버튼은 이미지 함수를 호출만 합니다. 경로 오류·취소도 창 쪽에서 처리합니다."
+        }
+      ],
+      "tips": {
+        "history": "문서 스캔 파이프라인은 원근 보정과 이진화의 교실 프로젝트로 자주 쓰입니다. 한 순서를 정답처럼 외우지 말고 같은 입력에서 비교합니다.",
         "youtube": []
       },
       "screenshots": []
