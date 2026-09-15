@@ -426,21 +426,31 @@
       {
         "id": "cv-overview",
         "title": "컴퓨터 비전과 영상 처리",
-        "examples": [],
+        "examples": [
+          "cv-process-vs-vision",
+          "cv-use-fields",
+          "cv-human-vs-computer"
+        ],
         "href": "units/unit04/cv-overview.html"
       },
       {
         "id": "cv-pixels",
         "title": "픽셀·해상도·RGB·그레이스케일",
         "examples": [
-          "cv-pixels"
+          "cv-pixels",
+          "cv-shape-size",
+          "cv-bgr-rgb"
         ],
         "href": "units/unit04/cv-pixels.html"
       },
       {
         "id": "cv-pipeline",
         "title": "알고리즘·처리 과정·평가 기준",
-        "examples": [],
+        "examples": [
+          "cv-pipeline-steps",
+          "cv-plate-stages",
+          "cv-eval-criteria"
+        ],
         "href": "units/unit04/cv-pipeline.html"
       },
       {
@@ -465,6 +475,7 @@
         "id": "cv-filters",
         "title": "블러·에지·이진화",
         "examples": [
+          "cv-threshold-kinds",
           "cv-filters"
         ],
         "href": "units/unit04/cv-filters.html"
@@ -482,6 +493,7 @@
         "id": "cv-features",
         "title": "에지·코너·윤곽선으로 중요한 부분 찾기",
         "examples": [
+          "cv-feature-kinds",
           "cv-features"
         ],
         "href": "units/unit04/cv-features.html"
@@ -490,6 +502,7 @@
         "id": "cv-haar",
         "title": "얼굴·눈·웃음 검출과 웹캠",
         "examples": [
+          "cv-haar-vs-id",
           "cv-haar",
           "cv-camera"
         ],
@@ -499,9 +512,9 @@
         "id": "cv-yolo",
         "title": "YOLOv8 객체 탐지와 개수 표시",
         "examples": [
+          "cv-count",
           "cv-yolo",
-          "cv-yolo-count",
-          "cv-count"
+          "cv-yolo-count"
         ],
         "href": "units/unit04/cv-yolo.html"
       },
@@ -509,8 +522,8 @@
         "id": "cv-project",
         "title": "컴퓨터 비전 프로젝트와 단원 정리",
         "examples": [
-          "cv-perspective",
-          "cv-features"
+          "cv-scan-card",
+          "cv-perspective"
         ],
         "href": "units/unit04/cv-project.html"
       }
@@ -1397,6 +1410,78 @@
       "id": "ml-report-card",
       "title": "재현 가능한 보고서 카드",
       "unit": 3,
+      "mode": "web"
+    },
+    "cv-process-vs-vision": {
+      "id": "cv-process-vs-vision",
+      "title": "사진을 다듬기 vs 의미를 판단하기",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-use-fields": {
+      "id": "cv-use-fields",
+      "title": "사서·교통·검사원 역할 · 이점과 오판",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-human-vs-computer": {
+      "id": "cv-human-vs-computer",
+      "title": "사람은 맥락, 컴퓨터는 숫자",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-shape-size": {
+      "id": "cv-shape-size",
+      "title": "shape의 픽셀 수와 size의 원소 수",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-bgr-rgb": {
+      "id": "cv-bgr-rgb",
+      "title": "OpenCV BGR과 화면 RGB",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-pipeline-steps": {
+      "id": "cv-pipeline-steps",
+      "title": "입력부터 평가까지 한 줄로",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-plate-stages": {
+      "id": "cv-plate-stages",
+      "title": "번호판 위치와 글자는 다른 단계",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-eval-criteria": {
+      "id": "cv-eval-criteria",
+      "title": "정확도만으로 고르지 않기",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-threshold-kinds": {
+      "id": "cv-threshold-kinds",
+      "title": "고정·분포·주변으로 이진화하기",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-feature-kinds": {
+      "id": "cv-feature-kinds",
+      "title": "선·점·닫힌 경계 고르기",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-haar-vs-id": {
+      "id": "cv-haar-vs-id",
+      "title": "얼굴 상자 ≠ 누구인지",
+      "unit": 4,
+      "mode": "web"
+    },
+    "cv-scan-card": {
+      "id": "cv-scan-card",
+      "title": "문서 스캔 보고서 카드",
+      "unit": 4,
       "mode": "web"
     }
   },
