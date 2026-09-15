@@ -1,4 +1,11 @@
-"""Content, Python, archive and local-link validation; scientific examples require their libraries."""
+"""Content, Python, archive and local-link validation; scientific examples require their libraries.
+
+Local / CI / Pages path and the teacher I–IV smoke list:
+  docs/teacher-smoke-checklist.md
+  python3 tools/web/build.py && python3 tools/web/verify.py
+  .github/workflows/verify.yml (pull requests)
+  .github/workflows/pages.yml (main → GitHub Pages)
+"""
 from pathlib import Path
 import sys,subprocess,tempfile,ast,json,zipfile,io,contextlib
 from html.parser import HTMLParser
@@ -921,4 +928,15 @@ assert 'focus.get(\'exampleId\', null)' in rules
 assert '>= resource.data.attention.nonce' in rules
 assert 'resource == null' not in rules
 assert '!resource.exists' not in rules
+# #62: teacher smoke checklist stays next to the build/verify/Pages path.
+assert (ROOT/'.github'/'workflows'/'verify.yml').is_file()
+smoke=(ROOT/'docs'/'teacher-smoke-checklist.md').read_text()
+assert 'python3 tools/web/build.py' in smoke
+assert 'python3 tools/web/verify.py' in smoke
+assert 'verify.yml' in smoke and 'pages.yml' in smoke
+assert 'units/unit01/' in smoke and 'units/unit02/' in smoke
+assert 'units/unit03/' in smoke and 'units/unit04/' in smoke
+assert '#lab' in smoke
+assert '더 알아보는 팁' in smoke
+assert '코드 전에 알아 두기' in smoke
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')

@@ -273,7 +273,7 @@ README의 “학습 주제 45 · 예제 82 · 연습 문제 213”과 같습니�
 | P4 | M4 | Ⅲ 개요 예제 공백·시각·커버 | §4.3, §6.2 | [#60](https://github.com/progh2/aipy2/issues/60) |
 | P4 | M4 | Ⅳ 소단원 분리·예제·스샷 | §4.4, §6.2 | [#61](https://github.com/progh2/aipy2/issues/61) |
 
-관련 이슈(이 표 밖): [#62](https://github.com/progh2/aipy2/issues/62) 검증·Pages 스모크, [#63](https://github.com/progh2/aipy2/issues/63) 학생 테스터. 콘텐츠를 나눈 뒤 회귀 확인용입니다.
+관련 이슈(이 표 밖): [#62](https://github.com/progh2/aipy2/issues/62) 검증·Pages 스모크 — [교사 체크리스트](teacher-smoke-checklist.md)와 PR용 `verify.yml`. [#63](https://github.com/progh2/aipy2/issues/63) 학생 테스터. 콘텐츠를 나눈 뒤 회귀 확인용입니다.
 
 ### 권장 순서 (의존)
 

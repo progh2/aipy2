@@ -19,12 +19,16 @@
 HTML 생성: `tools/web/build.py` / 공통 동작과 디자인: `web/assets/`
 
 ```bash
+python3 -m pip install numpy pandas scikit-learn matplotlib pillow
 python3 tools/web/build.py
 python3 tools/web/verify.py
 python3 -m http.server 8000 --directory web
 ```
 
-`http://localhost:8000`으로 접속하세요. 파일을 직접 여는 file:// 방식은 학습 JSON과 Worker 로딩을 지원하지 않습니다. 생성된 단원 HTML을 직접 수정하면 재생성 시 덮어씁니다. 준비 페이지는 생성 대상이 아니므로 직접 수정합니다.
+`http://127.0.0.1:8000`으로 접속하세요. 파일을 직접 여는 file:// 방식은 학습 JSON과 Worker 로딩을 지원하지 않습니다. 생성된 단원 HTML을 직접 수정하면 재생성 시 덮어씁니다. 준비 페이지는 생성 대상이 아니므로 직접 수정합니다.
+
+수업 전 단원 Ⅰ–Ⅳ 열어보기: 저장소 [docs/teacher-smoke-checklist.md](../docs/teacher-smoke-checklist.md).
+PR은 `.github/workflows/verify.yml`, `main` 배포는 `.github/workflows/pages.yml`이 같은 build → verify를 실행합니다.
 
 ## GitHub Pages
 
