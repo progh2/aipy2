@@ -8,18 +8,40 @@
       "lead": "규칙을 직접 쓰는 것과 데이터에서 규칙을 배우는 것은 어떻게 다를까요?",
       "paragraphs": [
         "인공지능은 지능적인 문제 해결 기술의 넓은 범위입니다. 머신러닝은 데이터에서 패턴을 학습하는 접근이며, 딥러닝은 여러 층의 신경망을 사용하는 머신러닝의 한 종류입니다. 모든 AI가 머신러닝인 것은 아닙니다.",
-        "초기의 규칙 중심 연구는 지식 입력과 계산 자원의 한계를 겪었습니다. 이후 데이터·계산 장치·학습 알고리즘의 발전이 함께 영향을 주었습니다. 1956년 다트머스 워크숍, 1997년 딥 블루의 체스 승리, 2012년 ImageNet의 딥러닝 성과는 서로 다른 접근의 발전 사례입니다. 딥 블루를 현대 딥러닝 모델과 같은 것으로 보지 마세요."
+        "초기의 규칙 중심 연구는 지식 입력과 계산 자원의 한계를 겪었습니다. 이후 데이터·계산 장치·학습 알고리즘의 발전이 함께 영향을 주었습니다. 1956년 다트머스 워크숍, 1997년 딥 블루의 체스 승리, 2012년 ImageNet의 딥러닝 성과는 서로 다른 접근의 발전 사례입니다. 딥 블루를 현대 딥러닝 모델과 같은 것으로 보지 마세요.",
+        "규칙을 코드에 쓰는 일과 사례를 모아 패턴을 쓰는 일을 나란히 보세요. 포함 관계는 인공지능이 가장 넓고, 딥 블루는 탐색 프로그램이지 딥러닝이 아닙니다. 아래는 규칙 vs 학습 → 포함 관계 → 역사 사례 순서입니다."
       ],
-      "examples": [],
+      "examples": [
+        "ml-rule-vs-learn",
+        "ml-nesting",
+        "ml-history-cases"
+      ],
       "tasks": [
         "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "세 겹의 범위",
+          "signature": "인공지능 ⊃ 머신러닝 ⊃ 딥러닝",
+          "note": "규칙을 쓰는 프로그램도 인공지능일 수 있습니다. 아래는 규칙 vs 학습을 같은 페이지에서 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "딥 블루",
+          "meaning": "탐색과 평가 함수로 체스를 둔 프로그램입니다. 다층 신경망을 학습한 모델이 아닙니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "1956년 다트머스 워크숍에서 AI라는 이름이 쓰였고, 1959년 Arthur Samuel이 머신러닝이라는 말을 썼습니다. 2012년 ImageNet의 AlexNet은 딥러닝이 사진 분류에서 두드러진 사례입니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning & Artificial Intelligence: Crash Course Computer Science #34",
+            "url": "https://www.youtube.com/watch?v=z-EtmaFJieY",
+            "note": "영어 공개 강의(약 12분)입니다. AI와 머신러닝이 어떻게 다른지, 스팸·추천처럼 어디에 쓰이는지만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -68,18 +90,40 @@
       "lead": "정확한 규칙을 쓰기 어려운 문제를 찾아보세요.",
       "paragraphs": [
         "추천, 이미지 분류, 음성 처리처럼 복잡한 패턴이 있는 문제에서 머신러닝을 활용합니다. 규칙이 명확한 사칙연산이나 간단한 유효성 검사에는 일반 프로그램이 더 간단할 수 있습니다.",
-        "학습 데이터가 현실을 충분히 대표하지 않으면 특정 조건에서 오류가 늘어납니다. 예측을 사실로 단정하지 말고, 데이터의 범위·오류 비용·사람의 확인 절차를 함께 설명하세요."
+        "학습 데이터가 현실을 충분히 대표하지 않으면 특정 조건에서 오류가 늘어납니다. 예측을 사실로 단정하지 말고, 데이터의 범위·오류 비용·사람의 확인 절차를 함께 설명하세요.",
+        "합·길이 검사처럼 규칙이 분명하면 일반 프로그램이 낫습니다. 사서 역할에서는 예측 시점에 알 수 있는 열만 X로 모으고, 검사원 역할에서는 입력과 예측을 한 줄로 적습니다."
       ],
-      "examples": [],
+      "examples": [
+        "ml-when-not",
+        "ml-loan-data",
+        "ml-inspect"
+      ],
       "tasks": [
         "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "문제 카드",
+          "signature": "입력 데이터 → 예측할 출력",
+          "note": "규칙을 정확히 쓸 수 있으면 일반 프로그램이 낫습니다. 대출·검사·추천은 입력과 예측을 먼저 적습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "대표하지 않는 데이터",
+          "meaning": "모은 조건 밖에서 오류가 늘어납니다. 예측을 사실로 단정하지 않습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "1990년대 스팸 필터와 2000년대 추천 시스템은, 규칙을 다 쓰기 어려운 패턴을 데이터에서 배우는 쪽이 더 실용적임을 보여 주었습니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning & Artificial Intelligence: Crash Course Computer Science #34",
+            "url": "https://www.youtube.com/watch?v=z-EtmaFJieY",
+            "note": "영어 공개 강의(약 12분)입니다. AI와 머신러닝이 어떻게 다른지, 스팸·추천처럼 어디에 쓰이는지만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -129,20 +173,39 @@
       "lead": "모델을 만들기 전에 성공 기준을 정하세요.",
       "paragraphs": [
         "문제 정의 → 수집·탐색 → 전처리 → 모델 선택 → 학습·평가 → 해석·응용으로 진행합니다. 실제 프로젝트에서는 결과를 보고 앞 단계로 돌아가 수정하기도 합니다.",
-        "평가용 데이터는 먼저 분리해 둡니다. 평균·스케일·범주 목록처럼 데이터에서 배우는 전처리 값도 훈련 부분에서만 구합니다. 모델 후보는 검증 데이터나 교차 검증으로 비교하고, 최종 테스트는 선택을 마친 뒤 사용합니다."
+        "평가용 데이터는 먼저 분리해 둡니다. 평균·스케일·범주 목록처럼 데이터에서 배우는 전처리 값도 훈련 부분에서만 구합니다. 모델 후보는 검증 데이터나 교차 검증으로 비교하고, 최종 테스트는 선택을 마친 뒤 사용합니다.",
+        "성공 기준을 “평균 예측보다 MAE가 낮은가”처럼 숫자로 먼저 적으세요. 그다음 자료를 훈련·검증·테스트로 나누고, 전처리 값은 훈련 부분에서만 구합니다."
       ],
       "examples": [
+        "ml-success-mae",
         "ml-split-small"
       ],
       "tasks": [
         "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "나누는 순서",
+          "signature": "문제·기준 → 분할 → 훈련에서만 전처리 → 검증 → 테스트",
+          "note": "평가용 자료는 먼저 떼어 둡니다. 평균·스케일도 훈련 부분에서만 구합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "검증과 테스트",
+          "meaning": "검증은 모델·설정을 고를 때, 테스트는 선택을 마친 뒤 한 번 보고할 때 씁니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "훈련과 평가를 나누는 습관은 1990년대 이후 표준이 되었습니다. 전처리 값도 훈련 부분에서만 구해야 새 데이터 평가가 공정합니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning for Everybody – Full Course (freeCodeCamp)",
+            "url": "https://www.youtube.com/watch?v=i_LwzRVP7bg",
+            "note": "영어 공개 강의입니다. 목차의 train/test 분할 구간만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -199,18 +262,40 @@
       "lead": "표의 어느 열을 X로, 어느 열을 y로 사용할까요?",
       "paragraphs": [
         "데이터 세트의 한 행은 보통 한 관측입니다. X는 예측 시점에 알 수 있는 특성의 표이며 y는 예측할 정답입니다. 샘플 수와 특성 수를 확인하고 같은 행의 X와 y가 대응하는지 검사합니다.",
-        "모델은 학습한 예측 규칙입니다. 가중치 같은 파라미터는 학습 과정에서 정해지고, k-NN의 k 같은 하이퍼파라미터는 학습 전에 설정합니다. 훈련 성능만 좋고 검증 성능이 낮으면 과대 적합, 둘 다 낮으면 과소 적합을 의심합니다."
+        "모델은 학습한 예측 규칙입니다. 가중치 같은 파라미터는 학습 과정에서 정해지고, k-NN의 k 같은 하이퍼파라미터는 학습 전에 설정합니다. 훈련 성능만 좋고 검증 성능이 낮으면 과대 적합, 둘 다 낮으면 과소 적합을 의심합니다.",
+        "표의 한 행이 한 관측입니다. X와 y의 개수와 순서를 맞춘 뒤, k처럼 미리 정하는 값과 데이터에서 정해지는 값을 구별하세요. 미래 정답을 X에 넣으면 점수가 높아 보여도 현실에서는 쓸 수 없습니다."
       ],
-      "examples": [],
+      "examples": [
+        "ml-xy-table",
+        "ml-param-hyper",
+        "ml-leakage"
+      ],
       "tasks": [
         "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "X / y / 설정",
+          "signature": "X 특성표  ·  y 정답  ·  하이퍼파라미터",
+          "note": "한 행이 한 관측입니다. 가중치는 학습이 정하고, k 같은 값은 학습 전에 정합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "데이터 누수",
+          "meaning": "예측 시점에 없는 정보를 X에 넣는 것입니다. 점수는 높아져도 현실에서 쓸 수 없습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "퍼셉트론(1958)은 데이터로 가중치를 배웠습니다. k-NN의 k처럼 학습 전에 고르는 값은 나중에 하이퍼파라미터라고 부르게 되었습니다.",
+        "youtube": [
+          {
+            "title": "A Gentle Introduction to Machine Learning (StatQuest)",
+            "url": "https://www.youtube.com/watch?v=Gv9_4yMHFhI",
+            "note": "영어 공개 강의입니다. 특성·정답·모델이 무엇인지만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -260,18 +345,40 @@
       "lead": "정답을 배우나요, 구조를 찾나요, 행동의 보상을 배우나요?",
       "paragraphs": [
         "지도 학습은 입력과 정답의 관계를 학습합니다. 범주를 예측하면 분류, 연속적인 수치를 예측하면 회귀입니다. 비지도 학습은 정답 없이 군집이나 낮은 차원의 구조를 찾습니다.",
-        "강화 학습에서는 에이전트가 상태를 보고 행동하며 환경에서 보상을 받습니다. 정책은 행동 선택 전략이고 장기 누적 보상을 높이는 방향으로 배웁니다. Q-learning은 여러 강화 학습 알고리즘 중 하나입니다."
+        "강화 학습에서는 에이전트가 상태를 보고 행동하며 환경에서 보상을 받습니다. 정책은 행동 선택 전략이고 장기 누적 보상을 높이는 방향으로 배웁니다. Q-learning은 여러 강화 학습 알고리즘 중 하나입니다.",
+        "정답이 범주면 분류, 숫자면 회귀입니다. 정답이 없으면 가까운 값끼리 묶는 비지도이고, 미로처럼 행동에 점수를 주면 강화 학습입니다. 제자리 반복이 이득이 되지 않게 보상을 설계하세요."
       ],
-      "examples": [],
+      "examples": [
+        "ml-classify-vs-regress",
+        "ml-unsupervised-groups",
+        "ml-rl-reward"
+      ],
       "tasks": [
         "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "학습의 종류",
+          "signature": "지도(분류/회귀)  ·  비지도  ·  강화",
+          "note": "정답이 있는지, 범주인지 숫자인지, 행동에 보상이 있는지로 먼저 고릅니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "정책",
+          "meaning": "상태를 보고 행동을 고르는 전략입니다. 한 번의 보상보다 누적 보상을 봅니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "지도 학습은 정답이 있는 자료, 비지도는 정답 없이 구조를 찾습니다. 강화 학습은 벨만의 동적 계획과 서튼의 시행착오 학습에서 이어집니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning & Artificial Intelligence: Crash Course Computer Science #34",
+            "url": "https://www.youtube.com/watch?v=z-EtmaFJieY",
+            "note": "영어 공개 강의입니다. 데이터를 보고 예측하는 부분과 강화 학습(AlphaGo) 언급만 보면 이 주제와 맞습니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -325,7 +432,8 @@
       "lead": "배열·표·모델·그래프 도구를 연결해 보세요.",
       "paragraphs": [
         "NumPy는 다차원 배열과 벡터 연산, pandas는 Series·DataFrame과 표 탐색, scikit-learn은 전처리·학습·평가 도구를 제공합니다. Matplotlib은 그래프 구성, Seaborn은 표 데이터의 통계 시각화를 돕습니다.",
-        "웹에서는 NumPy·pandas·그래프와 작은 원리 실습을 실행합니다. scikit-learn 전체 파이프라인은 PC에서 실행합니다. 필요한 웹 패키지는 처음에 내려받습니다. 실행한 Python이 만든 PNG 그래프는 결과 아래에 표시됩니다. PC에서는 예제 폴더에서 requirements.txt를 설치합니다."
+        "웹에서는 NumPy·pandas·그래프와 작은 원리 실습을 실행합니다. scikit-learn 전체 파이프라인은 PC에서 실행합니다. 필요한 웹 패키지는 처음에 내려받습니다. 실행한 Python이 만든 PNG 그래프는 결과 아래에 표시됩니다. PC에서는 예제 폴더에서 requirements.txt를 설치합니다.",
+        "배열(NumPy) → 표(pandas) → 그래프(Matplotlib/Seaborn) → 학습(scikit-learn) 순으로 연결합니다. 웹에서는 표와 그래프를 먼저 실행하고, 전체 모델은 PC에서 돌립니다."
       ],
       "examples": [
         "ml-tools",
@@ -336,11 +444,28 @@
         "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "도구 역할",
+          "signature": "NumPy 배열  ·  pandas 표  ·  sklearn 학습  ·  그래프",
+          "note": "웹에서는 배열·표·그래프와 작은 원리 실습을 실행합니다. 전체 파이프라인은 PC에서 돌립니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "설치 이름",
+          "meaning": "scikit-learn을 설치하고 import sklearn 합니다. 설치 이름과 import 이름이 다릅니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "NumPy(2006), pandas(2008), scikit-learn(2007~2010)은 배열·표·학습 도구를 파이썬에서 같은 흐름으로 쓰게 했습니다.",
+        "youtube": [
+          {
+            "title": "Python Pandas Tutorial (Part 1): Getting Started with Data Analysis (Corey Schafer)",
+            "url": "https://www.youtube.com/watch?v=ZyhVh-qRZPA",
+            "note": "영어 공개 강의입니다. DataFrame을 만들고 head로 앞부분을 보는 앞부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -395,7 +520,8 @@
       "lead": "값을 바꾼 이유와 기준을 남겨 보세요.",
       "paragraphs": [
         "CSV는 read_csv, Excel은 read_excel로 읽습니다. 결측치는 isna로 확인한 뒤 dropna로 제거하거나 fillna·SimpleImputer로 채울 수 있습니다. 이상치는 입력 오류인지 드문 정상 관측인지 먼저 확인합니다. 임의 삭제는 데이터의 의미를 바꿀 수 있습니다.",
-        "MinMaxScaler는 훈련 범위를 기준으로 값을 조정하며 새로운 값은 0~1 범위를 벗어날 수 있습니다. StandardScaler는 훈련 평균과 표준편차로 변환하지만 정규분포를 만들어 주지는 않습니다. 범주형 값에는 get_dummies 또는 OneHotEncoder를 사용하며 새 범주 처리 기준도 정합니다."
+        "MinMaxScaler는 훈련 범위를 기준으로 값을 조정하며 새로운 값은 0~1 범위를 벗어날 수 있습니다. StandardScaler는 훈련 평균과 표준편차로 변환하지만 정규분포를 만들어 주지는 않습니다. 범주형 값에는 get_dummies 또는 OneHotEncoder를 사용하며 새 범주 처리 기준도 정합니다.",
+        "결측을 채우기 전에 그 값이 무엇을 뜻하는지 적습니다. 스케일과 범주 목록은 훈련에서만 배우고, 테스트에는 transform만 적용합니다. 1000점이 오타인지 먼저 묻는 과제를 빼지 마세요."
       ],
       "examples": [
         "ml-scale-small",
@@ -406,10 +532,21 @@
         "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "훈련에서만 배우기",
+          "signature": "fit / fit_transform(train)  →  transform(test)",
+          "note": "중앙값·최솟값·범주 목록을 테스트에 맞추면 평가가 새어 나갑니다. 이상치는 삭제 전에 의미를 확인합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "정규화 / 표준화",
+          "meaning": "MinMax는 훈련 최솟값·최댓값, Standard는 훈련 평균·표준편차입니다. 분포 모양을 정규분포로 바꾸지는 않습니다."
+        }
+      ],
       "tips": {
-        "history": "",
+        "history": "결측과 스케일 변환은 통계의 표준화에서 왔습니다. 평균과 최댓값을 전체 데이터로 구하면 평가가 새어 나갑니다.",
         "youtube": []
       },
       "screenshots": [],
@@ -466,9 +603,11 @@
       "lead": "이름에 회귀가 들어 있어도 범주를 예측하는 모델이 있어요.",
       "paragraphs": [
         "k-NN은 가까운 이웃들의 정답을 참고합니다. 로지스틱 회귀는 분류에 사용하는 모델이고, 결정 트리는 조건으로 데이터를 나누며, SVM은 범주 사이의 경계를 학습합니다.",
-        "붓꽃 예제에서 X는 꽃받침·꽃잎의 측정값이고 y는 품종입니다. stratify=y는 분할 시 클래스 비율을 고려합니다. k-NN·SVM 등은 거리나 스케일의 영향을 받으므로 전처리를 파이프라인 안에서 학습합니다."
+        "붓꽃 예제에서 X는 꽃받침·꽃잎의 측정값이고 y는 품종입니다. stratify=y는 분할 시 클래스 비율을 고려합니다. k-NN·SVM 등은 거리나 스케일의 영향을 받으므로 전처리를 파이프라인 안에서 학습합니다.",
+        "로지스틱 회귀는 이름과 달리 분류에 씁니다. 웹 원리에서는 가까운 이웃의 표를 직접 세고, PC 예제에서 같은 분할로 네 모델을 비교합니다. 테스트 점수로 k를 고르지 마세요."
       ],
       "examples": [
+        "ml-logistic-name",
         "ml-knn-small",
         "ml-classify"
       ],
@@ -476,11 +615,28 @@
         "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "분류기",
+          "signature": "k-NN · 로지스틱 · 트리 · SVM",
+          "note": "로지스틱 회귀는 분류입니다. 거리 기반 모델은 파이프라인 안에서 스케일을 배웁니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "stratify",
+          "meaning": "나눌 때 클래스 비율을 유지합니다. 붓꽃처럼 품종 수가 비슷해야 비교가 공정합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "k-NN은 1951년 Fix·Hodges의 이웃 규칙에서, 로지스틱 회귀는 통계의 범주 모형에서, SVM은 1995년 Vapnik 등에서 이어집니다.",
+        "youtube": [
+          {
+            "title": "Hello World — Machine Learning Recipes #1 (Google for Developers)",
+            "url": "https://www.youtube.com/watch?v=cKxRvEZd3Mw",
+            "note": "영어 공개 강의(약 7분)입니다. 과일을 분류하는 첫 모델만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -536,7 +692,8 @@
       "lead": "예측 숫자는 정답에서 얼마나 떨어져 있나요?",
       "paragraphs": [
         "회귀는 연속적인 목표값을 예측합니다. 선형 회귀는 특성들의 가중합과 절편으로 값을 예측합니다. 예측한 값과 실제 값의 차이를 잔차라고 부릅니다.",
-        "MAE는 절대 오차 평균, MSE는 제곱 오차 평균입니다. MSE는 큰 오차에 더 큰 벌점을 줍니다. R²는 평균 예측 기준과 비교한 값으로 음수가 될 수 있습니다. 한 지표의 숫자만 보지 말고 목표값의 단위와 오류 사례도 확인하세요."
+        "MAE는 절대 오차 평균, MSE는 제곱 오차 평균입니다. MSE는 큰 오차에 더 큰 벌점을 줍니다. R²는 평균 예측 기준과 비교한 값으로 음수가 될 수 있습니다. 한 지표의 숫자만 보지 말고 목표값의 단위와 오류 사례도 확인하세요.",
+        "예측 숫자와 정답의 차이를 잔차라고 합니다. MAE는 원래 단위, MSE는 큰 오차에 더 민감하고, R²는 평균 예측보다 나은지를 보므로 음수가 될 수 있습니다."
       ],
       "examples": [
         "ml-line-small",
@@ -547,11 +704,28 @@
         "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "숫자 예측과 오차",
+          "signature": "ŷ = 가중합 + 절편  ·  MAE / MSE / R²",
+          "note": "잔차는 예측과 정답의 차이입니다. R²는 평균 예측 기준이라 음수가 될 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "단위",
+          "meaning": "MAE는 원래 목표값 단위입니다. 숫자만 보지 말고 큰 오류 사례도 확인합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "최소제곱 직선은 1800년대 초 가우스·르장드르가 정리했습니다. 머신러닝에서는 같은 식을 예측 모델로 씁니다.",
+        "youtube": [
+          {
+            "title": "Linear Regression, Clearly Explained!!! (StatQuest)",
+            "url": "https://www.youtube.com/watch?v=nk2CQITm_eo",
+            "note": "영어 공개 강의입니다. 직선으로 숫자를 예측하는 아이디어만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -607,7 +781,8 @@
       "lead": "정답 이름 없이 비슷한 점들을 묶을 수 있을까요?",
       "paragraphs": [
         "K-평균은 정한 개수 K의 중심을 이용해 가까운 샘플들을 묶고 중심을 갱신합니다. labels_의 번호는 정답 클래스나 순위가 아니며 실행 조건에 따라 번호가 달라질 수 있습니다.",
-        "데이터의 스케일, K, 초기 중심이 결과에 영향을 줍니다. n_init은 여러 초기화 시도를 제어합니다. 점들의 분포를 보고 군집이 의미 있는지 해석하며, 항상 원형 군집이 존재한다고 가정하지 마세요."
+        "데이터의 스케일, K, 초기 중심이 결과에 영향을 줍니다. n_init은 여러 초기화 시도를 제어합니다. 점들의 분포를 보고 군집이 의미 있는지 해석하며, 항상 원형 군집이 존재한다고 가정하지 마세요.",
+        "정한 개수 K의 중심으로 가까운 점을 묶습니다. labels_의 번호는 정답 이름도 순위도 아닙니다. K와 스케일을 바꾸면 같은 자료도 다른 그림이 됩니다."
       ],
       "examples": [
         "ml-kmeans-small",
@@ -617,11 +792,28 @@
         "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "K-평균",
+          "signature": "K개 중심 → 배정 → 평균으로 갱신",
+          "note": "labels_는 그룹 이름입니다. 번호 2가 1보다 좋은 그룹이 아닙니다. K와 스케일이 결과를 바꿉니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "n_init",
+          "meaning": "여러 초기 중심으로 다시 시도하는 횟수입니다. 한 번의 시작점에 결과가 묶이지 않게 합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "K-평균은 1957년 Steinhaus, 1967년 MacQueen으로 이어진 중심 갱신 방법입니다. 군집 번호 자체에는 순위가 없습니다.",
+        "youtube": [
+          {
+            "title": "StatQuest: K-means clustering",
+            "url": "https://www.youtube.com/watch?v=4b5d3muPQmA",
+            "note": "영어 공개 강의입니다. 중심을 정하고 가까운 점을 묶는 반복만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -671,7 +863,8 @@
       "lead": "어떤 종류의 실수가 더 중요한가요?",
       "paragraphs": [
         "양성으로 삼는 클래스를 먼저 정합니다. TP는 실제 양성을 양성으로, TN은 실제 음성을 음성으로 맞힌 수입니다. FP는 음성을 양성으로, FN은 양성을 음성으로 틀린 수입니다.",
-        "정확도는 전체 정답 비율입니다. 정밀도는 양성 예측 중 실제 양성의 비율, 재현율은 실제 양성 중 찾아낸 비율입니다. F1은 정밀도와 재현율의 조화평균입니다. 클래스 불균형이 있으면 정확도만으로 비교하기 어렵습니다."
+        "정확도는 전체 정답 비율입니다. 정밀도는 양성 예측 중 실제 양성의 비율, 재현율은 실제 양성 중 찾아낸 비율입니다. F1은 정밀도와 재현율의 조화평균입니다. 클래스 불균형이 있으면 정확도만으로 비교하기 어렵습니다.",
+        "양성이 무엇인지 먼저 정하고 TP·FP·FN·TN을 셉니다. 스팸을 양성이라 두면, 정상 메일을 스팸으로 보낸 것은 FP이므로 정밀도를 함께 봅니다. 불균형이면 정확도만으로 비교하지 않습니다."
       ],
       "examples": [
         "ml-confusion-small",
@@ -681,11 +874,28 @@
         "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "양성을 먼저",
+          "signature": "TP FP FN TN → 정확도·정밀도·재현율·F1",
+          "note": "스팸을 양성으로 두면, 정상 메일을 스팸으로 보낸 것은 FP입니다. 불균형이면 정확도만 보지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "임계값",
+          "meaning": "확률을 양성으로 부를 기준입니다. 올리면 FP는 줄거나 같고 FN은 늘거나 같습니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "혼동행렬은 의학·정보검색에서 쓰이던 오류 분류표입니다. 정밀도·재현율은 어떤 실수를 줄일지에 따라 고릅니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning Fundamentals: The Confusion Matrix (StatQuest)",
+            "url": "https://www.youtube.com/watch?v=Kdsp6soqA7o",
+            "note": "영어 공개 강의입니다. 실제와 예측을 표로 나누는 부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -740,7 +950,8 @@
       "lead": "한 번 나눈 점수만으로 모델을 선택해도 될까요?",
       "paragraphs": [
         "교차 검증은 훈련 자료를 여러 묶음으로 나누어 검증 역할을 번갈아 맡깁니다. GridSearchCV는 설정 후보를 교차 검증으로 비교합니다. 전처리도 각 훈련 묶음에서 다시 학습하도록 Pipeline을 사용합니다.",
-        "학습 곡선은 훈련 샘플 수에 따른 훈련·검증 성능을 함께 보여 줍니다. 두 곡선의 간격과 수준을 보고 데이터 추가, 모델 복잡도 조절, 규제, 특성 개선 등을 검토합니다. 데이터 스케일 정규화와 모델 규제(regularization)는 다른 개념입니다."
+        "학습 곡선은 훈련 샘플 수에 따른 훈련·검증 성능을 함께 보여 줍니다. 두 곡선의 간격과 수준을 보고 데이터 추가, 모델 복잡도 조절, 규제, 특성 개선 등을 검토합니다. 데이터 스케일 정규화와 모델 규제(regularization)는 다른 개념입니다.",
+        "교차 검증은 훈련 자료를 여러 묶음으로 나눠 검증 역할을 바꿉니다. best_score_는 그 평균이고, 최종 테스트는 따로 보관한 데이터의 점수입니다. 둘이 다를 수 있습니다."
       ],
       "examples": [
         "ml-cv-small",
@@ -751,11 +962,28 @@
         "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "고르기와 보고",
+          "signature": "교차 검증으로 선택  ·  테스트는 마지막에 한 번",
+          "note": "전처리도 각 훈련 묶음에서 다시 배우도록 Pipeline을 씁니다. 데이터 스케일과 모델 규제는 다른 말입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "학습 곡선",
+          "meaning": "훈련 샘플 수에 따른 훈련·검증 점수입니다. 둘 다 낮으면 과소, 훈련만 높으면 과대를 의심합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "교차 검증은 1974년 Stone 등이 일반화 성능을 나누어 추정하려고 정리했습니다. 설정 선택은 검증, 최종 보고는 테스트입니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning Fundamentals: Cross Validation (StatQuest)",
+            "url": "https://www.youtube.com/watch?v=fSytzGwwBVw",
+            "note": "영어 공개 강의입니다. 훈련 자료를 나눠 검증 역할을 바꾸는 이유만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": [],
       "visual": [
@@ -806,19 +1034,32 @@
       "lead": "입력부터 결과 설명까지 재현 가능한 보고서를 만드세요.",
       "paragraphs": [
         "문제와 목표값, 데이터 출처, 특성, 분할 조건, 전처리, 모델, 평가 결과를 한 흐름으로 연결하세요. 비교 대상과 난수 조건을 기록하고, 점수가 낮아진 사례를 찾아 개선안을 제안합니다.",
-        "스팸 분류의 FP와 정밀도, 가격 같은 수치 예측과 회귀, 정답 없는 고객 군집, AI 포함 관계, 과대 적합 방지, DataFrame.describe를 모두 설명할 수 있는지 확인하세요."
+        "스팸 분류의 FP와 정밀도, 가격 같은 수치 예측과 회귀, 정답 없는 고객 군집, AI 포함 관계, 과대 적합 방지, DataFrame.describe를 모두 설명할 수 있는지 확인하세요.",
+        "문제·특성·분할·난수·지표·한계를 한 카드에 적으세요. 아래 보고서 카드 예제로 항목을 채운 뒤, 같은 파이프라인에서 k 후보를 하나 추가하고 선택 근거를 남깁니다."
       ],
       "examples": [
+        "ml-report-card",
         "ml-selection"
       ],
       "tasks": [
         "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "보고서 한 장",
+          "signature": "문제·분할·전처리·모델·지표·한계",
+          "note": "같은 난수로 다시 돌릴 수 있게 적습니다. 점수가 나빠진 사례를 찾아 개선안을 제안합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "수행 저널",
+          "meaning": "코드와 함께 내는 기록입니다. 변경 이유와 최종 테스트는 검증 선택과 구별해 적습니다."
+        }
+      ],
       "tips": {
-        "history": "",
+        "history": "재현 가능한 실험 기록은 과학 논문의 습관입니다. 문제·분할·난수·지표·한계를 한 카드에 남기면 같은 코드를 다시 돌릴 수 있습니다.",
         "youtube": []
       },
       "screenshots": [],
@@ -854,6 +1095,233 @@
     }
   ],
   "examples": {
+    "ml-rule-vs-learn": {
+      "id": "ml-rule-vs-learn",
+      "title": "규칙으로 쓰기 vs 데이터에서 배우기",
+      "files": {
+        "main.py": "def password_ok(password):\n    return len(password) >= 8\n\nspam_tokens = [\"free\", \"winner\", \"prize\"]\n\ndef looks_like_spam(text):\n    words = text.lower().split()\n    return any(token in words for token in spam_tokens)\n\nprint(\"규칙 기반 비밀번호:\", password_ok(\"abc\"), password_ok(\"longpass\"))\nprint(\"데이터에서 본 단어:\", looks_like_spam(\"Winner prize now\"), looks_like_spam(\"숙제 제출합니다\"))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert password_ok(\"abcdefgh\") and not password_ok(\"short\")\nassert looks_like_spam(\"free winner\") and not looks_like_spam(\"숙제 제출합니다\")\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "사람이 쓴 규칙",
+          "signature": "len(password) >= 8",
+          "note": "조건을 코드에 직접 적습니다. 비밀번호 길이처럼 기준이 분명하면 머신러닝이 필요 없습니다."
+        },
+        {
+          "name": "데이터에서 본 패턴",
+          "signature": "spam_tokens = [\"free\", \"winner\"]",
+          "note": "자주 나온 단어를 목록에 모은 뒤 새 메일에 적용합니다. 진짜 학습 알고리즘은 아니지만, “규칙을 쓰기보다 사례를 모은다”는 역할만 보여 줍니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "규칙 기반",
+          "meaning": "사람이 조건과 예외를 작성합니다. 모든 인공지능이 머신러닝인 것은 아닙니다."
+        }
+      ],
+      "tips": {
+        "history": "초기의 많은 인공지능은 규칙을 직접 입력했습니다. 데이터가 늘면서, 사례에서 패턴을 모으는 쪽이 스팸·추천처럼 예외가 많은 문제에 쓰이기 시작했습니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-nesting": {
+      "id": "ml-nesting",
+      "title": "AI ⊃ 머신러닝 ⊃ 딥러닝",
+      "files": {
+        "main.py": "layers = [\n    (\"인공지능\", \"가장 넓은 범위\", \"비밀번호 길이 검사\"),\n    (\"머신러닝\", \"데이터로 패턴을 배움\", \"스팸 분류\"),\n    (\"딥러닝\", \"여러 층의 신경망\", \"이미지 특징 학습\"),\n]\nfor name, meaning, example in layers:\n    print(f\"{name}: {meaning} · 예: {example}\")\nprint(\"포함 관계: 인공지능 ⊃ 머신러닝 ⊃ 딥러닝\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert layers[0][0] == \"인공지능\" and layers[-1][0] == \"딥러닝\"\nassert len(layers) == 3\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "포함 관계",
+          "signature": "인공지능 ⊃ 머신러닝 ⊃ 딥러닝",
+          "note": "딥러닝은 머신러닝의 한 종류이고, 머신러닝은 인공지능의 한 접근입니다. 방향을 뒤집으면 틀립니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "딥러닝",
+          "meaning": "여러 층의 신경망으로 특징을 배우는 머신러닝입니다. 모든 머신러닝이 딥러닝은 아닙니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-history-cases": {
+      "id": "ml-history-cases",
+      "title": "딥 블루와 ImageNet은 같은 접근이 아니다",
+      "files": {
+        "main.py": "cases = [\n    {\"해\": 1956, \"이름\": \"다트머스\", \"접근\": \"이름과 연구 모임\", \"데이터 학습\": \"아님\"},\n    {\"해\": 1997, \"이름\": \"딥 블루\", \"접근\": \"탐색과 평가 함수\", \"데이터 학습\": \"아님\"},\n    {\"해\": 2012, \"이름\": \"AlexNet\", \"접근\": \"다층 신경망\", \"데이터 학습\": \"딥러닝\"},\n]\nfor row in cases:\n    print(row[\"해\"], row[\"이름\"], row[\"접근\"], \"학습:\", row[\"데이터 학습\"])\nprint(\"딥 블루를 현대 딥러닝 모델과 같은 것으로 보지 마세요.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert cases[1][\"데이터 학습\"] == \"아님\"\nassert cases[2][\"데이터 학습\"] == \"딥러닝\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "접근을 구별하기",
+          "signature": "탐색·평가 함수  ≠  다층 신경망 학습",
+          "note": "체스 프로그램의 승리가 곧 딥러닝은 아닙니다. 무엇을 데이터에서 배웠는지 먼저 묻습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "ImageNet 2012",
+          "meaning": "사진 분류 대회에서 깊은 신경망이 두드러진 성과를 낸 사례입니다. AI의 시작 연도가 아닙니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-when-not": {
+      "id": "ml-when-not",
+      "title": "규칙을 쓰는 편이 나은 문제",
+      "files": {
+        "main.py": "problems = [\n    (\"두 수의 합\", \"규칙이 한 줄\", \"일반 프로그램\"),\n    (\"비밀번호 길이\", \"기준이 명확\", \"일반 프로그램\"),\n    (\"다음 날 대출 권수\", \"패턴이 복잡\", \"머신러닝 후보\"),\n    (\"제품 사진의 결함\", \"규칙을 다 쓰기 어려움\", \"머신러닝 후보\"),\n]\nfor name, reason, tool in problems:\n    print(f\"{name:14} → {tool}  ({reason})\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert problems[0][2] == \"일반 프로그램\"\nassert problems[2][2] == \"머신러닝 후보\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "먼저 물을 것",
+          "signature": "규칙을 정확히 쓸 수 있는가?",
+          "note": "사칙연산·유효성 검사는 조건문이 더 단순합니다. 추천·이미지·음성처럼 예외가 많을 때 학습을 검토합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "오류 비용",
+          "meaning": "틀린 예측이 사람에게 미치는 영향입니다. 대출·의료·채점에서는 사람 확인을 함께 둡니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-loan-data": {
+      "id": "ml-loan-data",
+      "title": "사서 역할 · 대출 예측에 모을 열",
+      "files": {
+        "main.py": "rows = [\n    {\"요일\": \"월\", \"어제_대출\": 12, \"시험기간\": 0, \"다음날_대출\": 15},\n    {\"요일\": \"화\", \"어제_대출\": 15, \"시험기간\": 0, \"다음날_대출\": 14},\n    {\"요일\": \"수\", \"어제_대출\": 30, \"시험기간\": 1, \"다음날_대출\": 28},\n]\nx_keys = [\"요일\", \"어제_대출\", \"시험기간\"]\ny_key = \"다음날_대출\"\nX = [{key: row[key] for key in x_keys} for row in rows]\ny = [row[y_key] for row in rows]\nprint(\"X (예측 때 알 수 있는 값):\", X)\nprint(\"y (맞힐 정답):\", y)\nprint(\"다음날_대출은 정답이므로 X에 넣지 않습니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert y == [15, 14, 28]\nassert all(\"다음날_대출\" not in row for row in X)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "입력 열 X",
+          "signature": "요일 · 어제_대출 · 시험기간",
+          "note": "예측하는 시점에 이미 알 수 있는 값만 넣습니다. 다음 날 대출 권수는 아직 없습니다."
+        },
+        {
+          "name": "정답 열 y",
+          "signature": "다음날_대출",
+          "note": "맞히고 싶은 값입니다. 학습할 때는 과거 기록의 정답을 쓰고, 실제 서비스에서는 이 값이 없습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "대표성",
+          "meaning": "모은 날이 시험 기간만이면, 방학 예측이 어긋날 수 있습니다. 데이터의 범위를 함께 적습니다."
+        }
+      ],
+      "tips": {
+        "history": "예측 시점에 없는 열을 빼는 습관은 시계열·시험 점수처럼 “아직 모르는 값”을 다루는 통계에서 오래되었습니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-inspect": {
+      "id": "ml-inspect",
+      "title": "검사원 역할 · 입력과 예측 출력",
+      "files": {
+        "main.py": "services = [\n    {\"역할\": \"추천\", \"입력\": \"이용 기록·항목 특성\", \"예측\": \"선호 가능성\"},\n    {\"역할\": \"제조 검사\", \"입력\": \"제품 이미지\", \"예측\": \"정상/결함\"},\n    {\"역할\": \"대출량\", \"입력\": \"과거 대출·요일\", \"예측\": \"예상 권수\"},\n]\nfor row in services:\n    print(f\"{row['역할']}: {row['입력']} → {row['예측']}\")\nprint(\"예측을 사실로 단정하지 말고, 틀린 경우의 비용도 적으세요.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert services[1][\"예측\"] == \"정상/결함\"\nassert len(services) == 3\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "서비스 카드",
+          "signature": "입력 → 예측",
+          "note": "무엇을 보고 무엇을 맞히는지 한 줄로 씁니다. 모델 이름보다 이 카드가 먼저입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "사람의 확인",
+          "meaning": "결함으로 예측된 제품을 바로 폐기하기보다, 비용이 크면 사람이 한 번 더 봅니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-success-mae": {
+      "id": "ml-success-mae",
+      "title": "성공 기준을 숫자로 적기",
+      "files": {
+        "main.py": "actual = [10, 12, 8, 14]\nbaseline = [11, 11, 11, 11]\nmodel = [10, 11, 9, 13]\n\ndef mae(true, pred):\n    return sum(abs(a - p) for a, p in zip(true, pred)) / len(true)\n\nprint(\"평균 예측 MAE:\", mae(actual, baseline))\nprint(\"모델 MAE:\", mae(actual, model))\nprint(\"성공?\", mae(actual, model) < mae(actual, baseline))\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert mae(actual, baseline) == 2\nassert mae(actual, model) == 1\nassert mae(actual, model) < mae(actual, baseline)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "MAE",
+          "signature": "sum(|정답-예측|) / n",
+          "note": "권·원처럼 원래 단위의 평균 오차입니다. 모델이 나은지는 단순한 평균 예측과 비교해야 드러납니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "성공 기준",
+          "meaning": "“잘 맞힌다”만 쓰지 말고, 어떤 지표가 비교 대상보다 낮아야 하는지 적습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
     "ml-split-small": {
       "id": "ml-split-small",
       "title": "웹 원리 · 훈련·검증·테스트 분할",
@@ -866,8 +1334,226 @@
       "args": "",
       "checks": "assert len(train)==6 and len(test)==2\nassert not (set(train)&set(test))\nassert len(set(train+validation+test))==10\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "세 묶음",
+          "signature": "train, validation, test = samples[:6], samples[6:8], samples[8:]",
+          "note": "섞은 뒤 앞부분을 훈련, 가운데를 검증, 끝을 테스트로 둡니다. 세 묶음에 같은 번호가 겹치면 안 됩니다."
+        },
+        {
+          "name": "random.Random(42)",
+          "signature": "random.Random(42).shuffle(samples)",
+          "note": "시드를 고정하면 같은 분할이 나옵니다. 수업에서 결과를 비교할 때 씁니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "한 번 본 점수로 모델을 고르면 그 점수는 더 이상 독립적인 평가가 아닙니다. 검증과 테스트를 나누는 이유입니다.",
+        "youtube": [
+          {
+            "title": "Machine Learning for Everybody – Full Course (freeCodeCamp)",
+            "url": "https://www.youtube.com/watch?v=i_LwzRVP7bg",
+            "note": "영어 공개 강의입니다. 목차의 train/test 분할 구간만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
+      },
+      "screenshots": []
+    },
+    "ml-xy-table": {
+      "id": "ml-xy-table",
+      "title": "같은 행의 X와 y를 맞추기",
+      "files": {
+        "main.py": "rows = [\n    ([\"월\", 12], 15),\n    ([\"화\", 15], 14),\n    ([\"수\", 30], 28),\n]\nX = [row[0] for row in rows]\ny = [row[1] for row in rows]\nprint(\"샘플 수:\", len(X), \"특성 수:\", len(X[0]))\nprint(\"X 형태: (샘플 수, 특성 수) =\", (len(X), len(X[0])))\nprint(\"y 형태: (샘플 수,) =\", (len(y),))\nprint(\"1번 행 X:\", X[1], \"→ y:\", y[1])\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert (len(X), len(X[0])) == (3, 2)\nassert len(y) == 3 and y[1] == 14\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "한 행 = 한 관측",
+          "signature": "X[i] 와 y[i]",
+          "note": "i번째 입력과 i번째 정답이 같은 사례여야 합니다. 순서가 어긋나면 학습이 잘못된 짝을 봅니다."
+        },
+        {
+          "name": "형태",
+          "signature": "X: (샘플 수, 특성 수)  ·  y: (샘플 수,)",
+          "note": "표의 열 개수가 특성 수입니다. 정답 열은 X에 넣지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "특성 / 레이블",
+          "meaning": "특성은 예측에 쓰는 입력, 레이블은 맞힐 정답입니다. 같은 행에서 짝을 이룹니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-param-hyper": {
+      "id": "ml-param-hyper",
+      "title": "배우는 값과 미리 정하는 값",
+      "files": {
+        "main.py": "from collections import Counter\ntraining = [(1, \"A\"), (2, \"A\"), (8, \"B\"), (9, \"B\")]\nx = 3\nk = 3\nneighbors = sorted(training, key=lambda row: abs(row[0] - x))[:k]\nvoted = Counter(label for _, label in neighbors).most_common(1)[0][0]\nprint(\"하이퍼파라미터 k:\", k)\nprint(\"가까운 이웃:\", neighbors)\nprint(\"이 데이터에서 정해진 예측:\", voted)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert k == 3 and voted == \"A\"\nassert len(neighbors) == 3\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "하이퍼파라미터",
+          "signature": "k = 3",
+          "note": "학습을 시작하기 전에 사람이 정합니다. 이웃 수 k, 트리의 최대 깊이가 이 자리에 해당합니다."
+        },
+        {
+          "name": "파라미터",
+          "signature": "voted = 이웃의 다수결",
+          "note": "이 예제의 예측은 주어진 자료에서 계산됩니다. 선형 모델의 가중치처럼, 데이터에 따라 달라지는 값이 파라미터입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "과대 / 과소 적합",
+          "meaning": "훈련만 좋고 검증이 낮으면 과대, 둘 다 낮으면 과소 적합을 의심합니다. k를 바꾸며 검증 점수를 봅니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-leakage": {
+      "id": "ml-leakage",
+      "title": "미래 정답을 X에 넣으면",
+      "files": {
+        "main.py": "honest = {\"어제_대출\": 12, \"시험기간\": 1}\nleaky = {\"어제_대출\": 12, \"시험기간\": 1, \"다음날_대출\": 28}\nprint(\"정직한 X:\", honest)\nprint(\"새어 나간 X:\", leaky)\nprint(\"예측 시점에는 다음날_대출을 모릅니다. 테스트 점수만 높아집니다.\")\navailable_at_predict_time = set(honest)\nprint(\"누수?\", \"다음날_대출\" in leaky and \"다음날_대출\" not in available_at_predict_time)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert \"다음날_대출\" not in honest\nassert \"다음날_대출\" in leaky\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "데이터 누수",
+          "signature": "다음날_대출을 X에 포함",
+          "note": "실제 서비스에서 없는 정보를 학습·평가에 쓰면 점수가 부풀려집니다. 미래 정답·시험 답안이 대표 사례입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "예측 시점에 알 수 있는가",
+          "meaning": "특성인지 확인할 질문입니다. 아니오라면 y이거나 누수입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-classify-vs-regress": {
+      "id": "ml-classify-vs-regress",
+      "title": "범주를 맞히나, 숫자를 맞히나",
+      "files": {
+        "main.py": "tasks = [\n    (\"이메일 스팸 여부\", \"범주\", \"분류\", \"지도\"),\n    (\"내일 기온\", \"연속 수치\", \"회귀\", \"지도\"),\n    (\"고객을 비슷한 묶음으로\", \"정답 없음\", \"군집\", \"비지도\"),\n    (\"미로에서 출구 찾기\", \"보상\", \"정책 학습\", \"강화\"),\n]\nfor name, target, kind, family in tasks:\n    print(f\"{family:4} | {kind:6} | {name} ({target})\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert tasks[0][2] == \"분류\" and tasks[1][2] == \"회귀\"\nassert tasks[2][3] == \"비지도\" and tasks[3][3] == \"강화\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "세 갈래",
+          "signature": "정답 있음 / 정답 없음 / 상태·행동·보상",
+          "note": "지도는 입력-정답 짝, 비지도는 구조, 강화는 행동의 누적 보상을 배웁니다. 군집은 비지도입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "분류와 회귀",
+          "meaning": "둘 다 지도 학습입니다. 차이는 정답이 이름(범주)인지 숫자인지입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-unsupervised-groups": {
+      "id": "ml-unsupervised-groups",
+      "title": "정답 없이 가까운 값 묶기",
+      "files": {
+        "main.py": "values = [1, 2, 3, 18, 19, 21]\ncut = (min(values) + max(values)) / 2\nlow = [v for v in values if v < cut]\nhigh = [v for v in values if v >= cut]\nprint(\"기준:\", cut)\nprint(\"묶음 0:\", low)\nprint(\"묶음 1:\", high)\nprint(\"0과 1은 이름일 뿐 순위가 아닙니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert low == [1, 2, 3]\nassert high == [18, 19, 21]\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "정답 열 없음",
+          "signature": "values만 있고 y는 없음",
+          "note": "비슷한 것끼리 묶는 것이 목적입니다. 이 예제의 기준은 최솟값·최댓값의 가운데로, 개념만 보여 줍니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "군집 번호",
+          "meaning": "그룹을 구별하는 이름입니다. 2번이 1번보다 좋은 그룹이라는 뜻은 없습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-rl-reward": {
+      "id": "ml-rl-reward",
+      "title": "미로 보상 설계하기",
+      "files": {
+        "main.py": "reward = {\"출구\": 100, \"벽\": -10, \"이동\": -1, \"제자리\": -2}\n\ndef step(kind):\n    return reward[kind]\n\npath = [\"이동\", \"이동\", \"벽\", \"이동\", \"출구\"]\ntotal = sum(step(kind) for kind in path)\nprint(\"경로:\", path)\nprint(\"누적 보상:\", total)\nprint(\"제자리만 반복하면:\", step(\"제자리\") * 5)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert step(\"출구\") == 100 and step(\"벽\") == -10\nassert total == 100 - 10 - 1 * 3\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "보상",
+          "signature": "출구 +100  ·  벽 -10  ·  이동 -1",
+          "note": "환경이 행동에 주는 점수입니다. 제자리 반복이 이득이 되지 않게 설계해야 합니다."
+        },
+        {
+          "name": "정책",
+          "signature": "상태 → 행동",
+          "note": "지금 칸에서 어느 쪽으로 갈지 정하는 전략입니다. 장기 누적 보상을 높이도록 배웁니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Q-learning",
+          "meaning": "여러 강화 학습 알고리즘 중 하나입니다. 강화 학습 전체를 가리키는 말은 아닙니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -887,11 +1573,33 @@
       "args": "",
       "checks": "assert df.shape == (3, 2)\n",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "numpy.array",
+          "signature": "np.array([10, 20, 30])",
+          "note": "같은 형의 값을 담는 배열입니다. + 5처럼 원소마다 연산할 수 있습니다."
+        },
+        {
+          "name": "DataFrame",
+          "signature": "pd.DataFrame({\"name\": [...], \"score\": [...]})",
+          "note": "열 이름이 있는 표입니다. head는 앞부분, describe는 수치 요약, info는 자료형과 결측입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "shape",
+          "meaning": "배열이나 표의 축별 길이입니다. (행, 열)을 먼저 확인합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "표 계산은 스프레드시트보다 코드로 반복하기 위해 pandas가 만들어졌습니다. 배열 연산의 뼈대는 NumPy입니다.",
+        "youtube": [
+          {
+            "title": "Python Pandas Tutorial (Part 1): Getting Started with Data Analysis (Corey Schafer)",
+            "url": "https://www.youtube.com/watch?v=ZyhVh-qRZPA",
+            "note": "영어 공개 강의입니다. DataFrame을 만들고 head로 앞부분을 보는 앞부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": []
     },
@@ -908,13 +1616,35 @@
       "args": "",
       "checks": "",
       "note": "실제 Python이 저장한 PNG를 실행 결과 아래에서 확인할 수 있습니다.",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "Counter",
+          "signature": "Counter([\"apple\", \"banana\", \"apple\"])",
+          "note": "항목별 개수 딕셔너리입니다. 막대 높이는 이 개수와 같아야 합니다."
+        },
+        {
+          "name": "plt.bar / savefig",
+          "signature": "plt.bar(이름, 개수)\nplt.savefig(\"frequency.png\")",
+          "note": "실행한 Python이 PNG를 만듭니다. 웹 결과 아래에 그림이 붙습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Agg",
+          "meaning": "화면 창 없이 그림을 파일로 저장하는 Matplotlib 백엔드입니다. 웹·서버에서 씁니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "assets/science/ml-chart.png",
+          "alt": "과일 빈도 막대그래프",
+          "caption": "제공 예제를 실행해 저장한 막대그래프입니다. 막대 높이는 Counter 개수와 같습니다."
+        }
+      ]
     },
     "ml-seaborn": {
       "id": "ml-seaborn",
@@ -929,7 +1659,18 @@
       "args": "",
       "checks": "",
       "note": "Excel 입출력과 seaborn 비교 예제입니다. python -m pip install -r requirements.txt 후 PC에서 실행하세요.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "to_excel / read_excel",
+          "signature": "frame.to_excel(\"fruit.xlsx\")\npd.read_excel(...)",
+          "note": "엑셀 입출력입니다. openpyxl이 필요하고 PC에서 실행합니다."
+        },
+        {
+          "name": "sns.countplot",
+          "signature": "sns.countplot(data=frame, x=\"fruit\")",
+          "note": "범주 열의 빈도를 막대로 그립니다. Matplotlib 위에 통계 그림을 얹습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -949,7 +1690,18 @@
       "args": "",
       "checks": "assert mean==20\nassert normalize(50)==2\nassert standardize(20)==0\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "훈련 통계량",
+          "signature": "mean, std, min, max = 훈련에서만",
+          "note": "테스트 값 50을 정규화하면 (50-10)/(30-10)=2 입니다. 1을 넘을 수 있습니다."
+        },
+        {
+          "name": "표준화 / 정규화",
+          "signature": "(v-mean)/std  ·  (v-low)/(high-low)",
+          "note": "둘 다 훈련 기준으로 새 값을 변환합니다. 표준화가 정규분포를 만들어 주지는 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -971,8 +1723,24 @@
       "args": "",
       "checks": "assert filled.isna().sum().sum() == 0\n",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "isna / dropna / fillna",
+          "signature": "frame.isna().sum()\nframe.dropna()\nframe.fillna(...)",
+          "note": "결측 개수를 본 뒤 지우거나 채웁니다. 예측 모델에서는 분할 후 훈련 통계량으로 채웁니다."
+        },
+        {
+          "name": "이상치 범위",
+          "signature": "score < 0 또는 score > 100",
+          "note": "1000점이 오타인지 실제 값인지 확인하기 전에 삭제하지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "탐색과 학습",
+          "meaning": "이 예제는 표를 살펴보는 용도입니다. 모델에 넣을 때는 분할 후 훈련 통계량을 씁니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -992,8 +1760,50 @@
       "args": "",
       "checks": "assert test_filled.shape == (1, 2)\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "SimpleImputer",
+          "signature": "imputer.fit_transform(train)\nimputer.transform(test)",
+          "note": "중앙값 등 채울 값을 훈련에서 배웁니다. 테스트에는 transform만 씁니다."
+        },
+        {
+          "name": "Scaler / OneHotEncoder",
+          "signature": "MinMaxScaler · StandardScaler · OneHotEncoder",
+          "note": "handle_unknown=\"ignore\"면 본 적 없는 범주는 0 벡터가 됩니다. 새 도시는 훈련 목록에 없습니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-logistic-name": {
+      "id": "ml-logistic-name",
+      "title": "이름에 회귀가 있어도 분류인 모델",
+      "files": {
+        "main.py": "models = [\n    (\"로지스틱 회귀\", \"스팸/정상 확률\", \"분류\"),\n    (\"선형 회귀\", \"다음 날 대출 권수\", \"회귀\"),\n    (\"k-NN\", \"품종 이름\", \"분류\"),\n    (\"결정 트리\", \"조건으로 나눈 범주\", \"분류\"),\n]\nfor name, output, kind in models:\n    print(f\"{name:8} → {output:14} ({kind})\")\nprint(\"LogisticRegression은 분류 문제에 씁니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert models[0][2] == \"분류\" and models[1][2] == \"회귀\"\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "로지스틱 회귀",
+          "signature": "확률 → 범주",
+          "note": "이름에 회귀가 들어 있지만 교실에서는 분류 모델로 다룹니다. 출력은 클래스 확률입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "stratify=y",
+          "meaning": "나눌 때 클래스 비율을 비슷하게 맞춥니다. 한쪽에 품종이 몰리면 평가가 흔들립니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1012,7 +1822,13 @@
       "args": "",
       "checks": "assert len(neighbors)==3\nassert prediction==\"B\"\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "거리와 k",
+          "signature": "sorted(..., key=거리)[:k]",
+          "note": "입력에 가까운 순서대로 k개를 고르고, 레이블 다수결로 예측합니다. k는 미리 정합니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1033,11 +1849,33 @@
       "args": "",
       "checks": "assert len(pred) == len(y_test)\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "train_test_split",
+          "signature": "train_test_split(..., stratify=y, random_state=42)",
+          "note": "같은 난수면 같은 분할입니다. stratify=y는 품종 비율을 유지합니다."
+        },
+        {
+          "name": "make_pipeline",
+          "signature": "make_pipeline(StandardScaler(), model)",
+          "note": "스케일을 파이프라인 안에서 훈련합니다. 테스트에 따로 fit하지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "관찰용 비교",
+          "meaning": "테스트로 네 모델을 한 번 보는 실습입니다. 실제 선택은 훈련 부분 교차 검증으로 합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "같은 자료로 여러 분류기를 나란히 두는 비교는 교재와 경진 대회의 기본 습관입니다. 선택은 테스트가 아니라 검증으로 합니다.",
+        "youtube": [
+          {
+            "title": "Hello World — Machine Learning Recipes #1 (Google for Developers)",
+            "url": "https://www.youtube.com/watch?v=cKxRvEZd3Mw",
+            "note": "영어 공개 강의(약 7분)입니다. 과일을 분류하는 첫 모델만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
       "screenshots": []
     },
@@ -1053,7 +1891,13 @@
       "args": "",
       "checks": "assert w==2 and b==1\nassert w*5+b==11\nassert mae==0\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "최소제곱 기울기",
+          "signature": "w = Σ(x-μx)(y-μy) / Σ(x-μx)²",
+          "note": "직선 y = wx + b를 훈련 점으로 직접 구합니다. 훈련 MAE=0이 새 데이터 정확을 보장하지는 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1074,8 +1918,24 @@
       "args": "",
       "checks": "assert mean_absolute_error(y_test, pred) >= 0\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. 내장 자료로 회귀 원리를 연습하는 예제이며 실제 개인에 대한 예측 용도로 사용하지 않습니다.",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "LinearRegression",
+          "signature": "model.fit(X_train, y_train)\nmodel.predict(X_test)",
+          "note": "특성의 가중합과 절편으로 숫자를 예측합니다. score는 훈련 R²입니다."
+        },
+        {
+          "name": "오차 지표",
+          "signature": "mean_absolute_error · mean_squared_error · r2_score",
+          "note": "MAE는 원래 단위, MSE는 제곱, R²는 평균 예측과 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "내장 자료",
+          "meaning": "diabetes 자료는 원리 연습용입니다. 실제 개인 건강을 예측하는 용도가 아닙니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1095,7 +1955,13 @@
       "args": "",
       "checks": "",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. 첫 실행에 외부 데이터 다운로드가 필요합니다. 네트워크가 없으면 내장 자료 회귀 예제를 사용하세요.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "fetch_california_housing",
+          "signature": "fetch_california_housing(return_X_y=True)",
+          "note": "첫 실행에 자료를 내려받습니다. 네트워크가 없으면 내장 diabetes 예제를 쓰세요. 개인 예측용이 아닙니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1115,7 +1981,13 @@
       "args": "",
       "checks": "assert centers==[2.,9.]\nassert groups==[[1,2,3],[8,9,10]]\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "배정과 갱신",
+          "signature": "가까운 중심 → 그룹 평균 → 새 중심",
+          "note": "중심이 더 이상 바뀌지 않으면 멈춥니다. 이 숫자는 1차원 개념 실습입니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1136,13 +2008,41 @@
       "args": "",
       "checks": "assert len(set(labels)) == 3\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "KMeans",
+          "signature": "KMeans(n_clusters=3, n_init=10, random_state=42)",
+          "note": "labels_는 샘플별 번호, cluster_centers_는 중심 좌표입니다. 번호는 실행마다 뒤바뀔 수 있습니다."
+        },
+        {
+          "name": "산점도",
+          "signature": "plt.scatter(..., c=labels)\nplt.savefig(\"clusters.png\")",
+          "note": "색은 그룹 이름입니다. 항상 동그란 덩어리가 있다고 가정하지 마세요."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "원형 가정",
+          "meaning": "K-평균은 중심에 가까운 덩어리를 잘 찾습니다. 길쭉하거나 고리가 있으면 다른 방법을 검토합니다."
+        }
+      ],
       "tips": {
-        "history": "",
-        "youtube": []
+        "history": "중심을 옮기며 묶는 방법은 통계 군집화의 고전입니다. 그림의 색은 이름일 뿐 순위가 아닙니다.",
+        "youtube": [
+          {
+            "title": "StatQuest: K-means clustering",
+            "url": "https://www.youtube.com/watch?v=4b5d3muPQmA",
+            "note": "영어 공개 강의입니다. 중심을 정하고 가까운 점을 묶는 반복만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
+          }
+        ]
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "assets/science/ml-cluster.png",
+          "alt": "K-평균 군집과 중심점",
+          "caption": "제공 예제의 산점도입니다. 색은 군집 번호, 빨간 X는 중심입니다. 번호에 순위는 없습니다."
+        }
+      ]
     },
     "ml-confusion-small": {
       "id": "ml-confusion-small",
@@ -1156,7 +2056,18 @@
       "args": "",
       "checks": "assert (tp,fp,fn,tn)==(2,1,1,2)\nassert len(pred)==len(truth)\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "임계값",
+          "signature": "pred = int(p >= 0.5)",
+          "note": "확률을 양성으로 부를 기준입니다. TP/FP/FN/TN을 직접 셉니다."
+        },
+        {
+          "name": "정밀도 / 재현율",
+          "signature": "TP/(TP+FP)  ·  TP/(TP+FN)",
+          "note": "분모가 0이면 계산하지 않습니다. 양성이 무엇인지에 따라 숫자가 달라집니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1177,7 +2088,18 @@
       "args": "",
       "checks": "assert confusion_matrix(y_true, y_pred).tolist() == [[2,1],[1,2]]\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "confusion_matrix",
+          "signature": "confusion_matrix(y_true, y_pred, labels=[0, 1])",
+          "note": "행이 실제, 열이 예측입니다. labels를 지정해야 0/1 순서가 고정됩니다."
+        },
+        {
+          "name": "네 지표",
+          "signature": "accuracy · precision · recall · f1",
+          "note": "같은 예측 쌍으로 네 숫자를 비교합니다. 한 지표만으로 모델을 고르지 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1197,7 +2119,13 @@
       "args": "",
       "checks": "assert len(folds)==3\nassert sorted(v for fold in folds for v in fold)==samples\n",
       "note": "작은 데이터로 핵심 원리를 직접 계산합니다. scikit-learn API 실행과 구별되는 학습용 구현입니다.",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "폴드",
+          "signature": "한 묶음은 검증, 나머지는 훈련",
+          "note": "역할을 번갈아 맡깁니다. 최종 테스트는 이 묶음 밖에 따로 둡니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -1218,8 +2146,24 @@
       "args": "",
       "checks": "assert search.best_params_[\"kneighborsclassifier__n_neighbors\"] in [3,5,7]\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "cross_val_score",
+          "signature": "cross_val_score(pipe, X_train, y_train, cv=3)",
+          "note": "훈련 부분만 나눕니다. 테스트는 넘기지 않습니다."
+        },
+        {
+          "name": "GridSearchCV",
+          "signature": "GridSearchCV(pipe, {이웃 수: [3,5,7]}, cv=3)",
+          "note": "설정 후보를 교차 검증으로 비교합니다. best_score_와 최종 테스트 점수는 다를 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "n_jobs=1",
+          "meaning": "병렬을 켜지 않습니다. 교실 컴퓨터에서 재현하기 쉽게 한 코어로 둡니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1239,10 +2183,53 @@
       "args": "",
       "checks": "assert len(sizes)==3\n",
       "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "learning_curve",
+          "signature": "learning_curve(model, X, y, train_sizes=[...], cv=...)",
+          "note": "훈련 샘플을 늘리며 훈련·검증 점수를 그립니다. 간격과 수준을 보고 다음 실험을 정합니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "assets/science/ml-learning-curve.png",
+          "alt": "훈련·검증 학습 곡선",
+          "caption": "제공 예제의 학습 곡선입니다. 샘플 수에 따라 두 점수가 어떻게 달라지는지 봅니다."
+        }
+      ]
+    },
+    "ml-report-card": {
+      "id": "ml-report-card",
+      "title": "재현 가능한 보고서 카드",
+      "files": {
+        "main.py": "report = {\n    \"문제\": \"다음 날 총 대출 권수\",\n    \"정답\": \"다음날_대출\",\n    \"특성\": [\"요일\", \"어제_대출\", \"시험기간\"],\n    \"분할\": \"시간 순서, 뒤 20%는 테스트\",\n    \"난수\": 42,\n    \"지표\": \"MAE (권)\",\n    \"비교\": \"과거 평균 예측\",\n    \"한계\": \"시험 기간 자료가 적으면 방학 예측이 어긋날 수 있음\",\n}\nfor key, value in report.items():\n    print(f\"{key}: {value}\")\nprint(\"같은 난수·같은 분할이면 다른 사람도 같은 실험을 다시 할 수 있습니다.\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert report[\"지표\"].startswith(\"MAE\")\nassert report[\"난수\"] == 42\nassert \"다음날_대출\" not in report[\"특성\"]\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "남길 항목",
+          "signature": "문제 · 특성 · 분할 · 난수 · 지표 · 한계",
+          "note": "점수 숫자만 적지 않습니다. 같은 조건으로 다시 돌릴 수 있어야 보고서입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "재현",
+          "meaning": "다른 사람이 같은 코드·같은 난수로 같은 표를 얻을 수 있는 상태입니다. 수행평가 저널의 뼈대입니다."
+        }
+      ],
+      "tips": {
+        "history": "실험 조건을 한 장에 남기는 형식은 실험실 노트에서 왔습니다. 수행평가 저널도 같은 항목을 코드와 함께 제출합니다.",
         "youtube": []
       },
       "screenshots": []

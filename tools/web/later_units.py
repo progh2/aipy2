@@ -645,3 +645,9 @@ for i, validation in enumerate(folds):
     assert not set(training)&set(validation)
 print("최종 테스트 자료는 이 묶음들과 별도로 보관합니다.")
 ''','assert len(folds)==3\nassert sorted(v for fold in folds for v in fold)==samples')
+import unit3_density
+import unit3_pre_api
+import unit3_tips
+unit3_density.apply()
+unit3_pre_api.apply()
+unit3_tips.apply()
