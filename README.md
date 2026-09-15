@@ -32,7 +32,7 @@
 tools/web/     ← 사람이 고치는 원본. 레슨·예제·문제·도식이 Python 데이터로 들어 있습니다
 web/           ← 생성된 결과물. 이 폴더가 그대로 배포됩니다
 firebase/      ← 학교 계정 로그인·권한 규칙과 콘솔 설정 절차
-docs/          ← 제품 요구사항(PRD), 콘텐츠 갭 감사
+docs/          ← 제품 요구사항(PRD), 콘텐츠 갭 감사, 교사 스모크 체크리스트
 ```
 
 `web/`의 HTML은 **생성물이므로 직접 고치지 않습니다.** `tools/web/`을 고치고 다시 생성하세요.
@@ -41,15 +41,19 @@ docs/          ← 제품 요구사항(PRD), 콘텐츠 갭 감사
 학습 주제는 단원 안내(`units/unit0N/index.html`)와 주제 페이지(`units/unit0N/{id}.html`, 예: `units/unit02/widgets.html`)로 나뉩니다. 예전 `#widgets` 북마크는 해당 파일로 이어집니다.
 
 ```bash
-python tools/web/build.py     # 생성
-python tools/web/verify.py    # 검증
-python -m http.server 8000 --directory web
+python3 -m pip install numpy pandas scikit-learn matplotlib pillow
+python3 tools/web/build.py     # 생성
+python3 tools/web/verify.py    # 검증 — PASS 한 줄
+python3 -m http.server 8000 --directory web
 ```
 
-`http://localhost:8000`으로 접속합니다. `file://`로 직접 열면 학습 데이터와 Worker가 동작하지 않습니다.
+`http://127.0.0.1:8000`으로 접속합니다. `file://`로 직접 열면 학습 데이터와 Worker가 동작하지 않습니다.
 Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 
-`main`에 푸시하면 [GitHub Actions](.github/workflows/pages.yml)가 생성·검증을 거쳐 자동 배포합니다.
+- **PR:** [Build and verify](.github/workflows/verify.yml)가 같은 생성·검증을 실행합니다.
+- **main 푸시:** [Build and deploy](.github/workflows/pages.yml)가 검증 후 `web/`을 GitHub Pages에 올립니다. 학생용 주소는 https://progh2.github.io/aipy2/ 입니다.
+- **수업 전 열어보기:** [docs/teacher-smoke-checklist.md](docs/teacher-smoke-checklist.md) — 단원 Ⅰ–Ⅳ 페이지·실습실·팁 체크리스트
+
 검증은 모든 예제의 문법과 실제 실행, 정답 통과와 미완성 코드 실패, 문항 수, 내부 링크와 앵커, ZIP 무결성을 확인합니다.
 
 ## 계정과 수업 관리
@@ -76,6 +80,7 @@ Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 | --- | --- |
 | [docs/PRD.md](docs/PRD.md) | 수업 관리 기능의 요구사항·데이터 모델·로드맵 |
 | [docs/content-gap-audit.md](docs/content-gap-audit.md) | 교과서 TOC↔웹 주제·예제·스샷·팁 갭 감사 (#50). 주제 URL은 `units/unit0N/{id}.html` (#51) |
+| [docs/teacher-smoke-checklist.md](docs/teacher-smoke-checklist.md) | 교사 스모크: build/verify/CI/Pages 경로와 단원 Ⅰ–Ⅳ 페이지·실습실·팁 (#62) |
 | [web/README.md](web/README.md) | 사이트 구조와 수정·재생성·검증 방법 |
 | [firebase/README.md](firebase/README.md) | Firebase 콘솔 설정, 권한 모델, 공개 설정값의 보안 |
 | [web/sources.html](web/sources.html) | 교과서 목차 대응표와 참고 자료 |

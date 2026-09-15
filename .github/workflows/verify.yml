@@ -1,0 +1,20 @@
+name: Build and verify
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build static learning pages
+        run: python3 tools/web/build.py
+      - name: Install Python validation dependencies
+        run: python3 -m pip install numpy pandas scikit-learn matplotlib pillow
+      - name: Validate examples, questions, links and archives
+        run: python3 tools/web/verify.py

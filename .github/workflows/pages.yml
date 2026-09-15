@@ -1,3 +1,5 @@
+# PR의 build+verify는 .github/workflows/verify.yml 이 담당합니다.
+# 이 워크플로는 main 푸시에서 같은 생성·검증 뒤 web/ 을 Pages에 올립니다.
 name: Build and deploy Python classroom
 on:
   push:
