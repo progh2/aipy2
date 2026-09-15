@@ -63,7 +63,8 @@ function paintCue() {
 
 function lessonIdNear(el) {
  const lesson = el && el.closest && el.closest('section.lesson[id]');
- return lesson ? lesson.id : null;
+ if (lesson) return lesson.id;
+ return document.body.dataset.topic || null;
 }
 
 function focusFromEvent(event) {

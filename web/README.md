@@ -4,8 +4,10 @@
 
 - 대문: `index.html`
 - 기존 준비 안내: `before-you-start.html` (기존 localStorage 키 유지)
-- 1단원: `units/unit01/index.html` — 12개 주제, 60문제
-- 2단원: `units/unit02/index.html` — 9개 주제, 70문제
+- 1단원 안내: `units/unit01/index.html` — 주제 목록·전체 문제. 각 주제는 `units/unit01/{id}.html` (예: `overview.html`)
+- 2단원 안내: `units/unit02/index.html` — 9개 주제. 예: `units/unit02/widgets.html`
+- 3·4단원도 같은 규칙: `units/unit0N/{id}.html`
+- 예전 `index.html#widgets` 주소는 `widgets.html`로 이어집니다. 진행 키 `u2-widgets`는 그대로입니다.
 - 출처·범위·교과서 오류 보완: `sources.html`
 - 49개 예제, 6종 GUI 실제 실행 스크린샷, tkinter/PySide6 대응 실습
 - 파일 탭·편집·복사·추가·삭제·실행 인자·표준 입력·ZIP 다운로드

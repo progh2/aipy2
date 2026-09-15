@@ -47,14 +47,22 @@ def badge(u,l):
  s+=f'<p class="book-topic-pages">이 웹 주제의 연계 범위: {esc(pages)}</p></div>'
  return s
 
-def toc(u,ls,target=''):
+def topic_file(lesson_id):
+ return f'{lesson_id}.html'
+
+def topic_href(lesson_id, base='', hash_page=False):
+ if hash_page:
+  return f'{base}#{lesson_id}'
+ return f'{base}{topic_file(lesson_id)}'
+
+def toc(u,ls,base='',hash_page=False):
  s=f'<nav class="book-toc" aria-label="교과서 단원 목차"><h2>{unit_label(u)}</h2><p>대단원 · {BOOK[u][1]}쪽</p>'
  for m,(title,pages,smalls,reviews) in enumerate(BOOK[u][2],1):
   s+=f'<div class="book-middle"><h3>중단원 {m:02}. {title}</h3><p>{pages}쪽</p><ol>'
   for n,(name,pp) in enumerate(smalls,1):
    related=[l for l in ls if (m,n) in MAP[u][l['id']]]
    assert related, (u,m,n)
-   s+=f'<li><strong>소단원 {n:02}. {name}</strong><span class="book-pages">{pp}쪽</span><ul>'+''.join(f'<li><a href="{target}#{l["id"]}">웹 실습 · {esc(l["title"])}</a></li>' for l in related)+'</ul></li>'
+   s+=f'<li><strong>소단원 {n:02}. {name}</strong><span class="book-pages">{pp}쪽</span><ul>'+''.join(f'<li><a href="{topic_href(l["id"],base,hash_page)}">웹 실습 · {esc(l["title"])}</a></li>' for l in related)+'</ul></li>'
   s+='</ol><p class="book-review">'+ ' · '.join(f'{name} {pp}쪽' for name,pp in reviews)+'</p></div>'
- s+=f'<p class="book-review"><b>대단원 종합 평가</b> {BOOK[u][3]}쪽</p><div class="book-extra"><h3>복습·추가 실습</h3>'+''.join(f'<a href="{target}#{l["id"]}">{esc(l["title"])} <small>({"평가 연계" if l["id"] in REVIEW[u] else "확장"})</small></a>' for l in ls if not MAP[u][l['id']])+'</div></nav>'
+ s+=f'<p class="book-review"><b>대단원 종합 평가</b> {BOOK[u][3]}쪽</p><div class="book-extra"><h3>복습·추가 실습</h3>'+''.join(f'<a href="{topic_href(l["id"],base,hash_page)}">{esc(l["title"])} <small>({"평가 연계" if l["id"] in REVIEW[u] else "확장"})</small></a>' for l in ls if not MAP[u][l['id']])+'</div></nav>'
  return s

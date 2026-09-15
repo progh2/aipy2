@@ -118,7 +118,7 @@ export function topicParts(topicId) {
 export function topicHref(prefix, topicId) {
  const parts = topicParts(topicId);
  if (!parts) return '';
- return `${prefix || ''}units/unit0${parts.unit}/index.html#${parts.anchor}`;
+ return `${prefix || ''}units/unit0${parts.unit}/${parts.anchor}.html`;
 }
 
 export function titlesFromCatalog(catalog) {

@@ -62,15 +62,51 @@ export function samePage(a, b) {
  return normalizePage(a) === normalizePage(b) && Boolean(normalizePage(a));
 }
 
+const CHROME_TOPICS = new Set(['main', 'account', 'toast', 'lab', 'practice', 'gallery', 'simulator', 'journal']);
+
+export function unitFromPage(page) {
+ const match = /^units\/unit0([1-4])\//.exec(normalizePage(page));
+ return match ? Number(match[1]) : 0;
+}
+
+export function pageTopicId(page) {
+ const match = /^units\/unit0[1-4]\/([a-z0-9-]+)\.html$/.exec(normalizePage(page));
+ if (!match || match[1] === 'index' || match[1] === 'summary') return null;
+ return match[1];
+}
+
+export function isLessonTopic(id) {
+ return Boolean(id) && /^[a-z][a-z0-9-]*$/.test(id) && !CHROME_TOPICS.has(id);
+}
+
+export function topicPage(unit, topicId) {
+ if (!unit || !isLessonTopic(topicId)) return '';
+ return `units/unit0${unit}/${topicId}.html`;
+}
+
+export function resolveFocusLocation(focus) {
+ const page = normalizePage(focus && focus.page);
+ const topic = focus && focus.topicAnchor;
+ const unit = unitFromPage(page);
+ const fromPage = pageTopicId(page);
+ const lesson = isLessonTopic(topic) ? topic : fromPage;
+ if (unit && lesson) return {page: topicPage(unit, lesson), topicAnchor: lesson};
+ return {page, topicAnchor: topic || fromPage || null};
+}
+
 export function shouldNavigate(currentPage, focus) {
- return Boolean(focus && focus.page && !samePage(currentPage, focus.page));
+ if (!focus || !focus.page) return false;
+ const here = resolveFocusLocation({page: currentPage, topicAnchor: pageTopicId(currentPage)});
+ const there = resolveFocusLocation(focus);
+ return Boolean(there.page) && !samePage(here.page, there.page);
 }
 
 export function focusHref(prefix, focus) {
- const page = normalizePage(focus && focus.page);
- if (!page) return '';
- const hash = focus.topicAnchor ? `#${focus.topicAnchor}` : '';
- return `${prefix || ''}${page}${hash}`;
+ const loc = resolveFocusLocation(focus);
+ if (!loc.page) return '';
+ const pageTopic = pageTopicId(loc.page);
+ const hash = loc.topicAnchor && loc.topicAnchor !== pageTopic ? `#${loc.topicAnchor}` : '';
+ return `${prefix || ''}${loc.page}${hash}`;
 }
 
 export function focusKey(focus) {
@@ -168,7 +204,8 @@ export function sessionEndFields(existing, {teacherEmail} = {}) {
 }
 
 export function isUnitLessonPage(page) {
- return /^units\/unit0[1-4]\/index\.html$/.test(normalizePage(page));
+ const path = normalizePage(page);
+ return /^units\/unit0[1-4]\/index\.html$/.test(path) || Boolean(pageTopicId(path));
 }
 
 const SKIP_FOCUS_TOPICS = new Set(['main', 'account', 'toast']);
@@ -193,17 +230,18 @@ export function focusFromUnitClick({href, exampleId, lessonId, currentPage} = {}
  if (exampleId && typeof exampleId === 'string' && exampleId.trim()) {
   return focusFields({
    page: page || DEFAULT_PAGE,
-   topicAnchor: lessonId || null,
+   topicAnchor: lessonId || pageTopicId(page) || null,
    exampleId: exampleId.trim()
   });
  }
  const resolved = resolveHref(href, page);
  if (!resolved || !isUnitLessonPage(resolved.page)) return null;
- if (resolved.topicAnchor && SKIP_FOCUS_TOPICS.has(resolved.topicAnchor)) return null;
- if (!resolved.topicAnchor && samePage(resolved.page, page)) return null;
+ const topic = resolved.topicAnchor || pageTopicId(resolved.page);
+ if (topic && SKIP_FOCUS_TOPICS.has(topic)) return null;
+ if (!topic && samePage(resolved.page, page)) return null;
  return focusFields({
   page: resolved.page,
-  topicAnchor: resolved.topicAnchor,
+  topicAnchor: topic || null,
   exampleId: null
  });
 }
@@ -268,7 +306,12 @@ export function catalogPages(catalog) {
 
 export function catalogTopics(catalog, page) {
  const topics = catalog && catalog.topics;
- return (topics && topics[normalizePage(page)]) || [];
+ if (!topics || typeof topics !== 'object') return [];
+ const key = normalizePage(page);
+ if (topics[key]) return topics[key];
+ const unit = unitFromPage(key);
+ if (unit) return topics[`units/unit0${unit}/index.html`] || [];
+ return [];
 }
 
 export function catalogExamples(catalog, topic) {

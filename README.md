@@ -38,6 +38,8 @@ docs/          ← 제품 요구사항(PRD), 콘텐츠 갭 감사
 `web/`의 HTML은 **생성물이므로 직접 고치지 않습니다.** `tools/web/`을 고치고 다시 생성하세요.
 예외는 준비 안내 페이지 `web/before-you-start.html` 하나로, 이 파일만 직접 관리합니다.
 
+학습 주제는 단원 안내(`units/unit0N/index.html`)와 주제 페이지(`units/unit0N/{id}.html`, 예: `units/unit02/widgets.html`)로 나뉩니다. 예전 `#widgets` 북마크는 해당 파일로 이어집니다.
+
 ```bash
 python tools/web/build.py     # 생성
 python tools/web/verify.py    # 검증
@@ -73,7 +75,7 @@ Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 | 문서 | 내용 |
 | --- | --- |
 | [docs/PRD.md](docs/PRD.md) | 수업 관리 기능의 요구사항·데이터 모델·로드맵 |
-| [docs/content-gap-audit.md](docs/content-gap-audit.md) | 교과서 TOC↔웹 주제·예제·스샷·팁 갭 감사 (이슈 #50) |
+| [docs/content-gap-audit.md](docs/content-gap-audit.md) | 교과서 TOC↔웹 주제·예제·스샷·팁 갭 감사 (#50). 주제 URL은 `units/unit0N/{id}.html` (#51) |
 | [web/README.md](web/README.md) | 사이트 구조와 수정·재생성·검증 방법 |
 | [firebase/README.md](firebase/README.md) | Firebase 콘솔 설정, 권한 모델, 공개 설정값의 보안 |
 | [web/sources.html](web/sources.html) | 교과서 목차 대응표와 참고 자료 |

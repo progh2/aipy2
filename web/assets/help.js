@@ -44,6 +44,7 @@ function lastError() {
 function currentTopic(fallback) {
  if (isTopicId(fallback)) return fallback;
  const unit = Number(document.body.dataset.unit || 0);
+ if (unit && document.body.dataset.topic) return `u${unit}-${document.body.dataset.topic}`;
  const lab = document.getElementById('lab');
  const workspace = lab && lab.closest('[data-workspace]');
  if (unit && workspace && workspace.dataset.workspace) return `u${unit}-${workspace.dataset.workspace}`;
