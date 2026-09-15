@@ -17,6 +17,9 @@
         "버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "01. GUI 프로그래밍 개요",
@@ -51,6 +54,9 @@
         "48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "01. GUI 프로그래밍 개요",
@@ -79,6 +85,9 @@
         "체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -107,6 +116,9 @@
         "웹 배치 체험에서 수평·수직·격자를 비교하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -135,6 +147,9 @@
         "버튼을 두 번 눌렀을 때 상태가 어떻게 바뀌는지 추적하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -175,6 +190,9 @@
         "메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?"
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -204,6 +222,9 @@
         "tkinter의 이벤트와 Qt 시그널을 자신의 말로 비교하세요."
       ],
       "extra": true,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": []
     },
     {
@@ -226,6 +247,9 @@
         "프로젝트 ZIP과 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
       ],
       "extra": true,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": []
     },
     {
@@ -243,6 +267,9 @@
         "교과서 확인학습과 종합평가 연계 문제를 풀고 틀린 이유를 기록하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": []
     }
   ],

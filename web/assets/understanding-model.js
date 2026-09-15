@@ -118,6 +118,7 @@ export function topicParts(topicId) {
 export function topicHref(prefix, topicId) {
  const parts = topicParts(topicId);
  if (!parts) return '';
+ if (parts.unit === 2) return `${prefix || ''}units/unit02/${parts.anchor}.html`;
  return `${prefix || ''}units/unit0${parts.unit}/index.html#${parts.anchor}`;
 }
 

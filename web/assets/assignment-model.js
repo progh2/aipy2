@@ -164,18 +164,23 @@ export function targetHref(prefix, target, catalog) {
   const fromId = /^u([1-4])-/.exec(target.id);
   const unit = target.unit || (fromId ? Number(fromId[1]) : null);
   if (!unit) return '';
+  if (unit === 2) return `${base}units/unit02/review.html#${target.id}`;
   return `${base}units/unit0${unit}/index.html#${target.id}`;
  }
  const topics = catalog && catalog.topics;
+ let fallback = '';
  if (topics && typeof topics === 'object') {
   for (const [page, rows] of Object.entries(topics)) {
    for (const row of rows || []) {
     if (row && Array.isArray(row.examples) && row.examples.includes(target.id)) {
-     return `${base}${page}#${row.id}`;
+     const href = `${base}${page}#${row.id}`;
+     if (!/\/index\.html$/.test(page)) return href;
+     if (!fallback) fallback = href;
     }
    }
   }
  }
+ if (fallback) return fallback;
  if (target.unit) return `${base}units/unit0${target.unit}/index.html#lab`;
  return `${base}units/unit01/index.html#lab`;
 }

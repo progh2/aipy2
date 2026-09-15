@@ -4,7 +4,7 @@ import {
  focusKey, topicFromHash, visibleTopic, countPresence, nextAttentionNonce, wholeNonce,
  expiresAtMillis, sessionFields, sessionEndFields, existingAttentionNonce, sessionStartChanged,
  focusFields, focusWritePayload, focusFromUnitClick,
- isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
+ isUnitLessonPage, resolveFocusPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
  DEFAULT_PAGE
 } from '../../web/assets/follow-model.js';
@@ -103,6 +103,18 @@ eq(focusKey({page: 'units/unit01/index.html', topicAnchor: 'a', exampleId: null,
 
 eq(isUnitLessonPage('units/unit01/index.html'), true, 'unit lesson page');
 eq(isUnitLessonPage('units/unit01/summary.html'), false, 'unit summary is not lesson');
+eq(isUnitLessonPage('units/unit02/ui.html'), true, 'unit II topic page');
+eq(isUnitLessonPage('units/unit02/summary.html'), false, 'unit II summary is not lesson');
+eq(resolveFocusPage({page: 'units/unit02/index.html', topicAnchor: 'widgets'}),
+ 'units/unit02/widgets.html', 'hub focus opens topic page');
+eq(resolveFocusPage({page: 'units/unit02/index.html', topicAnchor: 'gallery'}),
+ 'units/unit02/index.html', 'hub chrome stays on index');
+eq(shouldNavigate('units/unit02/index.html', {page: 'units/unit02/index.html', topicAnchor: 'ui'}),
+ true, 'hub to topic page');
+eq(shouldNavigate('units/unit02/ui.html', {page: 'units/unit02/index.html', topicAnchor: 'ui'}),
+ false, 'already on topic page');
+eq(focusHref('../../', {page: 'units/unit02/index.html', topicAnchor: 'ui'}),
+ '../../units/unit02/ui.html', 'focus href rewrites hub topic');
 eq(focusFields({page: 'units/unit02/index.html', topicAnchor: 'events'}),
  {page: 'units/unit02/index.html', topicAnchor: 'events', exampleId: null}, 'focus fields');
 eq(focusWritePayload({page: 'units/unit01/index.html', topicAnchor: 'overview', exampleId: 'reuse'}),

@@ -26,3 +26,8 @@
 .example-links button[aria-pressed=true] {border-color:#117365;background:#e9f7f2;color:#114e43}
 .lesson-workspace .editor-layout {grid-template-columns:145px minmax(0,1fr)}
 @media(max-width:700px){.lesson-workspace .editor-layout{grid-template-columns:1fr}.lesson-workspace .lab h2{font-size:19px}.lesson-workspace .editor-bar{flex-wrap:wrap}}
+.lesson-slot[hidden]{display:none}
+.lesson-slot{margin:16px 0;padding:14px 16px;border:1px dashed #b9d7d1;border-radius:12px;background:#f7fbf9}
+.lesson-slot h3{margin:0 0 8px;font-size:1rem}
+.topic-hub{margin-top:8px}
+.topic-hero h1{font-size:clamp(1.8rem,3vw,2.6rem)}

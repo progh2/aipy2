@@ -7,8 +7,9 @@ def code(s): return textwrap.dedent(s).strip()+'\n'
 def ex(id, title, files, mode='web', entry='main.py', stdin='', args='', checks='', note=''):
     examples[id] = dict(id=id,title=title,files={k:code(v) for k,v in files.items()},mode=mode,entry=entry,stdin=stdin,args=args,checks=code(checks) if checks else '',note=note)
     return id
-def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False):
-    units[unit].append(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra))
+def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False,preexplain=(),history='',youtube=''):
+    # preexplain/history/youtube are #57 hooks. Leave empty until 라온 fills them.
+    units[unit].append(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra,preexplain=list(preexplain),history=history,youtube=youtube))
 def q(unit,topic,kind,prompt,answer,hint,explain,options=None,starter='',checks='',level='기본',ref='보강'):
     questions.append(dict(id=f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}',unit=unit,topic=topic,kind=kind,prompt=prompt,answer=answer,hint=hint,explain=explain,options=options,starter=code(starter) if starter else '',checks=code(checks) if checks else '',level=level,ref=ref))
 

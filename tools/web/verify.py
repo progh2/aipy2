@@ -135,8 +135,25 @@ assert '초점을 보냈습니다.' in teacher_focus
 assert '에 초점을 보내요' in teacher_focus
 assert 'admins' in teacher_focus
 catalog=json.loads((WEB/'data/catalog.json').read_text())
-assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
+assert [p['id'] for p in catalog['pages'] if p['id'].endswith('index.html')]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
+UNIT2_TOPICS=['ui','libraries','widgets','layout','events','memo','pyside','project','review']
+assert [p['id'] for p in catalog['pages'] if p['id'].startswith('units/unit02/') and p['id'].endswith('.html') and not p['id'].endswith('index.html')]==[f'units/unit02/{tid}.html' for tid in UNIT2_TOPICS]
+for tid in UNIT2_TOPICS:
+ page=WEB/f'units/unit02/{tid}.html'
+ assert page.exists(),('missing unit II topic page',tid)
+ html=page.read_text()
+ assert f'id="{tid}"' in html
+ assert 'class="lesson"' in html
+ assert 'id="lab"' in html
+ assert 'id="practice"' in html
+ assert f'data-topic="{tid}"' in html
+ assert 'data-slot="preexplain"' in html and 'data-slot="history"' in html and 'data-slot="youtube"' in html
+ hub=(WEB/'units/unit02/index.html').read_text()
+ assert f'href="{tid}.html"' in hub
+ assert f'id="{tid}"' in hub
+assert 'class="lesson"' not in hub or hub.count('class="lesson"')==0
+assert catalog['topics']['units/unit02/ui.html'][0]['id']=='ui'
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')

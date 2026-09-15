@@ -15,6 +15,9 @@
         "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "컴퓨터 비전과 영상 처리 · 한눈에 보기",
         [
@@ -77,6 +80,9 @@
         "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "픽셀·해상도·RGB·그레이스케일 · 한눈에 보기",
         [
@@ -136,6 +142,9 @@
         "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "알고리즘·처리 과정·평가 기준 · 한눈에 보기",
         [
@@ -194,6 +203,9 @@
         "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "OpenCV·Pillow·Matplotlib·scikit-image · 한눈에 보기",
         [
@@ -256,6 +268,9 @@
         "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "이미지 읽기·표시·변환·저장 · 한눈에 보기",
         [
@@ -318,6 +333,9 @@
         "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "블러·에지·이진화 · 한눈에 보기",
         [
@@ -381,6 +399,9 @@
         "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "원근 변환과 마우스 이벤트 · 한눈에 보기",
         [
@@ -438,6 +459,9 @@
         "네모와 원에서 코너 수가 왜 다른지 관찰하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "에지·코너·윤곽선으로 중요한 부분 찾기 · 한눈에 보기",
         [
@@ -495,6 +519,9 @@
         "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "얼굴·눈·웃음 검출과 웹캠 · 한눈에 보기",
         [
@@ -559,6 +586,9 @@
         "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "YOLOv8 객체 탐지와 개수 표시 · 한눈에 보기",
         [
@@ -617,6 +647,9 @@
         "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "visual": [
         "컴퓨터 비전 프로젝트와 단원 정리 · 한눈에 보기",
         [

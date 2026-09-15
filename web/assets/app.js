@@ -72,7 +72,7 @@ function applyRemote(next){
   if(typeof box._paintComplete==='function') box._paintComplete();
  });
  $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';});
- if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/index\.html#[a-z0-9-]+$/.test(state.last))$('#resume').href=state.last;
+ if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/(?:index\.html#[a-z0-9-]+|[a-z0-9-]+\.html)$/.test(state.last))$('#resume').href=state.last;
  if(typeof window.aipyLearning._refreshUnit==='function') window.aipyLearning._refreshUnit();
 }
 let lastError='';
@@ -84,7 +84,7 @@ async function copy(text){try{await navigator.clipboard.writeText(text);toast('�
 function updateProgress(){for(const item of $$('[data-unit-progress]')){const u=Number(item.dataset.unitProgress),total=Number(item.dataset.total)||1;const count=Object.entries(state.complete).filter(([k,v])=>k.startsWith(`u${u}-`)&&v).length;const value=Math.min(100,Math.round(count/total*100));item.textContent=`${value}%`;$$(`[data-unit-bar="${u}"]`).forEach(e=>e.value=value);}}
 updateProgress();
 if(!storageWorks)toast('기록을 불러오지 못했습니다. 이 세션의 기록은 내보내기로 보관하세요.');
-if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/index\.html#[a-z0-9-]+$/.test(state.last))$('#resume').href=state.last;
+if($('#resume') && typeof state.last==='string' && /^units\/unit0[1-4]\/(?:index\.html#[a-z0-9-]+|[a-z0-9-]+\.html)$/.test(state.last))$('#resume').href=state.last;
 $$('[data-export]').forEach(b=>b.addEventListener('click',()=>download('aipy-learning-record.json',JSON.stringify(state,null,2),'application/json')));
 $$('[data-import]').forEach(input=>input.addEventListener('change',async()=>{
  try{
@@ -107,7 +107,12 @@ if($('#download-journal'))$('#download-journal').onclick=()=>{let text=`# ${unit
 if(!unit){window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));return;}
 let data, currentId, files={},fileName, worker=null,running=false,timer,jobResolve,jobOutput,exampleDirty=false;
 function markCode(){exampleDirty=true;stash();}
-function remember(){const id=location.hash.slice(1)||'overview';if(/^[a-z0-9-]+$/.test(id)){state.last=`units/unit0${unit}/index.html#${id}`;save('nav');}}
+function remember(){
+ const topic=document.body.dataset.topic;
+ if(topic && /^[a-z0-9-]+$/.test(topic)){state.last=`units/unit0${unit}/${topic}.html`;save('nav');return;}
+ const id=location.hash.slice(1)||'overview';
+ if(/^[a-z0-9-]+$/.test(id)){state.last=`units/unit0${unit}/index.html#${id}`;save('nav');}
+}
 window.addEventListener('hashchange',remember);remember();
 function stop(reason='실행을 중지했습니다.'){
  if(worker)worker.terminate();worker=null;clearTimeout(timer);
@@ -270,16 +275,22 @@ for(const id of ['question-kind','question-status'])$('#'+id).onchange=()=>rende
 $('#previous-questions').onclick=()=>{page--;renderQuestions(false);$('#practice').scrollIntoView();};$('#next-questions').onclick=()=>{page++;renderQuestions(false);$('#practice').scrollIntoView();};
 function initGUI(){
  if(unit!==2)return;
- $('#demo-greet').onclick=()=>{const name=$('#demo-name').value.trim()||'여러분';$('#demo-result').textContent=`${name}님, 안녕하세요!`;$('#event-log').textContent='클릭 발생 → greet 호출 → 입력값 읽기 → 라벨 변경';};
- $('#demo-reset').onclick=()=>{$('#demo-name').value='';$('#demo-result').textContent='이름을 입력하세요.';$('#event-log').textContent='클릭 발생 → reset 호출 → 입력과 출력 초기화';};
- $('#demo-layout').onchange=e=>$('#layout-preview').className=e.target.value;
- function stats(){const text=$('#demo-memo').value;$('#demo-stats').textContent=`${text.length}자 · ${text?text.split('\n').length:0}줄`;}$('#demo-memo').oninput=stats;
- $('#demo-open').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>2000000)throw Error('2MB 이하 텍스트를 선택하세요.');$('#demo-memo').value=await f.text();stats();}catch(error){toast(error.message);}finally{e.target.value='';}};
- $('#demo-save').onclick=()=>download('memo.txt',$('#demo-memo').value);
- $('#demo-new').onclick=()=>{if(!$('#demo-memo').value||confirm('현재 메모 내용을 지우고 새 문서를 시작할까요?')){$('#demo-memo').value='';stats();}};
- function compare(){const [tk,qt]=data.pairs[Number($('#compare-select').value)];$('#compare-tk').textContent=data.examples[tk].files['main.py'];$('#compare-qt').textContent=data.examples[qt].files['main.py'];}
- $('#compare-select').onchange=compare;compare();
- $$('[data-view]').forEach(b=>b.onclick=()=>{$$('[data-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const v=b.dataset.view;$$('[data-side]').forEach(x=>x.hidden=v!=='both'&&x.dataset.side!==v);$('#compare').classList.toggle('single',v!=='both');});
+ if($('#demo-greet')){
+  $('#demo-greet').onclick=()=>{const name=$('#demo-name').value.trim()||'여러분';$('#demo-result').textContent=`${name}님, 안녕하세요!`;$('#event-log').textContent='클릭 발생 → greet 호출 → 입력값 읽기 → 라벨 변경';};
+  $('#demo-reset').onclick=()=>{$('#demo-name').value='';$('#demo-result').textContent='이름을 입력하세요.';$('#event-log').textContent='클릭 발생 → reset 호출 → 입력과 출력 초기화';};
+  if($('#demo-layout'))$('#demo-layout').onchange=e=>$('#layout-preview').className=e.target.value;
+  if($('#demo-memo')){
+   function stats(){const text=$('#demo-memo').value;$('#demo-stats').textContent=`${text.length}자 · ${text?text.split('\n').length:0}줄`;}$('#demo-memo').oninput=stats;
+   $('#demo-open').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>2000000)throw Error('2MB 이하 텍스트를 선택하세요.');$('#demo-memo').value=await f.text();stats();}catch(error){toast(error.message);}finally{e.target.value='';}};
+   $('#demo-save').onclick=()=>download('memo.txt',$('#demo-memo').value);
+   $('#demo-new').onclick=()=>{if(!$('#demo-memo').value||confirm('현재 메모 내용을 지우고 새 문서를 시작할까요?')){$('#demo-memo').value='';stats();}};
+  }
+ }
+ if($('#compare-select')){
+  function compare(){const [tk,qt]=data.pairs[Number($('#compare-select').value)];$('#compare-tk').textContent=data.examples[tk].files['main.py'];$('#compare-qt').textContent=data.examples[qt].files['main.py'];}
+  $('#compare-select').onchange=compare;compare();
+  $$('[data-view]').forEach(b=>b.onclick=()=>{$$('[data-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const v=b.dataset.view;$$('[data-side]').forEach(x=>x.hidden=v!=='both'&&x.dataset.side!==v);$('#compare').classList.toggle('single',v!=='both');});
+ }
 }
 fetch(prefix+`data/unit${unit}.json`).then(r=>{if(!r.ok)throw Error(r.status);return r.json();}).then(d=>{
  data=d;

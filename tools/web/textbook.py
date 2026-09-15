@@ -24,7 +24,20 @@ MAP={
 3:{'ml-overview':[(1,1)],'ml-use':[(1,2)],'ml-process':[(1,3),(2,2)],'ml-terms':[(1,4)],'ml-methods':[(1,5)],'ml-libraries':[(2,1)],'ml-preprocess':[(2,2)],'ml-classification':[(2,3)],'ml-regression':[(2,3),(2,4)],'ml-cluster':[(2,3)],'ml-metrics':[(2,4)],'ml-selection':[(2,4)],'ml-project':[]},
 4:{'cv-overview':[(1,1),(1,2)],'cv-pixels':[(1,3)],'cv-pipeline':[(1,3)],'cv-libraries':[(2,1)],'cv-io':[(2,2)],'cv-filters':[(2,3)],'cv-transform':[(2,3)],'cv-features':[(2,4)],'cv-haar':[(2,5)],'cv-yolo':[(2,5)],'cv-project':[]}}
 REVIEW={1:['review'],2:['review'],3:['ml-project'],4:['cv-project']}
+# Units that emit one HTML file per web topic (not only index.html#id).
+STANDALONE={2}
 def unit_label(u):return f'{ROMAN[u]}. {BOOK[u][0]}'
+def topic_path(u,lid):
+ return f'{lid}.html' if u in STANDALONE else f'index.html#{lid}'
+def topic_href(u,lid,page=''):
+ """Link to a web topic. page is '' (same folder) or a path ending in index.html."""
+ if u in STANDALONE:
+  name=f'{lid}.html'
+  if not page:return name
+  if page.endswith('index.html'):return page[:-10]+name
+  if page.endswith('/'):return page+name
+  return name
+ return f'{page}#{lid}' if page else f'#{lid}'
 def references(u,l):
  result=[]
  for m,s in MAP[u][l['id']]:
@@ -54,7 +67,7 @@ def toc(u,ls,target=''):
   for n,(name,pp) in enumerate(smalls,1):
    related=[l for l in ls if (m,n) in MAP[u][l['id']]]
    assert related, (u,m,n)
-   s+=f'<li><strong>소단원 {n:02}. {name}</strong><span class="book-pages">{pp}쪽</span><ul>'+''.join(f'<li><a href="{target}#{l["id"]}">웹 실습 · {esc(l["title"])}</a></li>' for l in related)+'</ul></li>'
+   s+=f'<li><strong>소단원 {n:02}. {name}</strong><span class="book-pages">{pp}쪽</span><ul>'+''.join(f'<li><a href="{topic_href(u,l["id"],target)}">웹 실습 · {esc(l["title"])}</a></li>' for l in related)+'</ul></li>'
   s+='</ol><p class="book-review">'+ ' · '.join(f'{name} {pp}쪽' for name,pp in reviews)+'</p></div>'
- s+=f'<p class="book-review"><b>대단원 종합 평가</b> {BOOK[u][3]}쪽</p><div class="book-extra"><h3>복습·추가 실습</h3>'+''.join(f'<a href="{target}#{l["id"]}">{esc(l["title"])} <small>({"평가 연계" if l["id"] in REVIEW[u] else "확장"})</small></a>' for l in ls if not MAP[u][l['id']])+'</div></nav>'
+ s+=f'<p class="book-review"><b>대단원 종합 평가</b> {BOOK[u][3]}쪽</p><div class="book-extra"><h3>복습·추가 실습</h3>'+''.join(f'<a href="{topic_href(u,l["id"],target)}">{esc(l["title"])} <small>({"평가 연계" if l["id"] in REVIEW[u] else "확장"})</small></a>' for l in ls if not MAP[u][l['id']])+'</div></nav>'
  return s

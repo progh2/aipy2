@@ -50,7 +50,8 @@ eq(merged.comments['u2-hello'], '클라우드', 'store cloud comment');
 
 eq(historyItems({'u1-overview': 'hard', 'u1-define': 'understood', 'u2-hello': 'somewhat'}).map((i) => i.topicId),
  ['u1-overview', 'u2-hello'], 'history skips understood');
-eq(topicHref('../../', 'u2-hello'), '../../units/unit02/index.html#hello', 'topic href');
+eq(topicHref('../../', 'u2-hello'), '../../units/unit02/hello.html', 'unit II topic href');
+eq(topicHref('../../', 'u1-overview'), '../../units/unit01/index.html#overview', 'unit I topic href');
 
 const catalog = {topics: {'units/unit01/index.html': [{id: 'overview', title: '모듈이 필요한 이유'}]}};
 eq(titlesFromCatalog(catalog)['u1-overview'], '모듈이 필요한 이유', 'catalog title');

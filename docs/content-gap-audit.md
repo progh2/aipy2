@@ -2,7 +2,7 @@
 
 이슈 [#50](https://github.com/progh2/aipy2/issues/50)의 산출물입니다. 마스터 품질 기준과 현재 사이트를 대조하고, 후속 이슈 [#51](https://github.com/progh2/aipy2/issues/51)–[#61](https://github.com/progh2/aipy2/issues/61)로 넘길 우선순위를 고정합니다.
 
-이 PR은 **감사 문서만** 추가합니다. 레슨·예제·생성 HTML은 고치지 않습니다.
+이 문서는 M0 감사 스냅샷입니다. **[#51](https://github.com/progh2/aipy2/issues/51) 이후** 단원 Ⅱ는 `units/unit02/{ui,libraries,widgets,layout,events,memo,pyside,project,review}.html` 독립 페이지로 생성됩니다. 아래 표의 “한 장에 붙어 있음”은 감사 당시 상태입니다.
 
 | 항목 | 값 |
 | --- | --- |
@@ -21,7 +21,7 @@
 
 | # | 기준 | 현재 | 판정 |
 | --- | --- | --- | --- |
-| 1 | 교과서 소단원(또는 학습 주제)마다 **독립 완결 페이지** | 단원당 HTML 1장. 주제는 `#id` 앵커 섹션 | **미달** |
+| 1 | 교과서 소단원(또는 학습 주제)마다 **독립 완결 페이지** | Ⅰ·Ⅲ·Ⅳ는 단원당 HTML 1장. **Ⅱ는 주제별 HTML** (`#51`) | **Ⅱ 충족 / 나머지 미달** |
 | 2 | GUI 예제 수·설명이 충분 | Ⅱ단원 9주제 / 고유 예제 17개. widgets·layout·events가 특히 얇음 | **미달 (얇음)** |
 | 3 | 새 API·속성을 코드 **등장 전에** 설명 | 문단은 있으나 `<details>`에 접힘. 스키마 필드 없음 | **미달** |
 | 4 | 실습 실행 결과 **스크린샷을 페이지에** | 인사 앱 6장만 갤러리에 노출. 예제별 스샷 없음 | **미달** |
@@ -35,10 +35,11 @@
 
 ## 2. 페이지가 어떻게 만들어지는가
 
-`build.py`는 단원마다 **하나의** `web/units/unit0N/index.html`을 씁니다.
+`build.py`는 단원마다 `web/units/unit0N/index.html`을 씁니다. **단원 Ⅱ만** `textbook.STANDALONE`으로 주제별 `{id}.html`을 추가로 씁니다.
 
-- 각 학습 주제는 `<section class="lesson" id="{lesson_id}">`입니다.
-- 사이드 목차(`textbook.toc`)와 갤러리 링크는 `index.html#{id}` 앵커입니다. **주제별 HTML 파일이 없습니다.**
+- Ⅰ·Ⅲ·Ⅳ 학습 주제는 `<section class="lesson" id="{lesson_id}">` 앵커입니다.
+- Ⅱ는 목차(`index.html`)와 `ui.html` 등 9개 독립 페이지입니다. 목차 카드의 `#id`는 옛 북마크용이고, 해시가 주제 id이면 해당 HTML로 보냅니다.
+- 사이드 목차(`textbook.toc`)는 Ⅱ에서 `ui.html`처럼 파일로 연결합니다.
 - 개념 본문은 `<details class="lesson-details"><summary>개념 더 읽기</summary>` 안에 접혀 있습니다.
 - 파이 팁(`mascot.lesson_tip`)은 주제마다 붙지만, Ⅰ·Ⅱ만 주제별 문장이 있고 Ⅲ·Ⅳ는 공통 문구로 떨어집니다.
 - 코드 실습실은 단원 페이지에 **에디터 1개**를 두고, 주제의 예제 버튼이 그 에디터를 엽니다.
@@ -263,7 +264,7 @@ README의 “학습 주제 45 · 예제 82 · 연습 문제 213”과 같습니�
 | 우선 | 마일스톤 | 갭 | 근거(이 문서) | 이슈 |
 | --- | --- | --- | --- | --- |
 | P0 | M0 갭 감사·품질 기준 | 기준 고정·현황 기록 | 본 문서 | [#50](https://github.com/progh2/aipy2/issues/50) ← 이 PR |
-| P1 | M1 단원Ⅱ GUI 본편 | 주제를 독립 완결 페이지로 | §2, §4.2 | [#51](https://github.com/progh2/aipy2/issues/51) |
+| P1 | M1 단원Ⅱ GUI 본편 | 주제를 독립 완결 페이지로 | §2, §4.2 | [#51](https://github.com/progh2/aipy2/issues/51) · 구조 적용됨 |
 | P1 | M1 | widgets·layout·events·memo 예제·단계 설명 | §5 | [#52](https://github.com/progh2/aipy2/issues/52) |
 | P1 | M1 | Button/`pack`/`bind` 등 코드 전 선설명 블록 | §7 | [#53](https://github.com/progh2/aipy2/issues/53) |
 | P1 | M1 | 예제별 실행 스샷을 페이지에. `capture_gui.py` 확장 | §6.1 | [#54](https://github.com/progh2/aipy2/issues/54) |

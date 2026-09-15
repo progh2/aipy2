@@ -21,6 +21,9 @@
         "13쪽 확인학습: 두 수를 입력받아 합을 반환하는 모듈을 만드세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "01. 모듈, 패키지의 개요",
@@ -58,6 +61,9 @@
         "원의 반지름을 바꾸고 계산 결과를 확인하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -86,6 +92,9 @@
         "__main__이 파일 이름이라는 설명이 왜 틀렸는지 적으세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -117,6 +126,9 @@
         "두 모듈에 같은 함수가 있을 때 이름을 구별해 호출하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -151,6 +163,9 @@
         "animals 패키지에 새 모듈을 추가하고 불러오세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -181,6 +196,9 @@
         "sys.exit 앞뒤에 출력문을 넣고 순서를 설명하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -207,6 +225,9 @@
         "math.pi를 활용하는 원 넓이 함수를 작성하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -236,6 +257,9 @@
         "주사위 결과가 특정 숫자여야 한다는 검사가 부적절한 이유를 적으세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -264,6 +288,9 @@
         "현재 날짜와 요일을 한글 문장으로 출력하세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -292,6 +319,9 @@
         "설치 이름과 import 이름이 다른 예를 두 개 적으세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -319,6 +349,9 @@
         "단원 연습에서 틀린 문제를 다시 풀고 오류 원인을 저널에 남기세요."
       ],
       "extra": false,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": []
     },
     {
@@ -338,6 +371,9 @@
         "정상 입력·경계 입력·잘못된 입력을 하나씩 시험하세요."
       ],
       "extra": true,
+      "preexplain": [],
+      "history": "",
+      "youtube": "",
       "textbook": []
     }
   ],

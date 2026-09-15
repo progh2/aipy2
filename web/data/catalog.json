@@ -11,6 +11,51 @@
       "unit": 2
     },
     {
+      "id": "units/unit02/ui.html",
+      "label": "Ⅱ 사용자 인터페이스 · CLI, GUI, NUI",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/libraries.html",
+      "label": "Ⅱ GUI 라이브러리 비교 갤러리",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/widgets.html",
+      "label": "Ⅱ 창과 위젯 · 화면을 구성하는 부품",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/layout.html",
+      "label": "Ⅱ 배치 관리자와 반응하는 화면",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/events.html",
+      "label": "Ⅱ 이벤트 · 사용자의 행동에 반응하기",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/memo.html",
+      "label": "Ⅱ 교과서 메모장 · 여덟 단계로 완성",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/pyside.html",
+      "label": "Ⅱ PySide6 시작과 Qt Designer",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/project.html",
+      "label": "Ⅱ 통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
+      "unit": 2
+    },
+    {
+      "id": "units/unit02/review.html",
+      "label": "Ⅱ 2단원 마무리 · 개념에서 앱까지",
+      "unit": 2
+    },
+    {
       "id": "units/unit03/index.html",
       "label": "Ⅲ 파이썬과 머신러닝",
       "unit": 3
@@ -198,6 +243,97 @@
           "project-pyside"
         ]
       },
+      {
+        "id": "review",
+        "title": "2단원 마무리 · 개념에서 앱까지",
+        "examples": []
+      }
+    ],
+    "units/unit02/ui.html": [
+      {
+        "id": "ui",
+        "title": "사용자 인터페이스 · CLI, GUI, NUI",
+        "examples": []
+      }
+    ],
+    "units/unit02/libraries.html": [
+      {
+        "id": "libraries",
+        "title": "GUI 라이브러리 비교 갤러리",
+        "examples": [
+          "hello-tk",
+          "hello-ttk",
+          "hello-pyside",
+          "hello-pyqt",
+          "hello-wx",
+          "hello-kivy"
+        ]
+      }
+    ],
+    "units/unit02/widgets.html": [
+      {
+        "id": "widgets",
+        "title": "창과 위젯 · 화면을 구성하는 부품",
+        "examples": [
+          "widgets-tk",
+          "widgets-pyside"
+        ]
+      }
+    ],
+    "units/unit02/layout.html": [
+      {
+        "id": "layout",
+        "title": "배치 관리자와 반응하는 화면",
+        "examples": [
+          "layout-tk",
+          "layout-pyside"
+        ]
+      }
+    ],
+    "units/unit02/events.html": [
+      {
+        "id": "events",
+        "title": "이벤트 · 사용자의 행동에 반응하기",
+        "examples": [
+          "hello-tk",
+          "hello-pyside"
+        ]
+      }
+    ],
+    "units/unit02/memo.html": [
+      {
+        "id": "memo",
+        "title": "교과서 메모장 · 여덟 단계로 완성",
+        "examples": [
+          "memo-tk",
+          "memo-pyside",
+          "memo-plus-tk",
+          "memo-plus-pyside"
+        ]
+      }
+    ],
+    "units/unit02/pyside.html": [
+      {
+        "id": "pyside",
+        "title": "PySide6 시작과 Qt Designer",
+        "examples": [
+          "hello-pyside",
+          "memo-pyside"
+        ]
+      }
+    ],
+    "units/unit02/project.html": [
+      {
+        "id": "project",
+        "title": "통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
+        "examples": [
+          "core",
+          "project-tk",
+          "project-pyside"
+        ]
+      }
+    ],
+    "units/unit02/review.html": [
       {
         "id": "review",
         "title": "2단원 마무리 · 개념에서 앱까지",

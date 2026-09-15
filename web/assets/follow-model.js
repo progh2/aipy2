@@ -63,13 +63,15 @@ export function samePage(a, b) {
 }
 
 export function shouldNavigate(currentPage, focus) {
- return Boolean(focus && focus.page && !samePage(currentPage, focus.page));
+ const target = resolveFocusPage(focus);
+ return Boolean(target && !samePage(currentPage, target));
 }
 
 export function focusHref(prefix, focus) {
- const page = normalizePage(focus && focus.page);
+ const page = resolveFocusPage(focus);
  if (!page) return '';
- const hash = focus.topicAnchor ? `#${focus.topicAnchor}` : '';
+ const resolved = normalizePage(focus && focus.page);
+ const hash = focus && focus.topicAnchor && resolved === page ? `#${focus.topicAnchor}` : '';
  return `${prefix || ''}${page}${hash}`;
 }
 
@@ -167,8 +169,21 @@ export function sessionEndFields(existing, {teacherEmail} = {}) {
  };
 }
 
+const UNIT2_HUB_ONLY = new Set(['main', 'account', 'toast', 'lab', 'practice', 'gallery', 'simulator', 'journal']);
+
 export function isUnitLessonPage(page) {
- return /^units\/unit0[1-4]\/index\.html$/.test(normalizePage(page));
+ const p = normalizePage(page);
+ return /^units\/unit0[1-4]\/index\.html$/.test(p)
+  || (/^units\/unit02\/[a-z0-9-]+\.html$/.test(p) && !p.endsWith('summary.html'));
+}
+
+export function resolveFocusPage(focus) {
+ const page = normalizePage(focus && focus.page);
+ const topic = focus && focus.topicAnchor;
+ if (page === 'units/unit02/index.html' && topic && !UNIT2_HUB_ONLY.has(topic) && /^[a-z0-9-]+$/.test(topic)) {
+  return `units/unit02/${topic}.html`;
+ }
+ return page;
 }
 
 const SKIP_FOCUS_TOPICS = new Set(['main', 'account', 'toast']);
