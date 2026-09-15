@@ -890,8 +890,10 @@ for l in units[2]:
 import unit2_density
 import unit2_pre_api
 import wx_appendix
+import kivy_appendix
 import unit2_shots
 unit2_density.apply()
 unit2_pre_api.apply()
 wx_appendix.apply()
+kivy_appendix.apply()
 unit2_shots.apply()

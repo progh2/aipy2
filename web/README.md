@@ -5,7 +5,7 @@
 - 대문: `index.html`
 - 기존 준비 안내: `before-you-start.html` (기존 localStorage 키 유지)
 - 1단원 안내: `units/unit01/index.html` — 주제 목록·전체 문제. 각 주제는 `units/unit01/{id}.html` (예: `overview.html`)
-- 2단원 안내: `units/unit02/index.html` — 10개 주제. 예: `units/unit02/widgets.html`, 부록 `units/unit02/wx.html`
+- 2단원 안내: `units/unit02/index.html` — 11개 주제. 예: `units/unit02/widgets.html`, 부록 `units/unit02/wx.html`, `units/unit02/kivy.html`
 - 3·4단원도 같은 규칙: `units/unit0N/{id}.html`
 - 예전 `index.html#widgets` 주소는 `widgets.html`로 이어집니다. 진행 키 `u2-widgets`는 그대로입니다.
 - 출처·범위·교과서 오류 보완: `sources.html`

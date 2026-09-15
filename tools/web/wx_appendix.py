@@ -2,7 +2,7 @@
 
 Imported at the end of content.py. Does not change the tk/PySide example
 lists on the main Unit II topics. History/youtube seeding stays #58;
-Kivy appendix stays #56.
+Kivy appendix is kivy_appendix.py (#56).
 """
 from content import ex, lesson, units, examples, core
 from slots import api_items, glossary_items

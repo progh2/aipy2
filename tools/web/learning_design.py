@@ -22,6 +22,7 @@ VISUALS={
 'memo':('열기·저장·취소의 분기',['파일 대화상자','취소?｜화면 그대로','경로 선택?｜UTF-8 읽기/쓰기','내용과 상태 갱신'],['작업','입력','출력'],[['열기','파일 경로','Text 영역 내용'],['저장','Text 영역 내용','UTF-8 파일'],['취소','빈 경로','아무 파일도 변경 안 함'],['읽기 실패','OSError','오류 안내']]),
 'pyside':('tkinter 개념을 Qt에 대응해요',['QApplication 생성','위젯과 Layout 구성','시그널 연결','show → app.exec'],['tkinter','PySide6','공통 개념'],[['Tk()','QApplication + QWidget','앱과 창'],['command=handler','clicked.connect(handler)','이벤트 연결'],['pack / grid','QVBoxLayout / QGridLayout','배치 규칙'],['mainloop()','app.exec()','이벤트 루프']]),
 'wx':('본편 개념을 wxPython으로 옮기세요',['wx.App 생성','Frame·Panel·Sizer 구성','Bind로 이벤트 연결','Show → MainLoop'],['역할','tkinter','wxPython'],[['앱·창','Tk()','wx.App() + wx.Frame'],['설명 글','Label','wx.StaticText'],['한 줄 입력','Entry','wx.TextCtrl'],['여러 줄','Text','wx.TextCtrl(TE_MULTILINE)'],['버튼 클릭','command=','Bind(EVT_BUTTON)'],['배치','pack / grid','BoxSizer / FlexGridSizer'],['이벤트 루프','mainloop()','MainLoop()']]),
+'kivy':('본편 개념을 Kivy로 옮기세요',['App 클래스 작성','build()에서 Layout 구성','bind로 이벤트 연결','run()'],['역할','tkinter','Kivy'],[['앱·창','Tk()','App + build()'],['설명 글','Label','Label'],['한 줄 입력','Entry','TextInput(multiline=False)'],['여러 줄','Text','TextInput(multiline=True)'],['버튼 클릭','command=','bind(on_press=)'],['배치','pack / grid','BoxLayout / GridLayout'],['이벤트 루프','mainloop()','App.run()']]),
 }
 
 def table(headers,rows):
@@ -41,7 +42,7 @@ def visual(u,l,prefix="../../"):
   filename,alt=pictures[l['id']]
   picture=f'<a class="science-picture" href="{prefix}assets/science/{filename}.png" target="_blank" rel="noopener"><img src="{prefix}assets/science/{filename}.png" loading="lazy" alt="{alt}"><span>{alt} · 제공 Python 예제의 실제 실행 결과 · 클릭하여 확대</span></a>'
  diagram=flow(steps)
- if l['id'] in ['random','thirdparty','ui','libraries','widgets','wx','ml-methods','ml-libraries']:
+ if l['id'] in ['random','thirdparty','ui','libraries','widgets','wx','kivy','ml-methods','ml-libraries']:
   diagram=diagram.replace('concept-flow','concept-flow comparison-flow')
  if u==1 and l['id']=='overview':
   diagram='<div class="dependency-map"><div><strong>main.py</strong><span>calculator.add(3,5)</span></div><b aria-label="불러오기">→</b><div class="shared-module"><strong>calculator.py</strong><span>add 함수를 한 곳에서 정의</span></div><b aria-label="불러오기">←</b><div><strong>other_app.py</strong><span>calculator.add(10,2)</span></div></div>'
@@ -74,7 +75,7 @@ RUBRICS={
 4:[['이미지 처리·검출 구현','입출력·처리·검출 정확성','10점'],['응용·프로그램 완성도','응용 기능·오류 처리·완성도','5점'],['저널 기록·제출 충실도','과정과 해결 근거·제출률','5점']]}
 CAUTIONS={
 1:['교과서 39쪽 마지막 출력은 subnum(7,2)에 따라 5입니다. 정답편 201쪽의 9와 다릅니다.','25쪽 star 탐구는 함수 임포트와 모듈 임포트 표현이 혼재합니다. 명시적으로 두 호출법을 구별합니다.','__all__은 접근 금지가 아니고 별표 임포트의 이름 목록입니다.'],
-2:['58쪽 4번의 사용자 정의 예외 표현은 보기의 GUI 사례와 맞지 않아 인터페이스 분류로 재작성했습니다.','GUI의 문법 확인은 실제 창·버튼 동작 검증이 아닙니다. PC 시연을 별도로 확인합니다.','PySide6는 교과서 tkinter 이후 확장 학습입니다. 확장 사용 자체를 별도 평가 요건으로 추가하지 않습니다.','wxPython 부록은 본편 tkinter/PySide6를 대체하지 않습니다. 브라우저에는 wx가 없어 코드·캡처로 가르치고, 실제 창은 PC에서 확인합니다.'],
+2:['58쪽 4번의 사용자 정의 예외 표현은 보기의 GUI 사례와 맞지 않아 인터페이스 분류로 재작성했습니다.','GUI의 문법 확인은 실제 창·버튼 동작 검증이 아닙니다. PC 시연을 별도로 확인합니다.','PySide6는 교과서 tkinter 이후 확장 학습입니다. 확장 사용 자체를 별도 평가 요건으로 추가하지 않습니다.','wxPython 부록은 본편 tkinter/PySide6를 대체하지 않습니다. 브라우저에는 wx가 없어 코드·캡처로 가르치고, 실제 창은 PC에서 확인합니다.','Kivy 부록도 본편을 대체하지 않습니다. Pyodide는 Kivy를 실행하지 못하므로 코드·캡처로 가르치고, PC에서 pip install kivy 후 확인합니다.'],
 3:['브라우저는 작은 원리 구현과 배열·표·그래프 실습을 제공합니다. scikit-learn 전체 예제는 PC 경로이며 Python 문법 확인과 ZIP 다운로드가 가능합니다.','84쪽 확인학습 1③은 정답 없는 패턴 학습을 지도 학습이라고 하므로 ×입니다. 정답편 206쪽의 ○ 표기와 다릅니다.','128쪽 순서 문제의 정답편은 변환 뒤 분할합니다. 실제 모델 실습에서는 먼저 테스트를 떼고 훈련 데이터로 전처리 통계량을 학습합니다.','65쪽 딥 블루 사례를 현대의 데이터 학습형 딥러닝과 동일시하지 않습니다.','정규화(normalization)와 규제(regularization)는 용어가 겹쳐 번역될 수 있으나 기능이 다릅니다.','분류 지표는 양성 레이블을 먼저 명시합니다. R²는 음수가 될 수 있습니다.'],
 4:['150쪽 img.size는 컬러 이미지에서 픽셀 수가 아니라 채널을 포함한 원소 수입니다.','교과서의 얼굴 인식 표현 중 Haar 예제는 얼굴 위치 검출입니다. 개인 식별이나 감정 판단을 수행하지 않습니다.','169쪽 import cv2, import numpy as np 구문을 두 import 문으로 수정했습니다.','YOLOv8을 최신 버전이라고 표현하지 않습니다. 교과서 모델의 재현 경로로 제공합니다.','프레임별 객체 개수의 합은 고유 방문자 수가 아닙니다.','카메라·외부 가중치·개인 사진은 PC에서 별도 준비가 필요합니다. 도형 기반 처리를 먼저 확인하고 확장합니다.']}
 

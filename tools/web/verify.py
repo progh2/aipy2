@@ -227,7 +227,7 @@ pc_unit2=[eid for lesson in units[2] for eid in lesson['examples'] if examples[e
 assert all(examples[eid]['screenshots'] for eid in pc_unit2), [eid for eid in pc_unit2 if not examples[eid]['screenshots']]
 assert examples['events-bind-tk']['screenshots'][0]['src']=='events-bind-tk.png'
 assert examples['events-pyside-signal']['screenshots'][0]['src']=='events-pyside-signal.png'
-# #53: Unit II examples that introduce APIs show pre_api/glossary (wx/Kivy later).
+# #53: Unit II examples that introduce APIs show pre_api/glossary.
 for eid in unit2_pre_api.unit2_pre_coverage():
  assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit2 pre_api/glossary', eid)
  assert examples[eid]['pre_api'], ('unit2 pre_api', eid)
@@ -262,13 +262,37 @@ assert '코드 전에 알아 두기' in wx_page
 assert examples['first-wx']['pre_api'] and examples['memo-wx']['pre_api']
 assert examples['widgets-wx']['screenshots'][0]['src'] == 'widgets-wx.png'
 assert '브라우저(Pyodide)' in examples['first-wx']['note']
+assert 'kivy' in unit2 and unit2['kivy']['extra']
+assert unit2['kivy']['examples'] == [
+    'first-kivy', 'hello-kivy', 'widgets-label-entry-kivy', 'widgets-choice-kivy', 'widgets-kivy',
+    'layout-kivy', 'events-kivy', 'memo-window-kivy', 'memo-kivy', 'project-kivy',
+]
+assert 'widgets-kivy' not in unit2['widgets']['examples']
+assert 'memo-kivy' not in unit2['memo']['examples']
+assert 'first-kivy' not in unit2['wx']['examples']
+kivy_page = (WEB / 'units/unit02/kivy.html').read_text()
+assert 'id="lab"' in kivy_page and 'first-kivy' in kivy_page and 'memo-kivy' in kivy_page
+assert 'id="pre-api-first-kivy"' in kivy_page and 'App / build' in kivy_page
+assert 'id="pre-api-memo-kivy"' in kivy_page and 'memo.txt' in kivy_page
+assert 'Pyodide' in kivy_page and '본편 tkinter/PySide6' in kivy_page
+assert 'pip install kivy' in kivy_page
+assert 'assets/screenshots/widgets-kivy.png' in kivy_page
+assert 'id="screenshots-widgets-kivy"' in kivy_page
+assert '코드 전에 알아 두기' in kivy_page
+assert examples['first-kivy']['pre_api'] and examples['memo-kivy']['pre_api']
+assert examples['widgets-kivy']['screenshots'][0]['src'] == 'widgets-kivy.png'
+assert '브라우저(Pyodide)' in examples['first-kivy']['note']
+assert 'pip install kivy' in examples['first-kivy']['note']
+assert 'kivy.html' in (WEB / 'units/unit02/review.html').read_text()
+assert 'kivy.html' in (WEB / 'units/unit02/index.html').read_text()
 assert 'id="pre-api"' in libraries
 assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
 assert 'id="pre-api-hello-ttk"' in libraries
 assert 'id="pre-api-hello-wx"' in libraries
+assert 'id="pre-api-hello-kivy"' in libraries
 assert '바인딩' in libraries
 assert examples['hello-wx']['pre_api'] and 'Bind' in ''.join(item['name'] + item['signature'] for item in examples['hello-wx']['pre_api'])
-assert not examples['hello-kivy']['pre_api']
+assert examples['hello-kivy']['pre_api'] and 'bind' in ''.join(item['name'] + item['signature'] for item in examples['hello-kivy']['pre_api'])
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')

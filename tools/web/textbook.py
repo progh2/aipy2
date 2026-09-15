@@ -20,7 +20,7 @@ BOOK={
 # Each pair is (middle section, small section), numbered exactly as the book.
 MAP={
 1:{'overview':[(1,1),(1,2)],'define':[(2,1)],'entrypoint':[(2,1)],'imports':[(2,2)],'packages':[(2,2)], **{k:[(2,3)] for k in ['os-sys','math','random','datetime','thirdparty']},'review':[],'project':[]},
-2:{'ui':[(1,1)],'libraries':[(1,2)],'widgets':[(2,1)],'layout':[(2,1)],'events':[(2,1),(2,2)],'memo':[(2,2)],'pyside':[],'wx':[],'project':[],'review':[]},
+2:{'ui':[(1,1)],'libraries':[(1,2)],'widgets':[(2,1)],'layout':[(2,1)],'events':[(2,1),(2,2)],'memo':[(2,2)],'pyside':[],'wx':[],'kivy':[],'project':[],'review':[]},
 3:{'ml-overview':[(1,1)],'ml-use':[(1,2)],'ml-process':[(1,3),(2,2)],'ml-terms':[(1,4)],'ml-methods':[(1,5)],'ml-libraries':[(2,1)],'ml-preprocess':[(2,2)],'ml-classification':[(2,3)],'ml-regression':[(2,3),(2,4)],'ml-cluster':[(2,3)],'ml-metrics':[(2,4)],'ml-selection':[(2,4)],'ml-project':[]},
 4:{'cv-overview':[(1,1),(1,2)],'cv-pixels':[(1,3)],'cv-pipeline':[(1,3)],'cv-libraries':[(2,1)],'cv-io':[(2,2)],'cv-filters':[(2,3)],'cv-transform':[(2,3)],'cv-features':[(2,4)],'cv-haar':[(2,5)],'cv-yolo':[(2,5)],'cv-project':[]}}
 REVIEW={1:['review'],2:['review'],3:['ml-project'],4:['cv-project']}

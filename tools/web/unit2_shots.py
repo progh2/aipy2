@@ -3,7 +3,7 @@
 Hello-gallery files stay tk/ttk/pyside/pyqt/wx/kivy.png. Other GUI examples
 use web/assets/screenshots/{example-id}.png produced by capture_gui.py.
 CLI/print examples stay empty. wx appendix shots are registered by wx_appendix (#55).
-Kivy beyond the greeting gallery is #56.
+Kivy appendix shots are registered by kivy_appendix (#56).
 """
 from slots import shot_items
 
