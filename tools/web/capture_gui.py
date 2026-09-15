@@ -10,10 +10,11 @@ Usage:
   python tools/web/capture_gui.py --list
 
 Needs a display (Xvfb is fine), python3-tk, ImageMagick `import` for Tk,
-PySide6 plus libEGL/libGL for Qt, and wxPython for appendix shots.
-Gallery hello shots keep toolkit filenames. Qt: `apt install libegl1` if import fails on libEGL.so.1.
+PySide6 plus libEGL/libGL for Qt, wxPython for wx appendix shots, and Kivy
+for Kivy appendix shots. Gallery hello shots keep toolkit filenames.
+Qt: `apt install libegl1` if import fails on libEGL.so.1.
 """
-import os, sys, tempfile, subprocess, time
+import os, re, sys, tempfile, subprocess, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -49,10 +50,10 @@ def strip_loop(src):
     for old in (
         'root.mainloop()', 'window.mainloop()',
         'sys.exit(app.exec())', 'app.exec()',
-        'app.MainLoop()', 'GreetingApp().run()',
+        'app.MainLoop()',
     ):
         src = src.replace(old, '')
-    return src
+    return re.sub(r'\w+App\(\)\.run\(\)', '', src)
 
 
 def inject_tk_font(src):
@@ -68,12 +69,23 @@ def inject_tk_font(src):
     return src
 
 
+KIVY_FONT_CANDIDATES = (
+    Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),
+    Path('/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf'),
+)
+
+
 def write_work(example):
     work = Path(tempfile.mkdtemp(prefix=f'aipy-cap-{example["id"]}-'))
     for name, text in example['files'].items():
         path = work / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
+    if 'kivy' in example['id'] or 'from kivy' in example['files'].get('main.py', ''):
+        for font in KIVY_FONT_CANDIDATES:
+            if font.is_file():
+                (work / 'NotoSansKR.ttf').write_bytes(font.read_bytes())
+                break
     return work
 
 
@@ -297,6 +309,60 @@ def demo_wx_project(ns):
     ns['window'].run_task(None)
 
 
+def kivy_app_class(ns):
+    from kivy.app import App
+    for value in ns.values():
+        if isinstance(value, type) and issubclass(value, App) and value is not App:
+            return value
+    raise RuntimeError('no Kivy App class')
+
+
+def demo_kivy_label_entry(app, ns):
+    app.entry.text = 'Minji'
+    app.show_name(None)
+
+
+def demo_kivy_choice(app, ns):
+    app.done.active = True
+    app.show_choice(None)
+
+
+def demo_kivy_events(app, ns):
+    app.entry.text = 'Python'
+    app.greet(None)
+
+
+def demo_kivy_memo(app, ns):
+    app.editor.text = 'Practice notes\n1. Try save and open.\n2. Check UTF-8 stays.\n'
+
+
+def demo_kivy_project(app, ns):
+    app.entry.text = '6'
+    app.mode.text = 'Dice'
+    app.run_task(None)
+
+
+def capture_kivy(ns, output, demo=None):
+    from kivy.clock import Clock
+    from kivy.core.window import Window
+    app = kivy_app_class(ns)()
+
+    def after_start(dt):
+        if demo:
+            demo(app, ns)
+        Clock.schedule_once(save, 0.4)
+
+    def save(dt):
+        generated = Window.screenshot(name=str(output))
+        if generated and Path(generated) != output:
+            Path(generated).replace(output)
+        assert output.is_file() and output.stat().st_size > 1000, (output, output.stat().st_size if output.is_file() else 0)
+        app.stop()
+
+    Clock.schedule_once(after_start, 0.6)
+    app.run()
+
+
 DEMO = {
     'widgets-label-entry-tk': demo_label_entry,
     'widgets-choice-tk': demo_choice,
@@ -322,6 +388,12 @@ DEMO = {
     'memo-window-wx': demo_wx_memo,
     'memo-wx': demo_wx_memo,
     'project-wx': demo_wx_project,
+    'widgets-label-entry-kivy': demo_kivy_label_entry,
+    'widgets-choice-kivy': demo_kivy_choice,
+    'events-kivy': demo_kivy_events,
+    'memo-window-kivy': demo_kivy_memo,
+    'memo-kivy': demo_kivy_memo,
+    'project-kivy': demo_kivy_project,
 }
 
 
@@ -423,30 +495,33 @@ def capture_example(eid):
         if kind == 'tk':
             prepared = inject_tk_font(prepared)
         exec(prepared, ns)
-        DEMO.get(eid, demo_noop)(ns)
-        if kind == 'tk':
-            root = tk_root(ns)
-            capture_tk(root, output)
-            root.destroy()
-        elif kind in ('pyside', 'pyqt'):
-            if kind == 'pyside':
-                from PySide6.QtGui import QFont
-            else:
-                from PyQt6.QtGui import QFont
-            app = ns.get('app')
-            window = qt_window(ns)
-            app.setFont(QFont(FONT, 11))
-            window.show()
-            capture_qt(window, app, output)
-            window.close()
-        elif kind == 'wx':
-            import wx
-            window = wx_window(ns)
-            wx.Yield()
-            capture_wx(window, output)
-            window.Destroy()
+        if kind == 'kivy':
+            capture_kivy(ns, output, DEMO.get(eid))
         else:
-            raise SystemExit(f'{eid}: Kivy appendix captures stay on the hello gallery')
+            DEMO.get(eid, demo_noop)(ns)
+            if kind == 'tk':
+                root = tk_root(ns)
+                capture_tk(root, output)
+                root.destroy()
+            elif kind in ('pyside', 'pyqt'):
+                if kind == 'pyside':
+                    from PySide6.QtGui import QFont
+                else:
+                    from PyQt6.QtGui import QFont
+                app = ns.get('app')
+                window = qt_window(ns)
+                app.setFont(QFont(FONT, 11))
+                window.show()
+                capture_qt(window, app, output)
+                window.close()
+            elif kind == 'wx':
+                import wx
+                window = wx_window(ns)
+                wx.Yield()
+                capture_wx(window, output)
+                window.Destroy()
+            else:
+                raise SystemExit(f'{eid}: unsupported GUI toolkit')
     finally:
         sys.path = [p for p in sys.path if p != str(work)]
         os.chdir(cwd)

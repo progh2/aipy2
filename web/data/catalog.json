@@ -262,6 +262,23 @@
           "project-wx"
         ],
         "href": "units/unit02/wx.html"
+      },
+      {
+        "id": "kivy",
+        "title": "부록 · Kivy로 같은 앱 다시 만들기",
+        "examples": [
+          "first-kivy",
+          "hello-kivy",
+          "widgets-label-entry-kivy",
+          "widgets-choice-kivy",
+          "widgets-kivy",
+          "layout-kivy",
+          "events-kivy",
+          "memo-window-kivy",
+          "memo-kivy",
+          "project-kivy"
+        ],
+        "href": "units/unit02/kivy.html"
       }
     ],
     "units/unit03/index.html": [
@@ -927,6 +944,60 @@
     "project-wx": {
       "id": "project-wx",
       "title": "생활 도우미 · wxPython",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "first-kivy": {
+      "id": "first-kivy",
+      "title": "Kivy · 최소 창 실행 순서",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-label-entry-kivy": {
+      "id": "widgets-label-entry-kivy",
+      "title": "Label·TextInput · 한 줄 읽고 보여 주기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-choice-kivy": {
+      "id": "widgets-choice-kivy",
+      "title": "CheckBox·ToggleButton · 선택 값 읽기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-kivy": {
+      "id": "widgets-kivy",
+      "title": "Kivy 위젯 도감",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "layout-kivy": {
+      "id": "layout-kivy",
+      "title": "Kivy · 상자 배치와 격자 폼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "events-kivy": {
+      "id": "events-kivy",
+      "title": "bind · on_press와 text",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "memo-window-kivy": {
+      "id": "memo-window-kivy",
+      "title": "메모장 ① · 창과 여러 줄 TextInput만",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "memo-kivy": {
+      "id": "memo-kivy",
+      "title": "메모 형태 · Kivy 저장·열기 버튼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "project-kivy": {
+      "id": "project-kivy",
+      "title": "생활 도우미 · Kivy",
       "unit": 2,
       "mode": "pc"
     },
