@@ -1,14 +1,26 @@
-"""Authored web lessons. Run build.py after editing. Textbook pages refer to printed pages."""
+"""Authored web lessons. Run build.py after editing. Textbook pages refer to printed pages.
+
+Optional slots on lesson() / ex() (empty is fine):
+- pre_api: [{name, signature, note}] — API cards before code
+- glossary: [{term, meaning}] — extra terms
+- tips: {history, youtube: [{title, url, note}]} — or pass history=/youtube=
+- screenshots: [{src, alt, caption}] — files under web/assets/screenshots/ or assets/...
+"""
 import textwrap
+from slots import attach
 units = {1: [], 2: []}
 examples = {}
 questions = []
 def code(s): return textwrap.dedent(s).strip()+'\n'
-def ex(id, title, files, mode='web', entry='main.py', stdin='', args='', checks='', note=''):
-    examples[id] = dict(id=id,title=title,files={k:code(v) for k,v in files.items()},mode=mode,entry=entry,stdin=stdin,args=args,checks=code(checks) if checks else '',note=note)
+def ex(id, title, files, mode='web', entry='main.py', stdin='', args='', checks='', note='',
+       pre_api=None, glossary=None, tips=None, history=None, youtube=None, screenshots=None, screenshot=None):
+    examples[id] = attach(dict(id=id,title=title,files={k:code(v) for k,v in files.items()},mode=mode,entry=entry,stdin=stdin,args=args,checks=code(checks) if checks else '',note=note),
+        pre_api=pre_api,glossary=glossary,tips=tips,history=history,youtube=youtube,screenshots=screenshots,screenshot=screenshot)
     return id
-def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False):
-    units[unit].append(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra))
+def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False,
+           pre_api=None, glossary=None, tips=None, history=None, youtube=None, screenshots=None, screenshot=None):
+    units[unit].append(attach(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra),
+        pre_api=pre_api,glossary=glossary,tips=tips,history=history,youtube=youtube,screenshots=screenshots,screenshot=screenshot))
 def q(unit,topic,kind,prompt,answer,hint,explain,options=None,starter='',checks='',level='기본',ref='보강'):
     questions.append(dict(id=f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}',unit=unit,topic=topic,kind=kind,prompt=prompt,answer=answer,hint=hint,explain=explain,options=options,starter=code(starter) if starter else '',checks=code(checks) if checks else '',level=level,ref=ref))
 
@@ -219,7 +231,23 @@ tk.Button(root, text="인사하기", command=greet).pack(pady=8)
 tk.Button(root, text="초기화", command=reset).pack()
 result = tk.Label(root, text="이름을 입력하세요.")
 result.pack(pady=12)
-root.mainloop()'''},mode='pc')
+root.mainloop()'''},mode='pc',
+    pre_api=[
+        {'name':'tk.Tk','signature':'root = tk.Tk()','note':'빈 창을 만듭니다. 이 창이 Label·Entry·Button의 부모입니다.'},
+        {'name':'title / geometry','signature':'root.title("제목")\nroot.geometry("480x260")','note':'창 제목과 처음 크기를 정합니다. 크기를 빼도 위젯을 붙이면 창이 맞춰집니다.'},
+        {'name':'Label','signature':'tk.Label(parent, text=..., font=...)','note':'글자를 보여 줍니다. 나중에 config(text=...)로 바꿀 수 있습니다.'},
+        {'name':'Entry','signature':'entry = tk.Entry(parent)','note':'한 줄 입력을 받습니다. get()으로 읽고, delete(0, tk.END)로 지웁니다.'},
+        {'name':'Button','signature':'tk.Button(parent, text=..., command=함수)','note':'클릭하면 command에 넣은 함수를 실행합니다. command=함수()처럼 괄호를 붙이면 버튼을 만들 때 바로 실행됩니다.'},
+        {'name':'pack','signature':'위젯.pack(pady=8, fill="x")','note':'위젯을 창에 붙입니다. 생성만 하고 pack을 빼면 화면에 보이지 않습니다.'},
+        {'name':'mainloop','signature':'root.mainloop()','note':'클릭·입력을 기다리는 이벤트 루프입니다. 이 줄 아래의 코드는 창을 닫을 때까지 실행되지 않습니다.'},
+    ],
+    glossary=[
+        {'term':'위젯','meaning':'창 안의 부품입니다. Label·Entry·Button이 위젯입니다.'},
+        {'term':'이벤트 루프','meaning':'사용자의 클릭·입력을 순서대로 받아 처리하는 반복입니다. mainloop가 그 역할을 합니다.'},
+    ],
+    tips={'history':'Tk는 1991년 John Ousterhout가 Tcl에 붙인 GUI 툴킷입니다. 파이썬 표준 라이브러리의 tkinter는 이 Tk를 연결하므로, 많은 환경에서 별도 설치 없이 창과 버튼을 만들 수 있습니다.',
+          'youtube':{'title':'Tkinter Course — Create Graphic User Interfaces in Python (freeCodeCamp)','url':'https://www.youtube.com/watch?v=YXPyB4XeYLA','note':'영어 공개 강의입니다. 처음에는 창·Label·Button·pack만 따라 보고, 나머지는 필요할 때 이어서 보세요. 학교 네트워크·연령 정책을 확인하세요.'}},
+    screenshots=[{'src':'tk.png','alt':'tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼','caption':'같은 인사 앱을 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다.'}])
 ex('hello-ttk','인사 앱 · tkinter + ttk',{'main.py':examples['hello-tk']['files']['main.py'].replace('import tkinter as tk','import tkinter as tk\nfrom tkinter import ttk').replace('tk.Label','ttk.Label').replace('tk.Entry','ttk.Entry').replace('tk.Button','ttk.Button').replace('인사 실습 · tkinter','인사 실습 · ttk')},mode='pc')
 ex('hello-pyside','인사 앱 · PySide6',{'main.py':'''import sys
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton
@@ -340,7 +368,16 @@ canvas = tk.Canvas(frame, width=240, height=60, bg="white")
 canvas.create_oval(10, 10, 50, 50, fill="gold")
 canvas.pack()
 tk.Button(frame, text="상태 출력", command=lambda: print(checked.get(), choice.get())).pack()
-root.mainloop()'''},mode='pc')
+root.mainloop()'''},mode='pc',
+    pre_api=[
+        {'name':'Frame','signature':'frame = tk.Frame(parent, padx=16, pady=16)','note':'위젯을 묶는 상자입니다. 안쪽 여백(padx/pady)을 한곳에서 정할 수 있습니다.'},
+        {'name':'Text','signature':'tk.Text(parent, height=3)','note':'여러 줄 입력입니다. Entry는 한 줄, Text는 여러 줄입니다.'},
+        {'name':'BooleanVar / Checkbutton','signature':'checked = tk.BooleanVar()\ntk.Checkbutton(parent, text=..., variable=checked)','note':'체크 상태는 위젯이 아니라 변수에 저장됩니다. checked.get()이 True/False입니다.'},
+        {'name':'StringVar / Radiobutton','signature':'choice = tk.StringVar(value="A")\ntk.Radiobutton(..., variable=choice, value="A")','note':'같은 variable을 쓰는 라디오는 하나만 선택됩니다. value가 서로 달라야 합니다.'},
+        {'name':'Listbox','signature':'listbox.insert(tk.END, value)','note':'목록에서 고릅니다. insert로 항목을 넣고, curselection()으로 고른 위치를 읽습니다.'},
+        {'name':'Canvas','signature':'canvas.create_oval(x1, y1, x2, y2, fill=...)','note':'도형·그림을 그리는 공간입니다. 버튼·입력칸이 아니라 좌표로 그립니다.'},
+    ],
+    tips={'history':'위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품이고, 나중에 보는 Qt·wx·Kivy도 같은 역할을 다른 이름으로 제공합니다.'})
 ex('widgets-pyside','PySide6 위젯과 그리기 공간',{'main.py':'''import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QLabel,
     QLineEdit, QPlainTextEdit, QCheckBox, QRadioButton, QListWidget,

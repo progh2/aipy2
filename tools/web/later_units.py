@@ -1,13 +1,14 @@
 """Units III and IV: textbook concepts, runnable reworked examples and visual summaries."""
 from content import units,examples,lesson,ex,q
+from slots import pick_slots
 units.update({3:[],4:[]})
-def topic(u,id,title,pages,lead,paragraphs,steps,headers,rows,ids=(),tasks=()):
- lesson(u,id,title,pages,lead,paragraphs,ids,tasks)
+def topic(u,id,title,pages,lead,paragraphs,steps,headers,rows,ids=(),tasks=(),**slots):
+ lesson(u,id,title,pages,lead,paragraphs,ids,tasks,**pick_slots(slots))
  units[u][-1]['visual']=(title+' · 한눈에 보기',steps,headers,rows)
-def example(id,title,src,packages='',mode='web',files=None,checks='',note=''):
+def example(id,title,src,packages='',mode='web',files=None,checks='',note='',**slots):
  data={'main.py':src,**(files or {})}
  if packages:data['requirements.txt']=packages.replace(' ',',') .replace(',','\n')+'\n'
- ex(id,title,data,mode=mode,checks=checks,note=note)
+ ex(id,title,data,mode=mode,checks=checks,note=note,**pick_slots(slots))
 
 # III. Concepts: explicitly separate data, learned parameters and chosen settings.
 topic(3,'ml-overview','AI·머신러닝·딥러닝의 관계','62–67','규칙을 직접 쓰는 것과 데이터에서 규칙을 배우는 것은 어떻게 다를까요?',[
