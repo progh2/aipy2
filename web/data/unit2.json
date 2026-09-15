@@ -9,21 +9,40 @@
       "paragraphs": [
         "UI는 사람과 시스템이 상호 작용하는 접점입니다. 화면의 버튼·입력창·메뉴뿐 아니라 색상·글꼴·배치·피드백도 사용 편의성에 영향을 줍니다. 같은 기능이라도 저장 버튼을 찾기 어렵다면 사용자는 실수하기 쉽습니다.",
         "CLI는 명령어 입력 방식입니다. 반복 작업 자동화와 정확한 명령 전달에 유용하지만 문법을 배워야 합니다. GUI는 아이콘·메뉴·버튼 같은 시각 요소를 조작합니다. NUI는 음성·손짓·터치 등 자연스러운 행동을 사용합니다. 터치 GUI처럼 분류가 겹치는 사례도 있습니다.",
-        "생각 열기: 파일 100개 이름을 바꾸는 일과 사진 한 장을 자르는 일에 각각 어떤 인터페이스를 선택할까요? 편리함은 사용자 경험과 작업 목적에 따라 달라집니다. 44쪽 탐구의 dir 입력은 CLI, 아이콘 클릭은 GUI, 손짓으로 TV 조작은 NUI입니다."
+        "생각 열기: 파일 100개 이름을 바꾸는 일과 사진 한 장을 자르는 일에 각각 어떤 인터페이스를 선택할까요? 편리함은 사용자 경험과 작업 목적에 따라 달라집니다. 44쪽 탐구의 dir 입력은 CLI, 아이콘 클릭은 GUI, 손짓으로 TV 조작은 NUI입니다.",
+        "48쪽 확인학습은 UI 정의, GUI 장점, NUI 사례, 라이브러리 특징을 묻습니다. 아래 CLI 예제와 같은 인사를 창으로 만든 hello-tk를 나란히 실행해 보세요. 파일 100개 이름 바꾸기는 CLI가, 사진 한 장 자르기는 GUI가 편한 경우가 많습니다."
       ],
-      "examples": [],
+      "examples": [
+        "ui-cli",
+        "hello-tk"
+      ],
       "tasks": [
         "좋은 UI와 불편한 UI 사례를 한 가지씩 설명하세요.",
         "버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요."
       ],
       "extra": false,
       "pre_api": [],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "UI",
+          "meaning": "사람과 시스템이 의도를 주고받는 접점입니다. 버튼·색·배치·피드백이 모두 UI입니다."
+        },
+        {
+          "term": "CLI / GUI / NUI",
+          "meaning": "명령어 / 아이콘·메뉴·버튼 / 음성·손짓·터치. 분류가 겹치는 사례(터치 GUI)도 있습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "tk.png",
+          "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사를 GUI로 만들면 이런 창이 됩니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": [
         {
           "middle": "01. GUI 프로그래밍 개요",
@@ -82,18 +101,29 @@
       "paragraphs": [
         "Tk 객체는 기본 창입니다. Label은 표시, Button은 명령, Entry는 한 줄 입력, Text는 여러 줄 입력입니다. Checkbutton은 독립적인 선택, Radiobutton은 묶음 중 하나의 선택, Listbox는 목록 선택입니다. Canvas는 도형·이미지 그리기 공간이며 Frame은 위젯을 묶는 컨테이너입니다.",
         "위젯을 생성한 것만으로 배치가 완료되지는 않습니다. 부모 창이나 Frame을 지정하고 배치 관리자를 호출해야 합니다. BooleanVar·StringVar 같은 변수를 통해 체크 상태와 선택 값을 읽을 수 있습니다.",
-        "PySide6에서는 QApplication이 앱 실행을 관리하고 QWidget이 창·컨테이너 역할을 합니다. Label→QLabel, Button→QPushButton, Entry→QLineEdit, Text→QPlainTextEdit, Checkbutton→QCheckBox, Radiobutton→QRadioButton, Listbox→QListWidget으로 개념을 연결합니다. Canvas는 일대일 대응이 아니며 여기서는 QGraphicsScene/View로 도형을 그립니다."
+        "PySide6에서는 QApplication이 앱 실행을 관리하고 QWidget이 창·컨테이너 역할을 합니다. Label→QLabel, Button→QPushButton, Entry→QLineEdit, Text→QPlainTextEdit, Checkbutton→QCheckBox, Radiobutton→QRadioButton, Listbox→QListWidget으로 개념을 연결합니다. Canvas는 일대일 대응이 아니며 여기서는 QGraphicsScene/View로 도형을 그립니다.",
+        "위젯을 한 창에 모두 쌓기 전에, 역할별로 나누어 보세요. Label·Entry는 한 줄 읽고 보여 주기, Checkbutton·Radiobutton은 선택 값 읽기, Listbox·Canvas는 목록과 좌표 그리기입니다. 회원 가입의 이름·소개·약관 동의·학년 선택에 각각 어떤 위젯이 맞는지 고른 뒤 예제에서 값을 읽어 보세요. 57쪽 확인학습의 Frame·Button도 위젯입니다."
       ],
       "examples": [
+        "widgets-label-entry-tk",
+        "widgets-choice-tk",
+        "widgets-list-canvas-tk",
         "widgets-tk",
-        "widgets-pyside"
+        "widgets-pyside",
+        "widgets-pyside-form"
       ],
       "tasks": [
         "회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.",
         "체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요."
       ],
       "extra": false,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "위젯 선택",
+          "signature": "보여줄 글 → Label / 한 줄 → Entry / 여러 줄 → Text",
+          "note": "받을 정보의 형태를 먼저 정하면 위젯 이름이 따라옵니다. 아래 예제는 역할별로 나뉘어 있습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -117,18 +147,28 @@
       "paragraphs": [
         "pack은 순서와 방향으로 배치하고, grid는 행·열로 배치하며, place는 좌표나 상대 위치를 지정합니다. 고정 좌표는 창 크기·글꼴 변화에 취약하므로 폼에는 grid, 순차 영역에는 pack부터 검토하세요.",
         "pack(expand=True, fill=\"both\")에서 expand는 여유 공간 배분, fill은 배정 영역 안에서 위젯을 늘리는 방향입니다. grid의 sticky=\"ew\"와 columnconfigure(weight=1)는 가로 확장에 사용합니다. 같은 부모 안에서 pack과 grid를 혼용하지 마세요. 다른 Frame 안에서는 각각 사용할 수 있습니다.",
-        "Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요."
+        "Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요.",
+        "expand는 \"남는 공간을 누구에게 줄까\", fill은 \"받은 칸을 위젯이 채울까\"입니다. 격자 폼에서는 sticky와 columnconfigure(weight=1)를 함께 써야 창을 넓혀도 입력칸이 늘어납니다. 같은 부모에서 pack과 grid를 섞지 마세요. 창을 좁게·넓게 바꾸며 잘리는 요소를 찾는 것이 51쪽 배치의 확인 방법입니다."
       ],
       "examples": [
+        "layout-pack-tk",
+        "layout-grid-tk",
         "layout-tk",
-        "layout-pyside"
+        "layout-pyside",
+        "layout-pyside-form"
       ],
       "tasks": [
         "창을 좁게·넓게 바꾸어 잘리는 요소를 찾으세요.",
         "웹 배치 체험에서 수평·수직·격자를 비교하세요."
       ],
       "extra": false,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "배치 관리자",
+          "signature": "pack() / grid() / place()",
+          "note": "위젯을 생성한 것만으로는 화면에 나타나지 않습니다. 부모를 정하고 배치를 호출해야 합니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -152,9 +192,15 @@
       "paragraphs": [
         "콜백은 나중에 호출할 함수입니다. command=greet는 함수 자체를 전달합니다. command=greet()는 지금 함수를 실행하고 반환값을 전달하므로 의도와 다릅니다. 인자가 필요하면 lambda: greet(name)처럼 호출을 감쌉니다.",
         "tkinter의 mainloop는 이벤트 루프입니다. PySide6에서는 clicked.connect(greet)로 버튼의 시그널과 함수를 연결하고 app.exec()로 이벤트 루프를 시작합니다. connect(greet())도 같은 이유로 잘못된 사용입니다.",
-        "입력 변화는 tkinter의 bind나 변수 추적, PySide6의 textChanged 같은 시그널로 다룰 수 있습니다. GUI 이벤트 안에서 긴 반복·time.sleep을 실행하면 화면 반응이 늦어집니다. 주기 작업에는 after 또는 QTimer를 사용하고 긴 작업 분리는 심화 주제로 다룹니다."
+        "입력 변화는 tkinter의 bind나 변수 추적, PySide6의 textChanged 같은 시그널로 다룰 수 있습니다. GUI 이벤트 안에서 긴 반복·time.sleep을 실행하면 화면 반응이 늦어집니다. 주기 작업에는 after 또는 QTimer를 사용하고 긴 작업 분리는 심화 주제로 다룹니다.",
+        "이벤트 전용 예제부터 보세요. 웹의 콜백 예제는 괄호 유무만 추적하고, command 비교 창은 잘못된 연결이 생성 시점에 실행되는 모습을 보여 줍니다. bind는 Enter 키, after는 기다림, Qt는 clicked와 textChanged입니다. 인사 앱(hello-tk / hello-pyside)은 같은 원리가 실제 입력창에 붙은 완성 예입니다. 콜백 안에서 time.sleep을 쓰지 마세요."
       ],
       "examples": [
+        "events-callback",
+        "events-command-tk",
+        "events-bind-tk",
+        "events-after-tk",
+        "events-pyside-signal",
         "hello-tk",
         "hello-pyside"
       ],
@@ -163,7 +209,13 @@
         "버튼을 두 번 눌렀을 때 상태가 어떻게 바뀌는지 추적하세요."
       ],
       "extra": false,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "command / connect",
+          "signature": "command=greet  ·  clicked.connect(greet)",
+          "note": "함수 자체를 맡깁니다. greet()는 지금 호출입니다. 아래 웹 예제에서 괄호 유무를 먼저 보세요."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -196,9 +248,12 @@
         "⑤ 저장 함수: asksaveasfilename(defaultextension=\".txt\") → 취소 확인 → Text.get으로 읽기 → UTF-8 파일 쓰기입니다. 교과서의 END는 Text가 유지하는 마지막 개행까지 포함합니다. 추가 개행을 제외하려면 \"end-1c\"를 사용합니다.",
         "⑥ Menu에 열기·저장·종료를 연결합니다. ⑦ mainloop()로 이벤트를 기다립니다. ⑧ 전체 코드를 실행하고 한글 파일 저장→재열기를 시험합니다. 교과서 55쪽 탐구의 라이브러리 이름은 tkinter입니다.",
         "PySide6 비교: QMainWindow의 중앙에 QPlainTextEdit를 두고 QAction을 메뉴에 연결합니다. QFileDialog는 (경로, 선택 필터)를 반환하므로 path, _로 받습니다. setPlainText/toPlainText가 텍스트 넣기·읽기 역할입니다.",
-        "확장 완성 예제에는 글자 수, Ctrl+O/Ctrl+S, 다른 이름으로 저장, 창 닫기 시 미저장 확인, UTF-8 읽기·쓰기 실패 안내가 들어 있습니다. 저장 대화 상자를 취소하면 닫기도 취소되도록 반환값을 연결했습니다. 기본 메모장과 비교하며 한 기능씩 옮기세요."
+        "확장 완성 예제에는 글자 수, Ctrl+O/Ctrl+S, 다른 이름으로 저장, 창 닫기 시 미저장 확인, UTF-8 읽기·쓰기 실패 안내가 들어 있습니다. 저장 대화 상자를 취소하면 닫기도 취소되도록 반환값을 연결했습니다. 기본 메모장과 비교하며 한 기능씩 옮기세요.",
+        "완성본을 한 번에 외우지 말고 단계를 나누세요. ① 창과 Text, ② 열기·저장 버튼과 취소 검사, ③ 메뉴를 붙인 교과서 전체 코드, ④ PySide6 대응, ⑤ 미저장 확인이 있는 개선본입니다. 53쪽 열기 순서는 대화 상자 → 취소 확인 → UTF-8 읽기 → 기존 글 삭제 → 삽입입니다. 저장은 경로 선택 → 취소 확인 → get → 쓰기입니다."
       ],
       "examples": [
+        "memo-window-tk",
+        "memo-files-tk",
         "memo-tk",
         "memo-pyside",
         "memo-plus-tk",
@@ -210,7 +265,13 @@
         "메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?"
       ],
       "extra": false,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "filedialog",
+          "signature": "from tkinter import filedialog",
+          "note": "열기·저장 창은 별도 모듈입니다. 경로가 비었으면(취소) 파일을 읽거나 쓰지 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -235,10 +296,13 @@
         "PC의 프로젝트 폴더에서 python -m venv .venv를 실행합니다. Windows PowerShell은 .venv\\Scripts\\Activate.ps1, macOS/Linux는 source .venv/bin/activate로 활성화합니다. 이후 python -m pip install PySide6로 설치하고 python main.py로 실행합니다. VS Code에서 같은 .venv 인터프리터를 선택하세요.",
         "첫 예제는 함수 기반으로 QApplication → QWidget → 레이아웃 → 위젯 → connect → show → exec 순서를 익힙니다. 메모장은 QMainWindow를 상속하는 클래스로 상태와 메서드를 묶습니다. self.editor는 여러 메서드에서 같은 입력창을 사용하게 합니다.",
         "Qt Designer는 pyside6-designer로 실행합니다. Widget 폼에 라벨·입력창·버튼을 배치하고 레이아웃을 적용한 다음 form.ui로 저장하세요. pyside6-uic form.ui -o ui_form.py로 Python 코드를 생성할 수 있습니다.",
-        "생성 파일은 다시 생성하면 덮어써집니다. 직접 작성하는 main.py에서 Ui_Form을 가져와 setupUi(window)를 호출하고 이벤트를 연결하세요. 버튼의 objectName을 확인해야 코드에서 올바른 이름으로 접근할 수 있습니다. Qt Quick/QML은 별도 UI 기술이며 이번 기본 실습은 Qt Widgets입니다."
+        "생성 파일은 다시 생성하면 덮어써집니다. 직접 작성하는 main.py에서 Ui_Form을 가져와 setupUi(window)를 호출하고 이벤트를 연결하세요. 버튼의 objectName을 확인해야 코드에서 올바른 이름으로 접근할 수 있습니다. Qt Quick/QML은 별도 UI 기술이며 이번 기본 실습은 Qt Widgets입니다.",
+        "이 페이지만 열어도 순서를 실습할 수 있습니다. 최소 창으로 QApplication → show → exec를 확인하고, 인사 앱에서 위젯과 connect를 본 뒤, form.ui를 불러 와 objectName으로 버튼을 연결하세요. Designer의 보이는 글자(text)와 코드가 찾는 이름(objectName)은 다른 속성입니다."
       ],
       "examples": [
+        "pyside-first",
         "hello-pyside",
+        "pyside-ui-file",
         "memo-pyside"
       ],
       "tasks": [
@@ -246,7 +310,13 @@
         "tkinter의 이벤트와 Qt 시그널을 자신의 말로 비교하세요."
       ],
       "extra": true,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "실행 순서",
+          "signature": "QApplication → 창·레이아웃 → connect → show → exec",
+          "note": "tkinter의 Tk·pack·command·mainloop를 Qt 이름으로 옮긴 순서입니다. 단어만 바꾸기보다 역할을 옮기세요."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -263,10 +333,12 @@
       "paragraphs": [
         "같은 core.logic을 tkinter와 PySide6에서 임포트합니다. 각 GUI는 입력값을 읽어 함수에 전달하고 결과를 표시합니다. core에는 tkinter·PySide6 코드가 없으므로 웹에서도 기능을 검사할 수 있습니다.",
         "기본 완성 조건: 위젯 배치, 버튼 이벤트, 모듈 분리, 잘못된 입력 안내입니다. 확장 과제: 추첨 인원 입력, 결과 기록, 설명 문구 개선 중 하나를 선택하세요. 두 버전 모두 실행하고 같은 입력의 의미가 유지되는지 비교합니다.",
-        "수행평가에서는 교사가 명시적으로 허용하지 않은 AI 도움 없이 스스로 작성해야 합니다. 저널에는 구현 내용, 오류, 해결 근거를 기록하고 코드와 함께 제출하세요."
+        "수행평가에서는 교사가 명시적으로 허용하지 않은 AI 도움 없이 스스로 작성해야 합니다. 저널에는 구현 내용, 오류, 해결 근거를 기록하고 코드와 함께 제출하세요.",
+        "한 버튼만 연결한 주사위 예제부터 시작하세요. 동작이 보이면 라디오·입력칸이 있는 생활 도우미로 옮깁니다. 빈 입력, 0면 주사위, 잘못된 날짜, 중복 이름은 기능 모듈이 예외를 내고 GUI는 메시지로 보여 줍니다."
       ],
       "examples": [
         "core",
+        "project-button-tk",
         "project-tk",
         "project-pyside"
       ],
@@ -291,15 +363,24 @@
       "lead": "어떤 위젯을 왜 배치했고, 어떤 이벤트에 반응하는지 설명하세요.",
       "paragraphs": [
         "중단원 정리: Tk 객체가 창을 만들고, 위젯이 입력·표시 기능을 맡고, 배치 관리자가 위치를 정하며, 이벤트 함수가 사용자 행동에 반응합니다. mainloop가 이벤트를 기다립니다.",
-        "57쪽 확인학습의 IDLE 코드에서 컨테이너는 Frame, 클릭 요소는 Button, 이 요소들의 통칭은 위젯입니다. 종합 평가에서는 Tk 객체, UI 편의성, UI 정의, GUI 사례, 버튼 콜백, 배치 방식, pack 호출을 모두 확인합니다."
+        "57쪽 확인학습의 IDLE 코드에서 컨테이너는 Frame, 클릭 요소는 Button, 이 요소들의 통칭은 위젯입니다. 종합 평가에서는 Tk 객체, UI 편의성, UI 정의, GUI 사례, 버튼 콜백, 배치 방식, pack 호출을 모두 확인합니다.",
+        "56–59쪽을 이 페이지에서 다시 닫습니다. 처음부터 만들기 예제로 Tk 객체·pack·command·mainloop를 타이핑하고, 57쪽 IDLE 코드에서 컨테이너(Frame)·클릭 요소(Button)·통칭(위젯)을 찾으세요. 58쪽 4번은 보기 내용이 GUI 사례이므로 인터페이스 유형을 고르는 문제로 읽습니다."
       ],
-      "examples": [],
+      "examples": [
+        "review-scratch-tk"
+      ],
       "tasks": [
         "예제 없이 창·버튼·콜백·이벤트 루프를 작성하세요.",
         "교과서 확인학습과 종합평가 연계 문제를 풀고 틀린 이유를 기록하세요."
       ],
       "extra": false,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "한 줄로 복습",
+          "signature": "Tk() → 위젯 → pack → command → mainloop()",
+          "note": "예제를 보지 않고 이 순서로 창을 만들 수 있으면 2단원 본편을 닫을 수 있습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -310,6 +391,50 @@
     }
   ],
   "examples": {
+    "ui-cli": {
+      "id": "ui-cli",
+      "title": "같은 인사 · 명령줄(CLI)",
+      "files": {
+        "main.py": "name = input(\"이름: \").strip() or \"여러분\"\nprint(f\"{name}님, 안녕하세요!\")\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "민지",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "input",
+          "signature": "name = input(\"이름: \")",
+          "note": "터미널에 질문을 보여주고, 한 줄 입력을 문자열로 받습니다. GUI의 Entry와 같은 역할입니다."
+        },
+        {
+          "name": "print",
+          "signature": "print(f\"{name}님, 안녕하세요!\")",
+          "note": "결과를 글자로 보여 줍니다. GUI의 Label.config(text=...)와 같은 역할입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "CLI",
+          "meaning": "명령어를 타이핑해서 프로그램을 다루는 방식입니다. 반복 작업에 유리합니다."
+        },
+        {
+          "term": "GUI",
+          "meaning": "버튼·입력창처럼 눈에 보이는 부품을 조작하는 방식입니다. 다음 예제 hello-tk가 같은 인사를 창으로 만듭니다."
+        },
+        {
+          "term": "NUI",
+          "meaning": "음성·손짓·터치처럼 일상 행동으로 의도를 전달하는 방식입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
     "hello-tk": {
       "id": "hello-tk",
       "title": "인사 앱 · tkinter",
@@ -399,13 +524,25 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "ttk",
+          "signature": "from tkinter import ttk\nttk.Button(parent, text=..., command=...)",
+          "note": "Tk의 테마 위젯입니다. Label·Entry·Button의 역할은 같고, 모양만 운영체제 테마를 따릅니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "ttk.png",
+          "alt": "ttk 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사 앱을 ttk 테마 위젯으로 실행한 화면입니다."
+        }
+      ]
     },
     "hello-pyside": {
       "id": "hello-pyside",
@@ -419,13 +556,59 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "QApplication",
+          "signature": "app = QApplication(sys.argv)",
+          "note": "Qt 앱 객체입니다. 창보다 먼저 만듭니다. tkinter의 Tk()가 창과 앱을 겸하는 것과 다릅니다."
+        },
+        {
+          "name": "QWidget / setWindowTitle",
+          "signature": "window = QWidget()\nwindow.setWindowTitle(\"제목\")",
+          "note": "빈 창입니다. resize(가로, 세로)로 처음 크기를 정합니다."
+        },
+        {
+          "name": "QVBoxLayout",
+          "signature": "layout = QVBoxLayout(window)\nlayout.addWidget(위젯)",
+          "note": "위젯을 위에서 아래로 붙입니다. pack() 대신 레이아웃이 자리를 정합니다."
+        },
+        {
+          "name": "QLineEdit",
+          "signature": "entry = QLineEdit()\nentry.text()  ·  entry.clear()",
+          "note": "한 줄 입력입니다. tkinter Entry의 get/delete에 대응합니다."
+        },
+        {
+          "name": "clicked.connect",
+          "signature": "button.clicked.connect(greet)",
+          "note": "클릭 시그널에 함수를 맡깁니다. connect(greet())처럼 괄호를 붙이면 지금 실행됩니다."
+        },
+        {
+          "name": "app.exec",
+          "signature": "sys.exit(app.exec())",
+          "note": "이벤트 루프입니다. tkinter의 mainloop에 대응합니다. show() 뒤에 호출합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "시그널",
+          "meaning": "위젯이 “클릭됐다”, “글자가 바뀌었다”처럼 알리는 사건입니다. connect로 함수를 연결합니다."
+        },
+        {
+          "term": "PySide6",
+          "meaning": "Qt의 공식 파이썬 바인딩입니다. 이 과정의 Qt 실습은 Qt Widgets를 사용합니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "pyside.png",
+          "alt": "PySide6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사 앱을 PySide6로 실행한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "hello-pyqt": {
       "id": "hello-pyqt",
@@ -440,12 +623,23 @@
       "checks": "",
       "note": "",
       "pre_api": [],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "PyQt6",
+          "meaning": "Qt 6의 또 다른 파이썬 바인딩입니다. 위젯 이름은 PySide6와 같고, 배포 라이선스가 다릅니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "pyqt.png",
+          "alt": "PyQt6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사 앱을 PyQt6로 실행한 화면입니다. PySide6와 외형이 비슷할 수 있습니다."
+        }
+      ]
     },
     "hello-wx": {
       "id": "hello-wx",
@@ -465,7 +659,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "wx.png",
+          "alt": "wxPython 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사 앱을 wxPython으로 실행한 화면입니다. 운영체제 위젯을 활용합니다."
+        }
+      ]
     },
     "hello-kivy": {
       "id": "hello-kivy",
@@ -480,6 +680,135 @@
       "checks": "",
       "note": "Kivy 기본 글꼴의 한글 지원을 가정하지 않습니다. 한글 글꼴을 지정하면 한국어 문구로 바꿀 수 있습니다.",
       "pre_api": [],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "kivy.png",
+          "alt": "Kivy 인사 앱 실행 화면 · 이름 입력창과 Greet 및 Reset 버튼",
+          "caption": "같은 인사 앱을 Kivy로 실행한 화면입니다. 기본 글꼴을 위해 영어 문구를 사용합니다."
+        }
+      ]
+    },
+    "widgets-label-entry-tk": {
+      "id": "widgets-label-entry-tk",
+      "title": "Label·Entry · 한 줄 읽고 보여 주기",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef show_name():\n    name = entry.get().strip() or \"이름 없음\"\n    result.config(text=f\"입력한 이름: {name}\")\n\nroot = tk.Tk()\nroot.title(\"Label과 Entry\")\nroot.geometry(\"420x180\")\ntk.Label(root, text=\"이름을 입력하세요.\").pack(pady=8)\nentry = tk.Entry(root)\nentry.pack(fill=\"x\", padx=24)\ntk.Button(root, text=\"표시\", command=show_name).pack(pady=8)\nresult = tk.Label(root, text=\"아직 입력이 없습니다.\")\nresult.pack()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "Label",
+          "signature": "tk.Label(parent, text=\"설명\")",
+          "note": "짧은 글을 보여 줍니다. 나중에 config(text=...)로 바꿀 수 있습니다."
+        },
+        {
+          "name": "Entry.get",
+          "signature": "entry.get()",
+          "note": "한 줄 입력의 현재 문자열을 읽습니다. 위치 인자가 필요 없습니다."
+        },
+        {
+          "name": "Label.config",
+          "signature": "result.config(text=새글자)",
+          "note": "이미 만든 라벨의 속성만 바꿉니다. 새 Label을 또 만들면 화면에 겹칩니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "한 줄 입력",
+          "meaning": "이름·아이디처럼 줄바꿈이 없는 값입니다. 여러 줄 소개문은 Text를 씁니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "widgets-choice-tk": {
+      "id": "widgets-choice-tk",
+      "title": "Checkbutton·Radiobutton · 선택 값 읽기",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef show_choice():\n    extra = \"완료\" if done.get() else \"미완료\"\n    print(done.get(), grade.get(), extra)\n    result.config(text=f\"{grade.get()} · {extra}\")\n\nroot = tk.Tk()\nroot.title(\"체크와 라디오\")\nroot.geometry(\"420x240\")\ndone = tk.BooleanVar()\ntk.Checkbutton(root, text=\"오늘 실습 완료\", variable=done).pack(anchor=\"w\", padx=16, pady=8)\ngrade = tk.StringVar(value=\"1학년\")\nfor value in [\"1학년\", \"2학년\", \"3학년\"]:\n    tk.Radiobutton(root, text=value, variable=grade, value=value).pack(anchor=\"w\", padx=16)\ntk.Button(root, text=\"선택 확인\", command=show_choice).pack(pady=8)\nresult = tk.Label(root, text=\"체크는 여러 개, 라디오는 하나.\")\nresult.pack()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "BooleanVar",
+          "signature": "done = tk.BooleanVar()",
+          "note": "체크 상태는 위젯이 아니라 변수에 저장됩니다. done.get()이 True 또는 False입니다."
+        },
+        {
+          "name": "Checkbutton",
+          "signature": "tk.Checkbutton(parent, text=..., variable=done)",
+          "note": "서로 독립적으로 켜고 끌 수 있습니다. 약관 동의처럼 \"해도 되고 안 해도 되는\" 선택입니다."
+        },
+        {
+          "name": "StringVar / Radiobutton",
+          "signature": "grade = tk.StringVar(value=\"1학년\")\ntk.Radiobutton(..., variable=grade, value=\"1학년\")",
+          "note": "같은 variable을 쓰는 라디오는 하나만 선택됩니다. value가 서로 달라야 구분됩니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "확인학습 57쪽",
+          "meaning": "IDLE 화면의 Frame·Button처럼 눈에 보이는 부품을 통틀어 위젯이라고 합니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "widgets-list-canvas-tk": {
+      "id": "widgets-list-canvas-tk",
+      "title": "Listbox·Canvas · 목록과 그리기",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef show_pick():\n    selected = listbox.curselection()\n    if not selected:\n        result.config(text=\"항목을 먼저 고르세요.\")\n        return\n    name = listbox.get(selected[0])\n    result.config(text=f\"선택한 주제: {name}\")\n    canvas.delete(\"all\")\n    canvas.create_text(120, 30, text=name, font=(\"sans-serif\", 14))\n\nroot = tk.Tk()\nroot.title(\"목록과 캔버스\")\nroot.geometry(\"420x280\")\nlistbox = tk.Listbox(root, height=4)\nfor value in [\"모듈\", \"패키지\", \"GUI\"]:\n    listbox.insert(tk.END, value)\nlistbox.pack(fill=\"x\", padx=16, pady=8)\ncanvas = tk.Canvas(root, width=240, height=60, bg=\"white\")\ncanvas.create_oval(10, 10, 50, 50, fill=\"gold\")\ncanvas.pack()\ntk.Button(root, text=\"선택 그리기\", command=show_pick).pack(pady=8)\nresult = tk.Label(root, text=\"목록에서 고른 뒤 버튼을 누르세요.\")\nresult.pack()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "Listbox.insert",
+          "signature": "listbox.insert(tk.END, value)",
+          "note": "목록 끝에 항목을 넣습니다. tk.END는 \"지금 목록의 끝\"입니다."
+        },
+        {
+          "name": "curselection",
+          "signature": "listbox.curselection()",
+          "note": "고른 칸의 인덱스 튜플을 반환합니다. 아무 것도 안 골랐으면 빈 튜플입니다."
+        },
+        {
+          "name": "Canvas.create_oval",
+          "signature": "canvas.create_oval(x1, y1, x2, y2, fill=...)",
+          "note": "왼쪽 위 (x1,y1)과 오른쪽 아래 (x2,y2)로 타원을 그립니다. 버튼이 아니라 좌표입니다."
+        },
+        {
+          "name": "Canvas.delete",
+          "signature": "canvas.delete(\"all\")",
+          "note": "그린 도형을 지웁니다. 다시 그리기 전에 호출하면 겹치지 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -550,8 +879,168 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "QPlainTextEdit",
+          "signature": "text = QPlainTextEdit()",
+          "note": "여러 줄 입력입니다. tkinter Text에 대응합니다. 한 줄은 QLineEdit입니다."
+        },
+        {
+          "name": "QCheckBox / QRadioButton",
+          "signature": "QCheckBox(\"학습 완료\")\nQRadioButton(\"A\")",
+          "note": "체크는 독립 선택, 라디오는 같은 부모(또는 QButtonGroup)에서 하나만 선택됩니다."
+        },
+        {
+          "name": "QListWidget",
+          "signature": "items.addItems([\"모듈\", \"패키지\"])",
+          "note": "목록에서 고릅니다. Listbox.insert에 대응합니다."
+        },
+        {
+          "name": "QGraphicsScene / View",
+          "signature": "scene.addEllipse(...)\nview = QGraphicsView(scene)",
+          "note": "도형을 그리는 공간입니다. tkinter Canvas와 일대일은 아니지만 같은 역할로 연결합니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "widgets-pyside-form": {
+      "id": "widgets-pyside-form",
+      "title": "PySide6 · 입력·체크·라디오 폼",
+      "files": {
+        "main.py": "import sys\nfrom PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QLabel,\n    QLineEdit, QCheckBox, QRadioButton, QPushButton, QButtonGroup)\n\napp = QApplication(sys.argv)\nwindow = QWidget()\nwindow.setWindowTitle(\"입력 폼 · PySide6\")\nwindow.resize(420, 260)\nlayout = QVBoxLayout(window)\nlayout.addWidget(QLabel(\"이름을 입력하세요.\"))\nentry = QLineEdit()\nlayout.addWidget(entry)\ndone = QCheckBox(\"오늘 실습 완료\")\nlayout.addWidget(done)\ngroup = QButtonGroup(window)\nfor value in [\"1학년\", \"2학년\", \"3학년\"]:\n    radio = QRadioButton(value)\n    group.addButton(radio)\n    layout.addWidget(radio)\ngroup.buttons()[0].setChecked(True)\nresult = QLabel(\"값을 읽고 아래에 표시합니다.\")\nlayout.addWidget(result)\n\ndef show_choice():\n    extra = \"완료\" if done.isChecked() else \"미완료\"\n    picked = group.checkedButton()\n    grade = picked.text() if picked else \"?\"\n    result.setText(f\"{entry.text().strip() or '이름 없음'} · {grade} · {extra}\")\n\nbutton = QPushButton(\"선택 확인\")\nbutton.clicked.connect(show_choice)\nlayout.addWidget(button)\nwindow.show()\nsys.exit(app.exec())\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "QLineEdit",
+          "signature": "entry = QLineEdit()",
+          "note": "한 줄 입력입니다. text()로 읽고, clear()로 지웁니다. tkinter Entry에 대응합니다."
+        },
+        {
+          "name": "QCheckBox.isChecked",
+          "signature": "done.isChecked()",
+          "note": "체크 여부를 bool로 읽습니다. BooleanVar 없이 위젯이 상태를 가집니다."
+        },
+        {
+          "name": "QButtonGroup",
+          "signature": "group = QButtonGroup(window)\ngroup.addButton(radio)",
+          "note": "라디오를 한 묶음으로 만듭니다. checkedButton()으로 지금 선택된 버튼을 얻습니다."
+        },
+        {
+          "name": "QLabel.setText",
+          "signature": "result.setText(\"새 글자\")",
+          "note": "표시 문자열을 바꿉니다. result.text = \"...\"처럼 속성을 새로 만들면 화면에 반영되지 않습니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "pyside.png",
+          "alt": "PySide6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사를 Qt Widgets로 만든 실행 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
+    },
+    "layout-pack-tk": {
+      "id": "layout-pack-tk",
+      "title": "pack · expand와 fill",
+      "files": {
+        "main.py": "import tkinter as tk\n\nroot = tk.Tk()\nroot.title(\"pack · expand와 fill\")\nroot.geometry(\"420x240\")\ntk.Label(root, text=\"위쪽은 가로만 늘어남\", bg=\"#dbeafe\").pack(fill=\"x\")\ntk.Button(root, text=\"가운데는 남은 공간을 채움\", bg=\"#fef3c7\").pack(expand=True, fill=\"both\", padx=8, pady=8)\ntk.Button(root, text=\"아래도 가로는 채움\").pack(fill=\"x\")\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "fill",
+          "signature": "위젯.pack(fill=\"x\")",
+          "note": "배치 관리자가 준 칸 안에서 위젯을 늘리는 방향입니다. \"x\"는 가로, \"both\"는 가로·세로입니다."
+        },
+        {
+          "name": "expand",
+          "signature": "위젯.pack(expand=True, fill=\"both\")",
+          "note": "창에 남는 공간을 이 위젯에게 더 줄지 정합니다. expand만 켜고 fill을 빼면 칸은 커져도 위젯은 작습니다."
+        },
+        {
+          "name": "side",
+          "signature": "위젯.pack(side=\"left\")",
+          "note": "붙이는 방향입니다. 기본은 \"top\"(위에서 아래)입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "창을 늘려 보기",
+          "meaning": "배치를 시험할 때는 창 모서리를 드래그하세요. 잘리거나 빈 칸이 생기면 fill·expand를 점검합니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "layout-grid-tk": {
+      "id": "layout-grid-tk",
+      "title": "grid · 로그인 폼과 sticky",
+      "files": {
+        "main.py": "import tkinter as tk\n\nroot = tk.Tk()\nroot.title(\"grid · 로그인 폼\")\nroot.geometry(\"420x200\")\nframe = tk.Frame(root, padx=16, pady=16)\nframe.pack(fill=\"both\", expand=True)\nframe.columnconfigure(1, weight=1)\ntk.Label(frame, text=\"아이디\").grid(row=0, column=0, sticky=\"e\", padx=6, pady=6)\ntk.Entry(frame).grid(row=0, column=1, sticky=\"ew\")\ntk.Label(frame, text=\"비밀번호\").grid(row=1, column=0, sticky=\"e\", padx=6, pady=6)\ntk.Entry(frame, show=\"*\").grid(row=1, column=1, sticky=\"ew\")\ntk.Button(frame, text=\"로그인\").grid(row=2, column=0, columnspan=2, sticky=\"ew\", pady=8)\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "grid",
+          "signature": "위젯.grid(row=0, column=1)",
+          "note": "행·열 번호로 칸을 정합니다. 표 같은 입력 폼에 맞습니다."
+        },
+        {
+          "name": "sticky",
+          "signature": "위젯.grid(..., sticky=\"ew\")",
+          "note": "칸보다 위젯이 작을 때 어느 벽에 붙일지입니다. \"ew\"는 좌우로 늘립니다."
+        },
+        {
+          "name": "columnconfigure",
+          "signature": "frame.columnconfigure(1, weight=1)",
+          "note": "남는 가로 공간을 그 열에 줍니다. weight를 빼면 창을 늘려도 입력창이 늘어나지 않습니다."
+        },
+        {
+          "name": "columnspan",
+          "signature": "위젯.grid(..., columnspan=2)",
+          "note": "버튼을 두 열에 걸쳐 놓습니다."
+        },
+        {
+          "name": "show",
+          "signature": "tk.Entry(parent, show=\"*\")",
+          "note": "입력 칸에 실제 글자 대신 *를 보여 줍니다. 비밀번호 칸에 씁니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "같은 부모에서 pack+grid",
+          "meaning": "한 Frame 안에서 pack과 grid를 섞으면 배치 충돌이 납니다. 다른 Frame으로 나누면 각각 쓸 수 있습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -570,8 +1059,24 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "LabelFrame",
+          "signature": "tk.LabelFrame(root, text=\"pack\")",
+          "note": "제목이 있는 상자입니다. 서로 다른 배치를 같은 창에서 비교할 때 부모를 나눕니다."
+        },
+        {
+          "name": "place",
+          "signature": "위젯.place(x=20, y=10)",
+          "note": "픽셀 좌표로 붙입니다. 창 크기·글꼴이 바뀌면 잘리기 쉬워 입력 폼에는 grid나 pack을 먼저 검토합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "부모를 나누기",
+          "meaning": "한 Frame 안에서는 pack과 grid를 섞지 않습니다. 이 예제는 종류마다 새 LabelFrame을 만들어 각각 배치합니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -590,8 +1095,342 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "QHBoxLayout / QVBoxLayout",
+          "signature": "horizontal = QHBoxLayout()\nvertical.addLayout(horizontal)",
+          "note": "가로 묶음과 세로 묶음입니다. 레이아웃 안에 다른 레이아웃을 넣을 수 있습니다."
+        },
+        {
+          "name": "QGridLayout.addWidget",
+          "signature": "grid.addWidget(위젯, 행, 열)",
+          "note": "0부터 세는 행·열입니다. i // 3이 행, i % 3이 열입니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "layout-pyside-form": {
+      "id": "layout-pyside-form",
+      "title": "PySide6 · QGridLayout 입력 폼",
+      "files": {
+        "main.py": "import sys\nfrom PySide6.QtWidgets import (QApplication, QWidget, QGridLayout, QLabel,\n    QLineEdit, QPushButton)\n\napp = QApplication(sys.argv)\nwindow = QWidget()\nwindow.setWindowTitle(\"격자 폼 · PySide6\")\nwindow.resize(420, 180)\ngrid = QGridLayout(window)\ngrid.addWidget(QLabel(\"아이디\"), 0, 0)\ngrid.addWidget(QLineEdit(), 0, 1)\ngrid.addWidget(QLabel(\"비밀번호\"), 1, 0)\nsecret = QLineEdit()\nsecret.setEchoMode(QLineEdit.EchoMode.Password)\ngrid.addWidget(secret, 1, 1)\ngrid.addWidget(QPushButton(\"로그인\"), 2, 0, 1, 2)\nwindow.show()\nsys.exit(app.exec())\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "QGridLayout",
+          "signature": "grid = QGridLayout(window)",
+          "note": "행·열로 위젯을 놓습니다. tkinter grid에 대응합니다."
+        },
+        {
+          "name": "addWidget",
+          "signature": "grid.addWidget(위젯, 행, 열)\ngrid.addWidget(위젯, 행, 열, 행개수, 열개수)",
+          "note": "네 숫자를 주면 여러 칸을 차지합니다. 로그인 버튼은 두 열을 씁니다."
+        },
+        {
+          "name": "setEchoMode",
+          "signature": "secret.setEchoMode(QLineEdit.EchoMode.Password)",
+          "note": "입력 글자를 가립니다. tkinter Entry의 show=\"*\"와 같은 목적입니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "events-callback": {
+      "id": "events-callback",
+      "title": "콜백 · 지금 호출 vs 나중에 호출",
+      "files": {
+        "main.py": "def greet():\n    print(\"인사를 실행했습니다.\")\n    return \"반환값\"\n\nprint(\"1) command=greet() 처럼 지금 호출하면\")\nwrong = greet()\nprint(\"저장된 값:\", wrong)\n\nprint(\"2) command=greet 처럼 함수 자체를 저장하면\")\nright = greet\nprint(\"아직 두 번째 인사는 없습니다.\")\nprint(\"클릭을 흉내 내어 호출합니다.\")\nright()\nprint(\"저장된 값은 함수 객체입니다:\", right.__name__)\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "함수 전달",
+          "signature": "command=greet",
+          "note": "함수 이름만 넘깁니다. 클릭(또는 나중에 right())할 때 실행됩니다."
+        },
+        {
+          "name": "지금 호출",
+          "signature": "command=greet()",
+          "note": "괄호가 있으면 버튼을 만드는 순간에 실행되고, command에는 반환값(없으면 None)이 들어갑니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "콜백",
+          "meaning": "나중에 사건이 났을 때 불러 달라고 맡겨 두는 함수입니다."
+        },
+        {
+          "term": "교과서 59쪽 5",
+          "meaning": "command=say_hello는 버튼을 클릭할 때 실행됩니다. 생성 직후가 아닙니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "events-command-tk": {
+      "id": "events-command-tk",
+      "title": "Button.command · 올바른 연결과 잘못된 연결",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef greet():\n    log.insert(tk.END, \"클릭할 때 인사\\n\")\n\ndef too_early():\n    log.insert(tk.END, \"버튼을 만들기 전에 이미 실행됨\\n\")\n\nroot = tk.Tk()\nroot.title(\"command 전달 비교\")\nroot.geometry(\"420x240\")\nlog = tk.Text(root, height=8)\nlog.pack(fill=\"both\", expand=True, padx=8, pady=8)\ntk.Button(root, text=\"올바른 연결 command=greet\", command=greet).pack(fill=\"x\", padx=8)\ntk.Button(root, text=\"잘못된 연결 command=too_early()\", command=too_early()).pack(fill=\"x\", padx=8, pady=8)\nlog.insert(tk.END, \"창이 열린 직후 기록을 보세요.\\n\")\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "command=함수",
+          "signature": "tk.Button(parent, command=greet)",
+          "note": "함수 객체를 보관합니다. 클릭하면 greet()가 실행됩니다."
+        },
+        {
+          "name": "command=함수()",
+          "signature": "tk.Button(parent, command=too_early())",
+          "note": "버튼을 만드는 줄에서 이미 실행됩니다. 클릭해도 다시 실행되지 않거나, 반환값 None이 연결되어 반응이 없습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "인자가 필요할 때",
+          "meaning": "greet(name)처럼 값이 필요하면 command=lambda: greet(name)으로 호출을 감쌉니다. lambda greet(name)처럼 쓰면 문법 오류입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "events-bind-tk": {
+      "id": "events-bind-tk",
+      "title": "bind · Enter 키로 같은 함수 호출",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef greet(event=None):\n    name = entry.get().strip() or \"여러분\"\n    result.config(text=f\"{name}님, 안녕하세요!\")\n\nroot = tk.Tk()\nroot.title(\"bind · Enter 키\")\nroot.geometry(\"420x180\")\nentry = tk.Entry(root)\nentry.pack(fill=\"x\", padx=20, pady=12)\nentry.bind(\"<Return>\", greet)\ntk.Button(root, text=\"인사하기\", command=greet).pack()\nresult = tk.Label(root, text=\"이름을 쓰고 Enter를 눌러 보세요.\")\nresult.pack(pady=12)\nentry.focus()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "bind",
+          "signature": "entry.bind(\"<Return>\", greet)",
+          "note": "특정 사건(여기선 Enter)이 나면 greet을 호출합니다. command는 버튼 클릭 전용, bind는 키·마우스 등 여러 사건에 씁니다."
+        },
+        {
+          "name": "event 인자",
+          "signature": "def greet(event=None):",
+          "note": "bind는 이벤트 정보를 첫 인자로 넘깁니다. command는 인자를 넘기지 않으므로 기본값 None을 두면 버튼과 키를 한 함수로 받을 수 있습니다."
+        },
+        {
+          "name": "<Return>",
+          "signature": "\"<Return>\"",
+          "note": "Enter 키의 이벤트 이름입니다. 문자열 \"Return\"이 아니라 꺾쇠를 포함한 이름입니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "tk.png",
+          "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사를 GUI로 만들면 이런 창이 됩니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
+    },
+    "events-after-tk": {
+      "id": "events-after-tk",
+      "title": "after · 이벤트 루프를 막지 않는 타이머",
+      "files": {
+        "main.py": "import tkinter as tk\n\nroot = tk.Tk()\nroot.title(\"after 타이머\")\nroot.geometry(\"420x180\")\nlabel = tk.Label(root, text=\"3초 뒤에 인사합니다.\", font=(\"sans-serif\", 16))\nlabel.pack(padx=24, pady=24)\n\ndef tick(left):\n    if left == 0:\n        label.config(text=\"안녕하세요! after가 호출했습니다.\")\n        return\n    label.config(text=f\"{left}초 남았습니다.\")\n    root.after(1000, lambda: tick(left - 1))\n\ntk.Button(root, text=\"카운트 시작\", command=lambda: tick(3)).pack()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "after",
+          "signature": "root.after(1000, 함수)",
+          "note": "지정한 밀리초 뒤에 함수를 한 번 호출합니다. 그 동안에도 창은 클릭·그리기를 계속합니다."
+        },
+        {
+          "name": "time.sleep을 쓰지 않는 이유",
+          "signature": "# 콜백 안에서 time.sleep(3) 금지",
+          "note": "sleep은 이벤트 루프를 멈춰 화면이 하얗게 멈춘 것처럼 보입니다. 기다림은 after로 나눕니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "이벤트 루프",
+          "meaning": "클릭·키·타이머를 순서대로 처리하는 반복입니다. mainloop가 그 일을 합니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "events-pyside-signal": {
+      "id": "events-pyside-signal",
+      "title": "clicked·textChanged · 시그널 연결",
+      "files": {
+        "main.py": "import sys\nfrom PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton\n\ndef greet():\n    name = entry.text().strip() or \"여러분\"\n    result.setText(f\"{name}님, 안녕하세요!\")\n\ndef preview(text):\n    result.setText(f\"미리보기: {text or '빈 칸'}\")\n\napp = QApplication(sys.argv)\nwindow = QWidget()\nwindow.setWindowTitle(\"시그널 · PySide6\")\nwindow.resize(420, 200)\nlayout = QVBoxLayout(window)\nentry = QLineEdit()\nentry.textChanged.connect(preview)\nlayout.addWidget(entry)\nbutton = QPushButton(\"인사하기\")\nbutton.clicked.connect(greet)\nlayout.addWidget(button)\nresult = QLabel(\"글자를 쓰면 미리보기가 바뀝니다.\")\nlayout.addWidget(result)\nwindow.show()\nsys.exit(app.exec())\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "clicked.connect",
+          "signature": "button.clicked.connect(greet)",
+          "note": "버튼의 클릭 시그널에 함수를 연결합니다. connect(greet())처럼 괄호를 붙이면 지금 실행되고 반환값이 연결됩니다."
+        },
+        {
+          "name": "textChanged",
+          "signature": "entry.textChanged.connect(preview)",
+          "note": "한 글자가 바뀔 때마다 preview(text)를 호출합니다. 미리보기·실시간 검사에 씁니다."
+        },
+        {
+          "name": "app.exec",
+          "signature": "sys.exit(app.exec())",
+          "note": "Qt의 이벤트 루프입니다. tkinter의 mainloop에 대응합니다. show() 뒤에 호출합니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "pyside.png",
+          "alt": "PySide6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사를 Qt Widgets로 만든 실행 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
+    },
+    "memo-window-tk": {
+      "id": "memo-window-tk",
+      "title": "메모장 ① · 창과 Text만",
+      "files": {
+        "main.py": "import tkinter as tk\n\nwindow = tk.Tk()\nwindow.title(\"나만의 메모장 · 창만\")\nwindow.geometry(\"640x420\")\ntext_area = tk.Text(window, wrap=\"word\")\ntext_area.pack(expand=True, fill=\"both\")\nwindow.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "Tk",
+          "signature": "window = tk.Tk()",
+          "note": "기본 창을 만듭니다. title은 제목, geometry는 처음 크기입니다."
+        },
+        {
+          "name": "Text",
+          "signature": "tk.Text(window, wrap=\"word\")",
+          "note": "여러 줄 편집기입니다. wrap=\"word\"는 단어 단위로 줄을 바꿉니다. Entry는 한 줄입니다."
+        },
+        {
+          "name": "pack(expand, fill)",
+          "signature": "text_area.pack(expand=True, fill=\"both\")",
+          "note": "창이 커져도 편집기가 남는 공간을 채웁니다. 메모장 본문에 쓰는 배치입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "단계 1–3",
+          "meaning": "임포트 → 창 만들기 → Text를 붙이기까지가 메모장의 뼈대입니다. 파일 대화 상자는 다음 예제입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "memo-files-tk": {
+      "id": "memo-files-tk",
+      "title": "메모장 ② · 열기·저장 버튼",
+      "files": {
+        "main.py": "import tkinter as tk\nfrom tkinter import filedialog\n\ndef open_file():\n    file_path = filedialog.askopenfilename()\n    if not file_path:\n        return\n    with open(file_path, \"r\", encoding=\"utf-8\") as file:\n        content = file.read()\n    text_area.delete(\"1.0\", tk.END)\n    text_area.insert(tk.END, content)\n\ndef save_file():\n    file_path = filedialog.asksaveasfilename(defaultextension=\".txt\")\n    if not file_path:\n        return\n    with open(file_path, \"w\", encoding=\"utf-8\") as file:\n        file.write(text_area.get(\"1.0\", \"end-1c\"))\n\nwindow = tk.Tk()\nwindow.title(\"나만의 메모장 · 열기·저장\")\nwindow.geometry(\"640x420\")\nbuttons = tk.Frame(window)\nbuttons.pack(fill=\"x\")\ntk.Button(buttons, text=\"열기\", command=open_file).pack(side=\"left\", padx=4, pady=4)\ntk.Button(buttons, text=\"저장\", command=save_file).pack(side=\"left\")\ntext_area = tk.Text(window, wrap=\"word\")\ntext_area.pack(expand=True, fill=\"both\")\nwindow.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "askopenfilename",
+          "signature": "filedialog.askopenfilename()",
+          "note": "열 파일을 고르는 대화 상자입니다. 취소를 누르면 빈 문자열이 돌아오므로 바로 열지 말고 검사합니다."
+        },
+        {
+          "name": "asksaveasfilename",
+          "signature": "filedialog.asksaveasfilename(defaultextension=\".txt\")",
+          "note": "저장 경로를 고릅니다. defaultextension은 확장자를 빼먹었을 때 .txt를 붙입니다."
+        },
+        {
+          "name": "Text 위치 \"1.0\"",
+          "signature": "text_area.delete(\"1.0\", tk.END)",
+          "note": "\"줄.칸\"입니다. 첫 줄은 1, 첫 칸은 0입니다. 열기 전에 기존 글을 지웁니다."
+        },
+        {
+          "name": "end-1c",
+          "signature": "text_area.get(\"1.0\", \"end-1c\")",
+          "note": "Text는 끝에 줄바꿈을 하나 더 가지고 있습니다. 저장할 때 그 한 글자를 빼면 다시 열 때마다 빈 줄이 늘지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "취소 시험",
+          "meaning": "열기·저장 대화 상자에서 취소를 눌러 보세요. 기존 글이 그대로면 분기 검사가 맞은 것입니다."
+        },
+        {
+          "term": "UTF-8",
+          "meaning": "한글 파일을 읽고 쓸 때 지정하는 인코딩입니다. 빼면 환경에 따라 글자가 깨질 수 있습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -610,8 +1449,29 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "Menu / add_cascade",
+          "signature": "menu = tk.Menu(window)\nwindow.config(menu=menu)\nmenu.add_cascade(label=\"파일\", menu=file_menu)",
+          "note": "창 위쪽 메뉴 줄을 만듭니다. add_cascade는 \"파일\"처럼 펼쳐지는 상위 메뉴입니다."
+        },
+        {
+          "name": "add_command",
+          "signature": "file_menu.add_command(label=\"열기\", command=open_file)",
+          "note": "메뉴 항목에 함수를 연결합니다. Button의 command와 같습니다. command=open_file()처럼 괄호를 붙이면 창을 열 때 대화 상자가 뜹니다."
+        },
+        {
+          "name": "tearoff=False",
+          "signature": "tk.Menu(menu, tearoff=False)",
+          "note": "메뉴를 창 밖으로 떼는 점선을 숨깁니다. 교과서 예제의 흔한 보완입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "단계 6–8",
+          "meaning": "메뉴를 붙이고 mainloop로 기다린 뒤, 한글 파일을 저장했다가 다시 열어 봅니다. 열기·저장 함수는 앞 단계와 같습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -630,7 +1490,33 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "QMainWindow",
+          "signature": "class MemoWindow(QMainWindow):",
+          "note": "메뉴·상태줄·중앙 위젯을 가진 창입니다. 일반 QWidget보다 문서 앱에 맞습니다."
+        },
+        {
+          "name": "setCentralWidget",
+          "signature": "self.setCentralWidget(self.editor)",
+          "note": "편집기를 창의 가운데에 둡니다. pack이 아니라 메인 창의 중앙 영역입니다."
+        },
+        {
+          "name": "QAction",
+          "signature": "action = QAction(\"열기\", self)\naction.triggered.connect(self.open_file)",
+          "note": "메뉴 항목입니다. triggered 시그널이 버튼의 clicked와 같은 역할입니다."
+        },
+        {
+          "name": "QFileDialog",
+          "signature": "path, _ = QFileDialog.getOpenFileName(...)",
+          "note": "(경로, 선택한 필터) 튜플을 반환합니다. path, _로 받습니다. 취소하면 빈 경로입니다."
+        },
+        {
+          "name": "setPlainText / toPlainText",
+          "signature": "editor.setPlainText(글)\neditor.toPlainText()",
+          "note": "여러 줄 텍스트를 넣거나 읽습니다. QLineEdit의 setText/text와 이름을 구별하세요."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -650,7 +1536,33 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "bind 단축키",
+          "signature": "root.bind(\"<Control-s>\", lambda event: self.save_file())",
+          "note": "Ctrl+S가 저장 함수를 호출합니다. bind는 이벤트 객체를 넘기므로 lambda로 감쌉니다."
+        },
+        {
+          "name": "protocol(\"WM_DELETE_WINDOW\")",
+          "signature": "root.protocol(\"WM_DELETE_WINDOW\", self.close)",
+          "note": "창의 X 버튼을 눌렀을 때 destroy 대신 close를 부릅니다. 미저장 확인을 넣을 수 있습니다."
+        },
+        {
+          "name": "<<Modified>>",
+          "signature": "self.text.bind(\"<<Modified>>\", self.changed)",
+          "note": "문서가 바뀌면 dirty를 True로 둡니다. 제목 앞에 *를 붙이는 신호입니다."
+        },
+        {
+          "name": "askyesnocancel",
+          "signature": "messagebox.askyesnocancel(\"미저장 문서\", \"...\")",
+          "note": "예/아니요/취소 세 갈래입니다. None은 취소, True는 저장 후 진행, False는 저장하지 않고 진행입니다."
+        },
+        {
+          "name": "end-1c",
+          "signature": "self.text.get('1.0', 'end-1c')",
+          "note": "마지막 자동 개행을 빼고 글자 수를 셉니다. 저장에도 같은 끝을 쓰면 빈 줄이 쌓이지 않습니다."
+        }
+      ],
       "glossary": [],
       "tips": {
         "history": "",
@@ -670,8 +1582,112 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "QKeySequence",
+          "signature": "action.setShortcut(QKeySequence.StandardKey.Save)",
+          "note": "운영체제의 표준 저장 단축키를 붙입니다. Windows는 Ctrl+S, macOS는 ⌘S입니다."
+        },
+        {
+          "name": "isModified / setModified",
+          "signature": "self.editor.document().isModified()",
+          "note": "문서가 저장 이후 바뀌었는지입니다. 저장에 성공하면 setModified(False)로 되돌립니다."
+        },
+        {
+          "name": "closeEvent",
+          "signature": "def closeEvent(self, event):\n    event.accept()  # 또는 event.ignore()",
+          "note": "창을 닫으려 할 때 호출됩니다. 미저장이면 ignore()로 닫기를 취소합니다."
+        },
+        {
+          "name": "triggered(bool)",
+          "signature": "action.triggered.connect(lambda checked=False, fn=handler: fn())",
+          "note": "triggered는 체크 여부를 넘깁니다. 그대로 save_file에 연결하면 save_as로 오해할 수 있어 감쌉니다."
+        }
+      ],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "pyside-first": {
+      "id": "pyside-first",
+      "title": "PySide6 · 최소 창 실행 순서",
+      "files": {
+        "main.py": "import sys\nfrom PySide6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout\n\napp = QApplication(sys.argv)\nwindow = QWidget()\nwindow.setWindowTitle(\"첫 창 · PySide6\")\nwindow.resize(360, 160)\nlayout = QVBoxLayout(window)\nlayout.addWidget(QLabel(\"QApplication → 창 → show → exec\"))\nwindow.show()\nsys.exit(app.exec())\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "QApplication",
+          "signature": "app = QApplication(sys.argv)",
+          "note": "Qt 앱을 하나 만듭니다. 위젯보다 먼저 필요합니다. tkinter의 Tk()가 창과 앱을 겸하는 것과 다릅니다."
+        },
+        {
+          "name": "QWidget",
+          "signature": "window = QWidget()",
+          "note": "빈 창(또는 컨테이너)입니다. setWindowTitle·resize로 제목과 크기를 정합니다."
+        },
+        {
+          "name": "show / exec",
+          "signature": "window.show()\nsys.exit(app.exec())",
+          "note": "show는 창을 화면에 올리고, exec는 클릭을 기다립니다. exec를 빼면 프로그램이 바로 끝납니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "sys.argv",
+          "meaning": "실행 인자 목록입니다. QApplication이 일부 Qt 옵션을 읽을 수 있도록 넘깁니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "pyside-ui-file": {
+      "id": "pyside-ui-file",
+      "title": "Qt Designer · .ui 불러와 이벤트 연결",
+      "files": {
+        "main.py": "import sys\nfrom pathlib import Path\nfrom PySide6.QtWidgets import QApplication\nfrom PySide6.QtCore import QFile\nfrom PySide6.QtUiTools import QUiLoader\n\napp = QApplication(sys.argv)\nui_path = Path(__file__).with_name(\"form.ui\")\nui_file = QFile(str(ui_path))\nui_file.open(QFile.OpenModeFlag.ReadOnly)\nwindow = QUiLoader().load(ui_file)\nui_file.close()\n\ndef greet():\n    name = window.nameEdit.text().strip() or \"여러분\"\n    window.resultLabel.setText(f\"{name}님, 안녕하세요!\")\n\nwindow.greetButton.clicked.connect(greet)\nwindow.show()\nsys.exit(app.exec())\n",
+        "form.ui": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<ui version=\"4.0\">\n <class>Form</class>\n <widget class=\"QWidget\" name=\"Form\">\n  <property name=\"geometry\">\n   <rect>\n    <x>0</x>\n    <y>0</y>\n    <width>400</width>\n    <height>200</height>\n   </rect>\n  </property>\n  <property name=\"windowTitle\">\n   <string>Designer 실습 · PySide6</string>\n  </property>\n  <layout class=\"QVBoxLayout\" name=\"verticalLayout\">\n   <item>\n    <widget class=\"QLabel\" name=\"titleLabel\">\n     <property name=\"text\">\n      <string>이름을 입력하세요</string>\n     </property>\n    </widget>\n   </item>\n   <item>\n    <widget class=\"QLineEdit\" name=\"nameEdit\"/>\n   </item>\n   <item>\n    <widget class=\"QPushButton\" name=\"greetButton\">\n     <property name=\"text\">\n      <string>인사하기</string>\n     </property>\n    </widget>\n   </item>\n   <item>\n    <widget class=\"QLabel\" name=\"resultLabel\">\n     <property name=\"text\">\n      <string>결과가 여기에 표시됩니다.</string>\n     </property>\n    </widget>\n   </item>\n  </layout>\n </widget>\n <resources/>\n <connections/>\n</ui>\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "form.ui는 Designer가 저장하는 XML입니다. 이 예제는 실행 때 QUiLoader로 읽습니다. pyside6-uic로 파이썬을 만드는 경로와 결과 화면은 같습니다.",
+      "pre_api": [
+        {
+          "name": "objectName",
+          "signature": "window.nameEdit / window.greetButton",
+          "note": "Designer에서 붙인 부품 이름입니다. 화면에 보이는 text와 다릅니다. 코드는 objectName으로 위젯을 찾습니다."
+        },
+        {
+          "name": "QUiLoader.load",
+          "signature": "window = QUiLoader().load(ui_file)",
+          "note": "form.ui를 실행 중에 읽어 창을 만듭니다. 다른 방법은 pyside6-uic form.ui -o ui_form.py로 파이썬을 생성하는 것입니다."
+        },
+        {
+          "name": "생성 파일과 main.py",
+          "signature": "from ui_form import Ui_Form",
+          "note": "uic가 만든 파일은 다시 생성하면 덮어써집니다. 이벤트 연결은 직접 쓰는 main.py에 둡니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "pyside6-designer",
+          "meaning": "가상환경을 켠 뒤 실행하는 Designer 명령입니다. Widget 폼을 배치하고 form.ui로 저장합니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -694,6 +1710,44 @@
       "note": "",
       "pre_api": [],
       "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "project-button-tk": {
+      "id": "project-button-tk",
+      "title": "기능 모듈 한 줄 연결 · 주사위 버튼",
+      "files": {
+        "main.py": "import tkinter as tk\nfrom core.logic import roll\n\ndef show():\n    result.config(text=f\"주사위: {roll(6)}\")\n\nroot = tk.Tk()\nroot.title(\"기능 연결 · 주사위\")\nroot.geometry(\"360x160\")\ntk.Button(root, text=\"굴리기\", command=show).pack(pady=20)\nresult = tk.Label(root, text=\"버튼을 누르면 core.logic.roll을 호출합니다.\")\nresult.pack()\nroot.mainloop()\n",
+        "core/__init__.py": "# GUI와 독립적인 기능\n",
+        "core/logic.py": "from datetime import date\nimport random\n\ndef roll(sides):\n    if sides < 1:\n        raise ValueError(\"면 수는 1 이상이어야 합니다.\")\n    return random.randint(1, sides)\n\ndef days_left(target, today=None):\n    today = today or date.today()\n    return (date.fromisoformat(target) - today).days\n\ndef draw(names, count):\n    names = list(dict.fromkeys(name.strip() for name in names if name.strip()))\n    if not 1 <= count <= len(names):\n        raise ValueError(\"추첨 수를 명단 인원 안에서 정하세요.\")\n    return random.sample(names, count)\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "from core.logic import roll",
+          "signature": "from core.logic import roll",
+          "note": "화면 파일은 계산을 직접 쓰지 않고 기능 모듈을 부릅니다. 웹의 core 예제와 같은 함수입니다."
+        },
+        {
+          "name": "command=show",
+          "signature": "tk.Button(root, command=show)",
+          "note": "클릭하면 show가 roll(6)을 호출하고 Label에 결과를 씁니다. GUI는 입력·표시만 담당합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "화면과 기능 분리",
+          "meaning": "core에는 tkinter가 없습니다. 같은 roll을 PySide6 버튼에도 연결할 수 있습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -743,6 +1797,62 @@
         "youtube": []
       },
       "screenshots": []
+    },
+    "review-scratch-tk": {
+      "id": "review-scratch-tk",
+      "title": "확인학습 · 창·버튼·콜백을 처음부터",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef say_hello():\n    label.config(text=\"반갑습니다!\")\n\nroot = tk.Tk()\nroot.title(\"처음부터 만들기\")\nlabel = tk.Label(root, text=\"버튼을 눌러 보세요.\")\nlabel.pack(pady=12)\ntk.Button(root, text=\"인사\", command=say_hello).pack()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "Tk 객체",
+          "signature": "root = tk.Tk()",
+          "note": "창을 만드는 출발점입니다. 종합 평가에서 묻는 Tk 객체입니다."
+        },
+        {
+          "name": "pack",
+          "signature": "label.pack()",
+          "note": "생성만 하고 pack/grid/place를 빼면 화면에 보이지 않습니다. 59쪽 7번과 연결됩니다."
+        },
+        {
+          "name": "command",
+          "signature": "tk.Button(root, command=say_hello)",
+          "note": "함수 자체를 넘깁니다. 클릭할 때 실행됩니다."
+        },
+        {
+          "name": "mainloop",
+          "signature": "root.mainloop()",
+          "note": "이벤트를 기다리는 루프입니다. 이 줄이 없으면 창이 바로 사라질 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "57쪽 IDLE 코드",
+          "meaning": "Frame은 컨테이너, Button은 클릭 요소, 둘을 통칭하면 위젯입니다."
+        },
+        {
+          "term": "확인학습 커버",
+          "meaning": "이 네 줄(창·위젯·배치·콜백·루프)을 예제 없이 다시 타이핑해 보세요. 그런 다음 조건을 바꾸어 검사합니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "tk.png",
+          "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사를 GUI로 만들면 이런 창이 됩니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     }
   },
   "questions": [
@@ -1911,19 +3021,44 @@
       "첫 인사 앱"
     ],
     [
+      "widgets-label-entry-tk",
+      "widgets-pyside-form",
+      "입력 폼"
+    ],
+    [
       "widgets-tk",
       "widgets-pyside",
       "위젯 도감"
     ],
     [
+      "layout-pack-tk",
+      "layout-pyside",
+      "pack / 상자 배치"
+    ],
+    [
+      "layout-grid-tk",
+      "layout-pyside-form",
+      "격자 폼"
+    ],
+    [
       "layout-tk",
       "layout-pyside",
-      "레이아웃"
+      "레이아웃 비교"
+    ],
+    [
+      "events-bind-tk",
+      "events-pyside-signal",
+      "이벤트 연결"
     ],
     [
       "memo-tk",
       "memo-pyside",
       "메모장"
+    ],
+    [
+      "project-button-tk",
+      "project-pyside",
+      "기능 연결"
     ],
     [
       "project-tk",
