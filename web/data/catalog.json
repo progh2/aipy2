@@ -145,7 +145,10 @@
       {
         "id": "ui",
         "title": "사용자 인터페이스 · CLI, GUI, NUI",
-        "examples": [],
+        "examples": [
+          "ui-cli",
+          "hello-tk"
+        ],
         "href": "units/unit02/ui.html"
       },
       {
@@ -165,8 +168,12 @@
         "id": "widgets",
         "title": "창과 위젯 · 화면을 구성하는 부품",
         "examples": [
+          "widgets-label-entry-tk",
+          "widgets-choice-tk",
+          "widgets-list-canvas-tk",
           "widgets-tk",
-          "widgets-pyside"
+          "widgets-pyside",
+          "widgets-pyside-form"
         ],
         "href": "units/unit02/widgets.html"
       },
@@ -174,8 +181,11 @@
         "id": "layout",
         "title": "배치 관리자와 반응하는 화면",
         "examples": [
+          "layout-pack-tk",
+          "layout-grid-tk",
           "layout-tk",
-          "layout-pyside"
+          "layout-pyside",
+          "layout-pyside-form"
         ],
         "href": "units/unit02/layout.html"
       },
@@ -183,6 +193,11 @@
         "id": "events",
         "title": "이벤트 · 사용자의 행동에 반응하기",
         "examples": [
+          "events-callback",
+          "events-command-tk",
+          "events-bind-tk",
+          "events-after-tk",
+          "events-pyside-signal",
           "hello-tk",
           "hello-pyside"
         ],
@@ -192,6 +207,8 @@
         "id": "memo",
         "title": "교과서 메모장 · 여덟 단계로 완성",
         "examples": [
+          "memo-window-tk",
+          "memo-files-tk",
           "memo-tk",
           "memo-pyside",
           "memo-plus-tk",
@@ -203,7 +220,9 @@
         "id": "pyside",
         "title": "PySide6 시작과 Qt Designer",
         "examples": [
+          "pyside-first",
           "hello-pyside",
+          "pyside-ui-file",
           "memo-pyside"
         ],
         "href": "units/unit02/pyside.html"
@@ -213,6 +232,7 @@
         "title": "통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
         "examples": [
           "core",
+          "project-button-tk",
           "project-tk",
           "project-pyside"
         ],
@@ -221,7 +241,9 @@
       {
         "id": "review",
         "title": "2단원 마무리 · 개념에서 앱까지",
-        "examples": [],
+        "examples": [
+          "review-scratch-tk"
+        ],
         "href": "units/unit02/review.html"
       }
     ],
@@ -720,6 +742,120 @@
     "memo-plus-pyside": {
       "id": "memo-plus-pyside",
       "title": "개선 메모장 · PySide6",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "ui-cli": {
+      "id": "ui-cli",
+      "title": "같은 인사 · 명령줄(CLI)",
+      "unit": 2,
+      "mode": "web"
+    },
+    "widgets-label-entry-tk": {
+      "id": "widgets-label-entry-tk",
+      "title": "Label·Entry · 한 줄 읽고 보여 주기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-choice-tk": {
+      "id": "widgets-choice-tk",
+      "title": "Checkbutton·Radiobutton · 선택 값 읽기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-list-canvas-tk": {
+      "id": "widgets-list-canvas-tk",
+      "title": "Listbox·Canvas · 목록과 그리기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-pyside-form": {
+      "id": "widgets-pyside-form",
+      "title": "PySide6 · 입력·체크·라디오 폼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "layout-pack-tk": {
+      "id": "layout-pack-tk",
+      "title": "pack · expand와 fill",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "layout-grid-tk": {
+      "id": "layout-grid-tk",
+      "title": "grid · 로그인 폼과 sticky",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "layout-pyside-form": {
+      "id": "layout-pyside-form",
+      "title": "PySide6 · QGridLayout 입력 폼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "events-callback": {
+      "id": "events-callback",
+      "title": "콜백 · 지금 호출 vs 나중에 호출",
+      "unit": 2,
+      "mode": "web"
+    },
+    "events-command-tk": {
+      "id": "events-command-tk",
+      "title": "Button.command · 올바른 연결과 잘못된 연결",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "events-bind-tk": {
+      "id": "events-bind-tk",
+      "title": "bind · Enter 키로 같은 함수 호출",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "events-after-tk": {
+      "id": "events-after-tk",
+      "title": "after · 이벤트 루프를 막지 않는 타이머",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "events-pyside-signal": {
+      "id": "events-pyside-signal",
+      "title": "clicked·textChanged · 시그널 연결",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "memo-window-tk": {
+      "id": "memo-window-tk",
+      "title": "메모장 ① · 창과 Text만",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "memo-files-tk": {
+      "id": "memo-files-tk",
+      "title": "메모장 ② · 열기·저장 버튼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "pyside-first": {
+      "id": "pyside-first",
+      "title": "PySide6 · 최소 창 실행 순서",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "pyside-ui-file": {
+      "id": "pyside-ui-file",
+      "title": "Qt Designer · .ui 불러와 이벤트 연결",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "review-scratch-tk": {
+      "id": "review-scratch-tk",
+      "title": "확인학습 · 창·버튼·콜백을 처음부터",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "project-button-tk": {
+      "id": "project-button-tk",
+      "title": "기능 모듈 한 줄 연결 · 주사위 버튼",
       "unit": 2,
       "mode": "pc"
     },

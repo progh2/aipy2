@@ -177,7 +177,8 @@ hello=examples['hello-tk']
 assert hello['pre_api'] and hello['glossary'] and hello['tips']['history'] and hello['tips']['youtube'] and hello['screenshots']
 assert examples['widgets-tk']['pre_api'] and examples['widgets-tk']['tips']['history']
 assert not examples['widgets-tk']['screenshots']
-assert not examples['hello-pyside']['pre_api'] and not examples['hello-pyside']['tips']['history']
+assert examples['hello-pyside']['pre_api'] and examples['hello-pyside']['screenshots']
+assert not examples['hello-pyside']['tips']['history']
 libraries=(WEB/'units/unit02/libraries.html').read_text()
 assert 'id="example-guides"' in libraries
 assert 'id="pre-api-hello-tk"' in libraries
@@ -189,10 +190,28 @@ assert 'assets/screenshots/tk.png' in libraries
 assert 'id="example-guides"' in widgets
 assert 'id="pre-api-widgets-tk"' in widgets
 assert 'BooleanVar' in widgets
+assert 'widgets-label-entry-tk' in widgets and 'widgets-choice-tk' in widgets
 ui_page=(WEB/'units/unit02/ui.html').read_text()
-assert 'id="example-guides"' not in ui_page
-assert '코드 전에 알아 두기' not in ui_page
-assert content_slots.has_slots(hello) and not content_slots.has_slots(examples['hello-pyside'])
+assert 'id="example-guides"' in ui_page
+assert '코드 전에 알아 두기' in ui_page
+assert 'ui-cli' in ui_page
+assert content_slots.has_slots(hello) and content_slots.has_slots(examples['hello-pyside'])
+unit2={lesson['id']:lesson for lesson in units[2]}
+assert len(unit2['widgets']['examples'])>=5
+assert len(unit2['layout']['examples'])>=4
+assert len(unit2['events']['examples'])>=6
+assert len(unit2['memo']['examples'])>=6
+assert 'events-command-tk' in unit2['events']['examples']
+assert 'memo-window-tk' in unit2['memo']['examples']
+assert 'review-scratch-tk' in unit2['review']['examples']
+for eid in ['widgets-label-entry-tk','layout-pack-tk','events-command-tk','memo-window-tk','pyside-first','ui-cli']:
+ assert examples[eid]['pre_api'], eid
+events_page=(WEB/'units/unit02/events.html').read_text()
+assert 'id="pre-api-events-command-tk"' in events_page
+assert 'command=greet()' in events_page or 'command=too_early()' in events_page
+memo_page=(WEB/'units/unit02/memo.html').read_text()
+assert 'memo-window-tk' in memo_page and 'memo-files-tk' in memo_page
+assert 'id="pre-api-memo-window-tk"' in memo_page
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')
