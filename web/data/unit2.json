@@ -159,7 +159,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "widgets-tk.png",
+          "alt": "tkinter 위젯 도감 실행 화면",
+          "caption": "위젯을 역할별로 고른 뒤 아래 예제에서 값을 읽어 보세요. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -213,7 +219,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "layout-tk.png",
+          "alt": "pack·grid·place 비교 창",
+          "caption": "창을 늘려 보며 잘리는 칸을 찾는 것이 배치 확인입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -265,7 +277,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "events-command-tk.png",
+          "alt": "command 연결과 잘못된 연결 비교",
+          "caption": "괄호 유무가 실행 시점을 바꿉니다. 아래 예제에서 기록을 보세요. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -326,7 +344,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "memo-tk.png",
+          "alt": "교과서 메모장 실행 화면",
+          "caption": "창·Text·메뉴 순으로 쌓은 완성본입니다. 단계는 아래 예제에 있습니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -376,7 +400,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "pyside-first.png",
+          "alt": "PySide6 최소 창",
+          "caption": "QApplication → show → exec 순서를 이 창으로 확인합니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": []
     },
     {
@@ -418,7 +448,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "project-tk.png",
+          "alt": "생활 도우미 tkinter 실행 화면",
+          "caption": "화면은 입력과 표시만 하고 계산은 core에 맡깁니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": []
     },
     {
@@ -456,7 +492,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [],
+      "screenshots": [
+        {
+          "src": "review-scratch-tk.png",
+          "alt": "처음부터 만든 최소 인사 창",
+          "caption": "예제 없이 이 네 줄(창·위젯·배치·콜백)을 다시 타이핑해 보세요. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ],
       "textbook": []
     }
   ],
@@ -818,7 +860,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "widgets-label-entry-tk.png",
+          "alt": "Label·Entry 창 · 이름 입력 후 표시 버튼",
+          "caption": "한 줄 입력과 Label.config로 같은 이름을 다시 보여 줍니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "widgets-choice-tk": {
       "id": "widgets-choice-tk",
@@ -859,7 +907,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "widgets-choice-tk.png",
+          "alt": "체크·라디오 창 · 학년과 완료 여부",
+          "caption": "BooleanVar와 StringVar로 선택 값을 읽습니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "widgets-list-canvas-tk": {
       "id": "widgets-list-canvas-tk",
@@ -909,7 +963,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "widgets-list-canvas-tk.png",
+          "alt": "Listbox·Canvas 창 · 고른 주제를 캔버스에 그림",
+          "caption": "목록에서 고른 뒤 Canvas에 글자를 그립니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "widgets-tk": {
       "id": "widgets-tk",
@@ -970,7 +1030,13 @@
         "history": "위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품이고, 나중에 보는 Qt·wx·Kivy도 같은 역할을 다른 이름으로 제공합니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "widgets-tk.png",
+          "alt": "tkinter 위젯 도감 · Label·Entry·Text·선택·목록·Canvas",
+          "caption": "한 창에 위젯 9종을 모아 비교합니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "widgets-pyside": {
       "id": "widgets-pyside",
@@ -1016,7 +1082,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "widgets-pyside.png",
+          "alt": "PySide6 위젯 도감 · QLabel·입력·체크·목록·도형",
+          "caption": "같은 역할을 Qt 위젯 이름으로 대응합니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "widgets-pyside-form": {
       "id": "widgets-pyside-form",
@@ -1062,7 +1134,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "widgets-pyside-form.png",
+          "alt": "PySide6 입력 폼 · 이름·체크·라디오",
+          "caption": "QLineEdit·QCheckBox·QButtonGroup으로 값을 읽습니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "layout-pack-tk": {
       "id": "layout-pack-tk",
@@ -1103,7 +1181,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "layout-pack-tk.png",
+          "alt": "pack 배치 · expand와 fill을 켠 세 영역",
+          "caption": "위·가운데·아래가 창 너비에 어떻게 붙는지 봅니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "layout-grid-tk": {
       "id": "layout-grid-tk",
@@ -1154,7 +1238,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "layout-grid-tk.png",
+          "alt": "grid 로그인 폼 · sticky와 두 열",
+          "caption": "라벨은 오른쪽, 입력칸은 가로로 늘어납니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "layout-tk": {
       "id": "layout-tk",
@@ -1195,7 +1285,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "layout-tk.png",
+          "alt": "pack·grid·place를 한 창에서 비교",
+          "caption": "부모 Frame을 나누면 세 배치를 같이 볼 수 있습니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "layout-pyside": {
       "id": "layout-pyside",
@@ -1231,7 +1327,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "layout-pyside.png",
+          "alt": "Qt 레이아웃 · 가로 버튼과 격자",
+          "caption": "QHBoxLayout 위에 QGridLayout을 올립니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "layout-pyside-form": {
       "id": "layout-pyside-form",
@@ -1272,7 +1374,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "layout-pyside-form.png",
+          "alt": "QGridLayout 로그인 폼",
+          "caption": "아이디·비밀번호와 두 열을 차지하는 버튼입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "events-callback": {
       "id": "events-callback",
@@ -1348,7 +1456,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "events-command-tk.png",
+          "alt": "command 전달 비교 · 잘못된 연결이 생성 시점에 실행됨",
+          "caption": "창이 열린 직후 기록이 이미 있으면 괄호를 붙인 것입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "events-bind-tk": {
       "id": "events-bind-tk",
@@ -1391,9 +1505,9 @@
       },
       "screenshots": [
         {
-          "src": "tk.png",
-          "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
-          "caption": "같은 인사를 GUI로 만들면 이런 창이 됩니다. OS·테마에 따라 외형은 달라집니다."
+          "src": "events-bind-tk.png",
+          "alt": "bind · Enter 키로 인사하는 창",
+          "caption": "버튼 클릭과 Enter가 같은 greet 함수를 부릅니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
         }
       ]
     },
@@ -1431,7 +1545,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "events-after-tk.png",
+          "alt": "after 타이머 · 이벤트 루프를 막지 않는 카운트",
+          "caption": "sleep 대신 after로 기다린 뒤 글자가 바뀝니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "events-pyside-signal": {
       "id": "events-pyside-signal",
@@ -1474,9 +1594,9 @@
       },
       "screenshots": [
         {
-          "src": "pyside.png",
-          "alt": "PySide6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
-          "caption": "같은 인사를 Qt Widgets로 만든 실행 화면입니다. OS·테마에 따라 외형은 달라집니다."
+          "src": "events-pyside-signal.png",
+          "alt": "clicked·textChanged 시그널 창",
+          "caption": "글자를 쓰면 미리보기가 바뀌고, 버튼은 인사를 확정합니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
         }
       ]
     },
@@ -1519,7 +1639,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "memo-window-tk.png",
+          "alt": "메모장 뼈대 · 창과 Text만",
+          "caption": "메뉴·파일 대화 상자 전의 최소 화면입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "memo-files-tk": {
       "id": "memo-files-tk",
@@ -1569,7 +1695,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "memo-files-tk.png",
+          "alt": "메모장 · 열기·저장 버튼과 편집기",
+          "caption": "위쪽 Frame에 버튼을 두고 Text가 나머지를 채웁니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "memo-tk": {
       "id": "memo-tk",
@@ -1610,7 +1742,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "memo-tk.png",
+          "alt": "교과서 메모장 · 파일 메뉴가 있는 창",
+          "caption": "열기·저장·종료는 메뉴에 연결됩니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "memo-pyside": {
       "id": "memo-pyside",
@@ -1661,7 +1799,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "memo-pyside.png",
+          "alt": "메모장 · PySide6 QMainWindow",
+          "caption": "QPlainTextEdit를 중앙에 두고 파일 메뉴를 붙입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "memo-plus-tk": {
       "id": "memo-plus-tk",
@@ -1722,7 +1866,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "memo-plus-tk.png",
+          "alt": "개선 메모장 · 글자 수와 미저장 표시",
+          "caption": "상태 줄과 제목 앞 *가 dirty 상태를 보여 줍니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "memo-plus-pyside": {
       "id": "memo-plus-pyside",
@@ -1773,7 +1923,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "memo-plus-pyside.png",
+          "alt": "개선 메모장 · PySide6 상태 줄",
+          "caption": "글자 수와 수정 여부가 창 제목·상태 줄에 나타납니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "pyside-first": {
       "id": "pyside-first",
@@ -1814,7 +1970,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "pyside-first.png",
+          "alt": "PySide6 최소 창 · QApplication 실행 순서",
+          "caption": "위젯을 더하기 전의 빈 창입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "pyside-ui-file": {
       "id": "pyside-ui-file",
@@ -1856,7 +2018,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "pyside-ui-file.png",
+          "alt": "Qt Designer .ui를 불러 온 인사 폼",
+          "caption": "objectName으로 입력칸·버튼을 찾아 연결합니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "core": {
       "id": "core",
@@ -1937,7 +2105,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "project-button-tk.png",
+          "alt": "기능 모듈 한 줄 연결 · 주사위 버튼",
+          "caption": "클릭하면 core.logic.roll 결과를 Label에 씁니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "project-tk": {
       "id": "project-tk",
@@ -1980,7 +2154,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "project-tk.png",
+          "alt": "생활 도우미 · tkinter 라디오와 실행 버튼",
+          "caption": "같은 core.logic을 주사위·D-day·추첨에 연결합니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "project-pyside": {
       "id": "project-pyside",
@@ -2023,7 +2203,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "project-pyside.png",
+          "alt": "생활 도우미 · PySide6 콤보 상자",
+          "caption": "모드만 바꾸고 같은 기능 모듈을 부릅니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     },
     "review-scratch-tk": {
       "id": "review-scratch-tk",
@@ -2073,7 +2259,13 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [
+        {
+          "src": "review-scratch-tk.png",
+          "alt": "확인학습 · 창·버튼·콜백만 있는 최소 GUI",
+          "caption": "Tk → Label → Button(command) → mainloop를 다시 타이핑하는 창입니다. 이 예제를 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
     }
   },
   "questions": [

@@ -104,7 +104,13 @@ GitHub Pages는 서버 비밀을 둘 수 없으므로 학교 도메인 확인·�
 실제 브라우저 검증: 다중 파일, __main__, 인자, 무한 반복 중지/재실행, 구현형 채점, 기록 복원, ZIP, GUI 문법 검사·시뮬레이션, 390px 모바일 넘침.
 실제 GUI 검증: 6종 인사 앱의 인사·초기화, tkinter/PySide6 위젯·레이아웃·프로젝트, 기본·개선 메모장 한글 저장/열기/취소/미저장 확인. Linux 가상 디스플레이에서 검사했으며 Windows/macOS 외형은 다를 수 있습니다.
 
-스크린샷: `assets/screenshots/`. 제공 예제의 실제 실행 화면을 `tools/web/capture_gui.py`로 촬영했습니다. 캡처 환경의 글꼴은 Noto Sans CJK KR입니다. Kivy는 기본 글꼴 지원을 위해 영어 문구를 사용했습니다.
+스크린샷: `assets/screenshots/`. 제공 예제의 실제 실행 화면을 `tools/web/capture_gui.py`로 촬영했습니다. 인사 앱 6종은 `tk.png`처럼 툴킷 이름이고, 단원Ⅱ 본편 예제는 `{예제id}.png`입니다. 캡처 환경의 글꼴은 Noto Sans CJK KR입니다. Kivy는 기본 글꼴 지원을 위해 영어 문구를 사용했습니다.
+
+```bash
+# 디스플레이가 없으면 xvfb-run을 앞에 붙입니다.
+python3 tools/web/capture_gui.py tk                 # 갤러리 hello-tk → tk.png
+python3 tools/web/capture_gui.py --unit2            # 단원Ⅱ 전용 예제 스샷
+```
 
 ## 대표 캐릭터 파이
 

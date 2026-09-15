@@ -177,7 +177,7 @@ for rec in list(examples.values())+[lesson for group in units.values() for lesso
 hello=examples['hello-tk']
 assert hello['pre_api'] and hello['glossary'] and hello['tips']['history'] and hello['tips']['youtube'] and hello['screenshots']
 assert examples['widgets-tk']['pre_api'] and examples['widgets-tk']['tips']['history']
-assert not examples['widgets-tk']['screenshots']
+assert examples['widgets-tk']['screenshots']
 assert examples['hello-pyside']['pre_api'] and examples['hello-pyside']['screenshots']
 assert not examples['hello-pyside']['tips']['history']
 libraries=(WEB/'units/unit02/libraries.html').read_text()
@@ -192,6 +192,9 @@ assert 'id="example-guides"' in widgets
 assert 'id="pre-api-widgets-tk"' in widgets
 assert 'BooleanVar' in widgets
 assert 'widgets-label-entry-tk' in widgets and 'widgets-choice-tk' in widgets
+assert 'assets/screenshots/widgets-tk.png' in widgets
+assert 'id="screenshots-widgets-tk"' in widgets
+assert '실행하면 이렇게 보여요' in widgets
 ui_page=(WEB/'units/unit02/ui.html').read_text()
 assert 'id="example-guides"' in ui_page
 assert '코드 전에 알아 두기' in ui_page
@@ -213,6 +216,17 @@ assert 'command=greet()' in events_page or 'command=too_early()' in events_page
 memo_page=(WEB/'units/unit02/memo.html').read_text()
 assert 'memo-window-tk' in memo_page and 'memo-files-tk' in memo_page
 assert 'id="pre-api-memo-window-tk"' in memo_page
+assert 'assets/screenshots/memo-tk.png' in memo_page
+assert 'id="screenshots-memo-tk"' in memo_page
+layout_page=(WEB/'units/unit02/layout.html').read_text()
+assert 'assets/screenshots/layout-tk.png' in layout_page
+assert 'id="screenshots-layout-pack-tk"' in layout_page
+assert '실행하면 이렇게 보여요' in events_page
+assert 'assets/screenshots/events-command-tk.png' in events_page
+pc_unit2=[eid for lesson in units[2] for eid in lesson['examples'] if examples[eid]['mode']=='pc']
+assert all(examples[eid]['screenshots'] for eid in pc_unit2), [eid for eid in pc_unit2 if not examples[eid]['screenshots']]
+assert examples['events-bind-tk']['screenshots'][0]['src']=='events-bind-tk.png'
+assert examples['events-pyside-signal']['screenshots'][0]['src']=='events-pyside-signal.png'
 # #53: Unit II examples that introduce APIs show pre_api/glossary (wx/Kivy later).
 for eid in unit2_pre_api.unit2_pre_coverage():
  assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit2 pre_api/glossary', eid)
