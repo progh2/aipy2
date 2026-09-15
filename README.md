@@ -73,6 +73,7 @@ Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 | 문서 | 내용 |
 | --- | --- |
 | [docs/PRD.md](docs/PRD.md) | 수업 관리 기능의 요구사항·데이터 모델·로드맵 |
+| [docs/content-gap-audit.md](docs/content-gap-audit.md) | 교과서 TOC ↔ `tools/web` 콘텐츠 갭 감사 (M0 · #50) |
 | [web/README.md](web/README.md) | 사이트 구조와 수정·재생성·검증 방법 |
 | [firebase/README.md](firebase/README.md) | Firebase 콘솔 설정, 권한 모델, 공개 설정값의 보안 |
 | [web/sources.html](web/sources.html) | 교과서 목차 대응표와 참고 자료 |
