@@ -1154,8 +1154,29 @@
       "args": "",
       "checks": "assert days_left(\"2026-12-25\", date(2026,12,24)) == 1\nassert 1 <= roll(6) <= 6\nassert len(draw([\"A\", \"A\", \"B\"], 2)) == 2\n",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "roll",
+          "signature": "roll(sides)",
+          "note": "1부터 sides까지 정수 하나를 뽑습니다. 면 수가 1보다 작으면 ValueError입니다."
+        },
+        {
+          "name": "days_left",
+          "signature": "days_left(\"2026-12-25\", today)",
+          "note": "목표 날짜까지 남은 일수를 정수로 반환합니다. 오늘을 빼면 검사하기 쉽습니다."
+        },
+        {
+          "name": "draw",
+          "signature": "draw([\"민지\", \"수빈\"], 2)",
+          "note": "공백·중복을 정리한 뒤 count명을 뽑습니다. 인원이 부족하면 ValueError입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "반환과 출력",
+          "meaning": "함수는 값을 return하고, print는 main에서 합니다. GUI는 이 반환값을 Label에 보여 줍니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []

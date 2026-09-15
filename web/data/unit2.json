@@ -21,7 +21,13 @@
         "버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요."
       ],
       "extra": false,
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "같은 인사, 다른 접점",
+          "signature": "input/print  ·  Entry/Label  ·  손짓·음성",
+          "note": "하는 일은 같습니다. 사용자가 의도를 전하는 방식만 다릅니다. 아래 CLI와 hello-tk를 나란히 보세요."
+        }
+      ],
       "glossary": [
         {
           "term": "UI",
@@ -77,8 +83,23 @@
         "48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요."
       ],
       "extra": false,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "같은 버튼, 다른 이름",
+          "signature": "tk.Button  ·  ttk.Button  ·  QPushButton",
+          "note": "역할은 클릭입니다. 붙이는 법(pack / addWidget)만 다릅니다. 먼저 hello-tk의 Button·pack·command를 보세요."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "바인딩",
+          "meaning": "다른 언어의 GUI 툴킷을 파이썬에서 쓰게 하는 연결입니다. PySide6·PyQt6가 Qt의 바인딩입니다."
+        },
+        {
+          "term": "ttk",
+          "meaning": "tkinter의 테마 위젯입니다. 기능은 Label·Button과 같고 모양만 운영체제 테마를 따릅니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -124,7 +145,16 @@
           "note": "받을 정보의 형태를 먼저 정하면 위젯 이름이 따라옵니다. 아래 예제는 역할별로 나뉘어 있습니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "컨테이너",
+          "meaning": "다른 위젯을 담는 상자입니다. Frame·QWidget이 컨테이너입니다."
+        },
+        {
+          "term": "제어 변수",
+          "meaning": "체크·라디오 값을 담는 BooleanVar·StringVar입니다. 위젯이 아니라 변수에서 읽습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -169,7 +199,16 @@
           "note": "위젯을 생성한 것만으로는 화면에 나타나지 않습니다. 부모를 정하고 배치를 호출해야 합니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "expand와 fill",
+          "meaning": "expand는 남는 공간을 누구에게 줄지, fill은 받은 칸을 위젯이 채울지입니다."
+        },
+        {
+          "term": "sticky",
+          "meaning": "격자 칸보다 위젯이 작을 때 어느 벽에 붙일지입니다. \"ew\"는 좌우로 늘립니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -216,7 +255,12 @@
           "note": "함수 자체를 맡깁니다. greet()는 지금 호출입니다. 아래 웹 예제에서 괄호 유무를 먼저 보세요."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "콜백 / 시그널",
+          "meaning": "나중에 사건이 나면 불러 달라고 맡기는 함수입니다. tkinter는 command, Qt는 connect입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -272,7 +316,12 @@
           "note": "열기·저장 창은 별도 모듈입니다. 경로가 비었으면(취소) 파일을 읽거나 쓰지 않습니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "\"1.0\"",
+          "meaning": "Text의 위치입니다. 첫 줄(1)의 0번째 칸입니다. 저장할 때는 끝의 자동 개행을 빼는 end-1c를 검토하세요."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -317,7 +366,12 @@
           "note": "tkinter의 Tk·pack·command·mainloop를 Qt 이름으로 옮긴 순서입니다. 단어만 바꾸기보다 역할을 옮기세요."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "objectName",
+          "meaning": "Designer가 붙인 부품 이름입니다. 화면에 보이는 text와 다릅니다. 코드는 objectName으로 찾습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -347,8 +401,19 @@
         "프로젝트 ZIP과 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
       ],
       "extra": true,
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "기능 모듈",
+          "signature": "from core.logic import roll, days_left, draw",
+          "note": "화면 파일은 계산하지 않습니다. 같은 함수를 tkinter와 PySide6에서 부릅니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "화면과 기능 분리",
+          "meaning": "core에는 tkinter·PySide6가 없습니다. 웹에서 기능을 먼저 검사한 뒤 GUI를 붙입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -381,7 +446,12 @@
           "note": "예제를 보지 않고 이 순서로 창을 만들 수 있으면 2단원 본편을 닫을 수 있습니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "Tk 객체",
+          "meaning": "창을 만드는 출발점입니다. 종합 평가에서 묻는 바로 그 객체입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -531,7 +601,12 @@
           "note": "Tk의 테마 위젯입니다. Label·Entry·Button의 역할은 같고, 모양만 운영체제 테마를 따릅니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "테마 위젯",
+          "meaning": "역할은 tk.Label·tk.Button과 같고, 테두리·색만 운영체제 테마를 따릅니다. command·pack은 그대로입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -622,7 +697,18 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
+      "pre_api": [
+        {
+          "name": "PyQt6",
+          "signature": "from PyQt6.QtWidgets import QApplication, ...",
+          "note": "위젯 이름과 호출은 PySide6와 같습니다. import 줄의 패키지 이름만 바꿉니다."
+        },
+        {
+          "name": "바꿔 볼 곳",
+          "signature": "examples[\"hello-pyside\"]의 import를 PyQt6로",
+          "note": "setWindowTitle·clicked.connect·app.exec는 그대로입니다. 한 줄만 바꿔 같은 창이 열리는지 확인하세요."
+        }
+      ],
       "glossary": [
         {
           "term": "PyQt6",
@@ -809,7 +895,16 @@
           "note": "그린 도형을 지웁니다. 다시 그리기 전에 호출하면 겹치지 않습니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "인덱스",
+          "meaning": "목록의 몇 번째인지입니다. 0부터 셉니다. curselection()이 그 번호를 줍니다."
+        },
+        {
+          "term": "좌표",
+          "meaning": "Canvas는 칸이 아니라 (x, y)로 그립니다. 왼쪽 위가 (0, 0)입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -858,9 +953,19 @@
           "name": "Canvas",
           "signature": "canvas.create_oval(x1, y1, x2, y2, fill=...)",
           "note": "도형·그림을 그리는 공간입니다. 버튼·입력칸이 아니라 좌표로 그립니다."
+        },
+        {
+          "name": "pack을 빼면",
+          "signature": "위젯.pack()  # 생성만으로는 안 보임",
+          "note": "도감의 위젯도 모두 pack을 호출합니다. 생성과 배치는 다른 단계입니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "도감",
+          "meaning": "한 창에 여러 위젯을 모아 비교합니다. 실제 화면은 필요한 위젯만 고릅니다."
+        }
+      ],
       "tips": {
         "history": "위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품이고, 나중에 보는 Qt·wx·Kivy도 같은 역할을 다른 이름으로 제공합니다.",
         "youtube": []
@@ -901,7 +1006,12 @@
           "note": "도형을 그리는 공간입니다. tkinter Canvas와 일대일은 아니지만 같은 역할로 연결합니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "이름 대응",
+          "meaning": "Label→QLabel, Entry→QLineEdit, Text→QPlainTextEdit, Check→QCheckBox입니다. 역할로 외우세요."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -942,7 +1052,12 @@
           "note": "표시 문자열을 바꿉니다. result.text = \"...\"처럼 속성을 새로 만들면 화면에 반영되지 않습니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "QButtonGroup",
+          "meaning": "라디오를 한 묶음으로 만듭니다. 묶지 않으면 여러 개가 같이 켜질 수 있습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1063,6 +1178,11 @@
           "name": "place",
           "signature": "위젯.place(x=20, y=10)",
           "note": "픽셀 좌표로 붙입니다. 창 크기·글꼴이 바뀌면 잘리기 쉬워 입력 폼에는 grid나 pack을 먼저 검토합니다."
+        },
+        {
+          "name": "세 배치를 한 창에서",
+          "signature": "LabelFrame마다 pack / grid / place",
+          "note": "부모를 나누면 한 창에서 비교할 수 있습니다. 같은 Frame 안에서는 pack과 grid를 섞지 마세요."
         }
       ],
       "glossary": [
@@ -1101,7 +1221,12 @@
           "note": "0부터 세는 행·열입니다. i // 3이 행, i % 3이 열입니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "중첩 레이아웃",
+          "meaning": "세로 상자 안에 가로 상자를 넣을 수 있습니다. addLayout은 레이아웃, addWidget은 위젯입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1137,7 +1262,12 @@
           "note": "입력 글자를 가립니다. tkinter Entry의 show=\"*\"와 같은 목적입니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "칸 병합",
+          "meaning": "addWidget(위젯, 행, 열, 행개수, 열개수)의 뒤 두 숫자로 여러 칸을 차지합니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1249,7 +1379,12 @@
           "note": "Enter 키의 이벤트 이름입니다. 문자열 \"Return\"이 아니라 꺾쇠를 포함한 이름입니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "이벤트 이름",
+          "meaning": "\"<Return>\"처럼 꺾쇠를 포함한 문자열입니다. \"Return\"만 쓰면 연결되지 않습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1327,7 +1462,12 @@
           "note": "Qt의 이벤트 루프입니다. tkinter의 mainloop에 대응합니다. show() 뒤에 호출합니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "시그널",
+          "meaning": "위젯이 알리는 사건입니다. clicked·textChanged가 시그널이고, connect로 함수를 붙입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1511,7 +1651,12 @@
           "note": "여러 줄 텍스트를 넣거나 읽습니다. QLineEdit의 setText/text와 이름을 구별하세요."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "QMainWindow",
+          "meaning": "메뉴·중앙 위젯이 있는 문서 창입니다. 인사 앱의 QWidget보다 메모장에 맞습니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1555,9 +1700,24 @@
           "name": "end-1c",
           "signature": "self.text.get('1.0', 'end-1c')",
           "note": "마지막 자동 개행을 빼고 글자 수를 셉니다. 저장에도 같은 끝을 쓰면 빈 줄이 쌓이지 않습니다."
+        },
+        {
+          "name": "undo=True",
+          "signature": "tk.Text(root, wrap=\"word\", undo=True)",
+          "note": "Ctrl+Z로 되돌리기를 켭니다. 기본 Text는 undo가 꺼져 있습니다."
+        },
+        {
+          "name": "accelerator",
+          "signature": "file_menu.add_command(..., accelerator=\"Ctrl+S\")",
+          "note": "메뉴에 단축키 글자만 보여 줍니다. 실제 키 동작은 bind가 합니다. 둘 다 넣으세요."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "dirty",
+          "meaning": "저장 이후 글이 바뀌었는지입니다. 제목 앞 *와 닫기 확인의 기준입니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1596,9 +1756,19 @@
           "name": "triggered(bool)",
           "signature": "action.triggered.connect(lambda checked=False, fn=handler: fn())",
           "note": "triggered는 체크 여부를 넘깁니다. 그대로 save_file에 연결하면 save_as로 오해할 수 있어 감쌉니다."
+        },
+        {
+          "name": "QMessageBox.question",
+          "signature": "QMessageBox.question(..., B.Save | B.Discard | B.Cancel)",
+          "note": "저장/버리기/취소 세 갈래입니다. askyesnocancel에 대응합니다."
         }
       ],
-      "glossary": [],
+      "glossary": [
+        {
+          "term": "isModified",
+          "meaning": "Qt가 기억하는 dirty 플래그입니다. 저장 후 setModified(False)로 되돌립니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1702,8 +1872,29 @@
       "args": "",
       "checks": "assert days_left(\"2026-12-25\", date(2026,12,24)) == 1\nassert 1 <= roll(6) <= 6\nassert len(draw([\"A\", \"A\", \"B\"], 2)) == 2\n",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "roll",
+          "signature": "roll(sides)",
+          "note": "1부터 sides까지 정수 하나를 뽑습니다. 면 수가 1보다 작으면 ValueError입니다."
+        },
+        {
+          "name": "days_left",
+          "signature": "days_left(\"2026-12-25\", today)",
+          "note": "목표 날짜까지 남은 일수를 정수로 반환합니다. 오늘을 빼면 검사하기 쉽습니다."
+        },
+        {
+          "name": "draw",
+          "signature": "draw([\"민지\", \"수빈\"], 2)",
+          "note": "공백·중복을 정리한 뒤 count명을 뽑습니다. 인원이 부족하면 ValueError입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "반환과 출력",
+          "meaning": "함수는 값을 return하고, print는 main에서 합니다. GUI는 이 반환값을 Label에 보여 줍니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1762,8 +1953,29 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "messagebox.showwarning",
+          "signature": "messagebox.showwarning(\"입력 확인\", 메시지)",
+          "note": "잘못된 입력을 창으로 알립니다. print만 하면 창을 보는 사용자는 모릅니다."
+        },
+        {
+          "name": "textvariable",
+          "signature": "result = tk.StringVar()\ntk.Label(root, textvariable=result)",
+          "note": "Label이 변수를 구독합니다. result.set(\"글자\")하면 화면이 바뀝니다. config(text=...)와 같은 목적입니다."
+        },
+        {
+          "name": "Entry.insert",
+          "signature": "entry.insert(0, \"6\")",
+          "note": "시작할 때 칸에 기본값을 넣습니다. 0은 맨 앞 위치입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "입력 확인",
+          "meaning": "빈 칸·0면·잘못된 날짜는 core가 ValueError를 냅니다. GUI는 try/except로 메시지를 보여 줍니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
@@ -1784,8 +1996,29 @@
       "args": "",
       "checks": "",
       "note": "",
-      "pre_api": [],
-      "glossary": [],
+      "pre_api": [
+        {
+          "name": "QComboBox",
+          "signature": "self.mode.addItems([\"주사위\", \"D-day\", \"추첨\"])\nself.mode.currentText()",
+          "note": "드롭다운으로 모드를 고릅니다. tkinter 라디오+StringVar를 한 위젯으로 대신합니다."
+        },
+        {
+          "name": "QMessageBox.warning",
+          "signature": "QMessageBox.warning(self, \"입력 확인\", str(error))",
+          "note": "messagebox.showwarning에 대응합니다. 첫 인자는 부모 창입니다."
+        },
+        {
+          "name": "클래스와 self",
+          "signature": "self.entry = QLineEdit(\"6\")",
+          "note": "run_task에서 같은 입력칸을 쓰려면 위젯을 self에 둡니다. 함수만 쓰면 이름이 사라집니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "currentText",
+          "meaning": "지금 고른 콤보 항목의 글자입니다. StringVar.get()에 대응합니다."
+        }
+      ],
       "tips": {
         "history": "",
         "youtube": []
