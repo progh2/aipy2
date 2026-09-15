@@ -1,7 +1,7 @@
 """Unit II pre_api/glossary fill for #53. Applied after unit2_density.
 
 Adds or completes code-before cards for examples that introduce a new
-function/attribute/widget option. Does not seed history/youtube (#58).
+function/attribute/widget option. History/youtube seeds live in unit2_tips.py (#58).
 wxPython appendix APIs are filled in wx_appendix.py (#55).
 Kivy appendix APIs are filled in kivy_appendix.py (#56).
 """

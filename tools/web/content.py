@@ -892,8 +892,10 @@ import unit2_pre_api
 import wx_appendix
 import kivy_appendix
 import unit2_shots
+import unit2_tips
 unit2_density.apply()
 unit2_pre_api.apply()
 wx_appendix.apply()
 kivy_appendix.apply()
 unit2_shots.apply()
+unit2_tips.apply()

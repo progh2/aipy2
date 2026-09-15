@@ -9,6 +9,7 @@ import questions as bank
 import later_units
 import slots as content_slots
 import unit2_pre_api
+import unit2_tips
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -179,7 +180,9 @@ assert hello['pre_api'] and hello['glossary'] and hello['tips']['history'] and h
 assert examples['widgets-tk']['pre_api'] and examples['widgets-tk']['tips']['history']
 assert examples['widgets-tk']['screenshots']
 assert examples['hello-pyside']['pre_api'] and examples['hello-pyside']['screenshots']
-assert not examples['hello-pyside']['tips']['history']
+assert examples['hello-pyside']['tips']['history'] and examples['hello-pyside']['tips']['youtube']
+assert examples['hello-kivy']['tips']['history'] and examples['hello-kivy']['tips']['youtube']
+assert examples['hello-wx']['tips']['history'] and not examples['hello-wx']['tips']['youtube']
 libraries=(WEB/'units/unit02/libraries.html').read_text()
 assert 'id="example-guides"' in libraries
 assert 'id="pre-api-hello-tk"' in libraries
@@ -187,6 +190,8 @@ assert 'tk.Button' in libraries and 'command=함수()' in libraries
 assert '코드 전에 알아 두기' in libraries
 assert '역사 한 줄' in libraries
 assert 'https://www.youtube.com/watch?v=YXPyB4XeYLA' in libraries
+assert 'https://www.youtube.com/watch?v=Z1N9JzNax2k' in libraries
+assert 'https://www.youtube.com/watch?v=l8Imtec4ReQ' in libraries
 assert 'assets/screenshots/tk.png' in libraries
 assert 'id="example-guides"' in widgets
 assert 'id="pre-api-widgets-tk"' in widgets
@@ -285,6 +290,37 @@ assert '브라우저(Pyodide)' in examples['first-kivy']['note']
 assert 'pip install kivy' in examples['first-kivy']['note']
 assert 'kivy.html' in (WEB / 'units/unit02/review.html').read_text()
 assert 'kivy.html' in (WEB / 'units/unit02/index.html').read_text()
+# #58: Unit II history/youtube seeds (empty youtube is OK where no solid public video).
+for lid in unit2_tips.unit2_history_lessons():
+ assert unit2[lid]['tips']['history'], ('unit2 history', lid)
+for lid in unit2_tips.unit2_youtube_lessons():
+ assert unit2[lid]['tips']['youtube'], ('unit2 youtube', lid)
+assert not unit2['wx']['tips']['youtube']
+assert not unit2['project']['tips']['youtube']
+assert not unit2['review']['tips']['youtube']
+assert not unit2['libraries']['tips']['youtube']
+ui_page=(WEB/'units/unit02/ui.html').read_text()
+assert 'id="content-tips"' in ui_page
+assert '더 알아보는 팁' in ui_page
+assert 'https://www.youtube.com/watch?v=XIGSJshYb90' in ui_page
+assert 'Xerox Alto' in ui_page
+pyside_page=(WEB/'units/unit02/pyside.html').read_text()
+assert 'https://www.youtube.com/watch?v=Z1N9JzNax2k' in pyside_page
+assert 'id="content-tips"' in pyside_page
+kivy_page_tips=(WEB/'units/unit02/kivy.html').read_text()
+assert 'https://www.youtube.com/watch?v=l8Imtec4ReQ' in kivy_page_tips
+assert 'id="content-tips"' in kivy_page_tips
+wx_page_tips=(WEB/'units/unit02/wx.html').read_text()
+assert '역사 한 줄' in wx_page_tips and 'Julian Smart' in wx_page_tips
+assert 'id="content-tips"' in wx_page_tips
+widgets_tips=(WEB/'units/unit02/widgets.html').read_text()
+assert 'id="content-tips"' in widgets_tips
+assert 'https://www.youtube.com/watch?v=YXPyB4XeYLA' in widgets_tips
+assert '역사 한 줄' in (WEB/'units/unit02/layout.html').read_text()
+assert '역사 한 줄' in (WEB/'units/unit02/events.html').read_text()
+assert '역사 한 줄' in (WEB/'units/unit02/memo.html').read_text()
+assert '역사 한 줄' in (WEB/'units/unit02/project.html').read_text()
+assert '역사 한 줄' in (WEB/'units/unit02/review.html').read_text()
 assert 'id="pre-api"' in libraries
 assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
 assert 'id="pre-api-hello-ttk"' in libraries

@@ -1,7 +1,7 @@
 """Unit II appendix: rebuild the same memo/widget apps with wxPython (#55).
 
 Imported at the end of content.py. Does not change the tk/PySide example
-lists on the main Unit II topics. History/youtube seeding stays #58;
+lists on the main Unit II topics. History/youtube seeds are unit2_tips.py (#58).
 Kivy appendix is kivy_appendix.py (#56).
 """
 from content import ex, lesson, units, examples, core
