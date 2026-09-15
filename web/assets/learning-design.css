@@ -26,3 +26,15 @@
 .example-links button[aria-pressed=true] {border-color:#117365;background:#e9f7f2;color:#114e43}
 .lesson-workspace .editor-layout {grid-template-columns:145px minmax(0,1fr)}
 @media(max-width:700px){.lesson-workspace .editor-layout{grid-template-columns:1fr}.lesson-workspace .lab h2{font-size:19px}.lesson-workspace .editor-bar{flex-wrap:wrap}}
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:20px 0}
+.topic-card{display:flex;flex-direction:column;gap:8px;padding:20px;border:1px solid var(--line,#dce3ed);border-radius:14px;background:#fff;text-decoration:none;color:inherit;min-width:0}
+.topic-card:hover{border-color:#117365;background:#f3faf7}
+.topic-card .number{font:700 13px var(--mono,monospace);color:#117365}
+.topic-card h3{margin:0;font-size:1.05rem}
+.topic-card p{margin:0;color:#506481;font-size:.92rem}
+.topic-card>span:last-child{margin-top:auto;font-weight:700;color:#1e2761}
+.lesson-prose{margin:20px 0 8px}
+.lesson-prose p{line-height:1.9}
+.topic-hero h1{font-size:clamp(1.8rem,3vw,2.6rem)}
+.topic-nav{margin:28px 0 12px;flex-wrap:wrap}
+.topic-hero .eyebrow a{color:inherit}

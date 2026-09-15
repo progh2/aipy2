@@ -137,6 +137,28 @@ assert 'admins' in teacher_focus
 catalog=json.loads((WEB/'data/catalog.json').read_text())
 assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
+assert catalog['topics']['units/unit01/index.html'][0]['href']=='units/unit01/overview.html'
+assert catalog['topics']['units/unit02/index.html'][2]['href']=='units/unit02/widgets.html'
+for u, lessons in units.items():
+ for lesson in lessons:
+  topic_page=WEB/f'units/unit0{u}/{lesson["id"]}.html'
+  assert topic_page.exists(), ('missing topic page', topic_page)
+  html=topic_page.read_text()
+  assert f'data-complete="u{u}-{lesson["id"]}"' in html
+  assert f'data-topic="{lesson["id"]}"' in html
+  assert 'class="lesson-prose"' in html
+  assert 'assets/follow.js' in html
+  assert lesson['lead'] in html
+  if lesson['examples']:
+   assert 'id="lab"' in html
+   assert all(eid in html for eid in lesson['examples'])
+unit_index=(WEB/'units/unit01/index.html').read_text()
+assert 'data-lessons=' in unit_index
+assert 'overview.html' in unit_index
+assert 'id="topic-index-title"' in unit_index
+widgets=(WEB/'units/unit02/widgets.html').read_text()
+assert 'id="lab"' in widgets and 'widgets-tk' in widgets
+assert 'data-complete="u2-widgets"' in widgets
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')
@@ -267,8 +289,8 @@ assert catalog_questions and catalog_questions[0]['id'].startswith('u'), 'catalo
 unit=(WEB/'units/unit01/index.html').read_text()
 assert 'assets/understanding.js' in unit
 assert 'assets/help.js' in unit
-assert 'data-complete="u1-overview"' in unit
-assert 'class="completion"' in unit
+assert 'class="completion"' in (WEB/'units/unit01/overview.html').read_text()
+assert 'data-complete="u1-overview"' in (WEB/'units/unit01/overview.html').read_text()
 assert 'assets/understanding.js' in (WEB/'index.html').read_text()
 assert 'assets/assignments.js' in unit
 assert 'assets/assignments.js' in (WEB/'index.html').read_text()

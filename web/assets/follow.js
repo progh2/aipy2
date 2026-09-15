@@ -33,6 +33,7 @@ function currentPage() {
 }
 
 function currentTopic() {
+ if (document.body.dataset.topic) return document.body.dataset.topic;
  const fromHash = topicFromHash(location.hash);
  if (fromHash && document.getElementById(fromHash)) return fromHash;
  const lessons = [...document.querySelectorAll('section.lesson[id]')].map((el) => ({

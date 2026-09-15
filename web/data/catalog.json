@@ -28,7 +28,8 @@
         "title": "모듈과 패키지가 필요한 이유",
         "examples": [
           "reuse"
-        ]
+        ],
+        "href": "units/unit01/overview.html"
       },
       {
         "id": "define",
@@ -39,7 +40,8 @@
           "circle-function",
           "circle-mixed",
           "class-module"
-        ]
+        ],
+        "href": "units/unit01/define.html"
       },
       {
         "id": "entrypoint",
@@ -47,7 +49,8 @@
         "examples": [
           "main-guard",
           "rectangle"
-        ]
+        ],
+        "href": "units/unit01/entrypoint.html"
       },
       {
         "id": "imports",
@@ -58,7 +61,8 @@
           "import-2",
           "import-3",
           "import-4"
-        ]
+        ],
+        "href": "units/unit01/imports.html"
       },
       {
         "id": "packages",
@@ -72,7 +76,8 @@
           "all",
           "animal-check",
           "stars"
-        ]
+        ],
+        "href": "units/unit01/packages.html"
       },
       {
         "id": "os-sys",
@@ -81,14 +86,16 @@
           "os",
           "os-pc",
           "sys"
-        ]
+        ],
+        "href": "units/unit01/os-sys.html"
       },
       {
         "id": "math",
         "title": "math · 계산을 함수로 표현하기",
         "examples": [
           "math"
-        ]
+        ],
+        "href": "units/unit01/math.html"
       },
       {
         "id": "random",
@@ -97,7 +104,8 @@
           "random",
           "dice",
           "gift"
-        ]
+        ],
+        "href": "units/unit01/random.html"
       },
       {
         "id": "datetime",
@@ -105,35 +113,40 @@
         "examples": [
           "datetime",
           "christmas"
-        ]
+        ],
+        "href": "units/unit01/datetime.html"
       },
       {
         "id": "thirdparty",
         "title": "PyPI와 서드파티 패키지",
         "examples": [
           "thirdparty"
-        ]
+        ],
+        "href": "units/unit01/thirdparty.html"
       },
       {
         "id": "review",
         "title": "단원 마무리와 종합 평가",
         "examples": [
           "final-output"
-        ]
+        ],
+        "href": "units/unit01/review.html"
       },
       {
         "id": "project",
         "title": "1단원 프로젝트 · 우리 반 기능 패키지",
         "examples": [
           "core"
-        ]
+        ],
+        "href": "units/unit01/project.html"
       }
     ],
     "units/unit02/index.html": [
       {
         "id": "ui",
         "title": "사용자 인터페이스 · CLI, GUI, NUI",
-        "examples": []
+        "examples": [],
+        "href": "units/unit02/ui.html"
       },
       {
         "id": "libraries",
@@ -145,7 +158,8 @@
           "hello-pyqt",
           "hello-wx",
           "hello-kivy"
-        ]
+        ],
+        "href": "units/unit02/libraries.html"
       },
       {
         "id": "widgets",
@@ -153,7 +167,8 @@
         "examples": [
           "widgets-tk",
           "widgets-pyside"
-        ]
+        ],
+        "href": "units/unit02/widgets.html"
       },
       {
         "id": "layout",
@@ -161,7 +176,8 @@
         "examples": [
           "layout-tk",
           "layout-pyside"
-        ]
+        ],
+        "href": "units/unit02/layout.html"
       },
       {
         "id": "events",
@@ -169,7 +185,8 @@
         "examples": [
           "hello-tk",
           "hello-pyside"
-        ]
+        ],
+        "href": "units/unit02/events.html"
       },
       {
         "id": "memo",
@@ -179,7 +196,8 @@
           "memo-pyside",
           "memo-plus-tk",
           "memo-plus-pyside"
-        ]
+        ],
+        "href": "units/unit02/memo.html"
       },
       {
         "id": "pyside",
@@ -187,7 +205,8 @@
         "examples": [
           "hello-pyside",
           "memo-pyside"
-        ]
+        ],
+        "href": "units/unit02/pyside.html"
       },
       {
         "id": "project",
@@ -196,41 +215,48 @@
           "core",
           "project-tk",
           "project-pyside"
-        ]
+        ],
+        "href": "units/unit02/project.html"
       },
       {
         "id": "review",
         "title": "2단원 마무리 · 개념에서 앱까지",
-        "examples": []
+        "examples": [],
+        "href": "units/unit02/review.html"
       }
     ],
     "units/unit03/index.html": [
       {
         "id": "ml-overview",
         "title": "AI·머신러닝·딥러닝의 관계",
-        "examples": []
+        "examples": [],
+        "href": "units/unit03/ml-overview.html"
       },
       {
         "id": "ml-use",
         "title": "머신러닝이 필요한 문제와 활용",
-        "examples": []
+        "examples": [],
+        "href": "units/unit03/ml-use.html"
       },
       {
         "id": "ml-process",
         "title": "문제 해결 과정과 데이터 분할",
         "examples": [
           "ml-split-small"
-        ]
+        ],
+        "href": "units/unit03/ml-process.html"
       },
       {
         "id": "ml-terms",
         "title": "특성·레이블·모델·하이퍼파라미터",
-        "examples": []
+        "examples": [],
+        "href": "units/unit03/ml-terms.html"
       },
       {
         "id": "ml-methods",
         "title": "지도·비지도·강화 학습",
-        "examples": []
+        "examples": [],
+        "href": "units/unit03/ml-methods.html"
       },
       {
         "id": "ml-libraries",
@@ -239,7 +265,8 @@
           "ml-tools",
           "ml-chart",
           "ml-seaborn"
-        ]
+        ],
+        "href": "units/unit03/ml-libraries.html"
       },
       {
         "id": "ml-preprocess",
@@ -248,7 +275,8 @@
           "ml-scale-small",
           "ml-clean",
           "ml-scale"
-        ]
+        ],
+        "href": "units/unit03/ml-preprocess.html"
       },
       {
         "id": "ml-classification",
@@ -256,7 +284,8 @@
         "examples": [
           "ml-knn-small",
           "ml-classify"
-        ]
+        ],
+        "href": "units/unit03/ml-classification.html"
       },
       {
         "id": "ml-regression",
@@ -265,7 +294,8 @@
           "ml-line-small",
           "ml-regression",
           "ml-housing"
-        ]
+        ],
+        "href": "units/unit03/ml-regression.html"
       },
       {
         "id": "ml-cluster",
@@ -273,7 +303,8 @@
         "examples": [
           "ml-kmeans-small",
           "ml-cluster"
-        ]
+        ],
+        "href": "units/unit03/ml-cluster.html"
       },
       {
         "id": "ml-metrics",
@@ -281,7 +312,8 @@
         "examples": [
           "ml-confusion-small",
           "ml-metrics"
-        ]
+        ],
+        "href": "units/unit03/ml-metrics.html"
       },
       {
         "id": "ml-selection",
@@ -290,33 +322,38 @@
           "ml-cv-small",
           "ml-selection",
           "ml-learning-curve"
-        ]
+        ],
+        "href": "units/unit03/ml-selection.html"
       },
       {
         "id": "ml-project",
         "title": "모델 구현·평가 프로젝트와 단원 정리",
         "examples": [
           "ml-selection"
-        ]
+        ],
+        "href": "units/unit03/ml-project.html"
       }
     ],
     "units/unit04/index.html": [
       {
         "id": "cv-overview",
         "title": "컴퓨터 비전과 영상 처리",
-        "examples": []
+        "examples": [],
+        "href": "units/unit04/cv-overview.html"
       },
       {
         "id": "cv-pixels",
         "title": "픽셀·해상도·RGB·그레이스케일",
         "examples": [
           "cv-pixels"
-        ]
+        ],
+        "href": "units/unit04/cv-pixels.html"
       },
       {
         "id": "cv-pipeline",
         "title": "알고리즘·처리 과정·평가 기준",
-        "examples": []
+        "examples": [],
+        "href": "units/unit04/cv-pipeline.html"
       },
       {
         "id": "cv-libraries",
@@ -324,7 +361,8 @@
         "examples": [
           "cv-pillow",
           "cv-skimage"
-        ]
+        ],
+        "href": "units/unit04/cv-libraries.html"
       },
       {
         "id": "cv-io",
@@ -332,14 +370,16 @@
         "examples": [
           "cv-io",
           "cv-display"
-        ]
+        ],
+        "href": "units/unit04/cv-io.html"
       },
       {
         "id": "cv-filters",
         "title": "블러·에지·이진화",
         "examples": [
           "cv-filters"
-        ]
+        ],
+        "href": "units/unit04/cv-filters.html"
       },
       {
         "id": "cv-transform",
@@ -347,14 +387,16 @@
         "examples": [
           "cv-perspective",
           "cv-click-card"
-        ]
+        ],
+        "href": "units/unit04/cv-transform.html"
       },
       {
         "id": "cv-features",
         "title": "에지·코너·윤곽선으로 중요한 부분 찾기",
         "examples": [
           "cv-features"
-        ]
+        ],
+        "href": "units/unit04/cv-features.html"
       },
       {
         "id": "cv-haar",
@@ -362,7 +404,8 @@
         "examples": [
           "cv-haar",
           "cv-camera"
-        ]
+        ],
+        "href": "units/unit04/cv-haar.html"
       },
       {
         "id": "cv-yolo",
@@ -371,7 +414,8 @@
           "cv-yolo",
           "cv-yolo-count",
           "cv-count"
-        ]
+        ],
+        "href": "units/unit04/cv-yolo.html"
       },
       {
         "id": "cv-project",
@@ -379,7 +423,8 @@
         "examples": [
           "cv-perspective",
           "cv-features"
-        ]
+        ],
+        "href": "units/unit04/cv-project.html"
       }
     ]
   },

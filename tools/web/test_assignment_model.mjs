@@ -55,7 +55,7 @@ eq(items.some((row) => row.type === 'question' && row.id === 'u1-q041' && row.ti
 eq(items.some((row) => row.type === 'example' && row.id === 'reuse' && row.unit === 1), true, 'catalog example');
 eq(filterCatalogTargets(items, {unit: 1, type: 'question', search: 'add'}).map((r) => r.id), ['u1-q041'], 'filter');
 eq(targetHref('../', {type: 'question', id: 'u1-q041', unit: 1}, catalog), '../units/unit01/index.html#u1-q041', 'q href');
-eq(targetHref('../', {type: 'example', id: 'reuse'}, catalog), '../units/unit01/index.html#overview', 'ex href');
+eq(targetHref('../', {type: 'example', id: 'reuse'}, catalog), '../units/unit01/overview.html', 'ex href');
 
 const assignment = {
  title: '모듈 과제',

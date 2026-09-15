@@ -171,13 +171,16 @@ export function targetHref(prefix, target, catalog) {
   for (const [page, rows] of Object.entries(topics)) {
    for (const row of rows || []) {
     if (row && Array.isArray(row.examples) && row.examples.includes(target.id)) {
+     if (row.href) return `${base}${row.href}`;
+     const unit = /unit0([1-4])/.exec(page);
+     if (unit && row.id) return `${base}units/unit0${unit[1]}/${row.id}.html`;
      return `${base}${page}#${row.id}`;
     }
    }
   }
  }
- if (target.unit) return `${base}units/unit0${target.unit}/index.html#lab`;
- return `${base}units/unit01/index.html#lab`;
+ if (target.unit) return `${base}units/unit0${target.unit}/index.html`;
+ return `${base}units/unit01/index.html`;
 }
 
 export function assignmentVisible(assignment, classId, now = Date.now()) {

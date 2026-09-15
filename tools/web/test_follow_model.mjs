@@ -30,7 +30,11 @@ eq(samePage('units/unit01/index.html', '/units/unit01/index.html'), true, 'same 
 eq(shouldNavigate('units/unit01/index.html', {page: 'units/unit02/index.html'}), true, 'other unit');
 eq(shouldNavigate('units/unit01/index.html', {page: 'units/unit01/index.html'}), false, 'same unit');
 eq(focusHref('../../', {page: 'units/unit03/index.html', topicAnchor: 'ml-overview'}),
- '../../units/unit03/index.html#ml-overview', 'focus href');
+ '../../units/unit03/ml-overview.html', 'focus href');
+eq(shouldNavigate('units/unit01/overview.html', {page: 'units/unit01/index.html', topicAnchor: 'overview'}),
+ false, 'topic page matches unit+anchor');
+eq(shouldNavigate('units/unit01/overview.html', {page: 'units/unit01/index.html', topicAnchor: 'define'}),
+ true, 'other topic navigates');
 eq(topicFromHash('#overview'), 'overview', 'hash topic');
 eq(topicFromHash('#bad id'), null, 'invalid hash');
 eq(visibleTopic([{id: 'a', top: -20}, {id: 'b', top: 40}, {id: 'c', top: 400}], 120), 'b', 'visible topic');
@@ -102,6 +106,7 @@ eq(focusKey({page: 'units/unit01/index.html', topicAnchor: 'a', exampleId: null,
  'units/unit01/index.html|a||9', 'focus key');
 
 eq(isUnitLessonPage('units/unit01/index.html'), true, 'unit lesson page');
+eq(isUnitLessonPage('units/unit01/overview.html'), true, 'topic lesson page');
 eq(isUnitLessonPage('units/unit01/summary.html'), false, 'unit summary is not lesson');
 eq(focusFields({page: 'units/unit02/index.html', topicAnchor: 'events'}),
  {page: 'units/unit02/index.html', topicAnchor: 'events', exampleId: null}, 'focus fields');
@@ -121,6 +126,8 @@ eq(focusFromUnitClick({href: '../unit02/index.html', currentPage: unit01}),
  {page: 'units/unit02/index.html', topicAnchor: null, exampleId: null}, 'next unit page');
 eq(focusFromUnitClick({href: '../unit02/index.html#define', currentPage: unit01}),
  {page: 'units/unit02/index.html', topicAnchor: 'define', exampleId: null}, 'other unit topic');
+eq(focusFromUnitClick({href: 'widgets.html', currentPage: 'units/unit02/index.html'}),
+ {page: 'units/unit02/widgets.html', topicAnchor: 'widgets', exampleId: null}, 'topic file click');
 eq(focusFromUnitClick({href: 'summary.html', currentPage: unit01}), null, 'skip summary');
 eq(focusFromUnitClick({href: '../../downloads/unit1-examples.zip', currentPage: unit01}),
  null, 'skip download');

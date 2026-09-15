@@ -11,7 +11,7 @@
 | 교과서 TOC 원본 | `tools/web/textbook.py`의 `BOOK` / `MAP` (인쇄본 4–5쪽) |
 | 레슨 원본 | `tools/web/content.py` (Ⅰ·Ⅱ), `tools/web/later_units.py` (Ⅲ·Ⅳ) |
 | 생성 데이터 | `web/data/unit1.json` … `unit4.json`, `web/data/catalog.json` |
-| 생성기 | `tools/web/build.py` → `web/units/unit0N/index.html` |
+| 생성기 | `tools/web/build.py` → `web/units/unit0N/index.html` + `web/units/unit0N/{topic}.html` |
 
 생성 HTML은 결과물입니다. 이후 콘텐츠·페이지 구조 변경은 `tools/web/`만 고친 뒤 `python tools/web/build.py`로 다시 만듭니다. 손 편집 예외는 `web/before-you-start.html` 하나입니다.
 
@@ -21,7 +21,7 @@
 
 | # | 기준 | 현재 | 판정 |
 | --- | --- | --- | --- |
-| 1 | 교과서 소단원(또는 학습 주제)마다 **독립 완결 페이지** | 단원당 HTML 1장. 주제는 `#id` 앵커 섹션 | **미달** |
+| 1 | 교과서 소단원(또는 학습 주제)마다 **독립 완결 페이지** | #51 이후 `units/unit0N/{id}.html`. 감사 당시(#50)는 단원당 HTML 1장 | **#51에서 구조 충족** |
 | 2 | GUI 예제 수·설명이 충분 | Ⅱ단원 9주제 / 고유 예제 17개. widgets·layout·events가 특히 얇음 | **미달 (얇음)** |
 | 3 | 새 API·속성을 코드 **등장 전에** 설명 | 문단은 있으나 `<details>`에 접힘. 스키마 필드 없음 | **미달** |
 | 4 | 실습 실행 결과 **스크린샷을 페이지에** | 인사 앱 6장만 갤러리에 노출. 예제별 스샷 없음 | **미달** |
@@ -35,19 +35,17 @@
 
 ## 2. 페이지가 어떻게 만들어지는가
 
-`build.py`는 단원마다 **하나의** `web/units/unit0N/index.html`을 씁니다.
+`build.py`는 단원마다 **안내 페이지** `web/units/unit0N/index.html`과 **주제별 완결 페이지** `web/units/unit0N/{topic}.html`을 씁니다. (#51)
 
-- 각 학습 주제는 `<section class="lesson" id="{lesson_id}">`입니다.
-- 사이드 목차(`textbook.toc`)와 갤러리 링크는 `index.html#{id}` 앵커입니다. **주제별 HTML 파일이 없습니다.**
-- 개념 본문은 `<details class="lesson-details"><summary>개념 더 읽기</summary>` 안에 접혀 있습니다.
+- 각 학습 주제는 독립 HTML이며, 본문·과제·예제 실습실·주제 문제를 그 페이지에 둡니다. 진행 키는 그대로 `u{n}-{id}`입니다.
+- 사이드 목차(`textbook.toc`)는 `{id}.html`로 연결합니다. 예전 `index.html#{id}` 북마크는 해당 주제 페이지로 이어집니다.
+- 단원 `index.html`은 주제 목록·단원 전체 문제·저널(Ⅱ는 갤러리·시뮬레이터)을 담는 허브입니다.
+- 주제 페이지의 개념 본문은 접지 않고 바로 읽습니다. 단원 허브 카드에는 도입문만 있습니다.
 - 파이 팁(`mascot.lesson_tip`)은 주제마다 붙지만, Ⅰ·Ⅱ만 주제별 문장이 있고 Ⅲ·Ⅳ는 공통 문구로 떨어집니다.
-- 코드 실습실은 단원 페이지에 **에디터 1개**를 두고, 주제의 예제 버튼이 그 에디터를 엽니다.
-- 연습 문제·저널도 같은 단원 페이지 하단에 묶입니다.
+- 코드 실습실은 **그 주제 페이지**에 둡니다. 예제가 없는 주제는 개념·과제·문제만 둡니다.
 - 단원별 `summary.html`은 그림 요약 페이지이고, 소단원 본편이 아닙니다.
 
-즉 지금 구조는 “4단원 × 장문 스크롤 페이지 + 앵커”입니다. 기준 1(독립 완결 페이지)과 [#51](https://github.com/progh2/aipy2/issues/51)이 요구하는 형태가 아닙니다.
-
-학생·교사가 한 주제로 점프해도, 그 섹션만으로는 실습실·문제·스샷이 완결되지 않습니다. 실습실은 페이지 안 다른 위치로 이동하고, 문제는 맨 아래 공용 목록입니다.
+[#51](https://github.com/progh2/aipy2/issues/51)이 기준 1(독립 완결 페이지)의 구조를 채웁니다. 예제 밀도·선설명·스샷은 여전히 #52–#54 대상입니다.
 
 ---
 

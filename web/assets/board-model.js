@@ -83,7 +83,9 @@ export function currentPlace(presence, titles) {
  const page = typeof presence.page === 'string' ? presence.page : '';
  const unit = /unit0([1-4])/.exec(page);
  if (unit) parts.push(`${['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ'][Number(unit[1])]}`);
- const anchor = presence.topicAnchor;
+ const fileTopic = /unit0[1-4]\/([a-z0-9-]+)\.html$/.exec(page);
+ const fromFile = fileTopic && fileTopic[1] !== 'index' && fileTopic[1] !== 'summary' ? fileTopic[1] : '';
+ const anchor = presence.topicAnchor || fromFile;
  if (anchor && unit) {
   const id = `u${unit[1]}-${anchor}`;
   parts.push(topicTitle(id, titles));
