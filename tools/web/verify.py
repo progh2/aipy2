@@ -8,6 +8,7 @@ from content import examples,questions,units
 import questions as bank
 import later_units
 import slots as content_slots
+import unit2_pre_api
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -212,6 +213,26 @@ assert 'command=greet()' in events_page or 'command=too_early()' in events_page
 memo_page=(WEB/'units/unit02/memo.html').read_text()
 assert 'memo-window-tk' in memo_page and 'memo-files-tk' in memo_page
 assert 'id="pre-api-memo-window-tk"' in memo_page
+# #53: Unit II examples that introduce APIs show pre_api/glossary (wx/Kivy later).
+for eid in unit2_pre_api.unit2_pre_coverage():
+ assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit2 pre_api/glossary', eid)
+ assert examples[eid]['pre_api'], ('unit2 pre_api', eid)
+for lesson in units[2]:
+ page=(WEB/f'units/unit02/{lesson["id"]}.html').read_text()
+ assert '코드 전에 알아 두기' in page, lesson['id']
+ for eid in lesson['examples']:
+  if eid in unit2_pre_api.SKIP_TOOLKIT:
+   continue
+  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+project_page=(WEB/'units/unit02/project.html').read_text()
+assert 'id="pre-api-core"' in project_page and 'roll(sides)' in project_page
+assert 'id="pre-api-project-tk"' in project_page and 'messagebox.showwarning' in project_page
+assert 'id="pre-api-project-pyside"' in project_page and 'QComboBox' in project_page
+assert 'id="pre-api"' in libraries
+assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
+assert 'id="pre-api-hello-ttk"' in libraries
+assert '바인딩' in libraries
+assert not examples['hello-wx']['pre_api'] and not examples['hello-kivy']['pre_api']
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')
