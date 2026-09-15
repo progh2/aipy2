@@ -947,13 +947,7 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [
-        {
-          "src": "pyside.png",
-          "alt": "PySide6 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
-          "caption": "같은 인사를 Qt Widgets로 만든 실행 화면입니다. OS·테마에 따라 외형은 달라집니다."
-        }
-      ]
+      "screenshots": []
     },
     "layout-pack-tk": {
       "id": "layout-pack-tk",
@@ -1846,13 +1840,7 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": [
-        {
-          "src": "tk.png",
-          "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
-          "caption": "같은 인사를 GUI로 만들면 이런 창이 됩니다. OS·테마에 따라 외형은 달라집니다."
-        }
-      ]
+      "screenshots": []
     }
   },
   "questions": [

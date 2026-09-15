@@ -154,8 +154,7 @@ sys.exit(app.exec())'''}, mode='pc',
         {'name': 'QCheckBox.isChecked', 'signature': 'done.isChecked()', 'note': '체크 여부를 bool로 읽습니다. BooleanVar 없이 위젯이 상태를 가집니다.'},
         {'name': 'QButtonGroup', 'signature': 'group = QButtonGroup(window)\ngroup.addButton(radio)', 'note': '라디오를 한 묶음으로 만듭니다. checkedButton()으로 지금 선택된 버튼을 얻습니다.'},
         {'name': 'QLabel.setText', 'signature': 'result.setText("새 글자")', 'note': '표시 문자열을 바꿉니다. result.text = "..."처럼 속성을 새로 만들면 화면에 반영되지 않습니다.'},
-    ],
-    screenshots=SHOT_PS)
+    ])
 
 ex('layout-pack-tk', 'pack · expand와 fill', {'main.py': '''import tkinter as tk
 
@@ -516,8 +515,7 @@ root.mainloop()'''}, mode='pc',
     glossary=[
         {'term': '57쪽 IDLE 코드', 'meaning': 'Frame은 컨테이너, Button은 클릭 요소, 둘을 통칭하면 위젯입니다.'},
         {'term': '확인학습 커버', 'meaning': '이 네 줄(창·위젯·배치·콜백·루프)을 예제 없이 다시 타이핑해 보세요. 그런 다음 조건을 바꾸어 검사합니다.'},
-    ],
-    screenshots=SHOT_TK)
+    ])
 
 ex('project-button-tk', '기능 모듈 한 줄 연결 · 주사위 버튼', {'main.py': '''import tkinter as tk
 from core.logic import roll
