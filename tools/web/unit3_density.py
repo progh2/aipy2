@@ -150,7 +150,7 @@ print("예측을 사실로 단정하지 말고, 틀린 경우의 비용도 적�
 ex('ml-success-mae', '성공 기준을 숫자로 적기', {
     'main.py': '''actual = [10, 12, 8, 14]
 baseline = [11, 11, 11, 11]
-model = [10, 11, 9, 13]
+model = [10, 11, 9, 12]
 
 def mae(true, pred):
     return sum(abs(a - p) for a, p in zip(true, pred)) / len(true)
