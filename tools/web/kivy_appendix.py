@@ -1,7 +1,7 @@
 """Unit II appendix: rebuild the same memo/widget apps with Kivy (#56).
 
 Imported at the end of content.py. Does not change the tk/PySide/wx example
-lists on the main Unit II topics. History/youtube seeding stays #58.
+lists on the main Unit II topics. History/youtube seeds are unit2_tips.py (#58).
 """
 from content import ex, lesson, units, examples, core
 from slots import api_items, glossary_items
