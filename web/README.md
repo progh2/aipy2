@@ -17,6 +17,7 @@
 
 설명·예제: `tools/web/content.py` / 문제: `tools/web/questions.py`
 HTML 생성: `tools/web/build.py` / 공통 동작과 디자인: `web/assets/`
+선설명·역사/유튜브 팁·실행 스샷 칸: `tools/web/content_schema.py` · [docs/content-schema.md](../docs/content-schema.md)
 
 ```bash
 python3 tools/web/build.py

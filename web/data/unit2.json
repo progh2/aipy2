@@ -17,6 +17,10 @@
         "버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "01. GUI 프로그래밍 개요",
@@ -51,6 +55,10 @@
         "48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "tkinter는 파이썬과 함께 배포되는 Tcl/Tk 연결입니다. ttk는 그 테마 위젯이고, PySide6와 PyQt6는 같은 Qt 6의 서로 다른 바인딩입니다.",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "01. GUI 프로그래밍 개요",
@@ -79,6 +87,36 @@
         "체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요."
       ],
       "extra": false,
+      "api": [
+        {
+          "name": "tk.Label",
+          "kind": "클래스",
+          "meaning": "짧은 글이나 상태를 화면에 보여 줍니다."
+        },
+        {
+          "name": "tk.Button",
+          "kind": "클래스",
+          "meaning": "클릭하면 command에 맡긴 함수를 실행합니다."
+        },
+        {
+          "name": "tk.Entry",
+          "kind": "클래스",
+          "meaning": "한 줄 글자를 입력받습니다."
+        },
+        {
+          "name": "pack",
+          "kind": "메서드",
+          "meaning": "위젯을 부모 안에 놓습니다. 만들기만 해서는 화면에 안 보입니다."
+        },
+        {
+          "name": "command",
+          "kind": "속성",
+          "meaning": "버튼이 눌릴 때 호출할 함수입니다. greet()이 아니라 greet를 넘깁니다."
+        }
+      ],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -107,6 +145,10 @@
         "웹 배치 체험에서 수평·수직·격자를 비교하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -135,6 +177,10 @@
         "버튼을 두 번 눌렀을 때 상태가 어떻게 바뀌는지 추적하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -175,6 +221,10 @@
         "메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?"
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. GUI 프로그래밍 작성",
@@ -204,6 +254,10 @@
         "tkinter의 이벤트와 Qt 시그널을 자신의 말로 비교하세요."
       ],
       "extra": true,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": []
     },
     {
@@ -226,6 +280,10 @@
         "프로젝트 ZIP과 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
       ],
       "extra": true,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": []
     },
     {
@@ -243,6 +301,10 @@
         "교과서 확인학습과 종합평가 연계 문제를 풀고 틀린 이유를 기록하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": []
     }
   ],
@@ -258,7 +320,15 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {
+        "src": "tk.png",
+        "alt": "tkinter 인사 앱 실제 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+        "caption": "제공 코드를 Linux에서 실행한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+      }
     },
     "hello-ttk": {
       "id": "hello-ttk",
@@ -271,7 +341,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "hello-pyside": {
       "id": "hello-pyside",
@@ -284,7 +358,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "hello-pyqt": {
       "id": "hello-pyqt",
@@ -297,7 +375,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "hello-wx": {
       "id": "hello-wx",
@@ -310,7 +392,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "hello-kivy": {
       "id": "hello-kivy",
@@ -323,7 +409,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": "Kivy 기본 글꼴의 한글 지원을 가정하지 않습니다. 한글 글꼴을 지정하면 한국어 문구로 바꿀 수 있습니다."
+      "note": "Kivy 기본 글꼴의 한글 지원을 가정하지 않습니다. 한글 글꼴을 지정하면 한국어 문구로 바꿀 수 있습니다.",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "widgets-tk": {
       "id": "widgets-tk",
@@ -336,7 +426,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "widgets-pyside": {
       "id": "widgets-pyside",
@@ -349,7 +443,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "layout-tk": {
       "id": "layout-tk",
@@ -362,7 +460,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "layout-pyside": {
       "id": "layout-pyside",
@@ -375,7 +477,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "memo-tk": {
       "id": "memo-tk",
@@ -388,7 +494,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "memo-pyside": {
       "id": "memo-pyside",
@@ -401,7 +511,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "memo-plus-tk": {
       "id": "memo-plus-tk",
@@ -414,7 +528,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "memo-plus-pyside": {
       "id": "memo-plus-pyside",
@@ -427,7 +545,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "core": {
       "id": "core",
@@ -442,7 +564,11 @@
       "stdin": "",
       "args": "",
       "checks": "assert days_left(\"2026-12-25\", date(2026,12,24)) == 1\nassert 1 <= roll(6) <= 6\nassert len(draw([\"A\", \"A\", \"B\"], 2)) == 2\n",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "project-tk": {
       "id": "project-tk",
@@ -457,7 +583,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "project-pyside": {
       "id": "project-pyside",
@@ -472,7 +602,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     }
   },
   "questions": [

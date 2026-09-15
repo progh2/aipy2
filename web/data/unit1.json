@@ -21,6 +21,10 @@
         "13쪽 확인학습: 두 수를 입력받아 합을 반환하는 모듈을 만드세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "01. 모듈, 패키지의 개요",
@@ -58,6 +62,10 @@
         "원의 반지름을 바꾸고 계산 결과를 확인하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -86,6 +94,10 @@
         "__main__이 파일 이름이라는 설명이 왜 틀렸는지 적으세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -117,6 +129,10 @@
         "두 모듈에 같은 함수가 있을 때 이름을 구별해 호출하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -151,6 +167,10 @@
         "animals 패키지에 새 모듈을 추가하고 불러오세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -181,6 +201,10 @@
         "sys.exit 앞뒤에 출력문을 넣고 순서를 설명하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -207,6 +231,10 @@
         "math.pi를 활용하는 원 넓이 함수를 작성하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -236,6 +264,10 @@
         "주사위 결과가 특정 숫자여야 한다는 검사가 부적절한 이유를 적으세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -264,6 +296,10 @@
         "현재 날짜와 요일을 한글 문장으로 출력하세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -292,6 +328,10 @@
         "설치 이름과 import 이름이 다른 예를 두 개 적으세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": [
         {
           "middle": "02. 모듈, 패키지 활용",
@@ -319,6 +359,10 @@
         "단원 연습에서 틀린 문제를 다시 풀고 오류 원인을 저널에 남기세요."
       ],
       "extra": false,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": []
     },
     {
@@ -338,6 +382,10 @@
         "정상 입력·경계 입력·잘못된 입력을 하나씩 시험하세요."
       ],
       "extra": true,
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {},
       "textbook": []
     }
   ],
@@ -354,7 +402,11 @@
       "stdin": "",
       "args": "",
       "checks": "assert calculator.add(0, 4) == 4\nassert calculator.add(-2, 5) == 3\n",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "sum-input": {
       "id": "sum-input",
@@ -368,7 +420,11 @@
       "stdin": "3\n5",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "circle-top": {
       "id": "circle-top",
@@ -382,7 +438,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "circle-function": {
       "id": "circle-function",
@@ -396,7 +456,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "circle-mixed": {
       "id": "circle-mixed",
@@ -410,7 +474,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "class-module": {
       "id": "class-module",
@@ -424,7 +492,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "main-guard": {
       "id": "main-guard",
@@ -438,7 +510,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "rectangle": {
       "id": "rectangle",
@@ -452,7 +528,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "import-0": {
       "id": "import-0",
@@ -466,7 +546,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "import-1": {
       "id": "import-1",
@@ -480,7 +564,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "import-2": {
       "id": "import-2",
@@ -494,7 +582,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "import-3": {
       "id": "import-3",
@@ -508,7 +600,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "import-4": {
       "id": "import-4",
@@ -522,7 +618,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "package-0": {
       "id": "package-0",
@@ -543,7 +643,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "package-1": {
       "id": "package-1",
@@ -564,7 +668,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "package-2": {
       "id": "package-2",
@@ -585,7 +693,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "package-3": {
       "id": "package-3",
@@ -606,7 +718,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "package-4": {
       "id": "package-4",
@@ -627,7 +743,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "all": {
       "id": "all",
@@ -648,7 +768,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "animal-check": {
       "id": "animal-check",
@@ -670,7 +794,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "stars": {
       "id": "stars",
@@ -684,7 +812,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "os": {
       "id": "os",
@@ -697,7 +829,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": "웹의 폴더는 브라우저 메모리 안의 가상 파일입니다. PC 파일을 직접 읽지 않습니다."
+      "note": "웹의 폴더는 브라우저 메모리 안의 가상 파일입니다. PC 파일을 직접 읽지 않습니다.",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "os-pc": {
       "id": "os-pc",
@@ -710,7 +846,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": "교과서의 dir는 Windows 명령입니다. 이 예제는 macOS/Linux에서 ls를 선택하도록 보완했습니다."
+      "note": "교과서의 dir는 Windows 명령입니다. 이 예제는 macOS/Linux에서 ls를 선택하도록 보완했습니다.",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "sys": {
       "id": "sys",
@@ -723,7 +863,11 @@
       "stdin": "",
       "args": "[\"param1\", \"param2\"]",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "math": {
       "id": "math",
@@ -736,7 +880,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "random": {
       "id": "random",
@@ -749,7 +897,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "dice": {
       "id": "dice",
@@ -762,7 +914,11 @@
       "stdin": "6",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "gift": {
       "id": "gift",
@@ -775,7 +931,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "datetime": {
       "id": "datetime",
@@ -788,7 +948,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "christmas": {
       "id": "christmas",
@@ -801,7 +965,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "thirdparty": {
       "id": "thirdparty",
@@ -815,7 +983,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": "가상환경에서 python -m pip install -r requirements.txt를 실행하세요."
+      "note": "가상환경에서 python -m pip install -r requirements.txt를 실행하세요.",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "final-output": {
       "id": "final-output",
@@ -830,7 +1002,11 @@
       "stdin": "",
       "args": "",
       "checks": "",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     },
     "core": {
       "id": "core",
@@ -845,7 +1021,11 @@
       "stdin": "",
       "args": "",
       "checks": "assert days_left(\"2026-12-25\", date(2026,12,24)) == 1\nassert 1 <= roll(6) <= 6\nassert len(draw([\"A\", \"A\", \"B\"], 2)) == 2\n",
-      "note": ""
+      "note": "",
+      "api": [],
+      "history": "",
+      "youtube": {},
+      "screenshot": {}
     }
   },
   "questions": [

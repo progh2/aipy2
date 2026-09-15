@@ -7,6 +7,7 @@ sys.path.insert(0,str(Path(__file__).parent))
 from content import examples,questions,units
 import questions as bank
 import later_units
+import content_schema as schema
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -141,6 +142,17 @@ assert catalog['topics']['units/unit01/index.html'][0]['href']=='units/unit01/ov
 assert catalog['topics']['units/unit02/index.html'][2]['href']=='units/unit02/widgets.html'
 for u, lessons in units.items():
  for lesson in lessons:
+  for key in schema.SLOT_KEYS:
+   assert key in lesson, ('missing lesson slot', lesson['id'], key)
+  assert isinstance(lesson['api'], list)
+  assert isinstance(lesson['history'], str)
+  assert isinstance(lesson['youtube'], dict)
+  assert isinstance(lesson['screenshot'], dict)
+  if lesson['youtube'].get('url'):
+   assert schema.youtube_ok(lesson['youtube']['url']), ('youtube url', lesson['id'])
+  if lesson['screenshot'].get('src'):
+   shot=WEB/schema.asset_path(lesson['screenshot']['src'])
+   assert shot.exists() and shot.stat().st_size>1000, ('lesson screenshot', lesson['id'], shot)
   topic_page=WEB/f'units/unit0{u}/{lesson["id"]}.html'
   assert topic_page.exists(), ('missing topic page', topic_page)
   html=topic_page.read_text()
@@ -149,9 +161,33 @@ for u, lessons in units.items():
   assert 'class="lesson-prose"' in html
   assert 'assets/follow.js' in html
   assert lesson['lead'] in html
+  for key in schema.SLOT_KEYS:
+   assert f'data-slot="{key}"' in html, ('missing slot markup', topic_page, key)
   if lesson['examples']:
    assert 'id="lab"' in html
    assert all(eid in html for eid in lesson['examples'])
+for ex in examples.values():
+ for key in schema.SLOT_KEYS:
+  assert key in ex, ('missing example slot', ex['id'], key)
+ if ex['youtube'].get('url'):
+  assert schema.youtube_ok(ex['youtube']['url']), ('youtube url', ex['id'])
+ if ex['screenshot'].get('src'):
+  shot=WEB/schema.asset_path(ex['screenshot']['src'])
+  assert shot.exists() and shot.stat().st_size>1000, ('example screenshot', ex['id'], shot)
+schema_doc=(ROOT/'docs/content-schema.md').read_text()
+assert 'api' in schema_doc and 'history' in schema_doc and 'youtube' in schema_doc and 'screenshot' in schema_doc
+assert '코드에 나오기 전에' in schema_doc
+widgets_html=(WEB/'units/unit02/widgets.html').read_text()
+assert 'data-slot="api"' in widgets_html and 'tk.Button' in widgets_html and 'pack' in widgets_html
+assert '코드에 나오기 전에' in widgets_html
+assert 'data-filled="true"' in widgets_html
+libraries_html=(WEB/'units/unit02/libraries.html').read_text()
+assert '한 줄 역사' in libraries_html and 'Tcl/Tk' in libraries_html
+assert 'assets/screenshots/tk.png' in libraries_html
+assert 'data-slot="youtube"' in libraries_html and '관련 영상 링크가 아직 없습니다' in libraries_html
+overview_html=(WEB/'units/unit01/overview.html').read_text()
+assert '이 주제에서 새로 나오는 함수·속성의 선설명이 아직 없습니다' in overview_html
+assert '실행 결과 화면이 아직 없습니다' in overview_html
 unit_index=(WEB/'units/unit01/index.html').read_text()
 assert 'data-lessons=' in unit_index
 assert 'overview.html' in unit_index

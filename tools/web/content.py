@@ -1,14 +1,18 @@
 """Authored web lessons. Run build.py after editing. Textbook pages refer to printed pages."""
 import textwrap
+import content_schema as schema
 units = {1: [], 2: []}
 examples = {}
 questions = []
 def code(s): return textwrap.dedent(s).strip()+'\n'
-def ex(id, title, files, mode='web', entry='main.py', stdin='', args='', checks='', note=''):
+def ex(id, title, files, mode='web', entry='main.py', stdin='', args='', checks='', note='', api=(), history='', youtube=None, screenshot=None):
     examples[id] = dict(id=id,title=title,files={k:code(v) for k,v in files.items()},mode=mode,entry=entry,stdin=stdin,args=args,checks=code(checks) if checks else '',note=note)
+    schema.attach(examples[id], api=api, history=history, youtube=youtube, screenshot=screenshot)
     return id
-def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False):
-    units[unit].append(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra))
+def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False, api=(), history='', youtube=None, screenshot=None):
+    record=dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra)
+    schema.attach(record, api=api, history=history, youtube=youtube, screenshot=screenshot)
+    units[unit].append(record)
 def q(unit,topic,kind,prompt,answer,hint,explain,options=None,starter='',checks='',level='기본',ref='보강'):
     questions.append(dict(id=f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}',unit=unit,topic=topic,kind=kind,prompt=prompt,answer=answer,hint=hint,explain=explain,options=options,starter=code(starter) if starter else '',checks=code(checks) if checks else '',level=level,ref=ref))
 
@@ -219,7 +223,7 @@ tk.Button(root, text="인사하기", command=greet).pack(pady=8)
 tk.Button(root, text="초기화", command=reset).pack()
 result = tk.Label(root, text="이름을 입력하세요.")
 result.pack(pady=12)
-root.mainloop()'''},mode='pc')
+root.mainloop()'''},mode='pc',screenshot={'src':'tk.png','alt':'tkinter 인사 앱 실제 실행 화면 · 이름 입력창과 인사 및 초기화 버튼','caption':'제공 코드를 Linux에서 실행한 화면입니다. OS·테마에 따라 외형은 달라집니다.'})
 ex('hello-ttk','인사 앱 · tkinter + ttk',{'main.py':examples['hello-tk']['files']['main.py'].replace('import tkinter as tk','import tkinter as tk\nfrom tkinter import ttk').replace('tk.Label','ttk.Label').replace('tk.Entry','ttk.Entry').replace('tk.Button','ttk.Button').replace('인사 실습 · tkinter','인사 실습 · ttk')},mode='pc')
 ex('hello-pyside','인사 앱 · PySide6',{'main.py':'''import sys
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton
@@ -318,7 +322,7 @@ lesson(2,'libraries','GUI 라이브러리 비교 갤러리','45–48 + 보강','
 'PySide6와 PyQt6는 Qt 6를 파이썬에서 사용하는 서로 다른 바인딩입니다. 이 과정의 추가 실습은 Qt 공식 바인딩인 PySide6의 Qt Widgets를 사용합니다. 두 라이브러리의 외형은 같은 Qt 스타일을 쓰면 비슷하며 화면만으로 구분하기 어렵습니다.',
 'wxPython은 wxWidgets 기반으로 운영체제의 위젯을 활용합니다. Kivy는 자체 그리기 방식으로 터치와 여러 플랫폼의 인터페이스를 구성합니다. 배포 대상·필요 위젯·학습 자료·환경 지원을 기준으로 선택하세요.',
 '갤러리의 화면은 제공하는 코드를 실행한 캡처입니다. OS와 테마에 따라 외형은 달라집니다. PyQt와 PySide는 배포 조건이 다르므로 실제 배포 전 각 공식 라이선스 안내를 확인하는 습관을 갖습니다.',
-'좀 더 알아보기: IDLE은 tkinter를 사용하는 실제 파이썬 프로그램입니다. IDLE의 메뉴·버튼·입력창이 어떤 위젯으로 구성될지 관찰하세요. 라이브러리를 선택한 이유는 기능과 사용자를 함께 근거로 적으세요.'],['hello-tk','hello-ttk','hello-pyside','hello-pyqt','hello-wx','hello-kivy'],['같은 앱을 학교 실습용과 터치 키오스크용으로 만들 때 선택 근거를 비교하세요.','48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요.'])
+'좀 더 알아보기: IDLE은 tkinter를 사용하는 실제 파이썬 프로그램입니다. IDLE의 메뉴·버튼·입력창이 어떤 위젯으로 구성될지 관찰하세요. 라이브러리를 선택한 이유는 기능과 사용자를 함께 근거로 적으세요.'],['hello-tk','hello-ttk','hello-pyside','hello-pyqt','hello-wx','hello-kivy'],['같은 앱을 학교 실습용과 터치 키오스크용으로 만들 때 선택 근거를 비교하세요.','48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요.'],history='tkinter는 파이썬과 함께 배포되는 Tcl/Tk 연결입니다. ttk는 그 테마 위젯이고, PySide6와 PyQt6는 같은 Qt 6의 서로 다른 바인딩입니다.')
 ex('widgets-tk','tkinter 위젯 9종 체험',{'main.py':'''import tkinter as tk
 root = tk.Tk()
 root.title("tkinter 위젯 도감")
@@ -375,7 +379,13 @@ sys.exit(app.exec())'''},mode='pc')
 lesson(2,'widgets','창과 위젯 · 화면을 구성하는 부품','50','보여줄 정보와 받을 입력에 따라 위젯을 선택합니다.',[
 'Tk 객체는 기본 창입니다. Label은 표시, Button은 명령, Entry는 한 줄 입력, Text는 여러 줄 입력입니다. Checkbutton은 독립적인 선택, Radiobutton은 묶음 중 하나의 선택, Listbox는 목록 선택입니다. Canvas는 도형·이미지 그리기 공간이며 Frame은 위젯을 묶는 컨테이너입니다.',
 '위젯을 생성한 것만으로 배치가 완료되지는 않습니다. 부모 창이나 Frame을 지정하고 배치 관리자를 호출해야 합니다. BooleanVar·StringVar 같은 변수를 통해 체크 상태와 선택 값을 읽을 수 있습니다.',
-'PySide6에서는 QApplication이 앱 실행을 관리하고 QWidget이 창·컨테이너 역할을 합니다. Label→QLabel, Button→QPushButton, Entry→QLineEdit, Text→QPlainTextEdit, Checkbutton→QCheckBox, Radiobutton→QRadioButton, Listbox→QListWidget으로 개념을 연결합니다. Canvas는 일대일 대응이 아니며 여기서는 QGraphicsScene/View로 도형을 그립니다.'],['widgets-tk','widgets-pyside'],['회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.','체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요.'])
+'PySide6에서는 QApplication이 앱 실행을 관리하고 QWidget이 창·컨테이너 역할을 합니다. Label→QLabel, Button→QPushButton, Entry→QLineEdit, Text→QPlainTextEdit, Checkbutton→QCheckBox, Radiobutton→QRadioButton, Listbox→QListWidget으로 개념을 연결합니다. Canvas는 일대일 대응이 아니며 여기서는 QGraphicsScene/View로 도형을 그립니다.'],['widgets-tk','widgets-pyside'],['회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.','체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요.'],api=[
+    ('tk.Label','클래스','짧은 글이나 상태를 화면에 보여 줍니다.'),
+    ('tk.Button','클래스','클릭하면 command에 맡긴 함수를 실행합니다.'),
+    ('tk.Entry','클래스','한 줄 글자를 입력받습니다.'),
+    ('pack','메서드','위젯을 부모 안에 놓습니다. 만들기만 해서는 화면에 안 보입니다.'),
+    ('command','속성','버튼이 눌릴 때 호출할 함수입니다. greet()이 아니라 greet를 넘깁니다.'),
+])
 ex('layout-tk','tkinter · 세 가지 배치',{'main.py':'''import tkinter as tk
 root = tk.Tk()
 root.title("배치 비교")

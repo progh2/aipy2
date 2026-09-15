@@ -8,6 +8,7 @@ import mascot
 import later_units
 import learning_design as design
 import textbook
+import content_schema as schema
 textbook.attach(units)
 teacher_notes=design.prepare(units)
 for u in units:
@@ -90,8 +91,11 @@ def lesson_section(u,l,i,total,prefix,standalone=False):
  else:
   prose=f'<details class="lesson-details"><summary>개념 더 읽기</summary>{prose}</details>'
  s=f'<section class="lesson" id="{l["id"]}">{textbook.badge(u,l)}<p class="eyebrow">웹 학습 주제 {i+1:02} / {total:02}</p><h2>{esc(l["title"])}</h2><p class="lesson-lead">{esc(l["lead"])}</p>'+design.visual(u,l)+prose
+ s+=schema.render_api_block(l,examples)
  s+=mascot.lesson_tip(u,l['id'],prefix)
+ s+=schema.render_tips(l,examples)
  if l['tasks']: s+='<div class="task-box"><h3>직접 해 보세요</h3><ol>'+''.join(f'<li>{esc(t)}</li>' for t in l['tasks'])+'</ol></div>'
+ s+=schema.render_shot_block(l,examples,prefix)
  if l['examples']:
   s+=f'<div class="lesson-workspace" data-workspace="{l["id"]}"><h3>이 설명에 이어서 실습하기</h3><p class="small">예제를 선택하면 바로 아래에서 코드를 수정하고 실행할 수 있습니다. 작성한 코드는 예제별로 저장됩니다.</p><div class="example-links">'+''.join(f'<button data-example="{e}" aria-controls="lab"><span>{"▶ 웹 실행" if examples[e]["mode"]=="web" else "↗ PC 실습"}</span>{esc(examples[e]["title"])}</button>' for e in l['examples'])+f'</div><div class="editor-mount">{editor_markup(u)}</div></div>'
  s+=f'<label class="completion"><input type="checkbox" data-complete="u{u}-{l["id"]}"> 이 주제를 실습하고 설명할 수 있습니다.</label></section>'

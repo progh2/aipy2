@@ -76,6 +76,7 @@ Windows에서는 UTF-8 모드가 필요합니다: `set PYTHONUTF8=1`
 | --- | --- |
 | [docs/PRD.md](docs/PRD.md) | 수업 관리 기능의 요구사항·데이터 모델·로드맵 |
 | [docs/content-gap-audit.md](docs/content-gap-audit.md) | 교과서 TOC↔웹 주제·예제·스샷·팁 갭 감사 (#50). 주제 URL은 `units/unit0N/{id}.html` (#51) |
+| [docs/content-schema.md](docs/content-schema.md) | 레슨·예제 칸: API 선설명 · history/youtube 팁 · 실행 스샷 (#57). 라온이 채우고 건우가 생성기를 유지 |
 | [web/README.md](web/README.md) | 사이트 구조와 수정·재생성·검증 방법 |
 | [firebase/README.md](firebase/README.md) | Firebase 콘솔 설정, 권한 모델, 공개 설정값의 보안 |
 | [web/sources.html](web/sources.html) | 교과서 목차 대응표와 참고 자료 |
