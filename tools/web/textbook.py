@@ -25,6 +25,10 @@ MAP={
 4:{'cv-overview':[(1,1),(1,2)],'cv-pixels':[(1,3)],'cv-pipeline':[(1,3)],'cv-libraries':[(2,1)],'cv-io':[(2,2)],'cv-filters':[(2,3)],'cv-transform':[(2,3)],'cv-features':[(2,4)],'cv-haar':[(2,5)],'cv-yolo':[(2,5)],'cv-project':[]}}
 REVIEW={1:['review'],2:['review'],3:['ml-project'],4:['cv-project']}
 def unit_label(u):return f'{ROMAN[u]}. {BOOK[u][0]}'
+def page_label(pages):
+ pages=pages.replace(' + ', '쪽 + ')
+ if any(c.isdigit() for c in pages) and '쪽' not in pages:pages+='쪽'
+ return pages
 def references(u,l):
  result=[]
  for m,s in MAP[u][l['id']]:
@@ -42,9 +46,7 @@ def badge(u,l):
   s+=f'<p>중단원 {r["middle"]} <span>· {r["middle_pages"]}쪽</span><br><strong>소단원 {r["small"]}</strong> <span>· {r["pages"]}쪽</span></p>'
  if not references(u,l):
   s+='<p><strong>'+('마무리·종합 평가 연계' if l['id'] in REVIEW[u] else '추가 실습 · 교과서 밖 확장')+'</strong></p>'
- pages=l['pages'].replace(' + ', '쪽 + ')
- if any(c.isdigit() for c in pages) and '쪽' not in pages:pages+='쪽'
- s+=f'<p class="book-topic-pages">이 웹 주제의 연계 범위: {esc(pages)}</p></div>'
+ s+=f'<p class="book-topic-pages">이 웹 주제의 연계 범위: {esc(page_label(l["pages"]))}</p></div>'
  return s
 
 def topic_file(lesson_id):

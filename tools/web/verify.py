@@ -7,6 +7,7 @@ sys.path.insert(0,str(Path(__file__).parent))
 from content import examples,questions,units
 import questions as bank
 import later_units
+import slots as content_slots
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -159,6 +160,39 @@ assert 'id="topic-index-title"' in unit_index
 widgets=(WEB/'units/unit02/widgets.html').read_text()
 assert 'id="lab"' in widgets and 'widgets-tk' in widgets
 assert 'data-complete="u2-widgets"' in widgets
+for rec in list(examples.values())+[lesson for group in units.values() for lesson in group]:
+ assert isinstance(rec.get('pre_api'),list),(rec.get('id'),'pre_api')
+ assert isinstance(rec.get('glossary'),list),(rec.get('id'),'glossary')
+ assert isinstance(rec.get('tips'),dict) and 'history' in rec['tips'] and 'youtube' in rec['tips'],(rec.get('id'),'tips')
+ assert isinstance(rec.get('screenshots'),list),(rec.get('id'),'screenshots')
+ for shot in rec['screenshots']:
+  src=shot['src']
+  if src.startswith(('http://','https://','/')):continue
+  path=WEB/(src if src.startswith('assets/') else f'assets/screenshots/{src}')
+  assert path.is_file() and path.stat().st_size>1000,('missing screenshot',rec.get('id'),src)
+ for video in rec['tips']['youtube']:
+  assert video['url'].startswith('https://'),video
+  assert 'youtube.com/' in video['url'] or 'youtu.be/' in video['url'],video
+hello=examples['hello-tk']
+assert hello['pre_api'] and hello['glossary'] and hello['tips']['history'] and hello['tips']['youtube'] and hello['screenshots']
+assert examples['widgets-tk']['pre_api'] and examples['widgets-tk']['tips']['history']
+assert not examples['widgets-tk']['screenshots']
+assert not examples['hello-pyside']['pre_api'] and not examples['hello-pyside']['tips']['history']
+libraries=(WEB/'units/unit02/libraries.html').read_text()
+assert 'id="example-guides"' in libraries
+assert 'id="pre-api-hello-tk"' in libraries
+assert 'tk.Button' in libraries and 'command=함수()' in libraries
+assert '코드 전에 알아 두기' in libraries
+assert '역사 한 줄' in libraries
+assert 'https://www.youtube.com/watch?v=YXPyB4XeYLA' in libraries
+assert 'assets/screenshots/tk.png' in libraries
+assert 'id="example-guides"' in widgets
+assert 'id="pre-api-widgets-tk"' in widgets
+assert 'BooleanVar' in widgets
+ui_page=(WEB/'units/unit02/ui.html').read_text()
+assert 'id="example-guides"' not in ui_page
+assert '코드 전에 알아 두기' not in ui_page
+assert content_slots.has_slots(hello) and not content_slots.has_slots(examples['hello-pyside'])
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')

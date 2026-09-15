@@ -8,6 +8,7 @@ import mascot
 import later_units
 import learning_design as design
 import textbook
+import slots
 textbook.attach(units)
 teacher_notes=design.prepare(units)
 for u in units:
@@ -89,11 +90,13 @@ def lesson_section(u,l,i,total,prefix,standalone=False):
   prose=f'<div class="lesson-prose">{prose}</div>'
  else:
   prose=f'<details class="lesson-details"><summary>개념 더 읽기</summary>{prose}</details>'
- s=f'<section class="lesson" id="{l["id"]}">{textbook.badge(u,l)}<p class="eyebrow">웹 학습 주제 {i+1:02} / {total:02}</p><h2>{esc(l["title"])}</h2><p class="lesson-lead">{esc(l["lead"])}</p>'+design.visual(u,l)+prose
+ pre_slots=slots.render(l,prefix,ids={'pre':'pre-api','tips':'content-tips','shots':'screenshots'}) if standalone else ''
+ s=f'<section class="lesson" id="{l["id"]}">{textbook.badge(u,l)}<p class="eyebrow">웹 학습 주제 {i+1:02} / {total:02}</p><h2>{esc(l["title"])}</h2><p class="lesson-lead">{esc(l["lead"])}</p>'+design.visual(u,l)+pre_slots+prose
  s+=mascot.lesson_tip(u,l['id'],prefix)
  if l['tasks']: s+='<div class="task-box"><h3>직접 해 보세요</h3><ol>'+''.join(f'<li>{esc(t)}</li>' for t in l['tasks'])+'</ol></div>'
  if l['examples']:
-  s+=f'<div class="lesson-workspace" data-workspace="{l["id"]}"><h3>이 설명에 이어서 실습하기</h3><p class="small">예제를 선택하면 바로 아래에서 코드를 수정하고 실행할 수 있습니다. 작성한 코드는 예제별로 저장됩니다.</p><div class="example-links">'+''.join(f'<button data-example="{e}" aria-controls="lab"><span>{"▶ 웹 실행" if examples[e]["mode"]=="web" else "↗ PC 실습"}</span>{esc(examples[e]["title"])}</button>' for e in l['examples'])+f'</div><div class="editor-mount">{editor_markup(u)}</div></div>'
+  guides=slots.render_examples(l['examples'],examples,prefix) if standalone else ''
+  s+=f'<div class="lesson-workspace" data-workspace="{l["id"]}"><h3>이 설명에 이어서 실습하기</h3><p class="small">예제를 선택하면 바로 아래에서 코드를 수정하고 실행할 수 있습니다. 작성한 코드는 예제별로 저장됩니다.</p>{guides}<div class="example-links">'+''.join(f'<button data-example="{e}" aria-controls="lab"><span>{"▶ 웹 실행" if examples[e]["mode"]=="web" else "↗ PC 실습"}</span>{esc(examples[e]["title"])}</button>' for e in l['examples'])+f'</div><div class="editor-mount">{editor_markup(u)}</div></div>'
  s+=f'<label class="completion"><input type="checkbox" data-complete="u{u}-{l["id"]}"> 이 주제를 실습하고 설명할 수 있습니다.</label></section>'
  return s
 
@@ -125,13 +128,14 @@ for u,lessons in units.items():
   prev_l=lessons[i-1] if i else None
   next_l=lessons[i+1] if i+1<len(lessons) else None
   extras=topic_extras(u,l)
-  rail_extra=('<a href="#gallery">GUI 비교 갤러리</a>' if 'id="gallery"' in extras else '')+('<a href="#simulator">웹 동작 체험</a>' if 'id="simulator"' in extras else '')
+  shown=slots.flags(l,*[examples[e] for e in l['examples'] if e in examples])
+  rail_extra=('<a href="#pre-api">코드 전 설명</a>' if shown['pre'] and slots.has_pre(l) else '')+('<a href="#example-guides">예제 안내</a>' if any(slots.has_slots(examples[e]) for e in l['examples'] if e in examples) else '')+('<a href="#content-tips">역사·영상 팁</a>' if shown['tips'] and slots.has_tips(l) else '')+('<a href="#screenshots">실행 화면</a>' if shown['shots'] and slots.has_shots(l) else '')+('<a href="#gallery">GUI 비교 갤러리</a>' if 'id="gallery"' in extras else '')+('<a href="#simulator">웹 동작 체험</a>' if 'id="simulator"' in extras else '')
   topic_rail=textbook.toc(u,lessons)+ (f'<a href="#lab">코드 실습실</a>' if l['examples'] else '')+rail_extra+'<a href="#practice">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
   nav_links='<div class="actions topic-nav">'
   nav_links+=f'<a class="button" href="{textbook.topic_file(prev_l["id"])}">← {esc(prev_l["title"])}</a>' if prev_l else '<a class="button" href="index.html">← 단원 안내</a>'
   nav_links+=f'<a class="button primary" href="{textbook.topic_file(next_l["id"])}">다음: {esc(next_l["title"])} →</a>' if next_l else (f'<a class="button primary" href="../unit0{u+1}/index.html">다음 단원: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')
   nav_links+='</div>'
-  topic_body=f'<section class="unit-hero pai-unit-hero topic-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 주제 {i+1:02} / {len(lessons):02}</p><h1>{esc(l["title"])}</h1><p>{esc(l["lead"])}</p><div class="tags"><span>교과서 {esc(l["pages"])}</span><span>{"예제 "+str(len(l["examples"]))+"개" if l["examples"] else "개념 학습"}</span></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{topic_rail}</aside><main id="main">'
+  topic_body=f'<section class="unit-hero pai-unit-hero topic-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 주제 {i+1:02} / {len(lessons):02}</p><h1>{esc(l["title"])}</h1><p>{esc(l["lead"])}</p><div class="tags"><span>교과서 {esc(textbook.page_label(l["pages"]))}</span><span>{"예제 "+str(len(l["examples"]))+"개" if l["examples"] else "개념 학습"}</span></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{topic_rail}</aside><main id="main">'
   topic_body+=lesson_section(u,l,i,len(lessons),prefix,True)+extras+practice(u,l['id'])+nav_links+'</main></div>'
   (WEB/f'units/unit0{u}/{textbook.topic_file(l["id"])}').write_text(layout(f'{l["title"]} · {title}',topic_body,prefix,u,topic=l['id'],lessons=lesson_ids))
  with zipfile.ZipFile(WEB/f'downloads/unit{u}-examples.zip','w',zipfile.ZIP_DEFLATED) as z:
