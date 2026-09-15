@@ -245,6 +245,23 @@
           "review-scratch-tk"
         ],
         "href": "units/unit02/review.html"
+      },
+      {
+        "id": "wx",
+        "title": "부록 · wxPython으로 같은 앱 다시 만들기",
+        "examples": [
+          "first-wx",
+          "hello-wx",
+          "widgets-label-entry-wx",
+          "widgets-choice-wx",
+          "widgets-wx",
+          "layout-wx",
+          "events-wx",
+          "memo-window-wx",
+          "memo-wx",
+          "project-wx"
+        ],
+        "href": "units/unit02/wx.html"
       }
     ],
     "units/unit03/index.html": [
@@ -856,6 +873,60 @@
     "project-button-tk": {
       "id": "project-button-tk",
       "title": "기능 모듈 한 줄 연결 · 주사위 버튼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "first-wx": {
+      "id": "first-wx",
+      "title": "wxPython · 최소 창 실행 순서",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-label-entry-wx": {
+      "id": "widgets-label-entry-wx",
+      "title": "StaticText·TextCtrl · 한 줄 읽고 보여 주기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-choice-wx": {
+      "id": "widgets-choice-wx",
+      "title": "CheckBox·RadioButton · 선택 값 읽기",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "widgets-wx": {
+      "id": "widgets-wx",
+      "title": "wxPython 위젯 도감",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "layout-wx": {
+      "id": "layout-wx",
+      "title": "wxPython · 상자 배치와 격자 폼",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "events-wx": {
+      "id": "events-wx",
+      "title": "Bind · EVT_BUTTON과 EVT_TEXT",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "memo-window-wx": {
+      "id": "memo-window-wx",
+      "title": "메모장 ① · 창과 여러 줄 TextCtrl만",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "memo-wx": {
+      "id": "memo-wx",
+      "title": "교과서 메모장 · wxPython 전체 코드",
+      "unit": 2,
+      "mode": "pc"
+    },
+    "project-wx": {
+      "id": "project-wx",
+      "title": "생활 도우미 · wxPython",
       "unit": 2,
       "mode": "pc"
     },

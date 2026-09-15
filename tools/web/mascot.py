@@ -30,6 +30,7 @@ TIPS = {
   'events': ('thinking','지금 실행할까요, 클릭할 때 실행할까요?','command=greet와 clicked.connect(greet)는 함수를 맡겨 두는 코드예요. greet()는 지금 호출합니다.'),
   'memo': ('debug','취소 버튼도 꼭 눌러 봐야 하는 시험 입력이에요.','경로 선택 → 취소 확인 → 읽기·쓰기 → 화면 반영. 취소했을 때 기존 문서가 남는지 확인하세요.'),
   'pyside': ('idea','새 도구에서도 창·부품·배치·이벤트를 찾아요.','QApplication → 창과 위젯 → connect → show → exec. Designer의 objectName은 코드에서 부품을 찾는 이름입니다.'),
+  'wx': ('idea','같은 앱을 운영체제 위젯으로 다시 조립해 봐요.','wx.App → Frame·Panel·Sizer → Bind → Show → MainLoop. 브라우저에는 wx가 없으니 코드와 실행 화면으로 역할을 맞추세요.'),
   'project': ('celebrate','두 가지 화면이 같은 기능 상자를 사용해요!','GUI는 입력과 표시를, core는 계산을 담당합니다. 같은 입력을 넣어 두 화면의 결과를 비교하세요.'),
   'review': ('thinking','버튼을 누른 뒤 일어나는 일을 순서대로 말해 보세요.','입력 읽기 → 기능 호출 → 결과 표시. 어디에서 잘못됐는지 설명할 수 있으면 디버깅도 쉬워져요.'),
  }

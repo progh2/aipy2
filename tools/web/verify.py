@@ -242,11 +242,33 @@ project_page=(WEB/'units/unit02/project.html').read_text()
 assert 'id="pre-api-core"' in project_page and 'roll(sides)' in project_page
 assert 'id="pre-api-project-tk"' in project_page and 'messagebox.showwarning' in project_page
 assert 'id="pre-api-project-pyside"' in project_page and 'QComboBox' in project_page
+assert 'widgets-tk' in unit2['widgets']['examples'] and 'widgets-pyside' in unit2['widgets']['examples']
+assert 'memo-tk' in unit2['memo']['examples'] and 'memo-pyside' in unit2['memo']['examples']
+assert 'wx' in unit2 and unit2['wx']['extra']
+assert unit2['wx']['examples'] == [
+    'first-wx', 'hello-wx', 'widgets-label-entry-wx', 'widgets-choice-wx', 'widgets-wx',
+    'layout-wx', 'events-wx', 'memo-window-wx', 'memo-wx', 'project-wx',
+]
+assert 'widgets-wx' not in unit2['widgets']['examples']
+assert 'memo-wx' not in unit2['memo']['examples']
+wx_page = (WEB / 'units/unit02/wx.html').read_text()
+assert 'id="lab"' in wx_page and 'first-wx' in wx_page and 'memo-wx' in wx_page
+assert 'id="pre-api-first-wx"' in wx_page and 'wx.App' in wx_page
+assert 'id="pre-api-memo-wx"' in wx_page and 'FileDialog' in wx_page
+assert 'Pyodide' in wx_page and '본편 tkinter/PySide6' in wx_page
+assert 'assets/screenshots/widgets-wx.png' in wx_page
+assert 'id="screenshots-widgets-wx"' in wx_page
+assert '코드 전에 알아 두기' in wx_page
+assert examples['first-wx']['pre_api'] and examples['memo-wx']['pre_api']
+assert examples['widgets-wx']['screenshots'][0]['src'] == 'widgets-wx.png'
+assert '브라우저(Pyodide)' in examples['first-wx']['note']
 assert 'id="pre-api"' in libraries
 assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
 assert 'id="pre-api-hello-ttk"' in libraries
+assert 'id="pre-api-hello-wx"' in libraries
 assert '바인딩' in libraries
-assert not examples['hello-wx']['pre_api'] and not examples['hello-kivy']['pre_api']
+assert examples['hello-wx']['pre_api'] and 'Bind' in ''.join(item['name'] + item['signature'] for item in examples['hello-wx']['pre_api'])
+assert not examples['hello-kivy']['pre_api']
 assert len(catalog['questions'])==len(questions)
 assert len(catalog['examples'])==len(examples)
 assert catalog['questions'][0]['id'].startswith('u')

@@ -5,7 +5,7 @@
 - 대문: `index.html`
 - 기존 준비 안내: `before-you-start.html` (기존 localStorage 키 유지)
 - 1단원 안내: `units/unit01/index.html` — 주제 목록·전체 문제. 각 주제는 `units/unit01/{id}.html` (예: `overview.html`)
-- 2단원 안내: `units/unit02/index.html` — 9개 주제. 예: `units/unit02/widgets.html`
+- 2단원 안내: `units/unit02/index.html` — 10개 주제. 예: `units/unit02/widgets.html`, 부록 `units/unit02/wx.html`
 - 3·4단원도 같은 규칙: `units/unit0N/{id}.html`
 - 예전 `index.html#widgets` 주소는 `widgets.html`로 이어집니다. 진행 키 `u2-widgets`는 그대로입니다.
 - 출처·범위·교과서 오류 보완: `sources.html`
@@ -127,7 +127,7 @@ python3 tools/web/capture_gui.py --unit2            # 단원Ⅱ 전용 예제 �
 
 ## 학생·교사 분리와 3·4단원
 
-- 학생 본문: 45개 주제의 구조도와 표, 접어서 읽는 설명, 코드 실습.
+- 학생 본문: 46개 주제의 구조도와 표, 접어서 읽는 설명, 코드 실습.
 - 학생 시각 요약: `units/unit01/summary.html`부터 `unit04/summary.html`.
 - 교사용: `teacher/index.html`, 단원별 요약·발문·시연·오개념·평가 연결.
 - 교사 화면의 ‘수업 화면으로 보기’는 설명용 도식만 표시합니다. 방향키로 이동하고 ESC로 전체 보기에 돌아옵니다. 인쇄에서는 교사 메모를 제외합니다.
