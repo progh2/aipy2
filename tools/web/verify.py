@@ -12,6 +12,8 @@ import unit1_pre_api
 import unit1_tips
 import unit2_pre_api
 import unit2_tips
+import unit3_pre_api
+import unit3_tips
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -396,6 +398,83 @@ assert 'review-two-files' in review1
 assert '역사 한 줄' in review1
 assert '실행하면 이렇게 보여요' not in overview_page
 assert '실행하면 이렇게 보여요' not in math_page
+# #60: Unit III density · pre_api · history/youtube (console shots stay empty unless a real science render exists).
+unit3={lesson['id']:lesson for lesson in units[3]}
+assert len(unit3['ml-overview']['examples'])>=3
+assert len(unit3['ml-use']['examples'])>=3
+assert len(unit3['ml-process']['examples'])>=2
+assert len(unit3['ml-terms']['examples'])>=3
+assert len(unit3['ml-methods']['examples'])>=3
+assert len(unit3['ml-classification']['examples'])>=3
+assert len(unit3['ml-project']['examples'])>=2
+assert 'ml-rule-vs-learn' in unit3['ml-overview']['examples'] and 'ml-nesting' in unit3['ml-overview']['examples']
+assert 'ml-when-not' in unit3['ml-use']['examples'] and 'ml-loan-data' in unit3['ml-use']['examples']
+assert 'ml-success-mae' in unit3['ml-process']['examples']
+assert 'ml-xy-table' in unit3['ml-terms']['examples'] and 'ml-leakage' in unit3['ml-terms']['examples']
+assert 'ml-classify-vs-regress' in unit3['ml-methods']['examples'] and 'ml-rl-reward' in unit3['ml-methods']['examples']
+assert 'ml-logistic-name' in unit3['ml-classification']['examples']
+assert 'ml-report-card' in unit3['ml-project']['examples']
+for eid in unit3_pre_api.unit3_pre_coverage():
+ assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit3 pre_api/glossary', eid)
+ assert examples[eid]['pre_api'], ('unit3 pre_api', eid)
+for lesson in units[3]:
+ page=(WEB/f'units/unit03/{lesson["id"]}.html').read_text()
+ assert '코드 전에 알아 두기' in page, lesson['id']
+ for eid in lesson['examples']:
+  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+for lid in unit3_tips.unit3_history_lessons():
+ assert unit3[lid]['tips']['history'], ('unit3 history', lid)
+for lid in unit3_tips.unit3_youtube_lessons():
+ assert unit3[lid]['tips']['youtube'], ('unit3 youtube', lid)
+assert not unit3['ml-preprocess']['tips']['youtube']
+assert not unit3['ml-project']['tips']['youtube']
+overview3=(WEB/'units/unit03/ml-overview.html').read_text()
+assert 'id="example-guides"' in overview3
+assert 'id="pre-api-ml-rule-vs-learn"' in overview3
+assert 'id="pre-api-ml-nesting"' in overview3
+assert 'id="content-tips"' in overview3
+assert '더 알아보는 팁' in overview3
+assert 'https://www.youtube.com/watch?v=z-EtmaFJieY' in overview3
+assert '다트머스' in overview3
+assert '실행하면 이렇게 보여요' not in overview3
+use3=(WEB/'units/unit03/ml-use.html').read_text()
+assert 'ml-when-not' in use3 and 'ml-loan-data' in use3
+assert 'id="pre-api-ml-loan-data"' in use3
+assert 'https://www.youtube.com/watch?v=z-EtmaFJieY' in use3
+terms3=(WEB/'units/unit03/ml-terms.html').read_text()
+assert 'ml-leakage' in terms3 and 'id="pre-api-ml-leakage"' in terms3
+assert 'https://www.youtube.com/watch?v=Gv9_4yMHFhI' in terms3
+methods3=(WEB/'units/unit03/ml-methods.html').read_text()
+assert 'ml-rl-reward' in methods3
+assert '역사 한 줄' in methods3
+preprocess3=(WEB/'units/unit03/ml-preprocess.html').read_text()
+assert '역사 한 줄' in preprocess3
+assert 'https://www.youtube.com/' not in preprocess3
+classify3=(WEB/'units/unit03/ml-classification.html').read_text()
+assert 'ml-logistic-name' in classify3
+assert 'https://www.youtube.com/watch?v=cKxRvEZd3Mw' in classify3
+cluster3=(WEB/'units/unit03/ml-cluster.html').read_text()
+assert 'https://www.youtube.com/watch?v=4b5d3muPQmA' in cluster3
+assert 'assets/science/ml-cluster.png' in cluster3
+assert 'id="screenshots-ml-cluster"' in cluster3
+metrics3=(WEB/'units/unit03/ml-metrics.html').read_text()
+assert 'https://www.youtube.com/watch?v=Kdsp6soqA7o' in metrics3
+selection3=(WEB/'units/unit03/ml-selection.html').read_text()
+assert 'https://www.youtube.com/watch?v=fSytzGwwBVw' in selection3
+assert 'assets/science/ml-learning-curve.png' in selection3
+libraries3=(WEB/'units/unit03/ml-libraries.html').read_text()
+assert 'https://www.youtube.com/watch?v=ZyhVh-qRZPA' in libraries3
+assert 'assets/science/ml-chart.png' in libraries3
+assert 'id="screenshots-ml-chart"' in libraries3
+project3=(WEB/'units/unit03/ml-project.html').read_text()
+assert 'ml-report-card' in project3 and 'id="pre-api-ml-report-card"' in project3
+assert '역사 한 줄' in project3
+assert 'https://www.youtube.com/' not in project3
+assert examples['ml-chart']['screenshots'] and examples['ml-cluster']['screenshots']
+assert examples['ml-learning-curve']['screenshots']
+assert not examples['ml-rule-vs-learn']['screenshots']
+assert not examples['ml-report-card']['screenshots']
+assert not unit3['ml-overview']['screenshots']
 assert 'id="pre-api"' in libraries
 assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
 assert 'id="pre-api-hello-ttk"' in libraries
