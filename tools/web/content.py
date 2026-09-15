@@ -887,12 +887,18 @@ for l in units[2]:
  if l['id']=='memo':
   l['examples'] += ['memo-plus-tk','memo-plus-pyside']
   l['paragraphs'].append('확장 완성 예제에는 글자 수, Ctrl+O/Ctrl+S, 다른 이름으로 저장, 창 닫기 시 미저장 확인, UTF-8 읽기·쓰기 실패 안내가 들어 있습니다. 저장 대화 상자를 취소하면 닫기도 취소되도록 반환값을 연결했습니다. 기본 메모장과 비교하며 한 기능씩 옮기세요.')
+import unit1_density
+import unit1_pre_api
+import unit1_tips
 import unit2_density
 import unit2_pre_api
 import wx_appendix
 import kivy_appendix
 import unit2_shots
 import unit2_tips
+unit1_density.apply()
+unit1_pre_api.apply()
+unit1_tips.apply()
 unit2_density.apply()
 unit2_pre_api.apply()
 wx_appendix.apply()

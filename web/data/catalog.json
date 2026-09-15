@@ -27,7 +27,9 @@
         "id": "overview",
         "title": "모듈과 패키지가 필요한 이유",
         "examples": [
-          "reuse"
+          "copy-twice",
+          "reuse",
+          "two-adds"
         ],
         "href": "units/unit01/overview.html"
       },
@@ -60,7 +62,8 @@
           "import-1",
           "import-2",
           "import-3",
-          "import-4"
+          "import-4",
+          "import-clash"
         ],
         "href": "units/unit01/imports.html"
       },
@@ -85,7 +88,8 @@
         "examples": [
           "os",
           "os-pc",
-          "sys"
+          "sys",
+          "sys-modules"
         ],
         "href": "units/unit01/os-sys.html"
       },
@@ -93,7 +97,9 @@
         "id": "math",
         "title": "math · 계산을 함수로 표현하기",
         "examples": [
-          "math"
+          "math",
+          "math-circle",
+          "math-signed"
         ],
         "href": "units/unit01/math.html"
       },
@@ -102,6 +108,8 @@
         "title": "random · 결과보다 조건 확인하기",
         "examples": [
           "random",
+          "random-seed",
+          "random-sample",
           "dice",
           "gift"
         ],
@@ -112,6 +120,7 @@
         "title": "datetime · 날짜를 계산하는 프로그램",
         "examples": [
           "datetime",
+          "weekday-fixed",
           "christmas"
         ],
         "href": "units/unit01/datetime.html"
@@ -120,6 +129,8 @@
         "id": "thirdparty",
         "title": "PyPI와 서드파티 패키지",
         "examples": [
+          "pypi-names",
+          "stdlib-json",
           "thirdparty"
         ],
         "href": "units/unit01/thirdparty.html"
@@ -128,6 +139,7 @@
         "id": "review",
         "title": "단원 마무리와 종합 평가",
         "examples": [
+          "review-two-files",
           "final-output"
         ],
         "href": "units/unit01/review.html"
@@ -136,6 +148,7 @@
         "id": "project",
         "title": "1단원 프로젝트 · 우리 반 기능 패키지",
         "examples": [
+          "project-roll",
           "core"
         ],
         "href": "units/unit01/project.html"
@@ -778,6 +791,84 @@
       "title": "개선 메모장 · PySide6",
       "unit": 2,
       "mode": "pc"
+    },
+    "copy-twice": {
+      "id": "copy-twice",
+      "title": "같은 함수를 두 파일에 복사하면",
+      "unit": 1,
+      "mode": "web"
+    },
+    "two-adds": {
+      "id": "two-adds",
+      "title": "같은 이름 add, 다른 모듈",
+      "unit": 1,
+      "mode": "web"
+    },
+    "import-clash": {
+      "id": "import-clash",
+      "title": "같은 함수 이름 · 별칭으로 구별",
+      "unit": 1,
+      "mode": "web"
+    },
+    "sys-modules": {
+      "id": "sys-modules",
+      "title": "sys.path와 이미 불러온 모듈",
+      "unit": 1,
+      "mode": "web"
+    },
+    "math-circle": {
+      "id": "math-circle",
+      "title": "math.pi로 원 넓이",
+      "unit": 1,
+      "mode": "web"
+    },
+    "math-signed": {
+      "id": "math-signed",
+      "title": "음수에서 올림과 내림",
+      "unit": 1,
+      "mode": "web"
+    },
+    "random-seed": {
+      "id": "random-seed",
+      "title": "시드를 고정하면 같은 난수",
+      "unit": 1,
+      "mode": "web"
+    },
+    "random-sample": {
+      "id": "random-sample",
+      "title": "sample은 원본을 남긴다",
+      "unit": 1,
+      "mode": "web"
+    },
+    "weekday-fixed": {
+      "id": "weekday-fixed",
+      "title": "고정 날짜의 요일",
+      "unit": 1,
+      "mode": "web"
+    },
+    "pypi-names": {
+      "id": "pypi-names",
+      "title": "설치 이름과 import 이름",
+      "unit": 1,
+      "mode": "web"
+    },
+    "stdlib-json": {
+      "id": "stdlib-json",
+      "title": "표준 라이브러리로 먼저 해결",
+      "unit": 1,
+      "mode": "web"
+    },
+    "project-roll": {
+      "id": "project-roll",
+      "title": "기능 모듈 한 함수만 검사",
+      "unit": 1,
+      "mode": "web"
+    },
+    "review-two-files": {
+      "id": "review-two-files",
+      "title": "처음부터 두 파일 만들고 호출",
+      "unit": 1,
+      "mode": "web"
     },
     "ui-cli": {
       "id": "ui-cli",
