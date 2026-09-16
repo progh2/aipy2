@@ -236,6 +236,13 @@ assert 'memo-window-tk' in memo_page and 'memo-files-tk' in memo_page
 assert 'id="pre-api-memo-window-tk"' in memo_page
 assert 'assets/screenshots/memo-tk.png' in memo_page
 assert 'id="screenshots-memo-tk"' in memo_page
+# #80: Text index "1.0" / end-1c must draw as a concept-visual, not only glossary cards.
+assert 'text-index-visual' in memo_page
+assert memo_page.count('text-index-visual') >= 2
+assert 'Text 위치는 줄.칸입니다' in memo_page
+assert 'id="pre-api-memo-files-tk"' in memo_page
+assert 'get("1.0", "end-1c")' in memo_page
+assert '끝 자동 개행' in memo_page
 layout_page=(WEB/'units/unit02/layout.html').read_text()
 assert 'assets/screenshots/layout-tk.png' in layout_page
 assert 'id="screenshots-layout-pack-tk"' in layout_page

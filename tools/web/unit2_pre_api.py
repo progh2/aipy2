@@ -48,12 +48,46 @@ def _fill_lesson(lid, *, pre_api=None, glossary=None):
         rec['glossary'] = glossary_items(glossary)
 
 
+# Lesson + memo-files-tk share one diagram so "1.0" / end-1c are visible, not only glossary text (#80).
+TEXT_INDEX_VISUAL = {
+    'class': 'text-index-visual',
+    'title': 'Text 위치는 줄.칸입니다',
+    'steps': [
+        '"1.0"｜첫 줄(1)의 0번째 칸입니다. 줄은 1부터, 칸은 0부터 셉니다.',
+        '글자 격자｜한 칸에 글자 하나가 들어갑니다. 왼쪽 위가 시작입니다.',
+        'end-1c｜끝에서 글자 하나(자동 개행)를 빼고 읽습니다.',
+    ],
+    'tables': [
+        {
+            'headers': ['줄 \\ 칸', '0', '1'],
+            'rows': [
+                ['1', '안 · "1.0"', '녕 · "1.1"'],
+                ['2', '요 · "2.0"', '끝 자동 개행'],
+            ],
+        },
+        {
+            'headers': ['저장할 때 끝', '파일에 들어가는 글', '다시 열면'],
+            'rows': [
+                ['get("1.0", "end")', '안녕 / 요 + 자동 개행', '빈 줄이 하나 더 생깁니다'],
+                ['get("1.0", "end-1c")', '안녕 / 요', '쓴 글만 그대로입니다'],
+            ],
+        },
+    ],
+}
+
+
 def apply():
     """Fill remaining Unit II pre_api/glossary after the #52 density examples exist."""
     _fill_lessons()
     _fill_missing_example_api()
     _complete_example_glossary()
     _complete_example_api()
+    _attach_text_index_visual()
+
+
+def _attach_text_index_visual():
+    _lesson('memo')['pre_visual'] = TEXT_INDEX_VISUAL
+    _ex('memo-files-tk')['pre_visual'] = TEXT_INDEX_VISUAL
 
 
 def _fill_lessons():
@@ -80,7 +114,8 @@ def _fill_lessons():
         {'term': '콜백 / 시그널', 'meaning': '나중에 사건이 나면 불러 달라고 맡기는 함수입니다. tkinter는 command, Qt는 connect입니다.'},
     ])
     _fill_lesson('memo', glossary=[
-        {'term': '"1.0"', 'meaning': 'Text의 위치입니다. 첫 줄(1)의 0번째 칸입니다. 저장할 때는 끝의 자동 개행을 빼는 end-1c를 검토하세요.'},
+        {'term': '"1.0"', 'meaning': 'Text의 시작 위치입니다. 줄.칸에서 첫 줄은 1, 첫 칸은 0입니다. 위 격자 왼쪽 위 칸이 "1.0"입니다.'},
+        {'term': 'end-1c', 'meaning': '끝에서 문자 하나를 뺀 위치입니다. Text가 붙인 마지막 개행을 빼고 저장하면, 다시 열 때 빈 줄이 쌓이지 않습니다.'},
     ])
     _fill_lesson('pyside', glossary=[
         {'term': 'objectName', 'meaning': 'Designer가 붙인 부품 이름입니다. 화면에 보이는 text와 다릅니다. 코드는 objectName으로 찾습니다.'},

@@ -90,7 +90,7 @@ def pick_slots(kwargs):
     return {k: kwargs[k] for k in SLOT_KEYS if k in kwargs}
 
 def has_pre(record):
-    return bool(record.get('pre_api') or record.get('glossary'))
+    return bool(record.get('pre_api') or record.get('glossary') or record.get('pre_visual'))
 
 def has_tips(record):
     tips = record.get('tips') or {}
@@ -112,6 +112,31 @@ def shot_href(src, prefix):
         return prefix + src
     return f'{prefix}assets/screenshots/{src}'
 
+def _concept_visual_html(spec):
+    """Render a concept-visual / flow / table block for pre-api (same classes as lesson visuals)."""
+    if not spec:
+        return ''
+    from learning_design import flow, table
+    title = spec.get('title') or ''
+    steps = spec.get('steps') or []
+    tables = list(spec.get('tables') or [])
+    if spec.get('headers') is not None and spec.get('rows') is not None:
+        tables.insert(0, {'headers': spec['headers'], 'rows': spec['rows']})
+    extra_class = spec.get('class') or ''
+    cls = 'concept-visual' + (f' {extra_class}' if extra_class else '')
+    caption = ''
+    if title:
+        caption = f'<figcaption><span class="eyebrow">AT A GLANCE</span><h3>{esc(title)}</h3></figcaption>'
+    body = flow(steps) if steps else ''
+    body += ''.join(
+        table(item['headers'], item['rows'])
+        for item in tables if item.get('headers') is not None
+    )
+    if not caption and not body:
+        return ''
+    return f'<figure class="{esc(cls, True)}">{caption}{body}</figure>'
+
+
 def _pre_html(record, heading_id=''):
     cards = []
     for item in record.get('pre_api') or []:
@@ -122,10 +147,11 @@ def _pre_html(record, heading_id=''):
     for item in record.get('glossary') or []:
         meaning = f'<p>{esc(item["meaning"])}</p>' if item.get('meaning') else ''
         terms.append(f'<article class="glossary-card"><strong>{esc(item["term"])}</strong>{meaning}</article>')
-    if not cards and not terms:
+    visual = _concept_visual_html(record.get('pre_visual'))
+    if not cards and not terms and not visual:
         return ''
     hid = f' id="{heading_id}"' if heading_id else ''
-    body = ''
+    body = visual
     if cards:
         body += f'<div class="api-grid">{"".join(cards)}</div>'
     if terms:
