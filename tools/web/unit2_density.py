@@ -387,8 +387,8 @@ window.mainloop()'''}, mode='pc',
     pre_api=[
         {'name': 'askopenfilename', 'signature': 'filedialog.askopenfilename()', 'note': '열 파일을 고르는 대화 상자입니다. 취소를 누르면 빈 문자열이 돌아오므로 바로 열지 말고 검사합니다.'},
         {'name': 'asksaveasfilename', 'signature': 'filedialog.asksaveasfilename(defaultextension=".txt")', 'note': '저장 경로를 고릅니다. defaultextension은 확장자를 빼먹었을 때 .txt를 붙입니다.'},
-        {'name': 'Text 위치 "1.0"', 'signature': 'text_area.delete("1.0", tk.END)', 'note': '"줄.칸"입니다. 첫 줄은 1, 첫 칸은 0입니다. 열기 전에 기존 글을 지웁니다.'},
-        {'name': 'end-1c', 'signature': 'text_area.get("1.0", "end-1c")', 'note': 'Text는 끝에 줄바꿈을 하나 더 가지고 있습니다. 저장할 때 그 한 글자를 빼면 다시 열 때마다 빈 줄이 늘지 않습니다.'},
+        {'name': 'Text 위치 "1.0"', 'signature': 'text_area.delete("1.0", tk.END)', 'note': '"줄.칸"입니다. 첫 줄은 1, 첫 칸은 0입니다. 위 격자에서 왼쪽 위가 "1.0"입니다. 열기 전에 기존 글을 지웁니다.'},
+        {'name': 'end-1c', 'signature': 'text_area.get("1.0", "end-1c")', 'note': 'Text는 끝에 줄바꿈을 하나 더 가지고 있습니다. 저장할 때 그 한 글자를 빼면 다시 열 때마다 빈 줄이 늘지 않습니다. 위 표에서 end와 비교하세요.'},
     ],
     glossary=[
         {'term': '취소 시험', 'meaning': '열기·저장 대화 상자에서 취소를 눌러 보세요. 기존 글이 그대로면 분기 검사가 맞은 것입니다.'},
