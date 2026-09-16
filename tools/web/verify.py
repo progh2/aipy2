@@ -241,7 +241,7 @@ assert 'text-index-visual' in memo_page
 assert memo_page.count('text-index-visual') >= 2
 assert 'Text 위치는 줄.칸입니다' in memo_page
 assert 'id="pre-api-memo-files-tk"' in memo_page
-assert 'get("1.0", "end-1c")' in memo_page
+assert 'get(&quot;1.0&quot;, &quot;end-1c&quot;)' in memo_page
 assert '끝 자동 개행' in memo_page
 layout_page=(WEB/'units/unit02/layout.html').read_text()
 assert 'assets/screenshots/layout-tk.png' in layout_page
