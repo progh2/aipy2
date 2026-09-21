@@ -294,3 +294,25 @@ h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
 @media (max-width:720px){.done-row{grid-template-columns:100px 1fr 50px}}
 .understanding-offline{color:#a44517;background:#fff1e9;border-radius:6px;padding:6px 10px}
 .understanding-offline[hidden]{display:none}
+
+/* 포스트잇 메모(#99) */
+.notes-layer{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:30}
+.notes-add{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:31;box-shadow:0 3px 12px rgba(16,24,49,.2);background:#fff59d;border-color:#e6d76a}
+.notes-add:hover{background:#ffe082}
+.note-card{position:absolute;right:14px;width:230px;pointer-events:auto;border-radius:4px;box-shadow:2px 4px 14px rgba(16,24,49,.22);padding:8px 10px 10px;font-size:13px;line-height:1.5;color:#1a1a1a;transform:rotate(-.4deg)}
+.note-card.dragging{opacity:.85;transform:rotate(0) scale(1.02);z-index:2}
+.note-head{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:11px}
+.note-handle{cursor:grab;color:#0006;letter-spacing:-3px;padding-right:4px;touch-action:none;user-select:none}
+.note-who{flex:1;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note-vis{margin:0;padding:1px 4px;font-size:11px;width:auto;border:1px solid #0002;background:#ffffffaa;border-radius:4px}
+.note-color-btn,.note-del{padding:0 5px;min-width:0;font-size:12px;background:#ffffff80;border-color:#0002;line-height:1.5}
+.note-badge{font-size:10px;color:#0008;background:#ffffff80;border-radius:4px;padding:1px 5px}
+.note-text{margin:0;padding:6px;border:1px solid #0001;background:#ffffff66;border-radius:4px;font-size:13px;line-height:1.5;resize:vertical;min-height:70px}
+.note-body{white-space:pre-wrap;overflow-wrap:anywhere}
+.note-body a,.note-links a{color:#0b4a8b;text-decoration:underline}
+.note-links{display:flex;flex-wrap:wrap;gap:4px 8px;margin-top:6px;font-size:11px}
+.note-colors{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:8px;padding:6px;background:#ffffffcc;border-radius:6px}
+.note-swatch{width:22px;height:22px;min-width:0;padding:0;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #0002;color:transparent}
+.note-swatch[aria-pressed="true"]{box-shadow:0 0 0 2px #1e2761}
+@media (max-width:900px){.notes-layer,.notes-add{display:none}}
+@media print{.notes-layer,.notes-add{display:none!important}}

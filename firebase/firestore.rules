@@ -269,6 +269,39 @@ service cloud.firestore {
         && request.resource.data.updatedAt is timestamp;
     }
 
+    // 포스트잇 메모(#99). 작성자만 쓰고, 공개 범위(private/students/all)에 따라 읽습니다. 교사는 전부 읽고 지울 수 있습니다.
+    function notePayloadOk() {
+      return request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'name', 'classId', 'page', 'y', 'color', 'visibility', 'text', 'createdAt', 'updatedAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == email()
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.classId is string
+        && request.resource.data.classId.size() <= 12
+        && request.resource.data.page is string
+        && request.resource.data.page.size() > 0
+        && request.resource.data.page.size() <= 200
+        && request.resource.data.y is number
+        && request.resource.data.y >= 0
+        && request.resource.data.y <= 200000
+        && request.resource.data.color is string
+        && request.resource.data.color.matches('^#[0-9a-f]{6}$')
+        && request.resource.data.visibility in ['private', 'students', 'all']
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 500;
+    }
+
+    match /notes/{id} {
+      allow get, list: if schoolAccount() && resource.data.uid == request.auth.uid;
+      allow get, list: if schoolAccount() && resource.data.visibility == 'all';
+      allow get, list: if schoolAccount() && resource.data.visibility == 'students' && resource.data.classId == rosterClassId();
+      allow get, list: if isTeacher();
+      allow create: if schoolAccount() && notePayloadOk();
+      allow update: if schoolAccount() && resource.data.uid == request.auth.uid && notePayloadOk();
+      allow delete: if schoolAccount() && resource.data.uid == request.auth.uid;
+      allow delete: if isTeacher();
+    }
+
     match /helpRequests/{id} {
       allow get: if schoolAccount() && resource.data.uid == request.auth.uid;
       allow get, list: if isTeacher();
