@@ -3,7 +3,7 @@
    설정이 비어 있으면 아무 UI도 만들지 않고 조용히 종료합니다. */
 import {firebaseConfig, SCHOOL_DOMAIN, SDK, ready} from './firebase-config.js';
 import {UNDERSTANDING_KEY} from './understanding-model.js';
-import {privacyButton, mountPrivacyNotice} from './privacy-model.js';
+import {privacyButton, mountPrivacyNotice, openPrivacyDialog} from './privacy-model.js';
 import {
  userEmail, shouldSignOutForeignAccount, googleCustomParameters,
  markChooserNext, consumeChooserFlag, isPermissionDenied, needsReauth,
@@ -94,7 +94,7 @@ function renderSignedOut() {
  switchBtn.type = 'button';
  switchBtn.addEventListener('click', () => signIn(true));
  const note = node('span', 'account-note', `@${SCHOOL_DOMAIN} 계정만 사용합니다.`);
- slot.replaceChildren(button, switchBtn, note, privacyButton());
+ slot.replaceChildren(button, switchBtn, note);
 }
 
 function renderBusy(text) {
@@ -115,7 +115,7 @@ function renderSignedIn(profile, extra = {}) {
  const out = node('button', 'account-signout', '로그아웃');
  out.type = 'button';
  out.addEventListener('click', signOut);
- slot.replaceChildren(chip, out, privacyButton());
+ slot.replaceChildren(chip, out);
  if (extra.teacher) {
   const prefix = document.body.dataset.prefix || '';
   const link = node('a', 'account-teacher-link', '교사 모드 →');
@@ -331,6 +331,9 @@ async function handleUser(user) {
 
 function attachPrivacy() {
  mountPrivacyNotice(document.getElementById('privacy-notice'));
+ // 헤더 대신 푸터의 '개인정보 안내' 링크로 대화상자를 연다(#95). privacyButton()은 다른 화면에서 계속 쓴다.
+ const privacyLink = document.getElementById('privacy-link');
+ if (privacyLink) privacyLink.addEventListener('click', (event) => { event.preventDefault(); openPrivacyDialog(); });
 }
 
 // 모든 선언이 평가된 뒤에 시작합니다. 개인정보 안내는 로그인 설정과 관계없이 붙입니다.

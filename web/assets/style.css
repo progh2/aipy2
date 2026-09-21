@@ -69,3 +69,12 @@ html:has(body.presenting){scroll-padding-top:16px}
 .order-list li.drop-before::before{top:-5px}
 .order-list li.drop-after::after{bottom:-5px}
 .order-list li.drop-before,.order-list li.drop-after{background:#eef7f4;border-color:var(--teal)}
+
+/* 소단원 페이지 점프바·접힌 보조자료(#91) */
+.lesson-jump{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+.lesson-jump a{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--line);border-radius:20px;background:#fff;text-decoration:none;font-size:13px;font-weight:600;color:var(--navy)}
+.lesson-jump a b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--navy);color:#fff;font-size:11px}
+.lesson-jump a:hover{background:#eef2fa}
+.lesson-extra{margin:14px 0;border:1px dashed var(--line);border-radius:10px;padding:6px 14px;background:#fbfcfe}
+.lesson-extra>summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:14px;padding:6px 0}
+.lesson-extra[open]>summary{margin-bottom:6px}

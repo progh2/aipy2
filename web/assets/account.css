@@ -316,3 +316,7 @@ h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
 .note-swatch[aria-pressed="true"]{box-shadow:0 0 0 2px #1e2761}
 @media (max-width:900px){.notes-layer,.notes-add{display:none}}
 @media print{.notes-layer,.notes-add{display:none!important}}
+
+/* 헤더 정리(#95): 다른 계정은 작은 글자 링크처럼, 동기화 정상 상태는 숨김 */
+.account-switch{background:none;border:0;padding:0 4px;font-size:12px;font-weight:500;text-decoration:underline;color:var(--muted)}
+.account-sync[hidden]{display:none}

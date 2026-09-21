@@ -123,6 +123,8 @@ function setStatus(mode, detail) {
  el.dataset.sync = mode;
  el.textContent = STATUS[mode] || STATUS.local;
  el.title = detail || STATUS[mode] || '';
+ // 정상(맞춤)·로컬 상태는 굳이 헤더에 띄우지 않는다(#95). 대기·동기화 중·실패·충돌만 보인다.
+ el.hidden = mode === 'synced' || mode === 'local';
 }
 
 function stampNow(kind) {
