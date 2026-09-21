@@ -120,7 +120,9 @@ function renderSignedIn(profile, extra = {}) {
   const prefix = document.body.dataset.prefix || '';
   const link = node('a', 'account-teacher-link', '교사 모드 →');
   link.href = prefix + 'teacher/index.html';
-  link.title = '교사용 수업 요약·관리 화면으로 이동';
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.title = '교사용 수업 요약·관리 화면을 새 창으로 엽니다';
   slot.append(link);
  }
  const warn = missingRosterWarning({
