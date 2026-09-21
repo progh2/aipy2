@@ -354,17 +354,22 @@ if(!hasLab && !hasPractice){
 }).catch(error=>{const out=$('#output');if(out)out.textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));});
 })();
 
-/* ── 수업 프로젝터용 글자 크기 조절: 헤더에 −/현재%/＋ 버튼. 값은 이 브라우저에 저장됩니다. */
+/* ── 수업 프로젝터용 글자 크기 조절: −/현재%/＋. %버튼을 누르면 주요 배율 목록에서 바로 선택. */
 (function(){
  const header=document.querySelector('header.top');if(!header)return;
- const KEY='aipy-zoom',MIN=0.8,MAX=1.8,STEP=0.1;
+ const KEY='aipy-zoom',MIN=0.8,MAX=1.8,STEP=0.1,PRESETS=[0.8,0.9,1,1.1,1.25,1.5,1.8];
  let z=parseFloat(localStorage.getItem(KEY));if(!(z>=MIN&&z<=MAX))z=1;
  const wrap=document.createElement('div');wrap.className='fontsize';wrap.setAttribute('role','group');wrap.setAttribute('aria-label','화면 글자 크기 조절');
  const btn=(label,title)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.title=title;b.setAttribute('aria-label',title);return b;};
- const minus=btn('−','글자 작게'),reset=btn('100%','기본 크기로'),plus=btn('＋','글자 크게');
- const apply=()=>{z=Math.round(z*10)/10;document.body.style.zoom=z===1?'':String(z);reset.textContent=Math.round(z*100)+'%';localStorage.setItem(KEY,String(z));minus.disabled=z<=MIN;plus.disabled=z>=MAX;};
- minus.onclick=()=>{z-=STEP;apply();};plus.onclick=()=>{z+=STEP;apply();};reset.onclick=()=>{z=1;apply();};
- wrap.append(minus,reset,plus);
+ const minus=btn('−','글자 작게'),pct=btn('100%','배율 목록 열기'),plus=btn('＋','글자 크게');
+ const menu=document.createElement('div');menu.className='zoom-menu';menu.hidden=true;
+ PRESETS.forEach(v=>{const b=btn(Math.round(v*100)+'%','배율 '+Math.round(v*100)+'%로');b.onclick=()=>{z=v;apply();menu.hidden=true;};menu.append(b);});
+ const apply=()=>{z=Math.round(z*20)/20;document.body.style.zoom=z===1?'':String(z);pct.textContent=Math.round(z*100)+'%';localStorage.setItem(KEY,String(z));minus.disabled=z<=MIN;plus.disabled=z>=MAX;
+  [...menu.children].forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===Math.round(z*100)+'%')));};
+ minus.onclick=()=>{z-=STEP;apply();};plus.onclick=()=>{z+=STEP;apply();};
+ pct.onclick=(e)=>{e.stopPropagation();menu.hidden=!menu.hidden;};
+ document.addEventListener('click',e=>{if(!menu.hidden&&!wrap.contains(e.target))menu.hidden=true;});
+ wrap.append(minus,pct,plus,menu);
  const account=header.querySelector('.account');
  if(account)header.insertBefore(wrap,account);else header.append(wrap);
  apply();
@@ -410,9 +415,9 @@ if(!hasLab && !hasPractice){
  paint();
 })();
 
-/* ── 발표 모드: 상단 헤더·좌측 메뉴·푸터를 숨기고 본문만 크게.
-   발표 중에는 우상단 도구막대(글자 크기·빨강/초록/파랑 펜·지우기·종료)를 띄운다.
-   펜 낙서는 화면 고정 오버레이이며 발표 종료 시 모두 사라진다. ESC = 종료. */
+/* ── 발표 모드: 헤더·좌측 메뉴·푸터를 숨기고 본문만 크게. ESC 또는 '↩ 종료'로 복귀.
+   펜: 획 단위로 저장해 매번 다시 그린다 — 스크롤을 따라 움직이고,
+   드래그 중 잠시 멈추면 직선으로 펴진다. 색·굵기·불투명도는 ▾ 설정판에서. 종료 시 전부 삭제. */
 (function(){
  const header=document.querySelector('header.top');if(!header)return;
  const KEY='aipy-presenting';
@@ -420,34 +425,88 @@ if(!hasLab && !hasPractice){
  const enter=mkBtn('present-enter','발표 모드','메뉴를 숨기고 본문만 크게 봅니다 (ESC로 복귀)');
  const tools=document.createElement('div');tools.className='present-tools';tools.setAttribute('role','toolbar');tools.setAttribute('aria-label','발표 도구');
  const fontSlot=document.createElement('span');fontSlot.className='present-fontslot';
- const pens=[['#d21f2c','빨강 펜'],['#1e8a4c','초록 펜'],['#1d5bd6','파랑 펜']].map(([color,label])=>{
-  const b=mkBtn('present-pen',' ',label+' — 다시 누르면 펜 끄기(스크롤 가능)');b.style.setProperty('--pen',color);b.dataset.color=color;return b;});
+
+ // 펜 상태
+ const COLORS=['#d21f2c','#f28c1e','#f2c21e','#1e8a4c','#1d5bd6','#7a3bd6','#e0489a','#101831'];
+ const pen={on:false,color:COLORS[0],width:3.5,alpha:1};
+ const penBtn=mkBtn('present-pen',' ','펜 켜기/끄기 — 켜져 있으면 화면에 그립니다');
+ const gear=mkBtn('present-gear','▾','펜 설정: 색·굵기·불투명도');
  const wipe=mkBtn('present-wipe','지우기','펜 낙서 모두 지우기');
  const exit=mkBtn('present-exit','↩ 종료','발표 종료 — 메뉴로 되돌아가기 (ESC)');
- tools.append(fontSlot,...pens,wipe,exit);document.body.append(tools);
 
- // 펜 오버레이 캔버스는 body 밖(html)에 붙여 글자 크기(zoom)의 영향을 받지 않게 한다.
- let canvas=null,ctx=null,pen=null,drawing=false;
+ // 설정판
+ const panel=document.createElement('div');panel.className='pen-panel';panel.hidden=true;
+ const swWrap=document.createElement('div');swWrap.className='pen-swatches';
+ COLORS.forEach(c=>{const b=mkBtn('pen-swatch',' ','색 '+c);b.style.setProperty('--pen',c);
+  b.onclick=()=>{pen.color=c;pen.on=true;syncPen();};swWrap.append(b);});
+ const slider=(label,min,max,step,get,set)=>{
+  const row=document.createElement('label');row.className='pen-row';
+  const span=document.createElement('span');span.textContent=label;
+  const input=document.createElement('input');input.type='range';input.min=min;input.max=max;input.step=step;input.value=get();
+  input.oninput=()=>{set(parseFloat(input.value));syncPen();};
+  row.append(span,input);return row;};
+ panel.append(swWrap,
+  slider('굵기',1.5,12,0.5,()=>pen.width,v=>{pen.width=v;}),
+  slider('불투명도',0.2,1,0.05,()=>pen.alpha,v=>{pen.alpha=v;}));
+ tools.append(fontSlot,penBtn,gear,wipe,exit,panel);document.body.append(tools);
+
+ // 캔버스: body 밖(html)에 붙여 글자 크기(zoom)의 영향을 받지 않는다.
+ // 획 좌표는 문서 기준(client+scroll)으로 저장하고, 그릴 때 현재 스크롤만큼 이동한다.
+ let canvas=null,ctx=null,strokes=[],cur=null,holdTimer=null,holdAnchor=null,rafPending=false;
  function ensureCanvas(){
   if(canvas)return;
   canvas=document.createElement('canvas');canvas.className='present-ink';canvas.setAttribute('aria-hidden','true');
   document.documentElement.append(canvas);ctx=canvas.getContext('2d');sizeCanvas();
-  window.addEventListener('resize',()=>{if(document.body.classList.contains('presenting'))sizeCanvas();});
-  canvas.addEventListener('pointerdown',e=>{if(!pen)return;drawing=true;canvas.setPointerCapture(e.pointerId);ctx.beginPath();ctx.moveTo(...pos(e));e.preventDefault();});
-  canvas.addEventListener('pointermove',e=>{if(!drawing)return;ctx.lineTo(...pos(e));ctx.strokeStyle=pen;ctx.lineWidth=3.5;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();});
-  const up=()=>{drawing=false;};
+  window.addEventListener('resize',()=>{if(canvas.style.display!=='none'){sizeCanvas();redraw();}});
+  window.addEventListener('scroll',()=>{if(canvas.style.display!=='none')scheduleRedraw();},{passive:true});
+  canvas.addEventListener('pointerdown',e=>{
+   if(!pen.on)return;e.preventDefault();canvas.setPointerCapture(e.pointerId);
+   cur={color:pen.color,width:pen.width,alpha:pen.alpha,straight:false,pts:[docPt(e)]};
+   holdAnchor=null;armHold(e);scheduleRedraw();});
+  canvas.addEventListener('pointermove',e=>{
+   if(!cur)return;
+   const pt=docPt(e);
+   if(cur.straight)cur.pts[1]=pt;              // 직선 모드: 끝점만 갱신
+   else cur.pts.push(pt);
+   armHold(e);scheduleRedraw();});
+  const up=()=>{if(!cur)return;clearTimeout(holdTimer);if(cur.pts.length>1)strokes.push(cur);cur=null;scheduleRedraw();};
   canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
  }
+ // 드래그 중 0.5초 이상 거의 제자리면 직선으로 스냅
+ function armHold(e){
+  const now={x:e.clientX,y:e.clientY};
+  if(holdAnchor&&Math.hypot(now.x-holdAnchor.x,now.y-holdAnchor.y)<5)return; // 아직 같은 자리 — 타이머 유지
+  holdAnchor=now;clearTimeout(holdTimer);
+  holdTimer=setTimeout(()=>{
+   if(cur&&!cur.straight&&cur.pts.length>1){cur.pts=[cur.pts[0],cur.pts[cur.pts.length-1]];cur.straight=true;scheduleRedraw();}
+  },500);
+ }
+ function docPt(e){return [e.clientX+window.scrollX,e.clientY+window.scrollY];}
  function sizeCanvas(){const w=window.innerWidth,h=window.innerHeight;canvas.width=w;canvas.height=h;canvas.style.width=w+'px';canvas.style.height=h+'px';}
- function pos(e){const r=canvas.getBoundingClientRect();return [(e.clientX-r.left)*(canvas.width/r.width),(e.clientY-r.top)*(canvas.height/r.height)];}
- function clearInk(){if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);}
- function setPen(color){
-  pen=(pen===color)?null:color;
-  pens.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===pen)));
-  if(pen){ensureCanvas();canvas.classList.add('inking');}
+ function scheduleRedraw(){if(rafPending)return;rafPending=true;requestAnimationFrame(()=>{rafPending=false;redraw();});}
+ function drawStroke(st,ox,oy){
+  ctx.globalAlpha=st.alpha;ctx.strokeStyle=st.color;ctx.lineWidth=st.width;ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(st.pts[0][0]-ox,st.pts[0][1]-oy);
+  for(let i=1;i<st.pts.length;i++)ctx.lineTo(st.pts[i][0]-ox,st.pts[i][1]-oy);
+  ctx.stroke();
+ }
+ function redraw(){
+  if(!ctx)return;ctx.clearRect(0,0,canvas.width,canvas.height);
+  const ox=window.scrollX,oy=window.scrollY;
+  for(const st of strokes)drawStroke(st,ox,oy);
+  if(cur&&cur.pts.length>1)drawStroke(cur,ox,oy);
+  ctx.globalAlpha=1;
+ }
+ function clearInk(){strokes=[];cur=null;if(ctx)redraw();}
+ function syncPen(){
+  penBtn.style.setProperty('--pen',pen.color);
+  penBtn.setAttribute('aria-pressed',String(pen.on));
+  if(pen.on){ensureCanvas();canvas.classList.add('inking');}
   else if(canvas)canvas.classList.remove('inking');
  }
- pens.forEach(b=>{b.onclick=()=>setPen(b.dataset.color);});
+ penBtn.onclick=()=>{pen.on=!pen.on;syncPen();};
+ gear.onclick=(e)=>{e.stopPropagation();panel.hidden=!panel.hidden;};
+ document.addEventListener('click',e=>{if(!panel.hidden&&!tools.contains(e.target))panel.hidden=true;});
  wipe.onclick=clearInk;
 
  const set=(on)=>{
@@ -457,15 +516,14 @@ if(!hasLab && !hasPractice){
   if(on){if(fs)fontSlot.append(fs);}
   else{
    if(fs){const account=header.querySelector('.account');if(account)header.insertBefore(fs,account);else header.append(fs);}
-   setPen(null);if(pen)pen=null;clearInk();
-   if(canvas)canvas.classList.remove('inking');
-   pens.forEach(b=>b.setAttribute('aria-pressed','false'));
+   pen.on=false;syncPen();clearInk();panel.hidden=true;
   }
   if(canvas)canvas.style.display=on?'':'none';
  };
  enter.onclick=()=>set(true);
  exit.onclick=()=>set(false);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('presenting'))set(false);});
+ syncPen();
  const group=header.querySelector('.fontsize');
  if(group)group.append(enter);else header.append(enter);
  if(sessionStorage.getItem(KEY)==='1')set(true);
