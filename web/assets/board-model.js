@@ -244,16 +244,13 @@ function makeCard({roster, progress, presenceByUid, helpByUid, topicTotal, title
  };
 }
 
+// 학생 카드는 학번순으로 고정한다(2026-09 수업 요청). 학번이 없는 카드는 뒤로.
 export function sortStudentCards(cards) {
  return (cards || []).slice().sort((a, b) => {
-  const helpA = a && a.openHelp > 0 ? 1 : 0;
-  const helpB = b && b.openHelp > 0 ? 1 : 0;
-  if (helpA !== helpB) return helpB - helpA;
-  const rateA = a && Number.isFinite(a.completeRate) ? a.completeRate : 0;
-  const rateB = b && Number.isFinite(b.completeRate) ? b.completeRate : 0;
-  if (rateA !== rateB) return rateA - rateB;
-  const num = numberRank(a && a.number) - numberRank(b && b.number);
-  if (num) return num;
+  const idA = a && a.studentId ? String(a.studentId) : '';
+  const idB = b && b.studentId ? String(b.studentId) : '';
+  if (idA && idB && idA !== idB) return idA.localeCompare(idB, 'ko', {numeric: true});
+  if (idA !== idB) return idA ? -1 : 1;
   return studentLabel(a).localeCompare(studentLabel(b), 'ko');
  });
 }

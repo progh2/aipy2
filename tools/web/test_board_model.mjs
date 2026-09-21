@@ -104,12 +104,10 @@ eq(byName['박민수'].doneCount, 3, 'progress-only card');
 eq(byName['홍길동'].completeRate, completeRate(1, 3), 'hong complete rate');
 
 const sorted = sortStudentCards(cards);
-eq(sorted[0].name, '홍길동', 'help first');
-eq(sorted[1].name, '김서연', 'lagging next');
-eq(sorted[2].name, '박민수', 'ahead last');
+eq(sorted.map((c) => c.name), ['김서연', '홍길동', '박민수'], 'student id order');
 
 const noHelp = sortStudentCards(cards.map((c) => ({...c, openHelp: 0})));
-eq(noHelp.map((c) => c.name), ['김서연', '홍길동', '박민수'], 'lag then number');
+eq(noHelp.map((c) => c.name), ['김서연', '홍길동', '박민수'], 'student id order regardless of help');
 
 eq(isStuckOnTopic(byName['홍길동'], 'u1-overview'), true, 'hard is stuck');
 eq(isStuckOnTopic(byName['박민수'], 'u1-overview'), false, 'done not stuck');

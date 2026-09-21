@@ -26,15 +26,15 @@ const FIELDS = [
  {key: 'studentId', labels: ['studentid', 'student_id', '학번'], type: 'text'},
  {key: 'admissionYear', labels: ['admissionyear', 'admission_year', '입학년도', '입학연도'], type: 'int'},
  {key: 'name', labels: ['name', '이름', '성명'], type: 'text'},
- {key: 'grade', labels: ['grade', '학년'], type: 'int'},
- {key: 'classroom', labels: ['classroom', 'class', '반'], type: 'int'},
+ {key: 'grade', labels: ['grade', '학년'], type: 'int', optional: true},
+ {key: 'classroom', labels: ['classroom', 'class', '반'], type: 'int', optional: true},
  {key: 'number', labels: ['number', '번호', '출석번호'], type: 'int', optional: true}
 ];
 const NEWLINE = String.fromCharCode(10);
 const HEADER = 'email,studentId,admissionYear,name,grade,classroom,number';
 const SAMPLE = [HEADER,
- `20314@${SCHOOL},20314,2025,홍길동,2,3,14`,
- `20315@${SCHOOL},20315,2025,김서연,2,3,15`].join(NEWLINE);
+ `s2314@${SCHOOL},2314,2025,홍길동,,,`,
+ `s2315@${SCHOOL},2315,2025,김서연,,,`].join(NEWLINE);
 
 let planned = [];
 let teacherEmail = '';
@@ -153,6 +153,15 @@ export function columnOrder(head) {
  return {order, skipHead: true};
 }
 
+// 학번 규칙: 4자리 = 학년(1)·반(1)·번호(2), 5자리 = 학년(1)·반(2)·번호(2). 예: 2314 → 2학년 3반 14번.
+// 학년이 바뀌면 학번이 새로 부여되므로 코호트 구분은 입학년도로 한다.
+export function deriveFromStudentId(studentId) {
+ const id = String(studentId || '');
+ if (/^\d{4}$/.test(id)) return {grade: +id[0], classroom: +id[1], number: +id.slice(2)};
+ if (/^\d{5}$/.test(id)) return {grade: +id[0], classroom: +id.slice(1, 3), number: +id.slice(3)};
+ return null;
+}
+
 export function readRow(cells, order) {
  const raw = {};
  order.forEach((key, i) => { if (key) raw[key] = (cells[i] || '').trim(); });
@@ -173,6 +182,13 @@ export function readRow(cells, order) {
    entry[field.key] = value;
   }
  }
+ // 학년·반·번호가 비면 학번에서 유도한다.
+ const derived = deriveFromStudentId(entry.studentId);
+ for (const key of ['grade', 'classroom', 'number']) {
+  if (entry[key] == null && derived) entry[key] = derived[key];
+ }
+ if (entry.grade == null) problems.push('grade 없음(학번이 4~5자리 숫자가 아니면 직접 입력)');
+ if (entry.classroom == null) problems.push('classroom 없음(학번이 4~5자리 숫자가 아니면 직접 입력)');
  if (entry.email) {
   entry.email = entry.email.toLowerCase();
   if (!entry.email.endsWith(`@${SCHOOL}`)) problems.push(`학교 이메일(@${SCHOOL})이 아님`);
@@ -301,8 +317,8 @@ async function fetchRoster(db, store) {
  const rows = [];
  snapshot.forEach((d) => rows.push({id: d.id, ...d.data()}));
  rows.sort((a, b) =>
-  (a.grade - b.grade) || (a.classroom - b.classroom) ||
-  String(a.studentId).localeCompare(String(b.studentId)));
+  String(a.studentId).localeCompare(String(b.studentId), 'ko', {numeric: true}) ||
+  ((a.admissionYear || 0) - (b.admissionYear || 0)));
  return rows;
 }
 
@@ -330,11 +346,11 @@ function renderRoster(rows) {
   return;
  }
  const table = node('table');
- table.append(headRow(['학년', '반', '학번', '이름', '입학년도', '번호', '이메일', '']));
+ table.append(headRow(['입학년도', '학번', '이름', '이메일', '']));
  const tbody = node('tbody');
  for (const r of shown) {
   const tr = node('tr');
-  [r.grade, r.classroom, r.studentId, r.name, r.admissionYear, r.number ?? '', r.id]
+  [r.admissionYear, r.studentId, r.name, r.id]
    .forEach((v) => tr.append(node('td', '', String(v ?? ''))));
   const cell = node('td');
   const edit = node('button', '', '수정');
@@ -373,37 +389,37 @@ function editRosterRow(tr, r) {
   input.style.margin = '0';
   return input;
  };
- const grade = make(r.grade, 2, '학년');
- const classroom = make(r.classroom, 2, '반');
+ const admissionYear = make(r.admissionYear, 5, '입학년도');
  const studentId = make(r.studentId, 6, '학번');
  const name = make(r.name, 6, '이름');
- const admissionYear = make(r.admissionYear, 5, '입학년도');
- const number = make(r.number ?? '', 3, '번호');
- const cells = [grade, classroom, studentId, name, admissionYear, number];
  tr.replaceChildren();
- cells.forEach((input) => { const td = node('td'); td.append(input); tr.append(td); });
+ [admissionYear, studentId, name].forEach((input) => { const td = node('td'); td.append(input); tr.append(td); });
  tr.append(node('td', '', r.id));
  const actions = node('td');
  const saveBtn = node('button', '', '저장');
  saveBtn.type = 'button';
  saveBtn.onclick = async () => {
-  const intOf = (input) => { const v = parseInt(input.value, 10); return Number.isNaN(v) ? null : v; };
-  const payload = {
-   email: r.id,
-   studentId: studentId.value.trim(),
-   admissionYear: intOf(admissionYear),
-   name: name.value.trim(),
-   grade: intOf(grade),
-   classroom: intOf(classroom),
-   updatedAt: storeRef.serverTimestamp()
-  };
-  if (!payload.name || !payload.studentId || payload.admissionYear == null
-    || payload.grade == null || payload.classroom == null) {
-   alert('학년·반·학번·이름·입학년도를 모두 채우세요. 번호만 비울 수 있습니다.');
+  const yr = parseInt(admissionYear.value, 10);
+  const sid = studentId.value.trim();
+  const derived = deriveFromStudentId(sid);
+  if (!name.value.trim() || !sid || Number.isNaN(yr)) {
+   alert('입학년도·학번·이름을 모두 채우세요.');
    return;
   }
-  const num = intOf(number);
-  if (num != null) payload.number = num;
+  if (!derived) {
+   alert('학번은 4자리(학년·반·번호2) 또는 5자리 숫자여야 합니다. 예: 2314 = 2학년 3반 14번');
+   return;
+  }
+  const payload = {
+   email: r.id,
+   studentId: sid,
+   admissionYear: yr,
+   name: name.value.trim(),
+   grade: derived.grade,
+   classroom: derived.classroom,
+   number: derived.number,
+   updatedAt: storeRef.serverTimestamp()
+  };
   if (r.archived === true) {
    payload.archived = true;
    if (r.archivedAt) payload.archivedAt = r.archivedAt;
@@ -424,7 +440,7 @@ function editRosterRow(tr, r) {
  cancelBtn.onclick = () => renderRoster(cachedRoster || []);
  actions.append(saveBtn, cancelBtn);
  tr.append(actions);
- grade.focus();
+ admissionYear.focus();
 }
 
 async function listRoster(db, store) {
@@ -499,5 +515,5 @@ async function listUnassigned(db, store) {
   list.append(line);
  }
  $('unassigned-list').replaceChildren(
-  node('p', 'small', '추가한 뒤 학번·입학년도·학년·반을 채우고 검사하세요.'), list);
+  node('p', 'small', '추가한 뒤 학번·입학년도를 채우세요. 학년·반·번호는 학번에서 자동 계산됩니다.'), list);
 }
