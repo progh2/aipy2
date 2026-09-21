@@ -43,6 +43,69 @@ function note(id, text) {
  if (el) el.textContent = text || '';
 }
 
+let feedbackRows = [];
+let feedbackUnsub = null;
+
+// 주제별 '다 했어요' 집계(#87): progress.counts.done 기준, 현재 반 학생 카드로 계산
+function paintDone() {
+ const host = $('heatmap-wrap');
+ if (!host) return;
+ let box = document.getElementById('board-done');
+ if (!box) {
+  box = node('div', 'board-done');
+  box.id = 'board-done';
+  host.before(box);
+ }
+ const cards = liveCards();
+ if (!classIdValue || !cards.length || !topics.length) { box.replaceChildren(); return; }
+ const rows = topics.map((topic) => {
+  const n = cards.filter((card) => (card.done instanceof Set ? card.done.has(topic.id) : (card.done || []).includes(topic.id))).length;
+  return {topic, n};
+ });
+ const wrap = node('div', 'done-list');
+ wrap.append(node('p', 'small visual-label', `주제별 다 했어요 (학생 ${cards.length}명)`));
+ for (const {topic, n} of rows) {
+  const row = node('div', 'done-row');
+  row.title = topic.title;
+  const rate = cards.length ? n / cards.length : 0;
+  const bar = node('div', 'card-rate');
+  bar.dataset.tone = rate >= 0.7 ? 'good' : rate >= 0.4 ? 'mid' : 'low';
+  const fill = node('span');
+  fill.style.width = `${Math.round(rate * 100)}%`;
+  bar.append(fill);
+  row.append(node('span', 'done-topic', topic.short), bar, node('b', 'done-count', `${n}/${cards.length}`));
+  wrap.append(row);
+ }
+ box.replaceChildren(wrap);
+}
+
+function paintFeedback(list) {
+ const rows = feedbackRows.filter((row) => row.text);
+ if (!rows.length) return;
+ const byTopic = new Map();
+ for (const row of rows) {
+  if (!byTopic.has(row.topicId)) byTopic.set(row.topicId, []);
+  byTopic.get(row.topicId).push(row);
+ }
+ const wrap = node('div', 'admin-rows');
+ wrap.append(node('h3', '', `학생 의견 ${rows.length}건`));
+ for (const [topicId, items] of [...byTopic.entries()].sort((a, b) => b[1].length - a[1].length)) {
+  const card = node('article', 'admin-row feedback-topic-row');
+  const head = node('div');
+  head.append(node('strong', '', topicTitle(topicId, titles)), node('span', 'small', `${items.length}건`));
+  card.append(head);
+  const ul = node('ul', 'feedback-items');
+  for (const item of items.sort((a, b) => studentLabel(a).localeCompare(studentLabel(b), 'ko'))) {
+   const li = node('li');
+   li.append(node('b', '', studentLabel(item) + ' '), node('span', '', item.text));
+   ul.append(li);
+  }
+  card.append(ul);
+  wrap.append(card);
+ }
+ list.append(wrap);
+}
+
 function paintUnderstanding() {
  const {counts, hardRows} = countUnderstanding(progressRows);
  const countsEl = $('understanding-counts');
@@ -58,6 +121,7 @@ function paintUnderstanding() {
  }
  if (!groups.length) {
   list.replaceChildren(node('p', 'small', '이 반에서 어려워요를 누른 학생이 없습니다.'));
+  paintFeedback(list);
   return;
  }
  const wrap = node('div', 'admin-rows');
@@ -73,6 +137,7 @@ function paintUnderstanding() {
   wrap.append(card);
  }
  list.replaceChildren(wrap);
+ paintFeedback(list);
 }
 
 function formatWhen(value) {
@@ -271,6 +336,7 @@ function paintRoster() {
 function paintHeatmap() {
  const host = $('heatmap-wrap');
  if (!host) return;
+ paintDone();
  if (!classIdValue) {
   host.replaceChildren(node('p', 'small', '위에서 수업할 반을 선택하세요.'));
   return;
@@ -464,10 +530,15 @@ function stop() {
   rosterUnsub();
   rosterUnsub = null;
  }
+ if (feedbackUnsub) {
+  feedbackUnsub();
+  feedbackUnsub = null;
+ }
  progressRows = [];
  helpRows = [];
  presenceRows = [];
  rosterRows = [];
+ feedbackRows = [];
  filterTopic = '';
  selectedKey = '';
  paintUnderstanding();
@@ -508,6 +579,17 @@ function listen(id) {
    console.error('[teacher-board]', error);
    note('understanding-note', '이해도 요약을 읽지 못했습니다.');
    note('roster-note', '진행 요약을 읽지 못했습니다.');
+  });
+  feedbackUnsub = store.onSnapshot(store.collection(db, 'feedback'), (snap) => {
+   feedbackRows = [];
+   snap.forEach((doc) => {
+    const data = doc.data();
+    if (inClass(data, id)) feedbackRows.push({id: doc.id, ...data});
+   });
+   paintUnderstanding();
+  }, (error) => {
+   console.error('[teacher-board]', error);
+   note('understanding-note', '학생 의견을 읽지 못했습니다.');
   });
   presenceUnsub = store.onSnapshot(
    store.query(store.collection(db, 'presence'), store.where('classroom', '==', id)),

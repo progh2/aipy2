@@ -5,7 +5,7 @@ import {load} from './auth.js';
 import {progressFields} from './sync-model.js';
 import {
  UNDERSTANDING_KEY, UNDERSTANDING_WRITE_MS, COMMENT_MAX, UNDERSTANDING_VALUES,
- UNDERSTANDING_LABELS, HARD_PROMPT, NOT_GRADED_NOTE, normalizeStore, mergeStores,
+ UNDERSTANDING_LABELS, HARD_PROMPT, OPINION_PROMPT, NOT_GRADED_NOTE, normalizeStore, mergeStores,
  setUnderstanding, setComment, historyItems, topicHref, titlesFromCatalog,
  titlesFromLessons, topicTitle, feedbackId, feedbackFields
 } from './understanding-model.js';
@@ -61,7 +61,10 @@ function paintChoices() {
   });
   const comment = root.querySelector('.hard-comment');
   if (comment) {
-   comment.hidden = current !== 'hard';
+   // 의견란은 항상 보인다(#97). '어려워요'일 때만 막힌 곳을 묻는 문구로 바뀐다.
+   comment.hidden = false;
+   const field = comment.querySelector('.hard-comment-field');
+   if (field) field.textContent = current === 'hard' ? HARD_PROMPT : OPINION_PROMPT;
    const input = comment.querySelector('input');
    if (input && document.activeElement !== input) input.value = store.comments[topicId] || '';
   }
@@ -129,9 +132,25 @@ function mountSignals() {
    button.addEventListener('click', () => choose(topicId, value));
    group.append(button);
   }
+  // '다 했어요' 큰 버튼(#87): 완료 체크박스와 같은 기록을 쓰므로 교사 보드 완료율·히트맵에 바로 반영된다.
+  const doneBtn = node('button', 'done-button', '');
+  doneBtn.type = 'button';
+  const paintDone = () => {
+   doneBtn.textContent = box.checked ? '✔ 다 했어요 (누르면 취소)' : '다 했어요!';
+   doneBtn.setAttribute('aria-pressed', String(box.checked));
+  };
+  doneBtn.addEventListener('click', () => {
+   box.checked = !box.checked;
+   box.dispatchEvent(new Event('change', {bubbles: true}));
+   paintDone();
+   toast(box.checked ? '다 했어요로 표시했어요. 선생님 화면에 반영돼요.' : '표시를 취소했어요.');
+  });
+  box.addEventListener('change', paintDone);
+  paintDone();
+  label.before(doneBtn);
   const comment = node('div', 'hard-comment');
-  comment.hidden = true;
-  const field = node('label', 'hard-comment-field', HARD_PROMPT);
+  comment.hidden = false;
+  const field = node('label', 'hard-comment-field', OPINION_PROMPT);
   field.setAttribute('for', `hard-comment-${topicId}`);
   const input = node('input');
   input.id = `hard-comment-${topicId}`;
@@ -139,7 +158,7 @@ function mountSignals() {
   input.maxLength = COMMENT_MAX;
   input.autocomplete = 'off';
   input.setAttribute('aria-label', HARD_PROMPT);
-  input.placeholder = '한 줄로 적어도 되고, 비워도 돼요';
+  input.placeholder = '예: 이 부분이 헷갈려요 / 이런 예제가 더 있으면 좋겠어요';
   const save = node('button', '', '남기기');
   save.type = 'button';
   save.addEventListener('click', () => submitComment(topicId, input.value));

@@ -13,6 +13,7 @@ export const UNDERSTANDING_LABELS = {
  hard: '어려워요'
 };
 export const HARD_PROMPT = '어디가 막혔나요?';
+export const OPINION_PROMPT = '이 주제에 대한 의견·질문을 한 줄 남겨 주세요.';
 export const STUDENT_NOTE = '이해도·도움 요청은 성적에 안 들어가요. 수업 중에만 쓰는 신호예요.';
 export const TEACHER_NOTE = '학생이 보내는 신호예요. 점수·출결에는 안 반영돼요.';
 export const NOT_GRADED = STUDENT_NOTE;
