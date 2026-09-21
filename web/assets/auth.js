@@ -116,6 +116,13 @@ function renderSignedIn(profile, extra = {}) {
  out.type = 'button';
  out.addEventListener('click', signOut);
  slot.replaceChildren(chip, out, privacyButton());
+ if (extra.teacher) {
+  const prefix = document.body.dataset.prefix || '';
+  const link = node('a', 'account-teacher-link', '교사 모드 →');
+  link.href = prefix + 'teacher/index.html';
+  link.title = '교사용 수업 요약·관리 화면으로 이동';
+  slot.append(link);
+ }
  const warn = missingRosterWarning({
   classroom: profile.classroom,
   teacher: extra.teacher,

@@ -232,3 +232,7 @@ aside.rail .understanding-history h2{font-size:14px}
  .together-bar-track{grid-column:1/-1}
  .report-grid{grid-template-columns:1fr}
 }
+
+/* 교사 계정에게만 보이는 교사 모드 바로가기 */
+.account-teacher-link{font-size:13px;font-weight:700;color:var(--teal,#117365);white-space:nowrap;text-decoration:none;border:1px solid currentColor;border-radius:8px;padding:4px 10px}
+.account-teacher-link:hover{background:#e7f4f1}
