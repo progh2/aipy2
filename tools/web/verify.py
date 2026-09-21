@@ -843,7 +843,7 @@ assert '학습 기록(완료·답안·저널·코드)' in privacy_model
 assert '과제 제출물' in privacy_model
 assert '이해도 신호' in privacy_model
 assert '선생님이 보는 것' in privacy_model
-assert '성적·출결에는 들어가지 않아요.' in privacy_model
+assert '성적·출결에는 들어가지 않아요.' not in privacy_model  # 문구 삭제(2026-09-21 교사 요청)
 assert '본인 학습 기록은 JSON으로 내보낼 수 있어요.' in privacy_model
 assert '실제 보관·동의는 학교 규정을 따릅니다.' in privacy_model
 auth_js=(WEB/'assets/auth.js').read_text()

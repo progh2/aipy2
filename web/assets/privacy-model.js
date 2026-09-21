@@ -18,7 +18,6 @@ export const PRIVACY_TEACHER = [
  '이해도 신호와 도움 요청',
  '과제 제출 소스와 출력'
 ];
-export const PRIVACY_GRADE_NOTE = '성적·출결에는 들어가지 않아요.';
 export const PRIVACY_EXPORT_NOTE = '본인 학습 기록은 JSON으로 내보낼 수 있어요.';
 export const PRIVACY_SCHOOL_NOTE = '실제 보관·동의는 학교 규정을 따릅니다.';
 export const PRIVACY_BUTTON = '개인정보';
@@ -41,7 +40,7 @@ export function privacyBody() {
  const seen = node('ul', 'privacy-list');
  for (const item of PRIVACY_TEACHER) seen.append(node('li', '', item));
  wrap.append(node('h3', '', PRIVACY_TEACHER_TITLE), seen);
- wrap.append(node('p', 'small', `${PRIVACY_GRADE_NOTE} ${PRIVACY_EXPORT_NOTE}`));
+ wrap.append(node('p', 'small', PRIVACY_EXPORT_NOTE));
  wrap.append(node('p', 'small', PRIVACY_SCHOOL_NOTE));
  return wrap;
 }

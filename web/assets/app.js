@@ -186,7 +186,9 @@ if(currentId)stash();currentId=id;exampleDirty=false;const ex=data.examples[id],
  $('#run').textContent=ex.mode==='web'?'▶ Python 실행':'Python 문법 확인';
  $('#check-example').disabled=!ex.checks;
  $('#check-example').textContent=ex.checks?'입력·조건 검사':'PC 실행으로 동작 점검';
- $('#example-note').textContent=(ex.note||'')+(ex.mode==='pc'?' 이 코드는 PC에서 실행하세요. 웹에서는 Python 문법만 확인합니다. ZIP 다운로드 후 예제 폴더를 VS Code로 열고 python main.py를 실행하세요. 필요한 라이브러리는 requirements.txt로 설치합니다.':' 파일을 오가며 편집한 뒤 실행 파일을 선택하세요. 각 실행은 새 가상 프로젝트에서 시작합니다.');
+ const deps=(ex.files['requirements.txt']||'').split(/\s+/).filter(Boolean).join(' ')||(id.includes('pyside')?'PySide6':id.includes('pyqt')?'PyQt6':/(^|-)wx(-|$)/.test(id)||id.endsWith('-wx')?'wxPython':id.includes('kivy')?'Kivy':'');
+ const installNote=deps?` 이 예제는 외부 라이브러리가 필요해 설치 없이는 동작하지 않습니다. 먼저 python -m pip install ${deps} 를 실행하세요.`:(id.includes('tk')?' tkinter는 파이썬에 기본 포함되어 별도 설치가 필요 없습니다. 창이 안 뜨면 파이썬 설치 시 tcl/tk 옵션을 확인하세요.':' 표준 라이브러리만 사용하므로 별도 설치가 필요 없습니다.');
+ $('#example-note').textContent=(ex.note||'')+(ex.mode==='pc'?' 이 코드는 PC에서 실행하세요. 웹에서는 Python 문법만 확인합니다. ZIP 다운로드 후 예제 폴더를 VS Code로 열고 python main.py를 실행하세요.'+installNote:' 파일을 오가며 편집한 뒤 실행 파일을 선택하세요. 각 실행은 새 가상 프로젝트에서 시작합니다.');
  $('#plot-output').replaceChildren();
  $('#output').textContent=`${ex.title}\n${ex.mode==='web'?'실행 결과가 여기에 표시됩니다.':'문법 검사는 패키지 설치·데이터·장치·실제 프로그램 동작까지 검사하지 않습니다.'}`;
  paiGuide('thinking',ex.mode==='web'?'실행 전에 결과를 먼저 예상해 볼까요?':'웹에서 확인한 뒤, PC에서도 시험해요.',ex.mode==='web'?'어떤 파일을 실행하나요? 입력값을 바꾸면 어떤 결과가 나올지 먼저 적어 보세요.':'문법 확인은 첫 단계예요. 다운로드한 예제를 실행하고 입력·결과·오류 처리를 확인하세요.');
@@ -350,4 +352,60 @@ if(!hasLab && !hasPractice){
  window.aipyLearning.ready=true;
  document.dispatchEvent(new CustomEvent('aipy:learning-ready'));
 }).catch(error=>{const out=$('#output');if(out)out.textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));});
+})();
+
+/* ── 수업 프로젝터용 글자 크기 조절: 헤더에 −/현재%/＋ 버튼. 값은 이 브라우저에 저장됩니다. */
+(function(){
+ const header=document.querySelector('header.top');if(!header)return;
+ const KEY='aipy-zoom',MIN=0.8,MAX=1.8,STEP=0.1;
+ let z=parseFloat(localStorage.getItem(KEY));if(!(z>=MIN&&z<=MAX))z=1;
+ const wrap=document.createElement('div');wrap.className='fontsize';wrap.setAttribute('role','group');wrap.setAttribute('aria-label','화면 글자 크기 조절');
+ const btn=(label,title)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.title=title;b.setAttribute('aria-label',title);return b;};
+ const minus=btn('−','글자 작게'),reset=btn('100%','기본 크기로'),plus=btn('＋','글자 크게');
+ const apply=()=>{z=Math.round(z*10)/10;document.body.style.zoom=z===1?'':String(z);reset.textContent=Math.round(z*100)+'%';localStorage.setItem(KEY,String(z));minus.disabled=z<=MIN;plus.disabled=z>=MAX;};
+ minus.onclick=()=>{z-=STEP;apply();};plus.onclick=()=>{z+=STEP;apply();};reset.onclick=()=>{z=1;apply();};
+ wrap.append(minus,reset,plus);
+ const account=header.querySelector('.account');
+ if(account)header.insertBefore(wrap,account);else header.append(wrap);
+ apply();
+})();
+
+/* ── 코드 편집기 파이썬 문법 하이라이팅: textarea 아래에 색칠한 미러(pre)를 겹칩니다. */
+(function(){
+ const ta=document.getElementById('code-editor');if(!ta)return;
+ const wrap=document.createElement('div');wrap.className='hl-wrap';
+ ta.parentNode.insertBefore(wrap,ta);
+ const view=document.createElement('pre');view.className='hl-view';view.setAttribute('aria-hidden','true');
+ const code=document.createElement('code');view.append(code);
+ wrap.append(view,ta);
+ const escHtml=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+ const RX=new RegExp([
+  '(#[^\\n]*)',                                                    // 1 주석
+  '([rbfuRBFU]{0,2}(?:\'\'\'[\\s\\S]*?\'\'\'|"""[\\s\\S]*?"""))',  // 2 삼중 문자열
+  '([rbfuRBFU]{0,2}(?:\'(?:\\\\.|[^\'\\\\\\n])*\'|"(?:\\\\.|[^"\\\\\\n])*"))', // 3 문자열
+  '(@[A-Za-z_][\\w.]*)',                                           // 4 데코레이터
+  '\\b(False|None|True|and|as|assert|async|await|break|class|continue|def|del|elif|else|except|finally|for|from|global|if|import|in|is|lambda|nonlocal|not|or|pass|raise|return|try|while|with|yield)\\b', // 5 키워드
+  '\\b(self|cls|print|input|len|range|int|float|str|bool|list|tuple|dict|set|open|type|enumerate|zip|map|filter|sorted|reversed|sum|min|max|abs|round|super|isinstance|hasattr|getattr|Exception|ValueError|TypeError|KeyError|IndexError|OSError|ZeroDivisionError)\\b', // 6 내장·자주 쓰는 이름
+  '\\b(\\d[\\d_]*(?:\\.[\\d_]+)?(?:[eE][+-]?\\d+)?[jJ]?)\\b'      // 7 숫자
+ ].join('|'),'g');
+ const CLS=['','hl-com','hl-str','hl-str','hl-dec','hl-kw','hl-bi','hl-num'];
+ function paint(){
+  const src=ta.value;let out='',last=0,m;RX.lastIndex=0;
+  while((m=RX.exec(src))){
+   out+=escHtml(src.slice(last,m.index));
+   for(let g=1;g<CLS.length;g++)if(m[g]!==undefined){out+='<span class="'+CLS[g]+'">'+escHtml(m[g])+'</span>';break;}
+   last=m.index+m[0].length;
+   if(m[0].length===0)RX.lastIndex++;
+  }
+  out+=escHtml(src.slice(last));
+  code.innerHTML=out+'\n';
+  sync();
+ }
+ function sync(){view.scrollTop=ta.scrollTop;view.scrollLeft=ta.scrollLeft;}
+ ta.addEventListener('input',paint);
+ ta.addEventListener('scroll',sync);
+ // 예제 전환 등 코드가 스크립트로 바뀌는 경우를 잡는 저비용 감시
+ let lastValue=null;
+ setInterval(()=>{if(ta.value!==lastValue){lastValue=ta.value;paint();}},250);
+ paint();
 })();

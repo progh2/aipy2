@@ -337,6 +337,10 @@ function renderRoster(rows) {
   [r.grade, r.classroom, r.studentId, r.name, r.admissionYear, r.number ?? '', r.id]
    .forEach((v) => tr.append(node('td', '', String(v ?? ''))));
   const cell = node('td');
+  const edit = node('button', '', '수정');
+  edit.type = 'button';
+  edit.onclick = () => editRosterRow(tr, r);
+  cell.append(edit);
   const remove = node('button', '', '삭제');
   remove.type = 'button';
   remove.onclick = async () => {
@@ -356,6 +360,71 @@ function renderRoster(rows) {
  }
  table.append(tbody);
  $('roster-list').replaceChildren(table);
+}
+
+// 한 행을 입력 폼으로 바꿔 학년·반·학번·이름·입학년도·번호를 고칩니다.
+// 이메일은 문서 ID라 여기서 바꾸지 않습니다(변경하려면 삭제 후 재등록).
+function editRosterRow(tr, r) {
+ const make = (value, size, label) => {
+  const input = node('input');
+  input.value = value ?? '';
+  input.size = size;
+  input.setAttribute('aria-label', label);
+  input.style.margin = '0';
+  return input;
+ };
+ const grade = make(r.grade, 2, '학년');
+ const classroom = make(r.classroom, 2, '반');
+ const studentId = make(r.studentId, 6, '학번');
+ const name = make(r.name, 6, '이름');
+ const admissionYear = make(r.admissionYear, 5, '입학년도');
+ const number = make(r.number ?? '', 3, '번호');
+ const cells = [grade, classroom, studentId, name, admissionYear, number];
+ tr.replaceChildren();
+ cells.forEach((input) => { const td = node('td'); td.append(input); tr.append(td); });
+ tr.append(node('td', '', r.id));
+ const actions = node('td');
+ const saveBtn = node('button', '', '저장');
+ saveBtn.type = 'button';
+ saveBtn.onclick = async () => {
+  const intOf = (input) => { const v = parseInt(input.value, 10); return Number.isNaN(v) ? null : v; };
+  const payload = {
+   email: r.id,
+   studentId: studentId.value.trim(),
+   admissionYear: intOf(admissionYear),
+   name: name.value.trim(),
+   grade: intOf(grade),
+   classroom: intOf(classroom),
+   updatedAt: storeRef.serverTimestamp()
+  };
+  if (!payload.name || !payload.studentId || payload.admissionYear == null
+    || payload.grade == null || payload.classroom == null) {
+   alert('학년·반·학번·이름·입학년도를 모두 채우세요. 번호만 비울 수 있습니다.');
+   return;
+  }
+  const num = intOf(number);
+  if (num != null) payload.number = num;
+  if (r.archived === true) {
+   payload.archived = true;
+   if (r.archivedAt) payload.archivedAt = r.archivedAt;
+  }
+  saveBtn.disabled = true;
+  try {
+   await storeRef.setDoc(storeRef.doc(dbRef, 'roster', r.id), payload);
+   document.dispatchEvent(new CustomEvent('aipy:roster-changed'));
+   listRoster(dbRef, storeRef);
+  } catch (error) {
+   console.error('[admin]', error);
+   saveBtn.disabled = false;
+   alert('저장하지 못했습니다. 권한과 입력값을 확인하세요.');
+  }
+ };
+ const cancelBtn = node('button', '', '취소');
+ cancelBtn.type = 'button';
+ cancelBtn.onclick = () => renderRoster(cachedRoster || []);
+ actions.append(saveBtn, cancelBtn);
+ tr.append(actions);
+ grade.focus();
 }
 
 async function listRoster(db, store) {
