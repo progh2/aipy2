@@ -292,3 +292,5 @@ h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
 .feedback-items li{margin:3px 0}
 .feedback-topic-row{margin-top:8px}
 @media (max-width:720px){.done-row{grid-template-columns:100px 1fr 50px}}
+.understanding-offline{color:#a44517;background:#fff1e9;border-radius:6px;padding:6px 10px}
+.understanding-offline[hidden]{display:none}

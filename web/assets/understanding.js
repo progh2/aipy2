@@ -121,6 +121,9 @@ function mountSignals() {
   const root = node('div', 'topic-signals');
   root.dataset.topic = topicId;
   const note = node('p', 'small understanding-note', NOT_GRADED_NOTE);
+  const offline = node('p', 'small understanding-offline', OFFLINE_NOTE);
+  offline.hidden = true;
+  note.after(offline);
   const group = node('div', 'understanding-choices');
   group.setAttribute('role', 'group');
   group.setAttribute('aria-label', '이 주제 이해도');
@@ -169,7 +172,7 @@ function mountSignals() {
    }
   });
   comment.append(field, input, save);
-  root.append(note, group, comment);
+  root.append(note, offline, group, comment);
   label.after(root);
  });
 }
@@ -197,10 +200,17 @@ function scheduleWrite() {
  writeTimer = setTimeout(() => { writeProgress(); }, UNDERSTANDING_WRITE_MS);
 }
 
+const OFFLINE_NOTE = '지금은 이 브라우저에만 저장돼요. 학교 계정으로 로그인하면 선생님 화면에 전달돼요.';
+function signedIn() { return Boolean(user && profile); }
+function paintOfflineNotes() {
+ document.querySelectorAll('.topic-signals .understanding-offline').forEach((el) => { el.hidden = signedIn(); });
+}
+
 function choose(topicId, value) {
  store = setUnderstanding(store, topicId, value);
  scheduleWrite();
- toast(value === 'hard' ? `${UNDERSTANDING_LABELS[value]} · ${HARD_PROMPT}` : UNDERSTANDING_LABELS[value]);
+ const label = value === 'hard' ? `${UNDERSTANDING_LABELS[value]} · ${HARD_PROMPT}` : UNDERSTANDING_LABELS[value];
+ toast(signedIn() ? label : `${label} — ${OFFLINE_NOTE}`);
 }
 
 async function writeFeedback(topicId, text) {
@@ -225,7 +235,7 @@ function submitComment(topicId, text) {
  persistLocal();
  paintChoices();
  writeFeedback(topicId, text);
- toast('남겼어요.');
+ toast(signedIn() ? '남겼어요. 선생님 화면에 전달돼요.' : `남겼어요. ${OFFLINE_NOTE}`);
 }
 
 async function pullCloud() {
@@ -248,8 +258,10 @@ function onAccount(detail) {
  if (!user || !profile) {
   user = null;
   profile = null;
+  paintOfflineNotes();
   return;
  }
+ paintOfflineNotes();
  pullCloud();
 }
 
@@ -275,6 +287,8 @@ function start() {
  mountSignals();
  loadTitles().then(paintHistory);
  paintChoices();
+ // 계정 이벤트가 오기 전까지는 미로그인 안내를 보여 준다.
+ setTimeout(paintOfflineNotes, 2500);
  window.aipyUnderstanding = {
   snapshot,
   store: () => store,

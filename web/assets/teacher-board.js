@@ -325,7 +325,9 @@ function paintRoster() {
   fill.style.width = `${Math.round(rate * 100)}%`;
   bar.append(fill);
   btn.dataset.und = UND_KEY[card.understandingLabel] || 'none';
-  const flags = node('p', 'small', [card.openHelp ? `도움 ${card.openHelp}` : '', card.understandingLabel !== '—' ? card.understandingLabel : '', card.lastActivityLabel].filter(Boolean).join(' · '));
+  // 이해도는 전체 주제 중 '가장 나쁜 값' 하나가 아니라 집계(어려워요 1 · 이해했어요 3)로 보여 준다(#96).
+  const flags = node('p', 'small', [card.openHelp ? `도움 ${card.openHelp}` : '', card.understandingSummary || '', card.lastActivityLabel].filter(Boolean).join(' · '));
+  if (card.understandingLabel !== '—') btn.title = `테두리 색 = 가장 어려워한 주제 기준(${card.understandingLabel})`;
   btn.append(head, place, stats, bar, flags);
   btn.addEventListener('click', () => openDetail(card.key));
   wrap.append(btn);
