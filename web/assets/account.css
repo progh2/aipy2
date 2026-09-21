@@ -271,3 +271,11 @@ aside.rail .understanding-history h2{font-size:14px}
 .student-card[data-und=hard]{border-left:4px solid #c0392b}
 .student-card[data-und=somewhat]{border-left:4px solid #d9a400}
 .student-card[data-und=understood]{border-left:4px solid #2e7d5b}
+
+/* 교사 초점 보내기 버튼(#84) · 학생 화면 도착 강조 */
+.focus-send{font-size:11px;padding:2px 8px;margin-left:10px;vertical-align:middle;background:#e9f2ef;border-color:#b7d4cb;color:#176c5f;font-weight:700}
+.focus-send:hover{background:#d7ebe4}
+h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
+@keyframes focus-flash{0%{box-shadow:0 0 0 0 rgba(255,207,72,.9)}60%{box-shadow:0 0 0 10px rgba(255,207,72,0)}100%{box-shadow:none}}
+.focus-flash{animation:focus-flash 1.3s ease-out 2;border-radius:10px}
+@media print{.focus-send{display:none!important}}

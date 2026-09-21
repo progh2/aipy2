@@ -111,12 +111,14 @@ function paintUi() {
  document.body.classList.add('follow-active');
  const status = document.getElementById('follow-status');
  const rejoin = document.getElementById('follow-rejoin');
+ // 버튼은 세션 중 항상 보인다(#86): 따라가는 중이어도 '지금 선생님 위치로' 한 번 이동할 수 있다.
+ rejoin.hidden = false;
  if (following) {
   status.textContent = '선생님 화면을 따라가는 중';
-  rejoin.hidden = true;
+  rejoin.textContent = '선생님 화면으로 이동';
  } else {
   status.textContent = '잠깐 혼자 보는 중';
-  rejoin.hidden = false;
+  rejoin.textContent = '선생님 화면으로 돌아가기';
  }
 }
 
@@ -128,11 +130,19 @@ function showAttention() {
  attentionTimer = setTimeout(() => { banner.hidden = true; }, 6000);
 }
 
+function flash(el) {
+ el.classList.remove('focus-flash');
+ void el.offsetWidth; // 애니메이션 재시작
+ el.classList.add('focus-flash');
+ setTimeout(() => el.classList.remove('focus-flash'), 2600);
+}
+
 function scrollToId(id) {
  const el = document.getElementById(id);
  if (!el) return false;
  ignoreScrollUntil = Date.now() + 1400;
  el.scrollIntoView({behavior: prefersSmooth() ? 'smooth' : 'auto', block: 'start'});
+ flash(el);
  return true;
 }
 
@@ -169,7 +179,11 @@ function rejoinFocus() {
  following = true;
  persistFollowing();
  paintUi();
- if (liveSession && liveSession.focus) applyFocus(liveSession.focus, true);
+ if (liveSession && liveSession.focus && liveSession.focus.page) applyFocus(liveSession.focus, true);
+ else {
+  const box = document.getElementById('toast');
+  if (box) { box.textContent = '아직 선생님이 보낸 위치가 없어요. 잠시 후 다시 눌러 보세요.'; setTimeout(() => { box.textContent = ''; }, 4000); }
+ }
  writePresence();
 }
 

@@ -43,8 +43,10 @@ function paintCue() {
  if (!canSend()) {
   if (root) root.hidden = true;
   document.body.classList.remove('teacher-focus-live');
+  removeFocusButtons();
   return;
  }
+ injectFocusButtons();
  if (!root) {
   root = node('div', 'teacher-focus-ui');
   root.id = 'teacher-focus-ui';
@@ -58,7 +60,51 @@ function paintCue() {
  root.hidden = false;
  document.body.classList.add('teacher-focus-live');
  document.getElementById('teacher-focus-status').textContent =
-  `${labelClass(classIdValue)}에 초점을 보내요. 주제나 예제를 누르면 따라오는 학생이 옮겨요.`;
+  `${labelClass(classIdValue)}에 초점을 보내요. 📍 버튼이나 주제·예제를 누르면 따라오는 학생이 옮겨요.`;
+}
+
+// 교사에게만 보이는 '초점 보내기' 버튼을 소단원 제목·실습 워크스페이스·문항 카드에 붙인다(#84).
+// 앵커 클릭으로도 초점이 가지만, 눈에 보이는 버튼이 있어야 수업 중 바로 누를 수 있다.
+let questionObserver = null;
+function focusButton(anchorId, exampleId, label) {
+ const b = node('button', 'focus-send', label || '📍 초점 보내기');
+ b.type = 'button';
+ b.title = '따라오는 학생 화면을 이 위치로 옮깁니다';
+ b.addEventListener('click', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!canSend()) return;
+  const focus = exampleId
+   ? focusFromUnitClick({exampleId, lessonId: anchorId, currentPage: currentPage()})
+   : focusFromUnitClick({href: '#' + anchorId, currentPage: currentPage()});
+  if (focus) sendFocus(focus);
+ });
+ return b;
+}
+function injectFocusButtons() {
+ if (!canSend()) return;
+ document.querySelectorAll('section.lesson[id]').forEach((lesson) => {
+  const h2 = lesson.querySelector('h2');
+  if (!h2 || h2.querySelector('.focus-send')) return;
+  h2.append(focusButton(lesson.id, null));
+  const ws = lesson.querySelector('.lesson-workspace');
+  const first = ws && ws.querySelector('[data-example]');
+  const h3 = ws && ws.querySelector('h3');
+  if (h3 && first && !h3.querySelector('.focus-send')) h3.append(focusButton(lesson.id, first.dataset.example, '📍 실습으로 초점'));
+ });
+ document.querySelectorAll('#questions .question[id]').forEach((card) => {
+  const meta = card.querySelector('.question-meta') || card;
+  if (meta.querySelector('.focus-send')) return;
+  meta.append(focusButton(card.id, null, '📍 이 문제로 초점'));
+ });
+ const host = document.getElementById('questions');
+ if (host && !questionObserver) {
+  questionObserver = new MutationObserver(() => injectFocusButtons());
+  questionObserver.observe(host, {childList: true});
+ }
+}
+function removeFocusButtons() {
+ document.querySelectorAll('.focus-send').forEach((el) => el.remove());
 }
 
 function lessonIdNear(el) {
