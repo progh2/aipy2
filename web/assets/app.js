@@ -409,3 +409,21 @@ if(!hasLab && !hasPractice){
  setInterval(()=>{if(ta.value!==lastValue){lastValue=ta.value;paint();}},250);
  paint();
 })();
+
+/* ── 발표 모드: 상단 헤더·좌측 메뉴·푸터를 숨기고 본문만 크게. ESC 또는 '발표 종료'로 복귀. */
+(function(){
+ const header=document.querySelector('header.top');if(!header)return;
+ const KEY='aipy-presenting';
+ const enter=document.createElement('button');enter.type='button';enter.className='present-enter';
+ enter.textContent='발표 모드';enter.title='메뉴를 숨기고 본문만 크게 봅니다 (ESC로 복귀)';
+ const exit=document.createElement('button');exit.type='button';exit.className='present-exit';
+ exit.textContent='↩ 발표 종료';exit.title='메뉴로 되돌아가기 (ESC)';
+ document.body.append(exit);
+ const set=(on)=>{document.body.classList.toggle('presenting',on);sessionStorage.setItem(KEY,on?'1':'');};
+ enter.onclick=()=>set(true);
+ exit.onclick=()=>set(false);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('presenting'))set(false);});
+ const group=header.querySelector('.fontsize');
+ if(group)group.append(enter);else header.append(enter);
+ if(sessionStorage.getItem(KEY)==='1')set(true);
+})();
