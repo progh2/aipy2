@@ -410,16 +410,59 @@ if(!hasLab && !hasPractice){
  paint();
 })();
 
-/* ── 발표 모드: 상단 헤더·좌측 메뉴·푸터를 숨기고 본문만 크게. ESC 또는 '발표 종료'로 복귀. */
+/* ── 발표 모드: 상단 헤더·좌측 메뉴·푸터를 숨기고 본문만 크게.
+   발표 중에는 우상단 도구막대(글자 크기·빨강/초록/파랑 펜·지우기·종료)를 띄운다.
+   펜 낙서는 화면 고정 오버레이이며 발표 종료 시 모두 사라진다. ESC = 종료. */
 (function(){
  const header=document.querySelector('header.top');if(!header)return;
  const KEY='aipy-presenting';
- const enter=document.createElement('button');enter.type='button';enter.className='present-enter';
- enter.textContent='발표 모드';enter.title='메뉴를 숨기고 본문만 크게 봅니다 (ESC로 복귀)';
- const exit=document.createElement('button');exit.type='button';exit.className='present-exit';
- exit.textContent='↩ 발표 종료';exit.title='메뉴로 되돌아가기 (ESC)';
- document.body.append(exit);
- const set=(on)=>{document.body.classList.toggle('presenting',on);sessionStorage.setItem(KEY,on?'1':'');};
+ const mkBtn=(cls,text,title)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;if(title){b.title=title;b.setAttribute('aria-label',title);}return b;};
+ const enter=mkBtn('present-enter','발표 모드','메뉴를 숨기고 본문만 크게 봅니다 (ESC로 복귀)');
+ const tools=document.createElement('div');tools.className='present-tools';tools.setAttribute('role','toolbar');tools.setAttribute('aria-label','발표 도구');
+ const fontSlot=document.createElement('span');fontSlot.className='present-fontslot';
+ const pens=[['#d21f2c','빨강 펜'],['#1e8a4c','초록 펜'],['#1d5bd6','파랑 펜']].map(([color,label])=>{
+  const b=mkBtn('present-pen',' ',label+' — 다시 누르면 펜 끄기(스크롤 가능)');b.style.setProperty('--pen',color);b.dataset.color=color;return b;});
+ const wipe=mkBtn('present-wipe','지우기','펜 낙서 모두 지우기');
+ const exit=mkBtn('present-exit','↩ 종료','발표 종료 — 메뉴로 되돌아가기 (ESC)');
+ tools.append(fontSlot,...pens,wipe,exit);document.body.append(tools);
+
+ // 펜 오버레이 캔버스는 body 밖(html)에 붙여 글자 크기(zoom)의 영향을 받지 않게 한다.
+ let canvas=null,ctx=null,pen=null,drawing=false;
+ function ensureCanvas(){
+  if(canvas)return;
+  canvas=document.createElement('canvas');canvas.className='present-ink';canvas.setAttribute('aria-hidden','true');
+  document.documentElement.append(canvas);ctx=canvas.getContext('2d');sizeCanvas();
+  window.addEventListener('resize',()=>{if(document.body.classList.contains('presenting'))sizeCanvas();});
+  canvas.addEventListener('pointerdown',e=>{if(!pen)return;drawing=true;canvas.setPointerCapture(e.pointerId);ctx.beginPath();ctx.moveTo(...pos(e));e.preventDefault();});
+  canvas.addEventListener('pointermove',e=>{if(!drawing)return;ctx.lineTo(...pos(e));ctx.strokeStyle=pen;ctx.lineWidth=3.5;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();});
+  const up=()=>{drawing=false;};
+  canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
+ }
+ function sizeCanvas(){const w=window.innerWidth,h=window.innerHeight;canvas.width=w;canvas.height=h;canvas.style.width=w+'px';canvas.style.height=h+'px';}
+ function pos(e){const r=canvas.getBoundingClientRect();return [(e.clientX-r.left)*(canvas.width/r.width),(e.clientY-r.top)*(canvas.height/r.height)];}
+ function clearInk(){if(ctx)ctx.clearRect(0,0,canvas.width,canvas.height);}
+ function setPen(color){
+  pen=(pen===color)?null:color;
+  pens.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===pen)));
+  if(pen){ensureCanvas();canvas.classList.add('inking');}
+  else if(canvas)canvas.classList.remove('inking');
+ }
+ pens.forEach(b=>{b.onclick=()=>setPen(b.dataset.color);});
+ wipe.onclick=clearInk;
+
+ const set=(on)=>{
+  document.body.classList.toggle('presenting',on);
+  sessionStorage.setItem(KEY,on?'1':'');
+  const fs=document.querySelector('.fontsize');
+  if(on){if(fs)fontSlot.append(fs);}
+  else{
+   if(fs){const account=header.querySelector('.account');if(account)header.insertBefore(fs,account);else header.append(fs);}
+   setPen(null);if(pen)pen=null;clearInk();
+   if(canvas)canvas.classList.remove('inking');
+   pens.forEach(b=>b.setAttribute('aria-pressed','false'));
+  }
+  if(canvas)canvas.style.display=on?'':'none';
+ };
  enter.onclick=()=>set(true);
  exit.onclick=()=>set(false);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('presenting'))set(false);});
