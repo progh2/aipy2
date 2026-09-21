@@ -52,3 +52,4 @@ body.presenting .present-enter{display:none}
 .present-ink{position:fixed;left:0;top:0;z-index:65;pointer-events:none;touch-action:none}
 .present-ink.inking{pointer-events:auto;cursor:crosshair}
 html:has(body.presenting){scroll-padding-top:16px}
+.zoom-menu[hidden],.pen-panel[hidden]{display:none}

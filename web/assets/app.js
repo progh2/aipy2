@@ -364,7 +364,7 @@ if(!hasLab && !hasPractice){
  const minus=btn('−','글자 작게'),pct=btn('100%','배율 목록 열기'),plus=btn('＋','글자 크게');
  const menu=document.createElement('div');menu.className='zoom-menu';menu.hidden=true;
  PRESETS.forEach(v=>{const b=btn(Math.round(v*100)+'%','배율 '+Math.round(v*100)+'%로');b.onclick=()=>{z=v;apply();menu.hidden=true;};menu.append(b);});
- const apply=()=>{z=Math.round(z*20)/20;document.body.style.zoom=z===1?'':String(z);pct.textContent=Math.round(z*100)+'%';localStorage.setItem(KEY,String(z));minus.disabled=z<=MIN;plus.disabled=z>=MAX;
+ const apply=()=>{z=Math.round(z*20)/20;document.body.style.zoom=z===1?'':String(z);document.dispatchEvent(new CustomEvent('aipy:zoom'));pct.textContent=Math.round(z*100)+'%';localStorage.setItem(KEY,String(z));minus.disabled=z<=MIN;plus.disabled=z>=MAX;
   [...menu.children].forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===Math.round(z*100)+'%')));};
  minus.onclick=()=>{z-=STEP;apply();};plus.onclick=()=>{z+=STEP;apply();};
  pct.onclick=(e)=>{e.stopPropagation();menu.hidden=!menu.hidden;};
@@ -459,9 +459,10 @@ if(!hasLab && !hasPractice){
   document.documentElement.append(canvas);ctx=canvas.getContext('2d');sizeCanvas();
   window.addEventListener('resize',()=>{if(canvas.style.display!=='none'){sizeCanvas();redraw();}});
   window.addEventListener('scroll',()=>{if(canvas.style.display!=='none')scheduleRedraw();},{passive:true});
+  document.addEventListener('aipy:zoom',()=>{if(canvas&&canvas.style.display!=='none')scheduleRedraw();});
   canvas.addEventListener('pointerdown',e=>{
    if(!pen.on)return;e.preventDefault();canvas.setPointerCapture(e.pointerId);
-   cur={color:pen.color,width:pen.width,alpha:pen.alpha,straight:false,pts:[docPt(e)]};
+   cur={color:pen.color,width:pen.width,alpha:pen.alpha,straight:false,z:zoomNow(),pts:[docPt(e)]};
    holdAnchor=null;armHold(e);scheduleRedraw();});
   canvas.addEventListener('pointermove',e=>{
    if(!cur)return;
@@ -481,13 +482,16 @@ if(!hasLab && !hasPractice){
    if(cur&&!cur.straight&&cur.pts.length>1){cur.pts=[cur.pts[0],cur.pts[cur.pts.length-1]];cur.straight=true;scheduleRedraw();}
   },500);
  }
+ function zoomNow(){return parseFloat(document.body.style.zoom)||1;}
  function docPt(e){return [e.clientX+window.scrollX,e.clientY+window.scrollY];}
  function sizeCanvas(){const w=window.innerWidth,h=window.innerHeight;canvas.width=w;canvas.height=h;canvas.style.width=w+'px';canvas.style.height=h+'px';}
  function scheduleRedraw(){if(rafPending)return;rafPending=true;requestAnimationFrame(()=>{rafPending=false;redraw();});}
  function drawStroke(st,ox,oy){
-  ctx.globalAlpha=st.alpha;ctx.strokeStyle=st.color;ctx.lineWidth=st.width;ctx.lineCap='round';ctx.lineJoin='round';
-  ctx.beginPath();ctx.moveTo(st.pts[0][0]-ox,st.pts[0][1]-oy);
-  for(let i=1;i<st.pts.length;i++)ctx.lineTo(st.pts[i][0]-ox,st.pts[i][1]-oy);
+  // 그릴 당시 배율(st.z) 대비 현재 배율만큼 좌표·굵기를 함께 확대/축소한다.
+  const f=zoomNow()/(st.z||1);
+  ctx.globalAlpha=st.alpha;ctx.strokeStyle=st.color;ctx.lineWidth=st.width*f;ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.beginPath();ctx.moveTo(st.pts[0][0]*f-ox,st.pts[0][1]*f-oy);
+  for(let i=1;i<st.pts.length;i++)ctx.lineTo(st.pts[i][0]*f-ox,st.pts[i][1]*f-oy);
   ctx.stroke();
  }
  function redraw(){
