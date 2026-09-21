@@ -236,3 +236,38 @@ aside.rail .understanding-history h2{font-size:14px}
 /* 교사 계정에게만 보이는 교사 모드 바로가기 */
 .account-teacher-link{font-size:13px;font-weight:700;color:var(--teal,#117365);white-space:nowrap;text-decoration:none;border:1px solid currentColor;border-radius:8px;padding:4px 10px}
 .account-teacher-link:hover{background:#e7f4f1}
+
+/* 반 현황 보드 시각 요약 */
+.board-visual{display:grid;grid-template-columns:120px 1fr 1fr;gap:12px;margin-top:12px}
+.board-visual:empty{display:none}
+.visual-tile{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;border:1px solid var(--line);border-radius:10px;background:#f7f9fd;padding:10px}
+.visual-tile b{font-size:30px;color:var(--navy);line-height:1.1}
+.visual-panel{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.visual-label{font-weight:700;color:var(--navy)}
+.visual-histogram{display:flex;align-items:stretch;gap:10px;height:78px}
+.histo-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:2px;min-width:0}
+.histo-col .small{font-size:10.5px;white-space:nowrap}
+.histo-count{font-size:11px;font-weight:700;color:var(--muted)}
+.histo-bar{width:70%;min-height:3px;border-radius:4px 4px 0 0;background:#c8d2e0}
+.histo-bar[data-tone=good]{background:#2e7d5b}
+.histo-bar[data-tone=mid]{background:#d9a400}
+.histo-bar[data-tone=low]{background:#c0392b}
+.visual-stack{display:flex;height:20px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.stack-seg{display:block;min-width:6px}
+.visual-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--muted)}
+.legend-item::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;background:#c8d2e0}
+[data-und=hard].stack-seg,[data-und=hard].legend-item::before{background:#c0392b}
+[data-und=somewhat].stack-seg,[data-und=somewhat].legend-item::before{background:#d9a400}
+[data-und=understood].stack-seg,[data-und=understood].legend-item::before{background:#2e7d5b}
+[data-und=none].stack-seg,[data-und=none].legend-item::before{background:#c8d2e0}
+@media (max-width:860px){.board-visual{grid-template-columns:1fr}}
+
+/* 학생 카드: 완료율 막대 + 이해도 테두리 */
+.card-rate{height:7px;border-radius:4px;background:#eef1f7;overflow:hidden}
+.card-rate span{display:block;height:100%;border-radius:4px;background:#c8d2e0;min-width:2px}
+.card-rate[data-tone=good] span{background:#2e7d5b}
+.card-rate[data-tone=mid] span{background:#d9a400}
+.card-rate[data-tone=low] span{background:#c0392b}
+.student-card[data-und=hard]{border-left:4px solid #c0392b}
+.student-card[data-und=somewhat]{border-left:4px solid #d9a400}
+.student-card[data-und=understood]{border-left:4px solid #2e7d5b}

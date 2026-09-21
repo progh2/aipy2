@@ -143,6 +143,65 @@ function liveCards() {
  }));
 }
 
+const UND_KEY = {'어려워요': 'hard', '조금 어려워요': 'somewhat', '이해했어요': 'understood'};
+const UND_ORDER = [['hard', '어려워요'], ['somewhat', '조금 어려워요'], ['understood', '이해했어요'], ['none', '미표시']];
+
+// 반 전체를 한눈에: 평균 완료율, 완료율 분포(4구간), 이해도 분포 스택 막대
+function paintVisual(all) {
+ const list = $('roster-list');
+ if (!list) return;
+ let vis = document.getElementById('board-visual');
+ if (!vis) {
+  vis = node('div', 'board-visual');
+  vis.id = 'board-visual';
+  list.parentNode.insertBefore(vis, list);
+ }
+ if (!classIdValue || !all.length) { vis.replaceChildren(); return; }
+ const rates = all.map((c) => (Number.isFinite(c.completeRate) ? c.completeRate : 0));
+ const avg = rates.reduce((a, b) => a + b, 0) / rates.length;
+
+ const tile = node('div', 'visual-tile');
+ tile.append(node('b', '', `${Math.round(avg * 100)}%`), node('span', 'small', '평균 완료율'));
+
+ const buckets = [0, 0, 0, 0];
+ rates.forEach((r) => { buckets[Math.min(3, Math.floor(r * 4))] += 1; });
+ const histo = node('div', 'visual-panel');
+ histo.append(node('span', 'small visual-label', '완료율 분포 (학생 수)'));
+ const bars = node('div', 'visual-histogram');
+ const max = Math.max(...buckets, 1);
+ ['0~25%', '25~50%', '50~75%', '75~100%'].forEach((label, i) => {
+  const col = node('div', 'histo-col');
+  const bar = node('div', 'histo-bar');
+  bar.style.height = `${Math.round((buckets[i] / max) * 100)}%`;
+  bar.dataset.tone = i >= 3 ? 'good' : i >= 2 ? 'mid' : 'low';
+  col.append(node('span', 'histo-count', String(buckets[i])), bar, node('span', 'small', label));
+  bars.append(col);
+ });
+ histo.append(bars);
+
+ const und = {hard: 0, somewhat: 0, understood: 0, none: 0};
+ all.forEach((c) => { und[UND_KEY[c.understandingLabel] || 'none'] += 1; });
+ const undPanel = node('div', 'visual-panel');
+ undPanel.append(node('span', 'small visual-label', '이해도 분포'));
+ const stack = node('div', 'visual-stack');
+ const legend = node('div', 'visual-legend');
+ UND_ORDER.forEach(([key, label]) => {
+  if (und[key] > 0) {
+   const seg = node('span', 'stack-seg');
+   seg.dataset.und = key;
+   seg.style.flexGrow = String(und[key]);
+   seg.title = `${label} ${und[key]}명`;
+   stack.append(seg);
+  }
+  const item = node('span', 'legend-item');
+  item.dataset.und = key;
+  item.textContent = `${label} ${und[key]}`;
+  legend.append(item);
+ });
+ undPanel.append(stack, legend);
+ vis.replaceChildren(tile, histo, undPanel);
+}
+
 function paintRoster() {
  const list = $('roster-list');
  const countsEl = $('roster-counts');
@@ -152,12 +211,14 @@ function paintRoster() {
  if (!classIdValue) {
   paintedCards = [];
   if (countsEl) countsEl.textContent = '학생 0 · 접속 0 · 도움 0';
+  paintVisual([]);
   if (list) list.replaceChildren(node('p', 'small', '위에서 수업할 반을 선택하세요.'));
   if (clearBtn) clearBtn.hidden = true;
   paintDetail(null);
   return;
  }
  const all = liveCards();
+ paintVisual(all);
  const cards = filterStuck(all, filterTopic);
  paintedCards = cards;
  const online = all.filter((card) => card.online).length;
@@ -192,8 +253,15 @@ function paintRoster() {
   head.append(who, node('span', 'small', card.presenceLabel));
   const place = node('p', 'small', card.place || '위치 없음');
   const stats = node('p', 'small', `완료 ${formatRate(card.completeRate)} · 정답 ${cardAccuracyLabel(card)}`);
+  const rate = Number.isFinite(card.completeRate) ? card.completeRate : 0;
+  const bar = node('div', 'card-rate');
+  bar.dataset.tone = rate >= 0.7 ? 'good' : rate >= 0.4 ? 'mid' : 'low';
+  const fill = node('span');
+  fill.style.width = `${Math.round(rate * 100)}%`;
+  bar.append(fill);
+  btn.dataset.und = UND_KEY[card.understandingLabel] || 'none';
   const flags = node('p', 'small', [card.openHelp ? `도움 ${card.openHelp}` : '', card.understandingLabel !== '—' ? card.understandingLabel : '', card.lastActivityLabel].filter(Boolean).join(' · '));
-  btn.append(head, place, stats, flags);
+  btn.append(head, place, stats, bar, flags);
   btn.addEventListener('click', () => openDetail(card.key));
   wrap.append(btn);
  }

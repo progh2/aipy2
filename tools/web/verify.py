@@ -793,20 +793,19 @@ assert 'ops.html' in shell
 assert "{id: 'ops'" in shell or "id: 'ops'" in shell
 ops_html=(WEB/'teacher/ops.html').read_text()
 assert 'ops.js' in ops_html
-assert 'ops.js?v=2' in ops_html
+assert 'ops.js?v=3' in ops_html
 assert 'id="ops-year"' in ops_html
-assert 'id="ops-promote"' in ops_html
+assert 'id="ops-promote"' not in ops_html  # 일괄 진급 제거
 assert 'id="ops-archive"' in ops_html
 assert 'id="ops-remove"' in ops_html
 assert 'id="ops-export"' in ops_html
 assert '입학년도' in ops_html
-assert '입학년도로 학생을 모아요. 진급 때는 학년·반만 바꾸고, 입학년도와 학습 기록은 그대로 이어져요.' in ops_html
-assert '진급 반영' in ops_html
+assert '입학년도로 학생을 모아 졸업·보관을 정리해요.' in ops_html
+assert '진급 반영' not in ops_html  # 일괄 진급 제거(2026-09)
 assert '요약 CSV 내보내기' in ops_html
 assert '코호트 보관' in ops_html
 assert '명단에서만 제거' in ops_html
 assert '나래 스모크' in ops_html
-assert '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.' in ops_html
 assert '보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요.' in ops_html
 assert '명단 한 줄만 지워요. 학습 기록은 남아요.' in ops_html
 assert '학습 기록·제출물·이해도 신호는 한꺼번에 지우지 않아요.' in ops_html

@@ -55,10 +55,10 @@ export function filterCohort(rows, year, {includeArchived = true, classId = ''} 
 }
 
 export function sortCohort(rows) {
+ // 명단 화면과 동일: 학번순 → 입학년도 → 이메일
  return (rows || []).slice().sort((a, b) =>
-  (Number(a.grade) - Number(b.grade)) ||
-  (Number(a.classroom) - Number(b.classroom)) ||
-  String(a.studentId || '').localeCompare(String(b.studentId || ''), 'ko') ||
+  String(a.studentId || '').localeCompare(String(b.studentId || ''), 'ko', {numeric: true}) ||
+  ((Number(a.admissionYear) || 0) - (Number(b.admissionYear) || 0)) ||
   emailKey(a).localeCompare(emailKey(b)));
 }
 

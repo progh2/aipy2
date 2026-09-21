@@ -1,13 +1,14 @@
-/* 교사 운영 도구. 입학년도로 조회하고 진급·졸업 정리를 합니다.
+/* 교사 운영 도구. 입학년도로 조회하고 졸업 정리를 합니다.
+   (일괄 진급 기능은 2026-09 요청으로 제거 — 매년 반이 개별적으로 바뀌어 의미가 없음)
    학습 기록은 일괄 삭제하지 않습니다. 쓰기는 교사 권한이 있을 때만 규칙이 허용합니다. */
 import {ready} from './firebase-config.js';
 import {load, readTeacherFlag} from './auth.js';
 import {teacherAccessMessage, dataFailureNote} from './auth-model.js';
 import {labelClass} from './class-picker.js';
 import {
- filterCohort, sortCohort, cohortYears, promotePreview, rosterWriteFields,
- identityPatch, archivePhrase, removePhrase, phraseMatches, cohortCsv,
- matchByEmail, chunkWrites, isArchived, emailKey, LEARNING_KEEP_NOTE, PROMOTE_NOTE,
+ filterCohort, sortCohort, cohortYears,
+ archivePhrase, removePhrase, phraseMatches, cohortCsv,
+ matchByEmail, chunkWrites, isArchived, emailKey, LEARNING_KEEP_NOTE,
  ARCHIVE_NOTE, REMOVE_NOTE, asInt
 } from './ops-model.js';
 
@@ -140,11 +141,6 @@ function bindUi() {
  if ($('ops-year')) $('ops-year').onchange = paint;
  if ($('ops-include-archived')) $('ops-include-archived').onchange = paint;
  if ($('ops-class-only')) $('ops-class-only').onchange = paint;
- if ($('ops-promote-preview')) $('ops-promote-preview').onclick = showPromotePreview;
- if ($('ops-promote')) $('ops-promote').onclick = () => {
-  if (!dbRef || !storeRef) { $('ops-promote-note').textContent = '로그인한 교사만 반영할 수 있습니다.'; return; }
-  applyPromote(dbRef, storeRef);
- };
  if ($('ops-export')) $('ops-export').onclick = exportSummary;
  if ($('ops-archive')) $('ops-archive').onclick = () => startArchive(dbRef, storeRef);
  if ($('ops-remove')) $('ops-remove').onclick = () => startRemove(dbRef, storeRef);
@@ -209,11 +205,9 @@ function paint() {
  if (scope) {
   if (!year) scope.textContent = '입학년도를 고르면 그 코호트만 보여 줍니다. 반 선택과 관계없이 모을 수 있습니다.';
   else if (classId) scope.textContent = `${year}년 입학 · ${labelClass(classId)}만 표시합니다.`;
-  else scope.textContent = `${year}년 입학 ${rows.length}명입니다. 진급 때 학년·반만 바꾸고 입학년도는 유지합니다.`;
+  else scope.textContent = `${year}년 입학 ${rows.length}명입니다. 학년·반은 명단의 학번으로 관리합니다.`;
  }
  $('ops-count').textContent = year ? `${rows.length}명` : '';
- $('ops-promote').disabled = true;
- $('ops-promote-preview-table').replaceChildren();
  if (!year) {
   $('ops-list').replaceChildren(node('p', 'small', '입학년도를 선택하세요.'));
   return;
@@ -223,97 +217,17 @@ function paint() {
   return;
  }
  const table = node('table');
- table.append(headRow(['학년', '반', '학번', '이름', '입학년도', '번호', '이메일', '상태']));
+ table.append(headRow(['입학년도', '학번', '이름', '이메일', '상태']));
  const tbody = node('tbody');
  for (const r of rows) {
   const tr = node('tr', isArchived(r) ? 'state-same' : '');
-  [r.grade, r.classroom, r.studentId, r.name, r.admissionYear, r.number ?? '', r.email || r.id,
+  [r.admissionYear, r.studentId, r.name, r.email || r.id,
    isArchived(r) ? '보관' : '재학']
    .forEach((v) => tr.append(node('td', '', String(v ?? ''))));
   tbody.append(tr);
  }
  table.append(tbody);
  $('ops-list').replaceChildren(table);
-}
-
-function showPromotePreview() {
- const year = selectedYear();
- if (!year) { $('ops-promote-note').textContent = '입학년도를 먼저 고르세요.'; return; }
- const preview = promotePreview(currentRows().filter((row) => !isArchived(row)), {
-  grade: $('ops-next-grade').value,
-  classroom: $('ops-next-class').value
- });
- if (preview.problems.length) {
-  $('ops-promote-note').textContent = preview.problems.join(' · ');
-  $('ops-promote').disabled = true;
-  $('ops-promote-preview-table').replaceChildren();
-  return;
- }
- const changing = preview.rows.filter((r) => !r.same);
- $('ops-promote-note').textContent =
-  `${PROMOTE_NOTE} ${preview.rows.length}명 중 ${changing.length}명의 학년·반이 바뀝니다.`;
- $('ops-promote').disabled = changing.length === 0;
- const table = node('table');
- table.append(headRow(['이름', '학번', '입학년도', '현재', '진급 후']));
- const tbody = node('tbody');
- for (const r of preview.rows) {
-  const tr = node('tr', r.same ? 'state-same' : 'state-update');
-  [r.name, r.studentId, r.admissionYear,
-   `${r.fromGrade}학년 ${r.fromClassroom}반`,
-   `${r.toGrade}학년 ${r.toClassroom}반`]
-   .forEach((v) => tr.append(node('td', '', String(v ?? ''))));
-  tbody.append(tr);
- }
- table.append(tbody);
- $('ops-promote-preview-table').replaceChildren(table);
-}
-
-async function applyPromote(db, store) {
- const preview = promotePreview(currentRows().filter((row) => !isArchived(row)), {
-  grade: $('ops-next-grade').value,
-  classroom: $('ops-next-class').value
- });
- if (preview.problems.length || !preview.rows.some((r) => !r.same)) return;
- const changing = preview.rows.filter((r) => !r.same);
- if (!confirm(`${changing.length}명의 학년·반을 ${preview.grade}학년 ${preview.classroom}반으로 바꿀까요? 입학년도는 그대로입니다.`)) return;
- $('ops-promote').disabled = true;
- $('ops-promote-note').textContent = '반영 중…';
- const patch = identityPatch({grade: preview.grade, classroom: preview.classroom});
- const writes = [];
- for (const row of changing) {
-  const source = allRoster.find((r) => emailKey(r) === row.email);
-  if (!source) continue;
-  writes.push({kind: 'roster', email: row.email, payload: rosterWriteFields(source, patch)});
-  const student = matchByEmail(studentDocs, row.email);
-  if (student) writes.push({kind: 'student', id: student.id, payload: patch});
-  const progress = matchByEmail(progressDocs, row.email);
-  if (progress) writes.push({kind: 'progress', id: progress.id, payload: patch});
- }
- let done = 0;
- try {
-  for (const chunk of chunkWrites(writes)) {
-   const batch = store.writeBatch(db);
-   for (const item of chunk) {
-    if (item.kind === 'roster') {
-     batch.set(store.doc(db, 'roster', item.email), {...item.payload, updatedAt: store.serverTimestamp()});
-    } else {
-     batch.update(store.doc(db, item.kind === 'student' ? 'students' : 'progress', item.id), {
-      ...item.payload, updatedAt: store.serverTimestamp()
-     });
-    }
-   }
-   await batch.commit();
-   done += chunk.length;
-   $('ops-promote-note').textContent = `반영 중… ${done}/${writes.length}`;
-  }
-  $('ops-promote-note').textContent = `${changing.length}명을 진급 반영했습니다. 입학년도는 그대로입니다.`;
-  document.dispatchEvent(new CustomEvent('aipy:roster-changed'));
-  await loadAll(db, store);
- } catch (error) {
-  console.error('[ops]', error);
-  $('ops-promote-note').textContent = `${dataFailureNote(error, `반영 중 오류가 발생했습니다: ${error.code || error}.`)} ${done}건까지 반영되었습니다.`;
-  $('ops-promote').disabled = false;
- }
 }
 
 function exportSummary() {
