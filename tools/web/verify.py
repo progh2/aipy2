@@ -7,11 +7,11 @@ Local / CI / Pages path and the teacher I–IV smoke list:
   .github/workflows/pages.yml (main → GitHub Pages)
 """
 from pathlib import Path
-import sys,subprocess,tempfile,ast,json,zipfile,io,contextlib
+import sys,subprocess,tempfile,ast,json,zipfile,io,contextlib,re
 from html.parser import HTMLParser
 from urllib.parse import urlsplit,unquote
 sys.path.insert(0,str(Path(__file__).parent))
-from content import examples,questions,units
+from content import examples,questions,units,QUESTION_HINTS
 import questions as bank
 import later_units
 import slots as content_slots
@@ -30,6 +30,19 @@ assert [sum(q['unit']==u for q in questions) for u in [1,2]]==[60,70]
 assert len({q['id'] for q in questions})==len(questions)
 assert set(units)=={1,2,3,4}
 assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:70,3:44,4:39}
+assert set(QUESTION_HINTS) == {q['id'] for q in questions}, '문항과 힌트 목록 불일치'
+for q in questions:
+ assert QUESTION_HINTS[q['id']]['prompt'] == q['prompt'], q['id']
+ for field in ('hint', 'hint2'):
+  hint = q[field]
+  assert isinstance(hint,str) and hint.strip(), (q['id'],field)
+  assert hint != q['explain'], (q['id'],'해설을 힌트로 재사용')
+  assert not re.search(r'(도감|개념 표|패키지 목록|예제의 함수 이름).*(확인|비교)하세요',hint), (q['id'],'참조 지시')
+  if q['kind'] in ('빈칸','예측'):
+   answer = str(q['answer']).strip()
+   # 숫자 부분 일치(-3와 -3.5 등)는 정답 노출로 잘못 판정하지 않습니다.
+   assert not re.search(r'(?<![\w.])'+re.escape(answer)+r'(?![\w.])',hint), (q['id'],field,'정답 직접 노출')
+ assert q['hint'] != q['hint2'], (q['id'],'두 단계가 동일')
 for u, lessons in units.items():
  assert len(lessons)>=9
  for l in lessons:

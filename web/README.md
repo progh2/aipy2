@@ -16,6 +16,7 @@
 ## 수정과 재생성
 
 설명·예제: `tools/web/content.py` / 문제: `tools/web/questions.py`
+문항별 힌트: `tools/web/question_hints.json` (작성 규칙: [힌트 작성·검토 규칙](../docs/question-hints.md))
 HTML 생성: `tools/web/build.py` / 공통 동작과 디자인: `web/assets/`
 
 ```bash

@@ -182,13 +182,15 @@ tk.Label(frame, text="아이디").grid(row=0, column=0, sticky="e", padx=6, pady
 tk.Entry(frame).grid(row=0, column=1, sticky="ew")
 tk.Label(frame, text="비밀번호").grid(row=1, column=0, sticky="e", padx=6, pady=6)
 tk.Entry(frame, show="*").grid(row=1, column=1, sticky="ew")
-tk.Button(frame, text="로그인").grid(row=2, column=0, columnspan=2, sticky="ew", pady=8)
+tk.Label(frame, text="계정 정보", bg="#dbeafe").grid(row=0, column=2, rowspan=2, sticky="ns", padx=8)
+tk.Button(frame, text="로그인").grid(row=2, column=0, columnspan=3, sticky="ew", pady=8)
 root.mainloop()'''}, mode='pc',
     pre_api=[
         {'name': 'grid', 'signature': '위젯.grid(row=0, column=1)', 'note': '행·열 번호로 칸을 정합니다. 표 같은 입력 폼에 맞습니다.'},
         {'name': 'sticky', 'signature': '위젯.grid(..., sticky="ew")', 'note': '칸보다 위젯이 작을 때 어느 벽에 붙일지입니다. "ew"는 좌우로 늘립니다.'},
         {'name': 'columnconfigure', 'signature': 'frame.columnconfigure(1, weight=1)', 'note': '남는 가로 공간을 그 열에 줍니다. weight를 빼면 창을 늘려도 입력창이 늘어나지 않습니다.'},
-        {'name': 'columnspan', 'signature': '위젯.grid(..., columnspan=2)', 'note': '버튼을 두 열에 걸쳐 놓습니다.'},
+        {'name': 'columnspan', 'signature': '위젯.grid(..., columnspan=3)', 'note': '로그인 버튼을 세 열에 걸쳐 놓습니다.'},
+        {'name': 'rowspan', 'signature': '위젯.grid(row=0, column=2, rowspan=2)', 'note': '계정 정보 안내를 두 입력 행에 걸쳐 놓습니다. sticky="ns"로 세로를 채웁니다.'},
         {'name': 'show', 'signature': 'tk.Entry(parent, show="*")', 'note': '입력 칸에 실제 글자 대신 *를 보여 줍니다. 비밀번호 칸에 씁니다.'},
     ],
     glossary=[{'term': '같은 부모에서 pack+grid', 'meaning': '한 Frame 안에서 pack과 grid를 섞으면 배치 충돌이 납니다. 다른 Frame으로 나누면 각각 쓸 수 있습니다.'}])

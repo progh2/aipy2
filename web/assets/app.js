@@ -113,8 +113,12 @@ $$('[data-import]').forEach(input=>input.addEventListener('change',async()=>{
 $$('[data-clear]').forEach(b=>b.addEventListener('click',()=>{if(confirm('이 실습실의 코드·풀이·저널 기록을 지울까요? 먼저 내보내기를 권장합니다.')){try{localStorage.removeItem(KEY);}catch{}location.reload();}}));
  $$('[data-complete]').forEach(box=>{
  box.checked=!!state.complete[box.dataset.complete];
- const tip=box.closest('.lesson')?.querySelector('.pai-note'),originalMood=tip?.dataset.paiMood,originalLabel=tip?.querySelector('.pai-label').textContent;
- function showCompletion(){if(!tip)return;const mood=box.checked?'celebrate':originalMood;tip.dataset.paiMood=mood;const img=tip.querySelector('img');img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt='';tip.querySelector('.pai-label').textContent=box.checked?'파이 · 설명까지 완료했어요!':originalLabel;}
+ // 체크 시 멀리 있는 마스코트 팁을 바꿔치기하던 동작이 '이상한 표시'로 보고되어(#88)
+ // 라벨 옆 인라인 배지로 교체했다. 화면의 다른 곳은 건드리지 않는다.
+ const label=box.closest('label.completion');
+ const badge=node('span','completion-badge','✔ 완료로 표시했어요');
+ if(label)label.append(badge);
+ function showCompletion(){badge.hidden=!box.checked;}
  box._paintComplete=showCompletion;
  showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save('complete');updateProgress();showCompletion();});
 });
@@ -243,11 +247,11 @@ function zipFiles(items){
 }
 if(hasLab)$('#download-project').onclick=()=>{stash();const ex=data.examples[currentId],all={...files};let dep=currentId.includes('pyside')?'PySide6':currentId.includes('pyqt')?'PyQt6':currentId.includes('-wx')?'wxPython':currentId.includes('kivy')?'Kivy':currentId==='thirdparty'?'numpy':'';if(dep&&!all['requirements.txt'])all['requirements.txt']=dep+'\n';all['실행안내.md']=`# ${ex.title}\n\n이 폴더를 VS Code로 열고 python ${$('#entry-file').value}로 실행하세요.\n${dep?'가상환경에서 python -m pip install -r requirements.txt를 먼저 실행하세요.':''}\n\n${ex.note||''}\n`;download(currentId+'.zip',zipFiles(all),'application/zip');};
 // Question bank: keep attempts, answers and self-assessment separately.
-let page=0,filtered=[];
-const PAGE_SIZE=8;
+let filtered=[];
+// 문항은 전부 한 번에 보여 준다 — 페이지로 나누면 1쪽만 풀고 끝난 줄 아는 학생이 있었다(#90).
 function norm(s){return String(s??'').trim().replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/\s+/g,'').replace(/'/g,'"');}
 function answerRecord(q){return state.answers[q.id]||{};}
-function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save(patch.status!==undefined||patch.attempts!==undefined?'answer':'draft');}
+function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save(patch.status!==undefined||patch.attempts!==undefined?'answer':'draft');updateQuestionSummary();}
 function questionCard(q){
  const card=node('article','question');card.id=q.id;
  card.append(node('div','question-meta',`${q.id} · ${q.kind} · ${q.ref}`),node('h3','',q.prompt));
@@ -265,7 +269,7 @@ function questionCard(q){
  const retry=node('button','','다시 풀기');actions.append(check,retry);card.append(actions);
  const feedback=node('div','feedback'+(record.status==='done'?' success':record.status==='retry'?' retry':''),record.feedback||'먼저 스스로 풀어 보세요.');feedback.setAttribute('role','status');paiFeedback(feedback,record.feedback||'실행하기 전에 결과를 예상하세요. 막히면 힌트를 하나씩 열어 보세요.',record.status==='done'?'celebrate':record.status==='retry'?'debug':'thinking');card.append(feedback);
  function detail(title,text){const d=node('details'),s=node('summary','',title);d.append(s,node('pre','',text));card.append(d);}
- detail('힌트 1 · 방향 잡기',q.hint);detail('힌트 2 · 점검할 원리',q.explain);detail('정답 예시와 해설',(Array.isArray(q.answer)?q.answer.join('\n'):q.answer)+'\n\n'+q.explain);
+ detail('힌트 1 · 방향 잡기',q.hint);detail('힌트 2 · 구체적 단서',q.hint2);detail('정답 예시와 해설',(Array.isArray(q.answer)?q.answer.join('\n'):q.answer)+'\n\n'+q.explain);
  if(q.kind==='서술'){
   const self=node('label','completion'),box=node('input');box.type='checkbox';box.checked=record.status==='done';self.append(box,node('span','','해설과 비교하고 근거를 포함했는지 스스로 점검했습니다.'));box.onchange=()=>{storeAnswer(q,{value:answer(),status:box.checked?'done':'todo',feedback:box.checked?'자기 점검 완료 · 자동 채점 점수가 아닙니다.':'자기 점검을 진행하세요.'});paiFeedback(feedback,box.checked?'설명과 근거를 스스로 확인했어요. 다른 예에도 적용해 보세요.':'해설과 내 설명을 비교하며 빠진 근거를 채워 보세요.',box.checked?'celebrate':'thinking');};card.append(self);
  }
@@ -279,11 +283,12 @@ function questionCard(q){
   const text=ok?'확인 완료! '+q.explain:'다시 살펴보세요. '+q.hint+(q.starter?'\n'+trace:'\n다른 올바른 표현일 수 있으니 정답 예시와 비교하세요.');
   feedback.className='feedback '+(ok?'success':'retry');paiFeedback(feedback,text,ok?'celebrate':'debug');
   if(ok)rememberError('');else rememberError(q.starter?(trace.trim().split('\n').filter(Boolean).slice(-1)[0]||text):text);
-  storeAnswer(q,{value,status:ok?'done':'retry',attempts:(record.attempts||0)+1,feedback:text});check.disabled=false;
-  const checkInfo={type:'question',id:q.id,ok,checked:true,output:text,attempts:(record.attempts||0)+1};
+  const attempts=(answerRecord(q).attempts||0)+1;
+  storeAnswer(q,{value,status:ok?'done':'retry',attempts,feedback:text});check.disabled=false;
+  const checkInfo={type:'question',id:q.id,ok,checked:true,output:text,attempts};
   window.aipyLearning.lastCheck=checkInfo;document.dispatchEvent(new CustomEvent('aipy:checked',{detail:checkInfo}));
  };
- retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save('answer');renderQuestions(false);}};
+ retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save('answer');renderQuestions();}};
  if(q.starter){const copyButton=node('button','','코드 복사');copyButton.onclick=()=>copy(answer());actions.append(copyButton);const stopButton=node('button','','실행 중지');stopButton.onclick=()=>{if(running)stop();};actions.append(stopButton);}
  return card;
 }
@@ -291,20 +296,23 @@ function topicQuestions(){
  const filter=$('#practice') && $('#practice').dataset.topicFilter;
  return data.questions.filter(q=>!filter || q.topic===filter);
 }
-function renderQuestions(reset=true){
+function updateQuestionSummary(){
+ if(!hasPractice||!data)return;
+ const pool=topicQuestions(),done=pool.filter(q=>answerRecord(q).status==='done').length;
+ $('#question-summary').textContent=`${pool.length===data.questions.length?'전체':'이 주제'} ${pool.length}문제 · 완료 ${done} · 남은 ${pool.length-done} · 현재 표시 ${filtered.length}문제`;
+ const progress=$('#question-progress');progress.max=pool.length||1;progress.value=done;
+}
+function renderQuestions(){
  if(!hasPractice)return;
- if(reset)page=0;const kind=$('#question-kind').value,status=$('#question-status').value,search=$('#question-search').value.trim().toLowerCase();
+ const kind=$('#question-kind').value,status=$('#question-status').value,search=$('#question-search').value.trim().toLowerCase();
  const pool=topicQuestions();
  filtered=pool.filter(q=>(!kind||q.kind===kind)&&(!search||`${q.prompt} ${q.topic} ${q.ref}`.toLowerCase().includes(search))&&(!status||(status==='todo'?!['done','retry'].includes(answerRecord(q).status):answerRecord(q).status===status)));
- const pages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));page=Math.min(page,pages-1);
- $('#questions').replaceChildren(...filtered.slice(page*PAGE_SIZE,(page+1)*PAGE_SIZE).map(questionCard));
- const done=pool.filter(q=>answerRecord(q).status==='done').length;
- $('#question-summary').textContent=`${pool.length===data.questions.length?'전체':'이 주제'} ${pool.length}문제 중 ${done}문제 점검 완료 · 현재 조건 ${filtered.length}문제`;
- $('#question-page').textContent=`${page+1} / ${pages}`;$('#previous-questions').disabled=page===0;$('#next-questions').disabled=page===pages-1;
+ $('#questions').replaceChildren(...filtered.map(questionCard));
+ if(!filtered.length)$('#questions').append(node('p','note','조건에 맞는 문제가 없습니다. 유형·상태·검색 조건을 바꿔 보세요.'));
+ updateQuestionSummary();
 }
 if(hasPractice){
  for(const id of ['question-kind','question-status'])$('#'+id).onchange=()=>renderQuestions();$('#question-search').oninput=()=>renderQuestions();
- $('#previous-questions').onclick=()=>{page--;renderQuestions(false);$('#practice').scrollIntoView();};$('#next-questions').onclick=()=>{page++;renderQuestions(false);$('#practice').scrollIntoView();};
 }
 function initGUI(){
  if($('#demo-greet')){

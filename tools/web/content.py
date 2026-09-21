@@ -7,7 +7,11 @@ Optional slots on lesson() / ex() (empty is fine):
 - screenshots: [{src, alt, caption}] — files under web/assets/screenshots/ or assets/...
 """
 import textwrap
+import json
+from pathlib import Path
 from slots import attach
+# 힌트의 편집 원본. 문항을 재정렬해도 다른 힌트가 붙지 않도록 지문까지 확인합니다.
+QUESTION_HINTS = json.loads(Path(__file__).with_name('question_hints.json').read_text(encoding='utf-8'))
 units = {1: [], 2: []}
 examples = {}
 questions = []
@@ -22,7 +26,11 @@ def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False
     units[unit].append(attach(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra),
         pre_api=pre_api,glossary=glossary,tips=tips,history=history,youtube=youtube,screenshots=screenshots,screenshot=screenshot))
 def q(unit,topic,kind,prompt,answer,hint,explain,options=None,starter='',checks='',level='기본',ref='보강'):
-    questions.append(dict(id=f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}',unit=unit,topic=topic,kind=kind,prompt=prompt,answer=answer,hint=hint,explain=explain,options=options,starter=code(starter) if starter else '',checks=code(checks) if checks else '',level=level,ref=ref))
+    id = f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}'
+    hints = QUESTION_HINTS[id]
+    assert hints['prompt'] == prompt, f'{id}: 지문 변경 시 question_hints.json도 함께 검토하세요.'
+    # 기존 호출의 hint 인자는 호환용이며, 화면에는 검토한 두 단계 힌트만 제공합니다.
+    questions.append(dict(id=id,unit=unit,topic=topic,kind=kind,prompt=prompt,answer=answer,hint=hints['hint'],hint2=hints['hint2'],explain=explain,options=options,starter=code(starter) if starter else '',checks=code(checks) if checks else '',level=level,ref=ref))
 
 ex('reuse','한 번 만든 함수를 두 프로그램에서 사용하기',{'main.py':'''import calculator
 print(calculator.add(3, 5))
@@ -438,30 +446,46 @@ lesson(2,'widgets','창과 위젯 · 화면을 구성하는 부품','50','보여
 'Tk 객체는 기본 창입니다. Label은 표시, Button은 명령, Entry는 한 줄 입력, Text는 여러 줄 입력입니다. Checkbutton은 독립적인 선택, Radiobutton은 묶음 중 하나의 선택, Listbox는 목록 선택입니다. Canvas는 도형·이미지 그리기 공간이며 Frame은 위젯을 묶는 컨테이너입니다.',
 '위젯을 생성한 것만으로 배치가 완료되지는 않습니다. 부모 창이나 Frame을 지정하고 배치 관리자를 호출해야 합니다. BooleanVar·StringVar 같은 변수를 통해 체크 상태와 선택 값을 읽을 수 있습니다.',
 'PySide6에서는 QApplication이 앱 실행을 관리하고 QWidget이 창·컨테이너 역할을 합니다. Label→QLabel, Button→QPushButton, Entry→QLineEdit, Text→QPlainTextEdit, Checkbutton→QCheckBox, Radiobutton→QRadioButton, Listbox→QListWidget으로 개념을 연결합니다. Canvas는 일대일 대응이 아니며 여기서는 QGraphicsScene/View로 도형을 그립니다.'],['widgets-tk','widgets-pyside'],['회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.','체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요.'])
-ex('layout-tk','tkinter · 세 가지 배치',{'main.py':'''import tkinter as tk
+ex('layout-tk','tkinter · 같은 입력 폼의 pack·grid·place 비교',{'main.py':'''import tkinter as tk
 root = tk.Tk()
-root.title("배치 비교")
-root.geometry("520x400")
-# 서로 다른 부모 Frame 안에서 배치 방식을 비교합니다.
+root.title("창 크기를 바꾸어 배치 비교")
+root.geometry("560x590")
+controls = tk.Frame(root)
+controls.pack(fill="x", padx=12, pady=8)
+tk.Button(controls, text="넓게", command=lambda: root.geometry("560x590")).pack(side="left")
+tk.Button(controls, text="좁게", command=lambda: root.geometry("340x590")).pack(side="left")
+# 같은 두 입력칸과 확인 버튼입니다. 부모 Frame마다 배치를 나눕니다.
 for kind in ["pack", "grid", "place"]:
-    frame = tk.LabelFrame(root, text=kind, height=110)
-    frame.pack(fill="x", padx=16, pady=8)
+    frame = tk.LabelFrame(root, text=kind, height=150)
+    frame.pack(fill="x", padx=12, pady=8)
     if kind == "pack":
-        for value in ["A", "B", "C"]:
-            tk.Button(frame, text=value).pack(side="left", expand=True, fill="x")
+        for title in ["이름", "학번"]:
+            row = tk.Frame(frame)
+            row.pack(fill="x", padx=8, pady=6)
+            tk.Label(row, text=title, width=6).pack(side="left")
+            tk.Entry(row, width=8).pack(side="left", expand=True, fill="x")
+        tk.Button(frame, text="확인").pack(fill="x", padx=8, pady=8)
     elif kind == "grid":
-        for i, value in enumerate(["A", "B", "C"]):
-            tk.Button(frame, text=value).grid(row=0, column=i, sticky="ew")
-            frame.columnconfigure(i, weight=1)
+        frame.columnconfigure(1, weight=1)
+        for row, title in enumerate(["이름", "학번"]):
+            tk.Label(frame, text=title).grid(row=row, column=0, sticky="e", padx=8, pady=6)
+            tk.Entry(frame, width=8).grid(row=row, column=1, sticky="ew", padx=8)
+        tk.Label(frame, text="두 칸 모두\\n입력하세요").grid(row=0, column=2, rowspan=2, sticky="ns", padx=8)
+        tk.Button(frame, text="확인").grid(row=2, column=0, columnspan=3, sticky="ew", padx=8, pady=8)
     else:
-        for i, value in enumerate(["A", "B", "C"]):
-            tk.Button(frame, text=value).place(x=20 + i*80, y=10)
+        # 좌표와 너비를 고정하면 좁은 창에서 입력칸·버튼이 잘립니다.
+        for row, title in enumerate(["이름", "학번"]):
+            tk.Label(frame, text=title).place(x=8, y=8 + row*36)
+            tk.Entry(frame).place(x=80, y=8 + row*36, width=400)
+        tk.Button(frame, text="확인").place(x=8, y=90, width=472)
 root.mainloop()'''},mode='pc',
+    note='교과서 밖 보강 예제입니다. 넓게·좁게를 번갈아 누르세요. 고정 좌표 place의 오른쪽이 잘리고, pack·grid 입력칸은 주어진 너비에 맞춰 변합니다.',
     pre_api=[
-        {'name':'LabelFrame','signature':'tk.LabelFrame(root, text="pack")','note':'제목이 있는 상자입니다. 서로 다른 배치를 같은 창에서 비교할 때 부모를 나눕니다.'},
-        {'name':'place','signature':'위젯.place(x=20, y=10)','note':'픽셀 좌표로 붙입니다. 창 크기·글꼴이 바뀌면 잘리기 쉬워 입력 폼에는 grid나 pack을 먼저 검토합니다.'},
+        {'name':'LabelFrame','signature':'tk.LabelFrame(root, text="pack")','note':'제목이 있는 상자입니다. 서로 다른 배치를 비교할 때 부모를 나눕니다.'},
+        {'name':'grid의 행·열과 병합','signature':'위젯.grid(row=0, column=2, rowspan=2)\n위젯.grid(row=2, column=0, columnspan=3)','note':'두 행의 라벨·입력칸을 정렬하고 안내는 두 행, 확인 버튼은 세 열에 걸쳐 배치합니다.'},
+        {'name':'place','signature':'위젯.place(x=80, y=8, width=400)','note':'이 예제는 픽셀 좌표·너비를 고정합니다. 상대 위치·크기 옵션을 쓰는 place와 구분하세요.'},
     ],
-    glossary=[{'term':'부모를 나누기','meaning':'한 Frame 안에서는 pack과 grid를 섞지 않습니다. 이 예제는 종류마다 새 LabelFrame을 만들어 각각 배치합니다.'}])
+    glossary=[{'term':'부모를 나누기','meaning':'같은 Frame 안에서는 pack과 grid를 섞지 않습니다. pack 예제의 각 입력 행도 별도 Frame입니다.'}])
 ex('layout-pyside','PySide6 · 수평·수직·격자 배치',{'main.py':'''import sys
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton
 app = QApplication(sys.argv)
@@ -484,9 +508,10 @@ sys.exit(app.exec())'''},mode='pc',
         {'name':'QGridLayout.addWidget','signature':'grid.addWidget(위젯, 행, 열)','note':'0부터 세는 행·열입니다. i // 3이 행, i % 3이 열입니다.'},
     ])
 lesson(2,'layout','배치 관리자와 반응하는 화면','51 + 보강','창을 늘렸을 때도 사용하기 좋은 화면을 만드세요.',[
-'pack은 순서와 방향으로 배치하고, grid는 행·열로 배치하며, place는 좌표나 상대 위치를 지정합니다. 고정 좌표는 창 크기·글꼴 변화에 취약하므로 폼에는 grid, 순차 영역에는 pack부터 검토하세요.',
+'학생마다 화면 해상도·화면 배율·글꼴과 창 크기가 다릅니다. 내 PC에서 place(x, y)와 고정 너비로 맞춘 화면도 다른 PC나 좁은 창에서는 입력칸·버튼이 잘리거나 겹칠 수 있습니다. 좌표를 하나씩 다시 계산하는 대신 pack의 순서·방향, grid의 행·열 규칙으로 공간을 나누세요.',
+'pack과 grid도 확장 설정이 필요합니다. place에는 relx·rely·relwidth처럼 상대 위치·크기를 지정하는 방법도 있으므로 place 자체가 항상 깨지는 것은 아닙니다. 아래 비교는 고정 좌표·고정 크기의 한계를 보여 주는 교과서 밖 보강 예제입니다.',
 'pack(expand=True, fill="both")에서 expand는 여유 공간 배분, fill은 배정 영역 안에서 위젯을 늘리는 방향입니다. grid의 sticky="ew"와 columnconfigure(weight=1)는 가로 확장에 사용합니다. 같은 부모 안에서 pack과 grid를 혼용하지 마세요. 다른 Frame 안에서는 각각 사용할 수 있습니다.',
-'Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요.'],['layout-tk','layout-pyside'],['창을 좁게·넓게 바꾸어 잘리는 요소를 찾으세요.','웹 배치 체험에서 수평·수직·격자를 비교하세요.'])
+'Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요.'],['layout-tk','layout-pyside'],['같은 입력 폼 비교 예제에서 넓게·좁게를 눌러 place의 오른쪽과 pack·grid의 입력칸 너비를 비교하세요.','grid의 안내는 두 행(rowspan), 확인 버튼은 여러 열(columnspan)에 걸칩니다. sticky와 weight를 각각 빼고 변화 원인을 설명하세요.','창을 너무 좁히면 pack·grid도 모든 내용을 담을 수 없습니다. 필요한 최소 창 크기를 찾아보세요.'])
 lesson(2,'events','이벤트 · 사용자의 행동에 반응하기','51, 54 + 보강','버튼 생성 시점과 클릭 시점은 다릅니다.',[
 '콜백은 나중에 호출할 함수입니다. command=greet는 함수 자체를 전달합니다. command=greet()는 지금 함수를 실행하고 반환값을 전달하므로 의도와 다릅니다. 인자가 필요하면 lambda: greet(name)처럼 호출을 감쌉니다.',
 'tkinter의 mainloop는 이벤트 루프입니다. PySide6에서는 clicked.connect(greet)로 버튼의 시그널과 함수를 연결하고 app.exec()로 이벤트 루프를 시작합니다. connect(greet())도 같은 이유로 잘못된 사용입니다.',

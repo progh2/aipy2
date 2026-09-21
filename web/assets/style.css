@@ -53,3 +53,8 @@ body.presenting .present-enter{display:none}
 .present-ink.inking{pointer-events:auto;cursor:crosshair}
 html:has(body.presenting){scroll-padding-top:16px}
 .zoom-menu[hidden],.pen-panel[hidden]{display:none}
+.completion-badge{color:#1f6b4a;font-weight:700;font-size:13px}
+.completion-badge[hidden]{display:none}
+
+.question-progress{padding:12px 16px;margin:16px 0;border:1px solid var(--line);border-radius:12px;background:#eef3fc;font-weight:700}
+.question-progress p{margin:0 0 8px}.question-progress progress{width:100%;accent-color:var(--teal)}

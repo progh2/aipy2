@@ -772,7 +772,7 @@
     },
     "layout-tk": {
       "id": "layout-tk",
-      "title": "tkinter · 세 가지 배치",
+      "title": "tkinter · 같은 입력 폼의 pack·grid·place 비교",
       "unit": 2,
       "mode": "pc"
     },

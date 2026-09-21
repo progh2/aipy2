@@ -43,8 +43,8 @@ OWN = {
         'pack 배치 · expand와 fill을 켠 세 영역',
         '위·가운데·아래가 창 너비에 어떻게 붙는지 봅니다. ' + CAPTION),
     'layout-grid-tk': (
-        'grid 로그인 폼 · sticky와 두 열',
-        '라벨은 오른쪽, 입력칸은 가로로 늘어납니다. ' + CAPTION),
+        'grid 로그인 폼 · 두 입력 행과 행·열 병합',
+        '라벨은 오른쪽, 입력칸은 가로로 늘어나며 안내는 두 행, 버튼은 세 열을 차지합니다. ' + CAPTION),
     'layout-tk': (
         'pack·grid·place를 한 창에서 비교',
         '부모 Frame을 나누면 세 배치를 같이 볼 수 있습니다. ' + CAPTION),
