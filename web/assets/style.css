@@ -58,3 +58,14 @@ html:has(body.presenting){scroll-padding-top:16px}
 
 .question-progress{padding:12px 16px;margin:16px 0;border:1px solid var(--line);border-radius:12px;background:#eef3fc;font-weight:700}
 .question-progress p{margin:0 0 8px}.question-progress progress{width:100%;accent-color:var(--teal)}
+
+/* 순서 배열 문항 드래그 앤 드롭(#94) */
+.order-list li{position:relative;cursor:grab;user-select:none;-webkit-user-select:none;background:#fff;transition:opacity .15s,background .15s}
+.order-list li:active{cursor:grabbing}
+.order-list li.dragging{opacity:.45;background:#f5f7fb;border-style:dashed;cursor:grabbing}
+.order-list .order-handle{flex:none;color:#9aa8bc;font-size:15px;line-height:1;letter-spacing:-3px;padding:0 4px 0 0;cursor:grab;touch-action:none}
+.order-list li:hover .order-handle{color:var(--navy)}
+.order-list li.drop-before::before,.order-list li.drop-after::after{content:"";position:absolute;left:0;right:0;height:4px;border-radius:2px;background:var(--teal);box-shadow:0 0 0 2px #fff;pointer-events:none}
+.order-list li.drop-before::before{top:-5px}
+.order-list li.drop-after::after{bottom:-5px}
+.order-list li.drop-before,.order-list li.drop-after{background:#eef7f4;border-color:var(--teal)}

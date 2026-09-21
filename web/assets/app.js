@@ -261,7 +261,30 @@ function questionCard(q){
  }else if(q.kind==='순서'){
   order=Array.isArray(record.value)&&record.value.length===q.answer.length&&q.answer.every(x=>record.value.includes(x))?[...record.value]:[...q.answer.slice(1),q.answer[0]];
   const list=node('ol','order-list');
-  function draw(){list.replaceChildren();order.forEach((text,i)=>{const li=node('li');li.append(node('span','',text));for(const [label,diff]of [['↑',-1],['↓',1]]){const b=node('button','',label);b.setAttribute('aria-label',text+(diff<0?' 위로':' 아래로'));b.disabled=i+diff<0||i+diff>=order.length;b.onclick=()=>{[order[i],order[i+diff]]=[order[i+diff],order[i]];storeAnswer(q,{value:order});draw();};li.append(b);}list.append(li);});}draw();card.append(list);answer=()=>order;
+  // 드래그 앤 드롭(마우스: HTML5 DnD, 터치·펜: pointer 이벤트)으로도 순서를 바꾼다(#94). ▲▼ 버튼은 키보드 접근용으로 유지.
+  let dragFrom=-1,dropAt=null;// dropAt: {index, before}
+  function move(from,to){if(from<0||to<0||from===to)return;const [item]=order.splice(from,1);order.splice(to,0,item);storeAnswer(q,{value:order});draw();}
+  function clearMarks(){for(const el of list.querySelectorAll('.drop-before,.drop-after,.dragging'))el.classList.remove('drop-before','drop-after','dragging');}
+  function markTarget(li,clientY){const rect=li.getBoundingClientRect(),before=clientY<rect.top+rect.height/2,index=Number(li.dataset.index);for(const el of list.querySelectorAll('.drop-before,.drop-after'))el.classList.remove('drop-before','drop-after');if(index===dragFrom){dropAt=null;return;}li.classList.add(before?'drop-before':'drop-after');dropAt={index,before};}
+  function finishDrop(){const from=dragFrom;let to=dropAt?dropAt.index+(dropAt.before?0:1):-1;if(to>from)to--;dragFrom=-1;dropAt=null;clearMarks();move(from,to);}
+  function draw(){list.replaceChildren();order.forEach((text,i)=>{
+   const li=node('li');li.dataset.index=i;li.draggable=true;
+   const handle=node('span','order-handle','⋮⋮');handle.setAttribute('aria-hidden','true');handle.title='끌어서 순서 바꾸기';
+   li.append(handle,node('span','',text));
+   for(const [label,diff]of [['↑',-1],['↓',1]]){const b=node('button','',label);b.setAttribute('aria-label',text+(diff<0?' 위로':' 아래로'));b.disabled=i+diff<0||i+diff>=order.length;b.onclick=()=>{[order[i],order[i+diff]]=[order[i+diff],order[i]];storeAnswer(q,{value:order});draw();};li.append(b);}
+   // 마우스: HTML5 drag & drop
+   li.addEventListener('dragstart',e=>{if(e.target.tagName==='BUTTON'){e.preventDefault();return;}dragFrom=i;dropAt=null;li.classList.add('dragging');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',String(i));}catch(_){}});
+   li.addEventListener('dragover',e=>{if(dragFrom<0)return;e.preventDefault();e.dataTransfer.dropEffect='move';markTarget(li,e.clientY);});
+   li.addEventListener('dragleave',e=>{if(!li.contains(e.relatedTarget))li.classList.remove('drop-before','drop-after');});
+   li.addEventListener('drop',e=>{if(dragFrom<0)return;e.preventDefault();markTarget(li,e.clientY);finishDrop();});
+   li.addEventListener('dragend',()=>{dragFrom=-1;dropAt=null;clearMarks();});
+   // 터치·펜: 핸들에서 pointer 이벤트로 처리(HTML5 DnD가 모바일에서 잘 안 되므로)
+   handle.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')return;e.preventDefault();dragFrom=i;dropAt=null;li.classList.add('dragging');try{handle.setPointerCapture(e.pointerId);}catch(_){}});
+   handle.addEventListener('pointermove',e=>{if(dragFrom<0||e.pointerType==='mouse')return;e.preventDefault();const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('li');if(target&&target.parentElement===list)markTarget(target,e.clientY);});
+   handle.addEventListener('pointerup',e=>{if(dragFrom<0||e.pointerType==='mouse')return;e.preventDefault();finishDrop();});
+   handle.addEventListener('pointercancel',()=>{if(dragFrom<0)return;dragFrom=-1;dropAt=null;clearMarks();});
+   list.append(li);});}
+  draw();card.append(list);answer=()=>order;
  }else{
   const label=node('label','',q.starter?'Python 코드':q.kind==='서술'?'내 설명':'내 답안');input=node('textarea',q.starter?'code-answer':'');input.rows=q.starter?6:q.kind==='서술'?4:2;input.spellcheck=false;input.value=typeof record.value==='string'?record.value:q.starter||'';input.addEventListener('input',()=>storeAnswer(q,{value:input.value}));label.append(input);card.append(label);answer=()=>input.value;
  }
