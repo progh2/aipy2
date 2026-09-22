@@ -164,6 +164,12 @@ assert '초점을 보냈습니다.' in teacher_focus
 assert '에 초점을 보내요' in teacher_focus
 assert 'admins' in teacher_focus
 catalog=json.loads((WEB/'data/catalog.json').read_text())
+example_unit={eid:u for u,ls in units.items() for l in ls for eid in l['examples']}
+_ex_html_cache={}
+def ex_html(eid):
+ if eid not in _ex_html_cache:
+  _ex_html_cache[eid]=(WEB/f'units/unit0{example_unit[eid]}/ex-{eid}.html').read_text()
+ return _ex_html_cache[eid]
 assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
 assert catalog['topics']['units/unit01/index.html'][0]['href']=='units/unit01/overview.html'
@@ -179,14 +185,21 @@ for u, lessons in units.items():
   assert 'assets/follow.js' in html
   assert lesson['lead'] in html
   if lesson['examples']:
-   assert 'id="lab"' in html
+   assert f'id="{lesson["id"]}-lab"' in html
    assert all(eid in html for eid in lesson['examples'])
+   for eid in lesson['examples']:
+    ex_page=WEB/f'units/unit0{u}/ex-{eid}.html'
+    assert ex_page.exists(), ('missing example page', ex_page)
+    ex_page_html=ex_page.read_text()
+    assert 'id="lab"' in ex_page_html
+    assert f'data-example="{eid}"' in ex_page_html
+    assert f'data-topic="{lesson["id"]}"' in ex_page_html
 unit_index=(WEB/'units/unit01/index.html').read_text()
 assert 'data-lessons=' in unit_index
 assert 'overview.html' in unit_index
 assert 'id="topic-index-title"' in unit_index
 widgets=(WEB/'units/unit02/widgets.html').read_text()
-assert 'id="lab"' in widgets and 'widgets-tk' in widgets
+assert 'id="widgets-lab"' in widgets and 'widgets-tk' in widgets
 assert 'data-complete="u2-widgets"' in widgets
 for rec in list(examples.values())+[lesson for group in units.values() for lesson in group]:
  assert isinstance(rec.get('pre_api'),list),(rec.get('id'),'pre_api')
@@ -213,21 +226,18 @@ assert examples['hello-pyside']['tips']['history'] and not examples['hello-pysid
 assert examples['hello-kivy']['tips']['history'] and not examples['hello-kivy']['tips']['youtube']
 assert examples['hello-wx']['tips']['history'] and not examples['hello-wx']['tips']['youtube']
 libraries=(WEB/'units/unit02/libraries.html').read_text()
-assert 'id="example-guides"' in libraries
-assert 'id="pre-api-hello-pyside"' in libraries
+assert 'id="pre-api"' in ex_html('hello-pyside')
 assert 'id="pre-api-hello-tk"' not in libraries
 assert '코드 전에 알아 두기' in libraries
 assert '역사 한 줄' in libraries
 assert '사용자 인터페이스 · CLI, GUI, NUI' in libraries
-assert 'id="example-guides"' in widgets
-assert 'id="pre-api-widgets-tk"' in widgets
+assert 'id="pre-api"' in ex_html('widgets-tk')
 assert 'BooleanVar' in widgets
 assert 'widgets-label-entry-tk' in widgets and 'widgets-choice-tk' in widgets
 assert 'assets/screenshots/widgets-tk.png' in widgets
-assert 'id="screenshots-widgets-tk"' in widgets
+assert 'id="screenshots"' in ex_html('widgets-tk')
 assert '실행하면 이렇게 보여요' in widgets
 ui_page=(WEB/'units/unit02/ui.html').read_text()
-assert 'id="example-guides"' in ui_page
 assert '코드 전에 알아 두기' in ui_page
 assert 'ui-cli' in ui_page
 assert content_slots.has_slots(hello) and content_slots.has_slots(examples['hello-pyside'])
@@ -242,23 +252,24 @@ assert 'review-scratch-tk' in unit2['review']['examples']
 for eid in ['widgets-label-entry-tk','layout-pack-tk','events-command-tk','memo-window-tk','pyside-first','ui-cli']:
  assert examples[eid]['pre_api'], eid
 events_page=(WEB/'units/unit02/events.html').read_text()
-assert 'id="pre-api-events-command-tk"' in events_page
+assert 'id="pre-api"' in ex_html('events-command-tk')
 assert 'command=greet()' in events_page or 'command=too_early()' in events_page
 memo_page=(WEB/'units/unit02/memo.html').read_text()
 assert 'memo-window-tk' in memo_page and 'memo-files-tk' in memo_page
-assert 'id="pre-api-memo-window-tk"' in memo_page
+assert 'id="pre-api"' in ex_html('memo-window-tk')
 assert 'assets/screenshots/memo-tk.png' in memo_page
-assert 'id="screenshots-memo-tk"' in memo_page
+assert 'id="screenshots"' in ex_html('memo-tk')
 # #80: Text index "1.0" / end-1c must draw as a concept-visual, not only glossary cards.
 assert 'text-index-visual' in memo_page
-assert memo_page.count('text-index-visual') >= 2
+# 소단원 단계(memo.html)와 memo-files-tk 예제 전용 페이지에 각각 하나씩 있어야 한다(#101로 분리 배치).
+assert memo_page.count('text-index-visual') + ex_html('memo-files-tk').count('text-index-visual') >= 2
 assert 'Text 위치는 줄.칸입니다' in memo_page
-assert 'id="pre-api-memo-files-tk"' in memo_page
+assert 'id="pre-api"' in ex_html('memo-files-tk')
 assert 'get(&quot;1.0&quot;, &quot;end-1c&quot;)' in memo_page
 assert '끝 자동 개행' in memo_page
 layout_page=(WEB/'units/unit02/layout.html').read_text()
 assert 'assets/screenshots/layout-tk.png' in layout_page
-assert 'id="screenshots-layout-pack-tk"' in layout_page
+assert 'id="screenshots"' in ex_html('layout-pack-tk')
 assert '실행하면 이렇게 보여요' in events_page
 assert 'assets/screenshots/events-command-tk.png' in events_page
 pc_unit2=[eid for lesson in units[2] for eid in lesson['examples'] if examples[eid]['mode']=='pc']
@@ -275,12 +286,12 @@ for lesson in units[2]:
  for eid in lesson['examples']:
   if eid in unit2_pre_api.SKIP_TOOLKIT:
    continue
-  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+  assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
 project_page=(WEB/'units/unit02/project.html').read_text()
 # core's pre_api now lives only on the 1단원 project page (#63 dedup).
 assert 'id="pre-api-core"' not in project_page
-assert 'id="pre-api-project-tk"' in project_page and 'messagebox.showwarning' in project_page
-assert 'id="pre-api-project-pyside"' in project_page and 'QComboBox' in project_page
+assert 'id="pre-api"' in ex_html('project-tk') and 'messagebox.showwarning' in ex_html('project-tk')
+assert 'id="pre-api"' in ex_html('project-pyside') and 'QComboBox' in ex_html('project-pyside')
 assert 'widgets-tk' in unit2['widgets']['examples'] and 'widgets-pyside' in unit2['widgets']['examples']
 assert 'memo-tk' in unit2['memo']['examples'] and 'memo-pyside' in unit2['memo']['examples']
 assert 'wx' in unit2 and unit2['wx']['extra']
@@ -291,12 +302,12 @@ assert unit2['wx']['examples'] == [
 assert 'widgets-wx' not in unit2['widgets']['examples']
 assert 'memo-wx' not in unit2['memo']['examples']
 wx_page = (WEB / 'units/unit02/wx.html').read_text()
-assert 'id="lab"' in wx_page and 'first-wx' in wx_page and 'memo-wx' in wx_page
-assert 'id="pre-api-first-wx"' in wx_page and 'wx.App' in wx_page
-assert 'id="pre-api-memo-wx"' in wx_page and 'FileDialog' in wx_page
+assert 'id="wx-lab"' in wx_page and 'first-wx' in wx_page and 'memo-wx' in wx_page
+assert 'id="pre-api"' in ex_html('first-wx') and 'wx.App' in wx_page
+assert 'id="pre-api"' in ex_html('memo-wx') and 'FileDialog' in wx_page
 assert 'Pyodide' in wx_page and '본편 tkinter/PySide6' in wx_page
 assert 'assets/screenshots/widgets-wx.png' in wx_page
-assert 'id="screenshots-widgets-wx"' in wx_page
+assert 'id="screenshots"' in ex_html('widgets-wx')
 assert '코드 전에 알아 두기' in wx_page
 assert examples['first-wx']['pre_api'] and examples['memo-wx']['pre_api']
 assert examples['widgets-wx']['screenshots'][0]['src'] == 'widgets-wx.png'
@@ -310,13 +321,13 @@ assert 'widgets-kivy' not in unit2['widgets']['examples']
 assert 'memo-kivy' not in unit2['memo']['examples']
 assert 'first-kivy' not in unit2['wx']['examples']
 kivy_page = (WEB / 'units/unit02/kivy.html').read_text()
-assert 'id="lab"' in kivy_page and 'first-kivy' in kivy_page and 'memo-kivy' in kivy_page
-assert 'id="pre-api-first-kivy"' in kivy_page and 'App / build' in kivy_page
-assert 'id="pre-api-memo-kivy"' in kivy_page and 'memo.txt' in kivy_page
+assert 'id="kivy-lab"' in kivy_page and 'first-kivy' in kivy_page and 'memo-kivy' in kivy_page
+assert 'id="pre-api"' in ex_html('first-kivy') and 'App / build' in ex_html('first-kivy')
+assert 'id="pre-api"' in ex_html('memo-kivy') and 'memo.txt' in kivy_page
 assert 'Pyodide' in kivy_page and '본편 tkinter/PySide6' in kivy_page
 assert 'pip install kivy' in kivy_page
 assert 'assets/screenshots/widgets-kivy.png' in kivy_page
-assert 'id="screenshots-widgets-kivy"' in kivy_page
+assert 'id="screenshots"' in ex_html('widgets-kivy')
 assert '코드 전에 알아 두기' in kivy_page
 assert examples['first-kivy']['pre_api'] and examples['memo-kivy']['pre_api']
 assert examples['widgets-kivy']['screenshots'][0]['src'] == 'widgets-kivy.png'
@@ -338,8 +349,8 @@ assert 'id="content-tips"' in ui_page
 assert '더 알아보는 팁' in ui_page
 assert 'https://www.youtube.com/watch?v=XIGSJshYb90' in ui_page
 assert 'Xerox Alto' in ui_page
-assert 'id="pre-api-hello-tk"' in ui_page
-assert 'tk.Button' in ui_page and 'command=함수()' in ui_page
+assert 'id="pre-api"' in ex_html('hello-tk')
+assert 'tk.Button' in ex_html('hello-tk') and 'command=함수()' in ex_html('hello-tk')
 assert 'assets/screenshots/tk.png' in ui_page
 pyside_page=(WEB/'units/unit02/pyside.html').read_text()
 assert 'https://www.youtube.com/watch?v=Z1N9JzNax2k' in pyside_page
@@ -385,7 +396,7 @@ for lesson in units[1]:
  page=(WEB/f'units/unit01/{lesson["id"]}.html').read_text()
  assert '코드 전에 알아 두기' in page, lesson['id']
  for eid in lesson['examples']:
-  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+  assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
 for lid in unit1_tips.unit1_history_lessons():
  assert unit1[lid]['tips']['history'], ('unit1 history', lid)
 for lid in unit1_tips.unit1_youtube_lessons():
@@ -394,9 +405,8 @@ assert not unit1['math']['tips']['youtube']
 assert not unit1['project']['tips']['youtube']
 assert not unit1['review']['tips']['youtube']
 overview_page=(WEB/'units/unit01/overview.html').read_text()
-assert 'id="example-guides"' in overview_page
-assert 'id="pre-api-reuse"' in overview_page
-assert 'id="pre-api-copy-twice"' in overview_page
+assert 'id="pre-api"' in ex_html('reuse')
+assert 'id="pre-api"' in ex_html('copy-twice')
 assert 'id="content-tips"' in overview_page
 assert '더 알아보는 팁' in overview_page
 # The modules video now lives on 'imports' only (#63 dedup).
@@ -405,7 +415,7 @@ assert 'Python 1.5' in overview_page
 imports_page=(WEB/'units/unit01/imports.html').read_text()
 assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' in imports_page
 math_page=(WEB/'units/unit01/math.html').read_text()
-assert 'id="pre-api-math-signed"' in math_page
+assert 'id="pre-api"' in ex_html('math-signed')
 assert 'math-circle' in math_page and 'math-signed' in math_page
 assert '역사 한 줄' in math_page
 assert 'https://www.youtube.com/' not in math_page
@@ -414,7 +424,7 @@ assert 'https://www.youtube.com/watch?v=sugvnHA7ElY' in entrypoint_page
 thirdparty_page=(WEB/'units/unit01/thirdparty.html').read_text()
 assert 'pypi-names' in thirdparty_page and 'stdlib-json' in thirdparty_page
 assert 'https://www.youtube.com/watch?v=U2ZN104hIcc' in thirdparty_page
-assert 'id="pre-api-pypi-names"' in thirdparty_page
+assert 'id="pre-api"' in ex_html('pypi-names')
 packages_page=(WEB/'units/unit01/packages.html').read_text()
 assert 'https://www.youtube.com/watch?v=HGOBQPFzWKo' in packages_page
 random_page=(WEB/'units/unit01/random.html').read_text()
@@ -427,8 +437,8 @@ os_page=(WEB/'units/unit01/os-sys.html').read_text()
 assert 'https://www.youtube.com/watch?v=tJxcKyFMTGo' in os_page
 assert 'sys-modules' in os_page
 project1=(WEB/'units/unit01/project.html').read_text()
-assert 'project-roll' in project1 and 'id="pre-api-project-roll"' in project1
-assert 'id="pre-api-core"' in project1
+assert 'project-roll' in project1 and 'id="pre-api"' in ex_html('project-roll')
+assert 'id="pre-api"' in ex_html('core')
 review1=(WEB/'units/unit01/review.html').read_text()
 assert 'review-two-files' in review1
 assert '역사 한 줄' in review1
@@ -457,7 +467,7 @@ for lesson in units[3]:
  page=(WEB/f'units/unit03/{lesson["id"]}.html').read_text()
  assert '코드 전에 알아 두기' in page, lesson['id']
  for eid in lesson['examples']:
-  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+  assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
 for lid in unit3_tips.unit3_history_lessons():
  assert unit3[lid]['tips']['history'], ('unit3 history', lid)
 for lid in unit3_tips.unit3_youtube_lessons():
@@ -465,9 +475,8 @@ for lid in unit3_tips.unit3_youtube_lessons():
 assert not unit3['ml-preprocess']['tips']['youtube']
 assert not unit3['ml-project']['tips']['youtube']
 overview3=(WEB/'units/unit03/ml-overview.html').read_text()
-assert 'id="example-guides"' in overview3
-assert 'id="pre-api-ml-rule-vs-learn"' in overview3
-assert 'id="pre-api-ml-nesting"' in overview3
+assert 'id="pre-api"' in ex_html('ml-rule-vs-learn')
+assert 'id="pre-api"' in ex_html('ml-nesting')
 assert 'id="content-tips"' in overview3
 assert '더 알아보는 팁' in overview3
 assert 'https://www.youtube.com/watch?v=z-EtmaFJieY' in overview3
@@ -475,11 +484,11 @@ assert '다트머스' in overview3
 assert '실행하면 이렇게 보여요' not in overview3
 use3=(WEB/'units/unit03/ml-use.html').read_text()
 assert 'ml-when-not' in use3 and 'ml-loan-data' in use3
-assert 'id="pre-api-ml-loan-data"' in use3
+assert 'id="pre-api"' in ex_html('ml-loan-data')
 # The Crash Course ML video now lives on 'ml-overview' only (#63 dedup).
 assert 'https://www.youtube.com/watch?v=z-EtmaFJieY' not in use3
 terms3=(WEB/'units/unit03/ml-terms.html').read_text()
-assert 'ml-leakage' in terms3 and 'id="pre-api-ml-leakage"' in terms3
+assert 'ml-leakage' in terms3 and 'id="pre-api"' in ex_html('ml-leakage')
 assert 'https://www.youtube.com/watch?v=Gv9_4yMHFhI' in terms3
 methods3=(WEB/'units/unit03/ml-methods.html').read_text()
 assert 'ml-rl-reward' in methods3
@@ -493,7 +502,7 @@ assert 'https://www.youtube.com/watch?v=cKxRvEZd3Mw' in classify3
 cluster3=(WEB/'units/unit03/ml-cluster.html').read_text()
 assert 'https://www.youtube.com/watch?v=4b5d3muPQmA' in cluster3
 assert 'assets/science/ml-cluster.png' in cluster3
-assert 'id="screenshots-ml-cluster"' in cluster3
+assert 'id="screenshots"' in ex_html('ml-cluster')
 metrics3=(WEB/'units/unit03/ml-metrics.html').read_text()
 assert 'https://www.youtube.com/watch?v=Kdsp6soqA7o' in metrics3
 selection3=(WEB/'units/unit03/ml-selection.html').read_text()
@@ -502,9 +511,9 @@ assert 'assets/science/ml-learning-curve.png' in selection3
 libraries3=(WEB/'units/unit03/ml-libraries.html').read_text()
 assert 'https://www.youtube.com/watch?v=ZyhVh-qRZPA' in libraries3
 assert 'assets/science/ml-chart.png' in libraries3
-assert 'id="screenshots-ml-chart"' in libraries3
+assert 'id="screenshots"' in ex_html('ml-chart')
 project3=(WEB/'units/unit03/ml-project.html').read_text()
-assert 'ml-report-card' in project3 and 'id="pre-api-ml-report-card"' in project3
+assert 'ml-report-card' in project3 and 'id="pre-api"' in ex_html('ml-report-card')
 assert '역사 한 줄' in project3
 assert 'https://www.youtube.com/' not in project3
 assert examples['ml-chart']['screenshots'] and examples['ml-cluster']['screenshots']
@@ -536,7 +545,7 @@ for lesson in units[4]:
  page=(WEB/f'units/unit04/{lesson["id"]}.html').read_text()
  assert '코드 전에 알아 두기' in page, lesson['id']
  for eid in lesson['examples']:
-  assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
+  assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
 for lid in unit4_tips.unit4_history_lessons():
  assert unit4[lid]['tips']['history'], ('unit4 history', lid)
 for lid in unit4_tips.unit4_youtube_lessons():
@@ -544,9 +553,8 @@ for lid in unit4_tips.unit4_youtube_lessons():
 assert not unit4['cv-transform']['tips']['youtube']
 assert not unit4['cv-project']['tips']['youtube']
 overview4=(WEB/'units/unit04/cv-overview.html').read_text()
-assert 'id="example-guides"' in overview4
-assert 'id="pre-api-cv-process-vs-vision"' in overview4
-assert 'id="pre-api-cv-use-fields"' in overview4
+assert 'id="pre-api"' in ex_html('cv-process-vs-vision')
+assert 'id="pre-api"' in ex_html('cv-use-fields')
 assert 'id="content-tips"' in overview4
 assert '더 알아보는 팁' in overview4
 assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in overview4
@@ -554,7 +562,7 @@ assert 'MIT' in overview4 or '여름' in overview4
 assert '실행하면 이렇게 보여요' not in overview4
 pixels4=(WEB/'units/unit04/cv-pixels.html').read_text()
 assert 'cv-shape-size' in pixels4 and 'cv-bgr-rgb' in pixels4
-assert 'id="pre-api-cv-shape-size"' in pixels4
+assert 'id="pre-api"' in ex_html('cv-shape-size')
 # The Crash Course CV video now lives on 'cv-overview' only (#63 dedup).
 assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pixels4
 pipeline4=(WEB/'units/unit04/cv-pipeline.html').read_text()
@@ -565,12 +573,12 @@ transform4=(WEB/'units/unit04/cv-transform.html').read_text()
 assert '역사 한 줄' in transform4
 assert 'https://www.youtube.com/' not in transform4
 assert 'assets/science/cv-perspective.png' in transform4
-assert 'id="screenshots-cv-perspective"' in transform4
+assert 'id="screenshots"' in ex_html('cv-perspective')
 filters4=(WEB/'units/unit04/cv-filters.html').read_text()
 assert 'cv-threshold-kinds' in filters4
 assert 'https://www.youtube.com/watch?v=C_zFhWdM4ic' in filters4
 assert 'assets/science/cv-filters.png' in filters4
-assert 'id="screenshots-cv-filters"' in filters4
+assert 'id="screenshots"' in ex_html('cv-filters')
 features4=(WEB/'units/unit04/cv-features.html').read_text()
 assert 'cv-feature-kinds' in features4
 assert 'https://www.youtube.com/watch?v=uihBwtPIBxM' in features4
@@ -578,19 +586,19 @@ assert 'assets/science/cv-features.png' in features4
 libraries4=(WEB/'units/unit04/cv-libraries.html').read_text()
 assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in libraries4
 assert 'assets/science/cv-sobel.png' in libraries4
-assert 'id="screenshots-cv-skimage"' in libraries4
+assert 'id="screenshots"' in ex_html('cv-skimage')
 io4=(WEB/'units/unit04/cv-io.html').read_text()
 # The OpenCV course video now lives on 'cv-libraries' only (#63 dedup).
 assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' not in io4
 assert 'assets/science/cv-io.png' in io4
 haar4=(WEB/'units/unit04/cv-haar.html').read_text()
-assert 'cv-haar-vs-id' in haar4 and 'id="pre-api-cv-haar-vs-id"' in haar4
+assert 'cv-haar-vs-id' in haar4 and 'id="pre-api"' in ex_html('cv-haar-vs-id')
 assert 'https://www.youtube.com/watch?v=uEJ71VlUmMQ' in haar4
 yolo4=(WEB/'units/unit04/cv-yolo.html').read_text()
 assert 'cv-count' in yolo4
 assert 'https://www.youtube.com/watch?v=Cgxsv1riJhI' in yolo4
 project4=(WEB/'units/unit04/cv-project.html').read_text()
-assert 'cv-scan-card' in project4 and 'id="pre-api-cv-scan-card"' in project4
+assert 'cv-scan-card' in project4 and 'id="pre-api"' in ex_html('cv-scan-card')
 assert '역사 한 줄' in project4
 assert 'https://www.youtube.com/' not in project4
 assert examples['cv-io']['screenshots'] and examples['cv-filters']['screenshots']
@@ -600,10 +608,10 @@ assert not examples['cv-process-vs-vision']['screenshots']
 assert not examples['cv-scan-card']['screenshots']
 assert not unit4['cv-overview']['screenshots']
 assert 'id="pre-api"' in libraries
-assert 'id="pre-api-hello-pyqt"' in libraries and 'from PyQt6.QtWidgets' in libraries
-assert 'id="pre-api-hello-ttk"' in libraries
-assert 'id="pre-api-hello-wx"' in libraries
-assert 'id="pre-api-hello-kivy"' in libraries
+assert 'id="pre-api"' in ex_html('hello-pyqt') and 'from PyQt6.QtWidgets' in ex_html('hello-pyqt')
+assert 'id="pre-api"' in ex_html('hello-ttk')
+assert 'id="pre-api"' in ex_html('hello-wx')
+assert 'id="pre-api"' in ex_html('hello-kivy')
 assert '바인딩' in libraries
 assert examples['hello-wx']['pre_api'] and 'Bind' in ''.join(item['name'] + item['signature'] for item in examples['hello-wx']['pre_api'])
 assert examples['hello-kivy']['pre_api'] and 'bind' in ''.join(item['name'] + item['signature'] for item in examples['hello-kivy']['pre_api'])

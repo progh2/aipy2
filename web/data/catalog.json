@@ -524,955 +524,1114 @@
       "id": "reuse",
       "title": "한 번 만든 함수를 두 프로그램에서 사용하기",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-reuse.html"
     },
     "sum-input": {
       "id": "sum-input",
       "title": "확인학습 · 두 수의 합",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-sum-input.html"
     },
     "circle-top": {
       "id": "circle-top",
       "title": "실행문만 있는 모듈",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-circle-top.html"
     },
     "circle-function": {
       "id": "circle-function",
       "title": "함수 정의와 호출 분리",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-circle-function.html"
     },
     "circle-mixed": {
       "id": "circle-mixed",
       "title": "함수와 실행문이 함께 있을 때",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-circle-mixed.html"
     },
     "class-module": {
       "id": "class-module",
       "title": "보강 · 클래스를 담은 모듈",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-class-module.html"
     },
     "main-guard": {
       "id": "main-guard",
       "title": "직접 실행과 임포트 비교",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-main-guard.html"
     },
     "rectangle": {
       "id": "rectangle",
       "title": "탐구 활동 · 사각형 모듈",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-rectangle.html"
     },
     "import-0": {
       "id": "import-0",
       "title": "모듈 전체",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-import-0.html"
     },
     "import-1": {
       "id": "import-1",
       "title": "특정 함수",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-import-1.html"
     },
     "import-2": {
       "id": "import-2",
       "title": "여러 함수",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-import-2.html"
     },
     "import-3": {
       "id": "import-3",
       "title": "별표",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-import-3.html"
     },
     "import-4": {
       "id": "import-4",
       "title": "별칭",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-import-4.html"
     },
     "package-0": {
       "id": "package-0",
       "title": "패키지 임포트 1",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-package-0.html"
     },
     "package-1": {
       "id": "package-1",
       "title": "패키지 임포트 2",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-package-1.html"
     },
     "package-2": {
       "id": "package-2",
       "title": "패키지 임포트 3",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-package-2.html"
     },
     "package-3": {
       "id": "package-3",
       "title": "패키지 임포트 4",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-package-3.html"
     },
     "package-4": {
       "id": "package-4",
       "title": "패키지 임포트 5",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-package-4.html"
     },
     "all": {
       "id": "all",
       "title": "__all__의 영향 실험",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-all.html"
     },
     "animal-check": {
       "id": "animal-check",
       "title": "35쪽 확인학습 · 동물 패키지",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-animal-check.html"
     },
     "stars": {
       "id": "stars",
       "title": "25쪽 탐구 · 별 출력",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-stars.html"
     },
     "os": {
       "id": "os",
       "title": "os · 가상 작업 폴더",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-os.html"
     },
     "os-pc": {
       "id": "os-pc",
       "title": "교과서 os 예제 · PC 명령",
       "unit": 1,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit01/ex-os-pc.html"
     },
     "sys": {
       "id": "sys",
       "title": "실행 인자와 종료",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-sys.html"
     },
     "math": {
       "id": "math",
       "title": "math의 상수와 함수",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-math.html"
     },
     "random": {
       "id": "random",
       "title": "random · 범위·선택·섞기",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-random.html"
     },
     "dice": {
       "id": "dice",
       "title": "종합 평가 · n면 주사위",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-dice.html"
     },
     "gift": {
       "id": "gift",
       "title": "탐구 · 선물 하나 고르기",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-gift.html"
     },
     "datetime": {
       "id": "datetime",
       "title": "날짜·시각·요일",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-datetime.html"
     },
     "christmas": {
       "id": "christmas",
       "title": "다음 크리스마스까지",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-christmas.html"
     },
     "thirdparty": {
       "id": "thirdparty",
       "title": "PC · NumPy 첫 실습",
       "unit": 1,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit01/ex-thirdparty.html"
     },
     "final-output": {
       "id": "final-output",
       "title": "종합 평가 8 · 출력 추적",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-final-output.html"
     },
     "hello-tk": {
       "id": "hello-tk",
       "title": "인사 앱 · tkinter",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-hello-tk.html"
     },
     "hello-ttk": {
       "id": "hello-ttk",
       "title": "인사 앱 · tkinter + ttk",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-hello-ttk.html"
     },
     "hello-pyside": {
       "id": "hello-pyside",
       "title": "인사 앱 · PySide6",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-hello-pyside.html"
     },
     "hello-pyqt": {
       "id": "hello-pyqt",
       "title": "인사 앱 · PyQt6",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-hello-pyqt.html"
     },
     "hello-wx": {
       "id": "hello-wx",
       "title": "인사 앱 · wxPython",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-hello-wx.html"
     },
     "hello-kivy": {
       "id": "hello-kivy",
       "title": "인사 앱 · Kivy",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-hello-kivy.html"
     },
     "widgets-tk": {
       "id": "widgets-tk",
       "title": "tkinter 위젯 9종 체험",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-tk.html"
     },
     "widgets-pyside": {
       "id": "widgets-pyside",
       "title": "PySide6 위젯과 그리기 공간",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-pyside.html"
     },
     "layout-tk": {
       "id": "layout-tk",
       "title": "tkinter · 같은 입력 폼의 pack·grid·place 비교",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-tk.html"
     },
     "layout-pyside": {
       "id": "layout-pyside",
       "title": "PySide6 · 수평·수직·격자 배치",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-pyside.html"
     },
     "memo-tk": {
       "id": "memo-tk",
       "title": "교과서 메모장 · tkinter 전체 코드",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-tk.html"
     },
     "memo-pyside": {
       "id": "memo-pyside",
       "title": "메모장 · PySide6 전체 코드",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-pyside.html"
     },
     "core": {
       "id": "core",
       "title": "프로젝트 · 기능 모듈을 웹에서 검사",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-core.html"
     },
     "project-tk": {
       "id": "project-tk",
       "title": "생활 도우미 · tkinter",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-project-tk.html"
     },
     "project-pyside": {
       "id": "project-pyside",
       "title": "생활 도우미 · PySide6",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-project-pyside.html"
     },
     "memo-plus-tk": {
       "id": "memo-plus-tk",
       "title": "개선 메모장 · tkinter",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-plus-tk.html"
     },
     "memo-plus-pyside": {
       "id": "memo-plus-pyside",
       "title": "개선 메모장 · PySide6",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-plus-pyside.html"
     },
     "copy-twice": {
       "id": "copy-twice",
       "title": "같은 함수를 두 파일에 복사하면",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-copy-twice.html"
     },
     "two-adds": {
       "id": "two-adds",
       "title": "같은 이름 add, 다른 모듈",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-two-adds.html"
     },
     "import-clash": {
       "id": "import-clash",
       "title": "같은 함수 이름 · 별칭으로 구별",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-import-clash.html"
     },
     "sys-modules": {
       "id": "sys-modules",
       "title": "sys.path와 이미 불러온 모듈",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-sys-modules.html"
     },
     "math-circle": {
       "id": "math-circle",
       "title": "math.pi로 원 넓이",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-math-circle.html"
     },
     "math-signed": {
       "id": "math-signed",
       "title": "음수에서 올림과 내림",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-math-signed.html"
     },
     "random-seed": {
       "id": "random-seed",
       "title": "시드를 고정하면 같은 난수",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-random-seed.html"
     },
     "random-sample": {
       "id": "random-sample",
       "title": "sample은 원본을 남긴다",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-random-sample.html"
     },
     "weekday-fixed": {
       "id": "weekday-fixed",
       "title": "고정 날짜의 요일",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-weekday-fixed.html"
     },
     "pypi-names": {
       "id": "pypi-names",
       "title": "설치 이름과 import 이름",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-pypi-names.html"
     },
     "stdlib-json": {
       "id": "stdlib-json",
       "title": "표준 라이브러리로 먼저 해결",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-stdlib-json.html"
     },
     "project-roll": {
       "id": "project-roll",
       "title": "기능 모듈 한 함수만 검사",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-project-roll.html"
     },
     "review-two-files": {
       "id": "review-two-files",
       "title": "처음부터 두 파일 만들고 호출",
       "unit": 1,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit01/ex-review-two-files.html"
     },
     "ui-cli": {
       "id": "ui-cli",
       "title": "같은 인사 · 명령줄(CLI)",
       "unit": 2,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit02/ex-ui-cli.html"
     },
     "widgets-label-entry-tk": {
       "id": "widgets-label-entry-tk",
       "title": "Label·Entry · 한 줄 읽고 보여 주기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-label-entry-tk.html"
     },
     "widgets-choice-tk": {
       "id": "widgets-choice-tk",
       "title": "Checkbutton·Radiobutton · 선택 값 읽기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-choice-tk.html"
     },
     "widgets-list-canvas-tk": {
       "id": "widgets-list-canvas-tk",
       "title": "Listbox·Canvas · 목록과 그리기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-list-canvas-tk.html"
     },
     "widgets-pyside-form": {
       "id": "widgets-pyside-form",
       "title": "PySide6 · 입력·체크·라디오 폼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-pyside-form.html"
     },
     "layout-pack-tk": {
       "id": "layout-pack-tk",
       "title": "pack · expand와 fill",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-pack-tk.html"
     },
     "layout-grid-tk": {
       "id": "layout-grid-tk",
       "title": "grid · 로그인 폼과 sticky",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-grid-tk.html"
     },
     "layout-pyside-form": {
       "id": "layout-pyside-form",
       "title": "PySide6 · QGridLayout 입력 폼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-pyside-form.html"
     },
     "events-callback": {
       "id": "events-callback",
       "title": "콜백 · 지금 호출 vs 나중에 호출",
       "unit": 2,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit02/ex-events-callback.html"
     },
     "events-command-tk": {
       "id": "events-command-tk",
       "title": "Button.command · 올바른 연결과 잘못된 연결",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-events-command-tk.html"
     },
     "events-bind-tk": {
       "id": "events-bind-tk",
       "title": "bind · Enter 키로 같은 함수 호출",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-events-bind-tk.html"
     },
     "events-after-tk": {
       "id": "events-after-tk",
       "title": "after · 이벤트 루프를 막지 않는 타이머",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-events-after-tk.html"
     },
     "events-pyside-signal": {
       "id": "events-pyside-signal",
       "title": "clicked·textChanged · 시그널 연결",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-events-pyside-signal.html"
     },
     "memo-window-tk": {
       "id": "memo-window-tk",
       "title": "메모장 ① · 창과 Text만",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-window-tk.html"
     },
     "memo-files-tk": {
       "id": "memo-files-tk",
       "title": "메모장 ② · 열기·저장 버튼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-files-tk.html"
     },
     "pyside-first": {
       "id": "pyside-first",
       "title": "PySide6 · 최소 창 실행 순서",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-pyside-first.html"
     },
     "pyside-ui-file": {
       "id": "pyside-ui-file",
       "title": "Qt Designer · .ui 불러와 이벤트 연결",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-pyside-ui-file.html"
     },
     "review-scratch-tk": {
       "id": "review-scratch-tk",
       "title": "확인학습 · 창·버튼·콜백을 처음부터",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-review-scratch-tk.html"
     },
     "project-button-tk": {
       "id": "project-button-tk",
       "title": "기능 모듈 한 줄 연결 · 주사위 버튼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-project-button-tk.html"
     },
     "first-wx": {
       "id": "first-wx",
       "title": "wxPython · 최소 창 실행 순서",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-first-wx.html"
     },
     "widgets-label-entry-wx": {
       "id": "widgets-label-entry-wx",
       "title": "StaticText·TextCtrl · 한 줄 읽고 보여 주기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-label-entry-wx.html"
     },
     "widgets-choice-wx": {
       "id": "widgets-choice-wx",
       "title": "CheckBox·RadioButton · 선택 값 읽기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-choice-wx.html"
     },
     "widgets-wx": {
       "id": "widgets-wx",
       "title": "wxPython 위젯 도감",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-wx.html"
     },
     "layout-wx": {
       "id": "layout-wx",
       "title": "wxPython · 상자 배치와 격자 폼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-wx.html"
     },
     "events-wx": {
       "id": "events-wx",
       "title": "Bind · EVT_BUTTON과 EVT_TEXT",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-events-wx.html"
     },
     "memo-window-wx": {
       "id": "memo-window-wx",
       "title": "메모장 ① · 창과 여러 줄 TextCtrl만",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-window-wx.html"
     },
     "memo-wx": {
       "id": "memo-wx",
       "title": "교과서 메모장 · wxPython 전체 코드",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-wx.html"
     },
     "project-wx": {
       "id": "project-wx",
       "title": "생활 도우미 · wxPython",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-project-wx.html"
     },
     "first-kivy": {
       "id": "first-kivy",
       "title": "Kivy · 최소 창 실행 순서",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-first-kivy.html"
     },
     "widgets-label-entry-kivy": {
       "id": "widgets-label-entry-kivy",
       "title": "Label·TextInput · 한 줄 읽고 보여 주기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-label-entry-kivy.html"
     },
     "widgets-choice-kivy": {
       "id": "widgets-choice-kivy",
       "title": "CheckBox·ToggleButton · 선택 값 읽기",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-choice-kivy.html"
     },
     "widgets-kivy": {
       "id": "widgets-kivy",
       "title": "Kivy 위젯 도감",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-widgets-kivy.html"
     },
     "layout-kivy": {
       "id": "layout-kivy",
       "title": "Kivy · 상자 배치와 격자 폼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-layout-kivy.html"
     },
     "events-kivy": {
       "id": "events-kivy",
       "title": "bind · on_press와 text",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-events-kivy.html"
     },
     "memo-window-kivy": {
       "id": "memo-window-kivy",
       "title": "메모장 ① · 창과 여러 줄 TextInput만",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-window-kivy.html"
     },
     "memo-kivy": {
       "id": "memo-kivy",
       "title": "메모 형태 · Kivy 저장·열기 버튼",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-memo-kivy.html"
     },
     "project-kivy": {
       "id": "project-kivy",
       "title": "생활 도우미 · Kivy",
       "unit": 2,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit02/ex-project-kivy.html"
     },
     "ml-tools": {
       "id": "ml-tools",
       "title": "NumPy·pandas로 표 탐색하기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-tools.html"
     },
     "ml-chart": {
       "id": "ml-chart",
       "title": "빈도표를 막대그래프로",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-chart.html"
     },
     "ml-seaborn": {
       "id": "ml-seaborn",
       "title": "Seaborn countplot과 Excel 입출력",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-seaborn.html"
     },
     "ml-clean": {
       "id": "ml-clean",
       "title": "CSV·결측치·이상치 탐색",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-clean.html"
     },
     "ml-scale": {
       "id": "ml-scale",
       "title": "훈련 데이터로만 전처리 배우기",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-scale.html"
     },
     "ml-classify": {
       "id": "ml-classify",
       "title": "붓꽃 분류 모델 네 가지 비교",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-classify.html"
     },
     "ml-regression": {
       "id": "ml-regression",
       "title": "회귀 예측과 MAE·MSE·R²",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-regression.html"
     },
     "ml-housing": {
       "id": "ml-housing",
       "title": "교과서 연결 · 주택 자료 회귀",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-housing.html"
     },
     "ml-cluster": {
       "id": "ml-cluster",
       "title": "군집 중심과 산점도",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-cluster.html"
     },
     "ml-metrics": {
       "id": "ml-metrics",
       "title": "혼동행렬과 분류 지표",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-metrics.html"
     },
     "ml-selection": {
       "id": "ml-selection",
       "title": "교차 검증과 GridSearchCV",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-selection.html"
     },
     "ml-learning-curve": {
       "id": "ml-learning-curve",
       "title": "학습 곡선으로 과대·과소 적합 살펴보기",
       "unit": 3,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-learning-curve.html"
     },
     "cv-pixels": {
       "id": "cv-pixels",
       "title": "작은 이미지의 픽셀·반전·이진화",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-pixels.html"
     },
     "cv-pillow": {
       "id": "cv-pillow",
       "title": "Pillow로 만들기·크기 변경·회전·저장",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-pillow.html"
     },
     "cv-skimage": {
       "id": "cv-skimage",
       "title": "scikit-image Sobel과 이미지 비교",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-skimage.html"
     },
     "cv-io": {
       "id": "cv-io",
       "title": "OpenCV 읽기·색상·크기·회전·저장",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-io.html"
     },
     "cv-display": {
       "id": "cv-display",
       "title": "PC 창에서 이미지 보기",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-display.html"
     },
     "cv-filters": {
       "id": "cv-filters",
       "title": "블러·Canny·세 가지 이진화 비교",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-filters.html"
     },
     "cv-perspective": {
       "id": "cv-perspective",
       "title": "네 점으로 원근 변환",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-perspective.html"
     },
     "cv-click-card": {
       "id": "cv-click-card",
       "title": "마우스로 카드 네 꼭짓점 선택",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-click-card.html"
     },
     "cv-features": {
       "id": "cv-features",
       "title": "에지·코너·윤곽선 비교",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-features.html"
     },
     "cv-haar": {
       "id": "cv-haar",
       "title": "Haar 얼굴·눈·웃음 검출 · 정적 이미지",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-haar.html"
     },
     "cv-camera": {
       "id": "cv-camera",
       "title": "실시간 얼굴 검출과 자원 정리",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-camera.html"
     },
     "cv-yolo": {
       "id": "cv-yolo",
       "title": "YOLOv8 객체 검출 · 이미지 한 장",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-yolo.html"
     },
     "cv-yolo-count": {
       "id": "cv-yolo-count",
       "title": "YOLO 웹캠 프레임별 객체 개수",
       "unit": 4,
-      "mode": "pc"
+      "mode": "pc",
+      "href": "units/unit04/ex-cv-yolo-count.html"
     },
     "cv-count": {
       "id": "cv-count",
       "title": "검출 결과 목록으로 개수 세기",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-count.html"
     },
     "ml-split-small": {
       "id": "ml-split-small",
       "title": "웹 원리 · 훈련·검증·테스트 분할",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-split-small.html"
     },
     "ml-scale-small": {
       "id": "ml-scale-small",
       "title": "웹 원리 · 훈련 평균과 스케일",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-scale-small.html"
     },
     "ml-knn-small": {
       "id": "ml-knn-small",
       "title": "웹 원리 · 가까운 이웃으로 분류",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-knn-small.html"
     },
     "ml-line-small": {
       "id": "ml-line-small",
       "title": "웹 원리 · 최소제곱 직선 학습",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-line-small.html"
     },
     "ml-kmeans-small": {
       "id": "ml-kmeans-small",
       "title": "웹 원리 · 군집 중심의 반복 갱신",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-kmeans-small.html"
     },
     "ml-confusion-small": {
       "id": "ml-confusion-small",
       "title": "웹 원리 · 혼동행렬 직접 계산",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-confusion-small.html"
     },
     "ml-cv-small": {
       "id": "ml-cv-small",
       "title": "웹 원리 · 교차 검증의 역할 바꾸기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-cv-small.html"
     },
     "ml-rule-vs-learn": {
       "id": "ml-rule-vs-learn",
       "title": "규칙으로 쓰기 vs 데이터에서 배우기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-rule-vs-learn.html"
     },
     "ml-nesting": {
       "id": "ml-nesting",
       "title": "AI ⊃ 머신러닝 ⊃ 딥러닝",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-nesting.html"
     },
     "ml-history-cases": {
       "id": "ml-history-cases",
       "title": "딥 블루와 ImageNet은 같은 접근이 아니다",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-history-cases.html"
     },
     "ml-when-not": {
       "id": "ml-when-not",
       "title": "규칙을 쓰는 편이 나은 문제",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-when-not.html"
     },
     "ml-loan-data": {
       "id": "ml-loan-data",
       "title": "사서 역할 · 대출 예측에 모을 열",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-loan-data.html"
     },
     "ml-inspect": {
       "id": "ml-inspect",
       "title": "검사원 역할 · 입력과 예측 출력",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-inspect.html"
     },
     "ml-success-mae": {
       "id": "ml-success-mae",
       "title": "성공 기준을 숫자로 적기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-success-mae.html"
     },
     "ml-xy-table": {
       "id": "ml-xy-table",
       "title": "같은 행의 X와 y를 맞추기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-xy-table.html"
     },
     "ml-param-hyper": {
       "id": "ml-param-hyper",
       "title": "배우는 값과 미리 정하는 값",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-param-hyper.html"
     },
     "ml-leakage": {
       "id": "ml-leakage",
       "title": "미래 정답을 X에 넣으면",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-leakage.html"
     },
     "ml-classify-vs-regress": {
       "id": "ml-classify-vs-regress",
       "title": "범주를 맞히나, 숫자를 맞히나",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-classify-vs-regress.html"
     },
     "ml-unsupervised-groups": {
       "id": "ml-unsupervised-groups",
       "title": "정답 없이 가까운 값 묶기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-unsupervised-groups.html"
     },
     "ml-rl-reward": {
       "id": "ml-rl-reward",
       "title": "미로 보상 설계하기",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-rl-reward.html"
     },
     "ml-logistic-name": {
       "id": "ml-logistic-name",
       "title": "이름에 회귀가 있어도 분류인 모델",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-logistic-name.html"
     },
     "ml-report-card": {
       "id": "ml-report-card",
       "title": "재현 가능한 보고서 카드",
       "unit": 3,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit03/ex-ml-report-card.html"
     },
     "cv-process-vs-vision": {
       "id": "cv-process-vs-vision",
       "title": "사진을 다듬기 vs 의미를 판단하기",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-process-vs-vision.html"
     },
     "cv-use-fields": {
       "id": "cv-use-fields",
       "title": "사서·교통·검사원 역할 · 이점과 오판",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-use-fields.html"
     },
     "cv-human-vs-computer": {
       "id": "cv-human-vs-computer",
       "title": "사람은 맥락, 컴퓨터는 숫자",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-human-vs-computer.html"
     },
     "cv-shape-size": {
       "id": "cv-shape-size",
       "title": "shape의 픽셀 수와 size의 원소 수",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-shape-size.html"
     },
     "cv-bgr-rgb": {
       "id": "cv-bgr-rgb",
       "title": "OpenCV BGR과 화면 RGB",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-bgr-rgb.html"
     },
     "cv-pipeline-steps": {
       "id": "cv-pipeline-steps",
       "title": "입력부터 평가까지 한 줄로",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-pipeline-steps.html"
     },
     "cv-plate-stages": {
       "id": "cv-plate-stages",
       "title": "번호판 위치와 글자는 다른 단계",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-plate-stages.html"
     },
     "cv-eval-criteria": {
       "id": "cv-eval-criteria",
       "title": "정확도만으로 고르지 않기",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-eval-criteria.html"
     },
     "cv-threshold-kinds": {
       "id": "cv-threshold-kinds",
       "title": "고정·분포·주변으로 이진화하기",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-threshold-kinds.html"
     },
     "cv-feature-kinds": {
       "id": "cv-feature-kinds",
       "title": "선·점·닫힌 경계 고르기",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-feature-kinds.html"
     },
     "cv-haar-vs-id": {
       "id": "cv-haar-vs-id",
       "title": "얼굴 상자 ≠ 누구인지",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-haar-vs-id.html"
     },
     "cv-scan-card": {
       "id": "cv-scan-card",
       "title": "문서 스캔 보고서 카드",
       "unit": 4,
-      "mode": "web"
+      "mode": "web",
+      "href": "units/unit04/ex-cv-scan-card.html"
     }
   },
   "questions": [

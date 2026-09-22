@@ -52,6 +52,9 @@ def badge(u,l):
 def topic_file(lesson_id):
  return f'{lesson_id}.html'
 
+def example_file(example_id):
+ return f'ex-{example_id}.html'
+
 def topic_href(lesson_id, base='', hash_page=False):
  if hash_page:
   return f'{base}#{lesson_id}'

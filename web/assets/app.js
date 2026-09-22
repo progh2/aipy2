@@ -5,6 +5,7 @@
 (() => {
 const prefix=document.body.dataset.prefix||'', unit=Number(document.body.dataset.unit||0), KEY='aipy-lab-v1';
 const pageTopic=document.body.dataset.topic||'';
+const pageExample=document.body.dataset.example||'';
 const pageLessons=(document.body.dataset.lessons||'').split(/\s+/).filter(Boolean);
 if(unit && !pageTopic){
  const hash=location.hash.slice(1);
@@ -173,17 +174,19 @@ function renderFiles(){
 }
 function selectExample(id,scroll=false,workspace=null){
  if(!hasLab)return;
- if(running){$('#example-select').value=currentId;toast('현재 실행을 마치거나 중지한 뒤 예제를 바꾸세요.');return;}
+ const select=$('#example-select');
+ if(running){if(select)select.value=currentId;toast('현재 실행을 마치거나 중지한 뒤 예제를 바꾸세요.');return;}
  if(!data.examples[id])return;
  const lab=$('#lab'),active=lab.closest('[data-workspace]');
+ // 예제 전용 페이지에는 .lesson-workspace가 없으므로 owner를 찾지 못하면 #lab은 제자리에 둔다.
  const owner=workspace || (active && data.lessons.find(l=>l.id===active.dataset.workspace)?.examples.includes(id) ? active : $$('[data-workspace]').find(el=>data.lessons.find(l=>l.id===el.dataset.workspace)?.examples.includes(id)));
- if(owner){owner.querySelector('.editor-mount').append(lab);$('#lab h2').textContent='바로 실습 · '+data.lessons.find(l=>l.id===owner.dataset.workspace).title;}
+ if(owner){const mount=owner.querySelector('.editor-mount');if(mount)mount.append(lab);const h2=$('#lab h2');if(h2)h2.textContent='바로 실습 · '+data.lessons.find(l=>l.id===owner.dataset.workspace).title;}
  $$('[data-example]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.example===id&&b.closest('[data-workspace]')===owner)));
 if(currentId)stash();currentId=id;exampleDirty=false;const ex=data.examples[id],saved=state.projects[id];
  files=JSON.parse(JSON.stringify(ex.files));
  if(saved && saved.files && typeof saved.files==='object' && Object.entries(saved.files).every(([n,s])=>validName(n)&&typeof s==='string') && Object.keys(saved.files).some(n=>n.endsWith('.py')))files={...saved.files};
  fileName=files[ex.entry]!==undefined?ex.entry:Object.keys(files)[0];
- $('#example-select').value=id;$('#code-editor').value=files[fileName];renderFiles();
+ if(select)select.value=id;$('#code-editor').value=files[fileName];renderFiles();
  $('#entry-file').value=saved?.entry&&files[saved.entry]!==undefined?saved.entry:ex.entry;
  $('#stdin').value=saved?.stdin??ex.stdin??'';$('#argv').value=saved?.args??ex.args??'[]';if(!$('#argv').value)$('#argv').value='[]';
  $('#run-mode').textContent=ex.mode==='web'?'브라우저 Python 실행':'PC Python 실습';
@@ -202,7 +205,7 @@ if(hasLab){
 $('#code-editor').addEventListener('input',markCode);
 $('#code-editor').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=e.target,s=a.selectionStart,end=a.selectionEnd;a.setRangeText('    ',s,end,'end');markCode();}});
 for(const id of ['stdin','argv','entry-file'])$('#'+id).addEventListener('change',markCode);
-$('#example-select').onchange=e=>selectExample(e.target.value,true);
+if($('#example-select'))$('#example-select').onchange=e=>selectExample(e.target.value,true);
 $('#add-file').onclick=()=>{const name=prompt('파일 경로를 입력하세요. 예: utils.py 또는 nature/bird.py');if(name===null)return;if(!validName(name)||Object.hasOwn(files,name))return toast('중복되지 않는 상대 경로를 입력하세요.');markCode();files[name]=name.endsWith('.py')?'# 새 기능을 작성하세요.\n':'';fileName=name;$('#code-editor').value=files[name];renderFiles();markCode();};
 $('#delete-file').onclick=()=>{if(Object.keys(files).length===1 || (fileName.endsWith('.py')&&Object.keys(files).filter(n=>n.endsWith('.py')).length===1))return toast('Python 파일 하나는 남겨 두세요.');if(!confirm(fileName+' 파일을 지울까요?'))return;delete files[fileName];fileName=Object.keys(files)[0];$('#code-editor').value=files[fileName];renderFiles();markCode();};
 $('#copy-code').onclick=()=>copy($('#code-editor').value);
@@ -362,9 +365,12 @@ if(!hasLab && !hasPractice){
  const lesson=pageTopic && data.lessons.find(l=>l.id===pageTopic);
  const exampleIds=(lesson && lesson.examples.length)?lesson.examples:Object.keys(data.examples);
  if(hasLab){
-  for(const id of exampleIds){const ex=data.examples[id];if(!ex)continue;const opt=node('option','',ex.title);opt.value=ex.id;$('#example-select').append(opt);}
+  const select=$('#example-select');
+  if(select)for(const id of exampleIds){const ex=data.examples[id];if(!ex)continue;const opt=node('option','',ex.title);opt.value=ex.id;select.append(opt);}
   $$('[data-example]').forEach(b=>b.onclick=()=>selectExample(b.dataset.example,true,b.closest('[data-workspace]')));
-  if(exampleIds[0]) selectExample(exampleIds[0]);
+  // 예제 전용 페이지는 data-example으로 어느 예제인지 이미 정해져 있으므로 선택 UI 없이 바로 불러온다.
+  if(pageExample && data.examples[pageExample]) selectExample(pageExample);
+  else if(exampleIds[0]) selectExample(exampleIds[0]);
  }
  if(hasPractice){
   for(const kind of new Set(topicQuestions().map(q=>q.kind))){const opt=node('option','',kind);opt.value=kind;$('#question-kind').append(opt);}

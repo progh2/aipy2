@@ -69,10 +69,16 @@ export function unitFromPage(page) {
  return match ? Number(match[1]) : 0;
 }
 
+// ex-*.html은 예제 전용 페이지이며 소단원(lesson) id로 오인하면 안 된다 — 별도 정규식으로 걸러낸다.
 export function pageTopicId(page) {
- const match = /^units\/unit0[1-4]\/([a-z0-9-]+)\.html$/.exec(normalizePage(page));
+ const match = /^units\/unit0[1-4]\/(?!ex-)([a-z0-9-]+)\.html$/.exec(normalizePage(page));
  if (!match || match[1] === 'index' || match[1] === 'summary') return null;
  return match[1];
+}
+
+export function pageExampleId(page) {
+ const match = /^units\/unit0[1-4]\/ex-([a-z0-9-]+)\.html$/.exec(normalizePage(page));
+ return match ? match[1] : null;
 }
 
 export function isLessonTopic(id) {
@@ -84,12 +90,20 @@ export function topicPage(unit, topicId) {
  return `units/unit0${unit}/${topicId}.html`;
 }
 
+export function examplePage(unit, exampleId) {
+ if (!unit || !exampleId) return '';
+ return `units/unit0${unit}/ex-${exampleId}.html`;
+}
+
 export function resolveFocusLocation(focus) {
  const page = normalizePage(focus && focus.page);
  const topic = focus && focus.topicAnchor;
  const unit = unitFromPage(page);
  const fromPage = pageTopicId(page);
  const lesson = isLessonTopic(topic) ? topic : fromPage;
+ const exampleId = focus && focus.exampleId;
+ // 예제가 지정되면 그 예제의 독립 페이지가 목적지다 — 소단원 페이지에는 더 이상 편집기가 없다.
+ if (unit && exampleId) return {page: examplePage(unit, exampleId), topicAnchor: null};
  if (unit && lesson) return {page: topicPage(unit, lesson), topicAnchor: lesson};
  return {page, topicAnchor: topic || fromPage || null};
 }
@@ -205,7 +219,7 @@ export function sessionEndFields(existing, {teacherEmail} = {}) {
 
 export function isUnitLessonPage(page) {
  const path = normalizePage(page);
- return /^units\/unit0[1-4]\/index\.html$/.test(path) || Boolean(pageTopicId(path));
+ return /^units\/unit0[1-4]\/index\.html$/.test(path) || Boolean(pageTopicId(path)) || Boolean(pageExampleId(path));
 }
 
 const SKIP_FOCUS_TOPICS = new Set(['main', 'account', 'toast']);

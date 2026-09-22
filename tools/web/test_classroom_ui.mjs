@@ -35,9 +35,10 @@ try {
  const box=page.locator('[data-complete="u2-widgets"]');
  const badge=page.locator('.completion-badge');
  assert.equal(await badge.isVisible(),false);
+ // 편집기는 소단원 페이지에서 예제 전용 페이지로 옮겨졌다(#101) — 여기서는 실습 카드 다음에 체크박스가 온다.
  assert.equal(await page.evaluate(()=>{
-  const lab=document.querySelector('#lab'),check=document.querySelector('label.completion');
-  return !!(lab.compareDocumentPosition(check)&Node.DOCUMENT_POSITION_FOLLOWING);
+  const workspace=document.querySelector('#widgets-lab'),check=document.querySelector('label.completion');
+  return !!(workspace.compareDocumentPosition(check)&Node.DOCUMENT_POSITION_FOLLOWING);
  }),true);
  await box.check();assert.equal(await badge.isVisible(),true);
  assert.equal(await page.locator('.lesson > .pai-note').textContent(),originalTip);
@@ -89,13 +90,17 @@ try {
  await self.check();assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
  await self.uncheck();assert.equal(await page.locator('#question-progress').getAttribute('value'),'0');
  console.log('PASS written self-assessment progress');
- for(const [path,label] of [['/units/unit01/overview.html','Python 실행'],['/units/unit02/layout.html','문법 확인']]){
+ // 편집기가 있는 곳은 이제 예제 전용 페이지뿐이다(#101). 페이지를 열자마자 선택 UI 없이 코드가 채워져 있어야 한다.
+ for(const [path,label] of [['/units/unit01/ex-reuse.html','Python 실행'],['/units/unit02/ex-layout-pack-tk.html','문법 확인']]){
   await open(path);
   assert.match(await page.locator('#run').textContent(),new RegExp(label));
   assert.match(await page.locator('.run-mode-guide').textContent(),/Python 실행.*문법 확인.*PC/);
+  assert.equal(await page.locator('#example-select').count(),0);
+  const code=await page.locator('#code-editor').inputValue();
+  assert.ok(code && code.trim().length>0, `#code-editor should be pre-filled on ${path}`);
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  }
  assert.deepEqual(errors,[]);
- console.log('PASS run modes, explanatory guide and 390px mobile layout');
+ console.log('PASS run modes, auto-filled editor, no selection UI and 390px mobile layout');
 } finally {await browser.close();}

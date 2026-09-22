@@ -29,11 +29,12 @@ def unit_scripts(prefix,unit):
   extras+=f'<script type="module" src="{prefix}assets/teacher-focus.js?v=7"></script>'
  return extras
 
-def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=()):
+def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''):
  extra=''
  if topic: extra+=f' data-topic="{esc(topic)}"'
  if lessons: extra+=f' data-lessons="{" ".join(lessons)}"'
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=cls10"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=11"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=cls9" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=7"></script><script type="module" src="{prefix}assets/follow.js?v=7"></script><script type="module" src="{prefix}assets/sync.js?v=3"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=1"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=4"></script><script type="module" src="{prefix}assets/editlock.js?v=1"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ if example: extra+=f' data-example="{esc(example)}"'
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=cls11"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=11"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=cls10" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=7"></script><script type="module" src="{prefix}assets/follow.js?v=8"></script><script type="module" src="{prefix}assets/sync.js?v=3"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=1"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=4"></script><script type="module" src="{prefix}assets/editlock.js?v=1"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -64,7 +65,9 @@ with zipfile.ZipFile(WEB/'downloads/pai-character-pack.zip','w',zipfile.ZIP_DEFL
 
 pairs=[('hello-tk','hello-pyside','첫 인사 앱'),('widgets-label-entry-tk','widgets-pyside-form','입력 폼'),('widgets-tk','widgets-pyside','위젯 도감'),('layout-pack-tk','layout-pyside','pack / 상자 배치'),('layout-grid-tk','layout-pyside-form','격자 폼'),('layout-tk','layout-pyside','레이아웃 비교'),('events-bind-tk','events-pyside-signal','이벤트 연결'),('memo-tk','memo-pyside','메모장'),('project-button-tk','project-pyside','기능 연결'),('project-tk','project-pyside','생활 도우미'),('memo-plus-tk','memo-plus-pyside','개선 메모장')]
 
-def editor_markup(u): return f'''<section class="lab" id="lab"><div class="section-head"><div><p class="eyebrow">CODE WORKSPACE</p><h2>코드를 바꾸는 실습실</h2></div><span class="pill" id="run-mode">실행 환경</span></div><label>예제 선택<select id="example-select" aria-label="예제 선택"></select></label><p class="note run-mode-guide"><b>Python 실행</b>: 브라우저에서 바로 실행합니다. <b>문법 확인</b>: GUI 창·카메라·대용량 패키지를 사용하는 PC 실습 예제입니다. 웹에서는 문법만 검사하고, 실제 동작은 내려받아 PC에서 확인하세요.</p><p id="example-note" class="note"></p>{mascot.runtime_guide(u)}<div class="editor-layout"><aside class="file-panel"><p class="eyebrow">PROJECT FILES</p><div id="file-tree"></div><button id="add-file">+ 파일 추가</button><button id="delete-file">현재 파일 삭제</button></aside><div class="editor-main"><div class="editor-bar"><strong id="file-name">main.py</strong><div><button id="copy-code">복사</button><button id="download-file">파일 저장</button></div></div><label class="sr-only" for="code-editor">Python 소스 편집기</label><textarea id="code-editor" spellcheck="false" autocapitalize="off"></textarea></div></div><div class="input-grid"><label>실행 파일<select id="entry-file"></select></label><label>input()에 전달할 값 · 한 줄에 하나<textarea id="stdin" rows="2" placeholder="6"></textarea></label><label>실행 인자 · JSON 문자열 배열<input id="argv" value='[]' placeholder='["param1", "param2"]'></label></div><div class="actions"><button class="primary" id="run">Python 실행</button><button id="check-example">검사</button><button id="stop" disabled>중지</button><button id="reset-code">예제 원본 복원</button><button id="download-project">프로젝트 ZIP</button></div><p class="small" id="runtime-info">실행 엔진은 처음 실행할 때 내려받습니다. 패키지 크기에 따라 최초 준비에 최대 3분이 걸릴 수 있으며 네트워크가 필요합니다. 실행은 최대 30초이며 중지 후 다시 실행할 수 있습니다.</p><div id="plot-output" class="plot-output" aria-live="polite"></div><pre id="output" role="status" aria-live="polite">실행할 예제를 선택하세요.</pre></section>'''
+def editor_markup(u,show_select=False):
+ select_markup='<label>예제 선택<select id="example-select" aria-label="예제 선택"></select></label>' if show_select else ''
+ return f'''<section class="lab" id="lab"><div class="section-head"><div><p class="eyebrow">CODE WORKSPACE</p><h2>코드를 바꾸는 실습실</h2></div><span class="pill" id="run-mode">실행 환경</span></div>{select_markup}<p class="note run-mode-guide"><b>Python 실행</b>: 브라우저에서 바로 실행합니다. <b>문법 확인</b>: GUI 창·카메라·대용량 패키지를 사용하는 PC 실습 예제입니다. 웹에서는 문법만 검사하고, 실제 동작은 내려받아 PC에서 확인하세요.</p><p id="example-note" class="note"></p>{mascot.runtime_guide(u)}<div class="editor-layout"><aside class="file-panel"><p class="eyebrow">PROJECT FILES</p><div id="file-tree"></div><button id="add-file">+ 파일 추가</button><button id="delete-file">현재 파일 삭제</button></aside><div class="editor-main"><div class="editor-bar"><strong id="file-name">main.py</strong><div><button id="copy-code">복사</button><button id="download-file">파일 저장</button></div></div><label class="sr-only" for="code-editor">Python 소스 편집기</label><textarea id="code-editor" spellcheck="false" autocapitalize="off"></textarea></div></div><div class="input-grid"><label>실행 파일<select id="entry-file"></select></label><label>input()에 전달할 값 · 한 줄에 하나<textarea id="stdin" rows="2" placeholder="6"></textarea></label><label>실행 인자 · JSON 문자열 배열<input id="argv" value='[]' placeholder='["param1", "param2"]'></label></div><div class="actions"><button class="primary" id="run">Python 실행</button><button id="check-example">검사</button><button id="stop" disabled>중지</button><button id="reset-code">예제 원본 복원</button><button id="download-project">프로젝트 ZIP</button></div><p class="small" id="runtime-info">실행 엔진은 처음 실행할 때 내려받습니다. 패키지 크기에 따라 최초 준비에 최대 3분이 걸릴 수 있으며 네트워크가 필요합니다. 실행은 최대 30초이며 중지 후 다시 실행할 수 있습니다.</p><div id="plot-output" class="plot-output" aria-live="polite"></div><pre id="output" role="status" aria-live="polite">실행할 예제를 선택하세요.</pre></section>'''
 
 def practice(u,topic=''):
  count=sum(q['unit']==u and (not topic or q['topic']==topic) for q in questions)
@@ -80,7 +83,8 @@ gallery_items=[('tk','tkinter','Tcl/Tk 8.6','기본 위젯 · 간단한 도구',
 def gallery(u,open_on_page=True):
  s='<section id="gallery" class="section"><p class="eyebrow">SAME TASK, DIFFERENT TOOLKITS</p><h2>실제 실행 화면으로 비교하세요.</h2><p>모두 이름 입력·인사·초기화 기능을 갖춘 앱입니다. Linux 가상 디스플레이에서 제공 소스를 실행해 캡처했습니다. OS·테마에 따라 외형은 달라집니다. Kivy 예제는 기본 글꼴에서도 보이도록 영어 문구를 사용합니다.</p><div class="gallery-grid">'
  for id,title,version,desc,example in gallery_items:
-  open_btn=f'<button data-example="{example}">코드 열기 ↗</button>' if open_on_page else f'<a class="button" href="libraries.html">코드 열기 ↗</a>'
+  # 편집기가 예제 전용 페이지로 옮겨졌으므로(#101) 갤러리도 그 페이지로 바로 연결한다.
+  open_btn=f'<a class="button" data-example="{example}" href="{textbook.example_file(example)}">코드 열기 ↗</a>'
   s+=f'<article class="gallery-card"><a href="../../assets/screenshots/{id}.png" target="_blank" rel="noopener"><img src="../../assets/screenshots/{id}.png" loading="lazy" alt="{title} 인사 앱 실제 실행 화면 · 이름 입력창과 인사 및 초기화 버튼"></a><div><h3>{title}</h3><p>교과서 {textbook.BOOK[u][1]}쪽 · 2개 중단원</p><p>{desc}</p><small>{version}</small>{open_btn}</div></article>'
  s+='</div><h3>같은 기능의 코드 나란히 보기</h3><label>비교할 앱<select id="compare-select">'+''.join(f'<option value="{i}">{title}</option>' for i,(_,_,title) in enumerate(pairs))+'</select></label><div class="actions" role="group" aria-label="코드 보기 방식"><button data-view="both" aria-pressed="true">나란히</button><button data-view="tk" aria-pressed="false">tkinter</button><button data-view="qt" aria-pressed="false">PySide6</button></div><div id="compare" class="compare-grid"><div data-side="tk"><h4>tkinter</h4><pre id="compare-tk"></pre></div><div data-side="qt"><h4>PySide6</h4><pre id="compare-qt"></pre></div></div><p>위젯 도감·레이아웃·메모장·생활 도우미까지 같은 개념을 대응하여 볼 수 있습니다. 실제 수정과 파일 다운로드는 실습실에서 진행하세요.</p></section>'
  return s
@@ -97,8 +101,15 @@ def lesson_section(u,l,i,total,prefix,standalone=False):
  s+=mascot.lesson_tip(u,l['id'],prefix)
  if l['tasks']: s+='<div class="task-box"><h3>직접 해 보세요</h3><ol>'+''.join(f'<li>{esc(t)}</li>' for t in l['tasks'])+'</ol></div>'
  if l['examples']:
-  guides=slots.render_examples(l['examples'],examples,prefix) if standalone else ''
-  s+=f'<div class="lesson-workspace" data-workspace="{l["id"]}"><h3>이 설명에 이어서 실습하기</h3><p class="small">예제를 선택하면 바로 아래에서 코드를 수정하고 실행할 수 있습니다. 작성한 코드는 예제별로 저장됩니다.</p>{guides}<div class="example-links">'+''.join(f'<button data-example="{e}" aria-controls="lab"><span>{"▶ 웹 실행" if examples[e]["mode"]=="web" else "↗ PC 실습"}</span>{esc(examples[e]["title"])}</button>' for e in l['examples'])+f'</div><div class="editor-mount">{editor_markup(u)}</div></div>'
+  # 예제마다 독립 페이지(ex-*.html)가 있다. 여기서는 설명 카드만 두고, 편집기는 그 페이지로 옮겼다(#101).
+  def example_card(e):
+   ex=examples[e]
+   badge='▶ 웹 실행' if ex['mode']=='web' else '↗ PC 실습'
+   note=(ex.get('note') or '')[:60]
+   note_html=f'<p>{esc(note)}</p>' if note else ''
+   return f'<a class="example-card" data-example="{e}" href="{textbook.example_file(e)}"><span class="example-card-badge">{badge}</span><h4>{esc(ex["title"])}</h4>{note_html}</a>'
+  cards=''.join(example_card(e) for e in l['examples'])
+  s+=f'<div class="lesson-workspace" id="{l["id"]}-lab" data-workspace="{l["id"]}"><h3>이 설명으로 해 보는 실습</h3><p class="small">예제마다 페이지가 따로 있습니다. 카드를 누르면 설명과 코드가 함께 열립니다.</p><div class="example-links">{cards}</div></div>'
  s+=f'<label class="completion"><input type="checkbox" data-complete="u{u}-{l["id"]}"> 이 주제를 실습하고 설명할 수 있습니다.</label></section>'
  return s
 
@@ -131,18 +142,38 @@ for u,lessons in units.items():
   next_l=lessons[i+1] if i+1<len(lessons) else None
   extras=topic_extras(u,l)
   shown=slots.flags(l,*[examples[e] for e in l['examples'] if e in examples])
-  rail_extra=('<a href="#pre-api">코드 전 설명</a>' if shown['pre'] and slots.has_pre(l) else '')+('<a href="#example-guides">예제 안내</a>' if any(slots.has_slots(examples[e]) for e in l['examples'] if e in examples) else '')+('<a href="#content-tips">역사·영상 팁</a>' if shown['tips'] and slots.has_tips(l) else '')+('<a href="#screenshots">실행 화면</a>' if shown['shots'] and slots.has_shots(l) else '')+('<a href="#gallery">GUI 비교 갤러리</a>' if 'id="gallery"' in extras else '')+('<a href="#simulator">웹 동작 체험</a>' if 'id="simulator"' in extras else '')
-  topic_rail=textbook.toc(u,lessons)+ (f'<a href="#lab">코드 실습실</a>' if l['examples'] else '')+rail_extra+'<a href="#practice">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
+  rail_extra=('<a href="#pre-api">코드 전 설명</a>' if shown['pre'] and slots.has_pre(l) else '')+('<a href="#content-tips">역사·영상 팁</a>' if shown['tips'] and slots.has_tips(l) else '')+('<a href="#screenshots">실행 화면</a>' if shown['shots'] and slots.has_shots(l) else '')+('<a href="#gallery">GUI 비교 갤러리</a>' if 'id="gallery"' in extras else '')+('<a href="#simulator">웹 동작 체험</a>' if 'id="simulator"' in extras else '')
+  topic_rail=textbook.toc(u,lessons)+ (f'<a href="#{l["id"]}-lab">실습 카드</a>' if l['examples'] else '')+rail_extra+'<a href="#practice">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
   nav_links='<div class="actions topic-nav">'
   nav_links+=f'<a class="button" href="{textbook.topic_file(prev_l["id"])}">← {esc(prev_l["title"])}</a>' if prev_l else '<a class="button" href="index.html">← 단원 안내</a>'
   nav_links+=f'<a class="button primary" href="{textbook.topic_file(next_l["id"])}">다음: {esc(next_l["title"])} →</a>' if next_l else (f'<a class="button primary" href="../unit0{u+1}/index.html">다음 단원: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')
   nav_links+='</div>'
   topic_body=f'<section class="unit-hero pai-unit-hero topic-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 주제 {i+1:02} / {len(lessons):02}</p><h1>{esc(l["title"])}</h1><p>{esc(l["lead"])}</p><div class="tags"><span>교과서 {esc(textbook.page_label(l["pages"]))}</span><span>{"예제 "+str(len(l["examples"]))+"개" if l["examples"] else "개념 학습"}</span></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{topic_rail}</aside><main id="main">'
   qcount=sum(q['unit']==u and q['topic']==l['id'] for q in questions)
-  jump='<nav class="lesson-jump" aria-label="이 주제 바로가기"><a href="#'+l['id']+'"><b>1</b> 설명</a>'+('<a href="#lab"><b>2</b> 실습</a>' if l['examples'] else '')+f'<a href="#practice"><b>{3 if l["examples"] else 2}</b> 문제 {qcount}개</a></nav>'
+  jump='<nav class="lesson-jump" aria-label="이 주제 바로가기"><a href="#'+l['id']+'"><b>1</b> 설명</a>'+(f'<a href="#{l["id"]}-lab"><b>2</b> 실습</a>' if l['examples'] else '')+f'<a href="#practice"><b>{3 if l["examples"] else 2}</b> 문제 {qcount}개</a></nav>'
   # 설명 → 실습 → 그 주제 문제 순으로 붙이고, 갤러리·체험 같은 보조 자료는 뒤로 보낸다(#91)
   topic_body+=jump+lesson_section(u,l,i,len(lessons),prefix,True)+practice(u,l['id'])+extras+nav_links+'</main></div>'
   (WEB/f'units/unit0{u}/{textbook.topic_file(l["id"])}').write_text(layout(f'{l["title"]} · {title}',topic_body,prefix,u,topic=l['id'],lessons=lesson_ids))
+  # 예제마다 독립 실습 페이지: 설명 바로 아래에 그 예제의 코드가 이미 채워진 편집기가 온다(#101).
+  n_examples=len(l['examples'])
+  for ei,eid in enumerate(l['examples']):
+   ex=examples[eid]
+   ex_rail_items=''.join(
+    f'<li><a href="{textbook.example_file(e2)}"{" aria-current=\"page\"" if e2==eid else ""}>{esc(examples[e2]["title"])}</a></li>'
+    for e2 in l['examples'])
+   ex_rail=textbook.toc(u,lessons)+f'<div class="rail-examples"><p class="eyebrow">이 소단원 실습</p><ul>{ex_rail_items}</ul></div>'+f'<a href="{textbook.topic_file(l["id"])}">소단원 설명으로</a><a href="index.html#practice">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
+   ex_tags=f'<span>{"웹에서 실행" if ex["mode"]=="web" else "PC에서 실행"}</span><span>교과서 {esc(textbook.page_label(l["pages"]))}</span>'
+   ex_hero=f'<section class="unit-hero pai-unit-hero topic-hero"><p class="eyebrow"><a href="{textbook.topic_file(l["id"])}">{esc(l["title"])}</a> · 실습 {ei+1} / {n_examples}</p><h1>{esc(ex["title"])}</h1><div class="tags">{ex_tags}</div></section>'
+   ex_desc=f'<p class="lesson-lead">{esc(l["lead"])}</p>'+slots.render(ex,prefix,ids={'pre':'pre-api','tips':'content-tips','shots':'screenshots'})
+   prev_e=l['examples'][ei-1] if ei else None
+   next_e=l['examples'][ei+1] if ei+1<n_examples else None
+   ex_nav='<div class="actions topic-nav">'
+   ex_nav+=f'<a class="button" href="{textbook.example_file(prev_e)}">← 이전 실습: {esc(examples[prev_e]["title"])}</a>' if prev_e else f'<a class="button" href="{textbook.topic_file(l["id"])}">← 소단원으로</a>'
+   ex_nav+=f'<a class="button" href="{textbook.topic_file(l["id"])}">소단원 설명으로</a>'
+   ex_nav+=f'<a class="button primary" href="{textbook.example_file(next_e)}">다음 실습: {esc(examples[next_e]["title"])} →</a>' if next_e else f'<a class="button primary" href="{textbook.topic_file(l["id"])}#practice">이 소단원 문제 풀기 →</a>'
+   ex_nav+='</div>'
+   ex_body=ex_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{ex_rail}</aside><main id="main">'+ex_desc+editor_markup(u)+ex_nav+'</main></div>'
+   (WEB/f'units/unit0{u}/{textbook.example_file(eid)}').write_text(layout(f'{ex["title"]} · {l["title"]} · {title}',ex_body,prefix,u,topic=l['id'],lessons=lesson_ids,example=eid))
  with zipfile.ZipFile(WEB/f'downloads/unit{u}-examples.zip','w',zipfile.ZIP_DEFLATED) as z:
   for id in ids:
    e=examples[id]
@@ -185,7 +216,7 @@ for u, lessons in units.items():
 dump(WEB/'data/catalog.json',{
  'pages':[{'id':f'units/unit0{u}/index.html','label':f'{textbook.ROMAN[u]} {design.META[u][0]}','unit':u} for u in units],
  'topics':{f'units/unit0{u}/index.html':[{'id':l['id'],'title':l['title'],'examples':list(l['examples']),'href':f'units/unit0{u}/{l["id"]}.html'} for l in lessons] for u,lessons in units.items()},
- 'examples':{k:{'id':k,'title':v['title'],'unit':example_unit.get(k),'mode':v.get('mode','')} for k,v in examples.items()},
+ 'examples':{k:{'id':k,'title':v['title'],'unit':example_unit.get(k),'mode':v.get('mode',''),'href':(f'units/unit0{example_unit[k]}/{textbook.example_file(k)}' if k in example_unit else '')} for k,v in examples.items()},
  'questions':[{
   'id':q['id'],'unit':q['unit'],'topic':q['topic'],'kind':q['kind'],'prompt':q['prompt'],
   **({'options':q['options']} if q.get('options') else {}),
