@@ -345,4 +345,5 @@ def apply():
     _set_examples('cv-features', ['cv-feature-kinds', 'cv-features'])
     _set_examples('cv-haar', ['cv-haar-vs-id', 'cv-haar', 'cv-camera'])
     _set_examples('cv-yolo', ['cv-count', 'cv-yolo', 'cv-yolo-count'])
-    _set_examples('cv-project', ['cv-scan-card', 'cv-perspective'])
+    # 원근 변환 예제는 'cv-transform' 소단원에서 실습한다(중복 배치 제거).
+    _set_examples('cv-project', ['cv-scan-card'])

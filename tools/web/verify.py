@@ -442,7 +442,7 @@ assert len(unit3['ml-process']['examples'])>=2
 assert len(unit3['ml-terms']['examples'])>=3
 assert len(unit3['ml-methods']['examples'])>=3
 assert len(unit3['ml-classification']['examples'])>=3
-assert len(unit3['ml-project']['examples'])>=2
+assert len(unit3['ml-project']['examples'])>=1  # 교차검증 예제는 ml-selection 소단원에만 배치
 assert 'ml-rule-vs-learn' in unit3['ml-overview']['examples'] and 'ml-nesting' in unit3['ml-overview']['examples']
 assert 'ml-when-not' in unit3['ml-use']['examples'] and 'ml-loan-data' in unit3['ml-use']['examples']
 assert 'ml-success-mae' in unit3['ml-process']['examples']
@@ -521,7 +521,7 @@ assert len(unit4['cv-filters']['examples'])>=2
 assert len(unit4['cv-features']['examples'])>=2
 assert len(unit4['cv-haar']['examples'])>=3
 assert len(unit4['cv-yolo']['examples'])>=3
-assert len(unit4['cv-project']['examples'])>=2
+assert len(unit4['cv-project']['examples'])>=1  # 원근 변환 예제는 cv-transform 소단원에만 배치
 assert 'cv-process-vs-vision' in unit4['cv-overview']['examples'] and 'cv-use-fields' in unit4['cv-overview']['examples']
 assert 'cv-shape-size' in unit4['cv-pixels']['examples'] and 'cv-bgr-rgb' in unit4['cv-pixels']['examples']
 assert 'cv-pipeline-steps' in unit4['cv-pipeline']['examples'] and 'cv-plate-stages' in unit4['cv-pipeline']['examples']

@@ -415,4 +415,5 @@ def apply():
     _set_examples('ml-cluster', ['ml-kmeans-small', 'ml-cluster'])
     _set_examples('ml-metrics', ['ml-confusion-small', 'ml-metrics'])
     _set_examples('ml-selection', ['ml-cv-small', 'ml-selection', 'ml-learning-curve'])
-    _set_examples('ml-project', ['ml-report-card', 'ml-selection'])
+    # 교차 검증·튜닝 예제는 'ml-selection' 소단원에서 실습한다(중복 배치 제거).
+    _set_examples('ml-project', ['ml-report-card'])

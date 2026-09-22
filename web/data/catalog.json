@@ -408,8 +408,7 @@
         "id": "ml-project",
         "title": "모델 구현·평가 프로젝트와 단원 정리",
         "examples": [
-          "ml-report-card",
-          "ml-selection"
+          "ml-report-card"
         ],
         "href": "units/unit03/ml-project.html"
       }
@@ -514,8 +513,7 @@
         "id": "cv-project",
         "title": "컴퓨터 비전 프로젝트와 단원 정리",
         "examples": [
-          "cv-scan-card",
-          "cv-perspective"
+          "cv-scan-card"
         ],
         "href": "units/unit04/cv-project.html"
       }
