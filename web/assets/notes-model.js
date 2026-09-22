@@ -26,6 +26,13 @@ export function clipNoteText(text) {
  return String(text).replace(/\r\n?/g, '\n').slice(0, NOTE_TEXT_MAX);
 }
 
+// 앵커 요소 높이에 대한 비율(0~10). 화면 폭이 바뀌어도 같은 콘텐츠 옆에 붙는다.
+export function clampOffset(offset) {
+ const n = Number(offset);
+ if (!Number.isFinite(n)) return 0;
+ return Math.min(10, Math.max(0, Math.round(n * 10000) / 10000));
+}
+
 export function clampY(y) {
  const n = Number(y);
  if (!Number.isFinite(n)) return 0;
@@ -67,7 +74,7 @@ export function classIdOf(profile) {
  return p.grade != null && p.classroom != null ? `${p.grade}-${p.classroom}` : '';
 }
 
-export function noteFields({profile, page, y, color, visibility, text} = {}) {
+export function noteFields({profile, page, y, anchor, offset, color, visibility, text} = {}) {
  const person = profile && typeof profile === 'object' ? profile : {};
  return {
   uid: person.uid || '',
@@ -77,6 +84,8 @@ export function noteFields({profile, page, y, color, visibility, text} = {}) {
   classId: classIdOf(person),
   page: String(page || '').slice(0, 200),
   y: clampY(y),
+  anchor: typeof anchor === 'string' ? anchor.slice(0, 80) : '',
+  offset: clampOffset(offset),
   color: isNoteColor(color) ? String(color).toLowerCase() : NOTE_COLORS[0],
   visibility: isVisibility(visibility) ? visibility : 'private',
   text: clipNoteText(text)
@@ -93,6 +102,8 @@ export function normalizeNote(id, raw) {
   classId: typeof data.classId === 'string' ? data.classId : '',
   page: typeof data.page === 'string' ? data.page : '',
   y: clampY(data.y),
+  anchor: typeof data.anchor === 'string' ? data.anchor.slice(0, 80) : '',
+  offset: clampOffset(data.offset),
   color: isNoteColor(data.color) ? String(data.color).toLowerCase() : NOTE_COLORS[0],
   visibility: isVisibility(data.visibility) ? data.visibility : 'private',
   text: clipNoteText(data.text)

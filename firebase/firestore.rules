@@ -271,7 +271,7 @@ service cloud.firestore {
 
     // 포스트잇 메모(#99). 작성자만 쓰고, 공개 범위(private/students/all)에 따라 읽습니다. 교사는 전부 읽고 지울 수 있습니다.
     function notePayloadOk() {
-      return request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'name', 'classId', 'page', 'y', 'color', 'visibility', 'text', 'createdAt', 'updatedAt'])
+      return request.resource.data.keys().hasOnly(['uid', 'email', 'studentId', 'name', 'classId', 'page', 'y', 'anchor', 'offset', 'color', 'visibility', 'text', 'createdAt', 'updatedAt'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.email == email()
         && request.resource.data.name is string
@@ -284,6 +284,11 @@ service cloud.firestore {
         && request.resource.data.y is number
         && request.resource.data.y >= 0
         && request.resource.data.y <= 200000
+        && request.resource.data.anchor is string
+        && request.resource.data.anchor.size() <= 80
+        && request.resource.data.offset is number
+        && request.resource.data.offset >= 0
+        && request.resource.data.offset <= 10
         && request.resource.data.color is string
         && request.resource.data.color.matches('^#[0-9a-f]{6}$')
         && request.resource.data.visibility in ['private', 'students', 'all']

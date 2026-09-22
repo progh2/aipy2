@@ -18,6 +18,55 @@ const node = (tag, cls, text) => {
 const zoom = () => parseFloat(document.body.style.zoom) || 1;
 const page = pageFromPath(location.pathname);
 
+// 문서 좌표(레이아웃 px). body zoom이 걸려 있어도 일관되게 쓴다.
+function layoutRect(el) {
+ const r = el.getBoundingClientRect();
+ const z = zoom();
+ return {top: (r.top + window.scrollY) / z, height: r.height / z};
+}
+// 메모를 붙일 앵커: 본문 안 id가 있는 큰 요소 중 y 바로 위에서 시작하는 것
+function anchorFor(y) {
+ let best = null, bestTop = -1;
+ for (const el of document.querySelectorAll('main [id]')) {
+  if (!el.id || /^(toast|account|notes-layer)$/.test(el.id)) continue;
+  const {top, height} = layoutRect(el);
+  if (height < 40) continue;
+  if (top <= y && top > bestTop) { best = el; bestTop = top; }
+ }
+ return best;
+}
+function placeFromY(note, y) {
+ note.y = Math.max(0, y);
+ const el = anchorFor(note.y);
+ if (el) {
+  const {top, height} = layoutRect(el);
+  note.anchor = el.id;
+  note.offset = height > 0 ? Math.max(0, (note.y - top) / height) : 0;
+ } else {
+  note.anchor = '';
+  note.offset = 0;
+ }
+}
+function topFor(note) {
+ if (note.anchor) {
+  const el = document.getElementById(note.anchor);
+  if (el) {
+   const {top, height} = layoutRect(el);
+   return top + Math.min(10, note.offset || 0) * height;
+  }
+ }
+ return note.y;
+}
+function reposition() {
+ if (!layer) return;
+ for (const card of layer.querySelectorAll('.note-card')) {
+  if (card.classList.contains('dragging')) continue;
+  const note = allNotes().find((n) => n.id === card.dataset.id);
+  if (note) card.style.top = `${topFor(note)}px`;
+ }
+ sizeLayer();
+}
+
 let user = null, profile = null, teacher = false, classId = '';
 let db = null, fs = null;
 let unsubs = [];
@@ -49,7 +98,9 @@ function ensureLayer() {
  addBtn.hidden = true;
  addBtn.addEventListener('click', createNote);
  document.body.append(addBtn);
- window.addEventListener('resize', sizeLayer);
+ window.addEventListener('resize', reposition);
+ // 본문 높이가 바뀌면(문항 렌더·이미지 로드·글자 크기) 앵커 기준으로 다시 놓는다.
+ if (window.ResizeObserver) new ResizeObserver(() => reposition()).observe(document.body);
  return layer;
 }
 
@@ -60,8 +111,9 @@ function sizeLayer() {
 
 async function createNote() {
  if (!user || !profile) { toast('학교 계정으로 로그인하면 메모를 붙일 수 있어요.'); return; }
- const y = (window.scrollY + window.innerHeight * 0.35) / zoom();
- const fields = noteFields({profile: {...profile, uid: user.uid}, page, y, color: randomColor(), visibility: 'private', text: ''});
+ const draft = {};
+ placeFromY(draft, (window.scrollY + window.innerHeight * 0.35) / zoom());
+ const fields = noteFields({profile: {...profile, uid: user.uid}, page, y: draft.y, anchor: draft.anchor, offset: draft.offset, color: randomColor(), visibility: 'private', text: ''});
  try {
   const ref = await fs.addDoc(fs.collection(db, 'notes'), {...fields, createdAt: fs.serverTimestamp(), updatedAt: fs.serverTimestamp()});
   // 구독 반영 전에 바로 편집할 수 있게 낙관적으로 그린다.
@@ -82,7 +134,7 @@ function scheduleSave(note, patch) {
 async function saveNote(note) {
  if (!user || !profile) return;
  try {
-  const fields = noteFields({profile: {...profile, uid: user.uid}, page: note.page || page, y: note.y, color: note.color, visibility: note.visibility, text: note.text});
+  const fields = noteFields({profile: {...profile, uid: user.uid}, page: note.page || page, y: note.y, anchor: note.anchor, offset: note.offset, color: note.color, visibility: note.visibility, text: note.text});
   await fs.setDoc(fs.doc(db, 'notes', note.id), {...fields, updatedAt: fs.serverTimestamp()}, {merge: true});
  } catch (error) {
   console.warn('[notes]', error);
@@ -117,18 +169,18 @@ function colorPicker(note, onPick) {
 }
 
 function bindDrag(handle, card, note) {
- let startY = 0, startTop = 0, dragging = false;
+ let startY = 0, startTop = 0, currentTop = 0, dragging = false;
  handle.addEventListener('pointerdown', (e) => {
   if (e.button !== 0) return;
-  dragging = true; startY = e.clientY; startTop = note.y;
+  dragging = true; startY = e.clientY; startTop = topFor(note); currentTop = startTop;
   handle.setPointerCapture(e.pointerId); card.classList.add('dragging'); e.preventDefault();
  });
  handle.addEventListener('pointermove', (e) => {
   if (!dragging) return;
-  note.y = Math.max(0, startTop + (e.clientY - startY) / zoom());
-  card.style.top = `${note.y}px`;
+  currentTop = Math.max(0, startTop + (e.clientY - startY) / zoom());
+  card.style.top = `${currentTop}px`;
  });
- const end = () => { if (!dragging) return; dragging = false; card.classList.remove('dragging'); scheduleSave(note, {}); };
+ const end = () => { if (!dragging) return; dragging = false; card.classList.remove('dragging'); placeFromY(note, currentTop); scheduleSave(note, {}); };
  handle.addEventListener('pointerup', end);
  handle.addEventListener('pointercancel', end);
 }
@@ -138,7 +190,7 @@ function noteCard(note) {
  const card = node('article', 'note-card');
  card.dataset.id = note.id;
  card.style.background = note.color;
- card.style.top = `${note.y}px`;
+ card.style.top = `${topFor(note)}px`;
  const head = node('div', 'note-head');
  const handle = node('span', 'note-handle', '⋮⋮');
  handle.title = '끌어서 위아래로 옮기기';

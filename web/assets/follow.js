@@ -6,8 +6,9 @@ import {classId} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, shouldNavigate, focusHref, focusKey, topicFromHash,
  visibleTopic, presenceFields, readPendingFocus, writePendingFocus, readFollowing,
- writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS
+ writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS, samePage, unitFromPage
 } from './follow-model.js';
+import {titlesFromCatalog} from './understanding-model.js';
 
 const prefix = document.body.dataset.prefix || '';
 const node = (tag, cls, text) => {
@@ -27,6 +28,62 @@ let lastFocusKey = '';
 let seenNonce = null;
 let ignoreScrollUntil = 0;
 let attentionTimer = 0;
+let lastNoticeKey = '';
+let noticeTimer = 0;
+let titles = {};
+fetch(`${prefix}data/catalog.json`).then((r) => r.json()).then((c) => { titles = titlesFromCatalog(c); }).catch(() => {});
+
+// 초점 위치를 사람이 읽을 이름으로
+function describeFocus(focus) {
+ const unit = unitFromPage(focus.page);
+ const anchor = focus.topicAnchor || '';
+ const q = /^u\d-q(\d+)$/.exec(anchor);
+ let label = '';
+ if (q) label = `문제 ${Number(q[1])}번`;
+ else if (anchor && titles[`u${unit}-${anchor}`]) label = titles[`u${unit}-${anchor}`];
+ else if (anchor && document.getElementById(anchor)) label = (document.getElementById(anchor).querySelector('h2, h3') || {}).textContent || anchor;
+ else if (focus.exampleId) label = `예제 ${focus.exampleId}`;
+ else label = unit ? `${unit}단원` : '학습 페이지';
+ const here = samePage(currentPage(), focus.page);
+ return here ? `이 페이지의 「${label.trim()}」` : `${unit ? unit + '단원 ' : ''}「${label.trim()}」`;
+}
+
+// 우하단 안내: 입력을 막지 않고, 새 안내가 오면 이전 안내를 교체한다.
+function ensureNotice() {
+ let box = document.getElementById('follow-notice');
+ if (box) return box;
+ box = node('div', 'follow-notice');
+ box.id = 'follow-notice';
+ box.hidden = true;
+ box.setAttribute('role', 'status');
+ box.setAttribute('aria-live', 'polite');
+ document.body.append(box);
+ return box;
+}
+
+function hideNotice() {
+ const box = document.getElementById('follow-notice');
+ if (box) { box.hidden = true; box.replaceChildren(); }
+ clearTimeout(noticeTimer);
+}
+
+function showNotice(focus) {
+ const box = ensureNotice();
+ box.replaceChildren();
+ const text = node('p', 'follow-notice-text', `선생님이 ${describeFocus(focus)}(으)로 이동했어요.`);
+ const actions = node('div', 'follow-notice-actions');
+ const go = node('button', 'primary', '이동하기');
+ go.type = 'button';
+ go.addEventListener('click', () => { hideNotice(); applyFocus(focus, true); });
+ const close = node('button', '', '닫기');
+ close.type = 'button';
+ close.addEventListener('click', hideNotice);
+ actions.append(go, close);
+ box.append(text, actions);
+ box.hidden = false;
+ clearTimeout(noticeTimer);
+ noticeTimer = setTimeout(hideNotice, 3 * 60 * 1000);
+}
 
 function currentPage() {
  return pageFromPath(location.pathname);
@@ -246,6 +303,8 @@ function startHeartbeat() {
 function dropSession() {
  liveSession = null;
  lastFocusKey = '';
+ lastNoticeKey = '';
+ hideNotice();
  seenNonce = null;
  stopHeartbeat();
  hideUi();
@@ -276,6 +335,9 @@ function onSessionSnap(snapshot) {
   if (seenNonce != null && nonce > seenNonce) showAttention();
   seenNonce = nonce;
   paintUi();
+  const key = focusKey(data.focus);
+  // 따라가는 중이든 아니든 새 초점은 우하단 안내로 알린다(따라가는 중이면 아래에서 자동 이동도 한다).
+  if (key && key !== lastNoticeKey) { lastNoticeKey = key; showNotice(data.focus); }
   applyFocus(data.focus, false);
  }
  if (!document.hidden) startHeartbeat();

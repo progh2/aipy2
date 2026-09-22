@@ -6,7 +6,8 @@ import {load, readTeacherFlag} from './auth.js';
 import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {
- isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload
+ isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload,
+ sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce
 } from './follow-model.js';
 
 const node = (tag, cls, text) => {
@@ -26,8 +27,9 @@ function currentPage() {
  return pageFromPath(location.pathname);
 }
 
+// 세션을 먼저 켜지 않아도 버튼이 보인다. 첫 전송 때 세션을 자동으로 시작한다.
 function canSend() {
- return Boolean(teacherEmail && classIdValue && isSessionLive(current));
+ return Boolean(teacherEmail && classIdValue);
 }
 
 function toast(text) {
@@ -60,7 +62,8 @@ function paintCue() {
  root.hidden = false;
  document.body.classList.add('teacher-focus-live');
  document.getElementById('teacher-focus-status').textContent =
-  `${labelClass(classIdValue)}에 초점을 보내요. 📍 버튼이나 주제·예제를 누르면 따라오는 학생이 옮겨요.`;
+  `${labelClass(classIdValue)}에 초점을 보내요. 📍 버튼을 누르면 학생 화면 우하단에 이동 안내가 떠요.` +
+  (isSessionLive(current) ? '' : ' (첫 전송 때 수업 세션이 자동으로 시작돼요)');
 }
 
 // 교사에게만 보이는 '초점 보내기' 버튼을 소단원 제목·실습 워크스페이스·문항 카드에 붙인다(#84).
@@ -135,7 +138,22 @@ async function sendFocus(focus) {
  if (!canSend() || !focus || !focus.page) return;
  try {
   const {db, store} = await load();
-  await store.updateDoc(store.doc(db, 'sessions', classIdValue), {
+  const ref = store.doc(db, 'sessions', classIdValue);
+  if (!isSessionLive(current)) {
+   // 세션이 없거나 만료됐으면 새로 시작하면서 초점을 담는다(teacher-session.js와 같은 문서 형식).
+   const fields = sessionFields({teacherEmail, ...focus, attentionNonce: existingAttentionNonce(current)});
+   await store.setDoc(ref, {
+    active: true,
+    teacherEmail: fields.teacherEmail,
+    startedAt: store.serverTimestamp(),
+    expiresAt: store.Timestamp.fromMillis(expiresAtMillis()),
+    focus: {...fields.focus, updatedAt: store.serverTimestamp()},
+    attention: {nonce: wholeNonce(fields.attention.nonce), at: store.serverTimestamp()}
+   });
+   toast('수업 세션을 시작하고 초점을 보냈습니다.');
+   return;
+  }
+  await store.updateDoc(ref, {
    ...focusWritePayload(focus),
    'focus.updatedAt': store.serverTimestamp()
   });

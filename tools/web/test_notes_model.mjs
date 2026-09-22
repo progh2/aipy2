@@ -1,7 +1,7 @@
 /* 포스트잇 메모 순수 함수 검사. node tools/web/test_notes_model.mjs */
 import {
  NOTE_COLORS, NOTE_VISIBILITY, NOTE_TEXT_MAX, randomColor, isNoteColor, isVisibility, clipNoteText,
- clampY, linkify, extractLinks, noteFields, normalizeNote, canSee, sortNotes, authorLabel, classIdOf
+ clampY, clampOffset, linkify, extractLinks, noteFields, normalizeNote, canSee, sortNotes, authorLabel, classIdOf
 } from '../../web/assets/notes-model.js';
 
 function eq(actual, expected, label) {
@@ -30,8 +30,11 @@ eq(extractLinks('a http://x.io/p) b https://y.kr'), ['http://x.io/p', 'https://y
 const profile = {uid: 'u1', email: 's1@e-mirim.hs.kr', studentId: '2314', name: '홍길동', grade: 2, classroom: 3};
 eq(classIdOf(profile), '2-3', 'class id');
 const fields = noteFields({profile, page: 'units/unit02/index.html', y: 340.4, color: 'bad', visibility: 'nope', text: 'hi'});
-eq(fields, {uid: 'u1', email: 's1@e-mirim.hs.kr', studentId: '2314', name: '홍길동', classId: '2-3', page: 'units/unit02/index.html', y: 340, color: NOTE_COLORS[0], visibility: 'private', text: 'hi'}, 'note fields defaults');
-eq(Object.keys(fields).sort(), ['classId', 'color', 'email', 'name', 'page', 'studentId', 'text', 'uid', 'visibility', 'y'], 'field keys match rules');
+eq(fields, {uid: 'u1', email: 's1@e-mirim.hs.kr', studentId: '2314', name: '홍길동', classId: '2-3', page: 'units/unit02/index.html', y: 340, anchor: '', offset: 0, color: NOTE_COLORS[0], visibility: 'private', text: 'hi'}, 'note fields defaults');
+eq(Object.keys(fields).sort(), ['anchor', 'classId', 'color', 'email', 'name', 'offset', 'page', 'studentId', 'text', 'uid', 'visibility', 'y'], 'field keys match rules');
+eq(noteFields({profile, page: 'p', y: 1, anchor: 'lesson-overview', offset: 0.33333333}).offset, 0.3333, 'offset rounded');
+eq(clampOffset(-1), 0, 'offset low'); eq(clampOffset(99), 10, 'offset high');
+eq(normalizeNote('n9', {anchor: 'x', offset: '0.5'}).offset, 0.5, 'normalize offset');
 
 const mine = normalizeNote('n1', {uid: 'u1', classId: '2-3', y: 50, visibility: 'private', color: '#b3e5fc', text: 't'});
 const cls = normalizeNote('n2', {uid: 'u2', classId: '2-3', y: 10, visibility: 'students', text: 't'});

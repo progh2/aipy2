@@ -320,3 +320,14 @@ h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
 /* 헤더 정리(#95): 다른 계정은 작은 글자 링크처럼, 동기화 정상 상태는 숨김 */
 .account-switch{background:none;border:0;padding:0 4px;font-size:12px;font-weight:500;text-decoration:underline;color:var(--muted)}
 .account-sync[hidden]{display:none}
+
+/* 학생 우하단 초점 이동 안내(비차단) */
+.follow-notice{position:fixed;right:14px;bottom:14px;z-index:80;max-width:340px;background:#10243d;color:#fff;border-radius:12px;padding:12px 14px;box-shadow:0 10px 26px rgba(16,24,49,.35);font-size:13px;line-height:1.5}
+.follow-notice[hidden]{display:none}
+.follow-notice-text{margin:0 0 8px;font-weight:600}
+.follow-notice-actions{display:flex;gap:8px}
+.follow-notice-actions button{padding:5px 12px;font-size:13px}
+.follow-notice-actions button:not(.primary){background:transparent;color:#fff;border-color:#ffffff66}
+.follow-notice-actions .primary{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+@media (max-width:720px){.follow-notice{left:14px;right:14px;max-width:none}}
+@media print{.follow-notice{display:none!important}}
