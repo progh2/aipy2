@@ -45,13 +45,16 @@ try {
  assert.equal(await box.isChecked(),true);assert.equal(await badge.isVisible(),true);
  await box.uncheck();assert.equal(await badge.isVisible(),false);
  const hard=page.locator('[data-understanding="hard"]');
+ // 의견란은 항상 보이고(#97), '어려워요'일 때만 막힌 곳을 묻는 문구로 바뀐다.
  await hard.click();assert.equal(await page.locator('.hard-comment').isVisible(),true);
+ assert.equal(await page.locator('.hard-comment-field').textContent(),'어디가 막혔나요?');
  await page.locator('[data-understanding="understood"]').click();
- assert.equal(await page.locator('.hard-comment').isVisible(),false);
+ assert.equal(await page.locator('.hard-comment').isVisible(),true);
+ assert.notEqual(await page.locator('.hard-comment-field').textContent(),'어디가 막혔나요?');
  assert.equal(await page.locator('[data-understanding="understood"]').getAttribute('aria-pressed'),'true');
  await page.reload();await page.waitForFunction(()=>!!window.aipyUnderstanding);
  assert.equal(await page.locator('[data-understanding="understood"]').getAttribute('aria-pressed'),'true');
- assert.equal(await page.locator('.hard-comment').isVisible(),false);
+ assert.notEqual(await page.locator('.hard-comment-field').textContent(),'어디가 막혔나요?');
  console.log('PASS completion position, badge, understanding switches and reload');
  const q=JSON.parse(await readFile(new URL('../../web/data/unit2.json',import.meta.url))).questions.find(q=>q.id==='u2-q009');
  const total=await page.locator('#questions .question').count();
