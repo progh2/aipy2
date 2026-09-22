@@ -23,6 +23,7 @@ let current = null;
 let sessionUnsub = null;
 let toastTimer = 0;
 let cueTimer = 0;
+let lastCueState = '';
 let lastTracked = '';
 let trackTimer = 0;
 
@@ -88,6 +89,7 @@ function paintCue() {
  let root = document.getElementById('teacher-focus-ui');
  if (!canSend()) {
   if (root) root.hidden = true;
+  lastCueState = '';
   document.body.classList.remove('teacher-focus-live');
   removeFocusButtons();
   return;
@@ -103,10 +105,15 @@ function paintCue() {
   if (header) header.after(root);
   else document.body.prepend(root);
  }
- root.hidden = false;
  document.body.classList.add('teacher-focus-live');
- clearTimeout(cueTimer);
- cueTimer = setTimeout(() => { root.hidden = true; }, 6000);
+ // 스크롤 추적으로 세션 문서가 2초마다 갱신되므로, 반·세션 상태가 실제로 바뀔 때만 띠를 다시 펼친다(깜빡임 방지).
+ const cueState = `${classIdValue}|${isSessionLive(current) ? 'live' : 'idle'}`;
+ if (cueState !== lastCueState) {
+  lastCueState = cueState;
+  root.hidden = false;
+  clearTimeout(cueTimer);
+  cueTimer = setTimeout(() => { root.hidden = true; }, 6000);
+ }
  document.getElementById('teacher-focus-status').textContent =
   `${labelClass(classIdValue)}에 초점을 보내요. 📍 버튼을 누르면 학생 화면 우하단에 이동 안내가 떠요.` +
   (isSessionLive(current) ? '' : ' (첫 전송 때 수업 세션이 자동으로 시작돼요)');
