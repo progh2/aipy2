@@ -709,10 +709,19 @@ assert 'board-export' in teacher_board
 assert 'student-detail' in teacher_board
 assert 'aipyBoardRender' in teacher_board
 assert 'renderFixture' in teacher_board
+assert "doc(db, 'students', " in teacher_board and "'state', 'current')" in teacher_board
+assert 'ensureStudentState' in teacher_board
+assert '학습 기록 미러가 아직 없습니다' in teacher_board
+assert 'answerRows' in teacher_board and 'journalRows' in teacher_board
 board_model=(WEB/'assets/board-model.js').read_text()
 assert 'CSV 내보내기' not in board_model
 assert '학번' in board_model
 assert '1분 이내' in board_model and '3분 이내' in board_model
+assert 'export function answerRows' in board_model
+assert 'export function journalRows' in board_model
+assert 'export function unitAnswerTotals' in board_model
+assert 'export function filterAnswerRows' in board_model
+assert "'서술'" in board_model and "SUBJECTIVE_KINDS" in board_model
 assert "collection(db, 'students'" not in board_model
 assert "collection(db, 'students'" not in teacher_board
 board=(WEB/'teacher/board.html').read_text()
@@ -909,6 +918,11 @@ assert '.reverify-badge' in account_css
 assert '.privacy-notice' in account_css
 assert '.account-privacy' in account_css
 assert '.ops-filters' in account_css
+assert '.answer-filter-bar' in account_css
+assert '.answer-row' in account_css
+assert '.answer-value' in account_css
+assert '.journal-list' in account_css
+assert '#student-detail-body{overflow-y:auto' in account_css
 sync_js=(WEB/'assets/sync.js').read_text()
 assert 'aipyUnderstanding' in sync_js
 app_js=(WEB/'assets/app.js').read_text()
