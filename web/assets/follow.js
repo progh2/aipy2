@@ -36,7 +36,7 @@ fetch(`${prefix}data/catalog.json`).then((r) => r.json()).then((c) => { titles =
 // 초점 위치를 사람이 읽을 이름으로
 function describeFocus(focus) {
  const unit = unitFromPage(focus.page);
- const anchor = focus.topicAnchor || '';
+ const anchor = parseAnchor(focus.topicAnchor).id;
  const q = /^u\d-q(\d+)$/.exec(anchor);
  let label = '';
  if (q) label = `문제 ${Number(q[1])}번`;
@@ -194,12 +194,28 @@ function flash(el) {
  setTimeout(() => el.classList.remove('focus-flash'), 2600);
 }
 
-function scrollToId(id) {
+// 'libraries@0.42' → {id, frac}. 비율이 있으면 요소 안 그 지점(선생님이 보던 높이)으로 간다.
+function parseAnchor(anchor) {
+ const m = /^([^@]+)(?:@([0-9.]+))?$/.exec(String(anchor || ''));
+ if (!m) return {id: '', frac: 0};
+ const frac = m[2] === undefined ? null : Math.min(0.99, Math.max(0, parseFloat(m[2]) || 0));
+ return {id: m[1], frac};
+}
+
+function scrollToId(anchor) {
+ const {id, frac} = parseAnchor(anchor);
  const el = document.getElementById(id);
  if (!el) return false;
  ignoreScrollUntil = Date.now() + 1400;
- el.scrollIntoView({behavior: prefersSmooth() ? 'smooth' : 'auto', block: 'start'});
- flash(el);
+ if (frac == null) {
+  el.scrollIntoView({behavior: prefersSmooth() ? 'smooth' : 'auto', block: 'start'});
+  flash(el);
+ } else {
+  const z = parseFloat(document.body.style.zoom) || 1;
+  const r = el.getBoundingClientRect();
+  const target = window.scrollY + r.top + frac * r.height - 110 * z;
+  window.scrollTo({top: Math.max(0, target), behavior: prefersSmooth() ? 'smooth' : 'auto'});
+ }
  return true;
 }
 
@@ -216,7 +232,7 @@ function applyFocus(focus, force) {
  if (shouldNavigate(currentPage(), focus)) {
   saveLocal();
   writePendingFocus(sessionStorage, focus);
-  location.href = focusHref(prefix, focus);
+  location.href = focusHref(prefix, {...focus, topicAnchor: parseAnchor(focus.topicAnchor).id});
   return;
  }
  whenLearningReady(() => {
@@ -337,7 +353,9 @@ function onSessionSnap(snapshot) {
   paintUi();
   const key = focusKey(data.focus);
   // 따라가는 중이든 아니든 새 초점은 우하단 안내로 알린다(따라가는 중이면 아래에서 자동 이동도 한다).
-  if (key && key !== lastNoticeKey) { lastNoticeKey = key; showNotice(data.focus); }
+  // 교사 스크롤 추적('id@비율')은 조용히 따라가고, 📍로 보낸 초점(비율 없음)만 안내를 띄운다.
+  const passive = parseAnchor(data.focus && data.focus.topicAnchor).frac != null;
+  if (key && key !== lastNoticeKey) { lastNoticeKey = key; if (!passive) showNotice(data.focus); }
   applyFocus(data.focus, false);
  }
  if (!document.hidden) startHeartbeat();

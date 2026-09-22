@@ -22,6 +22,50 @@ let classIdValue = '';
 let current = null;
 let sessionUnsub = null;
 let toastTimer = 0;
+let cueTimer = 0;
+let lastTracked = '';
+let trackTimer = 0;
+
+// ── 교사가 실제로 보고 있는 위치 추적: 화면 상단 근처의 본문 요소(id)와 그 안에서의 비율을 'id@0.42' 형식으로 기록.
+//    규칙의 focus.topicAnchor(문자열 80자 이내)를 그대로 쓰므로 규칙 변경이 없다. 학생의 '선생님 화면으로 이동'이 이 지점으로 간다.
+function viewAnchor() {
+ const z = parseFloat(document.body.style.zoom) || 1;
+ const viewTop = 110 / z; // 헤더 아래
+ let best = null, bestTop = -Infinity;
+ for (const el of document.querySelectorAll('main section.lesson[id], main .question[id], main section[id], main .lesson-workspace[id]')) {
+  const r = el.getBoundingClientRect();
+  const top = r.top / z, height = r.height / z;
+  if (height < 40 || !el.id) continue;
+  if (top <= viewTop && top > bestTop) { best = el; bestTop = top; }
+ }
+ if (!best) return '';
+ const r = best.getBoundingClientRect();
+ const height = r.height / z;
+ const frac = height > 0 ? Math.min(0.99, Math.max(0, (viewTop - bestTop) / height)) : 0;
+ return `${best.id}@${frac.toFixed(2)}`;
+}
+
+async function trackScroll() {
+ if (!canSend() || !isSessionLive(current)) return;
+ const anchor = viewAnchor();
+ if (!anchor || anchor === lastTracked) return;
+ lastTracked = anchor;
+ try {
+  const {db, store} = await load();
+  await store.updateDoc(store.doc(db, 'sessions', classIdValue), {
+   'focus.page': currentPage(),
+   'focus.topicAnchor': anchor,
+   'focus.updatedAt': store.serverTimestamp()
+  });
+ } catch (error) {
+  console.warn('[teacher-focus] track', error);
+ }
+}
+
+function scheduleTrack() {
+ if (trackTimer) return;
+ trackTimer = setTimeout(() => { trackTimer = 0; trackScroll(); }, 2000);
+}
 
 function currentPage() {
  return pageFromPath(location.pathname);
@@ -61,6 +105,8 @@ function paintCue() {
  }
  root.hidden = false;
  document.body.classList.add('teacher-focus-live');
+ clearTimeout(cueTimer);
+ cueTimer = setTimeout(() => { root.hidden = true; }, 6000);
  document.getElementById('teacher-focus-status').textContent =
   `${labelClass(classIdValue)}에 초점을 보내요. 📍 버튼을 누르면 학생 화면 우하단에 이동 안내가 떠요.` +
   (isSessionLive(current) ? '' : ' (첫 전송 때 수업 세션이 자동으로 시작돼요)');
@@ -157,6 +203,7 @@ async function sendFocus(focus) {
    ...focusWritePayload(focus),
    'focus.updatedAt': store.serverTimestamp()
   });
+  lastTracked = '';
   toast('초점을 보냈습니다.');
  } catch (error) {
   console.warn('[teacher-focus]', error);
@@ -250,6 +297,7 @@ function startTeacherFocus() {
  if (!Number(document.body.dataset.unit)) return;
  if (!ready) return;
  document.addEventListener('click', onClick);
+ window.addEventListener('scroll', scheduleTrack, {passive: true});
  const select = document.getElementById('example-select');
  if (select) select.addEventListener('change', onExampleSelect);
  document.addEventListener('aipy:account', (event) => onAccount(event.detail));
