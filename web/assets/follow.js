@@ -29,6 +29,7 @@ let seenNonce = null;
 let ignoreScrollUntil = 0;
 let attentionTimer = 0;
 let lastNoticeKey = '';
+let lastAppliedExample = '';
 let noticeTimer = 0;
 let titles = {};
 fetch(`${prefix}data/catalog.json`).then((r) => r.json()).then((c) => { titles = titlesFromCatalog(c); }).catch(() => {});
@@ -202,19 +203,22 @@ function parseAnchor(anchor) {
  return {id: m[1], frac};
 }
 
-function scrollToId(anchor) {
+function scrollToId(anchor, force) {
  const {id, frac} = parseAnchor(anchor);
  const el = document.getElementById(id);
  if (!el) return false;
- ignoreScrollUntil = Date.now() + 1400;
  if (frac == null) {
+  ignoreScrollUntil = Date.now() + 1400;
   el.scrollIntoView({behavior: prefersSmooth() ? 'smooth' : 'auto', block: 'start'});
   flash(el);
  } else {
   const z = parseFloat(document.body.style.zoom) || 1;
   const r = el.getBoundingClientRect();
-  const target = window.scrollY + r.top + frac * r.height - 110 * z;
-  window.scrollTo({top: Math.max(0, target), behavior: prefersSmooth() ? 'smooth' : 'auto'});
+  const target = Math.max(0, window.scrollY + r.top + frac * r.height - 110 * z);
+  // 자동 따라가기 중의 추적 갱신은 선생님 위치가 화면 높이의 40% 이상 멀어졌을 때만 옮긴다(잔 흔들림 방지).
+  if (!force && Math.abs(target - window.scrollY) < window.innerHeight * 0.4) return true;
+  ignoreScrollUntil = Date.now() + 1400;
+  window.scrollTo({top: target, behavior: prefersSmooth() ? 'smooth' : 'auto'});
  }
  return true;
 }
@@ -236,10 +240,12 @@ function applyFocus(focus, force) {
   return;
  }
  whenLearningReady(() => {
-  if (focus.topicAnchor) scrollToId(focus.topicAnchor);
-  if (focus.exampleId) {
+  if (focus.topicAnchor) scrollToId(focus.topicAnchor, force);
+  // 같은 예제를 다시 적용하면 편집기가 초기화되므로, 예제가 바뀌었을 때만 연다.
+  if (focus.exampleId && (force || focus.exampleId !== lastAppliedExample)) {
+   lastAppliedExample = focus.exampleId;
    applyExample(focus.exampleId);
-   if (!focus.topicAnchor) scrollToId('lab');
+   if (!focus.topicAnchor) scrollToId('lab', force);
   }
  });
 }

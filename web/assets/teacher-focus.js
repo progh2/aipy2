@@ -43,7 +43,7 @@ function viewAnchor() {
  const r = best.getBoundingClientRect();
  const height = r.height / z;
  const frac = height > 0 ? Math.min(0.99, Math.max(0, (viewTop - bestTop) / height)) : 0;
- return `${best.id}@${frac.toFixed(2)}`;
+ return `${best.id}@${frac.toFixed(1)}`;
 }
 
 async function trackScroll() {
@@ -53,9 +53,11 @@ async function trackScroll() {
  lastTracked = anchor;
  try {
   const {db, store} = await load();
+  // 추적 갱신은 예제 선택을 담지 않는다 — 남겨 두면 학생 편집기가 갱신마다 예제를 다시 열어 초기화된다.
   await store.updateDoc(store.doc(db, 'sessions', classIdValue), {
    'focus.page': currentPage(),
    'focus.topicAnchor': anchor,
+   'focus.exampleId': null,
    'focus.updatedAt': store.serverTimestamp()
   });
  } catch (error) {
@@ -65,7 +67,7 @@ async function trackScroll() {
 
 function scheduleTrack() {
  if (trackTimer) return;
- trackTimer = setTimeout(() => { trackTimer = 0; trackScroll(); }, 2000);
+ trackTimer = setTimeout(() => { trackTimer = 0; trackScroll(); }, 3000);
 }
 
 function currentPage() {
