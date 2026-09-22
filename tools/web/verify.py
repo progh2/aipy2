@@ -202,23 +202,23 @@ for rec in list(examples.values())+[lesson for group in units.values() for lesso
   assert video['url'].startswith('https://'),video
   assert 'youtube.com/' in video['url'] or 'youtu.be/' in video['url'],video
 hello=examples['hello-tk']
-assert hello['pre_api'] and hello['glossary'] and hello['tips']['history'] and hello['tips']['youtube'] and hello['screenshots']
+# hello-tk's youtube tip lives on the 'widgets' lesson only (#63 dedup); the
+# example itself keeps history/pre_api/screenshots but not its own video.
+assert hello['pre_api'] and hello['glossary'] and hello['tips']['history'] and not hello['tips']['youtube'] and hello['screenshots']
 assert examples['widgets-tk']['pre_api'] and examples['widgets-tk']['tips']['history']
 assert examples['widgets-tk']['screenshots']
 assert examples['hello-pyside']['pre_api'] and examples['hello-pyside']['screenshots']
-assert examples['hello-pyside']['tips']['history'] and examples['hello-pyside']['tips']['youtube']
-assert examples['hello-kivy']['tips']['history'] and examples['hello-kivy']['tips']['youtube']
+# hello-pyside/hello-kivy's videos live on the 'pyside'/'kivy' lessons only (#63 dedup).
+assert examples['hello-pyside']['tips']['history'] and not examples['hello-pyside']['tips']['youtube']
+assert examples['hello-kivy']['tips']['history'] and not examples['hello-kivy']['tips']['youtube']
 assert examples['hello-wx']['tips']['history'] and not examples['hello-wx']['tips']['youtube']
 libraries=(WEB/'units/unit02/libraries.html').read_text()
 assert 'id="example-guides"' in libraries
-assert 'id="pre-api-hello-tk"' in libraries
-assert 'tk.Button' in libraries and 'command=함수()' in libraries
+assert 'id="pre-api-hello-pyside"' in libraries
+assert 'id="pre-api-hello-tk"' not in libraries
 assert '코드 전에 알아 두기' in libraries
 assert '역사 한 줄' in libraries
-assert 'https://www.youtube.com/watch?v=YXPyB4XeYLA' in libraries
-assert 'https://www.youtube.com/watch?v=Z1N9JzNax2k' in libraries
-assert 'https://www.youtube.com/watch?v=l8Imtec4ReQ' in libraries
-assert 'assets/screenshots/tk.png' in libraries
+assert '사용자 인터페이스 · CLI, GUI, NUI' in libraries
 assert 'id="example-guides"' in widgets
 assert 'id="pre-api-widgets-tk"' in widgets
 assert 'BooleanVar' in widgets
@@ -234,7 +234,7 @@ assert content_slots.has_slots(hello) and content_slots.has_slots(examples['hell
 unit2={lesson['id']:lesson for lesson in units[2]}
 assert len(unit2['widgets']['examples'])>=5
 assert len(unit2['layout']['examples'])>=4
-assert len(unit2['events']['examples'])>=6
+assert len(unit2['events']['examples'])>=5
 assert len(unit2['memo']['examples'])>=6
 assert 'events-command-tk' in unit2['events']['examples']
 assert 'memo-window-tk' in unit2['memo']['examples']
@@ -277,14 +277,15 @@ for lesson in units[2]:
    continue
   assert f'id="pre-api-{eid}"' in page, (lesson['id'], eid)
 project_page=(WEB/'units/unit02/project.html').read_text()
-assert 'id="pre-api-core"' in project_page and 'roll(sides)' in project_page
+# core's pre_api now lives only on the 1단원 project page (#63 dedup).
+assert 'id="pre-api-core"' not in project_page
 assert 'id="pre-api-project-tk"' in project_page and 'messagebox.showwarning' in project_page
 assert 'id="pre-api-project-pyside"' in project_page and 'QComboBox' in project_page
 assert 'widgets-tk' in unit2['widgets']['examples'] and 'widgets-pyside' in unit2['widgets']['examples']
 assert 'memo-tk' in unit2['memo']['examples'] and 'memo-pyside' in unit2['memo']['examples']
 assert 'wx' in unit2 and unit2['wx']['extra']
 assert unit2['wx']['examples'] == [
-    'first-wx', 'hello-wx', 'widgets-label-entry-wx', 'widgets-choice-wx', 'widgets-wx',
+    'first-wx', 'widgets-label-entry-wx', 'widgets-choice-wx', 'widgets-wx',
     'layout-wx', 'events-wx', 'memo-window-wx', 'memo-wx', 'project-wx',
 ]
 assert 'widgets-wx' not in unit2['widgets']['examples']
@@ -302,7 +303,7 @@ assert examples['widgets-wx']['screenshots'][0]['src'] == 'widgets-wx.png'
 assert '브라우저(Pyodide)' in examples['first-wx']['note']
 assert 'kivy' in unit2 and unit2['kivy']['extra']
 assert unit2['kivy']['examples'] == [
-    'first-kivy', 'hello-kivy', 'widgets-label-entry-kivy', 'widgets-choice-kivy', 'widgets-kivy',
+    'first-kivy', 'widgets-label-entry-kivy', 'widgets-choice-kivy', 'widgets-kivy',
     'layout-kivy', 'events-kivy', 'memo-window-kivy', 'memo-kivy', 'project-kivy',
 ]
 assert 'widgets-kivy' not in unit2['widgets']['examples']
@@ -337,6 +338,9 @@ assert 'id="content-tips"' in ui_page
 assert '더 알아보는 팁' in ui_page
 assert 'https://www.youtube.com/watch?v=XIGSJshYb90' in ui_page
 assert 'Xerox Alto' in ui_page
+assert 'id="pre-api-hello-tk"' in ui_page
+assert 'tk.Button' in ui_page and 'command=함수()' in ui_page
+assert 'assets/screenshots/tk.png' in ui_page
 pyside_page=(WEB/'units/unit02/pyside.html').read_text()
 assert 'https://www.youtube.com/watch?v=Z1N9JzNax2k' in pyside_page
 assert 'id="content-tips"' in pyside_page
@@ -395,8 +399,11 @@ assert 'id="pre-api-reuse"' in overview_page
 assert 'id="pre-api-copy-twice"' in overview_page
 assert 'id="content-tips"' in overview_page
 assert '더 알아보는 팁' in overview_page
-assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' in overview_page
+# The modules video now lives on 'imports' only (#63 dedup).
+assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' not in overview_page
 assert 'Python 1.5' in overview_page
+imports_page=(WEB/'units/unit01/imports.html').read_text()
+assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' in imports_page
 math_page=(WEB/'units/unit01/math.html').read_text()
 assert 'id="pre-api-math-signed"' in math_page
 assert 'math-circle' in math_page and 'math-signed' in math_page
@@ -469,7 +476,8 @@ assert '실행하면 이렇게 보여요' not in overview3
 use3=(WEB/'units/unit03/ml-use.html').read_text()
 assert 'ml-when-not' in use3 and 'ml-loan-data' in use3
 assert 'id="pre-api-ml-loan-data"' in use3
-assert 'https://www.youtube.com/watch?v=z-EtmaFJieY' in use3
+# The Crash Course ML video now lives on 'ml-overview' only (#63 dedup).
+assert 'https://www.youtube.com/watch?v=z-EtmaFJieY' not in use3
 terms3=(WEB/'units/unit03/ml-terms.html').read_text()
 assert 'ml-leakage' in terms3 and 'id="pre-api-ml-leakage"' in terms3
 assert 'https://www.youtube.com/watch?v=Gv9_4yMHFhI' in terms3
@@ -547,10 +555,12 @@ assert '실행하면 이렇게 보여요' not in overview4
 pixels4=(WEB/'units/unit04/cv-pixels.html').read_text()
 assert 'cv-shape-size' in pixels4 and 'cv-bgr-rgb' in pixels4
 assert 'id="pre-api-cv-shape-size"' in pixels4
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in pixels4
+# The Crash Course CV video now lives on 'cv-overview' only (#63 dedup).
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pixels4
 pipeline4=(WEB/'units/unit04/cv-pipeline.html').read_text()
 assert 'cv-plate-stages' in pipeline4 and 'cv-eval-criteria' in pipeline4
 assert '역사 한 줄' in pipeline4
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pipeline4
 transform4=(WEB/'units/unit04/cv-transform.html').read_text()
 assert '역사 한 줄' in transform4
 assert 'https://www.youtube.com/' not in transform4
@@ -570,7 +580,8 @@ assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in libraries4
 assert 'assets/science/cv-sobel.png' in libraries4
 assert 'id="screenshots-cv-skimage"' in libraries4
 io4=(WEB/'units/unit04/cv-io.html').read_text()
-assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in io4
+# The OpenCV course video now lives on 'cv-libraries' only (#63 dedup).
+assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' not in io4
 assert 'assets/science/cv-io.png' in io4
 haar4=(WEB/'units/unit04/cv-haar.html').read_text()
 assert 'cv-haar-vs-id' in haar4 and 'id="pre-api-cv-haar-vs-id"' in haar4

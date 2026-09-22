@@ -84,12 +84,10 @@ def _fill_lessons():
     _fill_lesson(
         'overview',
         history='파이썬은 1991년 공개 때부터 .py 파일을 모듈로 불러왔습니다. 폴더를 패키지로 묶는 방식은 1997년 Python 1.5에서 공식화되었습니다.',
-        youtube=YT_MODULES,
     )
     _fill_lesson(
         'define',
         history='모듈은 특별한 파일 형식이 아닙니다. 처음부터 함수·클래스·실행문을 담은 .py가 곧 모듈이었고, 파일 이름이 모듈 이름이 되었습니다.',
-        youtube=YT_MODULES_CREATE,
     )
     _fill_lesson(
         'entrypoint',
@@ -148,7 +146,6 @@ def _fill_examples():
     _fill_example(
         'main-guard',
         history='__name__ 검사는 “이 파일이 프로그램의 입구인가, 부품인가”를 가릅니다. 스크립트와 모듈을 같은 파일에 두는 파이썬의 오랜 습관입니다.',
-        youtube=YT_NAMEMAIN,
     )
     _fill_example(
         'all',
@@ -174,8 +171,12 @@ def unit1_history_lessons():
 
 
 def unit1_youtube_lessons():
-    """Lessons that have a verified public video (math/project/review stay empty)."""
+    """Lessons that have a verified public video (math/project/review stay empty).
+
+    overview/define share the same modules video as imports (#63 dedup);
+    that URL stays on imports only.
+    """
     return [
-        'overview', 'define', 'entrypoint', 'imports', 'packages',
+        'entrypoint', 'imports', 'packages',
         'os-sys', 'random', 'datetime', 'thirdparty',
     ]

@@ -43,13 +43,7 @@
       ],
       "tips": {
         "history": "파이썬은 1991년 공개 때부터 .py 파일을 모듈로 불러왔습니다. 폴더를 패키지로 묶는 방식은 1997년 Python 1.5에서 공식화되었습니다.",
-        "youtube": [
-          {
-            "title": "Python Tutorial for Beginners 9: Import Modules and Exploring The Standard Library (Corey Schafer)",
-            "url": "https://www.youtube.com/watch?v=CqvZ3vGoGs0",
-            "note": "영어 공개 강의입니다. 모듈을 만들고 import하는 앞부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "textbook": [
@@ -105,13 +99,7 @@
       ],
       "tips": {
         "history": "모듈은 특별한 파일 형식이 아닙니다. 처음부터 함수·클래스·실행문을 담은 .py가 곧 모듈이었고, 파일 이름이 모듈 이름이 되었습니다.",
-        "youtube": [
-          {
-            "title": "Python Tutorial for Beginners 9: Import Modules and Exploring The Standard Library (Corey Schafer)",
-            "url": "https://www.youtube.com/watch?v=CqvZ3vGoGs0",
-            "note": "영어 공개 강의입니다. 자기 .py를 모듈로 저장하고 불러오는 구간이 이 주제와 맞습니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "textbook": [
@@ -921,13 +909,7 @@
       "glossary": [],
       "tips": {
         "history": "__name__ 검사는 “이 파일이 프로그램의 입구인가, 부품인가”를 가릅니다. 스크립트와 모듈을 같은 파일에 두는 파이썬의 오랜 습관입니다.",
-        "youtube": [
-          {
-            "title": "Python Tutorial: if __name__ == '__main__' (Corey Schafer)",
-            "url": "https://www.youtube.com/watch?v=sugvnHA7ElY",
-            "note": "영어 공개 강의(약 8분)입니다. 직접 실행과 임포트일 때 __name__이 달라지는 것만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },

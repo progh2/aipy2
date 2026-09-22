@@ -91,17 +91,14 @@ def _fill_lessons():
     _fill_lesson(
         'layout',
         history='Tk는 처음부터 pack·grid·place 세 배치 관리자를 두었습니다. 위젯을 만드는 일과 자리를 정하는 일을 나누어, 창 크기가 바뀌어도 다시 계산하게 했습니다.',
-        youtube=YT_TK_LAYOUT,
     )
     _fill_lesson(
         'events',
         history='GUI는 코드를 위에서 아래로 끝내지 않고, 클릭·키 입력이 올 때까지 루프에서 기다립니다. 이 사건 기반 방식은 Xerox PARC의 Smalltalk 이후 창 프로그램의 기본이 되었습니다.',
-        youtube=YT_TK_EVENTS,
     )
     _fill_lesson(
         'memo',
         history='간단한 텍스트 편집기는 GUI 교재의 단골 완성 과제입니다. 파이썬 기본 IDE인 IDLE도 tkinter로 만든 실제 프로그램입니다.',
-        youtube=YT_TK_MEMO,
     )
     _fill_lesson(
         'pyside',
@@ -139,7 +136,6 @@ def _fill_examples():
     _fill_example(
         'hello-pyside',
         history='Nokia가 2009년 PySide를 열었고, 지금은 Qt Company가 Qt for Python(PySide6)으로 공식 지원합니다. 위젯 이름은 PyQt와 같고 배포 조건이 다릅니다.',
-        youtube=YT_PYSIDE,
     )
     _fill_example(
         'hello-pyqt',
@@ -152,7 +148,6 @@ def _fill_examples():
     _fill_example(
         'hello-kivy',
         history='Kivy는 2011년 공개된 오픈 소스 UI 프레임워크입니다. 운영체제 버튼을 빌리지 않고 직접 그리므로, 기본 글꼴의 한글은 별도 지정해야 할 수 있습니다.',
-        youtube=YT_KIVY,
     )
     _fill_example(
         'events-callback',
@@ -186,5 +181,9 @@ def unit2_history_lessons():
 
 
 def unit2_youtube_lessons():
-    """Lessons that have a verified public video (wx/project/review stay empty)."""
-    return ['ui', 'widgets', 'layout', 'events', 'memo', 'pyside', 'kivy']
+    """Lessons that have a verified public video (wx/project/review stay empty).
+
+    layout/events/memo share the same Tk course video as widgets (#63 dedup);
+    that URL stays on widgets only.
+    """
+    return ['ui', 'widgets', 'pyside', 'kivy']

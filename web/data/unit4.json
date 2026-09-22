@@ -124,13 +124,7 @@
       ],
       "tips": {
         "history": "디지털 이미지는 1960년대부터 밝기 격자로 저장되었습니다. 한 칸의 0~255 값과 RGB 세 채널은 그 표현을 교실에서 다루는 기본 단위입니다.",
-        "youtube": [
-          {
-            "title": "Computer Vision: Crash Course Computer Science #35",
-            "url": "https://www.youtube.com/watch?v=-4E2-0sxVUM",
-            "note": "영어 공개 강의입니다. 이미지가 숫자 격자라는 앞부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "visual": [
@@ -212,13 +206,7 @@
       ],
       "tips": {
         "history": "1982년 마어(Marr)는 시각을 입력에서 표현을 단계적으로 만드는 계산 문제로 정리했습니다. 한 단계의 오류가 다음 해석을 흔드는 이유입니다.",
-        "youtube": [
-          {
-            "title": "Computer Vision: Crash Course Computer Science #35",
-            "url": "https://www.youtube.com/watch?v=-4E2-0sxVUM",
-            "note": "영어 공개 강의입니다. 작은 영역(커널)을 보며 특징을 쌓는 부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "visual": [
@@ -382,13 +370,7 @@
       ],
       "tips": {
         "history": "파일을 숫자 배열로 읽는 습관은 디지털 사진 형식(JPEG·PNG)과 함께 자리 잡았습니다. 읽기 실패를 None으로 확인하는 것은 OpenCV의 오랜 약속입니다.",
-        "youtube": [
-          {
-            "title": "OpenCV Course - Full Tutorial with Python (freeCodeCamp)",
-            "url": "https://www.youtube.com/watch?v=oXlwWbU8l2o",
-            "note": "영어 공개 강의입니다. 이미지 읽기·크기 변경 앞부분만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "visual": [
@@ -1261,13 +1243,7 @@
       ],
       "tips": {
         "history": "PIL은 1990년대 파이썬 이미지 편집의 기본 도구였고, Pillow가 그 인터페이스를 이어 받았습니다.",
-        "youtube": [
-          {
-            "title": "OpenCV Course - Full Tutorial with Python (freeCodeCamp)",
-            "url": "https://www.youtube.com/watch?v=oXlwWbU8l2o",
-            "note": "영어 공개 강의입니다. 이미지 읽기·크기 변경 앞부분만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },
@@ -1448,13 +1424,7 @@
       ],
       "tips": {
         "history": "같은 사진에 여러 필터를 나란히 두는 비교는 교재의 기본 습관입니다. 커널과 임계값을 바꾸고 표를 남깁니다.",
-        "youtube": [
-          {
-            "title": "How Blurs & Filters Work - Computerphile",
-            "url": "https://www.youtube.com/watch?v=C_zFhWdM4ic",
-            "note": "영어 공개 강의입니다. 평균 블러와 가우시안 커널만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [
         {
@@ -1593,13 +1563,7 @@
       ],
       "tips": {
         "history": "경계·꼭짓점·둘레를 한 장에 비교하는 방법은 특징 검출 장의 고전입니다. 그림의 점 개수는 설정에 따라 달라집니다.",
-        "youtube": [
-          {
-            "title": "Finding the Edges (Sobel Operator) - Computerphile",
-            "url": "https://www.youtube.com/watch?v=uihBwtPIBxM",
-            "note": "영어 공개 강의입니다. 밝기가 급변하는 곳을 경계로 보는 부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [
         {
@@ -1641,13 +1605,7 @@
       ],
       "tips": {
         "history": "얼굴이 있는 칸을 찾는 일과 신원을 맞히는 일은 연구도 제품도 오래 분리되어 있었습니다. 교실 예제는 앞쪽만 다룹니다.",
-        "youtube": [
-          {
-            "title": "Detecting Faces (Viola Jones Algorithm) - Computerphile",
-            "url": "https://www.youtube.com/watch?v=uEJ71VlUmMQ",
-            "note": "영어 공개 강의입니다. 밝기 패턴으로 얼굴 위치를 찾는 아이디어만 보면 됩니다. 누구인지 알아내는 이야기가 아닙니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },
@@ -1742,13 +1700,7 @@
       ],
       "tips": {
         "history": "프레임마다 다시 세는 습관은 실시간 검출 시연에서 왔습니다. 합계를 방문자 수로 읽으면 같은 사람을 여러 번 셉니다.",
-        "youtube": [
-          {
-            "title": "How computers learn to recognize objects instantly (Joseph Redmon, TED)",
-            "url": "https://www.youtube.com/watch?v=Cgxsv1riJhI",
-            "note": "영어 공개 강의(약 7분)입니다. 상자와 클래스 이름을 한 번에 찾는 아이디어만 보면 됩니다. 교과서의 YOLOv8과는 버전이 다릅니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },

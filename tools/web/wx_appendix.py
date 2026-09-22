@@ -13,7 +13,7 @@ NOTE = (
     'PC에서 python -m pip install wxPython 후 python main.py로 실행하세요.'
 )
 WX_EXAMPLES = [
-    'first-wx', 'hello-wx',
+    'first-wx',
     'widgets-label-entry-wx', 'widgets-choice-wx', 'widgets-wx',
     'layout-wx', 'events-wx',
     'memo-window-wx', 'memo-wx', 'project-wx',
@@ -400,6 +400,7 @@ lesson(2, 'wx', '부록 · wxPython으로 같은 앱 다시 만들기', '부록 
            '위젯 이름은 Label→StaticText, Entry→TextCtrl, Text→TextCtrl(TE_MULTILINE), Checkbutton→CheckBox, Radiobutton→RadioButton(첫 항목에 RB_GROUP), Listbox→ListBox, Button→Button입니다. 체크 상태는 BooleanVar가 아니라 GetValue()로 읽습니다.',
            '배치는 BoxSizer(VERTICAL/HORIZONTAL)와 FlexGridSizer입니다. Add의 두 번째 숫자가 남는 공간 비율이고, EXPAND는 받은 칸을 채웁니다. 이벤트는 Bind(wx.EVT_BUTTON, greet)처럼 함수 자체를 맡깁니다. greet()를 넘기면 창을 만들 때 이미 실행됩니다.',
            '메모장은 여러 줄 TextCtrl과 MenuBar, FileDialog로 본편과 같은 열기·저장·취소 분기를 만듭니다. 생활 도우미는 같은 core.logic을 Choice에 연결합니다. 빈 입력·0면 주사위·잘못된 날짜를 시험하세요.',
+           '같은 인사 앱 예제는 「GUI 라이브러리 비교 갤러리」 소단원에서 실습합니다.',
        ],
        WX_EXAMPLES,
        [

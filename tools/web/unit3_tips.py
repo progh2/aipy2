@@ -95,7 +95,6 @@ def _fill_lessons():
     _fill_lesson(
         'ml-use',
         history='1990년대 스팸 필터와 2000년대 추천 시스템은, 규칙을 다 쓰기 어려운 패턴을 데이터에서 배우는 쪽이 더 실용적임을 보여 주었습니다.',
-        youtube=YT_CRASH_ML,
     )
     _fill_lesson(
         'ml-process',
@@ -110,7 +109,6 @@ def _fill_lessons():
     _fill_lesson(
         'ml-methods',
         history='지도 학습은 정답이 있는 자료, 비지도는 정답 없이 구조를 찾습니다. 강화 학습은 벨만의 동적 계획과 서튼의 시행착오 학습에서 이어집니다.',
-        youtube=YT_CRASH_ML_TYPES,
     )
     _fill_lesson(
         'ml-libraries',
@@ -164,22 +162,18 @@ def _fill_examples():
     _fill_example(
         'ml-split-small',
         history='한 번 본 점수로 모델을 고르면 그 점수는 더 이상 독립적인 평가가 아닙니다. 검증과 테스트를 나누는 이유입니다.',
-        youtube=YT_FCC_ML,
     )
     _fill_example(
         'ml-tools',
         history='표 계산은 스프레드시트보다 코드로 반복하기 위해 pandas가 만들어졌습니다. 배열 연산의 뼈대는 NumPy입니다.',
-        youtube=YT_PANDAS,
     )
     _fill_example(
         'ml-classify',
         history='같은 자료로 여러 분류기를 나란히 두는 비교는 교재와 경진 대회의 기본 습관입니다. 선택은 테스트가 아니라 검증으로 합니다.',
-        youtube=YT_RECIPES,
     )
     _fill_example(
         'ml-cluster',
         history='중심을 옮기며 묶는 방법은 통계 군집화의 고전입니다. 그림의 색은 이름일 뿐 순위가 아닙니다.',
-        youtube=YT_KMEANS,
     )
     _fill_example(
         'ml-report-card',
@@ -193,9 +187,13 @@ def unit3_history_lessons():
 
 
 def unit3_youtube_lessons():
-    """Lessons that have a verified public video (preprocess/project stay empty)."""
+    """Lessons that have a verified public video (preprocess/project stay empty).
+
+    ml-use/ml-methods share the same Crash Course video as ml-overview
+    (#63 dedup); that URL stays on ml-overview only.
+    """
     return [
-        'ml-overview', 'ml-use', 'ml-process', 'ml-terms', 'ml-methods',
+        'ml-overview', 'ml-process', 'ml-terms',
         'ml-libraries', 'ml-classification', 'ml-regression', 'ml-cluster',
         'ml-metrics', 'ml-selection',
     ]

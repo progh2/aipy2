@@ -117,13 +117,7 @@
       ],
       "tips": {
         "history": "1990년대 스팸 필터와 2000년대 추천 시스템은, 규칙을 다 쓰기 어려운 패턴을 데이터에서 배우는 쪽이 더 실용적임을 보여 주었습니다.",
-        "youtube": [
-          {
-            "title": "Machine Learning & Artificial Intelligence: Crash Course Computer Science #34",
-            "url": "https://www.youtube.com/watch?v=z-EtmaFJieY",
-            "note": "영어 공개 강의(약 12분)입니다. AI와 머신러닝이 어떻게 다른지, 스팸·추천처럼 어디에 쓰이는지만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "visual": [
@@ -372,13 +366,7 @@
       ],
       "tips": {
         "history": "지도 학습은 정답이 있는 자료, 비지도는 정답 없이 구조를 찾습니다. 강화 학습은 벨만의 동적 계획과 서튼의 시행착오 학습에서 이어집니다.",
-        "youtube": [
-          {
-            "title": "Machine Learning & Artificial Intelligence: Crash Course Computer Science #34",
-            "url": "https://www.youtube.com/watch?v=z-EtmaFJieY",
-            "note": "영어 공개 강의입니다. 데이터를 보고 예측하는 부분과 강화 학습(AlphaGo) 언급만 보면 이 주제와 맞습니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [],
       "visual": [
@@ -1349,13 +1337,7 @@
       "glossary": [],
       "tips": {
         "history": "한 번 본 점수로 모델을 고르면 그 점수는 더 이상 독립적인 평가가 아닙니다. 검증과 테스트를 나누는 이유입니다.",
-        "youtube": [
-          {
-            "title": "Machine Learning for Everybody – Full Course (freeCodeCamp)",
-            "url": "https://www.youtube.com/watch?v=i_LwzRVP7bg",
-            "note": "영어 공개 강의입니다. 목차의 train/test 분할 구간만 보면 됩니다. 나머지 긴 코스는 건너뛰어도 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },
@@ -1593,13 +1575,7 @@
       ],
       "tips": {
         "history": "표 계산은 스프레드시트보다 코드로 반복하기 위해 pandas가 만들어졌습니다. 배열 연산의 뼈대는 NumPy입니다.",
-        "youtube": [
-          {
-            "title": "Python Pandas Tutorial (Part 1): Getting Started with Data Analysis (Corey Schafer)",
-            "url": "https://www.youtube.com/watch?v=ZyhVh-qRZPA",
-            "note": "영어 공개 강의입니다. DataFrame을 만들고 head로 앞부분을 보는 앞부분만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },
@@ -1869,13 +1845,7 @@
       ],
       "tips": {
         "history": "같은 자료로 여러 분류기를 나란히 두는 비교는 교재와 경진 대회의 기본 습관입니다. 선택은 테스트가 아니라 검증으로 합니다.",
-        "youtube": [
-          {
-            "title": "Hello World — Machine Learning Recipes #1 (Google for Developers)",
-            "url": "https://www.youtube.com/watch?v=cKxRvEZd3Mw",
-            "note": "영어 공개 강의(약 7분)입니다. 과일을 분류하는 첫 모델만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": []
     },
@@ -2028,13 +1998,7 @@
       ],
       "tips": {
         "history": "중심을 옮기며 묶는 방법은 통계 군집화의 고전입니다. 그림의 색은 이름일 뿐 순위가 아닙니다.",
-        "youtube": [
-          {
-            "title": "StatQuest: K-means clustering",
-            "url": "https://www.youtube.com/watch?v=4b5d3muPQmA",
-            "note": "영어 공개 강의입니다. 중심을 정하고 가까운 점을 묶는 반복만 보면 됩니다. 학교 네트워크·연령 정책을 확인하세요."
-          }
-        ]
+        "youtube": []
       },
       "screenshots": [
         {

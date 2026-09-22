@@ -84,12 +84,10 @@ def _fill_lessons():
     _fill_lesson(
         'cv-pixels',
         history='디지털 이미지는 1960년대부터 밝기 격자로 저장되었습니다. 한 칸의 0~255 값과 RGB 세 채널은 그 표현을 교실에서 다루는 기본 단위입니다.',
-        youtube=YT_CRASH_PIXELS,
     )
     _fill_lesson(
         'cv-pipeline',
         history='1982년 마어(Marr)는 시각을 입력에서 표현을 단계적으로 만드는 계산 문제로 정리했습니다. 한 단계의 오류가 다음 해석을 흔드는 이유입니다.',
-        youtube=YT_CRASH_PIPE,
     )
     _fill_lesson(
         'cv-libraries',
@@ -99,7 +97,6 @@ def _fill_lessons():
     _fill_lesson(
         'cv-io',
         history='파일을 숫자 배열로 읽는 습관은 디지털 사진 형식(JPEG·PNG)과 함께 자리 잡았습니다. 읽기 실패를 None으로 확인하는 것은 OpenCV의 오랜 약속입니다.',
-        youtube=YT_FCC_CV,
     )
     _fill_lesson(
         'cv-filters',
@@ -147,27 +144,22 @@ def _fill_examples():
     _fill_example(
         'cv-pillow',
         history='PIL은 1990년대 파이썬 이미지 편집의 기본 도구였고, Pillow가 그 인터페이스를 이어 받았습니다.',
-        youtube=YT_FCC_CV,
     )
     _fill_example(
         'cv-filters',
         history='같은 사진에 여러 필터를 나란히 두는 비교는 교재의 기본 습관입니다. 커널과 임계값을 바꾸고 표를 남깁니다.',
-        youtube=YT_BLUR,
     )
     _fill_example(
         'cv-features',
         history='경계·꼭짓점·둘레를 한 장에 비교하는 방법은 특징 검출 장의 고전입니다. 그림의 점 개수는 설정에 따라 달라집니다.',
-        youtube=YT_SOBEL,
     )
     _fill_example(
         'cv-haar-vs-id',
         history='얼굴이 있는 칸을 찾는 일과 신원을 맞히는 일은 연구도 제품도 오래 분리되어 있었습니다. 교실 예제는 앞쪽만 다룹니다.',
-        youtube=YT_HAAR,
     )
     _fill_example(
         'cv-count',
         history='프레임마다 다시 세는 습관은 실시간 검출 시연에서 왔습니다. 합계를 방문자 수로 읽으면 같은 사람을 여러 번 셉니다.',
-        youtube=YT_YOLO,
     )
     _fill_example(
         'cv-scan-card',
@@ -181,8 +173,13 @@ def unit4_history_lessons():
 
 
 def unit4_youtube_lessons():
-    """Lessons that have a verified public video (transform/project stay empty)."""
+    """Lessons that have a verified public video (transform/project stay empty).
+
+    cv-pixels/cv-pipeline share the same Crash Course video as cv-overview,
+    and cv-io shares the same OpenCV course video as cv-libraries (#63
+    dedup); those URLs stay on cv-overview and cv-libraries only.
+    """
     return [
-        'cv-overview', 'cv-pixels', 'cv-pipeline', 'cv-libraries', 'cv-io',
+        'cv-overview', 'cv-libraries',
         'cv-filters', 'cv-features', 'cv-haar', 'cv-yolo',
     ]

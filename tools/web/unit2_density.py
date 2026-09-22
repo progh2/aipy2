@@ -568,6 +568,15 @@ def apply():
     _lesson('review')['paragraphs'].append(
         '56–59쪽을 이 페이지에서 다시 닫습니다. 처음부터 만들기 예제로 Tk 객체·pack·command·mainloop를 타이핑하고, 57쪽 IDLE 코드에서 컨테이너(Frame)·클릭 요소(Button)·통칭(위젯)을 찾으세요. 58쪽 4번은 보기 내용이 GUI 사례이므로 인터페이스 유형을 고르는 문제로 읽습니다.'
     )
+    _lesson('events')['paragraphs'].append(
+        '같은 인사 앱 예제는 tkinter판이 「사용자 인터페이스 · CLI, GUI, NUI」, PySide6판이 「GUI 라이브러리 비교 갤러리」 소단원에서 실습됩니다.'
+    )
+    _lesson('project')['paragraphs'].append(
+        '기능 모듈 core 예제는 1단원 「1단원 프로젝트 · 우리 반 기능 패키지」 소단원에서 실습합니다.'
+    )
+    _lesson('pyside')['paragraphs'].append(
+        '인사 앱 예제는 「GUI 라이브러리 비교 갤러리」, 메모장 PySide6 전체 코드는 「교과서 메모장 · 여덟 단계로 완성」 소단원에서 실습합니다.'
+    )
 
     _set_examples('ui', ['ui-cli', 'hello-tk'])
     _set_examples('widgets', [
@@ -579,14 +588,14 @@ def apply():
     ])
     _set_examples('events', [
         'events-callback', 'events-command-tk', 'events-bind-tk', 'events-after-tk',
-        'events-pyside-signal', 'hello-tk', 'hello-pyside',
+        'events-pyside-signal',
     ])
     _set_examples('memo', [
         'memo-window-tk', 'memo-files-tk', 'memo-tk', 'memo-pyside',
         'memo-plus-tk', 'memo-plus-pyside',
     ])
-    _set_examples('pyside', ['pyside-first', 'hello-pyside', 'pyside-ui-file', 'memo-pyside'])
-    _set_examples('project', ['core', 'project-button-tk', 'project-tk', 'project-pyside'])
+    _set_examples('pyside', ['pyside-first', 'pyside-ui-file'])
+    _set_examples('project', ['project-button-tk', 'project-tk', 'project-pyside'])
     _set_examples('review', ['review-scratch-tk'])
 
     for lesson in units[2]:

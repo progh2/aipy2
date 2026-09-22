@@ -253,8 +253,7 @@ root.mainloop()'''},mode='pc',
         {'term':'위젯','meaning':'창 안의 부품입니다. Label·Entry·Button이 위젯입니다.'},
         {'term':'이벤트 루프','meaning':'사용자의 클릭·입력을 순서대로 받아 처리하는 반복입니다. mainloop가 그 역할을 합니다.'},
     ],
-    tips={'history':'Tk는 1991년 John Ousterhout가 Tcl에 붙인 GUI 툴킷입니다. 파이썬 표준 라이브러리의 tkinter는 이 Tk를 연결하므로, 많은 환경에서 별도 설치 없이 창과 버튼을 만들 수 있습니다.',
-          'youtube':{'title':'Tkinter Course — Create Graphic User Interfaces in Python (freeCodeCamp)','url':'https://www.youtube.com/watch?v=YXPyB4XeYLA','note':'영어 공개 강의입니다. 처음에는 창·Label·Button·pack만 따라 보고, 나머지는 필요할 때 이어서 보세요. 학교 네트워크·연령 정책을 확인하세요.'}},
+    tips={'history':'Tk는 1991년 John Ousterhout가 Tcl에 붙인 GUI 툴킷입니다. 파이썬 표준 라이브러리의 tkinter는 이 Tk를 연결하므로, 많은 환경에서 별도 설치 없이 창과 버튼을 만들 수 있습니다.'},
     screenshots=[{'src':'tk.png','alt':'tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼','caption':'같은 인사 앱을 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다.'}])
 ex('hello-ttk','인사 앱 · tkinter + ttk',{'main.py':examples['hello-tk']['files']['main.py'].replace('import tkinter as tk','import tkinter as tk\nfrom tkinter import ttk').replace('tk.Label','ttk.Label').replace('tk.Entry','ttk.Entry').replace('tk.Button','ttk.Button').replace('인사 실습 · tkinter','인사 실습 · ttk')},mode='pc',
     pre_api=[{'name':'ttk','signature':'from tkinter import ttk\nttk.Button(parent, text=..., command=...)','note':'Tk의 테마 위젯입니다. Label·Entry·Button의 역할은 같고, 모양만 운영체제 테마를 따릅니다.'}],
@@ -373,7 +372,8 @@ lesson(2,'libraries','GUI 라이브러리 비교 갤러리','45–48 + 보강','
 'PySide6와 PyQt6는 Qt 6를 파이썬에서 사용하는 서로 다른 바인딩입니다. 이 과정의 추가 실습은 Qt 공식 바인딩인 PySide6의 Qt Widgets를 사용합니다. 두 라이브러리의 외형은 같은 Qt 스타일을 쓰면 비슷하며 화면만으로 구분하기 어렵습니다.',
 'wxPython은 wxWidgets 기반으로 운영체제의 위젯을 활용합니다. Kivy는 자체 그리기 방식으로 터치와 여러 플랫폼의 인터페이스를 구성합니다. 배포 대상·필요 위젯·학습 자료·환경 지원을 기준으로 선택하세요.',
 '갤러리의 화면은 제공하는 코드를 실행한 캡처입니다. OS와 테마에 따라 외형은 달라집니다. PyQt와 PySide는 배포 조건이 다르므로 실제 배포 전 각 공식 라이선스 안내를 확인하는 습관을 갖습니다.',
-'좀 더 알아보기: IDLE은 tkinter를 사용하는 실제 파이썬 프로그램입니다. IDLE의 메뉴·버튼·입력창이 어떤 위젯으로 구성될지 관찰하세요. 라이브러리를 선택한 이유는 기능과 사용자를 함께 근거로 적으세요.'],['hello-tk','hello-ttk','hello-pyside','hello-pyqt','hello-wx','hello-kivy'],['같은 앱을 학교 실습용과 터치 키오스크용으로 만들 때 선택 근거를 비교하세요.','48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요.'])
+'좀 더 알아보기: IDLE은 tkinter를 사용하는 실제 파이썬 프로그램입니다. IDLE의 메뉴·버튼·입력창이 어떤 위젯으로 구성될지 관찰하세요. 라이브러리를 선택한 이유는 기능과 사용자를 함께 근거로 적으세요.',
+'같은 인사 앱의 tkinter 버전은 「사용자 인터페이스 · CLI, GUI, NUI」 소단원에서 실습합니다.'],['hello-ttk','hello-pyside','hello-pyqt','hello-wx','hello-kivy'],['같은 앱을 학교 실습용과 터치 키오스크용으로 만들 때 선택 근거를 비교하세요.','48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요.'])
 ex('widgets-tk','tkinter 위젯 9종 체험',{'main.py':'''import tkinter as tk
 root = tk.Tk()
 root.title("tkinter 위젯 도감")

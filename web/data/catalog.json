@@ -168,7 +168,6 @@
         "id": "libraries",
         "title": "GUI 라이브러리 비교 갤러리",
         "examples": [
-          "hello-tk",
           "hello-ttk",
           "hello-pyside",
           "hello-pyqt",
@@ -210,9 +209,7 @@
           "events-command-tk",
           "events-bind-tk",
           "events-after-tk",
-          "events-pyside-signal",
-          "hello-tk",
-          "hello-pyside"
+          "events-pyside-signal"
         ],
         "href": "units/unit02/events.html"
       },
@@ -234,9 +231,7 @@
         "title": "PySide6 시작과 Qt Designer",
         "examples": [
           "pyside-first",
-          "hello-pyside",
-          "pyside-ui-file",
-          "memo-pyside"
+          "pyside-ui-file"
         ],
         "href": "units/unit02/pyside.html"
       },
@@ -244,7 +239,6 @@
         "id": "project",
         "title": "통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
         "examples": [
-          "core",
           "project-button-tk",
           "project-tk",
           "project-pyside"
@@ -264,7 +258,6 @@
         "title": "부록 · wxPython으로 같은 앱 다시 만들기",
         "examples": [
           "first-wx",
-          "hello-wx",
           "widgets-label-entry-wx",
           "widgets-choice-wx",
           "widgets-wx",
@@ -281,7 +274,6 @@
         "title": "부록 · Kivy로 같은 앱 다시 만들기",
         "examples": [
           "first-kivy",
-          "hello-kivy",
           "widgets-label-entry-kivy",
           "widgets-choice-kivy",
           "widgets-kivy",
@@ -797,7 +789,7 @@
     "core": {
       "id": "core",
       "title": "프로젝트 · 기능 모듈을 웹에서 검사",
-      "unit": 2,
+      "unit": 1,
       "mode": "web"
     },
     "project-tk": {

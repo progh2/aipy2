@@ -13,7 +13,7 @@ NOTE = (
     '기본 글꼴은 한글을 가정하지 않습니다. 실행 폴더에 NotoSansKR.ttf를 넣으면 한국어 문구로 바꿀 수 있습니다.'
 )
 KIVY_EXAMPLES = [
-    'first-kivy', 'hello-kivy',
+    'first-kivy',
     'widgets-label-entry-kivy', 'widgets-choice-kivy', 'widgets-kivy',
     'layout-kivy', 'events-kivy',
     'memo-window-kivy', 'memo-kivy', 'project-kivy',
@@ -462,6 +462,7 @@ lesson(2, 'kivy', '부록 · Kivy로 같은 앱 다시 만들기', '부록 · �
            '위젯 이름은 Label→Label, Entry→TextInput(multiline=False), Text→TextInput(multiline=True), Checkbutton→CheckBox, Radiobutton→ToggleButton(같은 group), Listbox→Spinner, Button→Button입니다. 체크 상태는 BooleanVar가 아니라 active로 읽습니다.',
            '배치는 BoxLayout(orientation="vertical"/"horizontal")과 GridLayout(cols=...)입니다. size_hint는 부모 공간의 비율이고, None이면 height 픽셀을 씁니다. 이벤트는 button.bind(on_press=self.greet)처럼 함수 자체를 맡깁니다. greet()를 넘기면 창을 만들 때 이미 실행됩니다.',
            '메모는 OS 메뉴·파일 대화 상자 대신 Open/Save 버튼과 memo.txt로 같은 열기·저장·없는 파일 분기를 만듭니다. FileChooser를 붙이면 경로를 고를 수 있습니다. 생활 도우미는 같은 core.logic을 Spinner에 연결합니다. 빈 입력·0면 주사위·잘못된 날짜를 시험하세요. 기본 글꼴은 한글을 가정하지 않으므로 캡처는 영어 문구입니다.',
+           '같은 인사 앱 예제는 「GUI 라이브러리 비교 갤러리」 소단원에서 실습합니다.',
        ],
        KIVY_EXAMPLES,
        [
