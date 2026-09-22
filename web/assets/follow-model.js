@@ -72,8 +72,9 @@ export function unitFromPage(page) {
 // ex-*.html은 예제 전용 페이지이며 소단원(lesson) id로 오인하면 안 된다 — 별도 정규식으로 걸러낸다.
 export function pageTopicId(page) {
  const match = /^units\/unit0[1-4]\/(?!ex-)([a-z0-9-]+)\.html$/.exec(normalizePage(page));
- if (!match || match[1] === 'index' || match[1] === 'summary') return null;
- return match[1];
+ if (!match || match[1] === 'index' || match[1] === 'summary' || match[1] === 'practice') return null;
+ // 문제 페이지(q-widgets.html)의 주제는 그 소단원(widgets)이다.
+ return match[1].startsWith('q-') ? match[1].slice(2) : match[1];
 }
 
 export function pageExampleId(page) {
@@ -81,8 +82,12 @@ export function pageExampleId(page) {
  return match ? match[1] : null;
 }
 
+// 문항 앵커(u1-q041)는 소단원 이름이 아니다. 예전에는 이것을 소단원으로 오인해
+// units/unit01/u1-q041.html 같은 없는 페이지로 보냈다(교사가 문항에 초점을 보낼 때 이동 실패).
+const QUESTION_ANCHOR_RE = /^u[1-4]-q\d+$/;
+
 export function isLessonTopic(id) {
- return Boolean(id) && /^[a-z][a-z0-9-]*$/.test(id) && !CHROME_TOPICS.has(id);
+ return Boolean(id) && /^[a-z][a-z0-9-]*$/.test(id) && !CHROME_TOPICS.has(id) && !QUESTION_ANCHOR_RE.test(id);
 }
 
 export function topicPage(unit, topicId) {
@@ -100,10 +105,12 @@ export function resolveFocusLocation(focus) {
  const topic = focus && focus.topicAnchor;
  const unit = unitFromPage(page);
  const fromPage = pageTopicId(page);
- const lesson = isLessonTopic(topic) ? topic : fromPage;
  const exampleId = focus && focus.exampleId;
  // 예제가 지정되면 그 예제의 독립 페이지가 목적지다 — 소단원 페이지에는 더 이상 편집기가 없다.
  if (unit && exampleId) return {page: examplePage(unit, exampleId), topicAnchor: null};
+ // 문항 앵커는 보낸 페이지(문제 페이지)를 그대로 두고 그 문항으로만 스크롤한다.
+ if (QUESTION_ANCHOR_RE.test(topic || '')) return {page: page || DEFAULT_PAGE, topicAnchor: topic};
+ const lesson = isLessonTopic(topic) ? topic : fromPage;
  if (unit && lesson) return {page: topicPage(unit, lesson), topicAnchor: lesson};
  return {page, topicAnchor: topic || fromPage || null};
 }

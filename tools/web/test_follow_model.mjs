@@ -6,7 +6,7 @@ import {
  focusFields, focusWritePayload, focusFromUnitClick,
  isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
- DEFAULT_PAGE
+ DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId
 } from '../../web/assets/follow-model.js';
 
 function eq(actual, expected, label) {
@@ -135,5 +135,13 @@ eq(focusFromUnitClick({exampleId: 'reuse', lessonId: 'overview', currentPage: un
  {page: unit01, topicAnchor: 'overview', exampleId: 'reuse'}, 'example button');
 eq(focusFromUnitClick({href: 'https://www.mtrschool.co.kr/post/3095', currentPage: unit01}),
  null, 'skip external');
+
+// 문항 앵커는 소단원으로 오인되면 안 된다(없는 페이지로 이동하던 버그).
+eq(isLessonTopic('u1-q041'), false, 'question anchor is not a lesson');
+eq(isLessonTopic('widgets'), true, 'lesson id still ok');
+eq(resolveFocusLocation({page: 'units/unit01/q-overview.html', topicAnchor: 'u1-q041'}),
+ {page: 'units/unit01/q-overview.html', topicAnchor: 'u1-q041'}, 'question focus keeps its page');
+eq(pageTopicId('units/unit01/q-overview.html'), 'overview', 'question page maps to its lesson');
+eq(pageTopicId('units/unit01/practice.html'), null, 'unit practice page has no lesson topic');
 
 console.log('PASS: follow-model helpers');
