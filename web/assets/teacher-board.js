@@ -523,6 +523,16 @@ function renderAnswerSection(card) {
   });
   filterBar.append(btn);
  }
+ // 답안은 학생당 1회만 읽으므로, 수업 중 새로 쓴 답안을 보려면 다시 읽을 수 있어야 한다.
+ const again = node('button', 'answer-filter-btn answer-reload', '↻ 새로 읽기');
+ again.type = 'button';
+ again.title = '이 학생의 답안을 다시 읽습니다';
+ again.addEventListener('click', () => {
+  detailStateCache.delete(card.uid);
+  ensureStudentState(card.uid);
+  paintDetail(card, {keepFocus: true});
+ });
+ filterBar.append(again);
  wrap.append(filterBar);
  const entry = detailStateCache.get(card.uid) || {status: 'loading'};
  if (entry.status === 'loading') {
