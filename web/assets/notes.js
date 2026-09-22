@@ -104,10 +104,9 @@ function ensureLayer() {
  return layer;
 }
 
-function sizeLayer() {
- if (!layer) return;
- layer.style.height = `${document.documentElement.scrollHeight}px`;
-}
+// 레이어는 높이 0으로 두고 카드만 넘쳐 보이게 한다. 문서 높이에 맞추면
+// 레이어가 문서를 늘리고 ResizeObserver가 다시 반응해 하단 여백이 무한히 자란다.
+function sizeLayer() {}
 
 async function createNote() {
  if (!user || !profile) { toast('학교 계정으로 로그인하면 메모를 붙일 수 있어요.'); return; }
