@@ -98,3 +98,40 @@ button,.button,.file-button{font-size:15px}
 #output{font-size:14px}
 pre{font-size:14px}
 table{font-size:15px}
+
+/* 메뉴 접기 */
+.menu-fold{padding:4px 9px;font-size:13px;min-width:0}
+.menu-fold-rail{width:100%;margin-bottom:8px;font-size:12px}
+.menu-unfold{position:fixed;z-index:60;font-size:13px;padding:5px 10px;box-shadow:0 2px 10px rgba(16,24,49,.2);background:#fff}
+.menu-unfold[hidden]{display:none}
+.menu-unfold-header{top:8px;left:12px}
+.menu-unfold-rail{top:50%;left:8px;transform:translateY(-50%)}
+body.hide-header header.top{display:none}
+body.hide-header .follow-ui,body.hide-header .teacher-focus-ui{top:0}
+body.hide-rail .rail{display:none}
+body.hide-rail .course-layout{display:block}
+html:has(body.hide-header){scroll-padding-top:16px}
+
+/* 기본 글자 크기 2차 확대(2026-09-22: 아직 작다는 피드백) */
+body{font-size:17px}
+.lesson>p,.lesson-prose p{font-size:17.5px;line-height:1.95}
+.lesson-lead{font-size:18px}
+.lead{font-size:19px}
+.small,small{font-size:14px}
+.note{font-size:15px}
+.task-box{font-size:16px}
+.rail a{font-size:14px}
+.top nav a{font-size:16px}
+button,.button,.file-button{font-size:15.5px}
+.example-links button{font-size:14.5px}
+.question h3{font-size:19.5px}
+.question .options label{font-size:16px}
+.question details{font-size:16px}
+.question .feedback{font-size:15px}
+#code-editor,.hl-wrap .hl-view{font-size:15px;line-height:1.8}
+#output{font-size:15px}
+pre{font-size:15px}
+table{font-size:16px}
+h2{font-size:31px}
+h3{font-size:22px}
+.lesson h2{font-size:28px}

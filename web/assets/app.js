@@ -562,3 +562,26 @@ if(!hasLab && !hasPractice){
  if(group)group.append(enter);else header.append(enter);
  if(sessionStorage.getItem(KEY)==='1')set(true);
 })();
+
+/* ── 메뉴 접기(발표 모드와 별개): 상단 헤더·왼쪽 목차를 각각 접고 펼 수 있다. 상태는 브라우저에 저장. */
+(function(){
+ const header=document.querySelector('header.top');if(!header)return;
+ const mk=(cls,text,title)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.title=title;b.setAttribute('aria-label',title);return b;};
+ const apply=()=>{
+  const hh=localStorage.getItem('aipy-hide-header')==='1',hr=localStorage.getItem('aipy-hide-rail')==='1';
+  document.body.classList.toggle('hide-header',hh);document.body.classList.toggle('hide-rail',hr);
+  showHeader.hidden=!hh;showRail.hidden=!hr||!document.querySelector('aside.rail');
+ };
+ const hideHeader=mk('menu-fold menu-fold-header','▲','상단 메뉴 접기');
+ hideHeader.onclick=()=>{localStorage.setItem('aipy-hide-header','1');apply();};
+ const showHeader=mk('menu-unfold menu-unfold-header','☰ 메뉴','상단 메뉴 펼치기');
+ showHeader.onclick=()=>{localStorage.setItem('aipy-hide-header','');apply();};
+ const showRail=mk('menu-unfold menu-unfold-rail','▶ 목차','왼쪽 목차 펼치기');
+ showRail.onclick=()=>{localStorage.setItem('aipy-hide-rail','');apply();};
+ const group=header.querySelector('.fontsize');
+ if(group)group.append(hideHeader);else header.append(hideHeader);
+ document.body.append(showHeader,showRail);
+ const rail=document.querySelector('aside.rail');
+ if(rail){const hideRail=mk('menu-fold menu-fold-rail','◀ 접기','왼쪽 목차 접기');hideRail.onclick=()=>{localStorage.setItem('aipy-hide-rail','1');apply();};rail.prepend(hideRail);}
+ apply();
+})();

@@ -117,6 +117,7 @@ function bind(db, store) {
  $('roster-apply').onclick = () => apply(db, store);
  $('roster-load').onclick = () => listRoster(db, store);
  $('roster-export').onclick = () => exportRoster(db, store);
+ if ($('roster-clean-legacy')) $('roster-clean-legacy').onclick = () => cleanLegacyIds(db, store);
  $('unassigned-load').onclick = () => listUnassigned(db, store);
 }
 
@@ -441,6 +442,30 @@ function editRosterRow(tr, r) {
  actions.append(saveBtn, cancelBtn);
  tr.append(actions);
  admissionYear.focus();
+}
+
+// 학번이 4자리 숫자가 아닌 학생(옛 5자리 형식 등)을 찾아 명단에서 지운다. 학습 기록은 남는다.
+async function cleanLegacyIds(db, store) {
+ let rows;
+ try { rows = await fetchRoster(db, store); }
+ catch (error) { console.error('[admin]', error); alert('명단을 읽지 못했습니다.'); return; }
+ const legacy = rows.filter((r) => !/^\d{4}$/.test(String(r.studentId || '')));
+ if (!legacy.length) { alert('학번이 4자리가 아닌 학생이 없습니다.'); return; }
+ const preview = legacy.slice(0, 12).map((r) => `${r.studentId} ${r.name} (${r.id})`).join('\n');
+ if (!confirm(`학번이 4자리가 아닌 ${legacy.length}명을 명단에서 지울까요? 학습 기록은 남습니다.\n\n${preview}${legacy.length > 12 ? '\n…' : ''}`)) return;
+ try {
+  for (let i = 0; i < legacy.length; i += 400) {
+   const batch = store.writeBatch(db);
+   for (const r of legacy.slice(i, i + 400)) batch.delete(store.doc(db, 'roster', r.id));
+   await batch.commit();
+  }
+  document.dispatchEvent(new CustomEvent('aipy:roster-changed'));
+  listRoster(db, store);
+  alert(`${legacy.length}명을 명단에서 지웠습니다.`);
+ } catch (error) {
+  console.error('[admin]', error);
+  alert('지우지 못했습니다. 권한과 네트워크를 확인하세요.');
+ }
 }
 
 async function listRoster(db, store) {
