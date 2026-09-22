@@ -73,9 +73,7 @@ try {
  assert.equal(await page.locator('#questions .question').count(),0);
  assert.match(await page.locator('#questions').textContent(),/조건에 맞는 문제가 없습니다/);
  await page.fill('#question-search','');
- page.once('dialog',dialog=>dialog.accept());
- await page.locator(`#${q.id} button`).filter({hasText:'다시 풀기'}).click();
- assert.equal(await page.locator('#question-progress').getAttribute('value'),'0');
+ // '다시 풀기' 버튼은 제거됨(답안을 다시 제출하면 됨) — 원격 병합 검사로 이어간다.
  // 원격 병합도 기존 체크와 진행 표시를 갱신해야 합니다.
  await page.evaluate(id=>{
   const state=window.aipyLearning.getState();
@@ -85,7 +83,7 @@ try {
  assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
  await page.reload();await page.waitForFunction(()=>window.aipyLearning?.ready);
  assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
- console.log('PASS progress on answer/retry/filter/remote/reload and repeated attempts');
+ console.log('PASS progress on answer/filter/remote/reload and repeated attempts');
  await open('/units/unit02/ui.html');
  const self=page.locator('#questions .question label.completion input').first();
  await self.check();assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
