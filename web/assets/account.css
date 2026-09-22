@@ -335,3 +335,13 @@ h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
 .teacher-focus-ui{display:flex;align-items:center;gap:10px}
 .teacher-focus-ui .teacher-focus-status{flex:1;margin:0}
 .teacher-focus-close{padding:2px 8px;min-width:0;font-size:12px;margin-right:12px}
+
+/* 기기 간 편집 잠금(#기기잠금): 편집기 바로 위 작은 상단 바. 입력을 막지 않는다. */
+.editlock-bar{display:flex;align-items:center;gap:10px;margin:0 0 6px;padding:8px 12px;border-radius:10px;background:#fff1e9;border:1px solid #f0c9ae;color:#8a3a12;font-size:13px;line-height:1.5}
+.editlock-bar[hidden]{display:none}
+.editlock-text{flex:1;margin:0}
+.editlock-take{padding:5px 12px;font-size:12.5px;background:var(--gold);border-color:var(--gold);color:var(--ink);white-space:nowrap}
+.editlock-take[hidden]{display:none}
+body.edit-locked #code-editor{opacity:.6;cursor:not-allowed}
+body.edit-locked .hl-view{opacity:.6}
+@media print{.editlock-bar{display:none!important}}

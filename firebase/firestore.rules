@@ -433,6 +433,28 @@ service cloud.firestore {
     }
 
     // 과제 정의. 학생은 자기 반에 공개된 과제만 읽고, 교사가 만들고 고칩니다.
+    // 기기 간 편집 잠금. 문서 ID는 학생 uid, 반당 한 명 기준이 아니라 "학생당 하나"입니다.
+    // 자기 것만 읽고 쓸 수 있고, 교사는 확인만 합니다(고칠 일은 없습니다).
+    function editLockPayloadOk() {
+      return request.resource.data.keys().hasOnly(['uid', 'email', 'deviceId', 'label', 'beat', 'updatedAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == email()
+        && request.resource.data.deviceId is string
+        && request.resource.data.deviceId.size() > 0
+        && request.resource.data.deviceId.size() <= 64
+        && request.resource.data.label is string
+        && request.resource.data.label.size() <= 60
+        && request.resource.data.beat is number
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /editLocks/{uid} {
+      allow get, list: if owns(uid) || isTeacher();
+      allow create, update: if owns(uid) && editLockPayloadOk();
+      // delete 는 request.resource 가 없으므로 검증식과 분리합니다.
+      allow delete: if owns(uid);
+    }
+
     match /assignments/{id} {
       allow get, list: if isTeacher();
       allow get, list: if schoolAccount()
