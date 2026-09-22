@@ -70,7 +70,7 @@ function toast(text){$('#toast').textContent=text;clearTimeout(toastTimer);toast
 function save(kind){
  try{localStorage.setItem(KEY,JSON.stringify(state));}
  catch{if(storageWorks){toast('저장 공간에 접근할 수 없습니다. 기록을 내보내세요.');storageWorks=false;}}
- if(kind!=='remote'){
+ if(kind!=='remote'&&kind!=='quiet'){
   try{if(typeof window.aipyLearning.onLocalChange==='function')window.aipyLearning.onLocalChange(kind||'save');}catch{}
  }
 }
@@ -93,7 +93,7 @@ function applyRemote(next){
 }
 let lastError='';
 function rememberError(text){lastError=typeof text==='string'?text.replace(/\s+/g,' ').trim().slice(0,300):'';}
-window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;},lastError(){return lastError;},lastCheck:null};
+window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},saveLocalQuiet(){save('quiet');},getState(){return state;},applyRemote,onLocalChange:null,selectExample(){},currentExample(){return null;},lastError(){return lastError;},lastCheck:null};
 window.addEventListener('pagehide',()=>{try{window.aipyLearning.saveLocal();}catch{}});
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
@@ -289,7 +289,7 @@ function questionCard(q){
   const label=node('label','',q.starter?'Python 코드':q.kind==='서술'?'내 설명':'내 답안');input=node('textarea',q.starter?'code-answer':'');input.rows=q.starter?6:q.kind==='서술'?4:2;input.spellcheck=false;input.value=typeof record.value==='string'?record.value:q.starter||'';input.addEventListener('input',()=>storeAnswer(q,{value:input.value}));label.append(input);card.append(label);answer=()=>input.value;
  }
  const actions=node('div','actions'),check=node('button','primary',q.kind==='서술'?'설명 저장':q.starter?'실행하고 검사':'답 확인');
- const retry=node('button','','다시 풀기');actions.append(check,retry);card.append(actions);
+ actions.append(check);card.append(actions);
  const feedback=node('div','feedback'+(record.status==='done'?' success':record.status==='retry'?' retry':''),record.feedback||'먼저 스스로 풀어 보세요.');feedback.setAttribute('role','status');paiFeedback(feedback,record.feedback||'실행하기 전에 결과를 예상하세요. 막히면 힌트를 하나씩 열어 보세요.',record.status==='done'?'celebrate':record.status==='retry'?'debug':'thinking');card.append(feedback);
  function detail(title,text){const d=node('details'),s=node('summary','',title);d.append(s,node('pre','',text));card.append(d);}
  detail('힌트 1 · 방향 잡기',q.hint);detail('힌트 2 · 구체적 단서',q.hint2);detail('정답 예시와 해설',(Array.isArray(q.answer)?q.answer.join('\n'):q.answer)+'\n\n'+q.explain);
@@ -311,7 +311,6 @@ function questionCard(q){
   const checkInfo={type:'question',id:q.id,ok,checked:true,output:text,attempts};
   window.aipyLearning.lastCheck=checkInfo;document.dispatchEvent(new CustomEvent('aipy:checked',{detail:checkInfo}));
  };
- retry.onclick=()=>{if(confirm('이 문제의 답안을 초기화하고 다시 풀까요?')){delete state.answers[q.id];save('answer');renderQuestions();}};
  if(q.starter){const copyButton=node('button','','코드 복사');copyButton.onclick=()=>copy(answer());actions.append(copyButton);const stopButton=node('button','','실행 중지');stopButton.onclick=()=>{if(running)stop();};actions.append(stopButton);}
  return card;
 }

@@ -78,3 +78,23 @@ html:has(body.presenting){scroll-padding-top:16px}
 .lesson-extra{margin:14px 0;border:1px dashed var(--line);border-radius:10px;padding:6px 14px;background:#fbfcfe}
 .lesson-extra>summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:14px;padding:6px 0}
 .lesson-extra[open]>summary{margin-bottom:6px}
+
+/* 기본 글자 크기 확대(2026-09-22 수업 피드백: 폰트가 작다) */
+.lesson>p,.lesson-prose p{font-size:16.5px;line-height:1.95}
+.lesson-lead{font-size:17px}
+.lead{font-size:18px}
+.small,small{font-size:13.5px}
+.note{font-size:14.5px}
+.task-box{font-size:15px}
+.rail a{font-size:13.5px}
+.top nav a{font-size:15px}
+button,.button,.file-button{font-size:15px}
+.example-links button{font-size:14px}
+.question h3{font-size:18.5px}
+.question .options label{font-size:15px}
+.question details{font-size:15px}
+.question .feedback{font-size:14px}
+#code-editor,.hl-wrap .hl-view{font-size:14px;line-height:1.8}
+#output{font-size:14px}
+pre{font-size:14px}
+table{font-size:15px}

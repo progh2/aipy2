@@ -133,7 +133,7 @@ function scheduleSave(note, patch) {
 async function saveNote(note) {
  if (!user || !profile) return;
  try {
-  const fields = noteFields({profile: {...profile, uid: user.uid}, page: note.page || page, y: note.y, anchor: note.anchor, offset: note.offset, color: note.color, visibility: note.visibility, text: note.text});
+  const fields = noteFields({profile: {...profile, uid: user.uid}, page: note.page || page, y: note.y, anchor: note.anchor, offset: note.offset, color: note.color, visibility: teacher ? note.visibility : 'private', text: note.text});
   await fs.setDoc(fs.doc(db, 'notes', note.id), {...fields, updatedAt: fs.serverTimestamp()}, {merge: true});
  } catch (error) {
   console.warn('[notes]', error);
@@ -196,13 +196,17 @@ function noteCard(note) {
  const who = node('span', 'note-who', own ? '내 메모' : authorLabel(note));
  head.append(handle, who);
  if (own) {
-  const sel = node('select', 'note-vis');
-  sel.title = '공개 범위';
-  for (const v of NOTE_VISIBILITY) {
-   const opt = node('option', '', NOTE_VISIBILITY_LABELS[v]);
-   opt.value = v; opt.selected = v === note.visibility; sel.append(opt);
+  // 학생 메모는 항상 비공개(자기만 봄). 공개 범위 선택은 교사에게만 보인다.
+  if (teacher) {
+   const sel = node('select', 'note-vis');
+   sel.title = '공개 범위';
+   for (const v of NOTE_VISIBILITY) {
+    const opt = node('option', '', NOTE_VISIBILITY_LABELS[v]);
+    opt.value = v; opt.selected = v === note.visibility; sel.append(opt);
+   }
+   sel.addEventListener('change', () => scheduleSave(note, {visibility: sel.value}));
+   head.append(sel);
   }
-  sel.addEventListener('change', () => scheduleSave(note, {visibility: sel.value}));
   const colorBtn = node('button', 'note-color-btn', '🎨');
   colorBtn.type = 'button'; colorBtn.title = '배경색';
   colorBtn.addEventListener('click', () => {
@@ -213,7 +217,7 @@ function noteCard(note) {
   const del = node('button', 'note-del', '✕');
   del.type = 'button'; del.title = '메모 지우기';
   del.addEventListener('click', () => removeNote(note));
-  head.append(sel, colorBtn, del);
+  head.append(colorBtn, del);
   bindDrag(handle, card, note);
  } else {
   head.append(node('span', 'note-badge', NOTE_VISIBILITY_LABELS[note.visibility] || ''));

@@ -301,8 +301,11 @@ service cloud.firestore {
       allow get, list: if schoolAccount() && resource.data.visibility == 'all';
       allow get, list: if schoolAccount() && resource.data.visibility == 'students' && resource.data.classId == rosterClassId();
       allow get, list: if isTeacher();
-      allow create: if schoolAccount() && notePayloadOk();
-      allow update: if schoolAccount() && resource.data.uid == request.auth.uid && notePayloadOk();
+      // 학생 메모는 비공개만 허용. 공개(학생에게/모두)는 교사만.
+      allow create: if schoolAccount() && notePayloadOk()
+        && (isTeacher() || request.resource.data.visibility == 'private');
+      allow update: if schoolAccount() && resource.data.uid == request.auth.uid && notePayloadOk()
+        && (isTeacher() || request.resource.data.visibility == 'private');
       allow delete: if schoolAccount() && resource.data.uid == request.auth.uid;
       allow delete: if isTeacher();
     }

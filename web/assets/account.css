@@ -332,3 +332,6 @@ h2 .focus-send,h3 .focus-send{font-family:var(--sans);letter-spacing:0}
 @media (max-width:720px){.follow-notice{left:14px;right:14px;max-width:none}}
 @media print{.follow-notice{display:none!important}}
 .notes-layer{height:0;overflow:visible}
+.teacher-focus-ui{display:flex;align-items:center;gap:10px}
+.teacher-focus-ui .teacher-focus-status{flex:1;margin:0}
+.teacher-focus-close{padding:2px 8px;min-width:0;font-size:12px;margin-right:12px}

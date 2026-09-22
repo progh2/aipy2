@@ -66,6 +66,8 @@ async function trackScroll() {
 }
 
 function scheduleTrack() {
+ const cue = document.getElementById('teacher-focus-ui');
+ if (cue && !cue.hidden) cue.hidden = true; // 스크롤을 시작하면 안내는 접는다
  if (trackTimer) return;
  trackTimer = setTimeout(() => { trackTimer = 0; trackScroll(); }, 3000);
 }
@@ -102,7 +104,11 @@ function paintCue() {
   root.id = 'teacher-focus-ui';
   const status = node('p', 'teacher-focus-status', '');
   status.id = 'teacher-focus-status';
-  root.append(status);
+  const close = node('button', 'teacher-focus-close', '✕');
+  close.type = 'button';
+  close.title = '안내 닫기';
+  close.addEventListener('click', () => { root.hidden = true; });
+  root.append(status, close);
   const header = document.querySelector('header.top');
   if (header) header.after(root);
   else document.body.prepend(root);

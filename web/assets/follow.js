@@ -107,7 +107,10 @@ function prefersSmooth() {
 
 function saveLocal() {
  try {
-  if (window.aipyLearning && typeof window.aipyLearning.saveLocal === 'function') {
+  // 이동 직전에는 로컬 저장만 한다. 동기화 flush를 부르면 코드 충돌 대화상자가 떠 이동을 가로막는다.
+  if (window.aipyLearning && typeof window.aipyLearning.saveLocalQuiet === 'function') {
+   window.aipyLearning.saveLocalQuiet();
+  } else if (window.aipyLearning && typeof window.aipyLearning.saveLocal === 'function') {
    window.aipyLearning.saveLocal();
   }
  } catch (error) {
