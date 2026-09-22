@@ -107,11 +107,33 @@
 .heatmap-cell[data-tone="empty"]{background:#e4eaf2}
 .student-detail{position:fixed;inset:0;z-index:32;background:#10183173;display:flex;justify-content:flex-end}
 .student-detail[hidden]{display:none}
-.student-detail-panel{width:min(420px,100%);background:#fff;padding:20px 20px 28px;overflow:auto;box-shadow:-12px 0 28px #10183122}
+.student-detail-panel{width:min(560px,100%);background:#fff;padding:20px 20px 28px;overflow:auto;box-shadow:-12px 0 28px #10183122;display:flex;flex-direction:column;max-height:100vh}
 .student-detail-panel h2{margin:12px 0 8px;font-size:22px}
 .student-detail-panel h3{margin:18px 0 8px;font-size:16px}
 .student-detail-units,.student-detail-list{margin:0;padding-left:18px}
 .student-detail-units li,.student-detail-list li{margin:4px 0}
+#student-detail-body{overflow-y:auto;flex:1 1 auto;min-height:0}
+/* 답안 보기(#101) — 필터 버튼, 단원별 접기, 답안·정답 원문 표시 */
+.answer-filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.answer-filter-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
+.answer-filter-btn.is-active{background:#10243d;color:#fff;border-color:#10243d}
+.answer-unit-group{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0}
+.answer-unit-group summary{cursor:pointer;font-weight:700;font-size:14px}
+.answer-row-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.answer-row{border-top:1px solid var(--line);padding-top:10px}
+.answer-row:first-child{border-top:none;padding-top:0}
+.answer-row-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.answer-prompt{margin:4px 0;font-size:13px;font-weight:600}
+.answer-status{font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px}
+.answer-status--good{background:#e3f3ea;color:#176c5f}
+.answer-status--warn{background:#fdeee5;color:#a4471f}
+.answer-status--muted{background:#eef1f6;color:var(--muted)}
+.answer-value,.answer-key pre{background:#f4f6fb;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:12px/1.5 var(--mono);white-space:pre-wrap;word-break:break-word;overflow-x:auto;max-height:180px;overflow-y:auto;margin:6px 0 0}
+.answer-key{margin-top:6px}
+.answer-key summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.journal-list{margin:8px 0 0}
+.journal-list dt{font-weight:700;font-size:12px;margin-top:8px}
+.journal-list dd{margin:2px 0 0;font-size:13px;white-space:pre-wrap}
 @media (max-width:640px){
  .student-card-grid{grid-template-columns:1fr}
  .student-detail-panel{width:100%}

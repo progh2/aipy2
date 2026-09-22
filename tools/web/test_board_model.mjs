@@ -4,6 +4,8 @@ import {
  presenceFreshness, currentPlace, worstUnderstanding, understandingSummary,
  heatmapTone, isStuckOnTopic, filterStuck, buildStudentCards, sortStudentCards,
  classQuestionTotals, questionStats, csvCell, classCsv, cardAccuracyLabel,
+ answerRows, filterAnswerRows, groupAnswerRowsByUnit, unitAnswerTotals, journalRows,
+ formatAnswerValue, answerStatusLabel, isSubjectiveKind,
  PRESENCE_FRESH_MS, PRESENCE_RECENT_MS, CSV_HEADER
 } from '../../web/assets/board-model.js';
 
@@ -135,5 +137,57 @@ eq(csv.split('\n')[0], CSV_HEADER.join(','), 'csv first line');
 eq(csv.includes('홍길동'), true, 'csv name');
 eq(csv.includes('어려워요 1'), true, 'csv understanding');
 eq(cardAccuracyLabel(byName['홍길동']), '100%', 'card accuracy label');
+
+// 학생 상세 패널 — 답안 보기(#101)
+const questions = [
+ {id: 'u1-q001', unit: 1, topic: '기초 개념', kind: '선택', prompt: '모듈에 대한 설명으로 틀린 것을 고르세요.', options: ['a', 'b'], answer: 'b'},
+ {id: 'u1-q002', unit: 1, topic: '기초 개념', kind: '빈칸', prompt: '함수·변수·클래스 등을 담은 Python 파일은?', answer: '모듈'},
+ {id: 'u2-q010', unit: 2, topic: 'GUI', kind: '서술', prompt: 'tkinter로 창을 띄우는 과정을 서술하세요.'}
+];
+const detailState = {
+ answers: {
+  'u1-q001': {value: 'a', status: 'retry', attempts: 2},
+  'u1-q002': {value: '모듈', status: 'done', attempts: 1},
+  'u2-q010': {value: ['a', 'b', 'c'], status: 'retry', attempts: 1}
+ },
+ journals: {'u1-learn': ' 모듈 개념을 배웠다 ', 'u1-error': '', 'u2-next': 'GUI 이벤트 처리 도전'}
+};
+const rows = answerRows(detailState, questions);
+eq(rows.length, 3, 'answer rows count');
+eq(rows.map((r) => r.id), ['u1-q001', 'u1-q002', 'u2-q010'], 'answer rows sorted by unit');
+eq(rows[0].topic, '기초 개념', 'answer row topic from catalog');
+eq(rows[0].correctAnswer, 'b', 'answer row correct answer');
+
+eq(formatAnswerValue(['a', 'b', 'c']), 'a → b → c', 'format array answer');
+eq(formatAnswerValue('모듈'), '모듈', 'format string answer');
+eq(formatAnswerValue(null), '', 'format empty answer');
+
+eq(answerStatusLabel({status: 'done'}), '정답', 'answer status done');
+eq(answerStatusLabel({status: 'retry'}), '다시 풀기', 'answer status retry');
+eq(answerStatusLabel({value: '모듈'}), '제출', 'answer status submitted unknown');
+eq(answerStatusLabel({value: ''}), '미제출', 'answer status empty');
+
+eq(isSubjectiveKind('서술'), true, 'subjective kind narrative');
+eq(isSubjectiveKind('선택'), false, 'objective kind choice');
+
+eq(filterAnswerRows(rows, 'retry').map((r) => r.id), ['u1-q001', 'u2-q010'], 'filter retry only');
+eq(filterAnswerRows(rows, 'subjective').map((r) => r.id), ['u1-q002', 'u2-q010'], 'filter subjective only');
+eq(filterAnswerRows(rows, 'all').length, 3, 'filter all');
+
+const grouped = groupAnswerRowsByUnit(rows);
+eq(grouped.map(([unit]) => unit), [1, 2], 'grouped by unit');
+eq(grouped[0][1].length, 2, 'unit1 group size');
+
+const unitTotals = unitAnswerTotals(detailState, questions);
+eq(unitTotals, [{unit: 1, total: 2, answered: 2, correct: 1}, {unit: 2, total: 1, answered: 1, correct: 0}], 'unit answer totals');
+
+const journals = journalRows(detailState);
+eq(journals.length, 2, 'journal rows by unit');
+eq(journals[0], {unit: 1, items: [{key: 'learn', label: '이해한 개념', text: '모듈 개념을 배웠다'}]}, 'journal unit1 trims and skips empty');
+eq(journals[1].items[0].label, '다음 도전', 'journal unit2 label');
+
+eq(answerRows({}, questions), [], 'answer rows empty state');
+eq(unitAnswerTotals({}, questions), [{unit: 1, total: 2, answered: 0, correct: 0}, {unit: 2, total: 1, answered: 0, correct: 0}], 'unit totals no answers');
+eq(journalRows({}), [], 'journal rows empty state');
 
 console.log('PASS: board-model helpers');

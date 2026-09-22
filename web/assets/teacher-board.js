@@ -1,5 +1,6 @@
 /* 교사 현황 보드. M3 이해도·도움 요청을 유지하고, M4 카드·히트맵·문항·CSV를 붙입니다.
-   선택한 반의 progress·presence·help·roster만 구독합니다. */
+   선택한 반의 progress·presence·help·roster를 실시간 구독합니다.
+   학생 상세 패널을 열 때만 students/{uid}/state/current를 1회 조회해 답안·저널을 보여 줍니다(#101). */
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {inClass} from './class-picker.js';
@@ -10,7 +11,8 @@ import {sortOpenHelp} from './help-model.js';
 import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, filterStuck,
  questionStats, classQuestionTotals, classCsv, cardAccuracyLabel, formatRate,
- heatmapTone, historyItems
+ heatmapTone, historyItems, answerRows, filterAnswerRows, groupAnswerRowsByUnit,
+ unitAnswerTotals, journalRows, formatAnswerValue, answerStatusLabel, UNIT_ROMAN
 } from './board-model.js';
 
 const $ = (id) => document.getElementById(id);
@@ -37,6 +39,9 @@ let rosterRows = [];
 let paintedCards = [];
 let filterTopic = '';
 let selectedKey = '';
+// uid -> {status: 'loading'|'ready'|'empty'|'error', data?}. students/{uid}/state/current를 학생당 1회만 조회.
+let detailStateCache = new Map();
+let detailFilter = 'all';
 
 function note(id, text) {
  const el = $(id);
@@ -451,12 +456,135 @@ function toggleTopicFilter(topicId) {
 
 function openDetail(key) {
  selectedKey = key;
+ detailFilter = 'all';
  const card = liveCards().find((item) => item.key === key);
  paintRoster();
  paintDetail(card || null);
+ if (card && card.uid) ensureStudentState(card.uid);
 }
 
-function paintDetail(card) {
+// students/{uid}/state/current를 학생당 1회만 읽는다(#101). 실패·미존재는 캐시에 남겨 재요청하지 않는다.
+async function ensureStudentState(uid) {
+ if (!uid || detailStateCache.has(uid)) return;
+ detailStateCache.set(uid, {status: 'loading'});
+ refreshDetailIfSelected(uid);
+ try {
+  const {db, store} = await load();
+  const snap = await store.getDoc(store.doc(db, 'students', uid, 'state', 'current'));
+  detailStateCache.set(uid, snap.exists() ? {status: 'ready', data: snap.data()} : {status: 'empty'});
+ } catch (error) {
+  console.error('[teacher-board]', error);
+  detailStateCache.set(uid, {status: 'error', error});
+ }
+ refreshDetailIfSelected(uid);
+}
+
+function refreshDetailIfSelected(uid) {
+ if (!selectedKey) return;
+ const card = liveCards().find((item) => item.key === selectedKey);
+ if (card && card.uid === uid) paintDetail(card, {keepFocus: true});
+}
+
+function statusTone(status) {
+ if (status === 'done') return 'good';
+ if (status === 'retry') return 'warn';
+ return 'muted';
+}
+
+function renderAnswerRow(row) {
+ const li = node('li', 'answer-row');
+ const head = node('div', 'answer-row-head');
+ const info = node('span', 'answer-row-info');
+ info.append(node('b', '', row.kind || '문항'), node('span', 'small', ` · ${UNIT_ROMAN[row.unit] || ''} ${row.topic || ''}`.trim()));
+ head.append(info, node('span', `answer-status answer-status--${statusTone(row.status)}`, answerStatusLabel(row)));
+ const prompt = node('p', 'answer-prompt', row.prompt.length > 60 ? `${row.prompt.slice(0, 60)}…` : row.prompt);
+ prompt.title = row.prompt;
+ const meta = node('p', 'small', `시도 ${row.attempts}회`);
+ const valueBox = node('pre', 'answer-value', formatAnswerValue(row.value) || '(빈 답안)');
+ li.append(head, prompt, meta, valueBox);
+ if (row.correctAnswer != null && row.correctAnswer !== '') {
+  const det = node('details', 'answer-key');
+  det.append(node('summary', '', '정답 보기'), node('pre', '', formatAnswerValue(row.correctAnswer)));
+  li.append(det);
+ }
+ return li;
+}
+
+function renderAnswerSection(card) {
+ const wrap = node('div', 'student-detail-answers');
+ const filterBar = node('div', 'answer-filter-bar');
+ for (const [mode, label] of [['all', '전체'], ['retry', '다시 풀기만'], ['subjective', '서술·코드만']]) {
+  const btn = node('button', mode === detailFilter ? 'answer-filter-btn is-active' : 'answer-filter-btn', label);
+  btn.type = 'button';
+  btn.addEventListener('click', () => {
+   if (detailFilter === mode) return;
+   detailFilter = mode;
+   paintDetail(card, {keepFocus: true});
+  });
+  filterBar.append(btn);
+ }
+ // 답안은 학생당 1회만 읽으므로, 수업 중 새로 쓴 답안을 보려면 다시 읽을 수 있어야 한다.
+ const again = node('button', 'answer-filter-btn answer-reload', '↻ 새로 읽기');
+ again.type = 'button';
+ again.title = '이 학생의 답안을 다시 읽습니다';
+ again.addEventListener('click', () => {
+  detailStateCache.delete(card.uid);
+  ensureStudentState(card.uid);
+  paintDetail(card, {keepFocus: true});
+ });
+ filterBar.append(again);
+ wrap.append(filterBar);
+ const entry = detailStateCache.get(card.uid) || {status: 'loading'};
+ if (entry.status === 'loading') {
+  wrap.append(node('p', 'small', '학습 기록을 불러오는 중입니다…'));
+  return wrap;
+ }
+ if (entry.status === 'error') {
+  wrap.append(node('p', 'small', '학습 기록을 불러오지 못했습니다.'));
+  return wrap;
+ }
+ if (entry.status === 'empty') {
+  wrap.append(node('p', 'small', '이 학생의 학습 기록 미러가 아직 없습니다(로그인 후 학습하면 생깁니다).'));
+  return wrap;
+ }
+ const state = entry.data || {};
+ const rows = answerRows(state, questions);
+ const filtered = filterAnswerRows(rows, detailFilter);
+ const totalsByUnit = new Map(unitAnswerTotals(state, questions).map((t) => [t.unit, t]));
+ if (!filtered.length) {
+  wrap.append(node('p', 'small', '표시할 답안이 없습니다.'));
+ } else {
+  const groups = groupAnswerRowsByUnit(filtered);
+  for (const [unit, unitRows] of groups) {
+   const totalInfo = totalsByUnit.get(unit);
+   const details = node('details', 'answer-unit-group');
+   details.open = groups.length <= 1;
+   details.append(node('summary', '', `${UNIT_ROMAN[unit] || unit} 단원 · 푼 문항 ${totalInfo ? totalInfo.answered : unitRows.length} / 전체 ${totalInfo ? totalInfo.total : unitRows.length}`));
+   const ul = node('ul', 'answer-row-list');
+   for (const row of unitRows) ul.append(renderAnswerRow(row));
+   details.append(ul);
+   wrap.append(details);
+  }
+ }
+ const journals = journalRows(state);
+ if (journals.length) {
+  wrap.append(node('h3', '', '학습 저널'));
+  for (const jr of journals) {
+   const details = node('details', 'answer-unit-group');
+   details.append(node('summary', '', `${UNIT_ROMAN[jr.unit] || jr.unit} 단원 저널`));
+   const dl = node('dl', 'journal-list');
+   for (const item of jr.items) {
+    dl.append(node('dt', '', item.label));
+    dl.append(node('dd', '', item.text));
+   }
+   details.append(dl);
+   wrap.append(details);
+  }
+ }
+ return wrap;
+}
+
+function paintDetail(card, opts = {}) {
  const host = $('student-detail');
  const body = $('student-detail-body');
  if (!host || !body) return;
@@ -477,7 +605,13 @@ function paintDetail(card) {
  for (const unit of [1, 2, 3, 4]) {
   const total = topics.filter((topic) => topic.unit === unit).length;
   const done = card.done.filter((id) => id.startsWith(`u${unit}-`)).length;
-  units.append(node('li', '', `${['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ'][unit]} ${done}/${total}`));
+  units.append(node('li', '', `${UNIT_ROMAN[unit]} 주제 ${done}/${total}`));
+ }
+ const entryForTotals = detailStateCache.get(card.uid);
+ if (entryForTotals && entryForTotals.status === 'ready') {
+  for (const t of unitAnswerTotals(entryForTotals.data || {}, questions)) {
+   units.append(node('li', '', `${UNIT_ROMAN[t.unit] || t.unit} 문항 ${t.answered}/${t.total} · 정답 ${t.correct}`));
+  }
  }
  const histTitle = node('h3', '', '이해도');
  const hist = node('ul', 'student-detail-list');
@@ -496,9 +630,13 @@ function paintDetail(card) {
    help.append(node('li', '', [formatWhen(row.createdAt), topicTitle(row.topic, titles), row.lastError || ''].filter(Boolean).join(' · ')));
   }
  }
- body.replaceChildren(title, meta, progress, units, histTitle, hist, helpTitle, help);
- const close = $('student-detail-close');
- if (close) close.focus();
+ const answerTitle = node('h3', '', '답안 보기');
+ const answers = renderAnswerSection(card);
+ body.replaceChildren(title, meta, progress, units, histTitle, hist, helpTitle, help, answerTitle, answers);
+ if (!opts.keepFocus) {
+  const close = $('student-detail-close');
+  if (close) close.focus();
+ }
 }
 
 function exportCsv() {
@@ -543,6 +681,8 @@ function stop() {
  feedbackRows = [];
  filterTopic = '';
  selectedKey = '';
+ detailStateCache = new Map();
+ detailFilter = 'all';
  paintUnderstanding();
  paintHelp();
  paintBoard();

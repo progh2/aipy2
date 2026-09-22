@@ -1,5 +1,7 @@
 /* 참여 현황 보드(M4/F3) 순수 헬퍼. Firebase 없이 카드·히트맵·문항·CSV를 검사합니다.
-   교사 화면은 progress·presence·help·roster만 읽고, students/{uid}/state는 읽지 않습니다. */
+   교사 화면은 progress·presence·help·roster를 실시간 구독하고, students/{uid}/state는
+   학생 상세 패널을 열 때만 1회 조회합니다(#101 답안 보기). 여기 함수들은 그 문서를
+   받아 답안·저널 목록으로 바꾸는 순수 변환만 맡습니다. */
 import {inClass} from './class-picker.js';
 import {
  asMap, isTopicId, studentLabel, normalizeUnderstanding, UNDERSTANDING_LABELS,
@@ -331,6 +333,126 @@ export function cardAccuracyLabel(card) {
  if (card.accuracy != null) return formatRate(card.accuracy);
  if (card.correct || card.attempts) return `정답 ${card.correct} · 시도 ${card.attempts}`;
  return '—';
+}
+
+// 학생 상세 패널(#101) — students/{uid}/state/current 문서(sync-model.js의 statePayload 모양:
+// {answers, journals, ...})와 catalog.questions를 합쳐 답안 목록을 만든다.
+export const UNIT_ROMAN = ['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ'];
+
+// '선택'(5지선다)만 정답을 고르는 객관식이고, 나머지는 직접 입력하는 주관식으로 본다.
+export const SUBJECTIVE_KINDS = ['서술', '구현', '오류 수정', '예측', '빈칸'];
+
+export function isSubjectiveKind(kind) {
+ return SUBJECTIVE_KINDS.includes(kind);
+}
+
+export const ANSWER_STATUS_LABELS = {done: '정답', retry: '다시 풀기'};
+
+export function answerStatusLabel(row) {
+ const status = row && row.status;
+ if (status && ANSWER_STATUS_LABELS[status]) return ANSWER_STATUS_LABELS[status];
+ const value = row && row.value;
+ const hasValue = Array.isArray(value) ? value.length > 0 : value != null && String(value).trim() !== '';
+ return hasValue ? '제출' : '미제출';
+}
+
+export function formatAnswerValue(value) {
+ if (Array.isArray(value)) return value.map((item) => String(item)).join(' → ');
+ if (value == null) return '';
+ return String(value);
+}
+
+// 문항별 답안 한 줄. state.answers에 기록이 있는 문항만 돌려준다(#101).
+export function answerRows(state, questions = []) {
+ const answers = asMap(state && state.answers);
+ const index = new Map();
+ for (const q of questions || []) {
+  if (q && q.id) index.set(q.id, q);
+ }
+ const rows = [];
+ for (const [id, rec] of Object.entries(answers)) {
+  if (!rec || typeof rec !== 'object') continue;
+  const q = index.get(id) || {};
+  rows.push({
+   id,
+   unit: q.unit ?? (topicParts(id) ? topicParts(id).unit : null),
+   topic: q.topic || '',
+   prompt: q.prompt || id,
+   kind: q.kind || '',
+   options: Array.isArray(q.options) ? q.options : null,
+   correctAnswer: q.answer != null ? q.answer : null,
+   status: rec.status || '',
+   attempts: Number(rec.attempts) || 0,
+   value: rec.value,
+   feedback: rec.feedback || ''
+  });
+ }
+ rows.sort((a, b) => (Number(a.unit) || 0) - (Number(b.unit) || 0) || a.id.localeCompare(b.id));
+ return rows;
+}
+
+export function filterAnswerRows(rows, mode) {
+ const list = rows || [];
+ if (mode === 'retry') return list.filter((row) => row.status === 'retry');
+ if (mode === 'subjective') return list.filter((row) => isSubjectiveKind(row.kind));
+ return list;
+}
+
+export function groupAnswerRowsByUnit(rows) {
+ const map = new Map();
+ for (const row of rows || []) {
+  const unit = row && row.unit != null ? Number(row.unit) : 0;
+  if (!map.has(unit)) map.set(unit, []);
+  map.get(unit).push(row);
+ }
+ return [...map.entries()].sort((a, b) => a[0] - b[0]);
+}
+
+// 단원별 '푼 문항/전체 문항/정답 수' — catalog 전체 문항 기준이라 필터와 무관하게 고정된 값이다.
+export function unitAnswerTotals(state, questions = []) {
+ const answers = asMap(state && state.answers);
+ const totals = new Map();
+ for (const q of questions || []) {
+  if (!q || q.id == null || q.unit == null) continue;
+  const unit = Number(q.unit);
+  if (!totals.has(unit)) totals.set(unit, {unit, total: 0, answered: 0, correct: 0});
+  const bucket = totals.get(unit);
+  bucket.total += 1;
+  const rec = answers[q.id];
+  if (!rec || typeof rec !== 'object') continue;
+  const value = rec.value;
+  const hasValue = Array.isArray(value) ? value.length > 0 : value != null && String(value).trim() !== '';
+  if (hasValue || Number(rec.attempts) > 0) {
+   bucket.answered += 1;
+   if (rec.status === 'done') bucket.correct += 1;
+  }
+ }
+ return [...totals.values()].sort((a, b) => a.unit - b.unit);
+}
+
+// 학습 저널 3칸(u{n}-learn/error/next)을 단원별로 묶는다. 빈 칸은 건너뛴다.
+export const JOURNAL_LABELS = {learn: '이해한 개념', error: '오류와 해결', next: '다음 도전'};
+const JOURNAL_ORDER = ['learn', 'error', 'next'];
+
+export function journalRows(state) {
+ const journals = asMap(state && state.journals);
+ const byUnit = new Map();
+ for (const [key, text] of Object.entries(journals)) {
+  const value = typeof text === 'string' ? text.trim() : '';
+  if (!value) continue;
+  const match = /^u([1-4])-(learn|error|next)$/.exec(key);
+  if (!match) continue;
+  const unit = Number(match[1]);
+  if (!byUnit.has(unit)) byUnit.set(unit, {});
+  byUnit.get(unit)[match[2]] = value;
+ }
+ return [...byUnit.entries()]
+  .sort((a, b) => a[0] - b[0])
+  .map(([unit, entries]) => ({
+   unit,
+   items: JOURNAL_ORDER.filter((key) => entries[key]).map((key) => ({key, label: JOURNAL_LABELS[key], text: entries[key]}))
+  }))
+  .filter((row) => row.items.length > 0);
 }
 
 export {studentLabel, historyItems, UNDERSTANDING_LABELS};
