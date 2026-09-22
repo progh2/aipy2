@@ -25,9 +25,9 @@ const catalog = {
 };
 eq(choiceQuestions(catalog).map((q) => q.id), ['u1-q001', 'u2-q001'], 'choice filter');
 eq(choiceQuestions(catalog, {unit: 1}).map((q) => q.id), ['u1-q001'], 'choice unit');
-eq(questionPage(catalog.questions[0]), 'units/unit01/index.html', 'question page');
+eq(questionPage(catalog.questions[0]), 'units/unit01/q-overview.html', 'question page');
 eq(focusFromQuestion(catalog.questions[0]), {
- page: 'units/unit01/index.html', topicAnchor: 'u1-q001', exampleId: null
+ page: 'units/unit01/q-overview.html', topicAnchor: 'u1-q001', exampleId: null
 }, 'question focus');
 
 eq(choiceValue({choice: 'B'}), 'B', 'choice field');

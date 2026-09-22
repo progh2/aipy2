@@ -90,6 +90,7 @@ function applyRemote(next){
  });
  $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';});
  if($('#resume')){const href=resumeHref(state.last);if(href)$('#resume').href=href;}
+ renderRailTodo();
  if(typeof window.aipyLearning._refreshUnit==='function') window.aipyLearning._refreshUnit();
 }
 let lastError='';
@@ -121,12 +122,12 @@ $$('[data-clear]').forEach(b=>b.addEventListener('click',()=>{if(confirm('이 �
  if(label)label.append(badge);
  function showCompletion(){badge.hidden=!box.checked;}
  box._paintComplete=showCompletion;
- showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save('complete');updateProgress();showCompletion();});
+ showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save('complete');updateProgress();showCompletion();renderRailTodo();});
 });
 $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save('journal');});});
 if($('#download-journal'))$('#download-journal').onclick=()=>{let text=`# ${unit}단원 학습 저널\n\n작성일: ${new Date().toLocaleDateString('ko-KR')}\n`;for(const [key,title]of [['learn','이해한 개념'],['error','오류와 해결 근거'],['next','시험 결과와 다음 도전']])text+=`\n## ${title}\n\n${state.journals[`u${unit}-${key}`]||''}\n`;download(`unit${unit}-journal.md`,text);};
 if(!unit){window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));return;}
-const hasLab=Boolean($('#lab')), hasPractice=Boolean($('#practice'));
+const hasLab=Boolean($('#lab')), hasPractice=Boolean($('#practice')), hasRail=Boolean($('aside.rail'));
 let data, currentId, files={},fileName, worker=null,running=false,timer,jobResolve,jobOutput,exampleDirty=false;
 function markCode(){exampleDirty=true;stash();}
 function remember(){
@@ -254,7 +255,7 @@ let filtered=[];
 // 문항은 전부 한 번에 보여 준다 — 페이지로 나누면 1쪽만 풀고 끝난 줄 아는 학생이 있었다(#90).
 function norm(s){return String(s??'').trim().replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/\s+/g,'').replace(/'/g,'"');}
 function answerRecord(q){return state.answers[q.id]||{};}
-function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save(patch.status!==undefined||patch.attempts!==undefined?'answer':'draft');updateQuestionSummary();}
+function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save(patch.status!==undefined||patch.attempts!==undefined?'answer':'draft');updateQuestionSummary();renderRailTodo();}
 function questionCard(q){
  const card=node('article','question');card.id=q.id;
  card.append(node('div','question-meta',`${q.id} · ${q.kind} · ${q.ref}`),node('h3','',q.prompt));
@@ -357,11 +358,12 @@ function initGUI(){
   $$('[data-view]').forEach(b=>b.onclick=()=>{$$('[data-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const v=b.dataset.view;$$('[data-side]').forEach(x=>x.hidden=v!=='both'&&x.dataset.side!==v);$('#compare').classList.toggle('single',v!=='both');});
  }
 }
-if(!hasLab && !hasPractice){
+if(!hasLab && !hasPractice && !hasRail){
  window.aipyLearning.ready=true;
  document.dispatchEvent(new CustomEvent('aipy:learning-ready'));
 }else fetch(prefix+`data/unit${unit}.json`).then(r=>{if(!r.ok)throw Error(r.status);return r.json();}).then(d=>{
  data=d;
+ renderRailTodo();
  const lesson=pageTopic && data.lessons.find(l=>l.id===pageTopic);
  const exampleIds=(lesson && lesson.examples.length)?lesson.examples:Object.keys(data.examples);
  if(hasLab){
@@ -384,10 +386,48 @@ if(!hasLab && !hasPractice){
   if(!data)return;
   if(currentId){const id=currentId;currentId=null;selectExample(id,false);}
   renderQuestions(false);
+  renderRailTodo();
  };
  window.aipyLearning.ready=true;
  document.dispatchEvent(new CustomEvent('aipy:learning-ready'));
 }).catch(error=>{const out=$('#output');if(out)out.textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));});
+
+/* 왼쪽 목차 맨 위 '아직 남은 것' — 완료 체크·문제 풀이 중 놓친 항목을 한눈에 보여 준다(#107).
+   소단원 페이지는 '{id}.html', 문제 페이지는 'q-{id}.html'로 그 소단원과 같은 폴더에 있으므로
+   상대 경로만으로 링크할 수 있다. 체크·풀이·원격 병합 지점에서 다시 부른다. */
+function renderRailTodo(){
+ const rail=$('aside.rail');
+ if(!rail || !unit || !data || !Array.isArray(data.lessons)) return;
+ let box=rail.querySelector('.rail-todo');
+ if(!box){box=node('section','rail-todo');rail.prepend(box);}
+ box.replaceChildren(node('p','eyebrow','아직 남은 것'));
+ const rows=data.lessons.map(l=>{
+  const done=!!state.complete[`u${unit}-${l.id}`];
+  const left=(data.questions||[]).filter(q=>q.topic===l.id && answerRecord(q).status!=='done').length;
+  return {lesson:l,done,left};
+ });
+ if(rows.every(r=>r.done && r.left===0)){
+  box.append(node('p','rail-todo-clear','이 단원에서 남은 것이 없어요 🎉'));
+  return;
+ }
+ const list=node('ul','rail-todo-list');
+ for(const r of rows){
+  const li=node('li','rail-todo-item');
+  if(r.done && r.left===0){
+   li.classList.add('rail-todo-ok');
+   li.append(node('span','rail-todo-check','✔'),node('span','rail-todo-title',r.lesson.title));
+   list.append(li);continue;
+  }
+  const link=node('a','rail-todo-link');
+  link.href=!r.done?`${r.lesson.id}.html#${r.lesson.id}`:`q-${r.lesson.id}.html`;
+  link.append(node('span','rail-todo-title',r.lesson.title));
+  const badges=node('span','rail-todo-badges');
+  if(!r.done)badges.append(node('span','rail-todo-badge warn','완료 체크 안 함'));
+  if(r.left>0)badges.append(node('span','rail-todo-badge','문제 '+r.left+'개 남음'));
+  link.append(badges);li.append(link);list.append(li);
+ }
+ box.append(list);
+}
 })();
 
 /* ── 수업 프로젝터용 글자 크기 조절: −/현재%/＋. %버튼을 누르면 주요 배율 목록에서 바로 선택. */

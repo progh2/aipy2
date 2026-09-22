@@ -3,22 +3,26 @@
     {
       "id": "units/unit01/index.html",
       "label": "Ⅰ 모듈과 패키지 활용",
-      "unit": 1
+      "unit": 1,
+      "practiceHref": "units/unit01/practice.html"
     },
     {
       "id": "units/unit02/index.html",
       "label": "Ⅱ GUI 프로그래밍",
-      "unit": 2
+      "unit": 2,
+      "practiceHref": "units/unit02/practice.html"
     },
     {
       "id": "units/unit03/index.html",
       "label": "Ⅲ 파이썬과 머신러닝",
-      "unit": 3
+      "unit": 3,
+      "practiceHref": "units/unit03/practice.html"
     },
     {
       "id": "units/unit04/index.html",
       "label": "Ⅳ 파이썬과 컴퓨터 비전",
-      "unit": 4
+      "unit": 4,
+      "practiceHref": "units/unit04/practice.html"
     }
   ],
   "topics": {
@@ -31,7 +35,8 @@
           "reuse",
           "two-adds"
         ],
-        "href": "units/unit01/overview.html"
+        "href": "units/unit01/overview.html",
+        "practiceHref": "units/unit01/q-overview.html"
       },
       {
         "id": "define",
@@ -43,7 +48,8 @@
           "circle-mixed",
           "class-module"
         ],
-        "href": "units/unit01/define.html"
+        "href": "units/unit01/define.html",
+        "practiceHref": "units/unit01/q-define.html"
       },
       {
         "id": "entrypoint",
@@ -52,7 +58,8 @@
           "main-guard",
           "rectangle"
         ],
-        "href": "units/unit01/entrypoint.html"
+        "href": "units/unit01/entrypoint.html",
+        "practiceHref": "units/unit01/q-entrypoint.html"
       },
       {
         "id": "imports",
@@ -65,7 +72,8 @@
           "import-4",
           "import-clash"
         ],
-        "href": "units/unit01/imports.html"
+        "href": "units/unit01/imports.html",
+        "practiceHref": "units/unit01/q-imports.html"
       },
       {
         "id": "packages",
@@ -80,7 +88,8 @@
           "animal-check",
           "stars"
         ],
-        "href": "units/unit01/packages.html"
+        "href": "units/unit01/packages.html",
+        "practiceHref": "units/unit01/q-packages.html"
       },
       {
         "id": "os-sys",
@@ -91,7 +100,8 @@
           "sys",
           "sys-modules"
         ],
-        "href": "units/unit01/os-sys.html"
+        "href": "units/unit01/os-sys.html",
+        "practiceHref": "units/unit01/q-os-sys.html"
       },
       {
         "id": "math",
@@ -101,7 +111,8 @@
           "math-circle",
           "math-signed"
         ],
-        "href": "units/unit01/math.html"
+        "href": "units/unit01/math.html",
+        "practiceHref": "units/unit01/q-math.html"
       },
       {
         "id": "random",
@@ -113,7 +124,8 @@
           "dice",
           "gift"
         ],
-        "href": "units/unit01/random.html"
+        "href": "units/unit01/random.html",
+        "practiceHref": "units/unit01/q-random.html"
       },
       {
         "id": "datetime",
@@ -123,7 +135,8 @@
           "weekday-fixed",
           "christmas"
         ],
-        "href": "units/unit01/datetime.html"
+        "href": "units/unit01/datetime.html",
+        "practiceHref": "units/unit01/q-datetime.html"
       },
       {
         "id": "thirdparty",
@@ -133,7 +146,8 @@
           "stdlib-json",
           "thirdparty"
         ],
-        "href": "units/unit01/thirdparty.html"
+        "href": "units/unit01/thirdparty.html",
+        "practiceHref": "units/unit01/q-thirdparty.html"
       },
       {
         "id": "review",
@@ -142,7 +156,8 @@
           "review-two-files",
           "final-output"
         ],
-        "href": "units/unit01/review.html"
+        "href": "units/unit01/review.html",
+        "practiceHref": "units/unit01/q-review.html"
       },
       {
         "id": "project",
@@ -151,7 +166,8 @@
           "project-roll",
           "core"
         ],
-        "href": "units/unit01/project.html"
+        "href": "units/unit01/project.html",
+        "practiceHref": "units/unit01/q-project.html"
       }
     ],
     "units/unit02/index.html": [
@@ -162,7 +178,8 @@
           "ui-cli",
           "hello-tk"
         ],
-        "href": "units/unit02/ui.html"
+        "href": "units/unit02/ui.html",
+        "practiceHref": "units/unit02/q-ui.html"
       },
       {
         "id": "libraries",
@@ -174,7 +191,8 @@
           "hello-wx",
           "hello-kivy"
         ],
-        "href": "units/unit02/libraries.html"
+        "href": "units/unit02/libraries.html",
+        "practiceHref": "units/unit02/q-libraries.html"
       },
       {
         "id": "widgets",
@@ -187,7 +205,8 @@
           "widgets-pyside",
           "widgets-pyside-form"
         ],
-        "href": "units/unit02/widgets.html"
+        "href": "units/unit02/widgets.html",
+        "practiceHref": "units/unit02/q-widgets.html"
       },
       {
         "id": "layout",
@@ -199,7 +218,8 @@
           "layout-pyside",
           "layout-pyside-form"
         ],
-        "href": "units/unit02/layout.html"
+        "href": "units/unit02/layout.html",
+        "practiceHref": "units/unit02/q-layout.html"
       },
       {
         "id": "events",
@@ -211,7 +231,8 @@
           "events-after-tk",
           "events-pyside-signal"
         ],
-        "href": "units/unit02/events.html"
+        "href": "units/unit02/events.html",
+        "practiceHref": "units/unit02/q-events.html"
       },
       {
         "id": "memo",
@@ -224,7 +245,8 @@
           "memo-plus-tk",
           "memo-plus-pyside"
         ],
-        "href": "units/unit02/memo.html"
+        "href": "units/unit02/memo.html",
+        "practiceHref": "units/unit02/q-memo.html"
       },
       {
         "id": "pyside",
@@ -233,7 +255,8 @@
           "pyside-first",
           "pyside-ui-file"
         ],
-        "href": "units/unit02/pyside.html"
+        "href": "units/unit02/pyside.html",
+        "practiceHref": "units/unit02/q-pyside.html"
       },
       {
         "id": "project",
@@ -243,7 +266,8 @@
           "project-tk",
           "project-pyside"
         ],
-        "href": "units/unit02/project.html"
+        "href": "units/unit02/project.html",
+        "practiceHref": "units/unit02/q-project.html"
       },
       {
         "id": "review",
@@ -251,7 +275,8 @@
         "examples": [
           "review-scratch-tk"
         ],
-        "href": "units/unit02/review.html"
+        "href": "units/unit02/review.html",
+        "practiceHref": "units/unit02/q-review.html"
       },
       {
         "id": "wx",
@@ -267,7 +292,8 @@
           "memo-wx",
           "project-wx"
         ],
-        "href": "units/unit02/wx.html"
+        "href": "units/unit02/wx.html",
+        "practiceHref": "units/unit02/q-wx.html"
       },
       {
         "id": "kivy",
@@ -283,7 +309,8 @@
           "memo-kivy",
           "project-kivy"
         ],
-        "href": "units/unit02/kivy.html"
+        "href": "units/unit02/kivy.html",
+        "practiceHref": "units/unit02/q-kivy.html"
       }
     ],
     "units/unit03/index.html": [
@@ -295,7 +322,8 @@
           "ml-nesting",
           "ml-history-cases"
         ],
-        "href": "units/unit03/ml-overview.html"
+        "href": "units/unit03/ml-overview.html",
+        "practiceHref": "units/unit03/q-ml-overview.html"
       },
       {
         "id": "ml-use",
@@ -305,7 +333,8 @@
           "ml-loan-data",
           "ml-inspect"
         ],
-        "href": "units/unit03/ml-use.html"
+        "href": "units/unit03/ml-use.html",
+        "practiceHref": "units/unit03/q-ml-use.html"
       },
       {
         "id": "ml-process",
@@ -314,7 +343,8 @@
           "ml-success-mae",
           "ml-split-small"
         ],
-        "href": "units/unit03/ml-process.html"
+        "href": "units/unit03/ml-process.html",
+        "practiceHref": "units/unit03/q-ml-process.html"
       },
       {
         "id": "ml-terms",
@@ -324,7 +354,8 @@
           "ml-param-hyper",
           "ml-leakage"
         ],
-        "href": "units/unit03/ml-terms.html"
+        "href": "units/unit03/ml-terms.html",
+        "practiceHref": "units/unit03/q-ml-terms.html"
       },
       {
         "id": "ml-methods",
@@ -334,7 +365,8 @@
           "ml-unsupervised-groups",
           "ml-rl-reward"
         ],
-        "href": "units/unit03/ml-methods.html"
+        "href": "units/unit03/ml-methods.html",
+        "practiceHref": "units/unit03/q-ml-methods.html"
       },
       {
         "id": "ml-libraries",
@@ -344,7 +376,8 @@
           "ml-chart",
           "ml-seaborn"
         ],
-        "href": "units/unit03/ml-libraries.html"
+        "href": "units/unit03/ml-libraries.html",
+        "practiceHref": "units/unit03/q-ml-libraries.html"
       },
       {
         "id": "ml-preprocess",
@@ -354,7 +387,8 @@
           "ml-clean",
           "ml-scale"
         ],
-        "href": "units/unit03/ml-preprocess.html"
+        "href": "units/unit03/ml-preprocess.html",
+        "practiceHref": "units/unit03/q-ml-preprocess.html"
       },
       {
         "id": "ml-classification",
@@ -364,7 +398,8 @@
           "ml-knn-small",
           "ml-classify"
         ],
-        "href": "units/unit03/ml-classification.html"
+        "href": "units/unit03/ml-classification.html",
+        "practiceHref": "units/unit03/q-ml-classification.html"
       },
       {
         "id": "ml-regression",
@@ -374,7 +409,8 @@
           "ml-regression",
           "ml-housing"
         ],
-        "href": "units/unit03/ml-regression.html"
+        "href": "units/unit03/ml-regression.html",
+        "practiceHref": "units/unit03/q-ml-regression.html"
       },
       {
         "id": "ml-cluster",
@@ -383,7 +419,8 @@
           "ml-kmeans-small",
           "ml-cluster"
         ],
-        "href": "units/unit03/ml-cluster.html"
+        "href": "units/unit03/ml-cluster.html",
+        "practiceHref": "units/unit03/q-ml-cluster.html"
       },
       {
         "id": "ml-metrics",
@@ -392,7 +429,8 @@
           "ml-confusion-small",
           "ml-metrics"
         ],
-        "href": "units/unit03/ml-metrics.html"
+        "href": "units/unit03/ml-metrics.html",
+        "practiceHref": "units/unit03/q-ml-metrics.html"
       },
       {
         "id": "ml-selection",
@@ -402,7 +440,8 @@
           "ml-selection",
           "ml-learning-curve"
         ],
-        "href": "units/unit03/ml-selection.html"
+        "href": "units/unit03/ml-selection.html",
+        "practiceHref": "units/unit03/q-ml-selection.html"
       },
       {
         "id": "ml-project",
@@ -410,7 +449,8 @@
         "examples": [
           "ml-report-card"
         ],
-        "href": "units/unit03/ml-project.html"
+        "href": "units/unit03/ml-project.html",
+        "practiceHref": "units/unit03/q-ml-project.html"
       }
     ],
     "units/unit04/index.html": [
@@ -422,7 +462,8 @@
           "cv-use-fields",
           "cv-human-vs-computer"
         ],
-        "href": "units/unit04/cv-overview.html"
+        "href": "units/unit04/cv-overview.html",
+        "practiceHref": "units/unit04/q-cv-overview.html"
       },
       {
         "id": "cv-pixels",
@@ -432,7 +473,8 @@
           "cv-shape-size",
           "cv-bgr-rgb"
         ],
-        "href": "units/unit04/cv-pixels.html"
+        "href": "units/unit04/cv-pixels.html",
+        "practiceHref": "units/unit04/q-cv-pixels.html"
       },
       {
         "id": "cv-pipeline",
@@ -442,7 +484,8 @@
           "cv-plate-stages",
           "cv-eval-criteria"
         ],
-        "href": "units/unit04/cv-pipeline.html"
+        "href": "units/unit04/cv-pipeline.html",
+        "practiceHref": "units/unit04/q-cv-pipeline.html"
       },
       {
         "id": "cv-libraries",
@@ -451,7 +494,8 @@
           "cv-pillow",
           "cv-skimage"
         ],
-        "href": "units/unit04/cv-libraries.html"
+        "href": "units/unit04/cv-libraries.html",
+        "practiceHref": "units/unit04/q-cv-libraries.html"
       },
       {
         "id": "cv-io",
@@ -460,7 +504,8 @@
           "cv-io",
           "cv-display"
         ],
-        "href": "units/unit04/cv-io.html"
+        "href": "units/unit04/cv-io.html",
+        "practiceHref": "units/unit04/q-cv-io.html"
       },
       {
         "id": "cv-filters",
@@ -469,7 +514,8 @@
           "cv-threshold-kinds",
           "cv-filters"
         ],
-        "href": "units/unit04/cv-filters.html"
+        "href": "units/unit04/cv-filters.html",
+        "practiceHref": "units/unit04/q-cv-filters.html"
       },
       {
         "id": "cv-transform",
@@ -478,7 +524,8 @@
           "cv-perspective",
           "cv-click-card"
         ],
-        "href": "units/unit04/cv-transform.html"
+        "href": "units/unit04/cv-transform.html",
+        "practiceHref": "units/unit04/q-cv-transform.html"
       },
       {
         "id": "cv-features",
@@ -487,7 +534,8 @@
           "cv-feature-kinds",
           "cv-features"
         ],
-        "href": "units/unit04/cv-features.html"
+        "href": "units/unit04/cv-features.html",
+        "practiceHref": "units/unit04/q-cv-features.html"
       },
       {
         "id": "cv-haar",
@@ -497,7 +545,8 @@
           "cv-haar",
           "cv-camera"
         ],
-        "href": "units/unit04/cv-haar.html"
+        "href": "units/unit04/cv-haar.html",
+        "practiceHref": "units/unit04/q-cv-haar.html"
       },
       {
         "id": "cv-yolo",
@@ -507,7 +556,8 @@
           "cv-yolo",
           "cv-yolo-count"
         ],
-        "href": "units/unit04/cv-yolo.html"
+        "href": "units/unit04/cv-yolo.html",
+        "practiceHref": "units/unit04/q-cv-yolo.html"
       },
       {
         "id": "cv-project",
@@ -515,7 +565,8 @@
         "examples": [
           "cv-scan-card"
         ],
-        "href": "units/unit04/cv-project.html"
+        "href": "units/unit04/cv-project.html",
+        "practiceHref": "units/unit04/q-cv-project.html"
       }
     ]
   },

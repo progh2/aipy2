@@ -34,7 +34,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  if topic: extra+=f' data-topic="{esc(topic)}"'
  if lessons: extra+=f' data-lessons="{" ".join(lessons)}"'
  if example: extra+=f' data-example="{esc(example)}"'
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=cls11"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=11"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=cls10" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=7"></script><script type="module" src="{prefix}assets/follow.js?v=8"></script><script type="module" src="{prefix}assets/sync.js?v=3"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=1"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=4"></script><script type="module" src="{prefix}assets/editlock.js?v=1"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=cls12"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=11"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=cls11" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=7"></script><script type="module" src="{prefix}assets/follow.js?v=8"></script><script type="module" src="{prefix}assets/sync.js?v=3"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=1"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=4"></script><script type="module" src="{prefix}assets/editlock.js?v=1"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -74,8 +74,19 @@ def practice(u,topic=''):
  label='이 주제 연습 문제' if topic else '연습 문제'
  note='이 주제와 연결된 문제만 보여 줍니다. 단원 전체 문제는 단원 안내 페이지에서 이어서 풀 수 있습니다.' if topic else '실행 검사는 결과와 입력 조건을 확인합니다. 빈칸은 대표 답안과 비교하며, 다른 표현은 해설을 보고 판단하세요. GUI 코드는 PC 실행 점검까지 마치세요.'
  attr=f' data-topic-filter="{esc(topic)}"' if topic else ''
- extra=f'<p class="small"><a href="index.html#practice">단원 전체 {sum(q["unit"]==u for q in questions)}문제로 →</a></p>' if topic else ''
+ extra=f'<p class="small"><a href="practice.html">단원 전체 {sum(q["unit"]==u for q in questions)}문제로 →</a></p>' if topic else ''
  return f'''<section id="practice" class="section exercise-section"{attr}><p class="eyebrow">PRACTICE / RETRY / UNDERSTAND</p><h2>{label} <span class="count">{count}</span></h2><p>{note}</p>{extra}{mascot.card("../../","thinking","먼저 예상하고, 힌트는 한 단계씩 열어 보세요.","답을 확인한 다음에는 조건을 바꾸어 다시 풀어 보세요. 다른 올바른 풀이도 있을 수 있어요.","practice")}<div class="filter-row"><label>유형<select id="question-kind"><option value="">모든 유형</option></select></label><label>상태<select id="question-status"><option value="">전체</option><option value="todo">미완료</option><option value="retry">다시 풀기</option><option value="done">완료</option></select></label><label>검색<input id="question-search" type="search" placeholder="예: 임포트, 메모장"></label></div><div class="question-progress"><p id="question-summary" aria-live="polite"></p><progress id="question-progress" value="0" max="{count or 1}" aria-label="연습 문제 완료 진행률"></progress></div><div id="questions"></div></section>'''
+
+def practice_card(u,topic=''):
+ # 문제는 독립 페이지로 분리됐다(#106) — 소단원·단원 index에는 카드 링크만 남긴다.
+ # id="practice"는 실제 문제 페이지(q-*.html/practice.html)에만 둔다. 여기 붙이면
+ # app.js가 #question-kind 등을 찾다가 오류를 낸다.
+ count=sum(q['unit']==u and (not topic or q['topic']==topic) for q in questions)
+ href=textbook.question_file(topic) if topic else 'practice.html'
+ label=f'이 소단원 문제 {count}개 풀기 →' if topic else f'단원 전체 문제 {count}개 풀기 →'
+ note='설명·힌트·정답과 함께 스스로 채점합니다.' if topic else '이 단원의 문제를 모아서 한 번에 풀 수 있습니다.'
+ card=f'<a class="example-card practice-card" href="{href}"><span class="example-card-badge">PRACTICE</span><h4>{label}</h4><p>{note}</p></a>'
+ return f'<section id="practice-link" class="section exercise-section"><p class="eyebrow">PRACTICE / RETRY / UNDERSTAND</p><h2>연습 문제</h2>{card}</section>'
 
 def simulator(): return '''<section id="simulator" class="section"><p class="eyebrow">INTERACTIVE GUI CONCEPTS</p><h2>눈으로 확인하는 이벤트와 배치</h2><p class="note">학습용 웹 시뮬레이션입니다. 아래 조작은 정해진 예제의 동작을 재현하며, 편집한 Python 코드를 실행하지 않습니다. 실제 tkinter·PySide6 창은 프로젝트를 내려받아 PC에서 실행하세요.</p><div class="sim-grid"><div class="demo-window"><div class="code-top">인사 앱 · 동작 체험</div><div class="demo-body"><label>이름<input id="demo-name" placeholder="이름을 입력하세요"></label><div class="actions"><button id="demo-greet" class="primary">인사하기</button><button id="demo-reset">초기화</button></div><p id="demo-result" aria-live="polite">이름을 입력하세요.</p><pre id="event-log">이벤트를 기다립니다.</pre></div></div><div class="demo-window"><div class="code-top">레이아웃 · 동작 체험</div><div class="demo-body"><label>배치 방식<select id="demo-layout"><option value="vertical">수직 · pack / QVBoxLayout</option><option value="horizontal">수평 · pack(side) / QHBoxLayout</option><option value="grid">격자 · grid / QGridLayout</option></select></label><div id="layout-preview" class="vertical"><button>A</button><button>B</button><button>C</button><button>D</button></div><p class="small">창 너비를 바꿔 배치 변화를 확인하세요.</p></div></div></div><div class="demo-window memo-demo"><div class="code-top">메모장 · 웹 동작 체험</div><div class="demo-body"><div class="actions"><label class="file-button">텍스트 열기<input type="file" id="demo-open" accept="text/plain,.txt"></label><button id="demo-save">텍스트 저장</button><button id="demo-new">새 문서</button></div><label for="demo-memo">메모 내용</label><textarea id="demo-memo" rows="6" placeholder="한글을 입력하고 저장한 뒤 다시 열어 보세요."></textarea><p id="demo-stats" aria-live="polite">0자 · 0줄</p></div></div></section>'''
 
@@ -131,11 +142,11 @@ for u,lessons in units.items():
  first=next((l for l in lessons if l['examples']),lessons[0])
  rail=textbook.toc(u,lessons)
  cards=''.join(f'<a class="topic-card" href="{textbook.topic_file(l["id"])}"><span class="number">{i+1:02}</span><h3>{esc(l["title"])}</h3><p>{esc(l["lead"])}</p><span>이 주제로 →</span></a>' for i,l in enumerate(lessons))
- body=f'<section class="unit-hero pai-unit-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow">UNIT 0{u} / LEARN BY DOING</p><h1>{textbook.unit_label(u)}</h1><p>{design.META[u][2]}</p><div class="tags"><span>교과서 {design.META[u][1]}쪽</span><span>{len(lessons)}개 학습 주제</span></div><div class="actions"><a class="button primary" href="{textbook.topic_file(first["id"])}">첫 주제 시작하기 <span>↗</span></a><a class="button" href="summary.html">그림으로 정리</a><a class="button" href="#practice">문제 풀기</a><a class="button" href="../../downloads/unit{u}-examples.zip">전체 예제 ZIP ↓</a></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{rail}'+('<a href="#gallery">GUI 비교 갤러리</a><a href="#simulator">웹 동작 체험</a>' if u==2 else '')+'<a href="#practice">연습 문제</a><a href="#journal">학습 저널</a></aside><main id="main">'
+ body=f'<section class="unit-hero pai-unit-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow">UNIT 0{u} / LEARN BY DOING</p><h1>{textbook.unit_label(u)}</h1><p>{design.META[u][2]}</p><div class="tags"><span>교과서 {design.META[u][1]}쪽</span><span>{len(lessons)}개 학습 주제</span></div><div class="actions"><a class="button primary" href="{textbook.topic_file(first["id"])}">첫 주제 시작하기 <span>↗</span></a><a class="button" href="summary.html">그림으로 정리</a><a class="button" href="practice.html">문제 풀기</a><a class="button" href="../../downloads/unit{u}-examples.zip">전체 예제 ZIP ↓</a></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{rail}'+('<a href="#gallery">GUI 비교 갤러리</a><a href="#simulator">웹 동작 체험</a>' if u==2 else '')+'<a href="practice.html">연습 문제</a><a href="#journal">학습 저널</a></aside><main id="main">'
  body+=design.experiments(u)
  body+=f'<section class="section topic-index" aria-labelledby="topic-index-title"><p class="eyebrow">INDEPENDENT LESSONS</p><h2 id="topic-index-title">학습 주제</h2><p>각 주제는 설명·실습·과제가 있는 독립 페이지입니다. 예전 <code>index.html#주제</code> 주소는 해당 페이지로 이어집니다.</p><div class="topic-grid">{cards}</div></section>'
  if u==2: body+=gallery(u,False)+simulator()
- body+=practice(u)+journal_block(u,prefix)+'<div class="actions end-nav">'+(f'<a class="button primary" href="../unit0{u+1}/index.html">다음: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')+'</div></main></div>'
+ body+=practice_card(u)+journal_block(u,prefix)+'<div class="actions end-nav">'+(f'<a class="button primary" href="../unit0{u+1}/index.html">다음: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')+'</div></main></div>'
  (WEB/f'units/unit0{u}/index.html').write_text(layout(title,body,prefix,u,lessons=lesson_ids))
  for i,l in enumerate(lessons):
   prev_l=lessons[i-1] if i else None
@@ -143,17 +154,27 @@ for u,lessons in units.items():
   extras=topic_extras(u,l)
   shown=slots.flags(l,*[examples[e] for e in l['examples'] if e in examples])
   rail_extra=('<a href="#pre-api">코드 전 설명</a>' if shown['pre'] and slots.has_pre(l) else '')+('<a href="#content-tips">역사·영상 팁</a>' if shown['tips'] and slots.has_tips(l) else '')+('<a href="#screenshots">실행 화면</a>' if shown['shots'] and slots.has_shots(l) else '')+('<a href="#gallery">GUI 비교 갤러리</a>' if 'id="gallery"' in extras else '')+('<a href="#simulator">웹 동작 체험</a>' if 'id="simulator"' in extras else '')
-  topic_rail=textbook.toc(u,lessons)+ (f'<a href="#{l["id"]}-lab">실습 카드</a>' if l['examples'] else '')+rail_extra+'<a href="#practice">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
+  topic_rail=textbook.toc(u,lessons)+ (f'<a href="#{l["id"]}-lab">실습 카드</a>' if l['examples'] else '')+rail_extra+f'<a href="{textbook.question_file(l["id"])}">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
   nav_links='<div class="actions topic-nav">'
   nav_links+=f'<a class="button" href="{textbook.topic_file(prev_l["id"])}">← {esc(prev_l["title"])}</a>' if prev_l else '<a class="button" href="index.html">← 단원 안내</a>'
   nav_links+=f'<a class="button primary" href="{textbook.topic_file(next_l["id"])}">다음: {esc(next_l["title"])} →</a>' if next_l else (f'<a class="button primary" href="../unit0{u+1}/index.html">다음 단원: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')
   nav_links+='</div>'
   topic_body=f'<section class="unit-hero pai-unit-hero topic-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 주제 {i+1:02} / {len(lessons):02}</p><h1>{esc(l["title"])}</h1><p>{esc(l["lead"])}</p><div class="tags"><span>교과서 {esc(textbook.page_label(l["pages"]))}</span><span>{"예제 "+str(len(l["examples"]))+"개" if l["examples"] else "개념 학습"}</span></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{topic_rail}</aside><main id="main">'
   qcount=sum(q['unit']==u and q['topic']==l['id'] for q in questions)
-  jump='<nav class="lesson-jump" aria-label="이 주제 바로가기"><a href="#'+l['id']+'"><b>1</b> 설명</a>'+(f'<a href="#{l["id"]}-lab"><b>2</b> 실습</a>' if l['examples'] else '')+f'<a href="#practice"><b>{3 if l["examples"] else 2}</b> 문제 {qcount}개</a></nav>'
+  jump='<nav class="lesson-jump" aria-label="이 주제 바로가기"><a href="#'+l['id']+'"><b>1</b> 설명</a>'+(f'<a href="#{l["id"]}-lab"><b>2</b> 실습</a>' if l['examples'] else '')+f'<a href="{textbook.question_file(l["id"])}"><b>{3 if l["examples"] else 2}</b> 문제 {qcount}개</a></nav>'
   # 설명 → 실습 → 그 주제 문제 순으로 붙이고, 갤러리·체험 같은 보조 자료는 뒤로 보낸다(#91)
-  topic_body+=jump+lesson_section(u,l,i,len(lessons),prefix,True)+practice(u,l['id'])+extras+nav_links+'</main></div>'
+  # 문제 자체는 독립 페이지(q-*.html)로 분리됐다(#106) — 여기서는 카드 링크만 붙인다.
+  topic_body+=jump+lesson_section(u,l,i,len(lessons),prefix,True)+practice_card(u,l['id'])+extras+nav_links+'</main></div>'
   (WEB/f'units/unit0{u}/{textbook.topic_file(l["id"])}').write_text(layout(f'{l["title"]} · {title}',topic_body,prefix,u,topic=l['id'],lessons=lesson_ids))
+  # 소단원 문제 전용 페이지(#106): 설명 페이지와 같은 목차 레일을 쓰고, 문제 섹션만 담는다.
+  q_rail=textbook.toc(u,lessons)+f'<a href="{textbook.topic_file(l["id"])}">소단원 설명으로</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
+  q_hero=f'<section class="unit-hero pai-unit-hero topic-hero"><p class="eyebrow"><a href="{textbook.topic_file(l["id"])}">{esc(l["title"])}</a> · 연습 문제</p><h1>{esc(l["title"])} 연습 문제</h1><div class="tags"><span>문항 {qcount}개</span></div></section>'
+  q_nav='<div class="actions topic-nav">'
+  q_nav+=f'<a class="button" href="{textbook.topic_file(l["id"])}">← 소단원 설명으로</a>'
+  q_nav+=f'<a class="button primary" href="{textbook.question_file(next_l["id"])}">다음 소단원 문제: {esc(next_l["title"])} →</a>' if next_l else '<a class="button primary" href="index.html">다음 소단원으로 →</a>'
+  q_nav+='</div>'
+  q_body=q_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{q_rail}</aside><main id="main">'+practice(u,l['id'])+q_nav+'</main></div>'
+  (WEB/f'units/unit0{u}/{textbook.question_file(l["id"])}').write_text(layout(f'{l["title"]} 연습 문제 · {title}',q_body,prefix,u,topic=l['id'],lessons=lesson_ids))
   # 예제마다 독립 실습 페이지: 설명 바로 아래에 그 예제의 코드가 이미 채워진 편집기가 온다(#101).
   n_examples=len(l['examples'])
   for ei,eid in enumerate(l['examples']):
@@ -161,7 +182,7 @@ for u,lessons in units.items():
    ex_rail_items=''.join(
     f'<li><a href="{textbook.example_file(e2)}"{" aria-current=\"page\"" if e2==eid else ""}>{esc(examples[e2]["title"])}</a></li>'
     for e2 in l['examples'])
-   ex_rail=textbook.toc(u,lessons)+f'<div class="rail-examples"><p class="eyebrow">이 소단원 실습</p><ul>{ex_rail_items}</ul></div>'+f'<a href="{textbook.topic_file(l["id"])}">소단원 설명으로</a><a href="index.html#practice">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
+   ex_rail=textbook.toc(u,lessons)+f'<div class="rail-examples"><p class="eyebrow">이 소단원 실습</p><ul>{ex_rail_items}</ul></div>'+f'<a href="{textbook.topic_file(l["id"])}">소단원 설명으로</a><a href="{textbook.question_file(l["id"])}">연습 문제</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
    ex_tags=f'<span>{"웹에서 실행" if ex["mode"]=="web" else "PC에서 실행"}</span><span>교과서 {esc(textbook.page_label(l["pages"]))}</span>'
    ex_hero=f'<section class="unit-hero pai-unit-hero topic-hero"><p class="eyebrow"><a href="{textbook.topic_file(l["id"])}">{esc(l["title"])}</a> · 실습 {ei+1} / {n_examples}</p><h1>{esc(ex["title"])}</h1><div class="tags">{ex_tags}</div></section>'
    ex_desc=f'<p class="lesson-lead">{esc(l["lead"])}</p>'+slots.render(ex,prefix,ids={'pre':'pre-api','tips':'content-tips','shots':'screenshots'})
@@ -170,10 +191,17 @@ for u,lessons in units.items():
    ex_nav='<div class="actions topic-nav">'
    ex_nav+=f'<a class="button" href="{textbook.example_file(prev_e)}">← 이전 실습: {esc(examples[prev_e]["title"])}</a>' if prev_e else f'<a class="button" href="{textbook.topic_file(l["id"])}">← 소단원으로</a>'
    ex_nav+=f'<a class="button" href="{textbook.topic_file(l["id"])}">소단원 설명으로</a>'
-   ex_nav+=f'<a class="button primary" href="{textbook.example_file(next_e)}">다음 실습: {esc(examples[next_e]["title"])} →</a>' if next_e else f'<a class="button primary" href="{textbook.topic_file(l["id"])}#practice">이 소단원 문제 풀기 →</a>'
+   ex_nav+=f'<a class="button primary" href="{textbook.example_file(next_e)}">다음 실습: {esc(examples[next_e]["title"])} →</a>' if next_e else f'<a class="button primary" href="{textbook.question_file(l["id"])}">이 소단원 문제 풀기 →</a>'
    ex_nav+='</div>'
    ex_body=ex_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{ex_rail}</aside><main id="main">'+ex_desc+editor_markup(u)+ex_nav+'</main></div>'
    (WEB/f'units/unit0{u}/{textbook.example_file(eid)}').write_text(layout(f'{ex["title"]} · {l["title"]} · {title}',ex_body,prefix,u,topic=l['id'],lessons=lesson_ids,example=eid))
+ # 단원 전체 문제 전용 페이지(#106).
+ unit_qcount=sum(q['unit']==u for q in questions)
+ practice_rail=rail+('<a href="index.html#gallery">GUI 비교 갤러리</a><a href="index.html#simulator">웹 동작 체험</a>' if u==2 else '')+'<a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
+ practice_hero=f'<section class="unit-hero pai-unit-hero topic-hero"><p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 단원 전체 연습 문제</p><h1>단원 전체 연습 문제</h1><div class="tags"><span>문항 {unit_qcount}개</span></div></section>'
+ practice_nav=f'<div class="actions topic-nav"><a class="button" href="index.html">← 단원 안내</a></div>'
+ practice_body=practice_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{practice_rail}</aside><main id="main">'+practice(u)+practice_nav+'</main></div>'
+ (WEB/f'units/unit0{u}/practice.html').write_text(layout(f'단원 전체 연습 문제 · {title}',practice_body,prefix,u,lessons=lesson_ids))
  with zipfile.ZipFile(WEB/f'downloads/unit{u}-examples.zip','w',zipfile.ZIP_DEFLATED) as z:
   for id in ids:
    e=examples[id]
@@ -214,8 +242,9 @@ for u, lessons in units.items():
   for eid in lesson['examples']:
    example_unit[eid] = u
 dump(WEB/'data/catalog.json',{
- 'pages':[{'id':f'units/unit0{u}/index.html','label':f'{textbook.ROMAN[u]} {design.META[u][0]}','unit':u} for u in units],
- 'topics':{f'units/unit0{u}/index.html':[{'id':l['id'],'title':l['title'],'examples':list(l['examples']),'href':f'units/unit0{u}/{l["id"]}.html'} for l in lessons] for u,lessons in units.items()},
+ 'pages':[{'id':f'units/unit0{u}/index.html','label':f'{textbook.ROMAN[u]} {design.META[u][0]}','unit':u,'practiceHref':f'units/unit0{u}/practice.html'} for u in units],
+ # 문제 전용 페이지(#106)의 경로도 함께 실어, 과제·초점 이동이 최신 링크를 쓰게 한다.
+ 'topics':{f'units/unit0{u}/index.html':[{'id':l['id'],'title':l['title'],'examples':list(l['examples']),'href':f'units/unit0{u}/{l["id"]}.html','practiceHref':f'units/unit0{u}/{textbook.question_file(l["id"])}'} for l in lessons] for u,lessons in units.items()},
  'examples':{k:{'id':k,'title':v['title'],'unit':example_unit.get(k),'mode':v.get('mode',''),'href':(f'units/unit0{example_unit[k]}/{textbook.example_file(k)}' if k in example_unit else '')} for k,v in examples.items()},
  'questions':[{
   'id':q['id'],'unit':q['unit'],'topic':q['topic'],'kind':q['kind'],'prompt':q['prompt'],

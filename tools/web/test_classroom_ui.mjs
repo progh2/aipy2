@@ -18,7 +18,8 @@ try {
  }
  for(const unit of [1,2,3,4]){
   const data=JSON.parse(await readFile(new URL(`../../web/data/unit${unit}.json`,import.meta.url)));
-  await open(`/units/unit0${unit}/index.html`);
+  // 문제는 독립 페이지로 분리됐다(#106) — 단원 전체 문제는 이제 practice.html에 있다.
+  await open(`/units/unit0${unit}/practice.html`);
   assert.equal(await page.locator('#questions .question').count(),data.questions.length);
   assert.equal(await page.locator('#question-page, #previous-questions, #next-questions').count(),0);
   for(const q of data.questions){
@@ -58,7 +59,11 @@ try {
  assert.notEqual(await page.locator('.hard-comment-field').textContent(),'어디가 막혔나요?');
  console.log('PASS completion position, badge, understanding switches and reload');
  const q=JSON.parse(await readFile(new URL('../../web/data/unit2.json',import.meta.url))).questions.find(q=>q.id==='u2-q009');
+ // 소단원 문제는 독립 페이지(q-{소단원id}.html)로 옮겨졌다(#106) — 여기서 문항이 뜨는지 확인한다.
+ await open('/units/unit02/q-widgets.html');
+ const topicTotal=JSON.parse(await readFile(new URL('../../web/data/unit2.json',import.meta.url))).questions.filter(x=>x.topic==='widgets').length;
  const total=await page.locator('#questions .question').count();
+ assert.equal(total,topicTotal,'q-widgets.html shows exactly this topic\'s questions');
  await page.locator(`#${q.id} textarea`).fill(q.answer);
  await page.locator(`#${q.id} .primary`).click();
  assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
@@ -80,12 +85,15 @@ try {
   const state=window.aipyLearning.getState();
   window.aipyLearning.applyRemote({...state,complete:{'u2-widgets':true},answers:{[id]:{status:'done'}}});
  },q.id);
- assert.equal(await badge.isVisible(),true);
  assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
  await page.reload();await page.waitForFunction(()=>window.aipyLearning?.ready);
  assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
  console.log('PASS progress on answer/filter/remote/reload and repeated attempts');
- await open('/units/unit02/ui.html');
+ // 완료 체크는 소단원 설명 페이지에 있다 — 원격 병합이 그 페이지에도 반영됐는지 확인한다.
+ await open('/units/unit02/widgets.html');
+ assert.equal(await badge.isVisible(),true);
+ console.log('PASS remote-merged completion reflected on the lesson page');
+ await open('/units/unit02/q-ui.html');
  const self=page.locator('#questions .question label.completion input').first();
  await self.check();assert.equal(await page.locator('#question-progress').getAttribute('value'),'1');
  await self.uncheck();assert.equal(await page.locator('#question-progress').getAttribute('value'),'0');

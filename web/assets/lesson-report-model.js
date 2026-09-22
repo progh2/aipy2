@@ -34,7 +34,10 @@ export function choiceQuestions(catalog, {unit, search} = {}) {
 export function questionPage(question) {
  const unit = question && Number(question.unit);
  if (!Number.isInteger(unit) || unit < 1 || unit > 4) return DEFAULT_PAGE;
- return `units/unit0${unit}/index.html`;
+ // 문제는 소단원별 독립 페이지(q-*.html)로 옮겨졌다(#106). 주제를 모르면 단원 전체 문제 페이지로 보낸다.
+ const topic = question && question.topic;
+ if (topic) return `units/unit0${unit}/q-${topic}.html`;
+ return `units/unit0${unit}/practice.html`;
 }
 
 export function focusFromQuestion(question) {

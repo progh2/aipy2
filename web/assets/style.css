@@ -148,3 +148,18 @@ h3{font-size:22px}
 .rail-examples a{display:block;padding:6px 8px 6px 18px;border-radius:5px;text-decoration:none;font-size:12px;color:var(--muted)}
 .rail-examples a:hover{background:#eef2fa;color:var(--navy)}
 .rail-examples a[aria-current="page"]{background:#e9f2ef;color:#114e43;font-weight:700}
+/* 왼쪽 목차 맨 위 '아직 남은 것' — 완료 체크·문제 풀이 놓친 항목(#107) */
+.rail-todo{border-bottom:1px solid var(--line);margin-bottom:12px;padding-bottom:12px}
+.rail-todo .eyebrow{padding-left:8px}
+.rail-todo-list{list-style:none;margin:0;padding:0}
+.rail-todo-item{margin:2px 0}
+.rail-todo-item.rail-todo-ok{display:flex;align-items:center;gap:8px;padding:6px 8px;color:#9aa7bb;font-size:12px}
+.rail-todo-check{color:var(--teal);font-weight:700}
+.rail-todo-link{display:flex;flex-direction:column;gap:5px;padding:8px;border-radius:6px;text-decoration:none;color:var(--ink);font-size:12.5px}
+.rail-todo-link:hover{background:#eef2fa}
+.rail-todo-title{font-weight:650}
+.rail-todo-badges{display:flex;gap:6px;flex-wrap:wrap}
+.rail-todo-badge{font-size:10.5px;padding:2px 8px;border-radius:20px;background:#eef1f6;color:var(--muted)}
+.rail-todo-badge.warn{background:#fbe6e4;color:#c0392b}
+.rail-todo-clear{margin:0;padding:6px 8px;font-size:12.5px;color:#176c5f}
+@media(max-width:960px){.rail-todo{width:100%;border-bottom:1px solid var(--line);margin-bottom:10px;padding-bottom:10px}}
