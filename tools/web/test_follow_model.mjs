@@ -6,7 +6,7 @@ import {
  focusFields, focusWritePayload, focusFromUnitClick,
  isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
- DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId
+ DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId, parseAnchor, anchorId
 } from '../../web/assets/follow-model.js';
 
 function eq(actual, expected, label) {
@@ -143,5 +143,73 @@ eq(resolveFocusLocation({page: 'units/unit01/q-overview.html', topicAnchor: 'u1-
  {page: 'units/unit01/q-overview.html', topicAnchor: 'u1-q041'}, 'question focus keeps its page');
 eq(pageTopicId('units/unit01/q-overview.html'), 'overview', 'question page maps to its lesson');
 eq(pageTopicId('units/unit01/practice.html'), null, 'unit practice page has no lesson topic');
+
+// ── (#124) 앵커 정규화: '@비율'은 스크롤에만 쓴다. parseAnchor/anchorId가 그 규칙의 단일 출처다. ──
+eq(parseAnchor('widgets@0.42'), {id: 'widgets', frac: 0.42}, 'parseAnchor splits id/ratio');
+eq(parseAnchor('widgets'), {id: 'widgets', frac: null}, 'parseAnchor without ratio');
+eq(parseAnchor(''), {id: '', frac: null}, 'parseAnchor empty');
+eq(parseAnchor('u1-q041@1.5'), {id: 'u1-q041', frac: 0.99}, 'parseAnchor clamps ratio to 0.99');
+eq(anchorId('u1-q041@0.3'), 'u1-q041', 'anchorId strips ratio');
+eq(anchorId('u1-q041'), 'u1-q041', 'anchorId passthrough without ratio');
+eq(anchorId(null), '', 'anchorId handles null');
+
+// 회귀: 'u1-q042@0.3'(교사 스크롤 추적)이 문항 앵커로 인식되지 않아 q-math.html이 math.html로
+// 바뀌던 사고(#124). 비율을 뗀 뒤에 문항인지 판정해야 한다.
+eq(resolveFocusLocation({page: 'units/unit01/q-math.html', topicAnchor: 'u1-q042@0.3'}),
+ {page: 'units/unit01/q-math.html', topicAnchor: 'u1-q042'}, 'question anchor with ratio keeps its question page');
+eq(shouldNavigate('units/unit01/q-math.html', {page: 'units/unit01/q-math.html', topicAnchor: 'u1-q042@0.3'}),
+ false, 'question anchor with ratio does not trigger navigation away');
+eq(resolveFocusLocation({page: 'units/unit01/index.html', topicAnchor: 'widgets@0.4'}),
+ {page: 'units/unit01/widgets.html', topicAnchor: 'widgets'}, 'lesson anchor with ratio resolves to its lesson page');
+eq(
+ focusKey({page: 'units/unit01/q-widgets.html', topicAnchor: 'u1-q041@0.1', exampleId: null, updatedAt: 5}),
+ focusKey({page: 'units/unit01/q-widgets.html', topicAnchor: 'u1-q041@0.9', exampleId: null, updatedAt: 5}),
+ 'focusKey ignores ratio differences (ratio is scroll-only)'
+);
+
+// 표 기반 검사: 페이지 6종 × 앵커 3형식(소단원 id / 문항 id / 요소id@비율)의 모든 조합에서
+// resolveFocusLocation이 항상 "실제로 존재할 수 있는 경로 형식"(units/unit0N/{무엇}.html)만 돌려주는지 확인한다.
+// 빈 page(목적지 없음)는 애초에 이동하지 않으므로 형식 검사 대상에서 제외한다.
+const TABLE_PAGES = [
+ 'units/unit01/index.html',      // 단원 인덱스
+ 'units/unit01/widgets.html',    // 소단원
+ 'units/unit01/ex-loop.html',    // 예제 전용 페이지
+ 'units/unit01/q-widgets.html',  // 문제 페이지
+ 'units/unit01/practice.html',   // 종합 문제 페이지
+ 'units/unit01/summary.html'     // 단원 정리 페이지
+];
+const TABLE_ANCHORS = [
+ 'widgets',       // 소단원 id
+ 'u1-q041',       // 문항 id
+ 'widgets@0.42',  // 교사 스크롤 추적(소단원 + 비율)
+ 'u1-q042@0.3'    // 교사 스크롤 추적(문항 + 비율)
+];
+const VALID_PAGE_SHAPE_RE = /^units\/unit0[1-4]\/[a-z0-9-]+\.html$/;
+let tableChecked = 0;
+for (const page of TABLE_PAGES) {
+ for (const anchor of TABLE_ANCHORS) {
+  const loc = resolveFocusLocation({page, topicAnchor: anchor});
+  tableChecked += 1;
+  if (loc.page && !VALID_PAGE_SHAPE_RE.test(loc.page)) {
+   throw new Error(`resolveFocusLocation(${page}, ${anchor}) -> 존재할 수 없는 경로 형식: ${loc.page}`);
+  }
+  // topicAnchor로 남는 값도 비율이 없어야 한다(비율은 follow.js 쪽 scrollToId에서 원본 focus로 따로 쓴다).
+  if (loc.topicAnchor && /@/.test(loc.topicAnchor)) {
+   throw new Error(`resolveFocusLocation(${page}, ${anchor}) -> topicAnchor에 비율이 남음: ${loc.topicAnchor}`);
+  }
+ }
+}
+eq(tableChecked, TABLE_PAGES.length * TABLE_ANCHORS.length, 'resolveFocusLocation 조합 표 전부 검사함');
+console.log(`PASS: resolveFocusLocation ${TABLE_PAGES.length}페이지 × ${TABLE_ANCHORS.length}앵커 조합 모두 유효한 경로 형식`);
+
+// ── (#124) practice.html 초점: 문항 앵커는 페이지를 유지한 채 허용해야 한다. ──
+eq(isUnitLessonPage('units/unit01/practice.html'), false, 'practice page alone is not a lesson page');
+eq(isUnitLessonPage('units/unit01/practice.html', 'u1-q041'), true, 'practice page + question anchor is allowed');
+eq(isUnitLessonPage('units/unit01/practice.html', 'u1-q041@0.3'), true, 'practice page + question anchor(ratio) is allowed');
+eq(isUnitLessonPage('units/unit01/practice.html', 'widgets'), false, 'practice page + lesson anchor stays blocked');
+eq(focusFromUnitClick({href: '#u1-q041', currentPage: 'units/unit01/practice.html'}),
+ {page: 'units/unit01/practice.html', topicAnchor: 'u1-q041', exampleId: null}, 'practice page question anchor focus allowed');
+eq(focusFromUnitClick({href: '#lab', currentPage: 'units/unit01/practice.html'}), null,
+ 'practice page non-question anchor stays blocked');
 
 console.log('PASS: follow-model helpers');
