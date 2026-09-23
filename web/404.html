@@ -21,24 +21,41 @@
 </main>
 <script>
 (function(){
- // 옛 링크·옛 스크립트가 만든 주소를 현재 구조로 되돌린다.
+ // 중요: 자동 이동은 한 번만 한다. 캐시된 옛 스크립트가 다시 잘못된 주소로 보내면
+ // 404 → 이동 → 404 … 순환이 생기기 때문이다(2026-09-23 수업 중 발생).
+ var ONCE = 'aipy-404-redirected';
+ // 도착한 페이지에서 따라가기가 다시 잘못된 주소로 보내지 않도록 상태를 끈다.
+ try {
+  sessionStorage.removeItem('aipy-follow-pending');
+  for (var i = sessionStorage.length - 1; i >= 0; i--) {
+   var k = sessionStorage.key(i);
+   if (k && k.indexOf('aipy-following:') === 0) sessionStorage.setItem(k, '');
+  }
+ } catch (e) {}
  var p = location.pathname.replace(/^\/aipy2/, '');
  var m = /^\/units\/unit0([1-4])\/([a-z0-9-]+)\.html$/.exec(p);
- var target = null, why = '';
+ var target = null;
  if (m) {
   var unit = m[1], name = m[2];
-  var q = /^u[1-4]-q\d+$/.exec(name);
-  if (q) { target = '/aipy2/units/unit0' + unit + '/practice.html#' + name; why = '문제 페이지로'; }
-  else if (/^ex-/.test(name) || /^q-/.test(name)) { target = '/aipy2/units/unit0' + unit + '/index.html'; why = '단원 안내로'; }
-  else { target = '/aipy2/units/unit0' + unit + '/index.html'; why = '단원 안내로'; }
+  target = /^u[1-4]-q\d+$/.test(name)
+   ? '/aipy2/units/unit0' + unit + '/practice.html#' + name
+   : '/aipy2/units/unit0' + unit + '/index.html';
+  // 캐시된 옛 HTML 대신 새 HTML을 받도록 한 번만 쿼리를 붙인다.
+  target += (target.indexOf('#') < 0 ? '?r=1' : '');
  }
  var go = document.getElementById('go');
- if (target) {
-  document.getElementById('msg').textContent = '주소가 바뀌었어요. ' + why + ' 옮겨 갑니다…';
+ var msg = document.getElementById('msg');
+ var already = false;
+ try { already = sessionStorage.getItem(ONCE) === '1'; } catch (e) {}
+ if (target && !already) {
+  try { sessionStorage.setItem(ONCE, '1'); } catch (e) {}
+  msg.textContent = '주소가 바뀌었어요. 올바른 위치로 한 번 옮겨 갑니다…';
   go.href = target; go.textContent = '지금 이동하기';
   setTimeout(function(){ location.replace(target); }, 1200);
  } else {
-  document.getElementById('msg').textContent = '주소를 확인해 주세요. 아래에서 단원을 골라 이어서 학습할 수 있어요.';
+  msg.innerHTML = '선생님 화면 따라가기를 잠시 껐어요. 아래에서 단원을 고르면 이어서 학습할 수 있어요.<br>' +
+   '계속 이 화면이 보이면 <b>Ctrl+Shift+R</b>(맥 <b>Cmd+Shift+R</b>)로 새로고침하세요.';
+  if (target) { go.href = target; go.textContent = '이 페이지로 이동'; }
  }
 })();
 </script></body></html>
