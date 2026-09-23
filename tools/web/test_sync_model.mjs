@@ -3,7 +3,7 @@ import {
  LEARNING_KEY, CODE_IDLE_MS, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
  summarizeProgress, progressFields, statePayload, cloudToState, projectNeedsChoice,
  projectPreview, emptyState, normalizeState, projectCodeEqual, keepProjectRecord,
- projectConflictSignature, CHOICE_KEY
+ projectConflictSignature, CHOICE_KEY, TOMBSTONE_TTL_MS, freshTombstone
 } from '../../web/assets/sync-model.js';
 
 function code(text, extra = {}) {
@@ -130,6 +130,58 @@ const stampedProject = stampChanged(
 );
 eq(stampedProject.times.projects.math, 10, 'same source does not restamp');
 eq(stampedProject.projects.math.attempts, 2, 'stash without check fields keeps richer record');
+
+// #119 원본으로 되돌리기(프로젝트 삭제) 후 stampChanged가 툼스톤을 남기는지.
+const deletedStamp = stampChanged(
+ {projects: {math: code('print(1)')}, times: {projects: {math: 10}}},
+ {projects: {}},
+ now
+);
+eq(deletedStamp.projects.math, undefined, 'deleted project removed from map');
+eq(deletedStamp.times.projects.math, undefined, 'deleted project has no time entry');
+eq(deletedStamp.times.tombstones.projects.math, now, 'deleted project stamped as tombstone');
+
+// 다시 만들면(되돌리기 취소 등) 낡은 툼스톤을 지운다.
+const revivedStamp = stampChanged(
+ {projects: {}, times: {tombstones: {projects: {math: now - 1000}}}},
+ {projects: {math: code('print(2)')}},
+ now
+);
+eq(revivedStamp.times.tombstones.projects.math, undefined, 'recreated project clears its tombstone');
+
+// 되돌리기 후 병합해도 클라우드 값이 부활하지 않는다: 로컬이 방금 지웠고(툼스톤 now),
+// 클라우드는 그보다 오래된 버전을 그대로 들고 있다.
+const resetLocal = normalizeState({
+ projects: {},
+ times: {tombstones: {projects: {math: now}}}
+});
+const staleCloud = normalizeState({
+ projects: {math: code('print("old")')},
+ times: {projects: {math: now - 5000}}
+});
+const afterReset = mergeStates(resetLocal, staleCloud, {}, now);
+eq(afterReset.state.projects.math, undefined, 'reset keeps project deleted after merge');
+eq(afterReset.state.times.tombstones.projects.math, now, 'merge keeps tombstone to resist stale cloud');
+
+// 다른 기기가 삭제 이후에 더 늦게 다시 만들었다면 그 수정은 유지된다.
+const newerCloud = normalizeState({
+ projects: {math: code('print("new device")')},
+ times: {projects: {math: now + 5000}}
+});
+const afterLaterEdit = mergeStates(resetLocal, newerCloud, {}, now + 5000);
+eq(afterLaterEdit.state.projects.math.files['main.py'], 'print("new device")', 'later edit on another device survives a stale local tombstone');
+eq(afterLaterEdit.state.times.tombstones.projects.math, undefined, 'tombstone drops once a later edit wins');
+
+// 툼스톤은 TTL이 지나면 무시된다(무한 누적 방지).
+eq(freshTombstone({math: now}, 'math', now + TOMBSTONE_TTL_MS - 1), now, 'tombstone fresh just inside ttl');
+eq(freshTombstone({math: now}, 'math', now + TOMBSTONE_TTL_MS + 1), 0, 'tombstone expires past ttl');
+const expiredResetLocal = normalizeState({
+ projects: {},
+ times: {tombstones: {projects: {math: now}}}
+});
+const expiredMerge = mergeStates(expiredResetLocal, staleCloud, {}, now + TOMBSTONE_TTL_MS + 1);
+eq(expiredMerge.state.projects.math.files['main.py'], 'print("old")', 'expired tombstone no longer blocks revival');
+eq(expiredMerge.state.times.tombstones.projects.math, undefined, 'expired tombstone is dropped from merged state');
 
 const counts = summarizeProgress({
  complete: {'u1-overview': true, 'u1-define': false, 'u3-ml': true, 'skip': true},

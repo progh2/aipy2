@@ -1,16 +1,26 @@
 /* 학습 기록 동기화(M2) 순수 헬퍼. Firebase 없이 병합·요약·쓰기 억제를 검사합니다.
    화면이 읽는 complete/answers/journals/projects 모양은 그대로 두고,
    항목별 시각은 times 맵에만 둡니다. 문항·주제가 늘어도 키를 나열하지 않습니다.
-   understanding은 progress 요약에만 두고, 값 모양은 understanding-model이 맞춥니다. */
+   understanding은 progress 요약에만 두고, 값 모양은 understanding-model이 맞춥니다.
+   삭제(#119): 항목이 사라지면 times.tombstones[bucket][key]에 삭제 시각을 남긴다.
+   병합 때 상대(로컬/클라우드)에 그 항목이 남아 있어도 삭제 시각이 그 항목 시각보다
+   늦거나 같으면 삭제를 유지한다(그래야 되돌리기 후 병합해도 부활하지 않는다). 반대로
+   삭제 이후 어느 기기에서 더 늦게 다시 만들었다면 그 항목 시각이 더 늦으므로 살아남는다.
+   툼스톤은 TOMBSTONE_TTL_MS가 지나면 무시되어 다음 병합에서 자연히 사라진다(무한 누적 방지). */
 import {normalizeUnderstanding} from './understanding-model.js';
 
 export const LEARNING_KEY = 'aipy-lab-v1';
 export const CODE_IDLE_MS = 25000;
 export const BUCKETS = ['complete', 'answers', 'journals', 'projects'];
 export const IMMEDIATE_KINDS = ['complete', 'answer', 'import'];
+export const TOMBSTONE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+export function emptyTombstones() {
+ return {complete: {}, answers: {}, journals: {}, projects: {}};
+}
 
 export function emptyTimes() {
- return {complete: {}, answers: {}, journals: {}, projects: {}, last: 0};
+ return {complete: {}, answers: {}, journals: {}, projects: {}, last: 0, tombstones: emptyTombstones()};
 }
 
 export function emptyState() {
@@ -21,6 +31,23 @@ export function asMap(value) {
  return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
 }
 
+function normalizeTombstoneMap(raw) {
+ const map = asMap(raw);
+ const out = {};
+ for (const [key, value] of Object.entries(map)) {
+  const n = Number(value);
+  if (Number.isFinite(n) && n > 0) out[key] = n;
+ }
+ return out;
+}
+
+// now 시각 기준으로 아직 유효한(TTL 안의) 삭제 시각을 돌려준다. 지났으면 0(무시).
+export function freshTombstone(map, key, now) {
+ const t = Number(asMap(map)[key]);
+ if (!Number.isFinite(t) || t <= 0) return 0;
+ return (now - t) < TOMBSTONE_TTL_MS ? t : 0;
+}
+
 export function normalizeState(raw) {
  const state = emptyState();
  if (!raw || typeof raw !== 'object') return state;
@@ -28,6 +55,8 @@ export function normalizeState(raw) {
  state.last = typeof raw.last === 'string' ? raw.last : '';
  const times = asMap(raw.times);
  for (const key of BUCKETS) state.times[key] = {...asMap(times[key])};
+ const tombstones = asMap(times.tombstones);
+ for (const key of BUCKETS) state.times.tombstones[key] = normalizeTombstoneMap(tombstones[key]);
  const lastTime = Number(times.last);
  state.times.last = Number.isFinite(lastTime) ? lastTime : 0;
  return state;
@@ -91,7 +120,13 @@ export function stampChanged(prev, next, now) {
   answers: {...from.times.answers},
   journals: {...from.times.journals},
   projects: {...from.times.projects},
-  last: from.times.last || 0
+  last: from.times.last || 0,
+  tombstones: {
+   complete: {...from.times.tombstones.complete},
+   answers: {...from.times.tombstones.answers},
+   journals: {...from.times.tombstones.journals},
+   projects: {...from.times.tombstones.projects}
+  }
  };
  for (const bucket of BUCKETS) {
   const keys = new Set([...Object.keys(from[bucket]), ...Object.keys(to[bucket])]);
@@ -100,8 +135,12 @@ export function stampChanged(prev, next, now) {
    const has = Object.hasOwn(to[bucket], key);
    if (!has) {
     delete to.times[bucket][key];
+    // 방금 사라졌다(원본으로 되돌리기 등). 되살아나지 않도록 삭제 시각을 남긴다.
+    if (had) to.times.tombstones[bucket][key] = now;
     continue;
    }
+   // 항목이 있다 = 삭제가 아니다(다시 만들었거나 원래부터 있었다). 낡은 툼스톤은 지운다.
+   delete to.times.tombstones[bucket][key];
    if (!had || !deepEqual(from[bucket][key], to[bucket][key])) {
     if (bucket === 'projects' && had && projectCodeEqual(from[bucket][key], to[bucket][key])) {
      to[bucket][key] = keepProjectRecord(from[bucket][key], to[bucket][key]);
@@ -116,35 +155,52 @@ export function stampChanged(prev, next, now) {
  return to;
 }
 
-export function mergeBucket(localMap, cloudMap, localTimes, cloudTimes, bucket, now) {
+export function mergeBucket(localMap, cloudMap, localTimes, cloudTimes, bucket, now, localTombstones, cloudTombstones) {
  const local = asMap(localMap);
  const cloud = asMap(cloudMap);
- const keys = new Set([...Object.keys(local), ...Object.keys(cloud)]);
+ const localTomb = asMap(localTombstones);
+ const cloudTomb = asMap(cloudTombstones);
+ const keys = new Set([...Object.keys(local), ...Object.keys(cloud), ...Object.keys(localTomb), ...Object.keys(cloudTomb)]);
  const map = {};
  const times = {};
+ const tombstones = {};
  for (const key of keys) {
   const hasL = Object.hasOwn(local, key);
   const hasC = Object.hasOwn(cloud, key);
   const lt = itemTime(localTimes, bucket, key);
   const ct = itemTime(cloudTimes, bucket, key);
-  if (hasL && !hasC) {
-   map[key] = local[key];
-   times[key] = lt || now;
-  } else if (!hasL && hasC) {
-   map[key] = cloud[key];
-   times[key] = ct;
-  } else if (deepEqual(local[key], cloud[key])) {
-   map[key] = local[key];
-   times[key] = Math.max(lt, ct);
-  } else if (lt >= ct) {
-   map[key] = local[key];
-   times[key] = lt || now;
-  } else {
-   map[key] = cloud[key];
-   times[key] = ct;
+  const tombTime = Math.max(freshTombstone(localTomb, key, now), freshTombstone(cloudTomb, key, now));
+  if (hasL && hasC) {
+   if (deepEqual(local[key], cloud[key])) {
+    map[key] = local[key];
+    times[key] = Math.max(lt, ct);
+   } else if (lt >= ct) {
+    map[key] = local[key];
+    times[key] = lt || now;
+   } else {
+    map[key] = cloud[key];
+    times[key] = ct;
+   }
+   continue;
   }
+  if (hasL && !hasC) {
+   // 클라우드에는 없고(다른 기기에서 지웠거나 원래 없었음) 삭제 시각이 이 항목 시각보다
+   // 늦거나 같으면 삭제를 유지한다. 그렇지 않으면 이 기기가 더 늦게 만든 것이므로 살린다.
+   if (tombTime && tombTime >= lt) { tombstones[key] = tombTime; continue; }
+   map[key] = local[key];
+   times[key] = lt || now;
+   continue;
+  }
+  if (!hasL && hasC) {
+   if (tombTime && tombTime >= ct) { tombstones[key] = tombTime; continue; }
+   map[key] = cloud[key];
+   times[key] = ct;
+   continue;
+  }
+  // 둘 다 없다 — 삭제 시각만 있으면 TTL 안에서 들고 있는다(뒤늦게 도착하는 기기를 대비).
+  if (tombTime) tombstones[key] = tombTime;
  }
- return {map, times};
+ return {map, times, tombstones};
 }
 
 export function projectNeedsChoice(localValue, cloudValue, localTime, cloudTime) {
@@ -154,26 +210,36 @@ export function projectNeedsChoice(localValue, cloudValue, localTime, cloudTime)
  return localTime === cloudTime;
 }
 
-export function mergeProjects(localProjects, cloudProjects, localTimes, cloudTimes, choices, now) {
+export function mergeProjects(localProjects, cloudProjects, localTimes, cloudTimes, choices, now, localTombstones, cloudTombstones) {
  const local = asMap(localProjects);
  const cloud = asMap(cloudProjects);
- const keys = new Set([...Object.keys(local), ...Object.keys(cloud)]);
+ const localTomb = asMap(localTombstones);
+ const cloudTomb = asMap(cloudTombstones);
+ const keys = new Set([...Object.keys(local), ...Object.keys(cloud), ...Object.keys(localTomb), ...Object.keys(cloudTomb)]);
  const map = {};
  const times = {};
+ const tombstones = {};
  const unresolved = [];
  for (const key of keys) {
   const hasL = Object.hasOwn(local, key);
   const hasC = Object.hasOwn(cloud, key);
   const lt = itemTime(localTimes, 'projects', key);
   const ct = itemTime(cloudTimes, 'projects', key);
+  const tombTime = Math.max(freshTombstone(localTomb, key, now), freshTombstone(cloudTomb, key, now));
   if (hasL && !hasC) {
+   if (tombTime && tombTime >= lt) { tombstones[key] = tombTime; continue; }
    map[key] = local[key];
    times[key] = lt || now;
    continue;
   }
   if (!hasL && hasC) {
+   if (tombTime && tombTime >= ct) { tombstones[key] = tombTime; continue; }
    map[key] = cloud[key];
    times[key] = ct;
+   continue;
+  }
+  if (!hasL && !hasC) {
+   if (tombTime) tombstones[key] = tombTime;
    continue;
   }
   if (projectCodeEqual(local[key], cloud[key])) {
@@ -200,16 +266,17 @@ export function mergeProjects(localProjects, cloudProjects, localTimes, cloudTim
    times[key] = ct;
   }
  }
- return {map, times, unresolved};
+ return {map, times, tombstones, unresolved};
 }
 
 export function mergeStates(localRaw, cloudRaw, choices, now) {
  const local = normalizeState(localRaw);
  const cloud = normalizeState(cloudRaw);
- const complete = mergeBucket(local.complete, cloud.complete, local.times, cloud.times, 'complete', now);
- const answers = mergeBucket(local.answers, cloud.answers, local.times, cloud.times, 'answers', now);
- const journals = mergeBucket(local.journals, cloud.journals, local.times, cloud.times, 'journals', now);
- const projects = mergeProjects(local.projects, cloud.projects, local.times, cloud.times, choices, now);
+ const lt = local.times.tombstones, ct = cloud.times.tombstones;
+ const complete = mergeBucket(local.complete, cloud.complete, local.times, cloud.times, 'complete', now, lt.complete, ct.complete);
+ const answers = mergeBucket(local.answers, cloud.answers, local.times, cloud.times, 'answers', now, lt.answers, ct.answers);
+ const journals = mergeBucket(local.journals, cloud.journals, local.times, cloud.times, 'journals', now, lt.journals, ct.journals);
+ const projects = mergeProjects(local.projects, cloud.projects, local.times, cloud.times, choices, now, lt.projects, ct.projects);
  let last = local.last;
  let lastTime = local.times.last || 0;
  if (cloud.last && cloud.times.last > lastTime) {
@@ -229,7 +296,13 @@ export function mergeStates(localRaw, cloudRaw, choices, now) {
     answers: answers.times,
     journals: journals.times,
     projects: projects.times,
-    last: lastTime
+    last: lastTime,
+    tombstones: {
+     complete: complete.tombstones,
+     answers: answers.tombstones,
+     journals: journals.tombstones,
+     projects: projects.tombstones
+    }
    }
   },
   unresolved: projects.unresolved
