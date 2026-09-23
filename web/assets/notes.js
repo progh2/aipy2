@@ -6,7 +6,8 @@ import {load, readTeacherFlag} from './auth.js';
 import {pageFromPath} from './follow-model.js';
 import {
  NOTE_COLORS, NOTE_VISIBILITY, NOTE_VISIBILITY_LABELS, NOTE_TEXT_MAX, NOTE_WRITE_MS,
- randomColor, linkify, extractLinks, noteFields, normalizeNote, classIdOf, sortNotes, authorLabel
+ randomColor, linkify, extractLinks, noteFields, normalizeNote, classIdOf, sortNotes, authorLabel,
+ currentTeacherClassId, resolveNoteClassId, noteVisibilityBlocked
 } from './notes-model.js';
 
 const node = (tag, cls, text) => {
@@ -112,7 +113,8 @@ async function createNote() {
  if (!user || !profile) { toast('학교 계정으로 로그인하면 메모를 붙일 수 있어요.'); return; }
  const draft = {};
  placeFromY(draft, (window.scrollY + window.innerHeight * 0.35) / zoom());
- const fields = noteFields({profile: {...profile, uid: user.uid}, page, y: draft.y, anchor: draft.anchor, offset: draft.offset, color: randomColor(), visibility: 'private', text: ''});
+ const resolvedClassId = resolveNoteClassId({profile, teacher, teacherClassId: currentTeacherClassId(window.aipyClass), existingClassId: ''});
+ const fields = noteFields({profile: {...profile, uid: user.uid}, page, y: draft.y, anchor: draft.anchor, offset: draft.offset, color: randomColor(), visibility: 'private', text: '', classId: resolvedClassId});
  try {
   const ref = await fs.addDoc(fs.collection(db, 'notes'), {...fields, createdAt: fs.serverTimestamp(), updatedAt: fs.serverTimestamp()});
   // 구독 반영 전에 바로 편집할 수 있게 낙관적으로 그린다.
@@ -132,8 +134,14 @@ function scheduleSave(note, patch) {
 
 async function saveNote(note) {
  if (!user || !profile) return;
+ const visibility = teacher ? note.visibility : 'private';
+ const resolvedClassId = resolveNoteClassId({profile, teacher, teacherClassId: currentTeacherClassId(window.aipyClass), existingClassId: note.classId});
+ if (noteVisibilityBlocked({teacher, visibility, classId: resolvedClassId})) {
+  toast('반을 먼저 선택하세요.');
+  return;
+ }
  try {
-  const fields = noteFields({profile: {...profile, uid: user.uid}, page: note.page || page, y: note.y, anchor: note.anchor, offset: note.offset, color: note.color, visibility: teacher ? note.visibility : 'private', text: note.text});
+  const fields = noteFields({profile: {...profile, uid: user.uid}, page: note.page || page, y: note.y, anchor: note.anchor, offset: note.offset, color: note.color, visibility, text: note.text, classId: resolvedClassId});
   await fs.setDoc(fs.doc(db, 'notes', note.id), {...fields, updatedAt: fs.serverTimestamp()}, {merge: true});
  } catch (error) {
   console.warn('[notes]', error);
@@ -204,7 +212,15 @@ function noteCard(note) {
     const opt = node('option', '', NOTE_VISIBILITY_LABELS[v]);
     opt.value = v; opt.selected = v === note.visibility; sel.append(opt);
    }
-   sel.addEventListener('change', () => scheduleSave(note, {visibility: sel.value}));
+   sel.addEventListener('change', () => {
+    const resolvedClassId = resolveNoteClassId({profile, teacher, teacherClassId: currentTeacherClassId(window.aipyClass), existingClassId: note.classId});
+    if (noteVisibilityBlocked({teacher, visibility: sel.value, classId: resolvedClassId})) {
+     toast('반을 먼저 선택하세요.');
+     sel.value = note.visibility;
+     return;
+    }
+    scheduleSave(note, {visibility: sel.value});
+   });
    head.append(sel);
   }
   const colorBtn = node('button', 'note-color-btn', '🎨');
@@ -314,7 +330,7 @@ function start() {
  const col = fs.collection(db, 'notes');
  subscribe('own', fs.query(col, fs.where('uid', '==', user.uid), fs.where('page', '==', page)));
  subscribe('all', fs.query(col, fs.where('visibility', '==', 'all'), fs.where('page', '==', page)));
- const cls = teacher ? (window.aipyClass || '') : classId;
+ const cls = teacher ? currentTeacherClassId(window.aipyClass) : classId;
  if (cls) subscribe('cls', fs.query(col, fs.where('visibility', '==', 'students'), fs.where('classId', '==', cls), fs.where('page', '==', page)));
 }
 

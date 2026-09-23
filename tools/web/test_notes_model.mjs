@@ -1,7 +1,8 @@
 /* 포스트잇 메모 순수 함수 검사. node tools/web/test_notes_model.mjs */
 import {
  NOTE_COLORS, NOTE_VISIBILITY, NOTE_TEXT_MAX, randomColor, isNoteColor, isVisibility, clipNoteText,
- clampY, clampOffset, linkify, extractLinks, noteFields, normalizeNote, canSee, sortNotes, authorLabel, classIdOf
+ clampY, clampOffset, linkify, extractLinks, noteFields, normalizeNote, canSee, sortNotes, authorLabel, classIdOf,
+ currentTeacherClassId, resolveNoteClassId, noteVisibilityBlocked
 } from '../../web/assets/notes-model.js';
 
 function eq(actual, expected, label) {
@@ -49,4 +50,27 @@ eq(canSee(other, {uid: 't', classId: '', teacher: true}), true, 'teacher sees al
 eq(sortNotes([mine, cls, other, pub]).map((n) => n.id), ['n2', 'n4', 'n3', 'n1'], 'sort by y');
 eq(authorLabel({studentId: '2314', name: '홍길동'}), '2314 홍길동', 'author label');
 eq(authorLabel({}), '익명', 'author fallback');
+
+// #120 교사 메모 classId 해석
+eq(currentTeacherClassId({classId: '2-3', grade: 2, classroom: 3}), '2-3', 'teacher class id from aipyClass');
+eq(currentTeacherClassId(null), '', 'no aipyClass yields empty classId');
+eq(currentTeacherClassId({grade: 2}), '', 'aipyClass without classId string yields empty');
+
+eq(resolveNoteClassId({profile: {grade: 2, classroom: 5}, teacher: false}), '2-5', 'student uses own class');
+eq(resolveNoteClassId({profile: {}, teacher: true, teacherClassId: '2-3'}), '2-3', 'teacher uses selected class');
+eq(resolveNoteClassId({profile: {}, teacher: true, teacherClassId: ''}), '', 'teacher with no class selected yields empty');
+eq(resolveNoteClassId({profile: {}, teacher: true, teacherClassId: '3-1', existingClassId: '2-3'}), '2-3', 'existing classId is kept even if teacher switched class');
+
+eq(noteVisibilityBlocked({teacher: true, visibility: 'students', classId: ''}), true, 'teacher without class blocked for students visibility');
+eq(noteVisibilityBlocked({teacher: true, visibility: 'students', classId: '2-3'}), false, 'teacher with class not blocked');
+eq(noteVisibilityBlocked({teacher: true, visibility: 'all', classId: ''}), false, 'all visibility never blocked');
+eq(noteVisibilityBlocked({teacher: false, visibility: 'students', classId: ''}), false, 'student cannot set students visibility anyway, not blocked here');
+
+const teacherFields = noteFields({
+ profile: {uid: 't1', email: 't@e-mirim.hs.kr', name: '교사'},
+ page: 'p', y: 1, visibility: 'students',
+ classId: resolveNoteClassId({profile: {}, teacher: true, teacherClassId: '2-3'})
+});
+eq(teacherFields.classId, '2-3', 'teacher note stores selected classId');
+
 console.log('notes model OK');
