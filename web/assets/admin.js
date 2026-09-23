@@ -37,6 +37,10 @@ const SAMPLE = [HEADER,
  `s2315@${SCHOOL},2315,2025,김서연,,,`].join(NEWLINE);
 
 let planned = [];
+// check()에서 읽은 기존 명단(이메일→문서)을 그대로 apply()에 넘긴다(#123). cachedRoster(renderRoster가
+// 채움)에 의존하면, listRoster가 아직 한 번도 안 돌았거나 그 사이 갱신되지 않아 archived·archivedAt이
+// 비어 있는 상태로 CSV 반영 때 보관 학생을 되살려 버릴 수 있다.
+let plannedExisting = new Map();
 let teacherEmail = '';
 let cachedRoster = null;
 let dbRef = null;
@@ -156,10 +160,18 @@ export function columnOrder(head) {
 
 // 학번 규칙: 4자리 = 학년(1)·반(1)·번호(2), 5자리 = 학년(1)·반(2)·번호(2). 예: 2314 → 2학년 3반 14번.
 // 학년이 바뀌면 학번이 새로 부여되므로 코호트 구분은 입학년도로 한다.
+// 범위를 벗어난 값(학년 0/4 이상, 반 0, 번호 0 등)은 자릿수는 맞아도 학번이 아니다(#123) — null로
+// 돌려 readRow가 오류로 표시하게 한다.
+function validParts(grade, classroom, number) {
+ if (!(grade >= 1 && grade <= 3)) return null;
+ if (!(classroom >= 1)) return null;
+ if (!(number >= 1)) return null;
+ return {grade, classroom, number};
+}
 export function deriveFromStudentId(studentId) {
  const id = String(studentId || '');
- if (/^\d{4}$/.test(id)) return {grade: +id[0], classroom: +id[1], number: +id.slice(2)};
- if (/^\d{5}$/.test(id)) return {grade: +id[0], classroom: +id.slice(1, 3), number: +id.slice(3)};
+ if (/^\d{4}$/.test(id)) return validParts(+id[0], +id[1], +id.slice(2));
+ if (/^\d{5}$/.test(id)) return validParts(+id[0], +id.slice(1, 3), +id.slice(3));
  return null;
 }
 
@@ -183,11 +195,16 @@ export function readRow(cells, order) {
    entry[field.key] = value;
   }
  }
- // 학년·반·번호가 비면 학번에서 유도한다.
+ // 학년·반·번호가 비면 학번에서 유도한다. CSV에 직접 적은 값이 학번에서 유도한 값과 다르면
+ // 오타·전입 전 학번 재사용 등 데이터 불일치이므로 오류로 본다(#123).
  const derived = deriveFromStudentId(entry.studentId);
  for (const key of ['grade', 'classroom', 'number']) {
-  if (entry[key] == null && derived) entry[key] = derived[key];
+  if (entry[key] == null) { if (derived) entry[key] = derived[key]; }
+  else if (derived && entry[key] !== derived[key]) {
+   problems.push(`${key}가 학번(${entry.studentId})과 다름: 입력값 ${entry[key]} ≠ 학번 기준 ${derived[key]}`);
+  }
  }
+ if (entry.studentId && !derived) problems.push('학번이 4~5자리 숫자 형식(학년·반·번호)이 아님');
  if (entry.grade == null) problems.push('grade 없음(학번이 4~5자리 숫자가 아니면 직접 입력)');
  if (entry.classroom == null) problems.push('classroom 없음(학번이 4~5자리 숫자가 아니면 직접 입력)');
  if (entry.email) {
@@ -214,6 +231,7 @@ async function check(db, store) {
   $('roster-summary').textContent = '현재 명단을 읽지 못했습니다. 권한과 네트워크를 확인하세요.';
   return;
  }
+ plannedExisting = existing;
 
  const seenEmail = new Map(), seenId = new Map();
  const results = body.map((cells, i) => {
@@ -289,7 +307,7 @@ async function apply(db, store) {
      updatedAt: store.serverTimestamp()
     };
     if (entry.number != null) payload.number = entry.number;
-    const before = existingFromCache(entry.email);
+    const before = plannedExisting.get(entry.email) || existingFromCache(entry.email);
     if (before && before.archived === true) {
      payload.archived = true;
      if (before.archivedAt) payload.archivedAt = before.archivedAt;

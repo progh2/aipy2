@@ -105,6 +105,25 @@ eq(byName['김서연'].online, false, 'roster only offline');
 eq(byName['박민수'].doneCount, 3, 'progress-only card');
 eq(byName['홍길동'].completeRate, completeRate(1, 3), 'hong complete rate');
 
+// 명단에서 2-3 → 2-4로 반을 옮긴 학생(#123). progress 문서의 classroom 필드는 다음 활동 전까지
+// 옛 반(3)을 그대로 갖고 있을 수 있다 — 반 판정은 명단(roster)의 현재 반으로 해야
+// 새 반에 진행률과 함께 나오고, 옛 반에는 유령 카드로 남지 않는다.
+const movedRoster = [
+ {email: 'e@e-mirim.hs.kr', studentId: '20415', name: '이동학생', grade: 2, classroom: 4, number: 5}
+];
+const movedProgress = [
+ {
+  id: 'uid-e', uid: 'uid-e', email: 'e@e-mirim.hs.kr', studentId: '20415', name: '이동학생',
+  grade: 2, classroom: 3, number: 15,
+  counts: {done: ['u1-overview'], lastActivity: now}
+ }
+];
+const movedNewClassCards = buildStudentCards({classId: '2-4', topics, now, roster: movedRoster, progress: movedProgress});
+eq(movedNewClassCards.length, 1, 'moved student appears in new class');
+eq(movedNewClassCards[0].doneCount, 1, 'moved student progress carried over to new class');
+const movedOldClassCards = buildStudentCards({classId: '2-3', topics, now, roster: movedRoster, progress: movedProgress});
+eq(movedOldClassCards.length, 0, 'moved student does not ghost in old class');
+
 const sorted = sortStudentCards(cards);
 eq(sorted.map((c) => c.name), ['김서연', '홍길동', '박민수'], 'student id order');
 
