@@ -6,7 +6,8 @@ import {classId} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, shouldNavigate, focusHref, focusKey, topicFromHash,
  visibleTopic, presenceFields, readPendingFocus, writePendingFocus, readFollowing,
- writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS, samePage, unitFromPage
+ writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS, samePage, unitFromPage,
+ parseAnchor
 } from './follow-model.js';
 import {titlesFromCatalog} from './understanding-model.js';
 
@@ -199,12 +200,7 @@ function flash(el) {
 }
 
 // 'libraries@0.42' → {id, frac}. 비율이 있으면 요소 안 그 지점(선생님이 보던 높이)으로 간다.
-function parseAnchor(anchor) {
- const m = /^([^@]+)(?:@([0-9.]+))?$/.exec(String(anchor || ''));
- if (!m) return {id: '', frac: 0};
- const frac = m[2] === undefined ? null : Math.min(0.99, Math.max(0, parseFloat(m[2]) || 0));
- return {id: m[1], frac};
-}
+// 앵커 파싱은 follow-model.js의 parseAnchor로 모아 두었다(페이지 판정과 같은 규칙을 쓴다).
 
 function scrollToId(anchor, force) {
  const {id, frac} = parseAnchor(anchor);
@@ -235,18 +231,22 @@ function applyFocus(focus, force) {
  if (!focus || (!following && !force)) return;
  const key = focusKey(focus);
  if (!force && key && key === lastFocusKey) return;
- lastFocusKey = key || lastFocusKey;
  if (shouldNavigate(currentPage(), focus)) {
-  const href = focusHref(prefix, {...focus, topicAnchor: parseAnchor(focus.topicAnchor).id});
+  // resolveFocusLocation(follow-model.js)이 앵커의 비율을 알아서 떼고 목적지를 판정한다.
+  const href = focusHref(prefix, focus);
   // 목적지가 실제로 있는지 먼저 확인한다. 없는 주소로 보내면 학생 화면이 404로 튕긴다(2026-09-23 수업 사고).
   fetch(href, {method: 'HEAD'}).then((res) => {
    if (!res.ok) { console.warn('[follow] 없는 페이지라 이동하지 않습니다', href); return; }
+   // HEAD 확인이 끝나 실제로 이동할 때만 키를 갱신한다. 실패 시 갱신을 건너뛰어야
+   // 같은 초점이 나중에(재시도·재연결) 다시 와도 "이미 처리한 것"으로 무시되지 않는다.
+   lastFocusKey = key || lastFocusKey;
    saveLocal();
    writePendingFocus(sessionStorage, focus);
    location.href = href;
   }).catch((error) => { console.warn('[follow] 이동 확인 실패', error); });
   return;
  }
+ lastFocusKey = key || lastFocusKey;
  whenLearningReady(() => {
   if (focus.topicAnchor) scrollToId(focus.topicAnchor, force);
   // 같은 예제를 다시 적용하면 편집기가 초기화되므로, 예제가 바뀌었을 때만 연다.
@@ -375,23 +375,33 @@ function onSessionSnap(snapshot) {
  if (!document.hidden) startHeartbeat();
 }
 
+// 세션 구독 세대 번호. load()가 비동기라 그 사이 반이 다시 바뀌면(oldClass→newClass→oldClass 등)
+// 먼저 시작한 load()가 나중에 끝나 옛 반을 구독해 버릴 수 있다 — 최신 호출만 구독을 등록한다.
+let sessionGen = 0;
+
 function listenSession() {
+ const gen = ++sessionGen;
+ const cls = classroom;
  if (sessionUnsub) {
   sessionUnsub();
   sessionUnsub = null;
  }
  dropSession();
- if (!classroom) return;
+ if (!cls) return;
  load().then(({db, store}) => {
-  sessionUnsub = store.onSnapshot(
-   store.doc(db, 'sessions', classroom),
-   onSessionSnap,
+  const unsub = store.onSnapshot(
+   store.doc(db, 'sessions', cls),
+   (snapshot) => { if (gen === sessionGen) onSessionSnap(snapshot); },
    (error) => {
+    if (gen !== sessionGen) return;
     console.warn('[follow] 세션을 구독하지 못했습니다.', error);
     dropSession();
    }
   );
+  if (gen !== sessionGen) { unsub(); return; } // 오래된 호출 — 등록하지 않고 바로 해지
+  sessionUnsub = unsub;
  }).catch((error) => {
+  if (gen !== sessionGen) return;
   console.warn('[follow] 따라가기를 시작하지 못했습니다.', error);
   dropSession();
  });
@@ -414,6 +424,8 @@ function onAccount(detail) {
   dropSession();
   return;
  }
+ // 계정·반이 그대로면 재구독하지 않는다(불필요한 구독 해지·재생성으로 인한 경합 방지).
+ if (uid === nextUid && classroom === nextClass && sessionUnsub) return;
  uid = nextUid;
  classroom = nextClass;
  listenSession();
