@@ -1,6 +1,7 @@
 /* 기기 간 편집 잠금 순수 함수 검사. node tools/web/test_editlock_model.mjs */
 import {
- LOCK_FRESH_MS, HEARTBEAT_MS, LOCK_NOTE, deviceLabel, isFresh, heldByOther, lockFields, newDeviceId
+ LOCK_FRESH_MS, HEARTBEAT_MS, LOCK_NOTE, deviceLabel, isFresh, heldByOther, lockFields, newDeviceId,
+ newTabId, combineDeviceId, deviceIdOf, sameDevice, lockOwnerLabel
 } from '../../web/assets/editlock-model.js';
 
 function eq(actual, expected, label) {
@@ -49,5 +50,32 @@ const id2 = newDeviceId(() => 0.654321);
 eq(id1.startsWith('dev-'), true, 'device id prefix');
 eq(id1 !== id2, true, 'device ids differ with different rand');
 eq(newDeviceId(() => 0.5) === newDeviceId(() => 0.5), true, 'device id deterministic for same rand');
+
+// #121 같은 기기의 두 탭 구분
+const tab1 = newTabId(() => 0.111111);
+const tab2 = newTabId(() => 0.222222);
+eq(tab1.startsWith('tab-'), true, 'tab id prefix');
+eq(tab1 !== tab2, true, 'tab ids differ with different rand');
+
+const deviceA = 'dev-aaaaaaaaaaaaaaaa';
+const combined1 = combineDeviceId(deviceA, tab1);
+const combined2 = combineDeviceId(deviceA, tab2);
+eq(combined1, `${deviceA}:${tab1}`, 'combine device+tab id');
+eq(combined1.length <= 64, true, 'combined id fits rule length limit');
+eq(deviceIdOf(combined1), deviceA, 'deviceIdOf strips tab suffix');
+eq(deviceIdOf('no-colon-here'), 'no-colon-here', 'deviceIdOf handles plain id');
+eq(sameDevice(combined1, combined2), true, 'same device, different tab');
+eq(sameDevice(combined1, combineDeviceId('dev-bbbbbbbbbbbbbbbb', tab1)), false, 'different device, same tab id never happens but still compared correctly');
+eq(sameDevice('', combined1), false, 'empty id is never the same device');
+
+// 두 탭이 같은 기기라도 heldByOther는 조합 id 전체로 비교하므로 서로를 "다른 쪽"으로 본다.
+const now2 = 2_000_000;
+eq(heldByOther({beat: now2 - 1000, deviceId: combined1}, combined2, now2), true, 'other tab of same device still counts as holding the lock');
+eq(heldByOther({beat: now2 - 1000, deviceId: combined1}, combined1, now2), false, 'same tab (e.g. after reload) is not held by other');
+
+eq(lockOwnerLabel(null, combined1), '다른 기기', 'no lock label fallback');
+eq(lockOwnerLabel({deviceId: combined2, label: 'Windows · Chrome'}, combined1), '이 컴퓨터의 다른 탭', 'same device shows tab label regardless of stored label');
+eq(lockOwnerLabel({deviceId: combineDeviceId('dev-bbbbbbbbbbbbbbbb', tab1), label: 'Mac · Safari'}, combined1), '다른 기기(Mac · Safari)', 'different device shows its label');
+eq(lockOwnerLabel({deviceId: combineDeviceId('dev-bbbbbbbbbbbbbbbb', tab1), label: ''}, combined1), '다른 기기', 'different device without label falls back');
 
 console.log('editlock model OK');

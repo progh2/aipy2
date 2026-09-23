@@ -216,13 +216,25 @@ function askClearLocalOnLogout() {
 }
 
 async function finishSignOut(clearLocal) {
+ // #122 flush()는 이제 진행 중이던 저장이 실제로 끝날 때까지 기다린다(sync.js). 그래도
+ // 실패했다면(권한·네트워크) 로컬 기록을 지우면 그 변경분을 통째로 잃을 수 있으므로
+ // clearLocal을 요청했더라도 지우지 않는다.
+ let syncFailed = false;
  try {
-  if (window.aipySync && typeof window.aipySync.flush === 'function') await window.aipySync.flush();
+  if (window.aipySync && typeof window.aipySync.flush === 'function') {
+   await window.aipySync.flush();
+   syncFailed = typeof window.aipySync.status === 'function' && window.aipySync.status() === 'error';
+  }
  } catch (error) {
   console.warn('[auth] 로그아웃 전 동기화 실패', error);
+  syncFailed = true;
  }
  const {auth, authMod} = await load();
  await authMod.signOut(auth);
+ if (clearLocal && syncFailed) {
+  toast('동기화하지 못했습니다. 로컬 기록 삭제를 취소합니다.');
+  return;
+ }
  if (clearLocal) {
   const key = (window.aipyLearning && window.aipyLearning.key) || 'aipy-lab-v1';
   try {

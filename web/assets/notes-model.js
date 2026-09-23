@@ -74,14 +74,33 @@ export function classIdOf(profile) {
  return p.grade != null && p.classroom != null ? `${p.grade}-${p.classroom}` : '';
 }
 
-export function noteFields({profile, page, y, anchor, offset, color, visibility, text} = {}) {
+// 헤더에서 고른 반(window.aipyClass, class-picker.js publishClass()가 만든 값)에서 classId만 꺼낸다.
+export function currentTeacherClassId(aipyClass) {
+ return aipyClass && typeof aipyClass.classId === 'string' ? aipyClass.classId : '';
+}
+
+// 메모에 쓸 classId를 정한다. 이미 저장된 값(existingClassId)이 있으면 그대로 유지한다
+// (교사가 반을 바꿔도 이미 만든 메모는 원래 반 학생용으로 남는다). 새로 정할 때만
+// 교사는 지금 선택한 반, 학생은 자기 반을 쓴다.
+export function resolveNoteClassId({profile, teacher, teacherClassId, existingClassId} = {}) {
+ if (typeof existingClassId === 'string' && existingClassId) return existingClassId;
+ if (teacher) return typeof teacherClassId === 'string' ? teacherClassId : '';
+ return classIdOf(profile);
+}
+
+// 반을 선택하지 않은 교사가 '학생에게 공개'를 고르면 막는다.
+export function noteVisibilityBlocked({teacher, visibility, classId}) {
+ return Boolean(teacher) && visibility === 'students' && !classId;
+}
+
+export function noteFields({profile, page, y, anchor, offset, color, visibility, text, classId} = {}) {
  const person = profile && typeof profile === 'object' ? profile : {};
  return {
   uid: person.uid || '',
   email: person.email || '',
   studentId: person.studentId ?? null,
   name: typeof person.name === 'string' ? person.name : '',
-  classId: classIdOf(person),
+  classId: typeof classId === 'string' ? classId : classIdOf(person),
   page: String(page || '').slice(0, 200),
   y: clampY(y),
   anchor: typeof anchor === 'string' ? anchor.slice(0, 80) : '',
