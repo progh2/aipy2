@@ -6,7 +6,7 @@ import {load, readTeacherFlag} from './auth.js';
 import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {
- isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload,
+ isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload, focusHref,
  sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce
 } from './follow-model.js';
 
@@ -17,6 +17,7 @@ const node = (tag, cls, text) => {
  return el;
 };
 
+const prefix = document.body.dataset.prefix || '';
 let teacherEmail = '';
 let classIdValue = '';
 let current = null;
@@ -196,14 +197,45 @@ function focusFromEvent(event) {
  });
 }
 
+// 목적지가 실제로 있는 페이지인지 확인한다. 없는 주소로 초점을 보내면 학생 화면이 404로 튕긴다
+// (2026-09-23 수업 사고 — 학생 쪽은 follow.js에서 이미 확인하지만, 교사 쪽에서도 보내기 전에 막아야
+// "보냈는데 학생이 아무 반응이 없다"는 것을 교사가 알 수 있다).
+async function destinationExists(focus) {
+ const href = focusHref(prefix, focus);
+ if (!href) return true;
+ try {
+  const res = await fetch(href, {method: 'HEAD'});
+  return res.ok;
+ } catch (error) {
+  console.warn('[teacher-focus] 목적지 확인 실패', error);
+  return true; // 네트워크 오류로 확인 못 할 때는 전송을 막지 않는다
+ }
+}
+
 async function sendFocus(focus) {
  if (!canSend() || !focus || !focus.page) return;
+ if (!(await destinationExists(focus))) {
+  toast('이 위치로는 초점을 보낼 수 없습니다.');
+  return;
+ }
  try {
   const {db, store} = await load();
   const ref = store.doc(db, 'sessions', classIdValue);
-  if (!isSessionLive(current)) {
+  // 로컬 캐시(current)가 비어 있거나 오래됐다고 해서 바로 새 세션을 시작하지 않는다 — 다른 기기/탭이
+  // 이미 세션을 시작했는데 이 구독이 아직 못 받았을 수 있다. 서버 최신 문서를 확인한 뒤에만 새로 시작한다
+  // (teacher-session.js의 readExistingSession과 같은 방식).
+  let existing = current;
+  if (!isSessionLive(existing)) {
+   try {
+    const snap = await store.getDoc(ref);
+    existing = snap.exists() ? snap.data() : null;
+   } catch (error) {
+    console.warn('[teacher-focus] 기존 세션 확인 실패', error);
+   }
+  }
+  if (!isSessionLive(existing)) {
    // 세션이 없거나 만료됐으면 새로 시작하면서 초점을 담는다(teacher-session.js와 같은 문서 형식).
-   const fields = sessionFields({teacherEmail, ...focus, attentionNonce: existingAttentionNonce(current)});
+   const fields = sessionFields({teacherEmail, ...focus, attentionNonce: existingAttentionNonce(existing)});
    await store.setDoc(ref, {
     active: true,
     teacherEmail: fields.teacherEmail,
@@ -215,6 +247,7 @@ async function sendFocus(focus) {
    toast('수업 세션을 시작하고 초점을 보냈습니다.');
    return;
   }
+  // 살아 있는 세션이면 초점만 갱신한다 — setDoc으로 통째로 덮어쓰면 세션이 다시 시작된 것처럼 보인다.
   await store.updateDoc(ref, {
    ...focusWritePayload(focus),
    'focus.updatedAt': store.serverTimestamp()
@@ -245,7 +278,10 @@ function onExampleSelect(event) {
  }));
 }
 
+let listenGen = 0;
+
 function listen(id) {
+ const gen = ++listenGen;
  if (sessionUnsub) {
   sessionUnsub();
   sessionUnsub = null;
@@ -254,15 +290,20 @@ function listen(id) {
  paintCue();
  if (!id || !teacherEmail) return;
  load().then(({db, store}) => {
-  sessionUnsub = store.onSnapshot(store.doc(db, 'sessions', id), (snap) => {
+  const unsub = store.onSnapshot(store.doc(db, 'sessions', id), (snap) => {
+   if (gen !== listenGen) return;
    current = snap.exists() ? snap.data() : null;
    paintCue();
   }, (error) => {
+   if (gen !== listenGen) return;
    console.warn('[teacher-focus]', error);
    current = null;
    paintCue();
   });
+  if (gen !== listenGen) { unsub(); return; } // 오래된 호출 — 등록하지 않고 바로 해지
+  sessionUnsub = unsub;
  }).catch((error) => {
+  if (gen !== listenGen) return;
   console.warn('[teacher-focus]', error);
   current = null;
   paintCue();

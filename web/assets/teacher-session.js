@@ -502,7 +502,12 @@ function stopExtra() {
  presenceRows = [];
 }
 
+// 구독 세대 번호. 반을 빠르게 바꾸면(예: 2-1 → 2-3 → 2-1) 먼저 시작한 load()가 나중에 끝나
+// 옛 반을 구독해 버릴 수 있다 — load()가 끝난 시점에 최신 호출일 때만 구독을 등록한다.
+let listenGen = 0;
+
 function listen(id) {
+ const gen = ++listenGen;
  if (sessionUnsub) {
   sessionUnsub();
   sessionUnsub = null;
@@ -517,7 +522,9 @@ function listen(id) {
  paintStatus();
  if (!id || !teacherEmail) return;
  load().then(({db, store}) => {
+  if (gen !== listenGen) return; // 오래된 호출 — 구독을 등록하지 않는다
   sessionUnsub = store.onSnapshot(store.doc(db, 'sessions', id), (snap) => {
+   if (gen !== listenGen) return;
    current = snap.exists() ? snap.data() : null;
    if (current && current.focus && !$('focus-page').dataset.dirty) paintFocusFromSession(current);
    if (current && current.focus && isQuestionAnchor(current.focus.topicAnchor)) {
@@ -527,31 +534,36 @@ function listen(id) {
    paintStatus();
    rememberBaseline();
   }, (error) => {
+   if (gen !== listenGen) return;
    console.error('[teacher-session]', error);
    note('세션을 읽지 못했습니다.');
   });
   presenceUnsub = store.onSnapshot(
    store.query(store.collection(db, 'presence'), store.where('classroom', '==', id)),
    (snap) => {
+    if (gen !== listenGen) return;
     const rows = [];
     snap.forEach((doc) => rows.push({id: doc.id, uid: doc.id, ...doc.data()}));
     presenceRows = rows;
     paintCounts(rows);
    },
    (error) => {
+    if (gen !== listenGen) return;
     console.error('[teacher-session]', error);
     $('presence-counts').textContent = '따라오는 중 — / 따로 보는 중 —';
    }
   );
   rosterUnsub = store.onSnapshot(store.collection(db, 'roster'), (snap) => {
+   if (gen !== listenGen) return;
    rosterRows = [];
    snap.forEach((doc) => {
     const data = doc.data();
     rosterRows.push({id: doc.id, email: data.email || doc.id, ...data});
    });
    rememberBaseline();
-  }, (error) => console.error('[teacher-session]', error));
+  }, (error) => { if (gen === listenGen) console.error('[teacher-session]', error); });
   progressUnsub = store.onSnapshot(store.collection(db, 'progress'), (snap) => {
+   if (gen !== listenGen) return;
    progressRows = [];
    snap.forEach((doc) => {
     const data = doc.data();
@@ -559,20 +571,23 @@ function listen(id) {
    });
    rememberBaseline();
    if (togetherQuestionId) refreshTogether(false);
-  }, (error) => console.error('[teacher-session]', error));
+  }, (error) => { if (gen === listenGen) console.error('[teacher-session]', error); });
   helpUnsub = store.onSnapshot(
    store.query(store.collection(db, 'helpRequests'), store.where('classId', '==', id)),
    (snap) => {
+    if (gen !== listenGen) return;
     helpRows = [];
     snap.forEach((doc) => helpRows.push({id: doc.id, ...doc.data()}));
    },
-   (error) => console.error('[teacher-session]', error)
+   (error) => { if (gen === listenGen) console.error('[teacher-session]', error); }
   );
   store.getDocs(store.collection(db, 'assignments')).then((snap) => {
+   if (gen !== listenGen) return;
    assignments = [];
    snap.forEach((doc) => assignments.push({id: doc.id, ...doc.data()}));
-  }).catch((error) => console.error('[teacher-session]', error));
+  }).catch((error) => { if (gen === listenGen) console.error('[teacher-session]', error); });
  }).catch((error) => {
+  if (gen !== listenGen) return;
   console.error('[teacher-session]', error);
   note('세션 기능을 불러오지 못했습니다.');
  });

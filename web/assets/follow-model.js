@@ -89,6 +89,21 @@ export function pageExampleId(page) {
 // units/unit01/u1-q041.html 같은 없는 페이지로 보냈다(교사가 문항에 초점을 보낼 때 이동 실패).
 const QUESTION_ANCHOR_RE = /^u[1-4]-q\d+$/;
 
+// 앵커 정규화를 한 곳에 모은다. topicAnchor는 '요소id' 또는 '요소id@비율'(교사 스크롤 추적) 형식이다.
+// 비율은 스크롤 위치 계산에만 쓴다 — 페이지·소단원·문항 여부를 판단할 때는 반드시 이 함수로 비율을 먼저 뗀다.
+// (예: 'u1-q042@0.3'을 그대로 문항 판정 정규식에 넣으면 매치에 실패해 q-math.html이 math.html로 바뀌는 사고가 났다.)
+export function parseAnchor(anchor) {
+ const raw = String(anchor || '');
+ const m = /^([^@]+)(?:@([0-9.]+))?$/.exec(raw);
+ if (!m) return {id: '', frac: null};
+ const frac = m[2] === undefined ? null : Math.min(0.99, Math.max(0, parseFloat(m[2]) || 0));
+ return {id: m[1], frac};
+}
+
+export function anchorId(anchor) {
+ return parseAnchor(anchor).id;
+}
+
 export function isLessonTopic(id) {
  return Boolean(id) && /^[a-z][a-z0-9-]*$/.test(id) && !CHROME_TOPICS.has(id) && !QUESTION_ANCHOR_RE.test(id);
 }
@@ -105,24 +120,28 @@ export function examplePage(unit, exampleId) {
 
 export function resolveFocusLocation(focus) {
  const page = normalizePage(focus && focus.page);
- const topic = focus && focus.topicAnchor;
+ // 페이지·소단원·문항 판정은 언제나 비율을 뗀 id로 한다(스크롤용 비율은 여기서 버린다).
+ const topicId = anchorId(focus && focus.topicAnchor);
  const unit = unitFromPage(page);
  const fromPage = pageTopicId(page);
  const exampleId = focus && focus.exampleId;
  // 예제가 지정되면 그 예제의 독립 페이지가 목적지다 — 소단원 페이지에는 더 이상 편집기가 없다.
  if (unit && exampleId) return {page: examplePage(unit, exampleId), topicAnchor: null};
  // 문항 앵커는 보낸 페이지(문제 페이지)를 그대로 두고 그 문항으로만 스크롤한다.
- if (QUESTION_ANCHOR_RE.test(topic || '')) return {page: page || DEFAULT_PAGE, topicAnchor: topic};
- const lesson = isLessonTopic(topic) ? topic : fromPage;
+ if (QUESTION_ANCHOR_RE.test(topicId)) return {page: page || DEFAULT_PAGE, topicAnchor: topicId};
+ const lesson = isLessonTopic(topicId) ? topicId : fromPage;
  if (unit && lesson) return {page: topicPage(unit, lesson), topicAnchor: lesson};
- return {page, topicAnchor: topic || fromPage || null};
+ return {page, topicAnchor: topicId || fromPage || null};
 }
 
 export function shouldNavigate(currentPage, focus) {
  if (!focus || !focus.page) return false;
- const here = resolveFocusLocation({page: currentPage, topicAnchor: pageTopicId(currentPage)});
+ // currentPage는 이미 실제로 열려 있는 페이지(정규화된 최종 경로)이므로 그대로 비교한다.
+ // 예전에는 이 자리에서도 resolveFocusLocation을 한 번 더 거쳤는데, q-math.html처럼
+ // 문제 페이지에 있을 때 그 page를 다시 fromPage 경유로 math.html(소단원 페이지)로
+ // 바꿔 버려 "이미 있는 페이지인데도 이동해야 한다"고 잘못 판단하는 문제가 있었다.
  const there = resolveFocusLocation(focus);
- return Boolean(there.page) && !samePage(here.page, there.page);
+ return Boolean(there.page) && !samePage(currentPage, there.page);
 }
 
 export function focusHref(prefix, focus) {
@@ -137,7 +156,7 @@ export function focusKey(focus) {
  if (!focus) return '';
  return [
   normalizePage(focus.page),
-  focus.topicAnchor || '',
+  anchorId(focus.topicAnchor) || '',
   focus.exampleId || '',
   timestampMillis(focus.updatedAt)
  ].join('|');
@@ -227,9 +246,13 @@ export function sessionEndFields(existing, {teacherEmail} = {}) {
  };
 }
 
-export function isUnitLessonPage(page) {
+// topicAnchor를 함께 넘기면 practice.html에서도 문항 앵커일 때만 그 페이지를 초점 대상으로 허용한다
+// (practice.html 자체는 소단원이 아니지만, 문항으로 스크롤하는 초점은 그 페이지에 머물러야 한다).
+export function isUnitLessonPage(page, topicAnchor) {
  const path = normalizePage(page);
- return /^units\/unit0[1-4]\/index\.html$/.test(path) || Boolean(pageTopicId(path)) || Boolean(pageExampleId(path));
+ if (/^units\/unit0[1-4]\/index\.html$/.test(path) || pageTopicId(path) || pageExampleId(path)) return true;
+ if (/^units\/unit0[1-4]\/practice\.html$/.test(path) && QUESTION_ANCHOR_RE.test(anchorId(topicAnchor))) return true;
+ return false;
 }
 
 const SKIP_FOCUS_TOPICS = new Set(['main', 'account', 'toast']);
@@ -259,7 +282,7 @@ export function focusFromUnitClick({href, exampleId, lessonId, currentPage} = {}
   });
  }
  const resolved = resolveHref(href, page);
- if (!resolved || !isUnitLessonPage(resolved.page)) return null;
+ if (!resolved || !isUnitLessonPage(resolved.page, resolved.topicAnchor)) return null;
  const topic = resolved.topicAnchor || pageTopicId(resolved.page);
  if (topic && SKIP_FOCUS_TOPICS.has(topic)) return null;
  if (!topic && samePage(resolved.page, page)) return null;
