@@ -33,7 +33,8 @@ function viewAnchor() {
  const z = parseFloat(document.body.style.zoom) || 1;
  const viewTop = 110 / z; // 헤더 아래
  let best = null, bestTop = -Infinity;
- for (const el of document.querySelectorAll('main section.lesson[id], main .question[id], main section[id], main .lesson-workspace[id]')) {
+ // 소단원과 문항만 추적한다. 보조 섹션(pre-api 등)을 잡으면 학생이 없는 페이지로 이동한다.
+ for (const el of document.querySelectorAll('main section.lesson[id], main .question[id]')) {
   const r = el.getBoundingClientRect();
   const top = r.top / z, height = r.height / z;
   if (height < 40 || !el.id) continue;

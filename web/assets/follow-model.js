@@ -62,7 +62,10 @@ export function samePage(a, b) {
  return normalizePage(a) === normalizePage(b) && Boolean(normalizePage(a));
 }
 
-const CHROME_TOPICS = new Set(['main', 'account', 'toast', 'lab', 'practice', 'gallery', 'simulator', 'journal']);
+const CHROME_TOPICS = new Set(['main', 'account', 'toast', 'lab', 'practice', 'gallery', 'simulator', 'journal',
+ // 본문 안의 보조 섹션들 — 소단원 이름이 아니다(pre-api를 소단원으로 오인해 없는 페이지로 보내던 사고).
+ 'pre-api', 'content-tips', 'screenshots', 'example-guides', 'questions', 'question-page',
+ 'notes-layer', 'student-detail', 'follow-ui', 'teacher-focus-ui', 'toc', 'rail-todo']);
 
 export function unitFromPage(page) {
  const match = /^units\/unit0([1-4])\//.exec(normalizePage(page));

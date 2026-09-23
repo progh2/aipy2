@@ -237,9 +237,14 @@ function applyFocus(focus, force) {
  if (!force && key && key === lastFocusKey) return;
  lastFocusKey = key || lastFocusKey;
  if (shouldNavigate(currentPage(), focus)) {
-  saveLocal();
-  writePendingFocus(sessionStorage, focus);
-  location.href = focusHref(prefix, {...focus, topicAnchor: parseAnchor(focus.topicAnchor).id});
+  const href = focusHref(prefix, {...focus, topicAnchor: parseAnchor(focus.topicAnchor).id});
+  // 목적지가 실제로 있는지 먼저 확인한다. 없는 주소로 보내면 학생 화면이 404로 튕긴다(2026-09-23 수업 사고).
+  fetch(href, {method: 'HEAD'}).then((res) => {
+   if (!res.ok) { console.warn('[follow] 없는 페이지라 이동하지 않습니다', href); return; }
+   saveLocal();
+   writePendingFocus(sessionStorage, focus);
+   location.href = href;
+  }).catch((error) => { console.warn('[follow] 이동 확인 실패', error); });
   return;
  }
  whenLearningReady(() => {
