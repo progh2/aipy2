@@ -392,7 +392,7 @@ if(!hasLab && !hasPractice && !hasRail){
  document.dispatchEvent(new CustomEvent('aipy:learning-ready'));
 }).catch(error=>{const out=$('#output');if(out)out.textContent='학습 데이터를 불러오지 못했습니다. 웹서버 또는 GitHub Pages 주소로 접속하고 새로고침하세요. '+error.message;toast('학습 데이터 로딩 실패');window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));});
 
-/* 왼쪽 목차 맨 위 '아직 남은 것' — 완료 체크·문제 풀이 중 놓친 항목을 한눈에 보여 준다(#107).
+/* 왼쪽 목차 맨 위 '아직 남은 것' — 완료 체크·문제 풀이 중 놓친 항목을 한눈에 보여 준다(#102).
    소단원 페이지는 '{id}.html', 문제 페이지는 'q-{id}.html'로 그 소단원과 같은 폴더에 있으므로
    상대 경로만으로 링크할 수 있다. 체크·풀이·원격 병합 지점에서 다시 부른다. */
 function renderRailTodo(){

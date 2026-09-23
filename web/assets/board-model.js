@@ -1,6 +1,6 @@
 /* 참여 현황 보드(M4/F3) 순수 헬퍼. Firebase 없이 카드·히트맵·문항·CSV를 검사합니다.
    교사 화면은 progress·presence·help·roster를 실시간 구독하고, students/{uid}/state는
-   학생 상세 패널을 열 때만 1회 조회합니다(#101 답안 보기). 여기 함수들은 그 문서를
+   학생 상세 패널을 열 때만 1회 조회합니다(#104 답안 보기). 여기 함수들은 그 문서를
    받아 답안·저널 목록으로 바꾸는 순수 변환만 맡습니다. */
 import {inClass} from './class-picker.js';
 import {
@@ -335,7 +335,7 @@ export function cardAccuracyLabel(card) {
  return '—';
 }
 
-// 학생 상세 패널(#101) — students/{uid}/state/current 문서(sync-model.js의 statePayload 모양:
+// 학생 상세 패널(#104) — students/{uid}/state/current 문서(sync-model.js의 statePayload 모양:
 // {answers, journals, ...})와 catalog.questions를 합쳐 답안 목록을 만든다.
 export const UNIT_ROMAN = ['', 'Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ'];
 
@@ -362,7 +362,7 @@ export function formatAnswerValue(value) {
  return String(value);
 }
 
-// 문항별 답안 한 줄. state.answers에 기록이 있는 문항만 돌려준다(#101).
+// 문항별 답안 한 줄. state.answers에 기록이 있는 문항만 돌려준다(#104).
 export function answerRows(state, questions = []) {
  const answers = asMap(state && state.answers);
  const index = new Map();

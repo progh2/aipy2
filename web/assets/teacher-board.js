@@ -1,6 +1,6 @@
 /* 교사 현황 보드. M3 이해도·도움 요청을 유지하고, M4 카드·히트맵·문항·CSV를 붙입니다.
    선택한 반의 progress·presence·help·roster를 실시간 구독합니다.
-   학생 상세 패널을 열 때만 students/{uid}/state/current를 1회 조회해 답안·저널을 보여 줍니다(#101). */
+   학생 상세 패널을 열 때만 students/{uid}/state/current를 1회 조회해 답안·저널을 보여 줍니다(#104). */
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {inClass} from './class-picker.js';
@@ -463,7 +463,7 @@ function openDetail(key) {
  if (card && card.uid) ensureStudentState(card.uid);
 }
 
-// students/{uid}/state/current를 학생당 1회만 읽는다(#101). 실패·미존재는 캐시에 남겨 재요청하지 않는다.
+// students/{uid}/state/current를 학생당 1회만 읽는다(#104). 실패·미존재는 캐시에 남겨 재요청하지 않는다.
 async function ensureStudentState(uid) {
  if (!uid || detailStateCache.has(uid)) return;
  detailStateCache.set(uid, {status: 'loading'});

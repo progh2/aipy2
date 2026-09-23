@@ -165,7 +165,7 @@ export function targetHref(prefix, target, catalog) {
   const found = ((catalog && catalog.questions) || []).find((q) => q && q.id === target.id);
   const unit = target.unit || (found && found.unit) || (fromId ? Number(fromId[1]) : null);
   if (!unit) return '';
-  // 문제는 소단원별 독립 페이지(q-*.html)로 옮겨졌다(#106). 주제를 모르면 단원 전체 문제 페이지로 보낸다.
+  // 문제는 소단원별 독립 페이지(q-*.html)로 옮겨졌다(#103). 주제를 모르면 단원 전체 문제 페이지로 보낸다.
   const topic = found && found.topic;
   if (topic) return `${base}units/unit0${unit}/q-${topic}.html#${target.id}`;
   return `${base}units/unit0${unit}/practice.html#${target.id}`;
