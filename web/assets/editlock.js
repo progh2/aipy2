@@ -1,14 +1,17 @@
 /* 기기 간 편집 잠금. 한 학생이 두 기기(학교 PC·집 PC)에서 같은 코드 예제를 동시에 열면
    sync.js의 "어느 코드를 남길까요?" 충돌 대화상자가 뜬다. 이를 막기 위해 한 번에 한 기기만
    편집을 허용하고, 다른 기기가 이미 쥐고 있으면 이 기기는 읽기 전용으로 시작한다.
-   Firestore editLocks/{uid} 문서 하나로 판단하며, 실패해도 학습(코드 실행·읽기)은 막지 않는다. */
+   Firestore editLocks/{uid} 문서 하나로 판단하며, 실패해도 학습(코드 실행·읽기)은 막지 않는다.
+   #121: 같은 브라우저의 두 탭도 서로 다른 잠금 소유자로 구분한다(탭id는 sessionStorage). */
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {
- LOCK_FRESH_MS, HEARTBEAT_MS, LOCK_NOTE, deviceLabel, isFresh, heldByOther, lockFields, newDeviceId
+ LOCK_FRESH_MS, HEARTBEAT_MS, LOCK_NOTE, deviceLabel, isFresh, heldByOther, lockFields, newDeviceId,
+ newTabId, combineDeviceId, lockOwnerLabel
 } from './editlock-model.js';
 
 const DEVICE_KEY = 'aipy-device-id';
+const TAB_KEY = 'aipy-tab-id';
 const node = (tag, cls, text) => {
  const el = document.createElement(tag);
  if (cls) el.className = cls;
@@ -29,7 +32,23 @@ function readDeviceId() {
  }
 }
 
+// 탭마다 하나. 새로고침에는 sessionStorage가 남아 있으므로 같은 탭이 계속 같은 id를 쓴다.
+function readTabId() {
+ try {
+  const existing = sessionStorage.getItem(TAB_KEY);
+  if (existing) return existing;
+  const created = newTabId();
+  sessionStorage.setItem(TAB_KEY, created);
+  return created;
+ } catch {
+  return newTabId();
+ }
+}
+
 const deviceId = readDeviceId();
+const tabId = readTabId();
+// 잠금 문서에는 이 조합 id를 쓴다 — 같은 기기의 다른 탭과도 구분된다.
+const lockOwnerId = combineDeviceId(deviceId, tabId);
 const label = deviceLabel(navigator.userAgent);
 
 let user = null;
@@ -96,7 +115,7 @@ function setReadOnly(readOnly, mode, lock) {
  if (text) {
   text.textContent = mode === 'taken-over'
    ? '다른 기기가 편집을 가져갔어요. '
-   : `다른 기기(${(lock && lock.label) || '다른 기기'})에서 편집 중이에요. `;
+   : `${lockOwnerLabel(lock, lockOwnerId)}에서 편집 중이에요. `;
  }
  if (take) take.hidden = false;
 }
@@ -106,7 +125,7 @@ async function writeLock(reason) {
  try {
   const {store, ref} = await lockDocFor(user.uid)();
   await store.setDoc(ref, {
-   ...lockFields({profile, deviceId, label, now: Date.now()}),
+   ...lockFields({profile, deviceId: lockOwnerId, label, now: Date.now()}),
    updatedAt: store.serverTimestamp()
   });
  } catch (error) {
@@ -134,23 +153,24 @@ async function takeover() {
 }
 
 function wasMine(lock) {
- return Boolean(lock && lock.deviceId === deviceId);
+ return Boolean(lock && lock.deviceId === lockOwnerId);
 }
 
 function onLockSnap(snapshot) {
  const now = Date.now();
  const data = snapshot.exists() ? snapshot.data() : null;
- // 스냅샷 직전에 내가 편집 가능한 상태였는데, 이번에 다른 기기가 신선한 잠금으로 나타났다면
- // "가져간" 것이다(처음부터 다른 기기가 쥐고 있던 것과 구분해 배너 문구를 다르게 보여 준다).
- const justLost = sawFirstSnapshot && editable && heldByOther(data, deviceId, now);
+ // 스냅샷 직전에 내가 편집 가능한 상태였는데, 이번에 다른 탭(다른 기기 포함)이 신선한
+ // 잠금으로 나타났다면 "가져간" 것이다(원래부터 다른 쪽이 쥐고 있던 것과 구분해 배너 문구를
+ // 다르게 보여 준다).
+ const justLost = sawFirstSnapshot && editable && heldByOther(data, lockOwnerId, now);
  sawFirstSnapshot = true;
  latestLock = data;
- if (heldByOther(data, deviceId, now)) {
+ if (heldByOther(data, lockOwnerId, now)) {
   stopHeartbeat();
   setReadOnly(true, justLost ? 'taken-over' : 'locked', data);
   return;
  }
- // 잠금이 없거나(첫 사용), 만료됐거나, 이미 내 기기 것이면 이 기기가 편집을 갖는다.
+ // 잠금이 없거나(첫 사용), 만료됐거나, 이미 이 탭 것이면 이 탭이 편집을 갖는다.
  setReadOnly(false, null);
  if (!wasMine(data) || !isFresh(data, now)) writeLock('claim');
  startHeartbeat();
