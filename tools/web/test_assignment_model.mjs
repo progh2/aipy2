@@ -46,8 +46,8 @@ eq(normalizeClassrooms(['2-3', '2-3', 'bad', '1-2']), ['2-3', '1-2'], 'classroom
 
 const catalog = {
  pages: [{id: 'units/unit01/index.html', label: 'Ⅰ', unit: 1}],
- topics: {'units/unit01/index.html': [{id: 'overview', title: '모듈', examples: ['reuse']}]},
- examples: {reuse: {title: '재사용', unit: 1, mode: 'web'}},
+ topics: {'units/unit01/index.html': [{id: 'overview', title: '모듈', examples: ['reuse'], href: 'units/unit01/overview.html'}]},
+ examples: {reuse: {title: '재사용', unit: 1, mode: 'web', href: 'units/unit01/ex-reuse.html'}},
  questions: [{id: 'u1-q041', unit: 1, topic: 'define', kind: '구현', prompt: 'add 함수를 완성하세요.'}]
 };
 const items = catalogTargets(catalog);
@@ -55,7 +55,12 @@ eq(items.some((row) => row.type === 'question' && row.id === 'u1-q041' && row.ti
 eq(items.some((row) => row.type === 'example' && row.id === 'reuse' && row.unit === 1), true, 'catalog example');
 eq(filterCatalogTargets(items, {unit: 1, type: 'question', search: 'add'}).map((r) => r.id), ['u1-q041'], 'filter');
 eq(targetHref('../', {type: 'question', id: 'u1-q041', unit: 1}, catalog), '../units/unit01/q-define.html#u1-q041', 'q href');
-eq(targetHref('../', {type: 'example', id: 'reuse'}, catalog), '../units/unit01/overview.html', 'ex href');
+// 예제는 catalog.examples[id].href(편집기 있는 ex-*.html)를 최우선으로 써야 한다(#118) —
+// 소단원 row의 href(overview.html, 설명 페이지)로 보내면 편집기가 없어 실습을 이어갈 수 없었다.
+eq(targetHref('../', {type: 'example', id: 'reuse'}, catalog), '../units/unit01/ex-reuse.html', 'ex href uses catalog.examples href');
+// catalog.examples에 href가 없는 예외적인 경우에만 소단원 row로 대체(fallback)한다.
+const catalogNoExampleHref = {...catalog, examples: {reuse: {title: '재사용', unit: 1, mode: 'web'}}};
+eq(targetHref('../', {type: 'example', id: 'reuse'}, catalogNoExampleHref), '../units/unit01/overview.html', 'ex href falls back to topic row');
 
 const assignment = {
  title: '모듈 과제',

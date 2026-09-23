@@ -170,6 +170,11 @@ export function targetHref(prefix, target, catalog) {
   if (topic) return `${base}units/unit0${unit}/q-${topic}.html#${target.id}`;
   return `${base}units/unit0${unit}/practice.html#${target.id}`;
  }
+ // 예제는 편집기가 있는 독립 페이지(ex-*.html)로 보낸다(#118) — catalog.examples[id].href가 그 주소다.
+ // 소단원 row의 href(overview.html 등 설명 페이지)로 보내면 편집기가 없어 실습을 이어갈 수 없다.
+ const examples = catalog && catalog.examples;
+ const exampleRow = examples && typeof examples === 'object' ? examples[target.id] : null;
+ if (exampleRow && typeof exampleRow.href === 'string' && exampleRow.href) return `${base}${exampleRow.href}`;
  const topics = catalog && catalog.topics;
  if (topics && typeof topics === 'object') {
   for (const [page, rows] of Object.entries(topics)) {
