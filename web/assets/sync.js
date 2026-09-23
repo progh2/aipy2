@@ -7,7 +7,7 @@ import {
  LEARNING_KEY, CODE_IDLE_MS, CHOICE_KEY, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
  progressFields, statePayload, cloudToState, cloneState, projectPreview, emptyState,
  projectConflictSignature
-} from './sync-model.js?v=conflict2';
+} from './sync-model.js?v=tomb1';
 
 const node = (tag, cls, text) => {
  const el = document.createElement(tag);
@@ -150,12 +150,26 @@ function schedule(kind) {
  setStatus(statusMode === 'synced' ? 'pending' : statusMode, '코드·저널은 잠시 후 또는 페이지를 나갈 때 동기화합니다.');
 }
 
-async function flush() {
- if (!user || !profile || writing) return;
+// #122 로그아웃이 flush()를 await할 때 실제 쓰기가 끝날 때까지 기다리게 한다.
+// 이미 진행 중이면(writing) 그 완료를 기다렸다가, 그 사이 또 변경이 쌓였으면(pendingKind)
+// 한 번 더 플러시한다. writingDone은 충돌 대화상자가 뜨는 동안은 이미 resolve되어 있어
+// (아래 conflict 분기) 다른 저장이 그 모달까지 기다리지는 않는다.
+let writingDone = null;
+
+function flush() {
+ if (!user || !profile) return Promise.resolve();
+ if (writing) return writingDone.then(() => (pendingKind ? flush() : undefined));
+ return runFlush();
+}
+
+async function runFlush() {
  clearTimeout(idleTimer);
  const local = stampNow(pendingKind || 'save');
  pendingKind = '';
  writing = true;
+ let resolveWriting;
+ writingDone = new Promise((resolve) => { resolveWriting = resolve; });
+ const finishWriting = () => { if (writing) { writing = false; resolveWriting(); } };
  setStatus('syncing');
  try {
   const {db, store} = await load();
@@ -182,7 +196,7 @@ async function flush() {
   if (mapsChanged(local, result.merged.state)) applyToUi(result.merged.state);
   lastLocal = cloneState(result.merged.state);
   if (!result.wrote) {
-   writing = false;
+   finishWriting();
    setStatus('conflict', '같은 예제 코드가 기기마다 다릅니다. 남길 버전을 고르세요.');
    await resolveConflicts(result.merged.unresolved, local);
    return;
@@ -193,7 +207,7 @@ async function flush() {
   const denied = error && (error.code === 'permission-denied' || /permission/i.test(String(error.message || '')));
   setStatus('error', denied ? '로그인은 유지됩니다. 저장 권한이 없어 이 브라우저에만 기록합니다.' : '네트워크를 확인하세요. 학습은 이 브라우저에서 이어집니다.');
  } finally {
-  writing = false;
+  finishWriting();
  }
 }
 
