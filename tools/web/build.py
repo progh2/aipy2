@@ -253,5 +253,8 @@ dump(WEB/'data/catalog.json',{
  } for q in questions]
 })
 
+# 404: 옛 링크·캐시된 옛 스크립트가 만든 주소를 현재 구조로 되돌린다(수업 중 404 대응).
+if not (WEB/'404.html').exists():
+ raise SystemExit('web/404.html 이 필요합니다')
 (WEB/'.nojekyll').touch()
 print(f'Built {len(examples)} examples / {len(questions)} questions / {sum(map(len,units.values()))} lessons')

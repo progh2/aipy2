@@ -84,7 +84,12 @@ for p,parser in parsers.items():
  for link in parser.links:
   u=urlsplit(link)
   if u.scheme or u.netloc:continue
-  target=(p.parent/unquote(u.path)).resolve() if u.path else p
+  # 404 페이지는 어떤 깊이에서도 열리므로 사이트 절대경로(/aipy2/...)를 쓴다.
+  if u.path.startswith('/'):
+   assert u.path.startswith('/aipy2/'),('absolute link must start with /aipy2/',p,link)
+   target=(WEB/unquote(u.path)[len('/aipy2/'):]).resolve()
+  else:
+   target=(p.parent/unquote(u.path)).resolve() if u.path else p
   if target.is_dir():target=target/'index.html'
   assert target.exists(),('missing link',p,link)
   if u.fragment and target in parsers:assert unquote(u.fragment) in parsers[target].ids,('missing anchor',p,link)

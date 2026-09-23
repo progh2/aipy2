@@ -1,0 +1,44 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>페이지를 찾을 수 없어요 · AI Python Lab</title>
+<link rel="stylesheet" href="/aipy2/assets/style.css">
+<style>
+ .lost{max-width:640px;margin:60px auto;padding:32px;background:#fff;border:1px solid #dce3ed;border-radius:14px}
+ .lost h1{font-size:28px;margin-bottom:12px}.lost p{color:#586780;line-height:1.9}
+ .lost .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+ .lost code{background:#f0f4f9;padding:2px 6px;border-radius:5px;font-size:13px}
+</style></head><body>
+<main class="lost" id="main">
+ <h1>페이지를 찾을 수 없어요</h1>
+ <p id="msg">주소가 바뀐 페이지일 수 있어요. 올바른 위치로 옮겨 드릴게요…</p>
+ <div class="actions">
+  <a class="button primary" id="go" href="/aipy2/">홈으로</a>
+  <a class="button" href="/aipy2/units/unit01/index.html">1단원</a>
+  <a class="button" href="/aipy2/units/unit02/index.html">2단원</a>
+  <a class="button" href="/aipy2/units/unit03/index.html">3단원</a>
+  <a class="button" href="/aipy2/units/unit04/index.html">4단원</a>
+ </div>
+ <p class="small">계속 이 화면이 보이면 <b>Ctrl+Shift+R</b>(맥은 <b>Cmd+Shift+R</b>)로 새로고침하세요.</p>
+</main>
+<script>
+(function(){
+ // 옛 링크·옛 스크립트가 만든 주소를 현재 구조로 되돌린다.
+ var p = location.pathname.replace(/^\/aipy2/, '');
+ var m = /^\/units\/unit0([1-4])\/([a-z0-9-]+)\.html$/.exec(p);
+ var target = null, why = '';
+ if (m) {
+  var unit = m[1], name = m[2];
+  var q = /^u[1-4]-q\d+$/.exec(name);
+  if (q) { target = '/aipy2/units/unit0' + unit + '/practice.html#' + name; why = '문제 페이지로'; }
+  else if (/^ex-/.test(name) || /^q-/.test(name)) { target = '/aipy2/units/unit0' + unit + '/index.html'; why = '단원 안내로'; }
+  else { target = '/aipy2/units/unit0' + unit + '/index.html'; why = '단원 안내로'; }
+ }
+ var go = document.getElementById('go');
+ if (target) {
+  document.getElementById('msg').textContent = '주소가 바뀌었어요. ' + why + ' 옮겨 갑니다…';
+  go.href = target; go.textContent = '지금 이동하기';
+  setTimeout(function(){ location.replace(target); }, 1200);
+ } else {
+  document.getElementById('msg').textContent = '주소를 확인해 주세요. 아래에서 단원을 골라 이어서 학습할 수 있어요.';
+ }
+})();
+</script></body></html>
