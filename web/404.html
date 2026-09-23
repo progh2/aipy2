@@ -57,5 +57,10 @@
    '계속 이 화면이 보이면 <b>Ctrl+Shift+R</b>(맥 <b>Cmd+Shift+R</b>)로 새로고침하세요.';
   if (target) { go.href = target; go.textContent = '이 페이지로 이동'; }
  }
+ var box = document.createElement('p');
+ box.className = 'small';
+ box.style.cssText = 'margin-top:18px;padding:10px 12px;background:#f0f4f9;border-radius:8px;word-break:break-all';
+ box.innerHTML = '없는 주소: <code>' + location.pathname + (location.hash || '') + '</code>';
+ document.getElementById('main').appendChild(box);
 })();
 </script></body></html>
