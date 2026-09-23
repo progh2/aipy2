@@ -251,9 +251,29 @@ function noteCard(note) {
  return card;
 }
 
+let renderPending = false;
+function editingInLayer() {
+ const active = document.activeElement;
+ return Boolean(layer && active && layer.contains(active));
+}
+
 function render(focusId) {
  ensureLayer();
  sizeLayer();
+ // 메모를 입력하는 중에는 다시 그리지 않는다. 내 저장이 스냅샷으로 돌아올 때마다
+ // 카드를 교체하면 2초마다 입력 포커스를 잃는다(2026-09-23 수업 중 보고).
+ if (!focusId && editingInLayer()) {
+  renderPending = true;
+  const active = document.activeElement;
+  active.addEventListener('blur', () => {
+   if (!renderPending) return;
+   renderPending = false;
+   render();
+  }, {once: true});
+  reposition();
+  return;
+ }
+ renderPending = false;
  const notes = allNotes().filter((n) => n.page === page);
  const editing = document.activeElement && document.activeElement.closest && document.activeElement.closest('.note-card');
  const editingId = editing ? editing.dataset.id : '';

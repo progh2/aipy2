@@ -169,7 +169,7 @@ function validName(name){return typeof name==='string' && /^[\w.-]+(?:\/[\w.-]+)
 function stash(){if(!currentId||!exampleDirty)return;files[fileName]=$('#code-editor').value;const prev=state.projects[currentId]&&typeof state.projects[currentId]==='object'?state.projects[currentId]:{};state.projects[currentId]={...prev,files,entry:$('#entry-file').value,stdin:$('#stdin').value,args:$('#argv').value};save('code');}
 function renderFiles(){
  const tree=$('#file-tree');tree.replaceChildren();
- Object.keys(files).sort().forEach(name=>{const b=node('button',name===fileName?'active':'',name);b.setAttribute('aria-pressed',String(name===fileName));b.onclick=()=>{stash();fileName=name;$('#code-editor').value=files[name];$('#file-name').textContent=name;renderFiles();};tree.append(b);});
+ Object.keys(files).sort().forEach(name=>{const b=node('button',name===fileName?'active':'',name);b.setAttribute('aria-pressed',String(name===fileName));b.type='button';b.onclick=()=>{try{stash();fileName=name;const ed=$('#code-editor');ed.value=files[name];ed.dispatchEvent(new Event('input',{bubbles:true}));$('#file-name').textContent=name;renderFiles();}catch(error){console.error('[lab] 파일 전환 실패',name,error);toast('파일을 여는 중 문제가 생겼습니다: '+error.message);}};tree.append(b);});
  const entry=$('#entry-file'),old=entry.value;entry.replaceChildren();Object.keys(files).filter(n=>n.endsWith('.py')).forEach(n=>{const opt=node('option','',n);opt.value=n;entry.append(opt);});if(files[old]!==undefined)entry.value=old;
  $('#file-name').textContent=fileName;
 }
