@@ -166,12 +166,24 @@ function execute(payload,onOutput){
 }
 if($('#stop'))$('#stop').onclick=()=>stop();
 function validName(name){return typeof name==='string' && /^[\w.-]+(?:\/[\w.-]+)*$/.test(name) && !name.split('/').some(p=>p==='.'||p==='..') && name.length<150;}
-function stash(){if(!currentId||!exampleDirty)return;files[fileName]=$('#code-editor').value;const prev=state.projects[currentId]&&typeof state.projects[currentId]==='object'?state.projects[currentId]:{};state.projects[currentId]={...prev,files,entry:$('#entry-file').value,stdin:$('#stdin').value,args:$('#argv').value};save('code');}
+function stash(){if(!currentId||!exampleDirty)return;files[fileName]=$('#code-editor').value;const prev=state.projects[currentId]&&typeof state.projects[currentId]==='object'?state.projects[currentId]:{};state.projects[currentId]={...prev,files,entry:$('#entry-file').value,stdin:$('#stdin').value,args:$('#argv').value};save('code');exampleDirty=false;}
+// 보고 있는 파일과 실제 실행 파일(#entry-file)이 다를 수 있다(#110) — 편집기 위에 실행 파일을 밝히고,
+// 필요하면 보고 있는 파일을 실행 파일로 바꾸는 버튼을 보인다. 파일을 클릭했다고 자동으로 바뀌지는 않는다.
+function updateEntryIndicator(){
+ const indicator=$('#entry-indicator'),useBtn=$('#use-as-entry');
+ if(!indicator||!useBtn)return;
+ const entry=$('#entry-file').value;
+ indicator.textContent='▶ 실행 파일: '+entry;
+ const differs=fileName!==entry && fileName.endsWith('.py');
+ indicator.classList.toggle('entry-diff',differs);
+ useBtn.hidden=!differs;
+}
 function renderFiles(){
  const tree=$('#file-tree');tree.replaceChildren();
  Object.keys(files).sort().forEach(name=>{const b=node('button',name===fileName?'active':'',name);b.setAttribute('aria-pressed',String(name===fileName));b.type='button';b.onclick=()=>{try{stash();fileName=name;const ed=$('#code-editor');ed.value=files[name];ed.dispatchEvent(new Event('input',{bubbles:true}));$('#file-name').textContent=name;renderFiles();}catch(error){console.error('[lab] 파일 전환 실패',name,error);toast('파일을 여는 중 문제가 생겼습니다: '+error.message);}};tree.append(b);});
  const entry=$('#entry-file'),old=entry.value;entry.replaceChildren();Object.keys(files).filter(n=>n.endsWith('.py')).forEach(n=>{const opt=node('option','',n);opt.value=n;entry.append(opt);});if(files[old]!==undefined)entry.value=old;
  $('#file-name').textContent=fileName;
+ updateEntryIndicator();
 }
 function selectExample(id,scroll=false,workspace=null){
  if(!hasLab)return;
@@ -206,6 +218,8 @@ if(hasLab){
 $('#code-editor').addEventListener('input',markCode);
 $('#code-editor').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const a=e.target,s=a.selectionStart,end=a.selectionEnd;a.setRangeText('    ',s,end,'end');markCode();}});
 for(const id of ['stdin','argv','entry-file'])$('#'+id).addEventListener('change',markCode);
+$('#entry-file').addEventListener('change',updateEntryIndicator);
+if($('#use-as-entry'))$('#use-as-entry').onclick=()=>{$('#entry-file').value=fileName;markCode();updateEntryIndicator();};
 if($('#example-select'))$('#example-select').onchange=e=>selectExample(e.target.value,true);
 $('#add-file').onclick=()=>{const name=prompt('파일 경로를 입력하세요. 예: utils.py 또는 nature/bird.py');if(name===null)return;if(!validName(name)||Object.hasOwn(files,name))return toast('중복되지 않는 상대 경로를 입력하세요.');markCode();files[name]=name.endsWith('.py')?'# 새 기능을 작성하세요.\n':'';fileName=name;$('#code-editor').value=files[name];renderFiles();markCode();};
 $('#delete-file').onclick=()=>{if(Object.keys(files).length===1 || (fileName.endsWith('.py')&&Object.keys(files).filter(n=>n.endsWith('.py')).length===1))return toast('Python 파일 하나는 남겨 두세요.');if(!confirm(fileName+' 파일을 지울까요?'))return;delete files[fileName];fileName=Object.keys(files)[0];$('#code-editor').value=files[fileName];renderFiles();markCode();};
@@ -384,7 +398,12 @@ if(!hasLab && !hasPractice && !hasRail){
  window.aipyLearning.currentExample=()=>currentId||null;
  window.aipyLearning._refreshUnit=()=>{
   if(!data)return;
-  if(currentId){const id=currentId;currentId=null;selectExample(id,false);}
+  // 원격 기록 반영 시 호출된다(#110) — 편집기에 포커스가 있으면(=편집 중) 재적용을 미뤄 내용을 덮지 않는다.
+  // 재적용하더라도 지금 보던 파일이 여전히 있으면 그 파일을 계속 보여준다(main.py로 튕기지 않음).
+  if(currentId && document.activeElement!==$('#code-editor')){
+   const id=currentId,keepFile=fileName;currentId=null;selectExample(id,false);
+   if(files[keepFile]!==undefined && keepFile!==fileName){fileName=keepFile;$('#code-editor').value=files[fileName];renderFiles();}
+  }
   renderQuestions(false);
   renderRailTodo();
  };

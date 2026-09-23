@@ -173,14 +173,20 @@ export function buildStudentCards({roster = [], progress = [], presence = [], he
   const uid = (row && (row.uid || row.id)) || '';
   if (uid) presenceByUid.set(uid, row);
  }
+ // progress는 반 필터 없이 전부 이메일로 먼저 색인한다(#123). 반 판정은 명단(roster)의 현재 반으로
+ // 하고, progress 자체의 classroom 필드로 거르지 않는다 — 명단에서 반을 옮긴 학생의 progress 문서는
+ // 다음 활동(코드 실행·저널 저장 등)까지 예전 반 값을 그대로 갖고 있어서, progress 기준으로 먼저
+ // 거르면 옮긴 반에는 진행률 없는 카드만 남고 이전 반에는 유령 카드가 남는다.
+ const rosterEmails = new Set();
+ for (const row of roster || []) {
+  if (row && row.archived === true) continue;
+  const email = emailKey(row);
+  if (email) rosterEmails.add(email);
+ }
  const progressByEmail = new Map();
- const progressByUid = new Map();
  for (const row of progress || []) {
-  if (!inClass(row, classId)) continue;
   const email = emailKey(row);
   if (email) progressByEmail.set(email, row);
-  const uid = row.uid || row.id || '';
-  if (uid) progressByUid.set(uid, row);
  }
  const usedProgress = new Set();
  const cards = [];
@@ -192,8 +198,13 @@ export function buildStudentCards({roster = [], progress = [], presence = [], he
   if (matched) usedProgress.add(matched);
   cards.push(makeCard({roster: row, progress: matched, presenceByUid, helpByUid, topicTotal, titles, now}));
  }
+ // 명단에 없는 progress만 progress 자체의 반으로 판단한다(예: 퇴학·전출 등으로 명단에서 빠졌지만
+ // 기록은 남아 있는 경우). 명단에 있지만 이번 반이 아닌 학생은 이미 자기 반 카드로 나왔으므로 제외.
  for (const row of progress || []) {
-  if (!inClass(row, classId) || usedProgress.has(row)) continue;
+  if (usedProgress.has(row)) continue;
+  const email = emailKey(row);
+  if (email && rosterEmails.has(email)) continue;
+  if (!inClass(row, classId)) continue;
   cards.push(makeCard({roster: null, progress: row, presenceByUid, helpByUid, topicTotal, titles, now}));
  }
  return cards;
