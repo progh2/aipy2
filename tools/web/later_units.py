@@ -525,7 +525,7 @@ for u,topic_name,p,starter,answer,checks,hint in [
 # One transfer task per topic; model answer remains behind the answer control.
 for u in [3,4]:
  for l in units[u]:
-  q(u,l['title'],'서술',l['tasks'][0] if l['tasks'] else l['lead'],l['paragraphs'][-1],l['visual'][1][0]+'에서 시작해 입력과 출력을 연결하세요.','개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.',ref='교과서 '+l['pages']+' 연계·확장')
+  q(u,l['id'],'서술',l['tasks'][0] if l['tasks'] else l['lead'],l['paragraphs'][-1],l['visual'][1][0]+'에서 시작해 입력과 출력을 연결하세요.','개념의 정확성, 구체적인 예, 결과 또는 한계의 근거를 스스로 점검하세요.',ref='교과서 '+l['pages']+' 연계·확장')
 
 # Match each explanation answer to the actual transfer task, not to a generic paragraph.
 TRANSFER_ANSWERS={
@@ -657,3 +657,9 @@ import unit4_tips
 unit4_density.apply()
 unit4_pre_api.apply()
 unit4_tips.apply()
+
+# 모든 문항 생성이 끝난 뒤(content.py·questions.py·later_units.py) topic을
+# 실제 소단원 id로 정리한다(#116). id·순서·지문은 그대로 두고 topic만 바꾼다.
+import content
+import question_topics
+question_topics.apply(content.questions)

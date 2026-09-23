@@ -2116,7 +2116,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 36쪽 1"
+      "ref": "교과서 36쪽 1",
+      "tag": ""
     },
     {
       "id": "u1-q002",
@@ -2138,12 +2139,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 36쪽 2"
+      "ref": "교과서 36쪽 2",
+      "tag": ""
     },
     {
       "id": "u1-q003",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "overview",
       "kind": "빈칸",
       "prompt": "함수·변수·클래스 등을 담은 Python 파일은?",
       "answer": "모듈",
@@ -2154,12 +2156,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q004",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "packages",
       "kind": "빈칸",
       "prompt": "관련 모듈을 폴더 계층으로 묶은 구조는?",
       "answer": "패키지",
@@ -2170,12 +2173,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q005",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "imports",
       "kind": "빈칸",
       "prompt": "다른 모듈을 가져오는 키워드는?",
       "answer": "import",
@@ -2186,12 +2190,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q006",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "entrypoint",
       "kind": "빈칸",
       "prompt": "직접 실행한 파일의 __name__ 값은?",
       "answer": "__main__",
@@ -2202,12 +2207,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q007",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "entrypoint",
       "kind": "빈칸",
       "prompt": "if __name__ == \"____\": 의 빈칸을 채우세요.",
       "answer": "__main__",
@@ -2218,12 +2224,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q008",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "imports",
       "kind": "빈칸",
       "prompt": "import greet as g 이후 인사 함수 호출은?",
       "answer": "g.hello()",
@@ -2234,12 +2241,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q009",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "imports",
       "kind": "빈칸",
       "prompt": "from greet import hello 이후 호출은?",
       "answer": "hello()",
@@ -2250,12 +2258,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q010",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "packages",
       "kind": "빈칸",
       "prompt": "일반 패키지의 초기화 파일 이름은?",
       "answer": "__init__.py",
@@ -2266,12 +2275,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q011",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "packages",
       "kind": "빈칸",
       "prompt": "별표 임포트로 공개할 이름 목록을 지정하는 변수는?",
       "answer": "__all__",
@@ -2282,12 +2292,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q012",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "os-sys",
       "kind": "빈칸",
       "prompt": "현재 작업 폴더를 반환하는 os 함수 호출은?",
       "answer": "os.getcwd()",
@@ -2298,12 +2309,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q013",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "os-sys",
       "kind": "빈칸",
       "prompt": "실행 인자를 저장하는 sys 속성은?",
       "answer": "sys.argv",
@@ -2314,12 +2326,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q014",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "os-sys",
       "kind": "빈칸",
       "prompt": "프로그램을 종료하는 sys 함수 호출은?",
       "answer": "sys.exit()",
@@ -2330,12 +2343,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q015",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "math",
       "kind": "빈칸",
       "prompt": "math의 원주율 상수는?",
       "answer": "math.pi",
@@ -2346,12 +2360,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q016",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "random",
       "kind": "빈칸",
       "prompt": "목록에서 요소 하나를 고르는 random 함수 이름은?",
       "answer": "choice",
@@ -2362,12 +2377,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q017",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "random",
       "kind": "빈칸",
       "prompt": "목록 자체를 섞는 함수 이름은?",
       "answer": "shuffle",
@@ -2378,12 +2394,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q018",
       "unit": 1,
-      "topic": "기초 개념",
+      "topic": "datetime",
       "kind": "빈칸",
       "prompt": "날짜 객체의 요일을 얻는 메서드 호출은?",
       "answer": "weekday()",
@@ -2394,7 +2411,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기초 개념"
     },
     {
       "id": "u1-q019",
@@ -2410,7 +2428,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 36쪽 3"
+      "ref": "교과서 36쪽 3",
+      "tag": ""
     },
     {
       "id": "u1-q020",
@@ -2426,7 +2445,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 36쪽 3"
+      "ref": "교과서 36쪽 3",
+      "tag": ""
     },
     {
       "id": "u1-q021",
@@ -2442,7 +2462,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 36쪽 3"
+      "ref": "교과서 36쪽 3",
+      "tag": ""
     },
     {
       "id": "u1-q022",
@@ -2458,7 +2479,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 37쪽 4"
+      "ref": "교과서 37쪽 4",
+      "tag": ""
     },
     {
       "id": "u1-q023",
@@ -2474,7 +2496,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 37쪽 4"
+      "ref": "교과서 37쪽 4",
+      "tag": ""
     },
     {
       "id": "u1-q024",
@@ -2490,7 +2513,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 37쪽 4"
+      "ref": "교과서 37쪽 4",
+      "tag": ""
     },
     {
       "id": "u1-q025",
@@ -2506,7 +2530,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 37쪽 4"
+      "ref": "교과서 37쪽 4",
+      "tag": ""
     },
     {
       "id": "u1-q026",
@@ -2528,12 +2553,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 37쪽 5"
+      "ref": "교과서 37쪽 5",
+      "tag": ""
     },
     {
       "id": "u1-q027",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "entrypoint",
       "kind": "예측",
       "prompt": "print(__name__)을 직접 실행했을 때 출력은?",
       "answer": "__main__",
@@ -2544,12 +2570,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q028",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "math",
       "kind": "예측",
       "prompt": "import math\nprint(math.ceil(-3.5))",
       "answer": "-3",
@@ -2560,12 +2587,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q029",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "math",
       "kind": "예측",
       "prompt": "import math\nprint(math.floor(-3.5))",
       "answer": "-4",
@@ -2576,12 +2604,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q030",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "math",
       "kind": "예측",
       "prompt": "import math\nprint(math.factorial(0))",
       "answer": "1",
@@ -2592,12 +2621,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q031",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "math",
       "kind": "예측",
       "prompt": "import math\nprint(math.gcd(28,70))",
       "answer": "14",
@@ -2608,12 +2638,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q032",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "math",
       "kind": "예측",
       "prompt": "import math\nprint(math.pow(2,10))",
       "answer": "1024.0",
@@ -2624,12 +2655,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q033",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "random",
       "kind": "예측",
       "prompt": "import random\na=[1,2,3]\nprint(random.shuffle(a))",
       "answer": "None",
@@ -2640,12 +2672,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q034",
       "unit": 1,
-      "topic": "결과 추적",
+      "topic": "datetime",
       "kind": "예측",
       "prompt": "from datetime import date\nprint(date(2026,12,25).weekday())",
       "answer": "4",
@@ -2656,12 +2689,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "결과 추적"
     },
     {
       "id": "u1-q035",
       "unit": 1,
-      "topic": "응용 판단",
+      "topic": "packages",
       "kind": "선택",
       "prompt": "from pkg import *에서 __all__에 없는 이름은 명시적으로 import할 수 없나요?",
       "answer": "명시적으로 가져올 수 있습니다.",
@@ -2678,12 +2712,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u1-q036",
       "unit": 1,
-      "topic": "응용 판단",
+      "topic": "random",
       "kind": "선택",
       "prompt": "random.randrange(1,7,2)의 후보는?",
       "answer": "1, 3, 5",
@@ -2700,12 +2735,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u1-q037",
       "unit": 1,
-      "topic": "응용 판단",
+      "topic": "random",
       "kind": "선택",
       "prompt": "uniform(2.5,10.0)의 끝 값 설명으로 정확한 것은?",
       "answer": "반올림에 따라 10.0이 포함될 수도 있습니다.",
@@ -2722,12 +2758,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u1-q038",
       "unit": 1,
-      "topic": "응용 판단",
+      "topic": "thirdparty",
       "kind": "선택",
       "prompt": "이미지 크기를 바꾸는 패키지는?",
       "answer": "Pillow",
@@ -2744,12 +2781,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u1-q039",
       "unit": 1,
-      "topic": "응용 판단",
+      "topic": "thirdparty",
       "kind": "선택",
       "prompt": "HTML에서 제목을 추출할 때 선택할 도구는?",
       "answer": "Beautiful Soup",
@@ -2766,12 +2804,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u1-q040",
       "unit": 1,
-      "topic": "응용 판단",
+      "topic": "thirdparty",
       "kind": "선택",
       "prompt": "설치 성공 후 import가 실패할 때 먼저 확인할 것은?",
       "answer": "설치 환경과 실행 인터프리터",
@@ -2788,7 +2827,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u1-q041",
@@ -2804,7 +2844,8 @@
       "starter": "def add(a,b):\n    pass\n",
       "checks": "assert add(3,5)==8\nassert add(-2,5)==3\nassert add(0,0)==0\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q042",
@@ -2820,7 +2861,8 @@
       "starter": "import math\ndef area(radius):\n    pass\n",
       "checks": "import math\nassert math.isclose(area(3), math.pi*9)\nassert area(0)==0\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q043",
@@ -2836,7 +2878,8 @@
       "starter": "import random\ndef roll(n):\n    return random.randrange(n)\n",
       "checks": "assert roll(1)==1\nfor _ in range(100):\n    x=roll(6)\n    assert isinstance(x,int) and 1<=x<=6\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q044",
@@ -2852,7 +2895,8 @@
       "starter": "import random\ndef pick(names):\n    pass\n",
       "checks": "names=[\"A\",\"B\",\"C\"]\na=pick(names)\nassert len(a)==2 and len(set(a))==2\nassert set(a)<=set(names)\nassert names==[\"A\",\"B\",\"C\"]\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q045",
@@ -2868,7 +2912,8 @@
       "starter": "from datetime import date\ndef days(start,end):\n    pass\n",
       "checks": "assert days(\"2026-12-24\",\"2026-12-25\")==1\nassert days(\"2026-12-25\",\"2026-12-24\")==-1\nassert days(\"2024-02-28\",\"2024-03-01\")==2\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q046",
@@ -2884,7 +2929,8 @@
       "starter": "import math as m\nvalue = math.sqrt(81)\n",
       "checks": "assert value==9\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q047",
@@ -2900,7 +2946,8 @@
       "starter": "import random\ndef mix(values):\n    return random.shuffle(values)\n",
       "checks": "values=[1,2,3]\nr=mix(values)\nassert sorted(r)==[1,2,3] and r is values\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q048",
@@ -2916,7 +2963,8 @@
       "starter": "from datetime import date\ndef weekday_name(value):\n    pass\n",
       "checks": "assert weekday_name(\"2026-12-25\")==\"금\"\nassert weekday_name(\"2026-12-27\")==\"일\"\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q049",
@@ -2938,12 +2986,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q050",
       "unit": 1,
-      "topic": "main",
+      "topic": "review",
       "kind": "순서",
       "prompt": "addcal에 최상위 print가 있고 subcal 시험 코드에는 main 가드가 있습니다. main의 실행 순서를 배열하세요.",
       "answer": [
@@ -2959,7 +3008,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "main"
     },
     {
       "id": "u1-q051",
@@ -2975,12 +3025,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 10·12·13쪽"
+      "ref": "교과서 10·12·13쪽",
+      "tag": ""
     },
     {
       "id": "u1-q052",
       "unit": 1,
-      "topic": "main",
+      "topic": "entrypoint",
       "kind": "서술",
       "prompt": "__main__ 가드가 필요한 이유와 실행 결과 차이를 설명하세요.",
       "answer": "직접 실행할 때만 시험 코드를 돌려서 임포트하는 프로그램에 불필요한 출력과 동작이 섞이지 않도록 합니다.",
@@ -2991,7 +3042,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "main"
     },
     {
       "id": "u1-q053",
@@ -3007,7 +3059,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q054",
@@ -3023,7 +3076,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 39쪽 8 · 정답편 보완"
+      "ref": "교과서 39쪽 8 · 정답편 보완",
+      "tag": ""
     },
     {
       "id": "u1-q055",
@@ -3039,7 +3093,8 @@
       "starter": "def perimeter(w,h):\n    print(2*(w+h))\n",
       "checks": "assert perimeter(2,4)==12\nassert perimeter(0,3)==6\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q056",
@@ -3055,7 +3110,8 @@
       "starter": "import math\ndef boxes(n):\n    return n//4\n",
       "checks": "assert boxes(5)==2\nassert boxes(4)==1\nassert boxes(0)==0\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q057",
@@ -3071,7 +3127,8 @@
       "starter": "from datetime import date\ndef christmas(today):\n    return date(today.year,12,25)\n",
       "checks": "assert christmas(date(2026,12,24))==date(2026,12,25)\nassert christmas(date(2026,12,25))==date(2026,12,25)\nassert christmas(date(2026,12,26))==date(2027,12,25)\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q058",
@@ -3087,12 +3144,13 @@
       "starter": "def clean(names):\n    return names\n",
       "checks": "assert clean([\" A \",\"A\",\"\",\"B\"])==[\"A\",\"B\"]\nassert clean([])==[]\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u1-q059",
       "unit": 1,
-      "topic": "sys",
+      "topic": "os-sys",
       "kind": "오류 수정",
       "prompt": "문자열 실행 인자 두 개의 합을 반환하세요.",
       "answer": "def sum_args(args):\n    return int(args[0])+int(args[1])",
@@ -3103,7 +3161,8 @@
       "starter": "def sum_args(args):\n    return args[0]+args[1]\n",
       "checks": "assert sum_args([\"3\",\"5\"])==8\nassert sum_args([\"-1\",\"2\"])==1\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "sys"
     },
     {
       "id": "u1-q060",
@@ -3125,7 +3184,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 33쪽"
+      "ref": "교과서 33쪽",
+      "tag": ""
     }
   ],
   "pairs": []

@@ -1803,7 +1803,7 @@
     {
       "id": "u4-q001",
       "unit": 4,
-      "topic": "기본",
+      "topic": "cv-overview",
       "kind": "선택",
       "prompt": "이미지 밝기를 부드럽게 만드는 작업은?",
       "answer": "영상 처리",
@@ -1817,12 +1817,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 146쪽 1"
+      "ref": "교과서 146쪽 1",
+      "tag": "기본"
     },
     {
       "id": "u4-q002",
       "unit": 4,
-      "topic": "픽셀",
+      "topic": "cv-pixels",
       "kind": "선택",
       "prompt": "shape가 (2,3,3)인 이미지의 픽셀 수는?",
       "answer": "6",
@@ -1836,12 +1837,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 140–141쪽"
+      "ref": "교과서 140–141쪽",
+      "tag": "픽셀"
     },
     {
       "id": "u4-q003",
       "unit": 4,
-      "topic": "픽셀",
+      "topic": "cv-pixels",
       "kind": "선택",
       "prompt": "같은 배열의 size 값은?",
       "answer": "18",
@@ -1855,12 +1857,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 150쪽 보완"
+      "ref": "교과서 150쪽 보완",
+      "tag": "픽셀"
     },
     {
       "id": "u4-q004",
       "unit": 4,
-      "topic": "색상",
+      "topic": "cv-io",
       "kind": "선택",
       "prompt": "OpenCV imread의 기본 컬러 순서는?",
       "answer": "BGR",
@@ -1874,12 +1877,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 155–156쪽"
+      "ref": "교과서 155–156쪽",
+      "tag": "색상"
     },
     {
       "id": "u4-q005",
       "unit": 4,
-      "topic": "입출력",
+      "topic": "cv-io",
       "kind": "선택",
       "prompt": "imread가 파일을 못 읽으면 보통 무엇을 반환하나요?",
       "answer": "None",
@@ -1893,12 +1897,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 155쪽"
+      "ref": "교과서 155쪽",
+      "tag": "입출력"
     },
     {
       "id": "u4-q006",
       "unit": 4,
-      "topic": "크기",
+      "topic": "cv-io",
       "kind": "선택",
       "prompt": "cv2.resize(img,(80,60))의 결과 높이와 너비는?",
       "answer": "높이 60, 너비 80",
@@ -1912,12 +1917,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 157쪽"
+      "ref": "교과서 157쪽",
+      "tag": "크기"
     },
     {
       "id": "u4-q007",
       "unit": 4,
-      "topic": "이진화",
+      "topic": "cv-filters",
       "kind": "선택",
       "prompt": "THRESH_BINARY 기준 127에서 값 127의 결과는?",
       "answer": "0",
@@ -1931,12 +1937,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 167–168쪽"
+      "ref": "교과서 167–168쪽",
+      "tag": "이진화"
     },
     {
       "id": "u4-q008",
       "unit": 4,
-      "topic": "이진화",
+      "topic": "cv-filters",
       "kind": "선택",
       "prompt": "그림자가 있는 문서에서 영역별 기준을 적용하는 것은?",
       "answer": "적응형 이진화",
@@ -1950,12 +1957,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 172쪽 탐구"
+      "ref": "교과서 172쪽 탐구",
+      "tag": "이진화"
     },
     {
       "id": "u4-q009",
       "unit": 4,
-      "topic": "특징",
+      "topic": "cv-features",
       "kind": "선택",
       "prompt": "파노라마에서 공통 위치 단서로 쓰기 좋은 것은?",
       "answer": "코너",
@@ -1969,12 +1977,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 176쪽"
+      "ref": "교과서 176쪽",
+      "tag": "특징"
     },
     {
       "id": "u4-q010",
       "unit": 4,
-      "topic": "특징",
+      "topic": "cv-features",
       "kind": "선택",
       "prompt": "물체의 면적과 외곽 경계를 구할 때 활용할 것은?",
       "answer": "윤곽선",
@@ -1988,12 +1997,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 173–176쪽"
+      "ref": "교과서 173–176쪽",
+      "tag": "특징"
     },
     {
       "id": "u4-q011",
       "unit": 4,
-      "topic": "얼굴",
+      "topic": "cv-haar",
       "kind": "선택",
       "prompt": "Haar 얼굴 검출 결과만으로 사람의 이름을 알 수 있나요?",
       "answer": "알 수 없다",
@@ -2007,12 +2017,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 177–184쪽 보완"
+      "ref": "교과서 177–184쪽 보완",
+      "tag": "얼굴"
     },
     {
       "id": "u4-q012",
       "unit": 4,
-      "topic": "얼굴",
+      "topic": "cv-haar",
       "kind": "선택",
       "prompt": "얼굴 ROI의 눈 좌표를 원본 위치로 바꾸려면?",
       "answer": "얼굴 원점 좌표를 더한다",
@@ -2026,12 +2037,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 181–182쪽"
+      "ref": "교과서 181–182쪽",
+      "tag": "얼굴"
     },
     {
       "id": "u4-q013",
       "unit": 4,
-      "topic": "YOLO",
+      "topic": "cv-yolo",
       "kind": "선택",
       "prompt": "각 프레임의 person 수를 합하면 고유 방문자 수인가요?",
       "answer": "아니다",
@@ -2045,12 +2057,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 188–190쪽 보강"
+      "ref": "교과서 188–190쪽 보강",
+      "tag": "YOLO"
     },
     {
       "id": "u4-q014",
       "unit": 4,
-      "topic": "평가",
+      "topic": "cv-pipeline",
       "kind": "선택",
       "prompt": "비전 시스템에서 처리 속도 외에 확인할 것은?",
       "answer": "오탐·누락과 조건별 안정성",
@@ -2064,12 +2077,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 144쪽"
+      "ref": "교과서 144쪽",
+      "tag": "평가"
     },
     {
       "id": "u4-q015",
       "unit": 4,
-      "topic": "도구",
+      "topic": "cv-libraries",
       "kind": "선택",
       "prompt": "실시간 영상 입출력과 검출을 함께 다루는 대표 도구는?",
       "answer": "OpenCV",
@@ -2083,12 +2097,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 195쪽 4"
+      "ref": "교과서 195쪽 4",
+      "tag": "도구"
     },
     {
       "id": "u4-q016",
       "unit": 4,
-      "topic": "도구",
+      "topic": "cv-libraries",
       "kind": "선택",
       "prompt": "픽셀 단위 영역 분석 도구를 고를 때 고려할 것은?",
       "answer": "scikit-image의 분석 기능",
@@ -2102,12 +2117,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 195쪽 4"
+      "ref": "교과서 195쪽 4",
+      "tag": "도구"
     },
     {
       "id": "u4-q017",
       "unit": 4,
-      "topic": "검출",
+      "topic": "cv-haar",
       "kind": "빈칸",
       "prompt": "CascadeClassifier에 사용하는 정면 얼굴 파일 이름은?",
       "answer": "haarcascade_frontalface_default.xml",
@@ -2118,12 +2134,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 195쪽 3①"
+      "ref": "교과서 195쪽 3①",
+      "tag": "검출"
     },
     {
       "id": "u4-q018",
       "unit": 4,
-      "topic": "검출",
+      "topic": "cv-haar",
       "kind": "빈칸",
       "prompt": "face_cascade.____(gray,1.1,5)에서 빈칸은?",
       "answer": "detectMultiScale",
@@ -2134,12 +2151,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 195쪽 3②"
+      "ref": "교과서 195쪽 3②",
+      "tag": "검출"
     },
     {
       "id": "u4-q019",
       "unit": 4,
-      "topic": "입출력",
+      "topic": "cv-io",
       "kind": "빈칸",
       "prompt": "cv2.____(\"Result\",img)로 화면을 표시합니다.",
       "answer": "imshow",
@@ -2150,12 +2168,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 195쪽 3③"
+      "ref": "교과서 195쪽 3③",
+      "tag": "입출력"
     },
     {
       "id": "u4-q020",
       "unit": 4,
-      "topic": "입출력",
+      "topic": "cv-io",
       "kind": "빈칸",
       "prompt": "cv2.____(\"photo.jpg\")로 이미지를 읽습니다.",
       "answer": "imread",
@@ -2166,12 +2185,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 162쪽"
+      "ref": "교과서 162쪽",
+      "tag": "입출력"
     },
     {
       "id": "u4-q021",
       "unit": 4,
-      "topic": "변환",
+      "topic": "cv-io",
       "kind": "빈칸",
       "prompt": "cv2.____(img,cv2.COLOR_BGR2GRAY)로 회색조 변환합니다.",
       "answer": "cvtColor",
@@ -2182,12 +2202,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 162쪽"
+      "ref": "교과서 162쪽",
+      "tag": "변환"
     },
     {
       "id": "u4-q022",
       "unit": 4,
-      "topic": "반전",
+      "topic": "cv-pixels",
       "kind": "빈칸",
       "prompt": "8비트 밝기 40의 반전 값은?",
       "answer": "215",
@@ -2198,12 +2219,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "반전"
     },
     {
       "id": "u4-q023",
       "unit": 4,
-      "topic": "문서 스캔",
+      "topic": "cv-project",
       "kind": "순서",
       "prompt": "기울고 어두운 문서의 처리 경로 예를 배열하세요.",
       "answer": [
@@ -2219,12 +2241,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "문서 스캔"
     },
     {
       "id": "u4-q024",
       "unit": 4,
-      "topic": "카메라",
+      "topic": "cv-haar",
       "kind": "순서",
       "prompt": "카메라 프로그램의 기본 순서를 정하세요.",
       "answer": [
@@ -2241,12 +2264,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "카메라"
     },
     {
       "id": "u4-q025",
       "unit": 4,
-      "topic": "이진화",
+      "topic": "cv-filters",
       "kind": "구현",
       "prompt": "binary(values,t)가 OpenCV THRESH_BINARY와 같은 기준으로 0/255 목록을 반환하게 하세요.",
       "answer": "def binary(values,t):\n    return [255 if v>t else 0 for v in values]",
@@ -2257,12 +2281,13 @@
       "starter": "def binary(values,t):\n    pass\n",
       "checks": "assert binary([0,127,128,255],127)==[0,0,255,255]\nassert binary([255],255)==[0]\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "이진화"
     },
     {
       "id": "u4-q026",
       "unit": 4,
-      "topic": "색상",
+      "topic": "cv-libraries",
       "kind": "구현",
       "prompt": "bgr_to_rgb(pixel)이 채널 순서를 바꾼 튜플을 반환하게 만드세요.",
       "answer": "def bgr_to_rgb(pixel):\n    b,g,r=pixel\n    return (r,g,b)",
@@ -2273,12 +2298,13 @@
       "starter": "def bgr_to_rgb(pixel):\n    pass\n",
       "checks": "assert bgr_to_rgb((20,80,240))==(240,80,20)\nassert bgr_to_rgb((0,0,0))==(0,0,0)\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "색상"
     },
     {
       "id": "u4-q027",
       "unit": 4,
-      "topic": "좌표",
+      "topic": "cv-haar",
       "kind": "구현",
       "prompt": "global_point(origin,local)이 ROI 좌표를 원본 좌표로 바꾸게 만드세요.",
       "answer": "def global_point(origin,local):\n    return (origin[0]+local[0],origin[1]+local[1])",
@@ -2289,12 +2315,13 @@
       "starter": "def global_point(origin,local):\n    pass\n",
       "checks": "assert global_point((100,50),(20,10))==(120,60)\nassert global_point((0,0),(4,5))==(4,5)\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "좌표"
     },
     {
       "id": "u4-q028",
       "unit": 4,
-      "topic": "계수",
+      "topic": "cv-yolo",
       "kind": "구현",
       "prompt": "counts(names)가 현재 프레임의 클래스별 개수 딕셔너리를 반환하게 만드세요.",
       "answer": "def counts(names):\n    result={}\n    for name in names:\n        result[name]=result.get(name,0)+1\n    return result",
@@ -2305,12 +2332,13 @@
       "starter": "def counts(names):\n    pass\n",
       "checks": "assert counts([\"person\",\"car\",\"person\"])=={\"person\":2,\"car\":1}\nassert counts([])=={}\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "계수"
     },
     {
       "id": "u4-q029",
       "unit": 4,
-      "topic": "컴퓨터 비전과 영상 처리",
+      "topic": "cv-overview",
       "kind": "서술",
       "prompt": "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요.",
       "answer": "예: 도서관 빈자리 안내는 좌석 정보를 쉽게 보여 주지만 가방을 사람으로 잘못 찾으면 자리가 틀리게 표시될 수 있습니다. 사람의 신원을 저장하지 않고 오탐과 가림 조건을 시험합니다.",
@@ -2321,12 +2349,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 134–139 연계·확장"
+      "ref": "교과서 134–139 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q030",
       "unit": 4,
-      "topic": "픽셀·해상도·RGB·그레이스케일",
+      "topic": "cv-pixels",
       "kind": "서술",
       "prompt": "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요.",
       "answer": "THRESH_BINARY는 값이 기준보다 클 때만 255입니다. 값 128과 기준 128은 같으므로 검정 0이 됩니다.",
@@ -2337,12 +2366,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 140–141 연계·확장"
+      "ref": "교과서 140–141 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q031",
       "unit": 4,
-      "topic": "알고리즘·처리 과정·평가 기준",
+      "topic": "cv-pipeline",
       "kind": "서술",
       "prompt": "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요.",
       "answer": "카메라 입력 → 번호판 영역 검출 → 해당 영역의 문자 인식 → 문자열 결과입니다. 검출은 위치를 찾고 OCR은 글자 내용을 읽으므로 두 단계의 오류를 따로 점검합니다.",
@@ -2353,12 +2383,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 142–146 연계·확장"
+      "ref": "교과서 142–146 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q032",
       "unit": 4,
-      "topic": "OpenCV·Pillow·Matplotlib·scikit-image",
+      "topic": "cv-libraries",
       "kind": "서술",
       "prompt": "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요.",
       "answer": "Pillow.size는 (240,160), OpenCV의 3채널 shape는 (160,240,3)입니다. 픽셀은 38400개, 채널 원소는 115200개입니다.",
@@ -2369,12 +2400,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 147–154 연계·확장"
+      "ref": "교과서 147–154 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q033",
       "unit": 4,
-      "topic": "이미지 읽기·표시·변환·저장",
+      "topic": "cv-io",
       "kind": "서술",
       "prompt": "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요.",
       "answer": "260×180 컬러 이미지를 130×90으로 축소하면 픽셀 수는 11700개, 원소 수는 35100개이며 shape는 (90,130,3)입니다.",
@@ -2385,12 +2417,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 155–162 연계·확장"
+      "ref": "교과서 155–162 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q034",
       "unit": 4,
-      "topic": "블러·에지·이진화",
+      "topic": "cv-filters",
       "kind": "서술",
       "prompt": "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요.",
       "answer": "커널을 3에서 15로 늘리면 잡음뿐 아니라 세부 경계도 더 흐려질 수 있습니다. 고정 이진화 기준을 80에서 180으로 올리면 흰색으로 남는 픽셀은 줄거나 같습니다.",
@@ -2401,12 +2434,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 163–168 연계·확장"
+      "ref": "교과서 163–168 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q035",
       "unit": 4,
-      "topic": "원근 변환과 마우스 이벤트",
+      "topic": "cv-transform",
       "kind": "서술",
       "prompt": "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요.",
       "answer": "두 대응 목록에서 한쪽만 순서를 바꾸면 잘못된 꼭짓점으로 매핑되어 결과가 뒤틀리거나 뒤집힐 수 있습니다. 양쪽을 왼쪽 위부터 같은 방향으로 맞춥니다.",
@@ -2417,12 +2451,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 168–172 연계·확장"
+      "ref": "교과서 168–172 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q036",
       "unit": 4,
-      "topic": "에지·코너·윤곽선으로 중요한 부분 찾기",
+      "topic": "cv-features",
       "kind": "서술",
       "prompt": "네모와 원에서 코너 수가 왜 다른지 관찰하세요.",
       "answer": "네모의 꼭짓점은 여러 방향의 변화가 강해 코너로 잡히기 쉽습니다. 원의 곡선은 설정과 해상도에 따라 코너가 적거나 다르게 잡힙니다. 결과 개수는 고정 정답이 아니므로 그림과 조건을 함께 기록합니다.",
@@ -2433,12 +2468,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 173–176 연계·확장"
+      "ref": "교과서 173–176 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q037",
       "unit": 4,
-      "topic": "얼굴·눈·웃음 검출과 웹캠",
+      "topic": "cv-haar",
       "kind": "서술",
       "prompt": "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요.",
       "answer": "같은 사진에서 minNeighbors=3,5,7로 실행하고 실제 얼굴 수·검출 수·오탐 수·누락 수를 표로 비교합니다. 더 엄격한 기준은 오탐을 줄일 수 있지만 실제 얼굴을 놓칠 수도 있습니다.",
@@ -2449,12 +2485,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 177–184 연계·확장"
+      "ref": "교과서 177–184 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q038",
       "unit": 4,
-      "topic": "YOLOv8 객체 탐지와 개수 표시",
+      "topic": "cv-yolo",
       "kind": "서술",
       "prompt": "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요.",
       "answer": "같은 이미지에서 conf=0.3과 0.7을 비교합니다. 기준을 높이면 낮은 점수의 후보가 제외되어 검출 수가 줄 수 있고, 오탐 감소와 실제 객체 누락을 함께 확인해야 합니다.",
@@ -2465,12 +2502,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 185–191 연계·확장"
+      "ref": "교과서 185–191 연계·확장",
+      "tag": ""
     },
     {
       "id": "u4-q039",
       "unit": 4,
-      "topic": "컴퓨터 비전 프로젝트와 단원 정리",
+      "topic": "cv-project",
       "kind": "서술",
       "prompt": "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요.",
       "answer": "이미지 열기 버튼 → 입력 경로 확인 → 별도 처리 모듈의 함수 호출 → 결과 미리보기 → 저장 버튼으로 구성합니다. GUI 이벤트 코드와 배열 처리 코드를 분리하고 취소·잘못된 경로도 처리합니다.",
@@ -2481,7 +2519,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 192–195 + 확장 연계·확장"
+      "ref": "교과서 192–195 + 확장 연계·확장",
+      "tag": ""
     }
   ],
   "pairs": []

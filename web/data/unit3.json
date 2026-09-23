@@ -2202,7 +2202,7 @@
     {
       "id": "u3-q001",
       "unit": 3,
-      "topic": "AI 관계",
+      "topic": "ml-overview",
       "kind": "선택",
       "prompt": "올바른 포함 관계는?",
       "answer": "AI ⊃ 머신러닝 ⊃ 딥러닝",
@@ -2216,12 +2216,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 129쪽 3"
+      "ref": "교과서 129쪽 3",
+      "tag": "AI 관계"
     },
     {
       "id": "u3-q002",
       "unit": 3,
-      "topic": "학습 방식",
+      "topic": "ml-methods",
       "kind": "선택",
       "prompt": "레이블 없이 데이터의 비슷한 구조를 찾는 학습은?",
       "answer": "비지도 학습",
@@ -2235,12 +2236,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 84쪽 1③"
+      "ref": "교과서 84쪽 1③",
+      "tag": "학습 방식"
     },
     {
       "id": "u3-q003",
       "unit": 3,
-      "topic": "학습 방식",
+      "topic": "ml-methods",
       "kind": "선택",
       "prompt": "예측할 값이 내일의 기온이라면 주된 문제 유형은?",
       "answer": "회귀",
@@ -2254,12 +2256,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 84쪽 2"
+      "ref": "교과서 84쪽 2",
+      "tag": "학습 방식"
     },
     {
       "id": "u3-q004",
       "unit": 3,
-      "topic": "학습 방식",
+      "topic": "ml-methods",
       "kind": "선택",
       "prompt": "보상에 따라 미로의 행동 전략을 배우는 방식은?",
       "answer": "강화 학습",
@@ -2273,12 +2276,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 84쪽 3"
+      "ref": "교과서 84쪽 3",
+      "tag": "학습 방식"
     },
     {
       "id": "u3-q005",
       "unit": 3,
-      "topic": "군집",
+      "topic": "ml-cluster",
       "kind": "선택",
       "prompt": "정답 없이 고객을 구매 특성별로 묶는 도구는?",
       "answer": "KMeans",
@@ -2292,12 +2296,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 128쪽 3"
+      "ref": "교과서 128쪽 3",
+      "tag": "군집"
     },
     {
       "id": "u3-q006",
       "unit": 3,
-      "topic": "특성",
+      "topic": "ml-terms",
       "kind": "선택",
       "prompt": "예측 시점에는 알 수 없는 미래 정답 열을 X에 넣으면?",
       "answer": "데이터 누수",
@@ -2311,12 +2316,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "특성"
     },
     {
       "id": "u3-q007",
       "unit": 3,
-      "topic": "전처리",
+      "topic": "ml-preprocess",
       "kind": "선택",
       "prompt": "StandardScaler.fit을 적용할 데이터는?",
       "answer": "훈련 데이터",
@@ -2330,12 +2336,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 128쪽 2 보완"
+      "ref": "교과서 128쪽 2 보완",
+      "tag": "전처리"
     },
     {
       "id": "u3-q008",
       "unit": 3,
-      "topic": "pandas",
+      "topic": "ml-libraries",
       "kind": "선택",
       "prompt": "문자열 열을 DataFrame에 담을 수 있나요?",
       "answer": "가능하다",
@@ -2349,12 +2356,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 128쪽 1①"
+      "ref": "교과서 128쪽 1①",
+      "tag": "pandas"
     },
     {
       "id": "u3-q009",
       "unit": 3,
-      "topic": "분류",
+      "topic": "ml-metrics",
       "kind": "선택",
       "prompt": "중요한 정상 메일을 스팸으로 잘못 보내는 경우를 줄일 때 주목할 지표는?",
       "answer": "정밀도",
@@ -2368,12 +2376,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 129쪽 1"
+      "ref": "교과서 129쪽 1",
+      "tag": "분류"
     },
     {
       "id": "u3-q010",
       "unit": 3,
-      "topic": "과대 적합",
+      "topic": "ml-selection",
       "kind": "선택",
       "prompt": "훈련 점수만 높이려고 지나치게 반복 학습하면?",
       "answer": "과대 적합 위험이 커질 수 있다",
@@ -2387,12 +2396,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 130쪽 4"
+      "ref": "교과서 130쪽 4",
+      "tag": "과대 적합"
     },
     {
       "id": "u3-q011",
       "unit": 3,
-      "topic": "분류",
+      "topic": "ml-methods",
       "kind": "선택",
       "prompt": "분류 문제에 해당하는 것은?",
       "answer": "이메일 스팸 여부",
@@ -2406,12 +2416,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 130쪽 5"
+      "ref": "교과서 130쪽 5",
+      "tag": "분류"
     },
     {
       "id": "u3-q012",
       "unit": 3,
-      "topic": "알고리즘",
+      "topic": "ml-classification",
       "kind": "선택",
       "prompt": "지도 학습 알고리즘이 아닌 것은?",
       "answer": "KMeans",
@@ -2425,12 +2436,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 130쪽 6"
+      "ref": "교과서 130쪽 6",
+      "tag": "알고리즘"
     },
     {
       "id": "u3-q013",
       "unit": 3,
-      "topic": "전처리",
+      "topic": "ml-preprocess",
       "kind": "선택",
       "prompt": "정규화 후 새 데이터의 값이 1.4가 나올 수 있나요?",
       "answer": "가능하다",
@@ -2444,12 +2456,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "전처리"
     },
     {
       "id": "u3-q014",
       "unit": 3,
-      "topic": "용어",
+      "topic": "ml-terms",
       "kind": "선택",
       "prompt": "k-NN의 n_neighbors는 무엇인가요?",
       "answer": "하이퍼파라미터",
@@ -2463,12 +2476,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 78쪽"
+      "ref": "교과서 78쪽",
+      "tag": "용어"
     },
     {
       "id": "u3-q015",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-selection",
       "kind": "선택",
       "prompt": "최종 테스트 점수를 보고 k를 계속 고르면?",
       "answer": "테스트가 모델 선택에 사용된다",
@@ -2482,12 +2496,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "평가"
     },
     {
       "id": "u3-q016",
       "unit": 3,
-      "topic": "회귀",
+      "topic": "ml-regression",
       "kind": "선택",
       "prompt": "R²는 음수가 될 수 있나요?",
       "answer": "가능하다",
@@ -2501,12 +2516,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 121–123쪽"
+      "ref": "교과서 121–123쪽",
+      "tag": "회귀"
     },
     {
       "id": "u3-q017",
       "unit": 3,
-      "topic": "군집",
+      "topic": "ml-cluster",
       "kind": "선택",
       "prompt": "군집 번호 2는 번호 1보다 더 좋은 그룹인가요?",
       "answer": "번호에 우열 의미가 없다",
@@ -2520,12 +2536,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 108–111쪽"
+      "ref": "교과서 108–111쪽",
+      "tag": "군집"
     },
     {
       "id": "u3-q018",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-metrics",
       "kind": "선택",
       "prompt": "정확도·정밀도·재현율은 주로 어떤 모델에 쓰나요?",
       "answer": "분류",
@@ -2539,12 +2556,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 84쪽 1②"
+      "ref": "교과서 84쪽 1②",
+      "tag": "평가"
     },
     {
       "id": "u3-q019",
       "unit": 3,
-      "topic": "pandas",
+      "topic": "ml-libraries",
       "kind": "빈칸",
       "prompt": "import pandas as ____",
       "answer": "pd",
@@ -2555,12 +2573,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 131쪽 7①"
+      "ref": "교과서 131쪽 7①",
+      "tag": "pandas"
     },
     {
       "id": "u3-q020",
       "unit": 3,
-      "topic": "pandas",
+      "topic": "ml-libraries",
       "kind": "빈칸",
       "prompt": "pd.____(sales_info)로 표를 만듭니다.",
       "answer": "DataFrame",
@@ -2571,12 +2590,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 131쪽 7②"
+      "ref": "교과서 131쪽 7②",
+      "tag": "pandas"
     },
     {
       "id": "u3-q021",
       "unit": 3,
-      "topic": "pandas",
+      "topic": "ml-libraries",
       "kind": "빈칸",
       "prompt": "sales_df.____()로 수치형 요약 통계를 구합니다.",
       "answer": "describe",
@@ -2587,12 +2607,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 131쪽 7③"
+      "ref": "교과서 131쪽 7③",
+      "tag": "pandas"
     },
     {
       "id": "u3-q022",
       "unit": 3,
-      "topic": "모델",
+      "topic": "ml-classification",
       "kind": "빈칸",
       "prompt": "model.____(X_train,y_train)으로 학습합니다.",
       "answer": "fit",
@@ -2603,12 +2624,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 105쪽"
+      "ref": "교과서 105쪽",
+      "tag": "모델"
     },
     {
       "id": "u3-q023",
       "unit": 3,
-      "topic": "모델",
+      "topic": "ml-classification",
       "kind": "빈칸",
       "prompt": "model.____(X_test)로 새 입력을 예측합니다.",
       "answer": "predict",
@@ -2619,12 +2641,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 105쪽"
+      "ref": "교과서 105쪽",
+      "tag": "모델"
     },
     {
       "id": "u3-q024",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-metrics",
       "kind": "빈칸",
       "prompt": "TP=6, FP=2일 때 정밀도는? 소수로 쓰세요.",
       "answer": "0.75",
@@ -2635,12 +2658,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "평가"
     },
     {
       "id": "u3-q025",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-regression",
       "kind": "빈칸",
       "prompt": "실제 [1,3], 예측 [2,2]의 MSE는?",
       "answer": "1",
@@ -2651,12 +2675,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "평가"
     },
     {
       "id": "u3-q026",
       "unit": 3,
-      "topic": "과정",
+      "topic": "ml-process",
       "kind": "순서",
       "prompt": "데이터 누수 없이 예측 모델을 구성하는 순서를 정하세요.",
       "answer": [
@@ -2673,12 +2698,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "과정"
     },
     {
       "id": "u3-q027",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-selection",
       "kind": "순서",
       "prompt": "설정 후보를 고르고 최종 평가하는 순서를 정하세요.",
       "answer": [
@@ -2695,12 +2721,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "평가"
     },
     {
       "id": "u3-q028",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-regression",
       "kind": "구현",
       "prompt": "mae(actual,pred)가 평균 절대 오차를 반환하게 만드세요.",
       "answer": "def mae(actual,pred):\n    return sum(abs(a-p) for a,p in zip(actual,pred))/len(actual)",
@@ -2711,12 +2738,13 @@
       "starter": "def mae(actual,pred):\n    pass\n",
       "checks": "assert mae([1,3],[2,2])==1\nassert mae([0,0],[2,-4])==3\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "평가"
     },
     {
       "id": "u3-q029",
       "unit": 3,
-      "topic": "평가",
+      "topic": "ml-metrics",
       "kind": "구현",
       "prompt": "precision(tp,fp)가 정밀도를 반환하게 하세요. 분모 0은 0으로 처리합니다.",
       "answer": "def precision(tp,fp):\n    return tp/(tp+fp) if tp+fp else 0",
@@ -2727,12 +2755,13 @@
       "starter": "def precision(tp,fp):\n    pass\n",
       "checks": "assert precision(6,2)==0.75\nassert precision(0,0)==0\nassert precision(0,3)==0\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "평가"
     },
     {
       "id": "u3-q030",
       "unit": 3,
-      "topic": "전처리",
+      "topic": "ml-preprocess",
       "kind": "구현",
       "prompt": "fill(values)가 None을 관측값 평균으로 채운 새 목록을 반환하게 만드세요. 관측값은 한 개 이상입니다.",
       "answer": "def fill(values):\n    valid=[v for v in values if v is not None]\n    mean=sum(valid)/len(valid)\n    return [mean if v is None else v for v in values]",
@@ -2743,12 +2772,13 @@
       "starter": "def fill(values):\n    pass\n",
       "checks": "v=[0,None,4]\nassert fill(v)==[0,2,4]\nassert v==[0,None,4]\nassert fill([None,6])==[6,6]\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "전처리"
     },
     {
       "id": "u3-q031",
       "unit": 3,
-      "topic": "회귀",
+      "topic": "ml-regression",
       "kind": "구현",
       "prompt": "predict(x,w,b)가 선형 예측값을 반환하도록 고치세요.",
       "answer": "def predict(x,w,b):\n    return w*x+b",
@@ -2759,12 +2789,13 @@
       "starter": "def predict(x,w,b):\n    return x+w+b\n",
       "checks": "assert predict(3,2,1)==7\nassert predict(-2,3,4)==-2\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "회귀"
     },
     {
       "id": "u3-q032",
       "unit": 3,
-      "topic": "AI·머신러닝·딥러닝의 관계",
+      "topic": "ml-overview",
       "kind": "서술",
       "prompt": "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요.",
       "answer": "예: 음악 추천의 입력은 이전 청취 기록과 곡 특성, 출력은 추천 순위입니다. 추천 서비스의 일부는 데이터에서 선호 패턴을 학습합니다. 모든 기능이 딥러닝일 필요는 없습니다.",
@@ -2775,12 +2806,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 62–67 연계·확장"
+      "ref": "교과서 62–67 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q033",
       "unit": 3,
-      "topic": "머신러닝이 필요한 문제와 활용",
+      "topic": "ml-use",
       "kind": "서술",
       "prompt": "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요.",
       "answer": "날짜·요일·학사 일정·이전 날짜까지의 대출 권수와 다음 날 대출 권수를 모읍니다. 다음 날 대출 권수는 정답이며 예측 시점의 입력에 넣지 않습니다.",
@@ -2791,12 +2823,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 68–70 연계·확장"
+      "ref": "교과서 68–70 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q034",
       "unit": 3,
-      "topic": "문제 해결 과정과 데이터 분할",
+      "topic": "ml-process",
       "kind": "서술",
       "prompt": "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요.",
       "answer": "예: 다음 날 총 대출 권수를 예측하고 MAE가 단순 과거 평균 예측보다 낮은지 비교합니다. 시간 순서를 지켜 미래 자료를 테스트로 남기고 오차의 단위는 권으로 적습니다.",
@@ -2807,12 +2840,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 71–75, 101–102 연계·확장"
+      "ref": "교과서 71–75, 101–102 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q035",
       "unit": 3,
-      "topic": "특성·레이블·모델·하이퍼파라미터",
+      "topic": "ml-terms",
       "kind": "서술",
       "prompt": "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요.",
       "answer": "미래 대출 수는 예측할 정답이므로 실제 예측 때 사용할 수 없습니다. X에 넣으면 테스트 점수가 높아져도 현실에서는 사용할 수 없는 데이터 누수가 됩니다.",
@@ -2823,12 +2857,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 76–78 연계·확장"
+      "ref": "교과서 76–78 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q036",
       "unit": 3,
-      "topic": "지도·비지도·강화 학습",
+      "topic": "ml-methods",
       "kind": "서술",
       "prompt": "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요.",
       "answer": "예: 출구 도착 +100, 벽 충돌 -10, 이동마다 -1로 보상을 정할 수 있습니다. 제자리 반복이 이득이 되지 않는지 확인하며 정책은 장기 누적 보상을 높이도록 학습합니다.",
@@ -2839,12 +2874,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 79–84 연계·확장"
+      "ref": "교과서 79–84 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q037",
       "unit": 3,
-      "topic": "머신러닝 라이브러리와 그래프",
+      "topic": "ml-libraries",
       "kind": "서술",
       "prompt": "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요.",
       "answer": "banana 항목을 두 개 추가하면 해당 막대의 높이가 2 커집니다. Counter 또는 빈도표의 수와 그래프 높이를 함께 확인합니다.",
@@ -2855,12 +2891,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 85–89 연계·확장"
+      "ref": "교과서 85–89 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q038",
       "unit": 3,
-      "topic": "결측치·이상치·스케일·범주 처리",
+      "topic": "ml-preprocess",
       "kind": "서술",
       "prompt": "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요.",
       "answer": "시험 만점·입력 단위·원래 기록을 확인하고 1000이 100의 오타인지 묻습니다. 확인 없이 삭제하지 않으며 수정 또는 제외의 근거를 기록합니다.",
@@ -2871,12 +2908,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 90–100 연계·확장"
+      "ref": "교과서 90–100 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q039",
       "unit": 3,
-      "topic": "분류: k-NN·로지스틱·트리·SVM",
+      "topic": "ml-classification",
       "kind": "서술",
       "prompt": "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요.",
       "answer": "같은 분할·같은 스케일 처리에서 n_neighbors만 3과 7로 바꿉니다. 검증 점수와 달라진 오분류를 표로 기록하며 테스트를 반복 선택에 사용하지 않습니다.",
@@ -2887,12 +2925,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 103–105 연계·확장"
+      "ref": "교과서 103–105 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q040",
       "unit": 3,
-      "topic": "회귀와 수치 오차",
+      "topic": "ml-regression",
       "kind": "서술",
       "prompt": "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요.",
       "answer": "그림의 정답은 y=2x이므로 기울기 2에서 예측과 정답이 겹쳐 MSE=0입니다. 기울기를 1로 바꾸면 네 제곱 오차 평균은 7.5입니다.",
@@ -2903,12 +2942,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 106–107, 121–123 연계·확장"
+      "ref": "교과서 106–107, 121–123 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q041",
       "unit": 3,
-      "topic": "K-평균 군집화",
+      "topic": "ml-cluster",
       "kind": "서술",
       "prompt": "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요.",
       "answer": "K를 늘리면 같은 데이터가 더 많은 그룹으로 나뉘며 중심 위치도 달라집니다. 군집 번호를 정답이나 순위로 해석하지 않고 점 분포와 중심을 근거로 그룹의 의미를 설명합니다.",
@@ -2919,12 +2959,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 108–111 연계·확장"
+      "ref": "교과서 108–111 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q042",
       "unit": 3,
-      "topic": "혼동행렬·정확도·정밀도·재현율",
+      "topic": "ml-metrics",
       "kind": "서술",
       "prompt": "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요.",
       "answer": "임계값을 올리면 양성 예측 수가 줄어 FP는 줄거나 같고 FN은 늘거나 같습니다. 정밀도는 항상 단조롭게 오르는 것은 아니며, 양성 예측이 없으면 분모가 0입니다.",
@@ -2935,12 +2976,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 117–120 연계·확장"
+      "ref": "교과서 117–120 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q043",
       "unit": 3,
-      "topic": "교차 검증·튜닝·학습 곡선",
+      "topic": "ml-selection",
       "kind": "서술",
       "prompt": "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요.",
       "answer": "best_score_는 훈련 부분 교차 검증의 평균이고 최종 테스트는 따로 보관한 데이터의 점수입니다. 평가에 사용한 데이터와 학습 표본이 달라 점수도 달라질 수 있습니다.",
@@ -2951,12 +2993,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 112–116, 124–128 연계·확장"
+      "ref": "교과서 112–116, 124–128 연계·확장",
+      "tag": ""
     },
     {
       "id": "u3-q044",
       "unit": 3,
-      "topic": "모델 구현·평가 프로젝트와 단원 정리",
+      "topic": "ml-project",
       "kind": "서술",
       "prompt": "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요.",
       "answer": "후보 k=9를 param_grid에 추가하고 같은 교차 검증 조건에서 비교합니다. 평균 검증 점수로 선택하고 변경 이유·최종 테스트 결과·오류 사례를 저널에 남깁니다.",
@@ -2967,7 +3010,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 129–131 + 확장 연계·확장"
+      "ref": "교과서 129–131 + 확장 연계·확장",
+      "tag": ""
     }
   ],
   "pairs": []

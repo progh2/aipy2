@@ -31,6 +31,17 @@ assert len({q['id'] for q in questions})==len(questions)
 assert set(units)=={1,2,3,4}
 assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:70,3:44,4:39}
 assert set(QUESTION_HINTS) == {q['id'] for q in questions}, '문항과 힌트 목록 불일치'
+# (#116) 문항 topic은 반드시 그 단원의 실제 소단원 id여야 q-{topic}.html로 연결된다.
+# review/wx/kivy(2단원)처럼 문제를 일부러 만들지 않은 소단원만 예외로 허용한다.
+LESSON_IDS={u:{l['id'] for l in units[u]} for u in units}
+EMPTY_TOPIC_ALLOWED={(2,'review'),(2,'wx'),(2,'kivy')}
+for q in questions:
+ assert q['topic'] in LESSON_IDS[q['unit']], (q['id'],'topic이 소단원 id가 아님',q['topic'])
+for u in units:
+ for l in units[u]:
+  has_q=any(q['unit']==u and q['topic']==l['id'] for q in questions)
+  if not has_q:
+   assert (u,l['id']) in EMPTY_TOPIC_ALLOWED, (u,l['id'],'문항이 없는 소단원이 허용 목록에 없음')
 for q in questions:
  assert QUESTION_HINTS[q['id']]['prompt'] == q['prompt'], q['id']
  for field in ('hint', 'hint2'):
@@ -199,6 +210,18 @@ for u, lessons in units.items():
     assert 'id="lab"' in ex_page_html
     assert f'data-example="{eid}"' in ex_page_html
     assert f'data-topic="{lesson["id"]}"' in ex_page_html
+  # (#116) 소단원 전용 문제 페이지의 문항 수가 데이터와 일치하는지 확인한다.
+  q_page=WEB/f'units/unit0{u}/q-{lesson["id"]}.html'
+  assert q_page.exists(), ('missing question page', q_page)
+  q_html=q_page.read_text()
+  lesson_qcount=sum(q['unit']==u and q['topic']==lesson['id'] for q in questions)
+  if lesson_qcount:
+   assert f'문항 {lesson_qcount}개' in q_html, (lesson['id'],lesson_qcount)
+   assert f'data-topic-filter="{lesson["id"]}"' in q_html
+  else:
+   assert (u,lesson['id']) in EMPTY_TOPIC_ALLOWED, (u,lesson['id'],'문항 0개인데 허용 목록에 없음')
+   assert '이 소단원 전용 문제는 없습니다' in q_html
+   assert 'practice.html' in q_html
 unit_index=(WEB/'units/unit01/index.html').read_text()
 assert 'data-lessons=' in unit_index
 assert 'overview.html' in unit_index

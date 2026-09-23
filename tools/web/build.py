@@ -82,6 +82,14 @@ def practice_card(u,topic=''):
  # id="practice"는 실제 문제 페이지(q-*.html/practice.html)에만 둔다. 여기 붙이면
  # app.js가 #question-kind 등을 찾다가 오류를 낸다.
  count=sum(q['unit']==u and (not topic or q['topic']==topic) for q in questions)
+ unit_count=sum(q['unit']==u for q in questions)
+ if topic and count==0:
+  # 이 소단원과 정확히 연결된 문제가 없다(#116) — 단원 전체 문제로 안내한다.
+  href='practice.html'
+  label=f'이 단원 전체 문제 {unit_count}개 풀기 →'
+  note='이 소단원과 정확히 연결된 문제는 없습니다. 단원 전체 문제에서 관련 내용을 확인하세요.'
+  card=f'<a class="example-card practice-card" href="{href}"><span class="example-card-badge">PRACTICE</span><h4>{label}</h4><p>{note}</p></a>'
+  return f'<section id="practice-link" class="section exercise-section"><p class="eyebrow">PRACTICE / RETRY / UNDERSTAND</p><h2>연습 문제</h2>{card}</section>'
  href=textbook.question_file(topic) if topic else 'practice.html'
  label=f'이 소단원 문제 {count}개 풀기 →' if topic else f'단원 전체 문제 {count}개 풀기 →'
  note='설명·힌트·정답과 함께 스스로 채점합니다.' if topic else '이 단원의 문제를 모아서 한 번에 풀 수 있습니다.'
@@ -161,7 +169,10 @@ for u,lessons in units.items():
   nav_links+='</div>'
   topic_body=f'<section class="unit-hero pai-unit-hero topic-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 주제 {i+1:02} / {len(lessons):02}</p><h1>{esc(l["title"])}</h1><p>{esc(l["lead"])}</p><div class="tags"><span>교과서 {esc(textbook.page_label(l["pages"]))}</span><span>{"예제 "+str(len(l["examples"]))+"개" if l["examples"] else "개념 학습"}</span></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{topic_rail}</aside><main id="main">'
   qcount=sum(q['unit']==u and q['topic']==l['id'] for q in questions)
-  jump='<nav class="lesson-jump" aria-label="이 주제 바로가기"><a href="#'+l['id']+'"><b>1</b> 설명</a>'+(f'<a href="#{l["id"]}-lab"><b>2</b> 실습</a>' if l['examples'] else '')+f'<a href="{textbook.question_file(l["id"])}"><b>{3 if l["examples"] else 2}</b> 문제 {qcount}개</a></nav>'
+  # 이 소단원 문제가 0개면(#116, 예: review·wx·kivy) 단원 전체 문제 페이지를 바로 안내한다.
+  jump_q_href=textbook.question_file(l['id']) if qcount else 'practice.html'
+  jump_q_label=f'문제 {qcount}개' if qcount else '단원 전체 문제'
+  jump='<nav class="lesson-jump" aria-label="이 주제 바로가기"><a href="#'+l['id']+'"><b>1</b> 설명</a>'+(f'<a href="#{l["id"]}-lab"><b>2</b> 실습</a>' if l['examples'] else '')+f'<a href="{jump_q_href}"><b>{3 if l["examples"] else 2}</b> {jump_q_label}</a></nav>'
   # 설명 → 실습 → 그 주제 문제 순으로 붙이고, 갤러리·체험 같은 보조 자료는 뒤로 보낸다(#91)
   # 문제 자체는 독립 페이지(q-*.html)로 분리됐다(#106) — 여기서는 카드 링크만 붙인다.
   topic_body+=jump+lesson_section(u,l,i,len(lessons),prefix,True)+practice_card(u,l['id'])+extras+nav_links+'</main></div>'
@@ -173,7 +184,13 @@ for u,lessons in units.items():
   q_nav+=f'<a class="button" href="{textbook.topic_file(l["id"])}">← 소단원 설명으로</a>'
   q_nav+=f'<a class="button primary" href="{textbook.question_file(next_l["id"])}">다음 소단원 문제: {esc(next_l["title"])} →</a>' if next_l else '<a class="button primary" href="index.html">다음 소단원으로 →</a>'
   q_nav+='</div>'
-  q_body=q_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{q_rail}</aside><main id="main">'+practice(u,l['id'])+q_nav+'</main></div>'
+  if qcount:
+   q_section=practice(u,l['id'])
+  else:
+   # 이 소단원과 연결된 문제가 없다(#116) — 단원 전체 문제 페이지로 안내한다.
+   unit_qcount=sum(q['unit']==u for q in questions)
+   q_section=f'<section id="practice" class="section exercise-section"><p class="eyebrow">PRACTICE / RETRY / UNDERSTAND</p><h2>연습 문제 <span class="count">0</span></h2><p>이 소단원 전용 문제는 없습니다. 단원 전체 문제로 가세요.</p><p class="small"><a href="practice.html">단원 전체 {unit_qcount}문제로 →</a></p></section>'
+  q_body=q_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{q_rail}</aside><main id="main">'+q_section+q_nav+'</main></div>'
   (WEB/f'units/unit0{u}/{textbook.question_file(l["id"])}').write_text(layout(f'{l["title"]} 연습 문제 · {title}',q_body,prefix,u,topic=l['id'],lessons=lesson_ids))
   # 예제마다 독립 실습 페이지: 설명 바로 아래에 그 예제의 코드가 이미 채워진 편집기가 온다(#101).
   n_examples=len(l['examples'])

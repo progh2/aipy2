@@ -3454,7 +3454,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 48쪽 1"
+      "ref": "교과서 48쪽 1",
+      "tag": ""
     },
     {
       "id": "u2-q002",
@@ -3476,7 +3477,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 58쪽 4"
+      "ref": "교과서 58쪽 4",
+      "tag": ""
     },
     {
       "id": "u2-q003",
@@ -3498,7 +3500,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 48쪽 4"
+      "ref": "교과서 48쪽 4",
+      "tag": ""
     },
     {
       "id": "u2-q004",
@@ -3520,7 +3523,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q005",
@@ -3542,7 +3546,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 46·55쪽"
+      "ref": "교과서 46·55쪽",
+      "tag": ""
     },
     {
       "id": "u2-q006",
@@ -3564,7 +3569,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 59쪽 6 연계"
+      "ref": "교과서 59쪽 6 연계",
+      "tag": ""
     },
     {
       "id": "u2-q007",
@@ -3586,7 +3592,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 59쪽 5"
+      "ref": "교과서 59쪽 5",
+      "tag": ""
     },
     {
       "id": "u2-q008",
@@ -3608,7 +3615,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 58쪽 3"
+      "ref": "교과서 58쪽 3",
+      "tag": ""
     },
     {
       "id": "u2-q009",
@@ -3624,7 +3632,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q010",
@@ -3640,7 +3649,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q011",
@@ -3656,7 +3666,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q012",
@@ -3672,7 +3683,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q013",
@@ -3688,7 +3700,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q014",
@@ -3704,7 +3717,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q015",
@@ -3720,7 +3734,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q016",
@@ -3736,7 +3751,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q017",
@@ -3752,7 +3768,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q018",
@@ -3768,7 +3785,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q019",
@@ -3784,7 +3802,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q020",
@@ -3800,7 +3819,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q021",
@@ -3816,7 +3836,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q022",
@@ -3832,7 +3853,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q023",
@@ -3848,7 +3870,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽 연계"
+      "ref": "교과서 50쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q024",
@@ -3864,12 +3887,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q025",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter 기본 창을 만드는 호출은?",
       "answer": "tk.Tk()",
@@ -3880,12 +3904,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 51·58쪽"
+      "ref": "교과서 51·58쪽",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q026",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter에서 그림과 도형을 그릴 위젯 이름은?",
       "answer": "Canvas",
@@ -3896,12 +3921,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 50쪽"
+      "ref": "교과서 50쪽",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q027",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "layout",
       "kind": "빈칸",
       "prompt": "라벨을 순서대로 배치하려면 label.____()의 빈칸은?",
       "answer": "pack",
@@ -3912,12 +3938,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 59쪽 7"
+      "ref": "교과서 59쪽 7",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q028",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "layout",
       "kind": "빈칸",
       "prompt": "행과 열을 지정하는 tkinter 배치 메서드는?",
       "answer": "grid",
@@ -3928,12 +3955,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 51쪽"
+      "ref": "교과서 51쪽",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q029",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "layout",
       "kind": "빈칸",
       "prompt": "좌표로 배치하는 tkinter 메서드는?",
       "answer": "place",
@@ -3944,12 +3972,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 51쪽"
+      "ref": "교과서 51쪽",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q030",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "events",
       "kind": "빈칸",
       "prompt": "btn = tk.Button(root, command=____)에 함수 greet를 연결하세요.",
       "answer": "greet",
@@ -3960,12 +3989,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q031",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "events",
       "kind": "빈칸",
       "prompt": "button.clicked.connect(____)에 함수 greet를 연결하세요.",
       "answer": "greet",
@@ -3976,12 +4006,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q032",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "events",
       "kind": "빈칸",
       "prompt": "tkinter 이벤트 루프 호출은?",
       "answer": "root.mainloop()",
@@ -3992,12 +4023,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 54쪽"
+      "ref": "교과서 54쪽",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q033",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "events",
       "kind": "빈칸",
       "prompt": "Qt 이벤트 루프 호출은?",
       "answer": "app.exec()",
@@ -4008,12 +4040,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q034",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "memo",
       "kind": "빈칸",
       "prompt": "tkinter Text의 처음 위치 문자열은?",
       "answer": "1.0",
@@ -4024,12 +4057,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 53쪽"
+      "ref": "교과서 53쪽",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q035",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "memo",
       "kind": "빈칸",
       "prompt": "tkinter Text의 마지막 자동 개행을 빼고 읽는 끝 위치는?",
       "answer": "end-1c",
@@ -4040,12 +4074,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q036",
       "unit": 2,
-      "topic": "기본 코드",
+      "topic": "memo",
       "kind": "빈칸",
       "prompt": "Qt 텍스트 편집기의 내용을 문자열로 읽는 메서드는?",
       "answer": "toPlainText()",
@@ -4056,12 +4091,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "기본 코드"
     },
     {
       "id": "u2-q037",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "events",
       "kind": "빈칸",
       "prompt": "command=hello()에서 의도하지 않은 즉시 호출을 고치세요.",
       "answer": "command=hello",
@@ -4072,12 +4108,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q038",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "events",
       "kind": "빈칸",
       "prompt": "button.clicked.connect(hello())를 고치세요.",
       "answer": "button.clicked.connect(hello)",
@@ -4088,12 +4125,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q039",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "memo",
       "kind": "빈칸",
       "prompt": "editor.text()를 QPlainTextEdit에 맞게 고치세요.",
       "answer": "editor.toPlainText()",
@@ -4104,12 +4142,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q040",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "widgets",
       "kind": "빈칸",
       "prompt": "label.text = \"완료\"를 QLabel에 맞게 고치세요.",
       "answer": "label.setText(\"완료\")",
@@ -4120,12 +4159,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q041",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "memo",
       "kind": "빈칸",
       "prompt": "QFileDialog.getOpenFileName 결과를 path 하나로 받았습니다. 두 값을 받는 왼쪽 코드를 쓰세요.",
       "answer": "path, _",
@@ -4136,12 +4176,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q042",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "memo",
       "kind": "빈칸",
       "prompt": "tkinter Text에서 기존 내용을 제거하는 코드는?",
       "answer": "text_area.delete(\"1.0\", tk.END)",
@@ -4152,12 +4193,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q043",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "widgets",
       "kind": "빈칸",
       "prompt": "Tk 입력창 entry의 한 줄 값을 읽는 코드는?",
       "answer": "entry.get()",
@@ -4168,12 +4210,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q044",
       "unit": 2,
-      "topic": "오류 찾기",
+      "topic": "widgets",
       "kind": "빈칸",
       "prompt": "Qt 입력창 entry의 한 줄 값을 읽는 코드는?",
       "answer": "entry.text()",
@@ -4184,7 +4227,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "오류 찾기"
     },
     {
       "id": "u2-q045",
@@ -4206,7 +4250,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 53쪽 연계"
+      "ref": "교과서 53쪽 연계",
+      "tag": ""
     },
     {
       "id": "u2-q046",
@@ -4228,7 +4273,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q047",
@@ -4249,7 +4295,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q048",
@@ -4271,12 +4318,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q049",
       "unit": 2,
-      "topic": "응용 판단",
+      "topic": "layout",
       "kind": "선택",
       "prompt": "한 부모 안에서 pack과 grid를 섞으면?",
       "answer": "배치 충돌 오류가 날 수 있습니다.",
@@ -4293,12 +4341,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u2-q050",
       "unit": 2,
-      "topic": "응용 판단",
+      "topic": "memo",
       "kind": "선택",
       "prompt": "파일 대화 상자를 취소했다면?",
       "answer": "함수에서 돌아갑니다.",
@@ -4315,12 +4364,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u2-q051",
       "unit": 2,
-      "topic": "응용 판단",
+      "topic": "events",
       "kind": "선택",
       "prompt": "긴 time.sleep을 GUI 콜백에서 실행하면?",
       "answer": "화면 반응이 멈출 수 있습니다.",
@@ -4337,12 +4387,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u2-q052",
       "unit": 2,
-      "topic": "응용 판단",
+      "topic": "pyside",
       "kind": "선택",
       "prompt": "Designer 생성 파일을 직접 수정할 때의 문제는?",
       "answer": "재생성하면 변경이 사라질 수 있습니다.",
@@ -4359,12 +4410,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u2-q053",
       "unit": 2,
-      "topic": "응용 판단",
+      "topic": "ui",
       "kind": "선택",
       "prompt": "웹 GUI 체험 화면의 의미는?",
       "answer": "예제 동작을 재현한 학습용 시뮬레이션",
@@ -4381,12 +4433,13 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u2-q054",
       "unit": 2,
-      "topic": "응용 판단",
+      "topic": "memo",
       "kind": "선택",
       "prompt": "QMainWindow에 편집기를 넣는 방식은?",
       "answer": "setCentralWidget(editor)",
@@ -4403,7 +4456,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": "응용 판단"
     },
     {
       "id": "u2-q055",
@@ -4419,7 +4473,8 @@
       "starter": "def greeting(name):\n    pass\n",
       "checks": "assert greeting(\" 민지 \")==\"민지님, 안녕하세요!\"\nassert greeting(\" \")==\"여러분님, 안녕하세요!\"\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q056",
@@ -4435,7 +4490,8 @@
       "starter": "def stats(text):\n    pass\n",
       "checks": "assert stats(\"\")==(0,0)\nassert stats(\"가나\\n다\")== (4,2)\nassert stats(\"가\\n\")== (2,1)\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q057",
@@ -4451,7 +4507,8 @@
       "starter": "def parse_count(text,total):\n    pass\n",
       "checks": "assert parse_count(\"2\",3)==2\nassert parse_count(\"0\",3) is None\nassert parse_count(\"x\",3) is None\nassert parse_count(\"4\",3) is None\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q058",
@@ -4467,7 +4524,8 @@
       "starter": "def should_save(path):\n    return True\n",
       "checks": "assert should_save(\"\") is False\nassert should_save(\"memo.txt\") is True\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q059",
@@ -4483,7 +4541,8 @@
       "starter": "def increment(n):\n    return n+1\n",
       "checks": "assert increment(0)==1\nassert increment(9)==10\nassert increment(10)==10\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q060",
@@ -4499,7 +4558,8 @@
       "starter": "def title(name,modified):\n    pass\n",
       "checks": "assert title(\"메모장\",True)==\"* 메모장\"\nassert title(\"메모장\",False)==\"메모장\"\n",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q061",
@@ -4515,7 +4575,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 42·48쪽"
+      "ref": "교과서 42·48쪽",
+      "tag": ""
     },
     {
       "id": "u2-q062",
@@ -4531,7 +4592,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 48쪽 3"
+      "ref": "교과서 48쪽 3",
+      "tag": ""
     },
     {
       "id": "u2-q063",
@@ -4547,7 +4609,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q064",
@@ -4563,7 +4626,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 46쪽 탐구"
+      "ref": "교과서 46쪽 탐구",
+      "tag": ""
     },
     {
       "id": "u2-q065",
@@ -4579,7 +4643,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 57쪽"
+      "ref": "교과서 57쪽",
+      "tag": ""
     },
     {
       "id": "u2-q066",
@@ -4595,7 +4660,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q067",
@@ -4611,7 +4677,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q068",
@@ -4627,7 +4694,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 58쪽 2"
+      "ref": "교과서 58쪽 2",
+      "tag": ""
     },
     {
       "id": "u2-q069",
@@ -4643,7 +4711,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     },
     {
       "id": "u2-q070",
@@ -4659,7 +4728,8 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "보강"
+      "ref": "보강",
+      "tag": ""
     }
   ],
   "pairs": [
