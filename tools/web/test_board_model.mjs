@@ -209,4 +209,20 @@ eq(answerRows({}, questions), [], 'answer rows empty state');
 eq(unitAnswerTotals({}, questions), [{unit: 1, total: 2, answered: 0, correct: 0}, {unit: 2, total: 1, answered: 0, correct: 0}], 'unit totals no answers');
 eq(journalRows({}), [], 'journal rows empty state');
 
+// #125-5: 이메일·uid가 모두 없는 비정상 데이터에서 동명이인이면 key가 이름으로 충돌해
+// 카드가 서로 덮어썼다. 명단/progress 문서 id가 있으면 그걸 먼저 쓰고, 없을 때만
+// 이름#순번으로 유일화한다.
+const brokenRoster = [
+ {studentId: '20501', name: '김철수', grade: 2, classroom: 3, number: 1},
+ {studentId: '20502', name: '김철수', grade: 2, classroom: 3, number: 2}
+];
+const brokenCards = buildStudentCards({classId: '2-3', topics, now, roster: brokenRoster, progress: []});
+eq(brokenCards.length, 2, 'no-id/no-email roster rows both produce a card');
+eq(new Set(brokenCards.map((c) => c.key)).size, 2, 'fallback keys do not collide on shared name');
+
+const brokenWithId = [
+ {id: 'a@e-mirim.hs.kr', email: 'a@e-mirim.hs.kr', studentId: '20601', name: '이영희', grade: 2, classroom: 3}
+];
+eq(buildStudentCards({classId: '2-3', topics, now, roster: brokenWithId, progress: []})[0].key, 'r:a@e-mirim.hs.kr', 'roster doc id wins over email for key');
+
 console.log('PASS: board-model helpers');

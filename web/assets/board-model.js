@@ -190,13 +190,17 @@ export function buildStudentCards({roster = [], progress = [], presence = [], he
  }
  const usedProgress = new Set();
  const cards = [];
+ // key 유일화용 순번. 이메일·uid가 모두 없는 비정상 데이터라도 이름만으로 충돌하지 않도록,
+ // 다른 식별자가 하나도 없을 때만 이름#순번을 최후 수단으로 쓴다(#125-5).
+ let fallbackIndex = 0;
+ const nextFallback = () => { fallbackIndex += 1; return fallbackIndex; };
  for (const row of roster || []) {
   if (row && row.archived === true) continue;
   if (!inClass(row, classId)) continue;
   const email = emailKey(row);
   const matched = (email && progressByEmail.get(email)) || null;
   if (matched) usedProgress.add(matched);
-  cards.push(makeCard({roster: row, progress: matched, presenceByUid, helpByUid, topicTotal, titles, now}));
+  cards.push(makeCard({roster: row, progress: matched, presenceByUid, helpByUid, topicTotal, titles, now, nextFallback}));
  }
  // 명단에 없는 progress만 progress 자체의 반으로 판단한다(예: 퇴학·전출 등으로 명단에서 빠졌지만
  // 기록은 남아 있는 경우). 명단에 있지만 이번 반이 아닌 학생은 이미 자기 반 카드로 나왔으므로 제외.
@@ -205,12 +209,23 @@ export function buildStudentCards({roster = [], progress = [], presence = [], he
   const email = emailKey(row);
   if (email && rosterEmails.has(email)) continue;
   if (!inClass(row, classId)) continue;
-  cards.push(makeCard({roster: null, progress: row, presenceByUid, helpByUid, topicTotal, titles, now}));
+  cards.push(makeCard({roster: null, progress: row, presenceByUid, helpByUid, topicTotal, titles, now, nextFallback}));
  }
  return cards;
 }
 
-function makeCard({roster, progress, presenceByUid, helpByUid, topicTotal, titles, now}) {
+// 카드 key는 명단 문서 id → progress 문서 id → 이메일 → uid 순으로 고른다. 넷 다 없는
+// 비정상 데이터에서만 이름#순번으로 유일화한다(이름만 쓰면 동명이인 카드가 서로 덮어쓴다).
+function cardKey(roster, progress, person, nextFallback) {
+ if (roster && roster.id) return `r:${roster.id}`;
+ if (progress && progress.id) return `p:${progress.id}`;
+ const email = emailKey(person);
+ if (email) return email;
+ if (person && person.uid) return person.uid;
+ return `${studentLabel(person) || '학생'}#${nextFallback ? nextFallback() : ''}`;
+}
+
+function makeCard({roster, progress, presenceByUid, helpByUid, topicTotal, titles, now, nextFallback}) {
  const person = progress || roster || {};
  const uid = person.uid || (progress && progress.id) || '';
  const live = uid ? presenceByUid.get(uid) : null;
@@ -223,7 +238,7 @@ function makeCard({roster, progress, presenceByUid, helpByUid, topicTotal, title
  const worst = worstUnderstanding(understanding);
  const lastRaw = (counts && counts.lastActivity) || (progress && progress.updatedAt) || 0;
  return {
-  key: emailKey(person) || uid || studentLabel(person),
+  key: cardKey(roster, progress, person, nextFallback),
   uid,
   email: emailKey(person),
   studentId: roster && roster.studentId != null ? roster.studentId : (person.studentId ?? ''),
