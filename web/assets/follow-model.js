@@ -119,12 +119,30 @@ export function anchorId(anchor) {
 
 // 교사 쪽에서 앵커 문자열을 만드는 단일 출처(#126). block이 형식에 안 맞으면 조용히 빼고
 // 옛 '요소id@비율' 형식으로 내려간다 — parseAnchor의 검증 규칙과 항상 짝을 이룬다.
+// id를 비워 두면(''), 소단원/문항 컨테이너가 없는 페이지(예제·연습문제 목록·단원 인덱스 등)에서
+// 쓰는 '~b{n}@비율'(id 없는 블록 전용 앵커, #126) 형식이 된다 — 반드시 blockOnlyAllowed(page)가
+// true인 페이지에서만 이 형태로 호출해야 한다(teacher-focus.js에서 그렇게 쓴다).
 export function blockAnchor(id, block, frac) {
  const safeId = String(id || '');
- if (!safeId) return '';
+ const validBlock = Boolean(block) && BLOCK_TOKEN_RE.test(String(block));
+ if (!safeId && !validBlock) return '';
  const f = Math.min(0.99, Math.max(0, Number.isFinite(frac) ? frac : 0));
- const base = block && BLOCK_TOKEN_RE.test(String(block)) ? `${safeId}~${block}` : safeId;
+ let base;
+ if (validBlock) base = safeId ? `${safeId}~${block}` : `~${block}`;
+ else base = safeId;
+ if (!base) return '';
  return `${base}@${f.toFixed(2)}`;
+}
+
+// 컨테이너(section.lesson[id]·.question[id])가 없는 페이지에서만 id 없는 블록 전용 앵커
+// ('~b{n}@비율')를 써도 되는지 판단하는 단일 출처(#126). resolveFocusLocation에서
+// topicId가 ''일 때 pageTopicId(page)가 null이 아니면 fromPage로 다른 페이지(예: q-math.html
+// → math.html)로 잘못 넘어간다 — 그래서 pageTopicId(page)===null인 페이지(ex-*.html·
+// practice.html·index.html·summary.html)에서만 허용한다. q-*.html은 pageTopicId가 그
+// 소단원 id를 반환하므로 여기서 반드시 false다 — 절대 이 규칙을 약화하지 말 것.
+export function blockOnlyAllowed(page) {
+ const p = normalizePage(page);
+ return pageTopicId(p) === null && unitFromPage(p) > 0;
 }
 
 export function isLessonTopic(id) {

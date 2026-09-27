@@ -236,6 +236,14 @@ function applyExample(id) {
  window.aipyLearning.selectExample(id);
 }
 
+// (#126) 예제 페이지에서 교사가 편집기(#lab, data-fb 붙어 있음)를 보고 있으면 학생도 그 위치로
+// 스크롤될 수 있다 — 학생이 코드를 입력하는 중이면 자동 스크롤로 입력 포커스를 빼앗지 않는다.
+// 따라가기 상태 자체는 그대로 두고(안내·페이지 이동은 계속) 스크롤 이동만 건너뛴다.
+function isEditingCode() {
+ const el = document.activeElement;
+ return Boolean(el && el.id === 'code-editor');
+}
+
 function applyFocus(focus, force) {
  if (!focus || (!following && !force)) return;
  const key = focusKey(focus);
@@ -257,12 +265,12 @@ function applyFocus(focus, force) {
  }
  lastFocusKey = key || lastFocusKey;
  whenLearningReady(() => {
-  if (focus.topicAnchor) scrollToId(focus.topicAnchor, force);
+  if (focus.topicAnchor && !isEditingCode()) scrollToId(focus.topicAnchor, force);
   // 같은 예제를 다시 적용하면 편집기가 초기화되므로, 예제가 바뀌었을 때만 연다.
   if (focus.exampleId && (force || focus.exampleId !== lastAppliedExample)) {
    lastAppliedExample = focus.exampleId;
    applyExample(focus.exampleId);
-   if (!focus.topicAnchor) scrollToId('lab', force);
+   if (!focus.topicAnchor && !isEditingCode()) scrollToId('lab', force);
   }
  });
 }

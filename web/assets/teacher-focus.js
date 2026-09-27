@@ -7,7 +7,7 @@ import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload, focusHref,
- sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce, blockAnchor
+ sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce, blockAnchor, blockOnlyAllowed
 } from './follow-model.js';
 
 const node = (tag, cls, text) => {
@@ -45,7 +45,26 @@ function viewAnchor() {
   if (height < 40 || !el.id) continue;
   if (top <= viewTop && top > bestTop) { best = el; bestTop = top; }
  }
- if (!best) return '';
+ if (!best) {
+  // (#126) 컨테이너가 없는 페이지(예제·연습문제 목록·단원 인덱스 등)는 id 없는 블록 전용
+  // 앵커('~b{n}@비율')로만 추적한다. blockOnlyAllowed가 그 페이지가 안전한지 검사하는 단일
+  // 출처다 — q-*.html처럼 pageTopicId가 소단원 id를 반환하는 페이지에서는 절대 false라서
+  // 여기로 오지 않는다(빈 id 앵커가 오면 resolveFocusLocation이 다른 페이지로 잘못 판단한다).
+  if (!blockOnlyAllowed(currentPage())) return '';
+  const main = document.querySelector('main');
+  if (!main) return '';
+  let mainBlock = null, mainBlockTop = -Infinity;
+  for (const el of main.querySelectorAll('[data-fb]')) {
+   const r = el.getBoundingClientRect();
+   const top = r.top / z, height = r.height / z;
+   if (height < 10 || !el.dataset.fb) continue;
+   if (top <= viewTop && top > mainBlockTop) { mainBlock = el; mainBlockTop = top; }
+  }
+  if (!mainBlock) return '';
+  const mainHeight = mainBlock.getBoundingClientRect().height / z;
+  const mainFrac = mainHeight > 0 ? (viewTop - mainBlockTop) / mainHeight : 0;
+  return blockAnchor('', mainBlock.dataset.fb, mainFrac);
+ }
  let block = null, blockTop = -Infinity;
  for (const el of best.querySelectorAll('[data-fb]')) {
   const r = el.getBoundingClientRect();
