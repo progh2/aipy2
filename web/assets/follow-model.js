@@ -89,19 +89,60 @@ export function pageExampleId(page) {
 // units/unit01/u1-q041.html 같은 없는 페이지로 보냈다(교사가 문항에 초점을 보낼 때 이동 실패).
 const QUESTION_ANCHOR_RE = /^u[1-4]-q\d+$/;
 
-// 앵커 정규화를 한 곳에 모은다. topicAnchor는 '요소id' 또는 '요소id@비율'(교사 스크롤 추적) 형식이다.
-// 비율은 스크롤 위치 계산에만 쓴다 — 페이지·소단원·문항 여부를 판단할 때는 반드시 이 함수로 비율을 먼저 뗀다.
-// (예: 'u1-q042@0.3'을 그대로 문항 판정 정규식에 넣으면 매치에 실패해 q-math.html이 math.html로 바뀌는 사고가 났다.)
+// 앵커 정규화를 한 곳에 모은다. topicAnchor는 세 형식을 받는다.
+//  - '요소id' (버튼 클릭 등, 비율 없음)
+//  - '요소id@비율' (교사 스크롤 추적, 옛 형식 — 컨테이너 전체 안에서의 비율)
+//  - '요소id~b{n}@비율' (#126, 블록 추적 — build.py가 매긴 data-fb="b{n}" 블록 안에서의 비율)
+// 비율·블록은 스크롤 위치 계산에만 쓴다 — 페이지·소단원·문항 여부를 판단할 때는 반드시 이 함수로
+// 비율·블록을 먼저 뗀 id만 본다. (예: 'u1-q042@0.3'을 그대로 문항 판정 정규식에 넣으면 매치에 실패해
+// q-math.html이 math.html로 바뀌는 사고가 났다. 블록 부분도 같은 이유로 절대 경로 판정에 넣지 않는다.)
+// '~b{n}' 형식이 잘못된 값(경로 조각, 빈 값, 너무 긴 값 등)이면 조용히 버리고 id는 그대로 살린다 —
+// 악의적이거나 이상한 블록 값이 와도 앵커 해석 자체가 깨지지 않게 하기 위해서다.
+const BLOCK_TOKEN_RE = /^b\d{1,6}$/;
+
 export function parseAnchor(anchor) {
  const raw = String(anchor || '');
  const m = /^([^@]+)(?:@([0-9.]+))?$/.exec(raw);
- if (!m) return {id: '', frac: null};
+ if (!m) return {id: '', block: null, frac: null};
  const frac = m[2] === undefined ? null : Math.min(0.99, Math.max(0, parseFloat(m[2]) || 0));
- return {id: m[1], frac};
+ const idPart = m[1];
+ const tilde = idPart.indexOf('~');
+ if (tilde === -1) return {id: idPart, block: null, frac};
+ const id = idPart.slice(0, tilde);
+ const token = idPart.slice(tilde + 1);
+ return {id, block: BLOCK_TOKEN_RE.test(token) ? token : null, frac};
 }
 
 export function anchorId(anchor) {
  return parseAnchor(anchor).id;
+}
+
+// 교사 쪽에서 앵커 문자열을 만드는 단일 출처(#126). block이 형식에 안 맞으면 조용히 빼고
+// 옛 '요소id@비율' 형식으로 내려간다 — parseAnchor의 검증 규칙과 항상 짝을 이룬다.
+// id를 비워 두면(''), 소단원/문항 컨테이너가 없는 페이지(예제·연습문제 목록·단원 인덱스 등)에서
+// 쓰는 '~b{n}@비율'(id 없는 블록 전용 앵커, #126) 형식이 된다 — 반드시 blockOnlyAllowed(page)가
+// true인 페이지에서만 이 형태로 호출해야 한다(teacher-focus.js에서 그렇게 쓴다).
+export function blockAnchor(id, block, frac) {
+ const safeId = String(id || '');
+ const validBlock = Boolean(block) && BLOCK_TOKEN_RE.test(String(block));
+ if (!safeId && !validBlock) return '';
+ const f = Math.min(0.99, Math.max(0, Number.isFinite(frac) ? frac : 0));
+ let base;
+ if (validBlock) base = safeId ? `${safeId}~${block}` : `~${block}`;
+ else base = safeId;
+ if (!base) return '';
+ return `${base}@${f.toFixed(2)}`;
+}
+
+// 컨테이너(section.lesson[id]·.question[id])가 없는 페이지에서만 id 없는 블록 전용 앵커
+// ('~b{n}@비율')를 써도 되는지 판단하는 단일 출처(#126). resolveFocusLocation에서
+// topicId가 ''일 때 pageTopicId(page)가 null이 아니면 fromPage로 다른 페이지(예: q-math.html
+// → math.html)로 잘못 넘어간다 — 그래서 pageTopicId(page)===null인 페이지(ex-*.html·
+// practice.html·index.html·summary.html)에서만 허용한다. q-*.html은 pageTopicId가 그
+// 소단원 id를 반환하므로 여기서 반드시 false다 — 절대 이 규칙을 약화하지 말 것.
+export function blockOnlyAllowed(page) {
+ const p = normalizePage(page);
+ return pageTopicId(p) === null && unitFromPage(p) > 0;
 }
 
 export function isLessonTopic(id) {

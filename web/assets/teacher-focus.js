@@ -7,7 +7,7 @@ import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload, focusHref,
- sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce
+ sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce, blockAnchor, blockOnlyAllowed
 } from './follow-model.js';
 
 const node = (tag, cls, text) => {
@@ -28,8 +28,12 @@ let lastCueState = '';
 let lastTracked = '';
 let trackTimer = 0;
 
-// ── 교사가 실제로 보고 있는 위치 추적: 화면 상단 근처의 본문 요소(id)와 그 안에서의 비율을 'id@0.42' 형식으로 기록.
-//    규칙의 focus.topicAnchor(문자열 80자 이내)를 그대로 쓰므로 규칙 변경이 없다. 학생의 '선생님 화면으로 이동'이 이 지점으로 간다.
+// ── 교사가 실제로 보고 있는 위치 추적(#126): 화면 상단 근처의 소단원/문항 컨테이너(id)를 먼저 찾고,
+//    그 안에서 다시 build.py가 매긴 [data-fb] 블록(화면 한 장 단위)을 찾아 훨씬 촘촘한 위치를 기록한다.
+//    'id@비율'(옛 형식) 또는 'id~b{n}@비율'(블록) — 규칙의 focus.topicAnchor(문자열 80자 이내)를
+//    그대로 쓰므로 규칙 변경이 없다. 학생의 '선생님 화면으로 이동'이 이 지점으로 간다.
+//    컨테이너 탐색은 절대 건드리지 않는다 — 보조 섹션(pre-api 등)을 잡으면 학생이 없는 페이지로 이동한
+//    사고(#105/#106)가 있었다. querySelectorAll을 컨테이너로 스코프해 블록도 그 밖으로 새지 않는다.
 function viewAnchor() {
  const z = parseFloat(document.body.style.zoom) || 1;
  const viewTop = 110 / z; // 헤더 아래
@@ -41,11 +45,41 @@ function viewAnchor() {
   if (height < 40 || !el.id) continue;
   if (top <= viewTop && top > bestTop) { best = el; bestTop = top; }
  }
- if (!best) return '';
- const r = best.getBoundingClientRect();
- const height = r.height / z;
- const frac = height > 0 ? Math.min(0.99, Math.max(0, (viewTop - bestTop) / height)) : 0;
- return `${best.id}@${frac.toFixed(1)}`;
+ if (!best) {
+  // (#126) 컨테이너가 없는 페이지(예제·연습문제 목록·단원 인덱스 등)는 id 없는 블록 전용
+  // 앵커('~b{n}@비율')로만 추적한다. blockOnlyAllowed가 그 페이지가 안전한지 검사하는 단일
+  // 출처다 — q-*.html처럼 pageTopicId가 소단원 id를 반환하는 페이지에서는 절대 false라서
+  // 여기로 오지 않는다(빈 id 앵커가 오면 resolveFocusLocation이 다른 페이지로 잘못 판단한다).
+  if (!blockOnlyAllowed(currentPage())) return '';
+  const main = document.querySelector('main');
+  if (!main) return '';
+  let mainBlock = null, mainBlockTop = -Infinity;
+  for (const el of main.querySelectorAll('[data-fb]')) {
+   const r = el.getBoundingClientRect();
+   const top = r.top / z, height = r.height / z;
+   if (height < 10 || !el.dataset.fb) continue;
+   if (top <= viewTop && top > mainBlockTop) { mainBlock = el; mainBlockTop = top; }
+  }
+  if (!mainBlock) return '';
+  const mainHeight = mainBlock.getBoundingClientRect().height / z;
+  const mainFrac = mainHeight > 0 ? (viewTop - mainBlockTop) / mainHeight : 0;
+  return blockAnchor('', mainBlock.dataset.fb, mainFrac);
+ }
+ let block = null, blockTop = -Infinity;
+ for (const el of best.querySelectorAll('[data-fb]')) {
+  const r = el.getBoundingClientRect();
+  const top = r.top / z, height = r.height / z;
+  if (height < 10 || !el.dataset.fb) continue;
+  if (top <= viewTop && top > blockTop) { block = el; blockTop = top; }
+ }
+ if (block) {
+  const height = block.getBoundingClientRect().height / z;
+  const frac = height > 0 ? (viewTop - blockTop) / height : 0;
+  return blockAnchor(best.id, block.dataset.fb, frac);
+ }
+ const height = best.getBoundingClientRect().height / z;
+ const frac = height > 0 ? (viewTop - bestTop) / height : 0;
+ return blockAnchor(best.id, null, frac);
 }
 
 async function trackScroll() {
@@ -67,11 +101,29 @@ async function trackScroll() {
  }
 }
 
+// (#126) 1.2초 스로틀 + 트레일링: 스크롤이 시작되면 스로틀 창이 비어 있으면 바로 보내고, 창 안에서
+// 또 스크롤하면 창이 끝나는 시점에 마지막 위치로 한 번 더 보낸다(스크롤이 멈춘 뒤의 최종 위치를 반드시
+// 반영). 예전의 '3초 후 1회'보다 훨씬 촘촘하다.
+const TRACK_THROTTLE_MS = 1200;
+let lastTrackAt = 0;
+
 function scheduleTrack() {
  const cue = document.getElementById('teacher-focus-ui');
  if (cue && !cue.hidden) cue.hidden = true; // 스크롤을 시작하면 안내는 접는다
- if (trackTimer) return;
- trackTimer = setTimeout(() => { trackTimer = 0; trackScroll(); }, 3000);
+ const now = Date.now();
+ const elapsed = now - lastTrackAt;
+ clearTimeout(trackTimer);
+ if (elapsed >= TRACK_THROTTLE_MS) {
+  lastTrackAt = now;
+  trackTimer = 0;
+  trackScroll();
+ } else {
+  trackTimer = setTimeout(() => {
+   trackTimer = 0;
+   lastTrackAt = Date.now();
+   trackScroll();
+  }, TRACK_THROTTLE_MS - elapsed);
+ }
 }
 
 function currentPage() {

@@ -6,7 +6,8 @@ import {
  focusFields, focusWritePayload, focusFromUnitClick,
  isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
- DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId, parseAnchor, anchorId
+ DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId, parseAnchor, anchorId, blockAnchor,
+ blockOnlyAllowed
 } from '../../web/assets/follow-model.js';
 
 function eq(actual, expected, label) {
@@ -145,13 +146,44 @@ eq(pageTopicId('units/unit01/q-overview.html'), 'overview', 'question page maps 
 eq(pageTopicId('units/unit01/practice.html'), null, 'unit practice page has no lesson topic');
 
 // ── (#124) 앵커 정규화: '@비율'은 스크롤에만 쓴다. parseAnchor/anchorId가 그 규칙의 단일 출처다. ──
-eq(parseAnchor('widgets@0.42'), {id: 'widgets', frac: 0.42}, 'parseAnchor splits id/ratio');
-eq(parseAnchor('widgets'), {id: 'widgets', frac: null}, 'parseAnchor without ratio');
-eq(parseAnchor(''), {id: '', frac: null}, 'parseAnchor empty');
-eq(parseAnchor('u1-q041@1.5'), {id: 'u1-q041', frac: 0.99}, 'parseAnchor clamps ratio to 0.99');
+eq(parseAnchor('widgets@0.42'), {id: 'widgets', block: null, frac: 0.42}, 'parseAnchor splits id/ratio');
+eq(parseAnchor('widgets'), {id: 'widgets', block: null, frac: null}, 'parseAnchor without ratio');
+eq(parseAnchor(''), {id: '', block: null, frac: null}, 'parseAnchor empty');
+eq(parseAnchor('u1-q041@1.5'), {id: 'u1-q041', block: null, frac: 0.99}, 'parseAnchor clamps ratio to 0.99');
 eq(anchorId('u1-q041@0.3'), 'u1-q041', 'anchorId strips ratio');
 eq(anchorId('u1-q041'), 'u1-q041', 'anchorId passthrough without ratio');
 eq(anchorId(null), '', 'anchorId handles null');
+
+// ── (#126) 블록 앵커: '{id}~b{n}@{비율}'. 화면 단위 따라가기의 스크롤 세밀도용이며,
+// id 부분만 페이지·소단원·문항 판정에 쓴다. block은 스크롤에만 쓴다. ──
+eq(parseAnchor('widgets~b12@0.37'), {id: 'widgets', block: 'b12', frac: 0.37}, 'parseAnchor splits block form');
+eq(parseAnchor('widgets@0.42'), {id: 'widgets', block: null, frac: 0.42}, 'parseAnchor without block still works');
+eq(parseAnchor('widgets'), {id: 'widgets', block: null, frac: null}, 'parseAnchor bare id has no block');
+eq(anchorId('widgets~b12@0.37'), 'widgets', 'anchorId strips block+ratio');
+
+// 형식이 잘못된 블록 값은 조용히 버리고 id는 살린다 — 절대 경로에 이상한 값이 들어가면 안 된다.
+eq(parseAnchor('widgets~b../../x@0.3'), {id: 'widgets', block: null, frac: 0.3}, 'malformed block (path-like) is dropped, id kept');
+eq(parseAnchor('widgets~b@0.3'), {id: 'widgets', block: null, frac: 0.3}, 'block without digits is dropped');
+eq(parseAnchor('widgets~@0.3'), {id: 'widgets', block: null, frac: 0.3}, 'empty block token is dropped');
+eq(parseAnchor('widgets~b1234567890123@0.3'), {id: 'widgets', block: null, frac: 0.3}, 'absurdly long block token is dropped');
+eq(parseAnchor('widgets~' + 'b'.repeat(500) + '@0.3').id, 'widgets', 'very long garbage block never corrupts id');
+eq(anchorId('widgets~../../etc/passwd@0.1'), 'widgets', 'path-traversal-looking block never reaches id');
+
+// blockAnchor: 교사 쪽 문자열 생성이 parseAnchor의 검증 규칙과 짝을 이룬다(왕복 검증).
+eq(blockAnchor('widgets', 'b12', 0.372), 'widgets~b12@0.37', 'blockAnchor formats id~block@frac, 0.01 단위');
+eq(blockAnchor('widgets', 'b../../x', 0.3), 'widgets@0.30', 'blockAnchor drops invalid block token');
+eq(blockAnchor('widgets', null, 0.5), 'widgets@0.50', 'blockAnchor without block falls back to legacy form');
+eq(blockAnchor('', null, 0.5), '', 'blockAnchor needs an id or a valid block');
+eq(blockAnchor('', 'b../../x', 0.5), '', 'blockAnchor with empty id and invalid block yields nothing');
+eq(blockAnchor('widgets', 'b1', 1.5), 'widgets~b1@0.99', 'blockAnchor clamps frac like parseAnchor');
+eq(parseAnchor(blockAnchor('widgets', 'b12', 0.372)), {id: 'widgets', block: 'b12', frac: 0.37}, 'blockAnchor round-trips through parseAnchor');
+
+// (#126) id 없는 블록 전용 앵커: 컨테이너(section.lesson/.question)가 없는 페이지(예제 페이지 등)에서
+// 교사가 쓰는 형식이다. blockOnlyAllowed(page)가 true인 페이지에서만 이 형태를 만들어야 한다.
+eq(blockAnchor('', 'b12', 0.37), '~b12@0.37', 'blockAnchor with empty id keeps a block-only anchor');
+eq(parseAnchor('~b12@0.37'), {id: '', block: 'b12', frac: 0.37}, 'parseAnchor reads block-only anchor with empty id');
+eq(anchorId('~b12@0.37'), '', 'anchorId of a block-only anchor is empty (never a real lesson/question id)');
+eq(parseAnchor(blockAnchor('', 'b12', 0.372)), {id: '', block: 'b12', frac: 0.37}, 'blockAnchor(empty id) round-trips through parseAnchor');
 
 // 회귀: 'u1-q042@0.3'(교사 스크롤 추적)이 문항 앵커로 인식되지 않아 q-math.html이 math.html로
 // 바뀌던 사고(#124). 비율을 뗀 뒤에 문항인지 판정해야 한다.
@@ -161,6 +193,18 @@ eq(shouldNavigate('units/unit01/q-math.html', {page: 'units/unit01/q-math.html',
  false, 'question anchor with ratio does not trigger navigation away');
 eq(resolveFocusLocation({page: 'units/unit01/index.html', topicAnchor: 'widgets@0.4'}),
  {page: 'units/unit01/widgets.html', topicAnchor: 'widgets'}, 'lesson anchor with ratio resolves to its lesson page');
+
+// (#126) 블록 앵커도 같은 규칙을 따른다 — 페이지 해석은 id만 보고, 블록 부분(~b12)은 절대 경로에
+// 들어가지 않는다. 블록 값이 무엇이든(정상/이상/악의적) 결과 경로 형식은 바뀌지 않아야 한다.
+eq(resolveFocusLocation({page: 'units/unit01/index.html', topicAnchor: 'widgets~b12@0.37'}),
+ {page: 'units/unit01/widgets.html', topicAnchor: 'widgets'}, 'block anchor resolves to its lesson page, block dropped');
+eq(resolveFocusLocation({page: 'units/unit01/q-math.html', topicAnchor: 'u1-q042~b5@0.3'}),
+ {page: 'units/unit01/q-math.html', topicAnchor: 'u1-q042'}, 'question block anchor keeps its question page, block dropped');
+for (const evil of ['widgets~b../../x@0.3', 'widgets~../../../etc/passwd@0.1', 'widgets~b@0.9', 'widgets~' + 'x'.repeat(300) + '@0.9']) {
+ const loc = resolveFocusLocation({page: 'units/unit01/index.html', topicAnchor: evil});
+ eq(loc.page, 'units/unit01/widgets.html', `evil block anchor(${evil.slice(0, 20)}...) still resolves lesson page safely`);
+ eq(/[~.]|\.\./.test(loc.topicAnchor || ''), false, `evil block never leaks into topicAnchor(${evil.slice(0, 20)}...)`);
+}
 eq(
  focusKey({page: 'units/unit01/q-widgets.html', topicAnchor: 'u1-q041@0.1', exampleId: null, updatedAt: 5}),
  focusKey({page: 'units/unit01/q-widgets.html', topicAnchor: 'u1-q041@0.9', exampleId: null, updatedAt: 5}),
@@ -179,10 +223,15 @@ const TABLE_PAGES = [
  'units/unit01/summary.html'     // 단원 정리 페이지
 ];
 const TABLE_ANCHORS = [
- 'widgets',       // 소단원 id
- 'u1-q041',       // 문항 id
- 'widgets@0.42',  // 교사 스크롤 추적(소단원 + 비율)
- 'u1-q042@0.3'    // 교사 스크롤 추적(문항 + 비율)
+ 'widgets',           // 소단원 id
+ 'u1-q041',           // 문항 id
+ 'widgets@0.42',      // 교사 스크롤 추적(소단원 + 비율, 옛 형식)
+ 'u1-q042@0.3',       // 교사 스크롤 추적(문항 + 비율, 옛 형식)
+ 'widgets~b12@0.37',  // (#126) 블록 앵커(소단원 + 블록 + 비율)
+ 'u1-q041~b3@0.2',    // (#126) 블록 앵커(문항 + 블록 + 비율)
+ 'widgets~b../../x@0.3',        // (#126) 이상한 블록 값 — id는 살고 블록만 버려져야 한다
+ 'widgets~' + 'b'.repeat(200) + '@0.3', // (#126) 아주 긴 블록 값
+ '~b12@0.37'          // (#126) id 없는 블록 전용 앵커(컨테이너가 없는 페이지에서만 써야 함)
 ];
 const VALID_PAGE_SHAPE_RE = /^units\/unit0[1-4]\/[a-z0-9-]+\.html$/;
 let tableChecked = 0;
@@ -193,14 +242,46 @@ for (const page of TABLE_PAGES) {
   if (loc.page && !VALID_PAGE_SHAPE_RE.test(loc.page)) {
    throw new Error(`resolveFocusLocation(${page}, ${anchor}) -> 존재할 수 없는 경로 형식: ${loc.page}`);
   }
-  // topicAnchor로 남는 값도 비율이 없어야 한다(비율은 follow.js 쪽 scrollToId에서 원본 focus로 따로 쓴다).
-  if (loc.topicAnchor && /@/.test(loc.topicAnchor)) {
-   throw new Error(`resolveFocusLocation(${page}, ${anchor}) -> topicAnchor에 비율이 남음: ${loc.topicAnchor}`);
+  // topicAnchor로 남는 값도 비율·블록이 없어야 한다(비율·블록은 follow.js 쪽 scrollToId에서
+  // 원본 focus.topicAnchor로 따로 쓴다 — 여기 남는 topicAnchor는 순수 id뿐이어야 한다. #126: '~'도 포함).
+  if (loc.topicAnchor && /[@~]/.test(loc.topicAnchor)) {
+   throw new Error(`resolveFocusLocation(${page}, ${anchor}) -> topicAnchor에 비율/블록이 남음: ${loc.topicAnchor}`);
   }
  }
 }
 eq(tableChecked, TABLE_PAGES.length * TABLE_ANCHORS.length, 'resolveFocusLocation 조합 표 전부 검사함');
 console.log(`PASS: resolveFocusLocation ${TABLE_PAGES.length}페이지 × ${TABLE_ANCHORS.length}앵커 조합 모두 유효한 경로 형식`);
+
+// ── (#126) 컨테이너가 없는 페이지의 id 없는 블록 전용 앵커('~b12@0.37'). ──
+// blockOnlyAllowed(page)가 true인 페이지에서는 topicId가 ''이고 pageTopicId(page)도 null이라
+// resolveFocusLocation의 마지막 분기(return {page, topicAnchor: topicId || fromPage || null})로
+// 떨어져 focus.page를 그대로 유지해야 한다 — 그래야 예제 페이지 등에서 '~b12@0.37'을 받아도
+// 다른 페이지로 튕기지 않는다. q-*.html처럼 blockOnlyAllowed가 false인 페이지는 애초에
+// teacher-focus.js가 이 형식을 만들지 않는다(아래 진리표로 확인) — 여기서는 만약 그런 앵커가
+// 와도 최소한 유효한 경로 형식을 유지하는지만 표 테스트(위)로 이미 확인했다.
+const BLOCK_ONLY_TABLE = [
+ ['units/unit01/index.html', true],       // 단원 인덱스 — section.lesson 없음
+ ['units/unit01/widgets.html', false],    // 소단원 — section.lesson[id] 있음
+ ['units/unit01/ex-loop.html', true],     // 예제 전용 페이지 — section.lesson 없음
+ ['units/unit01/q-widgets.html', false],  // 문제 페이지 — pageTopicId가 소단원 id를 돌려줌(위험)
+ ['units/unit01/practice.html', true],    // 종합 문제 페이지(문항 사이 여백) — pageTopicId null
+ ['units/unit01/summary.html', true]      // 단원 정리 페이지 — pageTopicId null
+];
+for (const [page, expected] of BLOCK_ONLY_TABLE) {
+ eq(blockOnlyAllowed(page), expected, `blockOnlyAllowed(${page})`);
+}
+for (const [page, allowed] of BLOCK_ONLY_TABLE) {
+ if (!allowed) continue;
+ const loc = resolveFocusLocation({page, topicAnchor: '~b12@0.37'});
+ eq(loc.page, page, `id 없는 블록 앵커는 ${page}에서 원래 페이지를 유지함`);
+ eq(loc.topicAnchor, null, `id 없는 블록 앵커는 ${page}에서 topicAnchor를 남기지 않음(스크롤은 원본 focus.topicAnchor로 따로 함)`);
+ eq(shouldNavigate(page, {page, topicAnchor: '~b12@0.37'}), false, `같은 페이지에서 id 없는 블록 앵커는 이동을 유발하지 않음(${page})`);
+}
+// q-*.html에서는 절대 이 형식을 쓰지 않는다 — blockOnlyAllowed가 false이므로 teacher-focus.js가
+// 만들지 않는다. 혹시 잘못 왔다면(옛 클라이언트 등) 기존 규칙대로 그 소단원 설명 페이지로 가는
+// pre-existing 동작('widgets@0.4' 같은 옛 형식과 동일한 분기)이라 새로운 위험은 아니다.
+eq(blockOnlyAllowed('units/unit01/q-widgets.html'), false, 'q-*.html은 절대 빈 id 블록 앵커를 허용하지 않음');
+console.log('PASS: blockOnlyAllowed 6페이지 진리표, id 없는 블록 앵커의 페이지 보존 성질');
 
 // ── (#124) practice.html 초점: 문항 앵커는 페이지를 유지한 채 허용해야 한다. ──
 eq(isUnitLessonPage('units/unit01/practice.html'), false, 'practice page alone is not a lesson page');

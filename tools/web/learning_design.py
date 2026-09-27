@@ -1,6 +1,7 @@
 """Shared visual explanations and separate teacher notes, all authored for this course."""
 from html import escape as esc
 import textbook
+from focus_blocks import mark_focus_blocks
 META={1:('모듈과 패키지 활용','6–39','기능을 나누고 연결하기'),2:('GUI 프로그래밍','40–59','입력·이벤트·출력 연결하기'),3:('파이썬과 머신러닝','60–131','데이터로 학습하고 새 데이터로 평가하기'),4:('파이썬과 컴퓨터 비전','132–195','픽셀에서 특징과 검출까지')}
 # title, process cards, table headings, table rows. Diagram labels are also readable text.
 VISUALS={
@@ -97,4 +98,4 @@ def teacher_pages(web,layout,units,notes):
    summary+=f'<section class="teaching-slide" id="{l["id"]}">{textbook.badge(u,l)}<h2>{esc(l["title"])}</h2>'+visual(u,l)+f'<a href="{l["id"]}.html">실습하기 →</a></section>'
   s+='</main>';summary+='</main>'
   (root/f'unit0{u}.html').write_text(layout(title+' · 교사용',s,'../'))
-  (web/f'units/unit0{u}/summary.html').write_text(layout(title+' · 시각 요약',summary,'../../'))
+  (web/f'units/unit0{u}/summary.html').write_text(mark_focus_blocks(layout(title+' · 시각 요약',summary,'../../')))

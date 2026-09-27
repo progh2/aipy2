@@ -1022,4 +1022,22 @@ assert 'units/unit03/' in smoke and 'units/unit04/' in smoke
 assert '#lab' in smoke
 assert '더 알아보는 팁' in smoke
 assert '코드 전에 알아 두기' in smoke
-print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives.')
+
+# (#126) 화면 단위 따라가기 블록 표식: 학생 페이지(teacher/ 아래는 교사 관리 화면이라 제외)의
+# data-fb 값은 페이지 안에서 유일해야 하고 항상 'b{정수}' 형식이어야 한다. follow-model.js의
+# 블록 앵커('{id}~b{n}@{비율}')가 이 값을 그대로 참조하므로 형식이 깨지면 스크롤 위치가 틀어진다.
+FB_RE=re.compile(r'data-fb="([^"]*)"')
+FB_VALUE_RE=re.compile(r'^b\d+$')
+fb_pages_checked=0
+fb_blocks_total=0
+for p in WEB.rglob('*.html'):
+ if 'teacher' in p.relative_to(WEB).parts:continue
+ values=FB_RE.findall(p.read_text())
+ if not values:continue
+ fb_pages_checked+=1
+ fb_blocks_total+=len(values)
+ for v in values:
+  assert FB_VALUE_RE.match(v),(p,'data-fb 형식이 아님',v)
+ assert len(values)==len(set(values)),(p,'data-fb 중복',values)
+assert fb_pages_checked>0,'data-fb가 매겨진 학생 페이지가 없음'
+print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages.')

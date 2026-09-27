@@ -10,6 +10,7 @@ import later_units
 import learning_design as design
 import textbook
 import slots
+from focus_blocks import mark_focus_blocks
 textbook.attach(units)
 teacher_notes=design.prepare(units)
 for u in units:
@@ -26,7 +27,7 @@ def nav(prefix): return f'''<a class="skip" href="#main">본문으로 건너뛰�
 def unit_scripts(prefix,unit):
  extras=''
  if unit:
-  extras+=f'<script type="module" src="{prefix}assets/teacher-focus.js?v=8"></script>'
+  extras+=f'<script type="module" src="{prefix}assets/teacher-focus.js?v=10"></script>'
  return extras
 
 def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''):
@@ -34,7 +35,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  if topic: extra+=f' data-topic="{esc(topic)}"'
  if lessons: extra+=f' data-lessons="{" ".join(lessons)}"'
  if example: extra+=f' data-example="{esc(example)}"'
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=cls14"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=13"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=cls13" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=11"></script><script type="module" src="{prefix}assets/sync.js?v=4"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=1"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=cls14"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=13"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=cls13" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=13"></script><script type="module" src="{prefix}assets/sync.js?v=4"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=1"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -54,8 +55,8 @@ start=home.index('<div class="code-art"')
 end=home.index('</section><section class="section"',start)
 home=home[:start]+mascot.hero()+home[end:]
 home=home.replace('{QUESTION_COUNT}',str(len(questions)))
-(WEB/'index.html').write_text(layout('실습실',home))
-(WEB/'mascot.html').write_text(layout('대표 캐릭터 파이',mascot.intro_page()))
+(WEB/'index.html').write_text(mark_focus_blocks(layout('실습실',home)))
+(WEB/'mascot.html').write_text(mark_focus_blocks(layout('대표 캐릭터 파이',mascot.intro_page())))
 with zipfile.ZipFile(WEB/'downloads/pai-character-pack.zip','w',zipfile.ZIP_DEFLATED) as z:
  for mood in mascot.MOODS:
   name=f'pai-{mood}-v1.png'
@@ -155,7 +156,7 @@ for u,lessons in units.items():
  body+=f'<section class="section topic-index" aria-labelledby="topic-index-title"><p class="eyebrow">INDEPENDENT LESSONS</p><h2 id="topic-index-title">학습 주제</h2><p>각 주제는 설명·실습·과제가 있는 독립 페이지입니다. 예전 <code>index.html#주제</code> 주소는 해당 페이지로 이어집니다.</p><div class="topic-grid">{cards}</div></section>'
  if u==2: body+=gallery(u,False)+simulator()
  body+=practice_card(u)+journal_block(u,prefix)+'<div class="actions end-nav">'+(f'<a class="button primary" href="../unit0{u+1}/index.html">다음: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')+'</div></main></div>'
- (WEB/f'units/unit0{u}/index.html').write_text(layout(title,body,prefix,u,lessons=lesson_ids))
+ (WEB/f'units/unit0{u}/index.html').write_text(mark_focus_blocks(layout(title,body,prefix,u,lessons=lesson_ids)))
  for i,l in enumerate(lessons):
   prev_l=lessons[i-1] if i else None
   next_l=lessons[i+1] if i+1<len(lessons) else None
@@ -176,7 +177,7 @@ for u,lessons in units.items():
   # 설명 → 실습 → 그 주제 문제 순으로 붙이고, 갤러리·체험 같은 보조 자료는 뒤로 보낸다(#91)
   # 문제 자체는 독립 페이지(q-*.html)로 분리됐다(#106) — 여기서는 카드 링크만 붙인다.
   topic_body+=jump+lesson_section(u,l,i,len(lessons),prefix,True)+practice_card(u,l['id'])+extras+nav_links+'</main></div>'
-  (WEB/f'units/unit0{u}/{textbook.topic_file(l["id"])}').write_text(layout(f'{l["title"]} · {title}',topic_body,prefix,u,topic=l['id'],lessons=lesson_ids))
+  (WEB/f'units/unit0{u}/{textbook.topic_file(l["id"])}').write_text(mark_focus_blocks(layout(f'{l["title"]} · {title}',topic_body,prefix,u,topic=l['id'],lessons=lesson_ids)))
   # 소단원 문제 전용 페이지(#106): 설명 페이지와 같은 목차 레일을 쓰고, 문제 섹션만 담는다.
   q_rail=textbook.toc(u,lessons)+f'<a href="{textbook.topic_file(l["id"])}">소단원 설명으로</a><a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
   q_hero=f'<section class="unit-hero pai-unit-hero topic-hero"><p class="eyebrow"><a href="{textbook.topic_file(l["id"])}">{esc(l["title"])}</a> · 연습 문제</p><h1>{esc(l["title"])} 연습 문제</h1><div class="tags"><span>문항 {qcount}개</span></div></section>'
@@ -191,7 +192,7 @@ for u,lessons in units.items():
    unit_qcount=sum(q['unit']==u for q in questions)
    q_section=f'<section id="practice" class="section exercise-section"><p class="eyebrow">PRACTICE / RETRY / UNDERSTAND</p><h2>연습 문제 <span class="count">0</span></h2><p>이 소단원 전용 문제는 없습니다. 단원 전체 문제로 가세요.</p><p class="small"><a href="practice.html">단원 전체 {unit_qcount}문제로 →</a></p></section>'
   q_body=q_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{q_rail}</aside><main id="main">'+q_section+q_nav+'</main></div>'
-  (WEB/f'units/unit0{u}/{textbook.question_file(l["id"])}').write_text(layout(f'{l["title"]} 연습 문제 · {title}',q_body,prefix,u,topic=l['id'],lessons=lesson_ids))
+  (WEB/f'units/unit0{u}/{textbook.question_file(l["id"])}').write_text(mark_focus_blocks(layout(f'{l["title"]} 연습 문제 · {title}',q_body,prefix,u,topic=l['id'],lessons=lesson_ids)))
   # 예제마다 독립 실습 페이지: 설명 바로 아래에 그 예제의 코드가 이미 채워진 편집기가 온다(#101).
   n_examples=len(l['examples'])
   for ei,eid in enumerate(l['examples']):
@@ -211,14 +212,14 @@ for u,lessons in units.items():
    ex_nav+=f'<a class="button primary" href="{textbook.example_file(next_e)}">다음 실습: {esc(examples[next_e]["title"])} →</a>' if next_e else f'<a class="button primary" href="{textbook.question_file(l["id"])}">이 소단원 문제 풀기 →</a>'
    ex_nav+='</div>'
    ex_body=ex_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{ex_rail}</aside><main id="main">'+ex_desc+editor_markup(u)+ex_nav+'</main></div>'
-   (WEB/f'units/unit0{u}/{textbook.example_file(eid)}').write_text(layout(f'{ex["title"]} · {l["title"]} · {title}',ex_body,prefix,u,topic=l['id'],lessons=lesson_ids,example=eid))
+   (WEB/f'units/unit0{u}/{textbook.example_file(eid)}').write_text(mark_focus_blocks(layout(f'{ex["title"]} · {l["title"]} · {title}',ex_body,prefix,u,topic=l['id'],lessons=lesson_ids,example=eid)))
  # 단원 전체 문제 전용 페이지(#106).
  unit_qcount=sum(q['unit']==u for q in questions)
  practice_rail=rail+('<a href="index.html#gallery">GUI 비교 갤러리</a><a href="index.html#simulator">웹 동작 체험</a>' if u==2 else '')+'<a href="index.html#journal">학습 저널</a><a href="index.html">단원 안내</a>'
  practice_hero=f'<section class="unit-hero pai-unit-hero topic-hero"><p class="eyebrow"><a href="index.html">{textbook.unit_label(u)}</a> · 단원 전체 연습 문제</p><h1>단원 전체 연습 문제</h1><div class="tags"><span>문항 {unit_qcount}개</span></div></section>'
  practice_nav=f'<div class="actions topic-nav"><a class="button" href="index.html">← 단원 안내</a></div>'
  practice_body=practice_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{practice_rail}</aside><main id="main">'+practice(u)+practice_nav+'</main></div>'
- (WEB/f'units/unit0{u}/practice.html').write_text(layout(f'단원 전체 연습 문제 · {title}',practice_body,prefix,u,lessons=lesson_ids))
+ (WEB/f'units/unit0{u}/practice.html').write_text(mark_focus_blocks(layout(f'단원 전체 연습 문제 · {title}',practice_body,prefix,u,lessons=lesson_ids)))
  with zipfile.ZipFile(WEB/f'downloads/unit{u}-examples.zip','w',zipfile.ZIP_DEFLATED) as z:
   for id in ids:
    e=examples[id]
@@ -234,7 +235,7 @@ for u,ls in units.items(): sourcebody+=textbook.toc(u,ls,f'units/unit0{u}/')
 sourcebody+='<p><a href="teacher/index.html">교과서 정답·설명 보완 사항은 교사용 요약에 정리했습니다.</a></p><h2>공식 참고 자료</h2><ul>'
 for title,url in [('멘토르 인공지능 파이썬 실무 교과서','https://www.mtrschool.co.kr/post/3095'),('Python 모듈과 패키지','https://docs.python.org/ko/3/tutorial/modules.html'),('Python 표준 라이브러리','https://docs.python.org/ko/3/library/'),('random의 정확한 동작','https://docs.python.org/3/library/random.html'),('tkinter와 ttk','https://docs.python.org/3/library/tkinter.html'),('PySide6 시작하기','https://doc.qt.io/qtforpython-6/gettingstarted.html'),('Qt 시그널과 슬롯','https://doc.qt.io/qtforpython-6/tutorials/basictutorial/signals_and_slots.html'),('PyQt','https://www.riverbankcomputing.com/software/pyqt/'),('wxPython','https://wxpython.org/'),('Kivy','https://kivy.org/doc/stable/'),('scikit-learn 데이터 누수와 전처리','https://scikit-learn.org/stable/common_pitfalls.html'),('OpenCV 공식 튜토리얼','https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html'),('Ultralytics 예측 결과','https://docs.ultralytics.com/modes/predict/'),('PyPI','https://pypi.org/'),('Pyodide 브라우저 제약','https://pyodide.org/en/stable/usage/wasm-constraints.html')]: sourcebody+=f'<li><a href="{url}" target="_blank" rel="noopener">{title} ↗</a></li>'
 sourcebody+='</ul><p><a href="teacher/index.html">수업 운영·평가 연결은 교사용 요약에서 확인하세요.</a></p><h2>실행 환경</h2><p>브라우저 Python은 Pyodide 0.27.7을 고정하여 사용합니다. 최초 실행에는 CDN 접속이 필요합니다. 다중 파일 실행은 가상 폴더에서 진행합니다. GUI는 코드 문법 확인과 웹 시뮬레이션을 제공하며 실제 동작은 PC에서 확인합니다.</p></main>'
-(WEB/'sources.html').write_text(layout('출처와 대응표',sourcebody))
+(WEB/'sources.html').write_text(mark_focus_blocks(layout('출처와 대응표',sourcebody)))
 design.teacher_pages(WEB,layout,units,teacher_notes)
 # 교사 관리 화면. 반 선택 뼈대는 assets/teacher-shell.js가 공통으로 붙입니다.
 def teacher_manage(page, title, inner, extra_scripts=''):
