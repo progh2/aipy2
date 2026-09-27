@@ -199,12 +199,18 @@ function flash(el) {
  setTimeout(() => el.classList.remove('focus-flash'), 2600);
 }
 
-// 'libraries@0.42' → {id, frac}. 비율이 있으면 요소 안 그 지점(선생님이 보던 높이)으로 간다.
+// 'libraries@0.42' 또는 'libraries~b12@0.37' → {id, block, frac}. 블록이 있으면 그 블록(화면 한 장
+// 단위, #126)을, 없으면(옛 형식·블록을 못 찾음) 컨테이너 전체 비율로 그 지점(선생님이 보던 높이)으로 간다.
 // 앵커 파싱은 follow-model.js의 parseAnchor로 모아 두었다(페이지 판정과 같은 규칙을 쓴다).
 
+// 자동 따라가기 중의 추적 갱신은 선생님 위치가 화면 높이의 이 비율 이상 멀어졌을 때만 옮긴다(잔 흔들림
+// 방지). 블록 단위 추적(#126)으로 훨씬 촘촘해졌으므로 예전 0.4(화면 40%)보다 낮춘다.
+const FOLLOW_MOVE_THRESHOLD = 0.15;
+
 function scrollToId(anchor, force) {
- const {id, frac} = parseAnchor(anchor);
- const el = document.getElementById(id);
+ const {id, block, frac} = parseAnchor(anchor);
+ // 블록을 먼저 찾는다. 옛 클라이언트가 보낸 앵커·블록이 사라진 경우엔 컨테이너 id로 폴백한다.
+ const el = (block && document.querySelector(`[data-fb="${block}"]`)) || document.getElementById(id);
  if (!el) return false;
  if (frac == null) {
   ignoreScrollUntil = Date.now() + 1400;
@@ -214,10 +220,13 @@ function scrollToId(anchor, force) {
   const z = parseFloat(document.body.style.zoom) || 1;
   const r = el.getBoundingClientRect();
   const target = Math.max(0, window.scrollY + r.top + frac * r.height - 110 * z);
-  // 자동 따라가기 중의 추적 갱신은 선생님 위치가 화면 높이의 40% 이상 멀어졌을 때만 옮긴다(잔 흔들림 방지).
-  if (!force && Math.abs(target - window.scrollY) < window.innerHeight * 0.4) return true;
+  const delta = Math.abs(target - window.scrollY);
+  if (!force && delta < window.innerHeight * FOLLOW_MOVE_THRESHOLD) return true;
   ignoreScrollUntil = Date.now() + 1400;
-  window.scrollTo({top: target, behavior: prefersSmooth() ? 'smooth' : 'auto'});
+  // 짧은 거리는 즉시 이동한다 — 연속 갱신이 smooth 애니메이션과 겹쳐 흔들리는 것을 줄인다.
+  // 긴 거리는 그대로 smooth. scrollTo를 다시 호출하면 진행 중인 스크롤의 목표만 갈아탄다.
+  const behavior = (!prefersSmooth() || delta < window.innerHeight * 0.05) ? 'auto' : 'smooth';
+  window.scrollTo({top: target, behavior});
  }
  return true;
 }
