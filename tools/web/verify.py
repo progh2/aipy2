@@ -724,10 +724,13 @@ assert "where('uid', '==', user.uid)" in help_js
 assert 'status: \'cancelled\'' in help_js or "status: 'cancelled'" in help_js
 assert '#lab' in help_js and '#practice' in help_js
 teacher_board=(WEB/'assets/teacher-board.js').read_text()
-assert "collection(db, 'progress')" in teacher_board
+assert "collection(db, name)" in teacher_board
+assert "byGrade('progress')" in teacher_board
+assert "byGrade('roster')" in teacher_board
+assert "byGrade('feedback')" in teacher_board
+assert "where('grade', '==', parsed.grade)" in teacher_board
 assert "collection(db, 'helpRequests')" in teacher_board
 assert "collection(db, 'presence')" in teacher_board
-assert "collection(db, 'roster')" in teacher_board
 assert "where('classId', '==', id)" in teacher_board
 assert "where('classroom', '==', id)" in teacher_board
 assert "status: 'resolved'" in teacher_board

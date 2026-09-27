@@ -1,9 +1,12 @@
 /* 교사 현황 보드. M3 이해도·도움 요청을 유지하고, M4 카드·히트맵·문항·CSV를 붙입니다.
-   선택한 반의 progress·presence·help·roster를 실시간 구독합니다.
+   선택한 반의 presence·help는 반 단위로, roster·progress·feedback은 학년 단위로 구독합니다
+   (#125-4 — 전체 학생 데이터를 필터 없이 구독하던 것을 줄임. 반이 아니라 학년으로 거르는 이유는
+   반 이동 학생을 이메일로 계속 매칭하기 위해서, listen() 주석 참고). 화면별 반 필터는
+   inClass(row, classIdValue)로 한다.
    학생 상세 패널을 열 때만 students/{uid}/state/current를 1회 조회해 답안·저널을 보여 줍니다(#104). */
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
-import {inClass} from './class-picker.js';
+import {inClass, parseClassId} from './class-picker.js';
 import {
  titlesFromCatalog, topicTitle, studentLabel, countUnderstanding, groupHardByTopic
 } from './understanding-model.js';
@@ -84,8 +87,14 @@ function paintDone() {
  box.replaceChildren(wrap);
 }
 
+// progress·feedback는 이제 학년 단위로 구독한다(#125-4) — 반 집계 화면에서는
+// 이 반(classIdValue)에 속한 문서만 남긴다.
+function classScoped(rows) {
+ return (rows || []).filter((row) => inClass(row, classIdValue));
+}
+
 function paintFeedback(list) {
- const rows = feedbackRows.filter((row) => row.text);
+ const rows = classScoped(feedbackRows).filter((row) => row.text);
  if (!rows.length) return;
  const byTopic = new Map();
  for (const row of rows) {
@@ -112,7 +121,7 @@ function paintFeedback(list) {
 }
 
 function paintUnderstanding() {
- const {counts, hardRows} = countUnderstanding(progressRows);
+ const {counts, hardRows} = countUnderstanding(classScoped(progressRows));
  const countsEl = $('understanding-counts');
  if (countsEl) {
   countsEl.textContent = `어려워요 ${counts.hard} · 조금 어려워요 ${counts.somewhat} · 이해했어요 ${counts.understood}`;
@@ -691,14 +700,21 @@ function stop() {
 function listen(id) {
  stop();
  classIdValue = id || '';
- if (!id || !ready) {
+ const parsed = parseClassId(id);
+ if (!id || !parsed || !ready) {
   paintUnderstanding();
   paintHelp();
   paintBoard();
   return;
  }
  load().then(({db, store}) => {
-  rosterUnsub = store.onSnapshot(store.collection(db, 'roster'), (snap) => {
+  // roster·progress·feedback을 학년 단위로만 거른다(#125-4). 반이 아니라 학년으로 거르는 이유는
+  // 같은 학년 안에서 반을 옮긴 학생(#123)을 이메일로 계속 매칭하려면 옛 반·새 반을 가리지 않고
+  // 학년 전체 명단이 필요하기 때문 — 반까지 등호로 좁히면 이동한 학생이 옛 반에 유령 카드로
+  // 남거나 새 반에서 진행률 없이 보이는 문제가 재발한다. 반 단위 표시 필터는 각 화면에서
+  // inClass(row, classIdValue)로 한다(board-model.js buildStudentCards, classScoped 참고).
+  const byGrade = (name) => store.query(store.collection(db, name), store.where('grade', '==', parsed.grade));
+  rosterUnsub = store.onSnapshot(byGrade('roster'), (snap) => {
    rosterRows = [];
    snap.forEach((doc) => {
     const data = doc.data();
@@ -709,11 +725,11 @@ function listen(id) {
    console.error('[teacher-board]', error);
    note('roster-note', '명단을 읽지 못했습니다.');
   });
-  progressUnsub = store.onSnapshot(store.collection(db, 'progress'), (snap) => {
+  progressUnsub = store.onSnapshot(byGrade('progress'), (snap) => {
    progressRows = [];
    snap.forEach((doc) => {
     const data = doc.data();
-    if (inClass(data, id)) progressRows.push({id: doc.id, uid: data.uid || doc.id, ...data});
+    progressRows.push({id: doc.id, uid: data.uid || doc.id, ...data});
    });
    paintUnderstanding();
    paintBoard();
@@ -722,11 +738,11 @@ function listen(id) {
    note('understanding-note', '이해도 요약을 읽지 못했습니다.');
    note('roster-note', '진행 요약을 읽지 못했습니다.');
   });
-  feedbackUnsub = store.onSnapshot(store.collection(db, 'feedback'), (snap) => {
+  feedbackUnsub = store.onSnapshot(byGrade('feedback'), (snap) => {
    feedbackRows = [];
    snap.forEach((doc) => {
     const data = doc.data();
-    if (inClass(data, id)) feedbackRows.push({id: doc.id, ...data});
+    feedbackRows.push({id: doc.id, ...data});
    });
    paintUnderstanding();
   }, (error) => {
