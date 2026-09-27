@@ -1,9 +1,11 @@
 /* 학습 기록 병합·요약 검사. node tools/web/test_sync_model.mjs */
 import {
- LEARNING_KEY, CODE_IDLE_MS, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
+ LEARNING_KEY, CODE_IDLE_MS, shouldFlushNow, stampChanged, mergeStates, mapsChanged, mergeBucket,
  summarizeProgress, progressFields, statePayload, cloudToState, projectNeedsChoice,
  projectPreview, emptyState, normalizeState, projectCodeEqual, keepProjectRecord,
- projectConflictSignature, CHOICE_KEY, TOMBSTONE_TTL_MS, freshTombstone
+ projectConflictSignature, CHOICE_KEY, TOMBSTONE_TTL_MS, freshTombstone, pickTiedValue,
+ CLOCK_SKEW_THRESHOLD_MS, CLOCK_CHECK_INTERVAL_MS, estimateClockOffset, shouldApplyClockOffset,
+ shouldRefreshClockOffset, resolveClockOffset, correctedNow, SYNC_PENDING_KEY
 } from '../../web/assets/sync-model.js';
 
 function code(text, extra = {}) {
@@ -16,11 +18,14 @@ function eq(actual, expected, label) {
 }
 
 eq(LEARNING_KEY, 'aipy-lab-v1', 'storage key');
-eq(CODE_IDLE_MS >= 20000 && CODE_IDLE_MS <= 30000, true, 'idle window');
+// #125-1 유휴 타이머를 25초에서 크게 줄였다(탭 강제 종료로 최근 편집이 유실되는 문제).
+// complete/answer는 이미 즉시 플러시라 영향이 없다.
+eq(CODE_IDLE_MS >= 5000 && CODE_IDLE_MS <= 15000, true, 'idle window shortened');
 eq(shouldFlushNow('complete'), true, 'complete immediate');
 eq(shouldFlushNow('answer'), true, 'answer immediate');
 eq(shouldFlushNow('code'), false, 'code idle');
 eq(shouldFlushNow('journal'), false, 'journal idle');
+eq(SYNC_PENDING_KEY, 'aipy-sync-pending-v1', 'pending flag key');
 
 const now = 1_700_000_100_000;
 const local = normalizeState({
@@ -215,5 +220,64 @@ eq(mapsChanged(local, merged.state), true, 'maps changed after merge');
 eq(mapsChanged(local, local), false, 'same maps');
 eq(projectPreview(local.projects.reuse).entry, 'main.py', 'preview entry');
 eq(emptyState().version, 1, 'empty version');
+
+// #125-2 시각이 같거나(또는 둘 다 0) 값이 다를 때 결정론 규칙 — 사용자에게 묻지 않는다.
+eq(pickTiedValue('complete', true, false), true, 'complete: true wins over false');
+eq(pickTiedValue('complete', false, true), true, 'complete: cloud true wins when local false');
+eq(
+ pickTiedValue('answers', {status: 'done', attempts: 1}, {status: 'retry', attempts: 5}),
+ {status: 'done', attempts: 1},
+ 'answers: done status wins over more attempts'
+);
+eq(
+ pickTiedValue('answers', {status: 'retry', attempts: 3, value: 'a'}, {status: 'retry', attempts: 5, value: 'b'}),
+ {status: 'retry', attempts: 5, value: 'b'},
+ 'answers: more attempts wins when neither done'
+);
+eq(
+ pickTiedValue('answers', {status: 'retry', attempts: 2, value: '짧음'}, {status: 'retry', attempts: 2, value: '더 긴 답안입니다'}),
+ {status: 'retry', attempts: 2, value: '더 긴 답안입니다'},
+ 'answers: longer value wins when status and attempts tie'
+);
+eq(pickTiedValue('journals', '짧은 글', '이건 훨씬 더 긴 저널 글입니다'), '이건 훨씬 더 긴 저널 글입니다', 'journals: longer text wins');
+eq(pickTiedValue('journals', '똑같이 짧음12', '똑같이 짧음12'), '똑같이 짧음12', 'journals: equal length keeps either (local returned)');
+
+// mergeBucket이 실제로 같은 시각(또는 0/0) 충돌에 위 규칙을 적용하는지.
+const tieNow = 1_700_000_500_000;
+const tiedComplete = mergeBucket(
+ {'u1-overview': true}, {'u1-overview': false},
+ {complete: {'u1-overview': tieNow}}, {complete: {'u1-overview': tieNow}},
+ 'complete', tieNow, {}, {}
+);
+eq(tiedComplete.map['u1-overview'], true, 'mergeBucket complete tie: true wins');
+
+const tiedAnswers = mergeBucket(
+ {q1: {status: 'retry', attempts: 1, value: 'x'}}, {q1: {status: 'done', attempts: 1, value: 'y'}},
+ {answers: {q1: tieNow}}, {answers: {q1: tieNow}},
+ 'answers', tieNow, {}, {}
+);
+eq(tiedAnswers.map.q1.status, 'done', 'mergeBucket answers tie: done wins');
+
+const untimedJournals = mergeBucket(
+ {'u1-learn': '짧게'}, {'u1-learn': '이건 훨씬 더 긴 저널입니다'},
+ {journals: {}}, {journals: {}},
+ 'journals', tieNow, {}, {}
+);
+eq(untimedJournals.map['u1-learn'], '이건 훨씬 더 긴 저널입니다', 'mergeBucket journals both-untimed: longer wins');
+
+// #125-3 기기 시계 보정 순수 함수.
+eq(estimateClockOffset(1000, 1200, 1500), 400, 'clock offset uses request midpoint');
+eq(estimateClockOffset(1000, 1000, 1000), 0, 'clock offset zero when server matches local');
+eq(estimateClockOffset(NaN, 1000, 1000), 0, 'clock offset ignores invalid input');
+eq(shouldApplyClockOffset(CLOCK_SKEW_THRESHOLD_MS + 1), true, 'clock offset applies past threshold');
+eq(shouldApplyClockOffset(CLOCK_SKEW_THRESHOLD_MS - 1), false, 'clock offset ignored under threshold');
+eq(shouldApplyClockOffset(-(CLOCK_SKEW_THRESHOLD_MS + 1)), true, 'clock offset applies for negative skew too');
+eq(shouldRefreshClockOffset(0, tieNow), true, 'clock refresh due when never checked');
+eq(shouldRefreshClockOffset(tieNow, tieNow + CLOCK_CHECK_INTERVAL_MS - 1), false, 'clock refresh not due within a day');
+eq(shouldRefreshClockOffset(tieNow, tieNow + CLOCK_CHECK_INTERVAL_MS + 1), true, 'clock refresh due after a day');
+eq(resolveClockOffset('not a number'), 0, 'clock offset ignores garbage');
+eq(resolveClockOffset(5000), 5000, 'clock offset keeps finite number');
+eq(correctedNow(tieNow, 5000), tieNow + 5000, 'correctedNow adds stored offset');
+eq(correctedNow(tieNow, undefined), tieNow, 'correctedNow no-op without stored offset');
 
 console.log('PASS: sync-model helpers');

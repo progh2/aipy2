@@ -36,7 +36,9 @@ export function helpRequestFields({profile, classId, topic, example, lastError} 
   classroom: person.classroom ?? null,
   number: person.number ?? null,
   classId: classroomId || '',
-  topic: isTopicId(topic) ? topic : optionalShort(topic, 80),
+  // #8 firestore.rules의 optionalTopic은 null 또는 ^u[1-4]-[a-z0-9-]+$(<=40자)만 허용한다.
+  // 형식이 아니면 자유 문자열을 잘라 보내지 않고 null로 — 그런 값은 규칙에서 거부돼 요청 자체가 실패했다.
+  topic: isTopicId(topic) ? topic : null,
   example: optionalShort(example, 80),
   lastError: clipLastError(lastError) || null,
   status: 'open'

@@ -31,6 +31,13 @@ eq(fields.lastError, 'NameError: x', 'error');
 eq(fields.studentId, '20314', 'student id');
 eq(helpRequestFields({profile}).classId, '2-3', 'class id from profile');
 
+// #8 firestore.rules의 optionalTopic 규칙과 동일해야 한다: null 또는 ^u[1-4]-[a-z0-9-]+$(<=40자), 아니면 null.
+eq(helpRequestFields({profile, topic: '자유 입력 주제'}).topic, null, 'free text topic becomes null');
+eq(helpRequestFields({profile, topic: 'u5-overview'}).topic, null, 'out of range unit topic becomes null');
+eq(helpRequestFields({profile, topic: 'u1-' + 'a'.repeat(40)}).topic, null, 'over length topic becomes null');
+eq(helpRequestFields({profile, topic: null}).topic, null, 'null topic stays null');
+eq(helpRequestFields({profile, topic: 'u1-overview'}).topic, 'u1-overview', 'valid topic id kept');
+
 eq(clipLastError('  boom\n  ').length > 0, true, 'clip error');
 eq(clipLastError('e'.repeat(400)).length, 300, 'error max');
 

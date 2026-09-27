@@ -11,16 +11,14 @@ if(unit && !pageTopic){
  const hash=location.hash.slice(1);
  if(hash && pageLessons.includes(hash)) location.replace(hash+'.html');
 }
-function resumeHref(raw){
- if(typeof raw!=='string') return '';
- const legacy=/^units\/unit0([1-4])\/index\.html#([a-z0-9-]+)$/.exec(raw);
- if(legacy){
-  if(['lab','practice','gallery','simulator','journal'].includes(legacy[2]) || legacy[2].startsWith('u')) return raw;
-  return `units/unit0${legacy[1]}/${legacy[2]}.html`;
- }
- if(/^units\/unit0[1-4]\/[a-z0-9-]+\.html(?:#[a-z0-9-]+)?$/.test(raw)) return raw;
- return '';
+// #7 옛 앵커(#lab·#practice·#gallery·#simulator·#journal, 문항 id 등)를 현재 구조로 옮기는
+// 순수 함수는 assets/resume-model.js에 있다(node 테스트 가능). 여기서는 동적 import로 불러와 쓴다.
+let resumeHrefFn=null;
+function resolveResume(){
+ if(!resumeHrefFn) return;
+ if($('#resume')){const href=resumeHrefFn(state.last);if(href)$('#resume').href=href;}
 }
+import(prefix+'assets/resume-model.js').then((m)=>{resumeHrefFn=m.resumeHref;resolveResume();}).catch(()=>{});
 let state={version:1,complete:{},answers:{},journals:{},projects:{},last:''};
 let storageWorks=true;
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved && saved.version===1) state={...state,...saved};}catch{storageWorks=false;}
@@ -89,7 +87,7 @@ function applyRemote(next){
   if(typeof box._paintComplete==='function') box._paintComplete();
  });
  $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';});
- if($('#resume')){const href=resumeHref(state.last);if(href)$('#resume').href=href;}
+ resolveResume();
  renderRailTodo();
  if(typeof window.aipyLearning._refreshUnit==='function') window.aipyLearning._refreshUnit();
 }
@@ -102,7 +100,7 @@ async function copy(text){try{await navigator.clipboard.writeText(text);toast('�
 function updateProgress(){for(const item of $$('[data-unit-progress]')){const u=Number(item.dataset.unitProgress),total=Number(item.dataset.total)||1;const count=Object.entries(state.complete).filter(([k,v])=>k.startsWith(`u${u}-`)&&v).length;const value=Math.min(100,Math.round(count/total*100));item.textContent=`${value}%`;$$(`[data-unit-bar="${u}"]`).forEach(e=>e.value=value);}}
 updateProgress();
 if(!storageWorks)toast('기록을 불러오지 못했습니다. 이 세션의 기록은 내보내기로 보관하세요.');
-if($('#resume')){const href=resumeHref(state.last);if(href)$('#resume').href=href;}
+resolveResume();
 $$('[data-export]').forEach(b=>b.addEventListener('click',()=>download('aipy-learning-record.json',JSON.stringify(state,null,2),'application/json')));
 $$('[data-import]').forEach(input=>input.addEventListener('change',async()=>{
  try{
