@@ -4,6 +4,9 @@
 import {load, SCHOOL, readTeacherFlag} from './auth.js';
 import {teacherAccessMessage} from './auth-model.js';
 import {inClass, labelClass, isArchived} from './class-picker.js';
+import {
+ FIELDS, parseCsv, columnOrder, deriveFromStudentId, readRow, rosterPayload, legacyIdRows
+} from './admin-model.js';
 
 const $ = (id) => document.getElementById(id);
 const node = (tag, cls, text) => {
@@ -21,15 +24,6 @@ function headRow(titles) {
 const gate = $('admin-gate');
 if (gate) startAdmin();
 
-const FIELDS = [
- {key: 'email', labels: ['email', '이메일', '메일'], type: 'text'},
- {key: 'studentId', labels: ['studentid', 'student_id', '학번'], type: 'text'},
- {key: 'admissionYear', labels: ['admissionyear', 'admission_year', '입학년도', '입학연도'], type: 'int'},
- {key: 'name', labels: ['name', '이름', '성명'], type: 'text'},
- {key: 'grade', labels: ['grade', '학년'], type: 'int', optional: true},
- {key: 'classroom', labels: ['classroom', 'class', '반'], type: 'int', optional: true},
- {key: 'number', labels: ['number', '번호', '출석번호'], type: 'int', optional: true}
-];
 const NEWLINE = String.fromCharCode(10);
 const HEADER = 'email,studentId,admissionYear,name,grade,classroom,number';
 const SAMPLE = [HEADER,
@@ -126,93 +120,7 @@ function bind(db, store) {
 }
 
 // --- CSV ---
-
-export function parseCsv(text) {
- const rows = [];
- let row = [], field = '', quoted = false;
- text = text.replace(/^﻿/, '');
- for (let i = 0; i < text.length; i++) {
-  const c = text[i];
-  if (quoted) {
-   if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
-   else if (c === '"') quoted = false;
-   else field += c;
-  } else if (c === '"') quoted = true;
-  else if (c === ',' || c === '\t') { row.push(field); field = ''; }
-  else if (c === '\n') { row.push(field); field = ''; rows.push(row); row = []; }
-  else if (c !== '\r') field += c;
- }
- if (field !== '' || row.length) { row.push(field); rows.push(row); }
- return rows.filter((r) => r.some((v) => v.trim() !== ''));
-}
-
-// 머리글이 있으면 이름으로, 없으면 정해진 순서로 열을 맞춥니다. 한글 머리글도 받습니다.
-export function columnOrder(head) {
- const cells = head.map((c) => c.trim().toLowerCase());
- const isHeader = cells.some((c) => FIELDS.some((f) => f.labels.includes(c)));
- if (!isHeader) return {order: FIELDS.map((f) => f.key), skipHead: false};
- const order = cells.map((c) => {
-  const field = FIELDS.find((f) => f.labels.includes(c));
-  return field ? field.key : null;
- });
- return {order, skipHead: true};
-}
-
-// 학번 규칙: 4자리 = 학년(1)·반(1)·번호(2), 5자리 = 학년(1)·반(2)·번호(2). 예: 2314 → 2학년 3반 14번.
-// 학년이 바뀌면 학번이 새로 부여되므로 코호트 구분은 입학년도로 한다.
-// 범위를 벗어난 값(학년 0/4 이상, 반 0, 번호 0 등)은 자릿수는 맞아도 학번이 아니다(#123) — null로
-// 돌려 readRow가 오류로 표시하게 한다.
-function validParts(grade, classroom, number) {
- if (!(grade >= 1 && grade <= 3)) return null;
- if (!(classroom >= 1)) return null;
- if (!(number >= 1)) return null;
- return {grade, classroom, number};
-}
-export function deriveFromStudentId(studentId) {
- const id = String(studentId || '');
- if (/^\d{4}$/.test(id)) return validParts(+id[0], +id[1], +id.slice(2));
- if (/^\d{5}$/.test(id)) return validParts(+id[0], +id.slice(1, 3), +id.slice(3));
- return null;
-}
-
-export function readRow(cells, order) {
- const raw = {};
- order.forEach((key, i) => { if (key) raw[key] = (cells[i] || '').trim(); });
- const problems = [];
- const entry = {};
- for (const field of FIELDS) {
-  const value = raw[field.key] || '';
-  if (!value) {
-   if (field.optional) { entry[field.key] = null; continue; }
-   problems.push(`${field.key} 없음`);
-   continue;
-  }
-  if (field.type === 'int') {
-   const parsed = Number(value);
-   if (!Number.isInteger(parsed)) { problems.push(`${field.key}는 정수여야 함`); continue; }
-   entry[field.key] = parsed;
-  } else {
-   entry[field.key] = value;
-  }
- }
- // 학년·반·번호가 비면 학번에서 유도한다. CSV에 직접 적은 값이 학번에서 유도한 값과 다르면
- // 오타·전입 전 학번 재사용 등 데이터 불일치이므로 오류로 본다(#123).
- const derived = deriveFromStudentId(entry.studentId);
- for (const key of ['grade', 'classroom', 'number']) {
-  if (entry[key] == null) { if (derived) entry[key] = derived[key]; }
-  else if (derived && entry[key] !== derived[key]) {
-   problems.push(`${key}가 학번(${entry.studentId})과 다름: 입력값 ${entry[key]} ≠ 학번 기준 ${derived[key]}`);
-  }
- }
- if (entry.studentId && !derived) problems.push('학번이 4~5자리 숫자 형식(학년·반·번호)이 아님');
- if (entry.grade == null) problems.push('grade 없음(학번이 4~5자리 숫자가 아니면 직접 입력)');
- if (entry.classroom == null) problems.push('classroom 없음(학번이 4~5자리 숫자가 아니면 직접 입력)');
- if (entry.email) {
-  entry.email = entry.email.toLowerCase();
-  if (!entry.email.endsWith(`@${SCHOOL}`)) problems.push(`학교 이메일(@${SCHOOL})이 아님`);
- }
- return {entry, problems};
-}
+// parseCsv·columnOrder·deriveFromStudentId·readRow는 admin-model.js로 옮겼다(#125-6).
 
 async function check(db, store) {
  const text = $('roster-text').value;
@@ -297,21 +205,8 @@ async function apply(db, store) {
   for (const chunk of chunks) {
    const batch = store.writeBatch(db);
    for (const {entry} of chunk) {
-    const payload = {
-     email: entry.email,
-     studentId: entry.studentId,
-     admissionYear: entry.admissionYear,
-     name: entry.name,
-     grade: entry.grade,
-     classroom: entry.classroom,
-     updatedAt: store.serverTimestamp()
-    };
-    if (entry.number != null) payload.number = entry.number;
     const before = plannedExisting.get(entry.email) || existingFromCache(entry.email);
-    if (before && before.archived === true) {
-     payload.archived = true;
-     if (before.archivedAt) payload.archivedAt = before.archivedAt;
-    }
+    const payload = {...rosterPayload(entry, before), updatedAt: store.serverTimestamp()};
     batch.set(store.doc(db, 'roster', entry.email), payload);
    }
    await batch.commit();
@@ -467,7 +362,7 @@ async function cleanLegacyIds(db, store) {
  let rows;
  try { rows = await fetchRoster(db, store); }
  catch (error) { console.error('[admin]', error); alert('명단을 읽지 못했습니다.'); return; }
- const legacy = rows.filter((r) => !/^\d{4}$/.test(String(r.studentId || '')));
+ const legacy = legacyIdRows(rows);
  if (!legacy.length) { alert('학번이 4자리가 아닌 학생이 없습니다.'); return; }
  const preview = legacy.slice(0, 12).map((r) => `${r.studentId} ${r.name} (${r.id})`).join('\n');
  if (!confirm(`학번이 4자리가 아닌 ${legacy.length}명을 명단에서 지울까요? 학습 기록은 남습니다.\n\n${preview}${legacy.length > 12 ? '\n…' : ''}`)) return;
