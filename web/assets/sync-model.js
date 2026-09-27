@@ -6,14 +6,28 @@
    병합 때 상대(로컬/클라우드)에 그 항목이 남아 있어도 삭제 시각이 그 항목 시각보다
    늦거나 같으면 삭제를 유지한다(그래야 되돌리기 후 병합해도 부활하지 않는다). 반대로
    삭제 이후 어느 기기에서 더 늦게 다시 만들었다면 그 항목 시각이 더 늦으므로 살아남는다.
-   툼스톤은 TOMBSTONE_TTL_MS가 지나면 무시되어 다음 병합에서 자연히 사라진다(무한 누적 방지). */
+   툼스톤은 TOMBSTONE_TTL_MS가 지나면 무시되어 다음 병합에서 자연히 사라진다(무한 누적 방지).
+   #125-2: complete/answers/journals 병합에서 시각이 같거나 둘 다 0(시각 없음)인데 값이 다르면
+   기기마다 결과가 갈리지 않도록 결정론 규칙(pickTiedValue)으로 정한다 — 묻지 않는다.
+   #125-3: 기기 시계가 크게 틀리면 위 시각 비교가 무의미해진다. correctedNow가 저장된 오차를
+   더한 "보정된 지금"을 돌려주고, sync.js가 실제 Date.now() 호출부를 이 값으로 바꾼다. */
 import {normalizeUnderstanding} from './understanding-model.js';
 
 export const LEARNING_KEY = 'aipy-lab-v1';
-export const CODE_IDLE_MS = 25000;
+// #125-1: 25초는 편집이 몰려도 배터리·요청 수를 아끼려던 값이었지만, 교실 PC에서
+// 탭을 그냥 닫는 경우가 잦아 마지막 25초 분량이 유실될 위험이 컸다. complete/answer는
+// 이미 즉시 플러시(IMMEDIATE_KINDS)라 영향이 없고, 영향받는 건 code/journal처럼
+// 계속 타이핑하는 동안 눌러 쓰는 유휴 타이머뿐이라 8초로 줄여도 요청 수는 크게 늘지 않는다.
+export const CODE_IDLE_MS = 8000;
 export const BUCKETS = ['complete', 'answers', 'journals', 'projects'];
 export const IMMEDIATE_KINDS = ['complete', 'answer', 'import'];
 export const TOMBSTONE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+// #125-3 시계 오차 보정: 2분 넘게 틀릴 때만 적용하고(잦은 미세 보정 방지), 하루 1회만 다시 확인한다.
+export const CLOCK_OFFSET_KEY = 'aipy-clock-offset-v1';
+export const CLOCK_SKEW_THRESHOLD_MS = 2 * 60 * 1000;
+export const CLOCK_CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000;
+// #125-1 미전송 변경 플래그: 로컬 변경 시 세우고 flush 성공 시 내린다.
+export const SYNC_PENDING_KEY = 'aipy-sync-pending-v1';
 
 export function emptyTombstones() {
  return {complete: {}, answers: {}, journals: {}, projects: {}};
@@ -155,6 +169,33 @@ export function stampChanged(prev, next, now) {
  return to;
 }
 
+// #125-2 같은 시각(또는 둘 다 시각 없음)인데 값이 다를 때 기기마다 다른 결과가 나오지 않도록
+// 순서를 정한다. 사용자에게 묻지 않는다 — projects(코드)만 askConflict로 남겨 둔다.
+export function pickTiedValue(bucket, localValue, cloudValue) {
+ if (bucket === 'complete') {
+  // 완료 체크는 true 우선.
+  return localValue ? localValue : cloudValue;
+ }
+ if (bucket === 'answers') {
+  const l = localValue && typeof localValue === 'object' ? localValue : {};
+  const c = cloudValue && typeof cloudValue === 'object' ? cloudValue : {};
+  const lDone = l.status === 'done', cDone = c.status === 'done';
+  if (lDone !== cDone) return lDone ? localValue : cloudValue;
+  const lAttempts = Number(l.attempts) || 0, cAttempts = Number(c.attempts) || 0;
+  if (lAttempts !== cAttempts) return lAttempts > cAttempts ? localValue : cloudValue;
+  const lValue = typeof l.value === 'string' ? l.value : '';
+  const cValue = typeof c.value === 'string' ? c.value : '';
+  return lValue.length >= cValue.length ? localValue : cloudValue;
+ }
+ if (bucket === 'journals') {
+  // 저널은 더 긴 텍스트를 우선한다(대개 더 나중에 이어 쓴 쪽).
+  const l = typeof localValue === 'string' ? localValue : '';
+  const c = typeof cloudValue === 'string' ? cloudValue : '';
+  return l.length >= c.length ? localValue : cloudValue;
+ }
+ return localValue;
+}
+
 export function mergeBucket(localMap, cloudMap, localTimes, cloudTimes, bucket, now, localTombstones, cloudTombstones) {
  const local = asMap(localMap);
  const cloud = asMap(cloudMap);
@@ -174,7 +215,11 @@ export function mergeBucket(localMap, cloudMap, localTimes, cloudTimes, bucket, 
    if (deepEqual(local[key], cloud[key])) {
     map[key] = local[key];
     times[key] = Math.max(lt, ct);
-   } else if (lt >= ct) {
+   } else if (lt === ct) {
+    // #125-2 시각이 정확히 같거나(또는 둘 다 0) 값이 다르다 — 결정론 규칙으로 정한다.
+    map[key] = pickTiedValue(bucket, local[key], cloud[key]);
+    times[key] = Math.max(lt, ct) || now;
+   } else if (lt > ct) {
     map[key] = local[key];
     times[key] = lt || now;
    } else {
@@ -388,4 +433,35 @@ export function projectPreview(project) {
  const entry = typeof project?.entry === 'string' && files[project.entry] !== undefined ? project.entry : names[0] || '';
  const source = typeof files[entry] === 'string' ? files[entry] : '';
  return {files: names.length, entry, snippet: source.slice(0, 160)};
+}
+
+// #125-3 기기 시계 보정. sync.js가 HEAD 요청의 Date 헤더로 서버 시각을 추정해 넘긴다.
+// 요청 왕복의 중간 시각(requestStart~requestEnd)에 서버가 headerDate였다고 본다(대칭 지연 가정).
+export function estimateClockOffset(requestStart, requestEnd, headerDate) {
+ if (![requestStart, requestEnd, headerDate].every(Number.isFinite)) return 0;
+ const mid = requestStart + (requestEnd - requestStart) / 2;
+ return headerDate - mid;
+}
+
+// ±2분 이하의 오차는 적용하지 않는다(대부분의 오차·요청 지연 잡음을 무시).
+export function shouldApplyClockOffset(offsetMs) {
+ return Number.isFinite(offsetMs) && Math.abs(offsetMs) > CLOCK_SKEW_THRESHOLD_MS;
+}
+
+// 하루에 한 번만 다시 확인한다. lastCheckedAt이 없으면(최초) 즉시 확인한다.
+export function shouldRefreshClockOffset(lastCheckedAt, now) {
+ const t = Number(lastCheckedAt);
+ if (!Number.isFinite(t) || t <= 0) return true;
+ return (Number(now) - t) >= CLOCK_CHECK_INTERVAL_MS;
+}
+
+// 저장된 오차값을 안전하게 읽는다(형식이 아니면 보정 없음).
+export function resolveClockOffset(storedOffset) {
+ const n = Number(storedOffset);
+ return Number.isFinite(n) ? n : 0;
+}
+
+// 기록 시각을 만드는 모든 곳(stampChanged 등)이 Date.now() 대신 이 값을 쓴다.
+export function correctedNow(rawNow, storedOffset) {
+ return Number(rawNow) + resolveClockOffset(storedOffset);
 }

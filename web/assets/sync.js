@@ -6,8 +6,10 @@ import {load} from './auth.js';
 import {
  LEARNING_KEY, CODE_IDLE_MS, CHOICE_KEY, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
  progressFields, statePayload, cloudToState, cloneState, projectPreview, emptyState,
- projectConflictSignature
-} from './sync-model.js?v=tomb1';
+ projectConflictSignature, CLOCK_OFFSET_KEY, SYNC_PENDING_KEY,
+ estimateClockOffset, shouldRefreshClockOffset, shouldApplyClockOffset, resolveClockOffset,
+ correctedNow as correctedNowPure
+} from './sync-model.js?v=m125';
 
 const node = (tag, cls, text) => {
  const el = document.createElement(tag);
@@ -34,6 +36,50 @@ let idleTimer = 0;
 let writing = false;
 let pendingKind = '';
 let started = false;
+let clockOffset = 0;
+
+// #125-1 미전송 변경 플래그. 탭을 닫아 flush가 끝까지 못 갈 수 있으니, 다음에 열었을 때(또는
+// 다음 로그인 때) 가장 먼저 다시 올리도록 로컬에 남겨 둔다.
+function markPending() {
+ try { localStorage.setItem(SYNC_PENDING_KEY, '1'); } catch {}
+}
+function clearPending() {
+ try { localStorage.removeItem(SYNC_PENDING_KEY); } catch {}
+}
+function hasPending() {
+ try { return localStorage.getItem(SYNC_PENDING_KEY) === '1'; } catch { return false; }
+}
+
+// #125-3 기기 시계 보정. 저장된 오차를 읽고, 하루에 한 번만 HEAD 요청으로 다시 확인한다.
+function readClockOffsetStore() {
+ try {
+  const raw = JSON.parse(localStorage.getItem(CLOCK_OFFSET_KEY) || 'null');
+  return raw && typeof raw === 'object' ? raw : null;
+ } catch { return null; }
+}
+function writeClockOffsetStore(offset, checkedAt) {
+ try { localStorage.setItem(CLOCK_OFFSET_KEY, JSON.stringify({offset, checkedAt})); } catch {}
+}
+function correctedNow() {
+ return correctedNowPure(Date.now(), clockOffset);
+}
+async function refreshClockOffset() {
+ const stored = readClockOffsetStore();
+ clockOffset = resolveClockOffset(stored && stored.offset);
+ if (!shouldRefreshClockOffset(stored && stored.checkedAt, Date.now())) return;
+ try {
+  const start = Date.now();
+  const res = await fetch(location.href, {method: 'HEAD', cache: 'no-store'});
+  const end = Date.now();
+  const headerDate = Date.parse(res.headers.get('date') || '');
+  if (!Number.isFinite(headerDate)) return;
+  const offset = estimateClockOffset(start, end, headerDate);
+  clockOffset = shouldApplyClockOffset(offset) ? offset : 0;
+  writeClockOffsetStore(clockOffset, Date.now());
+ } catch (error) {
+  console.warn('[sync] clock check', error);
+ }
+}
 
 function toast(text) {
  const box = document.getElementById('toast');
@@ -130,7 +176,7 @@ function setStatus(mode, detail) {
 function stampNow(kind) {
  if (kind === 'remote') return liveState();
  const current = liveState();
- const stamped = stampChanged(lastLocal, current, Date.now());
+ const stamped = stampChanged(lastLocal, current, correctedNow());
  persist(stamped);
  lastLocal = cloneState(stamped);
  return stamped;
@@ -139,6 +185,8 @@ function stampNow(kind) {
 function schedule(kind) {
  if (!user || !profile) return;
  if (kind === 'remote') return;
+ // #125-1 편집한 순간 바로 세운다 — 유휴 타이머가 끝나기 전에 탭이 닫혀도 "보낼 것이 있었다"가 남는다.
+ markPending();
  pendingKind = kind;
  if (shouldFlushNow(kind)) {
   clearTimeout(idleTimer);
@@ -180,7 +228,7 @@ async function runFlush() {
    const prev = await tx.get(progressRef);
    const cloud = snap.exists() ? cloudToState(snap.data()) : emptyState();
    applyRememberedChoices(local, cloud);
-   const merged = mergeStates(local, cloud, choices, Date.now());
+   const merged = mergeStates(local, cloud, choices, correctedNow());
    if (merged.unresolved.length) return {merged, wrote: false};
    const payload = statePayload(merged.state);
    payload.updatedAt = store.serverTimestamp();
@@ -188,7 +236,7 @@ async function runFlush() {
    const liveUnderstanding = (window.aipyUnderstanding && typeof window.aipyUnderstanding.snapshot === 'function')
     ? window.aipyUnderstanding.snapshot()
     : (prev.exists() ? prev.data().understanding : {});
-   const progress = progressFields(profile, merged.state, Date.now(), liveUnderstanding);
+   const progress = progressFields(profile, merged.state, correctedNow(), liveUnderstanding);
    progress.updatedAt = store.serverTimestamp();
    tx.set(progressRef, progress);
    return {merged, wrote: true};
@@ -201,6 +249,7 @@ async function runFlush() {
    await resolveConflicts(result.merged.unresolved, local);
    return;
   }
+  clearPending();
   setStatus('synced');
  } catch (error) {
   console.warn('[sync]', error);
@@ -220,7 +269,7 @@ async function pullAndMerge() {
   const cloud = snap.exists() ? cloudToState(snap.data()) : emptyState();
   const local = stampNow('save');
   applyRememberedChoices(local, cloud);
-  const merged = mergeStates(local, cloud, choices, Date.now());
+  const merged = mergeStates(local, cloud, choices, correctedNow());
   if (mapsChanged(local, merged.state)) applyToUi(merged.state);
   lastLocal = cloneState(merged.state);
   if (merged.unresolved.length) {
@@ -292,11 +341,11 @@ async function resolveConflicts(conflicts, local) {
   const {db, store} = await load();
   const snap = await store.getDoc(store.doc(db, 'students', user.uid, 'state', 'current'));
   const cloud = snap.exists() ? cloudToState(snap.data()) : emptyState();
-  const again = mergeStates(local, cloud, choices, Date.now());
+  const again = mergeStates(local, cloud, choices, correctedNow());
   applyToUi(again.state);
   lastLocal = cloneState(again.state);
  } catch {
-  const again = mergeStates(local, emptyState(), choices, Date.now());
+  const again = mergeStates(local, emptyState(), choices, correctedNow());
   applyToUi(again.state);
   lastLocal = cloneState(again.state);
  }
@@ -338,6 +387,10 @@ function start() {
  if (started) return;
  started = true;
  window.aipySync = {flush, confirmClearLocal, status: () => statusMode};
+ refreshClockOffset();
+ // #125-1(b) 이전 세션에서 못 보낸 변경이 있었다면, 계정 정보가 오기 전이라도 우선 표시해 둔다.
+ // 실제 전송은 onAccount → pullAndMerge → flush가 로그인 뒤 가장 먼저 하는 일이다.
+ if (hasPending()) setStatus('pending', '이전에 못 보낸 변경이 있습니다. 로그인하면 먼저 올립니다.');
  hookLearning();
  if (window.aipyLearning && window.aipyLearning.ready) hookLearning();
  document.addEventListener('aipy:learning-ready', hookLearning);
@@ -347,6 +400,11 @@ function start() {
  });
  if (window.aipyAccount) onAccount(window.aipyAccount);
  window.addEventListener('pagehide', () => { try { flush(); } catch {} });
+ // #125-1(a) visibilitychange의 hidden은 탭을 닫거나 다른 앱으로 전환할 때 pagehide보다
+ // 먼저, 더 안정적으로 온다(pagehide는 일부 브라우저에서 비동기 작업을 끝까지 못 기다린다).
+ document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') { try { flush(); } catch {} }
+ });
  window.addEventListener('online', () => {
   if (user && (statusMode === 'error' || statusMode === 'pending')) flush();
  });
