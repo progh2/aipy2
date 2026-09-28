@@ -24,7 +24,7 @@ jobs:
       - name: Build static learning pages
         run: python3 tools/web/build.py
       - name: Install Python validation dependencies
-        run: python3 -m pip install numpy pandas scikit-learn matplotlib pillow
+        run: python3 -m pip install numpy pandas scikit-learn matplotlib seaborn pillow
       - name: Validate examples, questions, links and archives
         run: python3 tools/web/verify.py
       - uses: actions/configure-pages@v5
