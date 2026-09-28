@@ -2350,21 +2350,21 @@
       "unit": 2,
       "topic": "widgets",
       "kind": "서술",
-      "prompt": "다음 코드를 실행하면 버튼이 화면에 보이지 않는다(xvfb 실행으로 winfo_ismapped()==0 확인). 빠진 한 줄을 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"Go\")\nroot.mainloop()"
+      "prompt": "다음 코드를 실행하면 버튼이 화면에 보이지 않는다. 빠진 한 줄을 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"Go\")\nroot.mainloop()"
     },
     {
       "id": "u2-q120",
       "unit": 2,
       "topic": "events",
       "kind": "서술",
-      "prompt": "다음 코드를 실행하면 버튼을 한 번도 클릭하지 않았는데 print(len(calls))가 1을 출력한다(xvfb 실행으로 확인). 그 이유를 설명하세요.\ncalls = []\ndef hello():\n    calls.append(\"run\")\n\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"클릭\", command=hello())\nprint(len(calls))"
+      "prompt": "다음 코드를 실행하면 버튼을 한 번도 클릭하지 않았는데 print(len(calls))가 1을 출력한다. 그 이유를 설명하세요.\ncalls = []\ndef hello():\n    calls.append(\"run\")\n\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"클릭\", command=hello())\nprint(len(calls))"
     },
     {
       "id": "u2-q121",
       "unit": 2,
       "topic": "layout",
       "kind": "서술",
-      "prompt": "다음 코드는 실행하면 TclError가 발생한다(xvfb 실행으로 \"cannot use geometry manager grid inside . which already has slaves managed by pack\" 오류 확인). 오류가 나지 않도록 고치는 방법을 한 가지 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"이름\").pack()\ntk.Entry(root).grid(row=0, column=1)\nroot.mainloop()"
+      "prompt": "다음 코드는 실행하면 TclError가 발생한다(오류 메시지: \"cannot use geometry manager grid inside . which already has slaves managed by pack\"). 오류가 나지 않도록 고치는 방법을 한 가지 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"이름\").pack()\ntk.Entry(root).grid(row=0, column=1)\nroot.mainloop()"
     },
     {
       "id": "u2-q122",
@@ -2378,7 +2378,7 @@
       "unit": 2,
       "topic": "events",
       "kind": "서술",
-      "prompt": "다음 코드에는 window.mainloop() 호출이 없다. 실행하면 어떤 일이 일어나는지 설명하세요(xvfb 실행으로 창이 뜨지 못한 채 0.2초 만에 종료됨을 확인).\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"안녕\").pack()\nprint(\"끝\")"
+      "prompt": "다음 코드에는 window.mainloop() 호출이 없다. 실행하면 어떤 일이 일어나는지 설명하세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"안녕\").pack()\nprint(\"끝\")"
     },
     {
       "id": "u2-q124",

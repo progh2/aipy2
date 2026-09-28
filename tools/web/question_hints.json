@@ -855,17 +855,17 @@
   "hint2": "코드가 실행되는 순서와 화면에 배치되는 규칙은 별개입니다."
  },
  "u2-q119": {
-  "prompt": "다음 코드를 실행하면 버튼이 화면에 보이지 않는다(xvfb 실행으로 winfo_ismapped()==0 확인). 빠진 한 줄을 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"Go\")\nroot.mainloop()",
+  "prompt": "다음 코드를 실행하면 버튼이 화면에 보이지 않는다. 빠진 한 줄을 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"Go\")\nroot.mainloop()",
   "hint": "위젯은 생성만으로는 화면에 나타나지 않습니다.",
   "hint2": "배치 관리자(pack·grid·place) 중 하나가 빠졌습니다."
  },
  "u2-q120": {
-  "prompt": "다음 코드를 실행하면 버튼을 한 번도 클릭하지 않았는데 print(len(calls))가 1을 출력한다(xvfb 실행으로 확인). 그 이유를 설명하세요.\ncalls = []\ndef hello():\n    calls.append(\"run\")\n\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"클릭\", command=hello())\nprint(len(calls))",
+  "prompt": "다음 코드를 실행하면 버튼을 한 번도 클릭하지 않았는데 print(len(calls))가 1을 출력한다. 그 이유를 설명하세요.\ncalls = []\ndef hello():\n    calls.append(\"run\")\n\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text=\"클릭\", command=hello())\nprint(len(calls))",
   "hint": "괄호가 있으면 그 자리에서 바로 실행하라는 뜻입니다.",
   "hint2": "클릭 이벤트가 아니라 버튼을 만드는 그 줄 자체가 문제입니다."
  },
  "u2-q121": {
-  "prompt": "다음 코드는 실행하면 TclError가 발생한다(xvfb 실행으로 \"cannot use geometry manager grid inside . which already has slaves managed by pack\" 오류 확인). 오류가 나지 않도록 고치는 방법을 한 가지 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"이름\").pack()\ntk.Entry(root).grid(row=0, column=1)\nroot.mainloop()",
+  "prompt": "다음 코드는 실행하면 TclError가 발생한다(오류 메시지: \"cannot use geometry manager grid inside . which already has slaves managed by pack\"). 오류가 나지 않도록 고치는 방법을 한 가지 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"이름\").pack()\ntk.Entry(root).grid(row=0, column=1)\nroot.mainloop()",
   "hint": "같은 부모 안에서 배치 관리자를 섞으면 충돌합니다.",
   "hint2": "서로 다른 Frame으로 나누면 각 Frame 안에서는 다른 방식을 써도 됩니다."
  },
@@ -875,7 +875,7 @@
   "hint2": "cancel 버튼과 확인 버튼이 각각 무엇을 돌려주는지 비교해 보세요."
  },
  "u2-q123": {
-  "prompt": "다음 코드에는 window.mainloop() 호출이 없다. 실행하면 어떤 일이 일어나는지 설명하세요(xvfb 실행으로 창이 뜨지 못한 채 0.2초 만에 종료됨을 확인).\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"안녕\").pack()\nprint(\"끝\")",
+  "prompt": "다음 코드에는 window.mainloop() 호출이 없다. 실행하면 어떤 일이 일어나는지 설명하세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"안녕\").pack()\nprint(\"끝\")",
   "hint": "mainloop()는 사용자 이벤트를 기다리는 반복문입니다.",
   "hint2": "이 호출이 없으면 프로그램이 끝까지 실행되어 종료됩니다."
  },
