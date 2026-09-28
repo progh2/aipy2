@@ -32,7 +32,9 @@ try {
  }
  await open('/units/unit02/widgets.html');
  await page.waitForFunction(()=>!!window.aipyUnderstanding);
- const originalTip=await page.locator('.lesson > .pai-note').textContent();
+ // (#131) 2·3단원 소단원은 슬라이드 기반이라 파이 안내 카드가 없을 수 있다 — 있을 때만 불변 확인.
+ const tipBox=page.locator('.lesson > .pai-note');
+ const originalTip=await tipBox.count()?await tipBox.first().textContent():null;
  const box=page.locator('[data-complete="u2-widgets"]');
  const badge=page.locator('.completion-badge');
  assert.equal(await badge.isVisible(),false);
@@ -42,7 +44,7 @@ try {
   return !!(workspace.compareDocumentPosition(check)&Node.DOCUMENT_POSITION_FOLLOWING);
  }),true);
  await box.check();assert.equal(await badge.isVisible(),true);
- assert.equal(await page.locator('.lesson > .pai-note').textContent(),originalTip);
+ if(originalTip!==null)assert.equal(await tipBox.first().textContent(),originalTip);
  await page.reload();await page.waitForFunction(()=>!!window.aipyUnderstanding);
  assert.equal(await box.isChecked(),true);assert.equal(await badge.isVisible(),true);
  await box.uncheck();assert.equal(await badge.isVisible(),false);
