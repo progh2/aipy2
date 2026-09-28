@@ -521,6 +521,22 @@ choice_q=next((q for q in catalog['questions'] if q.get('kind')=='선택'), None
 assert choice_q and choice_q.get('options'), 'catalog choice options'
 assert catalog['examples']['reuse']['title']
 assert 'unit' in catalog['examples']['reuse']
+
+# (#135) 실행 전 예측·코드 읽기: key_lines.KEY_LINES의 모든 항목이 실제 파일에 있는 실제
+# 코드 줄(빈 줄·주석 아님)을 가리키는지 전수 검사한다. resolve()는 대조에 실패한 항목을
+# 조용히 빼므로, 여기서 개수가 그대로 넘어왔는지 확인해 조용한 누락을 잡는다.
+import key_lines as _key_lines
+assert set(_key_lines.KEY_LINES.keys()) <= set(examples.keys()), '핵심 줄 표에 없는 예제id'
+for _eid, _items in _key_lines.KEY_LINES.items():
+ assert len(_items)>=1, (_eid,'핵심 줄 0개')
+ _resolved=_key_lines.resolve({**examples[_eid],'id':_eid})
+ assert len(_resolved)==len(_items), (_eid,'핵심 줄 대조 실패(빈 줄·없는 파일 등)',_items,_resolved)
+ for _r in _resolved:
+  assert _r['code'].strip(), (_eid,'빈 코드 줄')
+# catalog.json examples[*].keyLines도 같은 값을 실었는지 확인(교사 화면이 이걸로 코드 스니펫을 보여준다).
+for _eid in _key_lines.KEY_LINES:
+ assert catalog['examples'][_eid]['keyLines']==_key_lines.resolve({**examples[_eid],'id':_eid}), (_eid,'catalog keyLines 불일치')
+print(f'PASS: key_lines {len(_key_lines.KEY_LINES)} examples / {sum(len(v) for v in _key_lines.KEY_LINES.values())} key lines resolved and matched in catalog.')
 rules=(ROOT/'firebase/firestore.rules').read_text()
 assert 'match /sessions/{classroom}' in rules
 assert 'match /presence/{uid}' in rules

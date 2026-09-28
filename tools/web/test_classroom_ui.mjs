@@ -108,9 +108,45 @@ try {
   assert.equal(await page.locator('#example-select').count(),0);
   const code=await page.locator('#code-editor').inputValue();
   assert.ok(code && code.trim().length>0, `#code-editor should be pre-filled on ${path}`);
+  // (#135) 예측을 적어야 [실행]이 켜진다.
+  assert.equal(await page.locator('#run').isDisabled(),true,`#run should start disabled on ${path}`);
+  await page.fill('#predict-input','예측을 적어 봅니다');
+  await page.waitForFunction(()=>!document.querySelector('#run').disabled);
+  assert.equal(await page.locator('#predict-hint').isVisible(),false,'예측을 채우면 안내 문구가 숨음');
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+  await page.setViewportSize({width:1280,height:900});
  }
+ // (#135) 1단원 ex-reuse: 웹 실행 → 예측과 실제 출력 비교 노출, 새로고침에도 유지.
+ await open('/units/unit01/ex-reuse.html');
+ await page.fill('#predict-input','8과 8이 출력된다');
+ await page.click('#run');
+ await page.waitForFunction(()=>!document.querySelector('#predict-result').hidden);
+ assert.match(await page.locator('#predict-shown').textContent(),/8과 8이 출력된다/);
+ assert.match(await page.locator('#predict-actual').textContent(),/8/);
+ // 이 헤드리스 크롬(chrome-headless-shell)은 서버가 낸 정적 radio가 마우스 클릭으로는
+ // checked를 못 바꾸는 것으로 보인다(동적으로 만든 radio·기존 문항 radio는 정상 동작 —
+ // #90 문항 radio로 확인). 실제 앱 로직(변경 이벤트 처리)은 그대로 실행하도록 change를
+ // 직접 디스패치해 검사한다.
+ await page.evaluate(()=>{const el=document.querySelector('#predict-match-diff');el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}));});
+ assert.equal(await page.locator('#predict-why-wrap').isVisible(),true,'달랐어요를 고르면 이유 칸이 보임');
+ await page.fill('#predict-why','계산 결과를 헷갈렸다');
+ // 코드 읽기: 핵심 줄 textarea가 최소 1개는 있고, 입력이 새로고침 뒤에도 남는다.
+ const codeReadInputs=page.locator('#code-read-list textarea');
+ assert.ok(await codeReadInputs.count()>=1,'코드 읽기에 핵심 줄 입력칸이 있어야 함');
+ await codeReadInputs.first().fill('필요한 모듈을 불러온다');
+ await page.reload();await page.waitForFunction(()=>window.aipyLearning?.ready);
+ assert.equal(await page.locator('#predict-input').inputValue(),'8과 8이 출력된다','예측이 새로고침에도 남음');
+ assert.equal(await page.locator('#predict-why').inputValue(),'계산 결과를 헷갈렸다','이유가 새로고침에도 남음');
+ assert.equal(await codeReadInputs.first().inputValue(),'필요한 모듈을 불러온다','코드 읽기 답이 새로고침에도 남음');
+ console.log('PASS 실행 전 예측(#run 비활성→활성)·예측 대 실제 비교·코드 읽기 입력이 새로고침에도 유지됨');
+ // PC 문법 확인 예제: 예측 후 "PC에서 실행해 본 결과"를 적으면 비교 블록이 뜬다(실제 웹 실행 출력이 없으므로).
+ await open('/units/unit02/ex-layout-tk.html');
+ await page.fill('#predict-input','창이 하나 뜬다');
+ assert.equal(await page.locator('#predict-pc-report-wrap').isVisible(),true,'PC 문법 확인 예제는 PC 실행 결과 입력칸을 보여줌');
+ await page.fill('#predict-pc-report','실제로 창이 떴다');
+ await page.waitForFunction(()=>!document.querySelector('#predict-result').hidden);
+ console.log('PASS PC 문법 확인 예제는 PC 실행 결과 입력으로 예측을 비교함');
  // (#132) 직접 해 보세요: 항목별 입력칸 + 제출. 새로고침에도 남고, 제출 후 고치면 '수정됨'.
  await open('/units/unit01/overview.html');
  const taskBox=page.locator('.task-box[data-task-key="u1-overview"]');

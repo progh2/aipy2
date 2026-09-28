@@ -15,7 +15,7 @@ import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, filterStuck,
  questionStats, classQuestionTotals, classCsv, cardAccuracyLabel, formatRate,
  heatmapTone, historyItems, answerRows, filterAnswerRows, groupAnswerRowsByUnit,
- unitAnswerTotals, journalRows, UNIT_ROMAN
+ unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
 } from './board-model.js';
 import {renderAnswerUnitGroup, renderJournalUnitGroup} from './answer-view.js';
 
@@ -31,6 +31,7 @@ const node = (tag, cls, text) => {
 let classIdValue = '';
 let titles = {};
 let tasks = {};
+let exampleIndex = {};
 let topics = [];
 let questions = [];
 let progressUnsub = null;
@@ -546,7 +547,7 @@ function renderAnswerSection(card) {
    wrap.append(renderAnswerUnitGroup(unit, unitRows, totalInfo, {open: groups.length <= 1, titles}));
   }
  }
- const journals = journalRows(state, titles, tasks);
+ const journals = journalRows(state, titles, tasks, exampleIndex);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
@@ -790,6 +791,7 @@ async function startTeacherBoard() {
   const catalog = await (await fetch(`${prefix}data/catalog.json`)).json();
   titles = titlesFromCatalog(catalog);
   tasks = tasksFromCatalog(catalog);
+  exampleIndex = exampleIndexFromCatalog(catalog);
   topics = topicListFromCatalog(catalog);
   questions = Array.isArray(catalog.questions) ? catalog.questions : [];
  } catch (error) {

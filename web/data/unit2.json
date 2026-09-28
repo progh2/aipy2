@@ -352,6 +352,38 @@
           "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
           "caption": "같은 인사 앱을 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
         }
+      ],
+      "keyLines": [
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "name = entry.get().strip() or \"여러분\""
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "result.config(text=f\"{name}님, 안녕하세요!\")"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "result.config(text=\"이름을 입력하세요.\")"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "root = tk.Tk()"
+        },
+        {
+          "ref": "14",
+          "file": "",
+          "line": 14,
+          "code": "tk.Label(root, text=\"나의 첫 GUI\", font=(\"sans-serif\", 20)).pack(pady=16)"
+        }
       ]
     },
     "widgets-tk": {
@@ -403,7 +435,39 @@
         "history": "위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품입니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "root = tk.Tk()"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "frame = tk.Frame(root, padx=16, pady=16)"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "frame.pack(fill=\"both\", expand=True)"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "tk.Label(frame, text=\"Label: 설명을 표시합니다\").pack()"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "tk.Entry(frame).pack(fill=\"x\")"
+        }
+      ]
     },
     "layout-tk": {
       "id": "layout-tk",
@@ -444,7 +508,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "root = tk.Tk()"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "controls = tk.Frame(root)"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "controls.pack(fill=\"x\", padx=12, pady=8)"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "tk.Button(controls, text=\"넓게\", command=lambda: root.geometry(\"560x590\")).pack(side=\"left\")"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "tk.Button(controls, text=\"좁게\", command=lambda: root.geometry(\"340x590\")).pack(side=\"left\")"
+        }
+      ]
     },
     "memo-tk": {
       "id": "memo-tk",
@@ -485,7 +581,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "file_path = filedialog.askopenfilename()"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "content = file.read()"
+        },
+        {
+          "ref": "13",
+          "file": "",
+          "line": 13,
+          "code": "file_path = filedialog.asksaveasfilename(defaultextension=\".txt\")"
+        },
+        {
+          "ref": "18",
+          "file": "",
+          "line": 18,
+          "code": "window = tk.Tk()"
+        },
+        {
+          "ref": "21",
+          "file": "",
+          "line": 21,
+          "code": "text_area = tk.Text(window, wrap=\"word\")"
+        }
+      ]
     }
   },
   "questions": [

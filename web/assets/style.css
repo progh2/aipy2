@@ -218,5 +218,22 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
 .run-result-imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .run-result-imgs figure{margin:0;padding:10px;background:#f8faff;border:1px solid var(--line);border-radius:10px}
 .run-result-imgs img{display:block;width:100%;height:auto;max-height:320px;object-fit:contain;background:#fff;border-radius:6px}
+/* #135 실행 전 예측·코드 읽기 */
+.predict-box{background:#fff8e6;border:2px solid #f0d78c;border-radius:12px;padding:16px 18px;margin:14px 0}
+.predict-box label{display:block;font-weight:600;margin-bottom:8px}
+.predict-hint{margin:8px 0 0;color:#8a6300}
+.predict-hint[hidden]{display:none}
+.predict-result{background:#f1f6ff;border:2px solid #b9cdf0;border-radius:12px;padding:16px 18px;margin:14px 0}
+.predict-result[hidden]{display:none}
+.predict-match{display:flex;gap:18px;margin:6px 0 10px}
+#predict-why-wrap[hidden]{display:none}
+.code-read{margin:24px 0}
+.code-read h3{margin-bottom:4px}
+.code-read-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0}
+.code-read-ref{margin:0 0 6px;font-size:12px;color:var(--muted)}
+.code-read-code{background:#111633;color:#e5ecf6;padding:10px 12px;border-radius:7px;font:13px/1.6 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 8px}
+.code-read-label{display:block;font-weight:600;margin-bottom:6px}
+.code-read-note{color:#8a6300;margin:6px 0 0}
+.code-read-note[hidden]{display:none}
 .tutorial-steps .step-result{margin-top:10px}
 .tutorial-steps .step-result img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}

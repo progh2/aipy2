@@ -875,7 +875,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from sklearn.tree import DecisionTreeClassifier"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "X_study = np.array([[1], [3]])   # 공부 시간"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "y_pass = np.array([0, 1])        # 합격 여부"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "model = DecisionTreeClassifier()"
+        },
+        {
+          "ref": "13",
+          "file": "",
+          "line": 13,
+          "code": "prediction = model.predict(np.array([[2]]))"
+        }
+      ]
     },
     "ml-numpy-exam": {
       "id": "ml-numpy-exam",
@@ -896,7 +928,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import numpy as np"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "my_array = np.array([10, 20, 30])"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "array_part1 = np.array([1, 2])"
+        },
+        {
+          "ref": "10",
+          "file": "",
+          "line": 10,
+          "code": "array_part2 = np.array([3, 4])"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "combined_array = np.concatenate((array_part1, array_part2))"
+        }
+      ]
     },
     "ml-pandas-exam": {
       "id": "ml-pandas-exam",
@@ -917,7 +981,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "data = {'이름': ['철수', '영희'], '점수': [85, 92]}"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "my_df = pd.DataFrame(data)"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(\"학생 점수표:\")"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "print(my_df)"
+        }
+      ]
     },
     "ml-matplot-exam": {
       "id": "ml-matplot-exam",
@@ -938,7 +1034,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import matplotlib"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "import matplotlib.pyplot as plt"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "import seaborn as sns"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "data_for_plot = pd.DataFrame({'fruits': ['apple', 'banana', 'apple']})"
+        }
+      ]
     },
     "ml-read-data": {
       "id": "ml-read-data",
@@ -959,7 +1087,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "with open('data.csv', 'w', encoding='utf-8') as f:"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "f.write('Name, Score\\nAlice, 90\\nBob, 85\\n')"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "df_csv = pd.read_csv('data.csv')"
+        },
+        {
+          "ref": "13",
+          "file": "",
+          "line": 13,
+          "code": "df_excel = pd.read_excel('data.xlsx')"
+        }
+      ]
     },
     "ml-head-describe-info": {
       "id": "ml-head-describe-info",
@@ -980,7 +1140,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "data = {'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank'],"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "df = pd.DataFrame(data)"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "print(\"--- 데이터프레임 상위 3행 (df.head(3)) ---\")"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "print(df.head(3))"
+        }
+      ]
     },
     "ml-missing-values": {
       "id": "ml-missing-values",
@@ -1001,7 +1193,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "df_missing = pd.DataFrame(data_missing)"
+        },
+        {
+          "ref": "12",
+          "file": "",
+          "line": 12,
+          "code": "df_dropna_row = df_missing.dropna(axis=0)"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "df_fill_zero = df_missing.fillna(0)"
+        },
+        {
+          "ref": "22",
+          "file": "",
+          "line": 22,
+          "code": "df_fill_unknown_name = df_missing.fillna({'Name': 'Unknown'})"
+        },
+        {
+          "ref": "28",
+          "file": "",
+          "line": 28,
+          "code": "df_fill_mean = df_missing.fillna({'Score': score_mean})"
+        }
+      ]
     },
     "ml-normalization": {
       "id": "ml-normalization",
@@ -1022,7 +1246,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "from sklearn.preprocessing import MinMaxScaler"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "df_norm = pd.DataFrame(data_norm)"
+        },
+        {
+          "ref": "10",
+          "file": "",
+          "line": 10,
+          "code": "scaler_minmax = MinMaxScaler()"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "df_normalized = pd.DataFrame(scaler_minmax.fit_transform(df_norm), columns=df_norm.columns)"
+        }
+      ]
     },
     "ml-standardization": {
       "id": "ml-standardization",
@@ -1043,7 +1299,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "10",
+          "file": "",
+          "line": 10,
+          "code": "df = pd.DataFrame(data)"
+        },
+        {
+          "ref": "12",
+          "file": "",
+          "line": 12,
+          "code": "scaler_standard = StandardScaler()"
+        },
+        {
+          "ref": "13",
+          "file": "",
+          "line": 13,
+          "code": "df_standardized = scaler_standard.fit_transform(df) # 데이터에 표준화 적용"
+        },
+        {
+          "ref": "14",
+          "file": "",
+          "line": 14,
+          "code": "df_standardized = pd.DataFrame(df_standardized, columns=df.columns)"
+        }
+      ]
     },
     "ml-one-hot-encoding": {
       "id": "ml-one-hot-encoding",
@@ -1064,7 +1352,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "data_onehot = {'도시': ['서울', '부산', '서울', '제주', '부산'],"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "df_onehot = pd.DataFrame(data_onehot)"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "print(\" - 원본 데이터\")"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "df_encoded = pd.get_dummies(df_onehot, columns=['도시', '직업'], drop_first=True, dtype=int)"
+        }
+      ]
     },
     "ml-train-test-split": {
       "id": "ml-train-test-split",
@@ -1085,7 +1405,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "from sklearn.model_selection import train_test_split"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "data_split = {'공부 시간': [2, 3, 5, 4, 6],"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "df = pd.DataFrame(data_split)"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "X = df[['공부 시간', '수면 시간']]"
+        }
+      ]
     },
     "ml-knn-exam": {
       "id": "ml-knn-exam",
@@ -1106,7 +1458,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "iris = load_iris()"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "X = pd.DataFrame(iris.data, columns=iris.feature_names)"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "y = pd.Series(iris.target)"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "knn_model = KNeighborsClassifier(n_neighbors=5)"
+        },
+        {
+          "ref": "20",
+          "file": "",
+          "line": 20,
+          "code": "y_pred = knn_model.predict(X_test)"
+        }
+      ]
     },
     "ml-linear-regression": {
       "id": "ml-linear-regression",
@@ -1127,7 +1511,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "diabetes = load_diabetes()"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "X = pd.DataFrame(diabetes.data, columns=diabetes.feature_names)    # 특징"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "y = pd.Series(diabetes.target)              # 질병 진행도: 연속적인 숫자 값"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "linear_model = LinearRegression()"
+        },
+        {
+          "ref": "22",
+          "file": "",
+          "line": 22,
+          "code": "y_pred = linear_model.predict(X_test)"
+        }
+      ]
     },
     "ml-regression-metrics": {
       "id": "ml-regression-metrics",
@@ -1148,7 +1564,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "housing = fetch_california_housing()"
+        },
+        {
+          "ref": "10",
+          "file": "",
+          "line": 10,
+          "code": "X = pd.DataFrame(housing.data, columns=housing.feature_names)"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "y = pd.Series(housing.target)   # 주택 가격 (연속형)"
+        },
+        {
+          "ref": "14",
+          "file": "",
+          "line": 14,
+          "code": "model = LinearRegression()"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "y_pred = model.predict(X_test)"
+        }
+      ]
     },
     "ml-clustering": {
       "id": "ml-clustering",
@@ -1169,7 +1617,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import pandas as pd"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "from sklearn.datasets import make_blobs         # 가상 데이터 생성"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "from sklearn.cluster import KMeans              # K-평균 군집화 모델"
+        },
+        {
+          "ref": "14",
+          "file": "",
+          "line": 14,
+          "code": "kmeans = KMeans(n_clusters=4, init='k-means++', max_iter=300, random_state=42,"
+        },
+        {
+          "ref": "25",
+          "file": "",
+          "line": 25,
+          "code": "scatter = plt.scatter(X[:, 0], X[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.8)"
+        }
+      ]
     },
     "ml-performance-metrics": {
       "id": "ml-performance-metrics",
@@ -1190,7 +1670,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "cancer = load_breast_cancer()"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "X = pd.DataFrame(cancer.data, columns=cancer.feature_names)"
+        },
+        {
+          "ref": "10",
+          "file": "",
+          "line": 10,
+          "code": "y = pd.Series(cancer.target)"
+        },
+        {
+          "ref": "15",
+          "file": "",
+          "line": 15,
+          "code": "model = LogisticRegression(max_iter=5000, random_state=42, solver='liblinear')"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "y_pred = model.predict(X_test)"
+        }
+      ]
     },
     "ml-train-test-split2": {
       "id": "ml-train-test-split2",
@@ -1211,7 +1723,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "diabetes = load_diabetes()"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "X = pd.DataFrame(diabetes.data, columns=diabetes.feature_names) # 특징 데이터"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "y = pd.Series(diabetes.target)   # 목표 변수 데이터"
+        },
+        {
+          "ref": "16",
+          "file": "",
+          "line": 16,
+          "code": "r2_train = linear_model.score(X_train, y_train) # 훈련 데이터 R²"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "r2_test = linear_model.score(X_test, y_test)   # 테스트 데이터 R²"
+        }
+      ]
     },
     "ml-cross-val-score": {
       "id": "ml-cross-val-score",
@@ -1232,7 +1776,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "diabetes = load_diabetes()"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "X = pd.DataFrame(diabetes.data, columns=diabetes.feature_names) # 특징 데이터"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "y = pd.Series(diabetes.target)                        # 목표 변수 데이터"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "linear_model = LinearRegression()                     # 선형 회귀 모델 객체 생성"
+        },
+        {
+          "ref": "12",
+          "file": "",
+          "line": 12,
+          "code": "scores = cross_val_score(linear_model, X, y, scoring='r2', cv=5)"
+        }
+      ]
     },
     "ml-grid-search-cv": {
       "id": "ml-grid-search-cv",
@@ -1253,7 +1829,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from sklearn.datasets import load_iris               # 간단한 분류 데이터 세트"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "from sklearn.neighbors import KNeighborsClassifier"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "iris = load_iris()"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "knn = KNeighborsClassifier()"
+        },
+        {
+          "ref": "12",
+          "file": "",
+          "line": 12,
+          "code": "grid_search = GridSearchCV(knn, param_grid, cv=5, scoring='accuracy')"
+        }
+      ]
     },
     "ml-learning-curve": {
       "id": "ml-learning-curve",
@@ -1274,7 +1882,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "cancer = load_breast_cancer()"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "model = LogisticRegression(max_iter=5000, random_state=42, solver='liblinear')"
+        },
+        {
+          "ref": "16",
+          "file": "",
+          "line": 16,
+          "code": "train_scores_mean = np.mean(train_scores, axis=1)"
+        },
+        {
+          "ref": "17",
+          "file": "",
+          "line": 17,
+          "code": "train_scores_std = np.std(train_scores, axis=1)"
+        },
+        {
+          "ref": "18",
+          "file": "",
+          "line": 18,
+          "code": "test_scores_mean = np.mean(test_scores, axis=1)"
+        }
+      ]
     }
   },
   "questions": [
