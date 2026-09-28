@@ -268,9 +268,18 @@ let filtered=[];
 function norm(s){return String(s??'').trim().replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/\s+/g,'').replace(/'/g,'"');}
 function answerRecord(q){return state.answers[q.id]||{};}
 function storeAnswer(q,patch){state.answers[q.id]={...answerRecord(q),...patch};save(patch.status!==undefined||patch.attempts!==undefined?'answer':'draft');updateQuestionSummary();renderRailTodo();}
+// 문항 지문을 질문 문장과 코드로 나눠 보여 준다 — 코드가 큰 제목 글씨로 섞여 무엇을 묻는지 안 보였다.
+// 문자열·주석을 뺀 나머지에 한글이 없고 비어 있지 않은 줄을 코드로 본다(빈 줄은 앞 묶음을 따른다).
+function isCodeLine(line){const bare=line.replace(/(["'])(?:\\.|(?!\1).)*\1/g,'').replace(/#.*$/,'');return bare.trim()!==''&&!/[가-힣]/.test(bare);}
+function promptNode(prompt){
+ const wrap=node('div','question-prompt'),lines=String(prompt||'').split('\n');let buf=[],code=null;
+ const flush=()=>{while(buf.length&&!buf[buf.length-1].trim())buf.pop();if(!buf.length)return;wrap.append(code?node('pre','question-code',buf.join('\n')):node('h3','',buf.join('\n')));buf=[];};
+ for(const line of lines){const c=line.trim()===''?code:isCodeLine(line);if(c!==code&&buf.length)flush();code=c;buf.push(line);}
+ flush();return wrap;
+}
 function questionCard(q){
  const card=node('article','question');card.id=q.id;
- card.append(node('div','question-meta',`${q.id} · ${q.kind} · ${q.ref}`),node('h3','',q.prompt));
+ card.append(node('div','question-meta',`${q.id} · ${q.kind} · ${q.ref}`),promptNode(q.prompt));
  const record=answerRecord(q);let input,order,answer=()=>'';
  if(q.kind==='선택'){
   const options=node('div','options');for(const [i,text]of q.options.entries()){const label=node('label'),radio=node('input');radio.type='radio';radio.name=q.id;radio.value=text;radio.checked=record.value===text;radio.addEventListener('change',()=>storeAnswer(q,{value:text}));label.append(radio,node('span','',text));options.append(label);}card.append(options);answer=()=>card.querySelector('input:checked')?.value||'';

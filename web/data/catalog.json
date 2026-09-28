@@ -1761,7 +1761,7 @@
       "unit": 1,
       "topic": "math",
       "kind": "예측",
-      "prompt": "import math\nprint(math.ceil(-3.5))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nimport math\nprint(math.ceil(-3.5))",
       "answer": "-3"
     },
     {
@@ -1769,7 +1769,7 @@
       "unit": 1,
       "topic": "math",
       "kind": "예측",
-      "prompt": "import math\nprint(math.floor(-3.5))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nimport math\nprint(math.floor(-3.5))",
       "answer": "-4"
     },
     {
@@ -1777,7 +1777,7 @@
       "unit": 1,
       "topic": "math",
       "kind": "예측",
-      "prompt": "import math\nprint(math.factorial(0))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nimport math\nprint(math.factorial(0))",
       "answer": "1"
     },
     {
@@ -1785,7 +1785,7 @@
       "unit": 1,
       "topic": "math",
       "kind": "예측",
-      "prompt": "import math\nprint(math.gcd(28,70))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nimport math\nprint(math.gcd(28,70))",
       "answer": "14"
     },
     {
@@ -1793,7 +1793,7 @@
       "unit": 1,
       "topic": "math",
       "kind": "예측",
-      "prompt": "import math\nprint(math.pow(2,10))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nimport math\nprint(math.pow(2,10))",
       "answer": "1024.0"
     },
     {
@@ -1801,7 +1801,7 @@
       "unit": 1,
       "topic": "random",
       "kind": "예측",
-      "prompt": "import random\na=[1,2,3]\nprint(random.shuffle(a))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nimport random\na=[1,2,3]\nprint(random.shuffle(a))",
       "answer": "None"
     },
     {
@@ -1809,7 +1809,7 @@
       "unit": 1,
       "topic": "datetime",
       "kind": "예측",
-      "prompt": "from datetime import date\nprint(date(2026,12,25).weekday())",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\nfrom datetime import date\nprint(date(2026,12,25).weekday())",
       "answer": "4"
     },
     {
@@ -2123,7 +2123,7 @@
       "unit": 2,
       "topic": "events",
       "kind": "예측",
-      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\nprint(len(calls))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\ncalls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\nprint(len(calls))",
       "answer": "0"
     },
     {
@@ -2131,7 +2131,7 @@
       "unit": 2,
       "topic": "events",
       "kind": "예측",
-      "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))",
+      "prompt": "다음 코드를 실행했을 때 출력되는 값을 쓰세요.\ncalls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))",
       "answer": "2"
     },
     {
@@ -2164,12 +2164,19 @@
       "prompt": "설정 화면에 다음 요소가 필요하다. 각 요소에 알맞은 tkinter 위젯 이름을 쓰세요.\n① 자동 저장 여부처럼 여러 옵션을 각각 독립적으로 켜고 끄는 요소\n② 글꼴 크기처럼 여러 선택지 중 하나만 고르게 하는 요소\n③ 최근에 연 파일처럼 여러 항목을 목록으로 나열해 그중 하나를 고르는 요소\n④ 그림이나 도형을 직접 그릴 수 있는 공간"
     },
     {
-      "id": "u2-q117",
+      "id": "u2-q133",
       "unit": 2,
       "topic": "layout",
-      "kind": "예측",
-      "prompt": "import tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"A\").pack()\ntk.Label(root, text=\"B\").pack()\ntk.Label(root, text=\"C\").pack()\nroot.mainloop()",
-      "answer": "A, B, C 순서로 위에서 아래로 쌓인다"
+      "kind": "선택",
+      "prompt": "다음 코드를 실행하면 창에 세 레이블은 어떻게 배치되나요?\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text=\"A\").pack()\ntk.Label(root, text=\"B\").pack()\ntk.Label(root, text=\"C\").pack()\nroot.mainloop()",
+      "options": [
+        "A, B, C가 왼쪽에서 오른쪽으로 나란히 놓인다",
+        "C, B, A 순서로 위에서 아래로 쌓인다",
+        "A, B, C가 위에서 아래로 차례로 쌓인다",
+        "세 레이블이 같은 자리에 겹쳐 C만 보인다",
+        "pack()에 위치를 주지 않아 아무것도 보이지 않는다"
+      ],
+      "answer": "A, B, C가 위에서 아래로 차례로 쌓인다"
     },
     {
       "id": "u2-q118",
@@ -2263,16 +2270,23 @@
       "unit": 2,
       "topic": "events",
       "kind": "예측",
-      "prompt": "handlers = []\ndef add_handler(name):\n    handlers.append(name)\n\nbtn1_command = add_handler\nbtn2_command = add_handler(\"저장\")\n\nprint(handlers)",
+      "prompt": "다음 코드를 실행했을 때 출력 결과를 쓰세요.\nhandlers = []\ndef add_handler(name):\n    handlers.append(name)\n\nbtn1_command = add_handler\nbtn2_command = add_handler(\"저장\")\n\nprint(handlers)",
       "answer": "['저장']"
     },
     {
-      "id": "u2-q132",
+      "id": "u2-q134",
       "unit": 2,
       "topic": "layout",
-      "kind": "예측",
-      "prompt": "import tkinter as tk\nroot = tk.Tk()\nroot.geometry(\"300x200\")\ne = tk.Entry(root)\ne.place(x=50, y=80)\nroot.mainloop()",
-      "answer": "x=50, y=80 위치"
+      "kind": "선택",
+      "prompt": "다음 코드를 실행하면 입력창(Entry)은 어디에 나타나나요?\nimport tkinter as tk\nroot = tk.Tk()\nroot.geometry(\"300x200\")\ne = tk.Entry(root)\ne.place(x=50, y=80)\nroot.mainloop()",
+      "options": [
+        "창의 정가운데",
+        "창 안쪽 왼쪽 위 모서리(0, 0)",
+        "모니터 화면 왼쪽 위에서 (50, 80) 떨어진 곳",
+        "창 안쪽 왼쪽 위 모서리에서 오른쪽으로 50, 아래로 80픽셀 떨어진 곳",
+        "창 가로의 50%, 세로의 80% 지점"
+      ],
+      "answer": "창 안쪽 왼쪽 위 모서리에서 오른쪽으로 50, 아래로 80픽셀 떨어진 곳"
     },
     {
       "id": "u2-q101",

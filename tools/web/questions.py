@@ -38,7 +38,7 @@ for p,a,explanation in [
 ('import math\nprint(math.pow(2,10))','1024.0','math.pow는 실수를 반환합니다.'),
 ('import random\na=[1,2,3]\nprint(random.shuffle(a))','None','shuffle은 제자리 변경 후 None을 반환합니다.'),
 ('from datetime import date\nprint(date(2026,12,25).weekday())','4','2026년 12월 25일은 금요일입니다.')]:
- q(1,'결과 추적','예측',p,a,'손으로 먼저 계산한 뒤 실습창에서 확인하세요.',explanation)
+ q(1,'결과 추적','예측',p if '?' in p else '다음 코드를 실행했을 때 출력되는 값을 쓰세요.\n'+p,a,'손으로 먼저 계산한 뒤 실습창에서 확인하세요.',explanation)
 for p,a,opts,h,e in [
 ('from pkg import *에서 __all__에 없는 이름은 명시적으로 import할 수 없나요?','명시적으로 가져올 수 있습니다.',['항상 금지됩니다.','명시적으로 가져올 수 있습니다.','파일이 삭제됩니다.','폴더 이름이 바뀝니다.','Python이 종료됩니다.'],'별표 임포트의 범위를 정하는 설정입니다.','__all__은 접근 제어 장치가 아닙니다.'),
 ('random.randrange(1,7,2)의 후보는?','1, 3, 5',['1, 2, 3','1, 3, 5','1, 3, 5, 7','2, 4, 6','1, 7'],'range와 같은 범위입니다.','끝 7은 포함하지 않습니다.'),
@@ -98,8 +98,8 @@ q(2,'memo','순서','저장 순서를 배열하세요.',['저장 경로 선택',
 
 written(2,'ui','UI가 사용자 편의성과 어떤 관련이 있는지 설명하세요.','찾기 쉬운 버튼, 읽기 쉬운 글자, 명확한 피드백은 작업 시간과 실수를 줄입니다.','구체적인 화면 요소 하나를 근거로 드세요.','UI 요소와 실제 사용 효과를 연결하세요.','교과서 58쪽 2',qid='u2-q068')
 # -- events: 콜백 참조 vs 호출 예측(코드 예측형 — #131 후속 피드백에서 우수 사례로 지목되어 계열을 늘렸다).
-q(2,'events','예측','calls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\nprint(len(calls))','0','함수를 저장하는 것과 호출하는 것은 다릅니다.','callback()을 호출해야 리스트가 바뀝니다.',qid='u2-q069')
-q(2,'events','예측','calls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))','2','콜백을 두 번 호출했습니다.','GUI 클릭도 연결된 함수를 호출하는 사건입니다.',level='심화',qid='u2-q070')
+q(2,'events','예측','다음 코드를 실행했을 때 출력되는 값을 쓰세요.\ncalls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\nprint(len(calls))','0','함수를 저장하는 것과 호출하는 것은 다릅니다.','callback()을 호출해야 리스트가 바뀝니다.',qid='u2-q069')
+q(2,'events','예측','다음 코드를 실행했을 때 출력되는 값을 쓰세요.\ncalls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))','2','콜백을 두 번 호출했습니다.','GUI 클릭도 연결된 함수를 호출하는 사건입니다.',level='심화',qid='u2-q070')
 
 choice(1,'thirdparty','관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?','Peewee',['Peewee','Pillow','Pygame','Kivy','math'],'교과서의 패키지 목록을 확인하세요.','Peewee는 데이터베이스 모델과 쿼리를 Python 객체로 다루도록 돕습니다.','교과서 33쪽')
 
@@ -110,7 +110,7 @@ choice(1,'thirdparty','관계형 데이터베이스를 객체 형태로 다루�
 # '상황 → 위젯' 매칭 2문항으로 압축한다.
 written(2,'widgets','메모장 화면에 다음 요소가 필요하다. 각 요소에 알맞은 tkinter 위젯 이름을 쓰세요.\n① 설명 문구만 보여 주고 입력은 받지 않는 안내 글자\n② 사용자가 누르면 저장 동작이 실행되는 버튼\n③ 이름처럼 한 줄짜리 값을 입력받는 칸\n④ 메모 내용처럼 여러 줄을 입력·표시하는 칸\n⑤ 여러 위젯을 하나로 묶는 컨테이너','① Label ② Button ③ Entry ④ Text ⑤ Frame','표시용인지 입력용인지, 한 줄인지 여러 줄인지 구분하세요.','컨테이너는 다른 위젯을 그룹으로 묶을 때 씁니다.','교과서 50쪽',qid='u2-q115')
 written(2,'widgets','설정 화면에 다음 요소가 필요하다. 각 요소에 알맞은 tkinter 위젯 이름을 쓰세요.\n① 자동 저장 여부처럼 여러 옵션을 각각 독립적으로 켜고 끄는 요소\n② 글꼴 크기처럼 여러 선택지 중 하나만 고르게 하는 요소\n③ 최근에 연 파일처럼 여러 항목을 목록으로 나열해 그중 하나를 고르는 요소\n④ 그림이나 도형을 직접 그릴 수 있는 공간','① Checkbutton ② Radiobutton ③ Listbox ④ Canvas','체크 박스와 라디오 버튼의 차이는 동시에 여러 개를 고를 수 있는지입니다.','목록에서 고르는 것과 그림을 그리는 것은 서로 다른 위젯입니다.','교과서 50쪽',qid='u2-q116')
-q(2,'layout','예측','import tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text="A").pack()\ntk.Label(root, text="B").pack()\ntk.Label(root, text="C").pack()\nroot.mainloop()','A, B, C 순서로 위에서 아래로 쌓인다','pack()의 기본 방향을 떠올리세요.','생성한 순서와 화면에 쌓이는 순서를 비교하세요.',ref='실행 검증',qid='u2-q117')
+q(2,'layout','선택','다음 코드를 실행하면 창에 세 레이블은 어떻게 배치되나요?\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text="A").pack()\ntk.Label(root, text="B").pack()\ntk.Label(root, text="C").pack()\nroot.mainloop()','A, B, C가 위에서 아래로 차례로 쌓인다','pack()의 기본 방향을 떠올리세요.','pack()은 기본값 side=TOP이라 호출한 순서대로 위에서 아래로 쌓입니다.',options=['A, B, C가 왼쪽에서 오른쪽으로 나란히 놓인다','C, B, A 순서로 위에서 아래로 쌓인다','A, B, C가 위에서 아래로 차례로 쌓인다','세 레이블이 같은 자리에 겹쳐 C만 보인다','pack()에 위치를 주지 않아 아무것도 보이지 않는다'],ref='실행 검증',qid='u2-q133')
 written(2,'layout','다음 코드에서 위젯 b를 먼저 만들었지만 실행 화면에서는 위젯 a가 왼쪽(B보다 작은 x좌표)에 나타난다. 그 이유를 한 문장으로 설명하세요.\nimport tkinter as tk\nroot = tk.Tk()\nb = tk.Label(root, text="B"); b.grid(row=0, column=1)\na = tk.Label(root, text="A"); a.grid(row=0, column=0)\nroot.mainloop()','grid()는 위젯을 만든 순서가 아니라 지정한 row·column 값으로 위치를 정하기 때문이다.','grid는 행과 열 번호로 위치를 지정합니다.','코드가 실행된 순서와 화면에 배치되는 규칙은 다릅니다.',level='심화',qid='u2-q118')
 written(2,'widgets','다음 코드를 실행하면 버튼이 화면에 보이지 않는다. 빠진 한 줄을 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text="Go")\nroot.mainloop()','btn.pack() (또는 btn.grid()·btn.place())','위젯은 생성만으로는 화면에 나타나지 않습니다.','배치 관리자 중 하나를 호출해야 합니다.','실행 검증',level='심화',qid='u2-q119')
 written(2,'events','다음 코드를 실행하면 버튼을 한 번도 클릭하지 않았는데 print(len(calls))가 1을 출력한다. 그 이유를 설명하세요.\ncalls = []\ndef hello():\n    calls.append("run")\n\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text="클릭", command=hello())\nprint(len(calls))','command=hello()는 괄호가 있어 버튼을 만드는 시점에 hello가 즉시 호출되고, 그 반환값(None)이 command에 전달되기 때문이다.','괄호가 있으면 지금 당장 실행하라는 뜻입니다.','클릭 이벤트가 아니라 버튼 생성 줄 자체가 hello()를 호출합니다.','실행 검증',level='심화',qid='u2-q120')
@@ -122,8 +122,8 @@ blank(2,'memo','다음은 교과서 53쪽 save_file() 함수이다. 빈칸 ①�
 blank(2,'memo','다음은 교과서 52쪽 open_file() 함수이다. 빈칸 ①에 들어갈 코드를 쓰세요.\ndef open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path:\n        with open(file_path, \'r\', encoding=\'utf-8\') as file:\n            text = file.read()\n            ①\n            text_area.insert(tk.END, text)','text_area.delete(\'1.0\', tk.END)','새 내용을 넣기 전에 기존 내용부터 지워야 합니다.','insert만 하면 이전 텍스트 뒤에 새 텍스트가 덧붙습니다.','교과서 52쪽',level='심화',qid='u2-q128')
 written(2,'memo','교과서의 나만의 메모장 코드에서 open_file()과 save_file()은 모두 사용자의 "취소"를 어떻게 공통으로 처리하는지 설명하세요.\ndef open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path: ...\ndef save_file():\n    file_path = filedialog.asksaveasfilename(...)\n    if file_path: ...','두 함수 모두 대화 상자의 반환값이 빈 문자열이면 if file_path가 거짓이 되어 open() 이하를 실행하지 않고 그대로 끝난다. 그 덕분에 취소했을 때 기존 텍스트가 지워지거나 잘못된 경로에 저장되는 문제를 막는다.','두 함수의 두 번째 줄 조건문 형태가 똑같습니다.','대화 상자가 취소되면 항상 빈 문자열을 돌려줍니다.','교과서 52~53쪽',level='심화',qid='u2-q129')
 choice(2,'events','다음처럼 버튼 클릭 이벤트 처리 함수 안에서 time.sleep(5)를 실행하면 어떤 문제가 생기는가?\ndef on_click():\n    time.sleep(5)\n    label.config(text="완료")\n\nbtn = tk.Button(root, text="실행", command=on_click)','5초 동안 다른 버튼 클릭이나 창 이동 등 화면 반응이 멈춘다.',['5초 동안 다른 버튼 클릭이나 창 이동 등 화면 반응이 멈춘다.','sleep이 실행되는 동안 새 스레드가 자동으로 생겨 화면은 그대로 반응한다.','sleep(5)는 5밀리초만 멈추므로 체감상 문제가 없다.','label.config가 먼저 실행되고 그 다음에 5초가 지나간다.','이벤트 루프가 알아서 sleep을 건너뛴다.'],'tkinter의 mainloop()는 하나의 스레드에서 이벤트를 순서대로 처리합니다.','sleep은 그 스레드 전체를 멈추게 해 다른 이벤트도 처리하지 못합니다.','보강',level='심화',qid='u2-q130')
-q(2,'events','예측','handlers = []\ndef add_handler(name):\n    handlers.append(name)\n\nbtn1_command = add_handler\nbtn2_command = add_handler("저장")\n\nprint(handlers)','[\'저장\']','괄호가 있으면 그 자리에서 바로 실행됩니다.','btn1_command은 함수를 참조만 했고, btn2_command는 호출까지 했습니다.',level='심화',qid='u2-q131')
-q(2,'layout','예측','import tkinter as tk\nroot = tk.Tk()\nroot.geometry("300x200")\ne = tk.Entry(root)\ne.place(x=50, y=80)\nroot.mainloop()','x=50, y=80 위치','place()는 좌표를 직접 지정합니다.','창의 크기(300x200)와 상관없이 지정한 좌표에 그대로 나타납니다.',ref='실행 검증',qid='u2-q132')
+q(2,'events','예측','다음 코드를 실행했을 때 출력 결과를 쓰세요.\nhandlers = []\ndef add_handler(name):\n    handlers.append(name)\n\nbtn1_command = add_handler\nbtn2_command = add_handler("저장")\n\nprint(handlers)','[\'저장\']','괄호가 있으면 그 자리에서 바로 실행됩니다.','btn1_command은 함수를 참조만 했고, btn2_command는 호출까지 했습니다.',level='심화',qid='u2-q131')
+q(2,'layout','선택','다음 코드를 실행하면 입력창(Entry)은 어디에 나타나나요?\nimport tkinter as tk\nroot = tk.Tk()\nroot.geometry("300x200")\ne = tk.Entry(root)\ne.place(x=50, y=80)\nroot.mainloop()','창 안쪽 왼쪽 위 모서리에서 오른쪽으로 50, 아래로 80픽셀 떨어진 곳','place()가 받는 x, y의 기준점을 떠올리세요.','place(x, y)는 부모 창 안의 픽셀 좌표를 직접 지정하므로 창 크기와 상관없이 (50, 80)에 놓입니다.',options=['창의 정가운데','창 안쪽 왼쪽 위 모서리(0, 0)','모니터 화면 왼쪽 위에서 (50, 80) 떨어진 곳','창 안쪽 왼쪽 위 모서리에서 오른쪽으로 50, 아래로 80픽셀 떨어진 곳','창 가로의 50%, 세로의 80% 지점'],level='심화',ref='실행 검증',qid='u2-q134')
 
 # -- 신규(#131): 교과서 확인 학습(48·57쪽)·종합 평가(58~59쪽) 원문 그대로 +
 # 라이브러리 선택 서술 재작성(PySide6 언급 삭제).
