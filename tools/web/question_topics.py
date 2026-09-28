@@ -53,35 +53,10 @@ UNIT1 = {
     'u1-q059': 'os-sys',      # sys.argv 코딩
 }
 
-# unit 2 — '기본 코드'/'오류 찾기'/'응용 판단' 분류형 라벨.
-UNIT2 = {
-    'u2-q025': 'widgets',  # tk.Tk() 기본 창
-    'u2-q026': 'widgets',  # Canvas
-    'u2-q027': 'layout',   # pack
-    'u2-q028': 'layout',   # grid
-    'u2-q029': 'layout',   # place
-    'u2-q030': 'events',   # command=greet
-    'u2-q031': 'events',   # clicked.connect(greet)
-    'u2-q032': 'events',   # root.mainloop()
-    'u2-q033': 'events',   # app.exec()
-    'u2-q034': 'memo',     # Text 시작 위치 "1.0"
-    'u2-q035': 'memo',     # Text 끝 위치 end-1c
-    'u2-q036': 'memo',     # toPlainText()
-    'u2-q037': 'events',   # command=hello() 즉시 호출 오류
-    'u2-q038': 'events',   # connect(hello()) 오류
-    'u2-q039': 'memo',     # editor.text() → toPlainText()
-    'u2-q040': 'widgets',  # label.text= → setText()
-    'u2-q041': 'memo',     # QFileDialog path, _
-    'u2-q042': 'memo',     # Text.delete("1.0", tk.END)
-    'u2-q043': 'widgets',  # entry.get()
-    'u2-q044': 'widgets',  # entry.text()
-    'u2-q049': 'layout',   # 한 부모에서 pack+grid 혼용
-    'u2-q050': 'memo',     # 파일 대화 상자 취소
-    'u2-q051': 'events',   # 콜백에서 time.sleep
-    'u2-q052': 'pyside',   # Designer 생성 파일 재생성
-    'u2-q053': 'ui',       # 웹 GUI 체험 화면의 의미
-    'u2-q054': 'memo',     # setCentralWidget(editor)
-}
+# unit 2 — #131 재편 이후 questions.py가 모든 문항에 최종 소단원을 직접
+# 전달하므로(topic 인자 = lesson id) 이 표는 더 필요하지 않다. 삭제된 옛
+# 항목(pyside 세부·중복 문항 등)의 override도 함께 제거했다.
+UNIT2 = {}
 
 # unit 3 — 자유 한글 라벨('AI 관계'·'학습 방식'·'pandas' 등)을 페이지 인용과
 # 소단원 본문 내용을 함께 확인해 재배정한다. 128~131쪽은 여러 개념을 섞은

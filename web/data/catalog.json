@@ -2203,39 +2203,9 @@
       "prompt": "문자열 실행 인자 두 개의 합을 반환하세요."
     },
     {
-      "id": "u2-q001",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "선택",
-      "prompt": "사용자 인터페이스 설명 중 틀린 것은?",
-      "options": [
-        "UI에는 버튼과 색상이 포함됩니다.",
-        "CLI는 그래픽 버튼으로만 조작합니다.",
-        "GUI는 메뉴를 클릭합니다.",
-        "NUI는 손짓을 사용합니다.",
-        "UI는 상호 작용의 접점입니다."
-      ],
-      "answer": "CLI는 그래픽 버튼으로만 조작합니다."
-    },
-    {
-      "id": "u2-q002",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "선택",
-      "prompt": "아이콘을 클릭하여 그림판을 열었습니다. 유형은?",
-      "options": [
-        "CLI",
-        "GUI",
-        "NUI",
-        "API",
-        "TUI"
-      ],
-      "answer": "GUI"
-    },
-    {
       "id": "u2-q003",
       "unit": 2,
-      "topic": "ui",
+      "topic": "libraries",
       "kind": "선택",
       "prompt": "운영체제 고유 위젯을 활용하는 라이브러리는?",
       "options": [
@@ -2248,24 +2218,9 @@
       "answer": "wxPython"
     },
     {
-      "id": "u2-q004",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "선택",
-      "prompt": "Qt의 공식 Python 바인딩은?",
-      "options": [
-        "Flask",
-        "NumPy",
-        "PySide6",
-        "Pillow",
-        "Scrapy"
-      ],
-      "answer": "PySide6"
-    },
-    {
       "id": "u2-q005",
       "unit": 2,
-      "topic": "ui",
+      "topic": "libraries",
       "kind": "선택",
       "prompt": "IDLE 구현에 사용된 GUI 라이브러리는?",
       "options": [
@@ -2278,24 +2233,9 @@
       "answer": "tkinter"
     },
     {
-      "id": "u2-q006",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "선택",
-      "prompt": "배치 관리자가 아닌 것은?",
-      "options": [
-        "pack()",
-        "grid()",
-        "place()",
-        "center()",
-        "QGridLayout"
-      ],
-      "answer": "center()"
-    },
-    {
       "id": "u2-q007",
       "unit": 2,
-      "topic": "ui",
+      "topic": "events",
       "kind": "선택",
       "prompt": "버튼 command=say_hello의 실행 시점은?",
       "options": [
@@ -2308,35 +2248,12 @@
       "answer": "버튼을 클릭할 때"
     },
     {
-      "id": "u2-q008",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "선택",
-      "prompt": "UI의 정의에 가장 가까운 것은?",
-      "options": [
-        "DB 테이블 구조",
-        "운영체제 설치 절차",
-        "내부 계산식만",
-        "사용자와 시스템이 상호 작용하는 접점",
-        "CPU 명령 집합"
-      ],
-      "answer": "사용자와 시스템이 상호 작용하는 접점"
-    },
-    {
       "id": "u2-q009",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter에서 설명 글자 표시에 사용하는 위젯 이름은?",
       "answer": "Label"
-    },
-    {
-      "id": "u2-q010",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Label의 설명 글자 표시 역할을 Qt Widgets로 옮기면?",
-      "answer": "QLabel"
     },
     {
       "id": "u2-q011",
@@ -2347,28 +2264,12 @@
       "answer": "Button"
     },
     {
-      "id": "u2-q012",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Button의 클릭 명령 역할을 Qt Widgets로 옮기면?",
-      "answer": "QPushButton"
-    },
-    {
       "id": "u2-q013",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter에서 한 줄 입력에 사용하는 위젯 이름은?",
       "answer": "Entry"
-    },
-    {
-      "id": "u2-q014",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Entry의 한 줄 입력 역할을 Qt Widgets로 옮기면?",
-      "answer": "QLineEdit"
     },
     {
       "id": "u2-q015",
@@ -2379,28 +2280,12 @@
       "answer": "Text"
     },
     {
-      "id": "u2-q016",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Text의 여러 줄 텍스트 역할을 Qt Widgets로 옮기면?",
-      "answer": "QPlainTextEdit"
-    },
-    {
       "id": "u2-q017",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter에서 독립 선택에 사용하는 위젯 이름은?",
       "answer": "Checkbutton"
-    },
-    {
-      "id": "u2-q018",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Checkbutton의 독립 선택 역할을 Qt Widgets로 옮기면?",
-      "answer": "QCheckBox"
     },
     {
       "id": "u2-q019",
@@ -2411,28 +2296,12 @@
       "answer": "Radiobutton"
     },
     {
-      "id": "u2-q020",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Radiobutton의 그룹 중 하나 선택 역할을 Qt Widgets로 옮기면?",
-      "answer": "QRadioButton"
-    },
-    {
       "id": "u2-q021",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter에서 항목 목록에 사용하는 위젯 이름은?",
       "answer": "Listbox"
-    },
-    {
-      "id": "u2-q022",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Listbox의 항목 목록 역할을 Qt Widgets로 옮기면?",
-      "answer": "QListWidget"
     },
     {
       "id": "u2-q023",
@@ -2443,36 +2312,12 @@
       "answer": "Frame"
     },
     {
-      "id": "u2-q024",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Frame의 컨테이너 역할을 Qt Widgets로 옮기면?",
-      "answer": "QWidget"
-    },
-    {
-      "id": "u2-q025",
-      "unit": 2,
-      "topic": "widgets",
-      "kind": "빈칸",
-      "prompt": "tkinter 기본 창을 만드는 호출은?",
-      "answer": "tk.Tk()"
-    },
-    {
       "id": "u2-q026",
       "unit": 2,
       "topic": "widgets",
       "kind": "빈칸",
       "prompt": "tkinter에서 그림과 도형을 그릴 위젯 이름은?",
       "answer": "Canvas"
-    },
-    {
-      "id": "u2-q027",
-      "unit": 2,
-      "topic": "layout",
-      "kind": "빈칸",
-      "prompt": "라벨을 순서대로 배치하려면 label.____()의 빈칸은?",
-      "answer": "pack"
     },
     {
       "id": "u2-q028",
@@ -2499,28 +2344,12 @@
       "answer": "greet"
     },
     {
-      "id": "u2-q031",
-      "unit": 2,
-      "topic": "events",
-      "kind": "빈칸",
-      "prompt": "button.clicked.connect(____)에 함수 greet를 연결하세요.",
-      "answer": "greet"
-    },
-    {
       "id": "u2-q032",
       "unit": 2,
       "topic": "events",
       "kind": "빈칸",
       "prompt": "tkinter 이벤트 루프 호출은?",
       "answer": "root.mainloop()"
-    },
-    {
-      "id": "u2-q033",
-      "unit": 2,
-      "topic": "events",
-      "kind": "빈칸",
-      "prompt": "Qt 이벤트 루프 호출은?",
-      "answer": "app.exec()"
     },
     {
       "id": "u2-q034",
@@ -2539,52 +2368,12 @@
       "answer": "end-1c"
     },
     {
-      "id": "u2-q036",
-      "unit": 2,
-      "topic": "memo",
-      "kind": "빈칸",
-      "prompt": "Qt 텍스트 편집기의 내용을 문자열로 읽는 메서드는?",
-      "answer": "toPlainText()"
-    },
-    {
       "id": "u2-q037",
       "unit": 2,
       "topic": "events",
       "kind": "빈칸",
       "prompt": "command=hello()에서 의도하지 않은 즉시 호출을 고치세요.",
       "answer": "command=hello"
-    },
-    {
-      "id": "u2-q038",
-      "unit": 2,
-      "topic": "events",
-      "kind": "빈칸",
-      "prompt": "button.clicked.connect(hello())를 고치세요.",
-      "answer": "button.clicked.connect(hello)"
-    },
-    {
-      "id": "u2-q039",
-      "unit": 2,
-      "topic": "memo",
-      "kind": "빈칸",
-      "prompt": "editor.text()를 QPlainTextEdit에 맞게 고치세요.",
-      "answer": "editor.toPlainText()"
-    },
-    {
-      "id": "u2-q040",
-      "unit": 2,
-      "topic": "widgets",
-      "kind": "빈칸",
-      "prompt": "label.text = \"완료\"를 QLabel에 맞게 고치세요.",
-      "answer": "label.setText(\"완료\")"
-    },
-    {
-      "id": "u2-q041",
-      "unit": 2,
-      "topic": "memo",
-      "kind": "빈칸",
-      "prompt": "QFileDialog.getOpenFileName 결과를 path 하나로 받았습니다. 두 값을 받는 왼쪽 코드를 쓰세요.",
-      "answer": "path, _"
     },
     {
       "id": "u2-q042",
@@ -2603,14 +2392,6 @@
       "answer": "entry.get()"
     },
     {
-      "id": "u2-q044",
-      "unit": 2,
-      "topic": "widgets",
-      "kind": "빈칸",
-      "prompt": "Qt 입력창 entry의 한 줄 값을 읽는 코드는?",
-      "answer": "entry.text()"
-    },
-    {
       "id": "u2-q045",
       "unit": 2,
       "topic": "memo",
@@ -2618,25 +2399,11 @@
       "prompt": "파일 열기 처리를 순서대로 배열하세요."
     },
     {
-      "id": "u2-q046",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "순서",
-      "prompt": "Qt 앱의 기본 실행 순서를 배열하세요."
-    },
-    {
       "id": "u2-q047",
       "unit": 2,
       "topic": "memo",
       "kind": "순서",
       "prompt": "저장 순서를 배열하세요."
-    },
-    {
-      "id": "u2-q048",
-      "unit": 2,
-      "topic": "layout",
-      "kind": "순서",
-      "prompt": "격자 폼을 만드는 흐름을 배열하세요."
     },
     {
       "id": "u2-q049",
@@ -2684,51 +2451,6 @@
       "answer": "화면 반응이 멈출 수 있습니다."
     },
     {
-      "id": "u2-q052",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "선택",
-      "prompt": "Designer 생성 파일을 직접 수정할 때의 문제는?",
-      "options": [
-        "절대로 실행되지 않습니다.",
-        "재생성하면 변경이 사라질 수 있습니다.",
-        "Qt가 삭제됩니다.",
-        "Python 버전이 바뀝니다.",
-        "파일이 이미지가 됩니다."
-      ],
-      "answer": "재생성하면 변경이 사라질 수 있습니다."
-    },
-    {
-      "id": "u2-q053",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "선택",
-      "prompt": "웹 GUI 체험 화면의 의미는?",
-      "options": [
-        "임의의 PySide 코드를 실제 실행",
-        "PC 모든 파일에 접근",
-        "예제 동작을 재현한 학습용 시뮬레이션",
-        "실행 검증이 모두 완료됨",
-        "운영체제 자체"
-      ],
-      "answer": "예제 동작을 재현한 학습용 시뮬레이션"
-    },
-    {
-      "id": "u2-q054",
-      "unit": 2,
-      "topic": "memo",
-      "kind": "선택",
-      "prompt": "QMainWindow에 편집기를 넣는 방식은?",
-      "options": [
-        "window.pack()",
-        "setCentralWidget(editor)",
-        "window.grid()",
-        "editor.mainloop()",
-        "app.setText(editor)"
-      ],
-      "answer": "setCentralWidget(editor)"
-    },
-    {
       "id": "u2-q055",
       "unit": 2,
       "topic": "events",
@@ -2745,7 +2467,7 @@
     {
       "id": "u2-q057",
       "unit": 2,
-      "topic": "project",
+      "topic": "review",
       "kind": "구현",
       "prompt": "추첨 인원 문자열을 1~total의 정수로 검사하세요. 잘못된 값은 None입니다."
     },
@@ -2771,71 +2493,11 @@
       "prompt": "제목에 미저장 표시 *를 붙이는 함수를 작성하세요."
     },
     {
-      "id": "u2-q061",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "서술",
-      "prompt": "GUI의 장점과 CLI가 더 편리할 수 있는 상황을 설명하세요."
-    },
-    {
-      "id": "u2-q062",
-      "unit": 2,
-      "topic": "ui",
-      "kind": "서술",
-      "prompt": "NUI를 설명하고 사례를 하나 적으세요."
-    },
-    {
       "id": "u2-q063",
       "unit": 2,
-      "topic": "project",
+      "topic": "review",
       "kind": "서술",
       "prompt": "모듈 구조·이벤트·입력 오류 처리의 구현 근거를 작성하세요."
-    },
-    {
-      "id": "u2-q064",
-      "unit": 2,
-      "topic": "libraries",
-      "kind": "서술",
-      "prompt": "학교용 메모장의 라이브러리를 선택하고 이유를 설명하세요."
-    },
-    {
-      "id": "u1-q060",
-      "unit": 1,
-      "topic": "thirdparty",
-      "kind": "선택",
-      "prompt": "관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?",
-      "options": [
-        "Peewee",
-        "Pillow",
-        "Pygame",
-        "Kivy",
-        "math"
-      ],
-      "answer": "Peewee"
-    },
-    {
-      "id": "u2-q065",
-      "unit": 2,
-      "topic": "widgets",
-      "kind": "빈칸",
-      "prompt": "57쪽 IDLE 코드에서 Frame과 Button 같은 요소를 통칭하는 말은?",
-      "answer": "위젯"
-    },
-    {
-      "id": "u2-q066",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "QLineEdit의 입력 변화 시그널 이름은?",
-      "answer": "textChanged"
-    },
-    {
-      "id": "u2-q067",
-      "unit": 2,
-      "topic": "pyside",
-      "kind": "빈칸",
-      "prompt": "Qt Designer 실행 명령은?",
-      "answer": "pyside6-designer"
     },
     {
       "id": "u2-q068",
@@ -2859,6 +2521,177 @@
       "kind": "예측",
       "prompt": "calls=[]\ndef hello():\n    calls.append(\"인사\")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))",
       "answer": "2"
+    },
+    {
+      "id": "u1-q060",
+      "unit": 1,
+      "topic": "thirdparty",
+      "kind": "선택",
+      "prompt": "관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?",
+      "options": [
+        "Peewee",
+        "Pillow",
+        "Pygame",
+        "Kivy",
+        "math"
+      ],
+      "answer": "Peewee"
+    },
+    {
+      "id": "u2-q101",
+      "unit": 2,
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "다음 중 사용자 인터페이스(User Interface)의 설명으로 옳지 않은 것은?",
+      "options": [
+        "UI의 구성 요소에는 버튼, 색상, 입력창 등이 포함된다.",
+        "CLI는 직관적인 그래픽 환경을 제공하는 인터페이스이다.",
+        "UI는 사용자가 컴퓨터와 상호 작용하는 모든 요소를 포함한다.",
+        "GUI는 마우스나 터치로 화면의 버튼이나 메뉴를 조작할 수 있다.",
+        "NUI는 음성, 제스처 등 자연스러운 방식으로 컴퓨터와 상호 작용할 수 있다."
+      ],
+      "answer": "CLI는 직관적인 그래픽 환경을 제공하는 인터페이스이다."
+    },
+    {
+      "id": "u2-q102",
+      "unit": 2,
+      "topic": "ui",
+      "kind": "서술",
+      "prompt": "GUI 프로그래밍을 하면 어떤 장점이 있는지 서술하시오."
+    },
+    {
+      "id": "u2-q103",
+      "unit": 2,
+      "topic": "ui",
+      "kind": "서술",
+      "prompt": "NUI 프로그래밍이 무엇인지 서술하시오."
+    },
+    {
+      "id": "u2-q104",
+      "unit": 2,
+      "topic": "libraries",
+      "kind": "서술",
+      "prompt": "아래의 GUI 라이브러리와 설명을 바르게 연결하시오.\n① tkinter  ② PyQt  ③ wxPython  ④ Kivy\n㉠ 멀티 플랫폼, 터치 중심 GUI 프레임워크  ㉡ 운영체제 네이티브 스타일 제공  ㉢ C++ Qt 기반, 상업용 앱에도 적합  ㉣ 파이썬 기본 GUI 라이브러리"
+    },
+    {
+      "id": "u2-q105",
+      "unit": 2,
+      "topic": "widgets",
+      "kind": "선택",
+      "prompt": "다음 중 Tkinter의 GUI 창을 생성하는 객체는 무엇인지 골라 보자.",
+      "options": [
+        "Tk()",
+        "Entry()",
+        "Frame()",
+        "Label()",
+        "Button()"
+      ],
+      "answer": "Tk()"
+    },
+    {
+      "id": "u2-q106",
+      "unit": 2,
+      "topic": "memo",
+      "kind": "빈칸",
+      "prompt": "다음은 IDLE에서 macOS와 관련된 macosx.py 코드의 일부이다. 빈칸에 공통으로 들어갈 모듈 이름을 쓰세요.\nimport ____\n\ndef _init_tk_type():\n    global _tk_type\n    if platform == 'darwin':\n        root = ____.Tk()",
+      "answer": "tkinter"
+    },
+    {
+      "id": "u2-q107",
+      "unit": 2,
+      "topic": "widgets",
+      "kind": "서술",
+      "prompt": "다음은 56쪽 디버거 GUI 코드의 일부이다. ①·②·③에 들어갈 말을 각각 쓰세요.\nfrom tkinter import *\nfrom tkinter.ttk import ① , Scrollbar\n...\nself.bframe = bframe = ① (top)\n...\nself.bcont = b = ② (bframe, text=\"Go\", command=self.cont)\n...\n①과 ②처럼 사용자와 상호 작용하는 인터페이스 요소를 ③이라 한다."
+    },
+    {
+      "id": "u2-q108",
+      "unit": 2,
+      "topic": "widgets",
+      "kind": "빈칸",
+      "prompt": "tkinter에서 GUI 창을 생성할 때 사용하는 기본 객체는 무엇인가?",
+      "answer": "Tk() 객체"
+    },
+    {
+      "id": "u2-q109",
+      "unit": 2,
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "다음 중 사용자 인터페이스(User Interface)의 정의로 가장 적절한 것은?",
+      "options": [
+        "프로그램의 내부 동작 방식",
+        "데이터베이스를 설계하는 구조",
+        "컴퓨터의 운영체제를 설치하는 방식",
+        "사용자가 명령어를 작성하는 개발 환경",
+        "사용자와 기계가 상호 작용하는 기능의 집합"
+      ],
+      "answer": "사용자와 기계가 상호 작용하는 기능의 집합"
+    },
+    {
+      "id": "u2-q110",
+      "unit": 2,
+      "topic": "ui",
+      "kind": "선택",
+      "prompt": "다음 상황은 어떤 인터페이스에 해당하는가?\n\"아이콘을 클릭해서 그림판을 열었어요.\"",
+      "options": [
+        "CLI",
+        "GUI",
+        "NUI",
+        "API",
+        "TUI"
+      ],
+      "answer": "GUI"
+    },
+    {
+      "id": "u2-q111",
+      "unit": 2,
+      "topic": "events",
+      "kind": "선택",
+      "prompt": "보기 코드의 실행 결과로 올바른 것을 고르시오.\nimport tkinter as tk\n\ndef say_hello():\n    print(\"안녕하세요\")\n\nwindow = tk.Tk()\nbtn = tk.Button(window, text=\"클릭\", command=say_hello)\nbtn.pack()\nwindow.mainloop()",
+      "options": [
+        "PyQT를 사용하였다.",
+        "코드는 에러가 발생한다.",
+        "버튼을 누르면 창이 닫힌다.",
+        "창만 뜨고 버튼은 보이지 않는다.",
+        "\"클릭\" 버튼이 보이고, 누르면 \"안녕하세요\"가 출력된다."
+      ],
+      "answer": "\"클릭\" 버튼이 보이고, 누르면 \"안녕하세요\"가 출력된다."
+    },
+    {
+      "id": "u2-q112",
+      "unit": 2,
+      "topic": "layout",
+      "kind": "선택",
+      "prompt": "다음 중 tkinter의 배치 방식과 설명이 올바르게 연결되지 않은 것은?",
+      "options": [
+        "grid() – 행과 열 기준으로 위젯을 배치한다.",
+        "center() – 위젯을 화면 중앙에 자동 배치한다.",
+        "place() – 좌표를 직접 지정해 위젯을 배치한다.",
+        "pack() – 기본적으로 많이 사용되는 배치 방식이다.",
+        "pack() – 위에서 아래로 순차적으로 위젯을 배치한다."
+      ],
+      "answer": "center() – 위젯을 화면 중앙에 자동 배치한다."
+    },
+    {
+      "id": "u2-q113",
+      "unit": 2,
+      "topic": "layout",
+      "kind": "선택",
+      "prompt": "다음 빈칸에 들어갈 코드로 적절한 것은?\nimport tkinter as tk\nwindow = tk.Tk()\nlabel = tk.Label(window, text=\"안녕하세요\")\nlabel.____\n\nwindow.mainloop()",
+      "options": [
+        "click()",
+        "draw()",
+        "pack()",
+        "open()",
+        "show()"
+      ],
+      "answer": "pack()"
+    },
+    {
+      "id": "u2-q114",
+      "unit": 2,
+      "topic": "libraries",
+      "kind": "서술",
+      "prompt": "학교용 메모장을 만든다면 tkinter, PyQt, wxPython, Kivy 중 어떤 라이브러리를 선택할지 고르고 이유를 설명하세요."
     },
     {
       "id": "u3-q001",
