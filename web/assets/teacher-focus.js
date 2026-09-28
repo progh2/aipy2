@@ -340,6 +340,10 @@ function attachCodeReadChips() {
 }
 
 function injectDetailFocusButtons() {
+ try { injectDetailFocusButtonsUnsafe(); } catch (error) { console.warn('[teacher-focus] 세부 초점 버튼', error); }
+}
+
+function injectDetailFocusButtonsUnsafe() {
  if (!canSend()) return;
  const main = document.querySelector('main');
  if (!main) return;

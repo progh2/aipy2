@@ -51,7 +51,7 @@ def nav(prefix): return f'''<a class="skip" href="#main">본문으로 건너뛰�
 def unit_scripts(prefix,unit):
  extras=''
  if unit:
-  extras+=f'<script type="module" src="{prefix}assets/teacher-focus.js?v=11"></script>'
+  extras+=f'<script type="module" src="{prefix}assets/teacher-focus.js?v=12"></script>'
  return extras
 
 def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''):
