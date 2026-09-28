@@ -3254,13 +3254,13 @@
       "unit": 3,
       "topic": "ml-metrics",
       "kind": "선택",
-      "prompt": "다음 코드의 출력은?\nfrom sklearn.metrics import precision_score, recall_score\ny_true = [1]*10 + [0]*8\ny_pred = [1]*8 + [0]*2 + [1]*4 + [0]*4\ntp, fp, fn, tn = 8, 4, 2, 6\nprint(round(tp/(tp+fp), 2), round(tp/(tp+fn), 2))",
+      "prompt": "다음 코드의 출력은?\nfrom sklearn.metrics import precision_score, recall_score\ny_true = [1]*10 + [0]*8\ny_pred = [1]*8 + [0]*2 + [1]*4 + [0]*4\nprint(round(precision_score(y_true, y_pred), 2), round(recall_score(y_true, y_pred), 2))",
       "options": [
-        "0.67 0.6",
+        "1.0 0.8",
         "0.8 0.67",
+        "0.67 0.6",
         "0.75 0.75",
-        "0.67 0.8",
-        "1.0 0.8"
+        "0.67 0.8"
       ],
       "answer": "0.67 0.8"
     },

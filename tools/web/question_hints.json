@@ -1010,7 +1010,7 @@
   "hint2": "붓꽃 데이터는 150개이므로 테스트 45개, 훈련 105개이며 특성은 4개입니다."
  },
  "u3-q128": {
-  "prompt": "다음 코드의 출력은?\nfrom sklearn.metrics import precision_score, recall_score\ny_true = [1]*10 + [0]*8\ny_pred = [1]*8 + [0]*2 + [1]*4 + [0]*4\ntp, fp, fn, tn = 8, 4, 2, 6\nprint(round(tp/(tp+fp), 2), round(tp/(tp+fn), 2))",
+  "prompt": "다음 코드의 출력은?\nfrom sklearn.metrics import precision_score, recall_score\ny_true = [1]*10 + [0]*8\ny_pred = [1]*8 + [0]*2 + [1]*4 + [0]*4\nprint(round(precision_score(y_true, y_pred), 2), round(recall_score(y_true, y_pred), 2))",
   "hint": "정밀도는 TP/(TP+FP), 재현율은 TP/(TP+FN)으로 계산합니다.",
   "hint2": "8/(8+4)=0.67, 8/(8+2)=0.8이므로 정밀도가 재현율보다 낮습니다."
  },
