@@ -611,11 +611,9 @@ lesson(2,'memo','교과서 메모장 · 여덟 단계로 완성','52–55','열�
 '⑤ 저장 함수: asksaveasfilename(defaultextension=".txt") → 취소 확인 → Text.get으로 읽기 → UTF-8 파일 쓰기입니다. 교과서의 END는 Text가 유지하는 마지막 개행까지 포함합니다. 추가 개행을 제외하려면 "end-1c"를 사용합니다.',
 '⑥ Menu에 열기·저장·종료를 연결합니다. ⑦ mainloop()로 이벤트를 기다립니다. ⑧ 전체 코드를 실행하고 한글 파일 저장→재열기를 시험합니다. 교과서 55쪽 탐구의 라이브러리 이름은 tkinter입니다.',
 'PySide6 비교: QMainWindow의 중앙에 QPlainTextEdit를 두고 QAction을 메뉴에 연결합니다. QFileDialog는 (경로, 선택 필터)를 반환하므로 path, _로 받습니다. setPlainText/toPlainText가 텍스트 넣기·읽기 역할입니다.'],['memo-tk','memo-pyside'],['새 파일 저장, 기존 파일 열기, 대화 상자 취소를 각각 시험하세요.','파일 열기 코드의 순서를 섞은 뒤 다시 배열하세요.','메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?'])
-lesson(2,'pyside','PySide6 시작과 Qt Designer','확장 학습','기본 위젯으로 익힌 개념을 Qt Widgets로 옮깁니다.',[
-'PC의 프로젝트 폴더에서 python -m venv .venv를 실행합니다. Windows PowerShell은 .venv\\Scripts\\Activate.ps1, macOS/Linux는 source .venv/bin/activate로 활성화합니다. 이후 python -m pip install PySide6로 설치하고 python main.py로 실행합니다. VS Code에서 같은 .venv 인터프리터를 선택하세요.',
-'첫 예제는 함수 기반으로 QApplication → QWidget → 레이아웃 → 위젯 → connect → show → exec 순서를 익힙니다. 메모장은 QMainWindow를 상속하는 클래스로 상태와 메서드를 묶습니다. self.editor는 여러 메서드에서 같은 입력창을 사용하게 합니다.',
-'Qt Designer는 pyside6-designer로 실행합니다. Widget 폼에 라벨·입력창·버튼을 배치하고 레이아웃을 적용한 다음 form.ui로 저장하세요. pyside6-uic form.ui -o ui_form.py로 Python 코드를 생성할 수 있습니다.',
-'생성 파일은 다시 생성하면 덮어써집니다. 직접 작성하는 main.py에서 Ui_Form을 가져와 setupUi(window)를 호출하고 이벤트를 연결하세요. 버튼의 objectName을 확인해야 코드에서 올바른 이름으로 접근할 수 있습니다. Qt Quick/QML은 별도 UI 기술이며 이번 기본 실습은 Qt Widgets입니다.'],['hello-pyside','memo-pyside'],['Designer의 objectName과 화면에 보이는 text가 다른 속성임을 확인하세요.','tkinter의 이벤트와 Qt 시그널을 자신의 말로 비교하세요.'],extra=True)
+# (#131) 'pyside' 소단원 페이지는 삭제했다 — 교과서 밖 확장(PySide6/Qt Designer)이며
+# 웹 실습실 개편에서 tkinter 중심 구성으로 정리했다. hello-pyside/memo-pyside 등 예제
+# 정의 자체는 examples 딕셔너리에 남아 있지만(하위 호환), 어떤 소단원도 더는 참조하지 않는다.
 # Two front ends reuse one core package.
 core={'core/__init__.py':'# GUI와 독립적인 기능','core/logic.py':'''from datetime import date
 import random
@@ -920,16 +918,16 @@ import unit1_pre_api
 import unit1_tips
 import unit2_density
 import unit2_pre_api
-import wx_appendix
-import kivy_appendix
 import unit2_shots
 import unit2_tips
 unit1_density.apply()
 unit1_pre_api.apply()
 unit1_tips.apply()
-unit2_density.apply()
-unit2_pre_api.apply()
-wx_appendix.apply()
-kivy_appendix.apply()
-unit2_shots.apply()
-unit2_tips.apply()
+# (#131) unit2_density/unit2_pre_api/unit2_shots/unit2_tips는 계속 import해서 그
+# 안의 ex() 예제 정의(module 최상위 코드)는 그대로 살아 있게 두지만, apply()는 더 이상
+# 호출하지 않는다. apply()는 pre_api/tips/screenshots/paragraphs·'pyside' 소단원 등
+# 웹 실습실 개편으로 쓰지 않는 옛 슬롯을 채우던 단계였고, 'pyside' 소단원을 참조하다
+# StopIteration도 낸다. 새 소단원 페이지는 tools/web/deck_u2.py로 구성한다.
+# wx_appendix/kivy_appendix는 아예 import하지 않는다 — 'wx'/'kivy' 부록 소단원과 그
+# 예제 전부(교과서 밖 확장)를 웹 실습실에서 삭제했다. 두 모듈 파일은 남겨 두되
+# (재도입 시 참고용) content 빌드에는 관여하지 않는다.
