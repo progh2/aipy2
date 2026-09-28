@@ -38,7 +38,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  if topic: extra+=f' data-topic="{esc(topic)}"'
  if lessons: extra+=f' data-lessons="{" ".join(lessons)}"'
  if example: extra+=f' data-example="{esc(example)}"'
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=deck4"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q132" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=14"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=deck5"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q132" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=14"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -127,6 +127,10 @@ def deck_slide_path(u,n):
  w=2 if u==2 else 3
  return f'assets/slides/u{u}/s{n:0{w}d}.webp'
 
+def deck_slide_q_path(u,n):
+ w=2 if u==2 else 3
+ return f'assets/slides/u{u}/s{n:0{w}d}q.webp'
+
 def tutorial_card(item):
  def step_html(s):
   code=f'<pre><code>{esc(s["code"])}</code></pre>' if s.get('code') else ''
@@ -146,15 +150,29 @@ def deck_lesson_section(u,l,prefix):
  d=DECKS[u].get(l['id'],{})
  pages=d.get('pages') or l['pages']
  s=f'<section class="lesson" id="{l["id"]}">{textbook.badge(u,l)}<p class="eyebrow">교과서 {esc(textbook.page_label(pages))}</p><h2>{esc(l["title"])}</h2><p class="lesson-lead">{esc(l["lead"])}</p>'
+ block_tag=re.compile(r'^\s*<(p|pre|div|ul|ol|table|figure|blockquote)\b',re.I)
+ def explain_html(paras):
+  # 문단 문자열에 <b>/<code> 같은 인라인 태그만 있어도 이미 블록 태그(<p>/<pre> 등)로
+  # 감싼 것으로 오인해 <p> 래핑을 건너뛰면 문단 사이 공백이 사라져 붙어 보인다(#131).
+  # 실제로 블록 태그로 시작할 때만 그대로 두고, 그 외에는 <p>로 감싼다.
+  return '<div class="slide-explain">'+''.join(p if block_tag.match(p) else f'<p>{p}</p>' for p in paras)+'</div>'
  for sl in d.get('slides',()):
-  s+=f'<figure class="deck-slide"><img src="{prefix}{deck_slide_path(u,sl["n"])}" alt="{esc(sl.get("alt",""))}" loading="lazy" width="1280" height="720"></figure>'
+  reveal=sl.get('reveal')
+  alt=sl.get('alt','')
+  img_path=deck_slide_q_path(u,sl['n']) if reveal else deck_slide_path(u,sl['n'])
+  s+=f'<figure class="deck-slide"><img src="{prefix}{img_path}" alt="{esc(alt)}" loading="lazy" width="1280" height="720"></figure>'
   explain=sl.get('explain') or []
   if explain:
-   # 문단 문자열에 <b>/<code> 같은 인라인 태그만 있어도 이미 블록 태그(<p>/<pre> 등)로
-   # 감싼 것으로 오인해 <p> 래핑을 건너뛰면 문단 사이 공백이 사라져 붙어 보인다(#131).
-   # 실제로 블록 태그로 시작할 때만 그대로 두고, 그 외에는 <p>로 감싼다.
-   block_tag=re.compile(r'^\s*<(p|pre|div|ul|ol|table|figure|blockquote)\b',re.I)
-   s+='<div class="slide-explain">'+''.join(p if block_tag.match(p) else f'<p>{p}</p>' for p in explain)+'</div>'
+   s+=explain_html(explain)
+  if reveal:
+   # (#136) 질문과 답이 함께 있던 슬라이드는 질문 이미지만 먼저 보이고, 답은
+   # <details>로 펼쳐야 나온다(JS 없이 동작·발표 모드에서도 동일).
+   answer_explain=sl.get('explain_answer') or []
+   s+=('<details class="slide-reveal"><summary>'
+       '<span class="when-closed">답 보기</span><span class="when-open">답 숨기기</span></summary>'
+       f'<figure class="deck-slide"><img src="{prefix}{deck_slide_path(u,sl["n"])}" alt="{esc(alt)} — 답 포함" loading="lazy" width="1280" height="720"></figure>'
+       +(explain_html(answer_explain) if answer_explain else '')
+       +'</details>')
  if l['tasks']: s+='<div class="task-box"><h3>직접 해 보세요</h3><ol>'+''.join(f'<li>{esc(t)}</li>' for t in l['tasks'])+'</ol></div>'
  practice_items=d.get('practice') or []
  if practice_items:

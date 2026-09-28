@@ -235,6 +235,18 @@ for u, lessons in units.items():
    if lesson['id']!='libraries':
     for banned in BANNED_LIBS:
      assert banned not in html, (banned,'off-curriculum library mentioned on deck page',topic_page)
+   # (#136) 질문·답이 함께 있던 슬라이드는 reveal=True로 표시하고, 질문 전용/전체
+   # webp가 둘 다 있어야 하며, 답 설명(explain_answer)이 비어 있으면 안 된다.
+   for sl in (DECKS[u].get(lesson['id'],{}).get('slides') or ()):
+    if sl.get('reveal'):
+     w=2 if u==2 else 3
+     n=sl['n']
+     qwebp=WEB/f'assets/slides/u{u}/s{n:0{w}d}q.webp'
+     fullwebp=WEB/f'assets/slides/u{u}/s{n:0{w}d}.webp'
+     assert qwebp.exists(), ('reveal 슬라이드의 질문 전용 webp 없음',lesson['id'],n,qwebp)
+     assert fullwebp.exists(), ('reveal 슬라이드의 전체 webp 없음',lesson['id'],n,fullwebp)
+     assert sl.get('explain_answer'), ('reveal 슬라이드인데 explain_answer 없음',lesson['id'],n)
+     assert 'class="slide-reveal"' in html, ('reveal 슬라이드인데 페이지에 slide-reveal 없음',lesson['id'],n)
    # (#131) 2단원(및 DECKS 기반 소단원)은 슬라이드마다 설명이 있어야 하고, 실습에 넣은
    # 튜토리얼은 최소 1단계 이상이어야 한다. 빈 explain·steps로 남겨 두는 회귀를 막는다.
    if u==2:
