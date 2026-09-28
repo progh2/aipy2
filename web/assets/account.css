@@ -55,6 +55,15 @@
 .admin-rows{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .admin-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px}
 
+/* 답변 내역(#129): 넓은 화면은 명단(왼쪽, 고정폭·자체 스크롤)/내용(오른쪽) 2단, 좁으면 위아래로 쌓인다. */
+.answers-layout{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media (min-width:900px){
+ .answers-layout{grid-template-columns:minmax(260px,300px) 1fr}
+ .answers-roster-col{position:sticky;top:132px;max-height:calc(100vh - 152px);overflow-y:auto}
+}
+.answers-roster-col .student-card-grid{grid-template-columns:1fr}
+.answers-detail-col{scroll-margin-top:132px}
+
 /* 교사 관리 공통 뼈대: 헤더 아래 반 선택 + 명단/보드/세션 내비게이션 */
 .teacher-shell{position:sticky;top:78px;z-index:18;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 6px 16px #1724430c}
 .teacher-shell-bar{padding:10px max(5%,calc((100vw - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}

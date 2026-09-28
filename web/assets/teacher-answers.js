@@ -64,7 +64,10 @@ function paintRosterList() {
   const btn = node('button', 'student-card');
   btn.type = 'button';
   btn.dataset.studentKey = card.key;
-  if (card.key === selectedKey) btn.classList.add('is-selected');
+  if (card.key === selectedKey) {
+   btn.classList.add('is-selected');
+   btn.setAttribute('aria-current', 'true');
+  }
   btn.setAttribute('aria-label', `${card.label} 답변 보기`);
   btn.append(node('strong', '', card.label), node('p', 'small', studentSummaryLabel(card)));
   btn.addEventListener('click', () => openDetail(card.key));
@@ -77,10 +80,20 @@ function paintRosterList() {
  }
 }
 
+// #129: 학생을 바꾸면 오른쪽 내용 열을 맨 위로 스크롤한다(좁은 화면에서 위아래로 쌓일 때도
+// 오른쪽 열 시작 지점으로 이동하면 자연스럽다).
+function scrollDetailToTop() {
+ const col = document.getElementById('answers-detail');
+ if (col && typeof col.scrollIntoView === 'function') col.scrollIntoView({block: 'start'});
+ else window.scrollTo(0, 0);
+}
+
 function openDetail(key) {
+ const changed = key !== selectedKey;
  selectedKey = key;
  const card = liveCards().find((item) => item.key === key);
  paintRosterList();
+ if (changed) scrollDetailToTop();
  if (card && card.uid) ensureStudentState(card.uid);
 }
 
