@@ -61,7 +61,7 @@ PySide6 비교 없이도 "1단원 core 패키지 + tkinter GUI" 통합 실습으
 LESSONS = {
     'ui': dict(
         title='사용자 인터페이스 · CLI, GUI, NUI',
-        pages='43–44',
+        pages='43–44, 47–48',
         slides=[
             dict(n=6, alt='사용자 인터페이스(UI)란 무엇인가 — 사람과 컴퓨터가 상호작용하는 접점', explain=[
                 '<b>사용자 인터페이스(UI, User Interface)</b>란, 사용자가 컴퓨터 시스템·소프트웨어·스마트폰·웹사이트 등을 쉽고 효율적으로 사용할 수 있도록 도와주는 장치나 화면 구성을 의미합니다. 즉, 사람과 기계가 만나는 접점이라 할 수 있습니다.',
@@ -80,14 +80,14 @@ LESSONS = {
             ]),
             dict(n=10, alt='NUI(자연스러운 사용자 인터페이스)의 정의와 특징', explain=[
                 '<b>NUI</b>(Natural User Interface)는 자연스러운 사용자 인터페이스로, 음성, 손짓, 터치 등 사람의 신체 동작을 기반으로 컴퓨터와 상호 작용하는 방식입니다. 별도의 학습 없이도 쉽게 사용할 수 있으며, 최근에는 스마트폰, 스마트 TV, 인공지능 스피커, 가상현실 기기 등에서 활발히 활용되고 있습니다.',
-                '탐구 활동(44쪽): "dir이라고 입력하면 폴더 목록이 나와요"는 CLI, "아이콘을 클릭해서 그림판을 열었어요"는 GUI, "손을 흔들면 스마트 TV가 반응해요"는 NUI에 해당합니다.',
+                '탐구 활동(44쪽): 사용자 인터페이스가 무엇인지 자신의 말로 설명해 보고, "dir 입력", "아이콘 클릭", "손짓으로 TV 조작"이 각각 어떤 인터페이스에 해당하는지 아래 「직접 해 보세요」에 적어 보세요.',
             ]),
         ],
         practice=['hello-tk'],
     ),
     'libraries': dict(
         title='파이썬 GUI 라이브러리',
-        pages='45–46',
+        pages='45–48',
         slides=[
             dict(n=14, alt='파이썬으로 GUI를 만든다는 것 — 버튼 클릭·텍스트 입력 같은 그래픽 요소 다루기', explain=[
                 'GUI 프로그래밍은 버튼 클릭, 텍스트 입력, 드래그 같은 그래픽 위젯을 통해 사용자와 프로그램이 상호 작용하도록 만드는 방식입니다. 파이썬에서 활용할 수 있는 대표적인 GUI 라이브러리 네 가지를 살펴봅니다.',
@@ -104,13 +104,23 @@ LESSONS = {
                 '<b>Kivy</b>는 터치 기반 사용자 인터페이스를 포함한 멀티 플랫폼 GUI 개발을 지원하는 프레임워크입니다. 모바일과 데스크탑 모두에서 실행할 수 있으며, 게임이나 앱과 같은 동적인 인터페이스 구성에 적합합니다. GPU 가속을 지원하지만 학습 곡선이 높아 입문용보다는 고급 프로젝트에 알맞은 도구입니다.',
                 '네 라이브러리 중 어떤 것을 선택할지는 목적에 따라 달라집니다. 쉬운 입문·교육용에는 tkinter, 전문적인 데스크탑 앱에는 PyQt, 운영체제 고유 외형이 필요하면 wxPython, 터치·모바일·게임에는 Kivy가 적합합니다.',
             ]),
+            dict(n=23, alt='좀 더 알아보기 — IDLE도 tkinter로 만들어졌다고?', explain=[
+                '<b>좀 더 알아보기(46쪽): IDLE도 tkinter로 만들어졌다고?</b> 파이썬을 설치하면 함께 제공되는 기본 개발 환경인 IDLE은 초보자가 파이썬을 배우기에 매우 좋은 도구입니다. 그런데 놀랍게도 이 IDLE 프로그램 자체도 tkinter로 만들어진 GUI 애플리케이션입니다.',
+                'IDLE에서 사용되는 tkinter 코드의 일부입니다.',
+                '<pre><code>def fix_scaling(root):\n    import tkinter.font\n    scaling = float(root.tk.call(\'tk\', \'scaling\'))\n    if scaling > 1.4:\n        for name in tkinter.font.names(root):\n            font = tkinter.font.Font(root=root, name=name, exists=True)\n            size = int(font[\'size\'])\n            if size < 0:\n                font[\'size\'] = round(-0.75*size)</code></pre>',
+                '우리가 지금 쓰고 있는 도구도 결국 누군가가 tkinter로 만든 프로그램입니다. 이번 단원을 마치면 여러분도 만들 수 있습니다.',
+            ]),
         ],
         practice=[],
     ),
     'widgets': dict(
         title='창과 위젯 · 화면을 구성하는 부품',
-        pages='50',
+        pages='49–50',
         slides=[
+            dict(n=31, alt='중단원 02 학습 목표와 생각 열기 — GUI 요소를 조합해 애플리케이션 만들기', explain=[
+                '<b>학습 목표(49쪽)</b>: GUI 요소들을 조합하여 간단한 애플리케이션을 설계하고 구현할 수 있습니다. 이 중단원에서는 tkinter의 구성 요소를 배운 뒤, 그 지식을 모아 나만의 메모장 애플리케이션을 만들어 봅니다.',
+                '생각 열기: 간단하게 만들 수 있는 GUI 프로그램에는 어떤 것들이 있을까요? 계산기, 단어 암기 카드, 타이머, 할 일 목록, 간단한 그림판, 성적 계산기, 학급 자리 뽑기처럼 만들고 싶은 GUI 애플리케이션을 자유롭게 떠올려 보세요.',
+            ]),
             dict(n=32, alt='tkinter를 이루는 네 가지 요소 한눈에 보기', explain=[
                 'tkinter 라이브러리를 통해 그래픽 기반의 인터페이스를 손쉽게 만들 수 있습니다. tkinter는 파이썬에 기본적으로 포함된 GUI 라이브러리로, 별도의 설치 없이 사용할 수 있으며, 다양한 버튼, 레이블, 입력창 등의 <b>위젯(widget)</b>을 제공합니다.',
                 'tkinter를 이루는 네 가지 요소는 <b>Tk 객체</b>, <b>위젯</b>, <b>배치 관리자</b>, <b>이벤트 처리</b>입니다. 이번 소단원에서는 Tk 객체와 위젯을, 다음 소단원에서 배치 관리자와 이벤트 처리를 배웁니다.',
@@ -149,7 +159,7 @@ LESSONS = {
             dict(n=35, alt='3. 배치 관리자 — 위젯을 어디에 둘 것인가', explain=[
                 '위젯을 창에 배치할 때는 단순히 생성만 하는 것이 아니라 위치와 정렬을 지정하는 <b>배치 관리자</b>가 필요합니다. tkinter는 세 가지 배치 방식을 제공합니다.',
                 '<b>pack()</b>은 위젯을 위에서 아래로, 왼쪽에서 오른쪽으로 차례대로 배치합니다. <b>grid()</b>는 행(row)과 열(column)로 구분하여 배치할 수 있습니다. <b>place()</b>는 좌표(x, y)를 지정하여 정확한 위치에 위젯을 배치합니다.',
-                '탐구 활동(51쪽): tkinter의 GUI 창을 생성하는 객체는 보기 ① Tk()입니다. Entry()·Frame()·Label()·Button()은 모두 그 창 위에 만드는 위젯입니다.',
+                '탐구 활동(51쪽): 다음 중 tkinter의 GUI 창을 생성하는 객체는 무엇인지 골라 보세요. ① Tk() ② Entry() ③ Frame() ④ Label() ⑤ Button() — 아래 「직접 해 보세요」에 답과 이유를 적어 보세요.',
             ]),
         ],
         practice=['layout-tk', dict(kind='tutorial', id='layout-same-form', title='pack·grid로 같은 폼 배치해 보기',
@@ -231,7 +241,7 @@ LESSONS = {
                 '전체 코드의 나머지 부분(25~41행)입니다.',
                 '<pre><code>25  # 텍스트 입력창 생성\n26  text_area = tk.Text(window, wrap="word")\n27  text_area.pack(expand=1, fill="both")\n28\n29  # 메뉴 구성\n30  menu_bar = tk.Menu(window)\n31  window.config(menu=menu_bar)\n32\n33  file_menu = tk.Menu(menu_bar, tearoff=0)\n34  menu_bar.add_cascade(label="파일", menu=file_menu)\n35  file_menu.add_command(label="열기", command=open_file)\n36  file_menu.add_command(label="저장", command=save_file)\n37  file_menu.add_separator()\n38  file_menu.add_command(label="종료", command=window.quit)\n39\n40  # GUI 실행\n41  window.mainloop()</code></pre>',
                 '26~27행은 텍스트 입력창, 30~38행은 메뉴 구성입니다. 37행 <code>add_separator()</code>는 항목 사이에 구분선을 넣습니다. 41행 <code>mainloop()</code>가 실행되어야 비로소 창이 화면에 나타나고 클릭·입력을 받기 시작합니다.',
-                '탐구 활동(55쪽): IDLE의 macosx.py 코드에서 <code>import tkinter</code>, <code>root = tkinter.Tk()</code>가 들어갑니다. IDLE도 tkinter로 만들어진 GUI 애플리케이션입니다.',
+                '탐구 활동(55쪽): IDLE의 macosx.py 코드 일부입니다. 빈칸에 들어갈 라이브러리 이름과 코드를 적어 보세요. <pre><code>import ______\n\ndef _init_tk_type():\n    global _tk_type\n    if platform == \'darwin\':\n        root = ______.Tk()\n        ws = root.tk.call(\'tk\', \'windowingsystem\')\n        if \'x11\' in ws:\n            _tk_type = "xquartz"</code></pre> IDLE도 GUI 애플리케이션입니다 — 어떤 라이브러리로 만들어졌을지 생각해 보세요.',
             ]),
             dict(n=50, alt='실행하고 확인하기 — 체크리스트', explain=[
                 '완성한 메모장을 실행하면서 다음을 확인하세요. 창 제목과 크기가 설정한 대로 보이는지, 텍스트 입력창에 자유롭게 글을 쓸 수 있는지, 파일 메뉴의 열기·저장이 실제로 동작하는지, 취소를 눌렀을 때 오류 없이 창이 그대로 유지되는지입니다.',
@@ -276,7 +286,7 @@ LESSONS = {
                 '<b>2. tkinter의 구성 요소</b>: Tk 객체(<code>root = tk.Tk()</code>)가 기본 창을 생성하고, 위젯이 사용자와 상호 작용하는 인터페이스 요소이며, 배치 관리자(<code>pack()</code>, <code>grid()</code>, <code>place()</code>)가 위젯을 창에 배치하고, 이벤트 처리가 사용자의 동작에 따라 특정 동작을 수행합니다.',
                 '<b>3. 주요 위젯 종류</b>: Label(표시), Button(클릭), Entry(한 줄 입력), Text(여러 줄 입력), Checkbutton(체크박스), Radiobutton(여러 옵션 중 하나), Listbox(목록 선택), Canvas(그리기), Frame(컨테이너)입니다.',
                 '<b>4. GUI 앱 개발 사례: 메모장 만들기</b>: Tk()로 창 생성, title()과 geometry()로 제목과 크기 설정, Text 위젯으로 텍스트 입력 영역 구성, filedialog로 파일 열기·저장, Menu로 파일 메뉴 구성 및 버튼과 기능 연결, mainloop()로 프로그램을 실행했습니다.',
-                '확인 학습(57쪽): 디버거 GUI 코드에서 ①은 위젯을 그룹으로 묶는 컨테이너 코드(Frame), ②는 클릭 버튼을 만드는 코드(Button), ①·②처럼 사용자와 상호 작용하는 인터페이스 요소를 ③위젯이라 합니다.',
+                '확인 학습(57쪽): 디버거 GUI 코드에서 ①·②·③에 들어갈 말이 무엇인지 아래 연습 문제에서 직접 풀어 보세요.',
             ]),
             dict(n=65, alt='정리하며 — UI 종류, tkinter 네 요소, 위젯 배치와 mainloop를 세 문장으로', explain=[
                 '이 단원을 세 문장으로 정리하면 다음과 같습니다. ① 인터페이스에는 명령어를 입력하는 CLI, 클릭·터치로 조작하는 GUI, 음성·몸짓으로 조작하는 NUI가 있습니다. ② tkinter는 Tk 객체·위젯·배치 관리자·이벤트 처리, 네 요소로 GUI를 구성합니다. ③ 위젯을 만든 뒤 pack·grid·place로 배치하고, command로 이벤트를 연결하고, mainloop()로 실행해야 완성된 프로그램이 됩니다.',

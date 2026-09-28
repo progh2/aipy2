@@ -366,11 +366,14 @@ class GreetingApp(App):
         self.result.text = "Enter your name."
 GreetingApp().run()'''},mode='pc',note='Kivy 기본 글꼴의 한글 지원을 가정하지 않습니다. 한글 글꼴을 지정하면 한국어 문구로 바꿀 수 있습니다.',
     screenshots=[{'src':'kivy.png','alt':'Kivy 인사 앱 실행 화면 · 이름 입력창과 Greet 및 Reset 버튼','caption':'같은 인사 앱을 Kivy로 실행한 화면입니다. 기본 글꼴을 위해 영어 문구를 사용합니다.'}])
-lesson(2,'ui','사용자 인터페이스 · CLI, GUI, NUI','43–44','사용자가 어떤 행동으로 프로그램에 의도를 전달하나요?',[
+lesson(2,'ui','사용자 인터페이스 · CLI, GUI, NUI','43–44, 47–48','사용자가 어떤 행동으로 프로그램에 의도를 전달하나요?',[
 'UI는 사람과 시스템이 상호 작용하는 접점입니다. 화면의 버튼·입력창·메뉴뿐 아니라 색상·글꼴·배치·피드백도 사용 편의성에 영향을 줍니다. 같은 기능이라도 저장 버튼을 찾기 어렵다면 사용자는 실수하기 쉽습니다.',
 'CLI는 명령어 입력 방식입니다. 반복 작업 자동화와 정확한 명령 전달에 유용하지만 문법을 배워야 합니다. GUI는 아이콘·메뉴·버튼 같은 시각 요소를 조작합니다. NUI는 음성·손짓·터치 등 자연스러운 행동을 사용합니다. 터치 GUI처럼 분류가 겹치는 사례도 있습니다.',
-'생각 열기: 파일 100개 이름을 바꾸는 일과 사진 한 장을 자르는 일에 각각 어떤 인터페이스를 선택할까요? 편리함은 사용자 경험과 작업 목적에 따라 달라집니다. 44쪽 탐구의 dir 입력은 CLI, 아이콘 클릭은 GUI, 손짓으로 TV 조작은 NUI입니다.'],[],['좋은 UI와 불편한 UI 사례를 한 가지씩 설명하세요.','버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요.'])
-lesson(2,'libraries','파이썬 GUI 라이브러리','45–46','파이썬에서 GUI를 만들 때 쓰는 대표 라이브러리 네 가지의 특징을 비교하세요.',[
+'생각 열기: 파일 100개 이름을 바꾸는 일과 사진 한 장을 자르는 일에 각각 어떤 인터페이스를 선택할까요? 편리함은 사용자 경험과 작업 목적에 따라 달라집니다.'],[],[
+    '탐구 활동(44쪽) ①: 사용자 인터페이스란 무엇인지 자신의 말로 설명해 보세요.',
+    '탐구 활동(44쪽) ②: 다음 문장이 각각 CLI·GUI·NUI 중 무엇인지 적어 보세요. (1) "dir이라고 입력하면 폴더 목록이 나와요." (2) "아이콘을 클릭해서 그림판을 열었어요." (3) "손을 흔들면 스마트 TV가 반응해요."',
+    '좋은 UI와 불편한 UI 사례를 한 가지씩 설명하세요.','버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요.'])
+lesson(2,'libraries','파이썬 GUI 라이브러리','45–48','파이썬에서 GUI를 만들 때 쓰는 대표 라이브러리 네 가지의 특징을 비교하세요.',[
 '교과서의 tkinter, PyQt, wxPython, Kivy에 PySide6와 ttk를 보강했습니다. tkinter는 Tcl/Tk 연결이며 파이썬 배포에 흔히 포함됩니다. 다만 일부 Linux 환경은 python3-tk를 별도 설치해야 합니다. ttk는 Tk의 테마 위젯입니다.',
 'PySide6와 PyQt6는 Qt 6를 파이썬에서 사용하는 서로 다른 바인딩입니다. 이 과정의 추가 실습은 Qt 공식 바인딩인 PySide6의 Qt Widgets를 사용합니다. 두 라이브러리의 외형은 같은 Qt 스타일을 쓰면 비슷하며 화면만으로 구분하기 어렵습니다.',
 'wxPython은 wxWidgets 기반으로 운영체제의 위젯을 활용합니다. Kivy는 자체 그리기 방식으로 터치와 여러 플랫폼의 인터페이스를 구성합니다. 배포 대상·필요 위젯·학습 자료·환경 지원을 기준으로 선택하세요.',
@@ -445,7 +448,7 @@ sys.exit(app.exec())'''},mode='pc',
         {'name':'QListWidget','signature':'items.addItems(["모듈", "패키지"])','note':'목록에서 고릅니다. Listbox.insert에 대응합니다.'},
         {'name':'QGraphicsScene / View','signature':'scene.addEllipse(...)\nview = QGraphicsView(scene)','note':'도형을 그리는 공간입니다. tkinter Canvas와 일대일은 아니지만 같은 역할로 연결합니다.'},
     ])
-lesson(2,'widgets','창과 위젯 · 화면을 구성하는 부품','50','보여줄 정보와 받을 입력에 따라 위젯을 선택합니다.',[
+lesson(2,'widgets','창과 위젯 · 화면을 구성하는 부품','49–50','보여줄 정보와 받을 입력에 따라 위젯을 선택합니다.',[
 'Tk 객체는 기본 창입니다. Label은 표시, Button은 명령, Entry는 한 줄 입력, Text는 여러 줄 입력입니다. Checkbutton은 독립적인 선택, Radiobutton은 묶음 중 하나의 선택, Listbox는 목록 선택입니다. Canvas는 도형·이미지 그리기 공간이며 Frame은 위젯을 묶는 컨테이너입니다.',
 '위젯을 생성한 것만으로 배치가 완료되지는 않습니다. 부모 창이나 Frame을 지정하고 배치 관리자를 호출해야 합니다. BooleanVar·StringVar 같은 변수를 통해 체크 상태와 선택 값을 읽을 수 있습니다.',
 'PySide6에서는 QApplication이 앱 실행을 관리하고 QWidget이 창·컨테이너 역할을 합니다. Label→QLabel, Button→QPushButton, Entry→QLineEdit, Text→QPlainTextEdit, Checkbutton→QCheckBox, Radiobutton→QRadioButton, Listbox→QListWidget으로 개념을 연결합니다. Canvas는 일대일 대응이 아니며 여기서는 QGraphicsScene/View로 도형을 그립니다.'],['widgets-tk','widgets-pyside'],['회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.','체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요.'])
@@ -514,7 +517,9 @@ lesson(2,'layout','배치 관리자','51','pack·grid·place, 위젯을 어디�
 '학생마다 화면 해상도·화면 배율·글꼴과 창 크기가 다릅니다. 내 PC에서 place(x, y)와 고정 너비로 맞춘 화면도 다른 PC나 좁은 창에서는 입력칸·버튼이 잘리거나 겹칠 수 있습니다. 좌표를 하나씩 다시 계산하는 대신 pack의 순서·방향, grid의 행·열 규칙으로 공간을 나누세요.',
 'pack과 grid도 확장 설정이 필요합니다. place에는 relx·rely·relwidth처럼 상대 위치·크기를 지정하는 방법도 있으므로 place 자체가 항상 깨지는 것은 아닙니다. 아래 비교는 고정 좌표·고정 크기의 한계를 보여 주는 교과서 밖 보강 예제입니다.',
 'pack(expand=True, fill="both")에서 expand는 여유 공간 배분, fill은 배정 영역 안에서 위젯을 늘리는 방향입니다. grid의 sticky="ew"와 columnconfigure(weight=1)는 가로 확장에 사용합니다. 같은 부모 안에서 pack과 grid를 혼용하지 마세요. 다른 Frame 안에서는 각각 사용할 수 있습니다.',
-'Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요.'],['layout-tk','layout-pyside'],['같은 입력 폼 비교 예제에서 넓게·좁게를 눌러 place의 오른쪽과 pack·grid의 입력칸 너비를 비교하세요.','grid의 안내는 두 행(rowspan), 확인 버튼은 여러 열(columnspan)에 걸칩니다. sticky와 weight를 각각 빼고 변화 원인을 설명하세요.','창을 너무 좁히면 pack·grid도 모든 내용을 담을 수 없습니다. 필요한 최소 창 크기를 찾아보세요.'])
+'Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요.'],['layout-tk','layout-pyside'],[
+    '탐구 활동(51쪽): 다음 중 tkinter의 GUI 창을 생성하는 객체는 무엇인지 골라 보세요. ① Tk() ② Entry() ③ Frame() ④ Label() ⑤ Button()',
+    '같은 입력 폼 비교 예제에서 넓게·좁게를 눌러 place의 오른쪽과 pack·grid의 입력칸 너비를 비교하세요.','grid의 안내는 두 행(rowspan), 확인 버튼은 여러 열(columnspan)에 걸칩니다. sticky와 weight를 각각 빼고 변화 원인을 설명하세요.','창을 너무 좁히면 pack·grid도 모든 내용을 담을 수 없습니다. 필요한 최소 창 크기를 찾아보세요.'])
 lesson(2,'events','이벤트 처리','51','버튼 생성 시점과 클릭 시점은 다릅니다.',[
 '콜백은 나중에 호출할 함수입니다. command=greet는 함수 자체를 전달합니다. command=greet()는 지금 함수를 실행하고 반환값을 전달하므로 의도와 다릅니다. 인자가 필요하면 lambda: greet(name)처럼 호출을 감쌉니다.',
 'tkinter의 mainloop는 이벤트 루프입니다. PySide6에서는 clicked.connect(greet)로 버튼의 시그널과 함수를 연결하고 app.exec()로 이벤트 루프를 시작합니다. connect(greet())도 같은 이유로 잘못된 사용입니다.',
@@ -611,7 +616,9 @@ lesson(2,'memo','GUI 앱 개발 · 나만의 메모장 만들기','52–55','열
 '④ 열기 함수: askopenfilename → 취소 여부 확인 → UTF-8로 읽기 → delete("1.0", END)로 기존 내용 제거 → insert로 새 내용 삽입입니다. "1.0"은 첫 줄 0번째 문자입니다.',
 '⑤ 저장 함수: asksaveasfilename(defaultextension=".txt") → 취소 확인 → Text.get으로 읽기 → UTF-8 파일 쓰기입니다. 교과서의 END는 Text가 유지하는 마지막 개행까지 포함합니다. 추가 개행을 제외하려면 "end-1c"를 사용합니다.',
 '⑥ Menu에 열기·저장·종료를 연결합니다. ⑦ mainloop()로 이벤트를 기다립니다. ⑧ 전체 코드를 실행하고 한글 파일 저장→재열기를 시험합니다. 교과서 55쪽 탐구의 라이브러리 이름은 tkinter입니다.',
-'PySide6 비교: QMainWindow의 중앙에 QPlainTextEdit를 두고 QAction을 메뉴에 연결합니다. QFileDialog는 (경로, 선택 필터)를 반환하므로 path, _로 받습니다. setPlainText/toPlainText가 텍스트 넣기·읽기 역할입니다.'],['memo-tk','memo-pyside'],['새 파일 저장, 기존 파일 열기, 대화 상자 취소를 각각 시험하세요.','파일 열기 코드의 순서를 섞은 뒤 다시 배열하세요.','메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?'])
+'PySide6 비교: QMainWindow의 중앙에 QPlainTextEdit를 두고 QAction을 메뉴에 연결합니다. QFileDialog는 (경로, 선택 필터)를 반환하므로 path, _로 받습니다. setPlainText/toPlainText가 텍스트 넣기·읽기 역할입니다.'],['memo-tk','memo-pyside'],[
+    '탐구 활동(55쪽): IDLE의 macosx.py 코드 일부에서 빈칸(import ______, root = ______.Tk())에 들어갈 라이브러리 이름을 적어 보세요.',
+    '새 파일 저장, 기존 파일 열기, 대화 상자 취소를 각각 시험하세요.','파일 열기 코드의 순서를 섞은 뒤 다시 배열하세요.','메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?'])
 # (#131) 'pyside' 소단원 페이지는 삭제했다 — 교과서 밖 확장(PySide6/Qt Designer)이며
 # 웹 실습실 개편에서 tkinter 중심 구성으로 정리했다. hello-pyside/memo-pyside 등 예제
 # 정의 자체는 examples 딕셔너리에 남아 있지만(하위 호환), 어떤 소단원도 더는 참조하지 않는다.
