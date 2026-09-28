@@ -11,204 +11,442 @@ def example(id,title,src,packages='',mode='web',files=None,checks='',note='',**s
  ex(id,title,data,mode=mode,checks=checks,note=note,**pick_slots(slots))
 
 # III. Concepts: explicitly separate data, learned parameters and chosen settings.
-topic(3,'ml-overview','AI·머신러닝·딥러닝의 관계','62–67','규칙을 직접 쓰는 것과 데이터에서 규칙을 배우는 것은 어떻게 다를까요?',[
+topic(3,'ml-overview','머신러닝이란? — AI·머신러닝·딥러닝의 관계','63–67','규칙을 직접 쓰는 것과 데이터에서 규칙을 배우는 것은 어떻게 다를까요?',[
 '인공지능은 지능적인 문제 해결 기술의 넓은 범위입니다. 머신러닝은 데이터에서 패턴을 학습하는 접근이며, 딥러닝은 여러 층의 신경망을 사용하는 머신러닝의 한 종류입니다. 모든 AI가 머신러닝인 것은 아닙니다.',
 '초기의 규칙 중심 연구는 지식 입력과 계산 자원의 한계를 겪었습니다. 이후 데이터·계산 장치·학습 알고리즘의 발전이 함께 영향을 주었습니다. 1956년 다트머스 워크숍, 1997년 딥 블루의 체스 승리, 2012년 ImageNet의 딥러닝 성과는 서로 다른 접근의 발전 사례입니다. 딥 블루를 현대 딥러닝 모델과 같은 것으로 보지 마세요.'],['인공지능｜가장 넓은 범위','머신러닝｜데이터로 학습','딥러닝｜여러 층의 신경망'],['접근','규칙의 출처','예'],[['규칙 기반','사람이 조건 작성','비밀번호 길이 검사'],['머신러닝','데이터와 학습 알고리즘','스팸 분류'],['딥러닝','다층 신경망의 학습','이미지 특징 학습']],tasks=['주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요.'])
-topic(3,'ml-use','머신러닝이 필요한 문제와 활용','68–70','정확한 규칙을 쓰기 어려운 문제를 찾아보세요.',[
+topic(3,'ml-use','머신러닝의 필요성과 활용','68–70','정확한 규칙을 쓰기 어려운 문제를 찾아보세요.',[
 '추천, 이미지 분류, 음성 처리처럼 복잡한 패턴이 있는 문제에서 머신러닝을 활용합니다. 규칙이 명확한 사칙연산이나 간단한 유효성 검사에는 일반 프로그램이 더 간단할 수 있습니다.',
 '학습 데이터가 현실을 충분히 대표하지 않으면 특정 조건에서 오류가 늘어납니다. 예측을 사실로 단정하지 말고, 데이터의 범위·오류 비용·사람의 확인 절차를 함께 설명하세요.'],['문제 찾기','입력 데이터 정하기','예측할 출력 정하기','오류가 미칠 영향 점검'],['서비스','입력','예측'],[['추천','이용 기록·항목 특성','선호 가능성'],['제조 검사','제품 이미지','정상/결함'],['대출량 예상','과거 대출·요일','예상 권수']],tasks=['학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요.'])
-topic(3,'ml-process','문제 해결 과정과 데이터 분할','71–75, 101–102','모델을 만들기 전에 성공 기준을 정하세요.',[
+topic(3,'ml-process','머신러닝 문제 해결 과정','71–75','모델을 만들기 전에 성공 기준을 정하세요.',[
 '문제 정의 → 수집·탐색 → 전처리 → 모델 선택 → 학습·평가 → 해석·응용으로 진행합니다. 실제 프로젝트에서는 결과를 보고 앞 단계로 돌아가 수정하기도 합니다.',
 '평가용 데이터는 먼저 분리해 둡니다. 평균·스케일·범주 목록처럼 데이터에서 배우는 전처리 값도 훈련 부분에서만 구합니다. 모델 후보는 검증 데이터나 교차 검증으로 비교하고, 최종 테스트는 선택을 마친 뒤 사용합니다.'],['문제·성공 기준','수집·탐색','훈련/테스트 분할','전처리·학습·검증','최종 평가·해석'],['분할','역할','금지할 일'],[['훈련','전처리 값·모델 학습','정답을 입력 특성에 포함'],['검증','모델·설정 선택','최종 테스트로 반복 선택'],['테스트','선택 완료 후 최종 확인','fit / fit_transform 호출']],tasks=['도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요.'])
-topic(3,'ml-terms','특성·레이블·모델·하이퍼파라미터','76–78','표의 어느 열을 X로, 어느 열을 y로 사용할까요?',[
+topic(3,'ml-terms','머신러닝의 주요 용어','76–78','표의 어느 열을 X로, 어느 열을 y로 사용할까요?',[
 '데이터 세트의 한 행은 보통 한 관측입니다. X는 예측 시점에 알 수 있는 특성의 표이며 y는 예측할 정답입니다. 샘플 수와 특성 수를 확인하고 같은 행의 X와 y가 대응하는지 검사합니다.',
 '모델은 학습한 예측 규칙입니다. 가중치 같은 파라미터는 학습 과정에서 정해지고, k-NN의 k 같은 하이퍼파라미터는 학습 전에 설정합니다. 훈련 성능만 좋고 검증 성능이 낮으면 과대 적합, 둘 다 낮으면 과소 적합을 의심합니다.'],['행｜샘플 1개','입력 열 X｜특성 여러 개','정답 열 y｜레이블','fit → predict｜학습 후 예측'],['기호','도서 예','형태'],[['X','요일·최근 대출 수','(샘플 수, 특성 수)'],['y','다음 날 대출 수','(샘플 수,)'],['하이퍼파라미터','트리의 최대 깊이','학습 전에 선택']],tasks=['미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요.'])
-topic(3,'ml-methods','지도·비지도·강화 학습','79–84','정답을 배우나요, 구조를 찾나요, 행동의 보상을 배우나요?',[
+topic(3,'ml-methods','머신러닝 학습 방법의 종류','79–82','정답을 배우나요, 구조를 찾나요, 행동의 보상을 배우나요?',[
 '지도 학습은 입력과 정답의 관계를 학습합니다. 범주를 예측하면 분류, 연속적인 수치를 예측하면 회귀입니다. 비지도 학습은 정답 없이 군집이나 낮은 차원의 구조를 찾습니다.',
 '강화 학습에서는 에이전트가 상태를 보고 행동하며 환경에서 보상을 받습니다. 정책은 행동 선택 전략이고 장기 누적 보상을 높이는 방향으로 배웁니다. Q-learning은 여러 강화 학습 알고리즘 중 하나입니다.'],['정답 있음｜지도 학습','정답 없음｜비지도 학습','상태·행동·보상｜강화 학습'],['유형','목표','예'],[['분류','범주 예측','스팸 여부'],['회귀','수치 예측','내일 기온'],['군집','유사한 데이터 묶기','고객 그룹'],['강화','행동 전략 학습','미로에서 탈출']],tasks=['미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요.'])
-example('ml-tools','NumPy·pandas로 표 탐색하기','''import numpy as np
-import pandas as pd
-values = np.array([10, 20, 30])
-print(values + 5)
-print(np.concatenate(([1, 2], [3, 4])))
-df = pd.DataFrame({"name": ["A", "B", "C"], "score": [75, 90, 85]})
-print(df.head())
-print(df.describe())
-df.info()
-''','numpy pandas',checks='assert df.shape == (3, 2)')
-example('ml-chart','빈도표를 막대그래프로','''import matplotlib
+example('ml-sklearn-exam','교과서 86쪽 sklearn_exam.py — 공부 시간으로 합격 예측','''from sklearn.tree import DecisionTreeClassifier
+import numpy as np
+
+# 학습 데이터
+X_study = np.array([[1], [3]])   # 공부 시간
+y_pass = np.array([0, 1])        # 합격 여부
+
+# 모델 만들고 학습
+model = DecisionTreeClassifier()
+model.fit(X_study, y_pass)
+
+# 새로운 공부 시간으로 예측
+prediction = model.predict(np.array([[2]]))
+print(f"공부 시간 2시간일 때 예측: {prediction[0]}")
+''','scikit-learn numpy',checks='assert prediction[0] == 0')
+example('ml-numpy-exam','교과서 87쪽 numpy_exam.py — 배열 계산과 이어 붙이기','''import numpy as np
+my_array = np.array([10, 20, 30])
+print("NumPy 배열:", my_array)
+
+result = my_array + 5
+print("5를 더한 결과:", result)
+
+# 여러 개의 배열 합치기
+array_part1 = np.array([1, 2])
+array_part2 = np.array([3, 4])
+combined_array = np.concatenate((array_part1, array_part2))
+print("\\n합쳐진 배열:", combined_array)
+''','numpy',checks='assert list(combined_array) == [1,2,3,4]')
+example('ml-pandas-exam','교과서 87~88쪽 pandas_exam.py — DataFrame 만들고 칼럼 선택','''import pandas as pd
+data = {'이름': ['철수', '영희'], '점수': [85, 92]}
+my_df = pd.DataFrame(data)
+print("학생 점수표:")
+print(my_df)
+print("\\n'점수' 칼럼:\\n", my_df['점수'])
+''','pandas',checks='assert list(my_df["점수"]) == [85,92]')
+example('ml-matplot-exam','교과서 88~89쪽 matplot_exam.py — Seaborn 막대그래프','''import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from collections import Counter
-counts = Counter(["apple", "banana", "apple", "pear", "banana", "apple"])
-plt.bar(list(counts), list(counts.values()))
-plt.ylabel("Count")
-plt.title("Fruit frequency")
-plt.savefig("frequency.png")
-print(dict(counts))
-''','matplotlib',note='실제 Python이 저장한 PNG를 실행 결과 아래에서 확인할 수 있습니다.')
-example('ml-seaborn','Seaborn countplot과 Excel 입출력','''import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-frame = pd.DataFrame({"fruit": ["apple", "banana", "apple"]})
-frame.to_excel("fruit.xlsx", index=False)
-print(pd.read_excel("fruit.xlsx").head())
-sns.countplot(data=frame, x="fruit")
-plt.savefig("fruit.png")
-''','pandas seaborn matplotlib openpyxl',mode='pc',note='Excel 입출력과 seaborn 비교 예제입니다. python -m pip install -r requirements.txt 후 PC에서 실행하세요.')
-topic(3,'ml-libraries','머신러닝 라이브러리와 그래프','85–89','배열·표·모델·그래프 도구를 연결해 보세요.',[
+import pandas as pd
+
+data_for_plot = pd.DataFrame({'fruits': ['apple', 'banana', 'apple']})
+
+# Seaborn으로 막대 그래프 그리기(각 과일 개수)
+plt.figure(figsize=(8, 6))
+sns.countplot(x='fruits', data=data_for_plot)
+plt.savefig("matplot_exam.png")
+''','matplotlib seaborn pandas',checks='assert data_for_plot.shape == (3,1)',note='교과서는 plt.show()로 화면에 띄우지만, 브라우저 실습에서는 plt.savefig()로 저장한 그림을 결과 아래에 보여줍니다(매트플롯립 백엔드도 Agg로 지정) — 이 두 줄만 교과서 코드에 추가했습니다.')
+topic(3,'ml-libraries','파이썬 머신러닝 라이브러리 소개','86–89','배열·표·모델·그래프 도구를 연결해 보세요.',[
 'NumPy는 다차원 배열과 벡터 연산, pandas는 Series·DataFrame과 표 탐색, scikit-learn은 전처리·학습·평가 도구를 제공합니다. Matplotlib은 그래프 구성, Seaborn은 표 데이터의 통계 시각화를 돕습니다.',
-'웹에서는 NumPy·pandas·그래프와 작은 원리 실습을 실행합니다. scikit-learn 전체 파이프라인은 PC에서 실행합니다. 필요한 웹 패키지는 처음에 내려받습니다. 실행한 Python이 만든 PNG 그래프는 결과 아래에 표시됩니다. PC에서는 예제 폴더에서 requirements.txt를 설치합니다.'],['NumPy｜배열','pandas｜표 정리','scikit-learn｜학습·평가','Matplotlib / Seaborn｜시각화'],['확인','코드','의미'],[['앞부분','df.head()','표의 실제 값'],['구조','df.info()','자료형·결측 개수'],['통계','df.describe()','수치 분포'],['배열 크기','array.shape','축별 길이']],['ml-tools','ml-chart','ml-seaborn'],['과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요.'])
-example('ml-clean','CSV·결측치·이상치 탐색','''import pandas as pd
-frame = pd.read_csv("scores.csv")
-print(frame.head())
-print("Missing:", frame.isna().sum())
-print("Drop missing:", frame.dropna())
-# 이 예제는 탐색용 표입니다. 예측 모델에서는 분할 후 훈련 데이터로 통계량을 구합니다.
-median = frame["score"].median()
-filled = frame.fillna({"name": "Unknown", "score": median})
-print("Filled:", filled)
-print("Outside score range:", filled[(filled.score < 0) | (filled.score > 100)])
-''','pandas',files={'scores.csv':'name,score\nA,80\nB,\n,90\nD,1000\n'},checks='assert filled.isna().sum().sum() == 0')
-example('ml-scale','훈련 데이터로만 전처리 배우기','''import numpy as np
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder
-train = np.array([[10., 1.], [20., np.nan], [30., 3.]])
-test = np.array([[50., 2.]])
-imputer = SimpleImputer(strategy="median")
-train_filled = imputer.fit_transform(train)
-test_filled = imputer.transform(test)
-for scaler in [MinMaxScaler(), StandardScaler()]:
-    print(type(scaler).__name__)
-    print(scaler.fit_transform(train_filled))
-    print("Test:", scaler.transform(test_filled))
-encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
-print(encoder.fit_transform([["Seoul"], ["Busan"], ["Seoul"]]))
-print("Unseen city:", encoder.transform([["Jeju"]]))
-''','numpy scikit-learn',checks='assert test_filled.shape == (1, 2)')
-topic(3,'ml-preprocess','결측치·이상치·스케일·범주 처리','90–100','값을 바꾼 이유와 기준을 남겨 보세요.',[
-'CSV는 read_csv, Excel은 read_excel로 읽습니다. 결측치는 isna로 확인한 뒤 dropna로 제거하거나 fillna·SimpleImputer로 채울 수 있습니다. 이상치는 입력 오류인지 드문 정상 관측인지 먼저 확인합니다. 임의 삭제는 데이터의 의미를 바꿀 수 있습니다.',
-'MinMaxScaler는 훈련 범위를 기준으로 값을 조정하며 새로운 값은 0~1 범위를 벗어날 수 있습니다. StandardScaler는 훈련 평균과 표준편차로 변환하지만 정규분포를 만들어 주지는 않습니다. 범주형 값에는 get_dummies 또는 OneHotEncoder를 사용하며 새 범주 처리 기준도 정합니다.'],['불러오기·자료형 확인','분할 후 훈련 부분 탐색','결측·이상치 처리 기준','수치 스케일·범주 인코딩','테스트에는 transform'],['처리','배우는 기준','확인'],[['결측 채우기','훈련 중앙값 등','누락 의미 보존'],['정규화','훈련 최소·최대','새 값은 범위 밖 가능'],['표준화','훈련 평균·표준편차','분포 모양 보장 안 함'],['원-핫','훈련 범주 목록','알 수 없는 범주 대응']],['ml-clean','ml-scale'],['1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요.'])
-example('ml-classify','붓꽃 분류 모델 네 가지 비교','''from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
+'웹에서는 NumPy·pandas·그래프와 작은 원리 실습을 실행합니다. scikit-learn 전체 파이프라인은 PC에서 실행합니다. 필요한 웹 패키지는 처음에 내려받습니다. 실행한 Python이 만든 PNG 그래프는 결과 아래에 표시됩니다. PC에서는 예제 폴더에서 requirements.txt를 설치합니다.'],['NumPy｜배열','pandas｜표 정리','scikit-learn｜학습·평가','Matplotlib / Seaborn｜시각화'],['확인','코드','의미'],[['앞부분','df.head()','표의 실제 값'],['구조','df.info()','자료형·결측 개수'],['통계','df.describe()','수치 분포'],['배열 크기','array.shape','축별 길이']],['ml-sklearn-exam','ml-numpy-exam','ml-pandas-exam','ml-matplot-exam'],['과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요.'])
+example('ml-read-data','교과서 90~91쪽 read_data.py — CSV·Excel 불러오기','''import pandas as pd
+
+# 교과서는 텍스트 편집기·엑셀로 만든 data.csv/data.xlsx를 코랩에 업로드해서 읽습니다.
+# 웹 실습에서는 같은 내용을 코드로 먼저 만든 뒤 그대로 읽어 들입니다.
+with open('data.csv', 'w', encoding='utf-8') as f:
+    f.write('Name, Score\\nAlice, 90\\nBob, 85\\n')
+pd.DataFrame({'Name': ['Alice', 'Bob'], 'Score': [90, 85]}).to_excel('data.xlsx', index=False)
+
+df_csv = pd.read_csv('data.csv')
+print("CSV에서 불러온 데이터:")
+print(df_csv)
+
+df_excel = pd.read_excel('data.xlsx')
+print("\\nExcel에서 불러온 데이터:")
+print(df_excel)
+''','pandas openpyxl',mode='pc',checks='assert list(df_csv.columns)[0]=="Name"',note='교과서는 텍스트 편집기·엑셀로 미리 만든 data.csv·data.xlsx를 코랩에 업로드해 읽습니다. 이 예제는 같은 내용을 코드 앞 두 줄에서 직접 만든 뒤 그대로 읽어 들입니다 — 그 두 줄만 교과서 코드에 추가했습니다. Excel 저장에 openpyxl이 필요해 PC/코랩에서 실행하세요.')
+example('ml-head-describe-info','교과서 91~93쪽 head_describe_info.py — head·describe·info','''import pandas as pd
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eve', 'Frank'],
+        'Score': [90, 85, 78, 92, 65, 70],
+        'City': ['Seoul', 'Busan', 'Seoul', 'Jeju', 'Busan', 'Seoul']}
+
+df = pd.DataFrame(data)
+print("--- 데이터프레임 상위 3행 (df.head(3)) ---")
+print(df.head(3))
+
+print("\\n--- 숫자 데이터 통계 요약 (df.describe()) ---")
+print(df.describe())
+
+print("\\n--- 데이터프레임 요약 정보 (df.info()) ---")
+df.info()
+''','pandas',checks='assert df.shape == (6,3)',note='교과서 표기(mean 79.00, std 9.92)는 같은 코드의 실제 실행값(mean 80.00, std 10.94)과 다릅니다 — 이 페이지는 실제 실행값을 싣습니다. dtype 표시도 pandas 버전에 따라 object/str로 다를 수 있습니다.')
+example('ml-missing-values','교과서 93~96쪽 missing_values.py — 결측치 확인·제거·채우기','''import pandas as pd
+import numpy as np
+
+data_missing = {'Name': ['Alice', 'Bob', np.nan],
+                'Score': [90, np.nan, 70],
+                'City': ['Seoul', 'Busan', 'Seoul']}
+
+df_missing = pd.DataFrame(data_missing)
+print("결측치 확인 (각 열의 결측치 개수):")
+print(df_missing.isnull().sum())
+
+df_dropna_row = df_missing.dropna(axis=0)
+print("\\n결측치가 있는 행 제거 후 데이터:")
+print(df_dropna_row)
+
+# 결측치를 0으로 채우기
+df_fill_zero = df_missing.fillna(0)
+print("\\n결측치를 0으로 채운 후 데이터:")
+print(df_fill_zero)
+
+# Name 칼럼의 결측치를 'Unknown'으로 채우기
+df_fill_unknown_name = df_missing.fillna({'Name': 'Unknown'})
+print("\\nName 결측치를 'Unknown'으로 채운 후 데이터:")
+print(df_fill_unknown_name)
+
+# 'Score' 열의 평균값으로 결측치 채우기
+score_mean = df_missing['Score'].mean()
+df_fill_mean = df_missing.fillna({'Score': score_mean})
+print(f"\\n'Score' 결측치를 평균({score_mean:.2f})으로 채운 후 데이터:")
+print(df_fill_mean)
+
+# 'Score' 열의 중앙값으로 결측치 채우기
+score_median = df_missing['Score'].median()
+df_fill_median = df_missing.fillna({'Score': score_median})
+print(f"\\n'Score' 결측치를 중앙값({score_median:.2f})으로 채운 후 데이터:")
+print(df_fill_median)
+''','pandas numpy',checks='assert df_fill_zero.isna().sum().sum() == 0')
+example('ml-normalization','교과서 96~98쪽 normalization.py — 정규화(Min-Max)','''import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+
+data_norm = {'Feature1': [10, 20, 30, 40],
+             'Feature2': [100, 200, 300, 400]}
+df_norm = pd.DataFrame(data_norm)
+print("--- 원본 데이터 (정규화 전) ---")
+print(df_norm)
+
+scaler_minmax = MinMaxScaler()
+df_normalized = pd.DataFrame(scaler_minmax.fit_transform(df_norm), columns=df_norm.columns)
+print("\\n--- 정규화된 데이터 ---")
+print(df_normalized)
+''','pandas scikit-learn',checks='assert round(df_normalized["Feature1"].max(),3) == 1.0')
+example('ml-standardization','교과서 98~99쪽 standardization.py — 표준화(Standardization)','''import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
-X, y = load_iris(return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
-models = [KNeighborsClassifier(5), LogisticRegression(max_iter=1000), DecisionTreeClassifier(max_depth=3, random_state=42), SVC()]
-for model in models:
-    pipe = make_pipeline(StandardScaler(), model)
-    pipe.fit(X_train, y_train)
-    pred = pipe.predict(X_test)
-    print(type(model).__name__, round(accuracy_score(y_test, pred), 3))
-# 이 비교는 관찰용입니다. 실제 모델 선택은 훈련 부분의 교차 검증으로 합니다.
-''','scikit-learn',checks='assert len(pred) == len(y_test)')
-topic(3,'ml-classification','분류: k-NN·로지스틱·트리·SVM','103–105','이름에 회귀가 들어 있어도 범주를 예측하는 모델이 있어요.',[
-'k-NN은 가까운 이웃들의 정답을 참고합니다. 로지스틱 회귀는 분류에 사용하는 모델이고, 결정 트리는 조건으로 데이터를 나누며, SVM은 범주 사이의 경계를 학습합니다.',
-'붓꽃 예제에서 X는 꽃받침·꽃잎의 측정값이고 y는 품종입니다. stratify=y는 분할 시 클래스 비율을 고려합니다. k-NN·SVM 등은 거리나 스케일의 영향을 받으므로 전처리를 파이프라인 안에서 학습합니다.'],['붓꽃 X,y','분할','스케일 + 분류기 fit','새 X로 predict','정답과 비교'],['알고리즘','핵심','조절값 예'],[['k-NN','가까운 이웃','n_neighbors'],['로지스틱','클래스 확률','C'],['결정 트리','조건 분기','max_depth'],['SVM','분리 경계','C / kernel']],['ml-classify'],['k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요.'])
-example('ml-regression','회귀 예측과 MAE·MSE·R²','''from sklearn.datasets import load_diabetes
+import numpy as np                                 # 통계량 확인을 위해 사용
+
+data = {
+    'Feature1': [10, 20, 30, 40, 50],
+    'Feature2': [100, 200, 50, 150, 250],
+    'Feature3': [1, 2, 3, 100, 4]                 # 이상치인 큰 값을 포함
+}
+df = pd.DataFrame(data)
+
+scaler_standard = StandardScaler()
+df_standardized = scaler_standard.fit_transform(df) # 데이터에 표준화 적용
+df_standardized = pd.DataFrame(df_standardized, columns=df.columns)
+print(df_standardized)
+
+print("각 특성의 평균 :", scaler_standard.mean_)
+print("각 특성의 표준편차 :", np.sqrt(scaler_standard.var_))
+''','pandas scikit-learn numpy',checks='assert round(df_standardized["Feature1"].mean(),6) == 0.0')
+example('ml-one-hot-encoding','교과서 100~101쪽 one_hot_encoding.py — 원-핫 인코딩','''import pandas as pd
+
+data_onehot = {'도시': ['서울', '부산', '서울', '제주', '부산'],
+               '직업': ['학생', '직장인', '직장인', '학생', '학생']}
+df_onehot = pd.DataFrame(data_onehot)
+print(" - 원본 데이터")
+print(df_onehot)
+
+df_encoded = pd.get_dummies(df_onehot, columns=['도시', '직업'], drop_first=True, dtype=int)
+print("\\n--- 2. 원-핫 인코딩된 데이터 ---")
+print(df_encoded)
+''','pandas',checks='assert "도시_부산" not in df_encoded.columns')
+example('ml-train-test-split','교과서 101~102쪽 train_test_split.py — 훈련/테스트 분할','''import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-X, y = load_diabetes(return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
-model = LinearRegression().fit(X_train, y_train)
-pred = model.predict(X_test)
-print("Train R2:", model.score(X_train, y_train))
-print("Test MAE:", mean_absolute_error(y_test, pred))
-print("Test MSE:", mean_squared_error(y_test, pred))
-print("Test R2:", r2_score(y_test, pred))
-''','scikit-learn',checks='assert mean_absolute_error(y_test, pred) >= 0',note='내장 자료로 회귀 원리를 연습하는 예제이며 실제 개인에 대한 예측 용도로 사용하지 않습니다.')
-example('ml-housing','교과서 연결 · 주택 자료 회귀','''from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-X, y = fetch_california_housing(return_X_y=True)
+data_split = {'공부 시간': [2, 3, 5, 4, 6],
+              '수면 시간': [7, 6, 8, 7, 7],
+              '시험 점수': [60, 70, 85, 75, 90]}
+df = pd.DataFrame(data_split)
+X = df[['공부 시간', '수면 시간']]
+y = df['시험 점수']
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-pred = LinearRegression().fit(X_train, y_train).predict(X_test)
-print("MAE", mean_absolute_error(y_test, pred))
-print("MSE", mean_squared_error(y_test, pred))
-print("R2", r2_score(y_test, pred))
-''','scikit-learn',mode='pc',note='첫 실행에 외부 데이터 다운로드가 필요합니다. 네트워크가 없으면 내장 자료 회귀 예제를 사용하세요.')
-topic(3,'ml-regression','회귀와 수치 오차','106–107, 121–123','예측 숫자는 정답에서 얼마나 떨어져 있나요?',[
+print("\\n--- 3. 분할된 데이터의 형태 확인 ---")
+print(f" - 훈련 특징 데이터 (X_train) 형태: {X_train.shape}")
+print(f" - 테스트 특징 데이터 (X_test) 형태: {X_test.shape}")
+print(f" - 훈련 목표 변수 (y_train) 형태: {y_train.shape}")
+print(f" - 테스트 목표 변수 (y_test) 형태: {y_test.shape}")
+''','pandas scikit-learn',checks='assert X_train.shape == (3,2) and X_test.shape == (2,2)')
+topic(3,'ml-preprocess','데이터 준비와 전처리','90–102','값을 바꾼 이유와 기준을 남겨 보세요.',[
+'CSV는 read_csv, Excel은 read_excel로 읽습니다. 결측치는 isna로 확인한 뒤 dropna로 제거하거나 fillna·SimpleImputer로 채울 수 있습니다. 이상치는 입력 오류인지 드문 정상 관측인지 먼저 확인합니다. 임의 삭제는 데이터의 의미를 바꿀 수 있습니다.',
+'MinMaxScaler는 훈련 범위를 기준으로 값을 조정하며 새로운 값은 0~1 범위를 벗어날 수 있습니다. StandardScaler는 훈련 평균과 표준편차로 변환하지만 정규분포를 만들어 주지는 않습니다. 범주형 값에는 get_dummies 또는 OneHotEncoder를 사용하며 새 범주 처리 기준도 정합니다.'],['불러오기·자료형 확인','분할 후 훈련 부분 탐색','결측·이상치 처리 기준','수치 스케일·범주 인코딩','테스트에는 transform'],['처리','배우는 기준','확인'],[['결측 채우기','훈련 중앙값 등','누락 의미 보존'],['정규화','훈련 최소·최대','새 값은 범위 밖 가능'],['표준화','훈련 평균·표준편차','분포 모양 보장 안 함'],['원-핫','훈련 범주 목록','알 수 없는 범주 대응']],['ml-read-data','ml-head-describe-info','ml-missing-values','ml-normalization','ml-standardization','ml-one-hot-encoding','ml-train-test-split'],['1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요.'])
+example('ml-knn-exam','교과서 104~105쪽 knn.py — K-최근접 이웃으로 붓꽃 분류','''import pandas as pd
+from sklearn.datasets import load_iris                # 붓꽃 데이터 세트
+from sklearn.model_selection import train_test_split  # 데이터 분할
+from sklearn.neighbors import KNeighborsClassifier    # K-최근접 이웃 알고리즘 모델
+
+iris = load_iris()
+X = pd.DataFrame(iris.data, columns=iris.feature_names)
+y = pd.Series(iris.target)
+print("원본 데이터 미리보기 (특징 X)\\n", X.head())
+print("원본 데이터 미리보기(목표 변수 y)\\n", y.head())
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,
+                                    random_state=42, stratify=y)
+print(f" - 훈련 데이터 형태: {X_train.shape}, {y_train.shape}")
+print(f" - 테스트 데이터 형태: {X_test.shape}, {y_test.shape}")
+
+knn_model = KNeighborsClassifier(n_neighbors=5)
+knn_model.fit(X_train, y_train)
+
+y_pred = knn_model.predict(X_test)
+print(y_pred[:5])                 # 예측 결과 중 앞의 5개만 출력
+''','scikit-learn pandas',checks='assert list(y_pred[:5]) == [2,1,2,1,2]')
+topic(3,'ml-classification','주요 알고리즘 활용 · 분류','103–105','이름에 회귀가 들어 있어도 범주를 예측하는 모델이 있어요.',[
+'k-NN은 가까운 이웃들의 정답을 참고합니다. 로지스틱 회귀는 분류에 사용하는 모델이고, 결정 트리는 조건으로 데이터를 나누며, SVM은 범주 사이의 경계를 학습합니다.',
+'붓꽃 예제에서 X는 꽃받침·꽃잎의 측정값이고 y는 품종입니다. stratify=y는 분할 시 클래스 비율을 고려합니다. k-NN·SVM 등은 거리나 스케일의 영향을 받으므로 전처리를 파이프라인 안에서 학습합니다.'],['붓꽃 X,y','분할','스케일 + 분류기 fit','새 X로 predict','정답과 비교'],['알고리즘','핵심','조절값 예'],[['k-NN','가까운 이웃','n_neighbors'],['로지스틱','클래스 확률','C'],['결정 트리','조건 분기','max_depth'],['SVM','분리 경계','C / kernel']],['ml-knn-exam'],['k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요.'])
+example('ml-linear-regression','교과서 106~108쪽 linear_regression.py — 당뇨병 데이터로 선형 회귀','''import pandas as pd
+from sklearn.datasets import load_diabetes            # 예제 데이터 세트(당뇨병 데이터)
+from sklearn.model_selection import train_test_split  # 데이터 분할
+from sklearn.linear_model import LinearRegression      # 선형 회귀 모델
+
+diabetes = load_diabetes()
+X = pd.DataFrame(diabetes.data, columns=diabetes.feature_names)    # 특징
+y = pd.Series(diabetes.target)              # 질병 진행도: 연속적인 숫자 값
+print(" - 특징(X) 데이터 미리보기 (상위 5개) \\n", X.head())
+print("\\n - 목표 변수(y) 미리보기 (상위 3개):\\n", y.head(3))
+print(f" - 원본 데이터 형태: {X.shape}, {y.shape}")
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+print(f" - 훈련 데이터 형태: {X_train.shape}, {y_train.shape}")
+print(f" - 테스트 데이터 형태: {X_test.shape}, {y_test.shape}")
+
+linear_model = LinearRegression()
+linear_model.fit(X_train, y_train)                # 모델 학습
+print(f" - 모델의 계수: {linear_model.coef_}")
+print(f" - 모델의 절편: {linear_model.intercept_:.4f}")
+
+y_pred = linear_model.predict(X_test)
+print(" - 테스트 데이터에 대한 예측 결과 (일부):")
+print(y_pred[:5])
+''','scikit-learn pandas',checks='assert round(linear_model.intercept_,4) == 151.0082',note='X.head() 출력은 pandas가 화면 폭에 맞춰 가운데 열을 생략(...)해 보여줄 수 있습니다 — 교과서는 지면 폭이 넓어 10개 열을 모두 보여줍니다. 계수·절편·예측값은 동일합니다.')
+example('ml-regression-metrics','교과서 122~123쪽 regression_metrics.py — 캘리포니아 주택 가격 MSE·MAE·R²','''import pandas as pd
+import numpy as np              # 수치 계산을 위한 numpy 라이브러리
+from sklearn.datasets import fetch_california_housing    # 회귀 예제 데이터 세트
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression        # 선형 회귀 모델
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+                                         # 회귀 평가 지표 함수들
+
+housing = fetch_california_housing()
+X = pd.DataFrame(housing.data, columns=housing.feature_names)
+y = pd.Series(housing.target)   # 주택 가격 (연속형)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+print(f"\\n - 평균 제곱 오차 (MSE): {mse:.4f}")
+print(f" - 평균 절대 오차 (MAE): {mae:.4f}")
+print(f" - 결정계수 (R-squared): {r2:.4f}")
+''','scikit-learn pandas numpy',mode='pc',checks='assert round(r2,4) == 0.5958',note='첫 실행에 캘리포니아 주택 데이터 다운로드가 필요해 PC/코랩에서 실행하세요.')
+topic(3,'ml-regression','주요 알고리즘 활용 · 회귀 / 회귀와 수치 오차','106–107, 121–123','예측 숫자는 정답에서 얼마나 떨어져 있나요?',[
 '회귀는 연속적인 목표값을 예측합니다. 선형 회귀는 특성들의 가중합과 절편으로 값을 예측합니다. 예측한 값과 실제 값의 차이를 잔차라고 부릅니다.',
-'MAE는 절대 오차 평균, MSE는 제곱 오차 평균입니다. MSE는 큰 오차에 더 큰 벌점을 줍니다. R²는 평균 예측 기준과 비교한 값으로 음수가 될 수 있습니다. 한 지표의 숫자만 보지 말고 목표값의 단위와 오류 사례도 확인하세요.'],['입력 특성','가중합 + 절편','예측 숫자','정답과 오차 계산'],['지표','작을수록?','의미'],[['MAE','좋음','원래 목표값 단위'],['MSE','좋음','큰 오차를 강하게 반영'],['R²','클수록 좋음','0은 평균 기준, 음수 가능']],['ml-regression','ml-housing'],['기울기 실험에서 MSE가 가장 작은 위치를 찾으세요.'])
-example('ml-cluster','군집 중심과 산점도','''import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from sklearn.datasets import make_blobs
-from sklearn.cluster import KMeans
-X, _ = make_blobs(n_samples=120, centers=3, random_state=42, cluster_std=0.7)
-model = KMeans(n_clusters=3, n_init=10, random_state=42)
-labels = model.fit_predict(X)
-centers = model.cluster_centers_
-print("Centers:", centers)
-plt.scatter(X[:, 0], X[:, 1], c=labels)
-plt.scatter(centers[:, 0], centers[:, 1], marker="X", s=180, c="red")
-plt.title("K-means: groups and centers")
-plt.savefig("clusters.png")
-''','scikit-learn matplotlib',checks='assert len(set(labels)) == 3')
-topic(3,'ml-cluster','K-평균 군집화','108–111','정답 이름 없이 비슷한 점들을 묶을 수 있을까요?',[
-'K-평균은 정한 개수 K의 중심을 이용해 가까운 샘플들을 묶고 중심을 갱신합니다. labels_의 번호는 정답 클래스나 순위가 아니며 실행 조건에 따라 번호가 달라질 수 있습니다.',
-'데이터의 스케일, K, 초기 중심이 결과에 영향을 줍니다. n_init은 여러 초기화 시도를 제어합니다. 점들의 분포를 보고 군집이 의미 있는지 해석하며, 항상 원형 군집이 존재한다고 가정하지 마세요.'],['K개 중심 초기화','가장 가까운 중심에 배정','그룹 평균으로 중심 갱신','수렴까지 반복'],['속성','의미'],[['labels_','샘플별 군집 번호'],['cluster_centers_','군집 중심 좌표'],['n_clusters','미리 정하는 그룹 수'],['random_state / n_init','재현 조건 / 초기화 반복']],['ml-cluster'],['K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요.'])
-example('ml-metrics','혼동행렬과 분류 지표','''from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
-y_true = [1, 0, 1, 1, 0, 0]
-y_pred = [1, 1, 1, 0, 0, 0]
-print("rows=true, columns=predicted; labels=[0,1]")
-print(confusion_matrix(y_true, y_pred, labels=[0, 1]))
-for metric in [accuracy_score, precision_score, recall_score, f1_score]:
-    print(metric.__name__, metric(y_true, y_pred))
-''','scikit-learn',checks='assert confusion_matrix(y_true, y_pred).tolist() == [[2,1],[1,2]]')
-topic(3,'ml-metrics','혼동행렬·정확도·정밀도·재현율','117–120','어떤 종류의 실수가 더 중요한가요?',[
-'양성으로 삼는 클래스를 먼저 정합니다. TP는 실제 양성을 양성으로, TN은 실제 음성을 음성으로 맞힌 수입니다. FP는 음성을 양성으로, FN은 양성을 음성으로 틀린 수입니다.',
-'정확도는 전체 정답 비율입니다. 정밀도는 양성 예측 중 실제 양성의 비율, 재현율은 실제 양성 중 찾아낸 비율입니다. F1은 정밀도와 재현율의 조화평균입니다. 클래스 불균형이 있으면 정확도만으로 비교하기 어렵습니다.'],['양성 의미 정하기','예측 임계값 선택','TP·FP·FN·TN 세기','목표에 맞는 지표 해석'],['지표','계산','질문'],[['정확도','(TP+TN)/전체','전체에서 얼마나 맞혔나?'],['정밀도','TP/(TP+FP)','양성이라고 한 것 중 맞은 비율?'],['재현율','TP/(TP+FN)','실제 양성 중 찾은 비율?'],['F1','2PR/(P+R)','두 지표의 균형은?']],['ml-metrics'],['임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요.'])
-example('ml-selection','교차 검증과 GridSearchCV','''from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
-X, y = load_iris(return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
-pipe = make_pipeline(StandardScaler(), KNeighborsClassifier())
-print("CV:", cross_val_score(pipe, X_train, y_train, cv=3))
-search = GridSearchCV(pipe, {"kneighborsclassifier__n_neighbors": [3, 5, 7]}, cv=3, scoring="accuracy", n_jobs=1)
-search.fit(X_train, y_train)
-print("Best:", search.best_params_, search.best_score_)
-print("Final test:", search.score(X_test, y_test))
-''','scikit-learn',checks='assert search.best_params_["kneighborsclassifier__n_neighbors"] in [3,5,7]')
-example('ml-learning-curve','학습 곡선으로 과대·과소 적합 살펴보기','''import numpy as np
+'MAE는 절대 오차 평균, MSE는 제곱 오차 평균입니다. MSE는 큰 오차에 더 큰 벌점을 줍니다. R²는 평균 예측 기준과 비교한 값으로 음수가 될 수 있습니다. 한 지표의 숫자만 보지 말고 목표값의 단위와 오류 사례도 확인하세요.'],['입력 특성','가중합 + 절편','예측 숫자','정답과 오차 계산'],['지표','작을수록?','의미'],[['MAE','좋음','원래 목표값 단위'],['MSE','좋음','큰 오차를 강하게 반영'],['R²','클수록 좋음','0은 평균 기준, 음수 가능']],['ml-linear-regression','ml-regression-metrics'],['기울기 실험에서 MSE가 가장 작은 위치를 찾으세요.'])
+example('ml-clustering','교과서 108~110쪽 clustering.py — K-평균으로 4개 군집 찾기','''import pandas as pd
+from sklearn.datasets import make_blobs         # 가상 데이터 생성
+from sklearn.cluster import KMeans              # K-평균 군집화 모델
 import matplotlib
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from sklearn.datasets import load_iris
-from sklearn.model_selection import learning_curve, StratifiedKFold
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-X, y = load_iris(return_X_y=True)
-model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))
-cv = StratifiedKFold(3, shuffle=True, random_state=42)
-sizes, train, valid = learning_curve(model, X, y, train_sizes=[0.4, 0.7, 1.0], cv=cv, shuffle=True, random_state=42, n_jobs=1)
-plt.plot(sizes, train.mean(axis=1), "o-", label="Training")
-plt.plot(sizes, valid.mean(axis=1), "s--", label="Validation")
-plt.xlabel("Training samples")
-plt.ylabel("Accuracy")
+import matplotlib.pyplot as plt                 # 시각화를 위한 라이브러리
+import numpy as np                              # 수치 연산을 위한 라이브러리
+
+X, y_true = make_blobs(n_samples=300, n_features=2, centers=4, cluster_std=0.60,
+                        random_state=42)
+print(" - 생성된 데이터 형태 (X):", X.shape)
+print(" - 생성된 데이터 미리보기 (상위 3개):\\n", pd.DataFrame(X, columns=['Feature_1', 'Feature_2']).head(3))
+
+kmeans = KMeans(n_clusters=4, init='k-means++', max_iter=300, random_state=42,
+                n_init=10)
+kmeans.fit(X)
+cluster_labels = kmeans.labels_
+print(f" - 각 데이터 포인트의 할당된 군집 레이블 (일부): {cluster_labels[:10]}")
+
+centroids = kmeans.cluster_centers_
+print(f" - 각 군집의 중심점:\\n {centroids}")
+print(f" - 군집 내 응집도: {kmeans.inertia_:.2f}")
+
+plt.figure(figsize=(10, 7))
+scatter = plt.scatter(X[:, 0], X[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.8)
+plt.scatter(centroids[:, 0], centroids[:, 1], s=200, marker='X', c='red',
+            edgecolor='black', label='Centroids')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
 plt.legend()
-plt.savefig("learning-curve.png")
-print("Sizes:", sizes)
-print("Validation:", np.round(valid.mean(axis=1), 3))
-''','numpy scikit-learn matplotlib',checks='assert len(sizes)==3')
-topic(3,'ml-selection','교차 검증·튜닝·학습 곡선','112–116, 124–128','한 번 나눈 점수만으로 모델을 선택해도 될까요?',[
+plt.savefig("clustering.png")
+''','scikit-learn matplotlib pandas numpy',checks='assert list(cluster_labels[:10]) == [3,3,0,1,3,1,2,1,0,2]')
+topic(3,'ml-cluster','주요 알고리즘 활용 · 군집화','108–111','정답 이름 없이 비슷한 점들을 묶을 수 있을까요?',[
+'K-평균은 정한 개수 K의 중심을 이용해 가까운 샘플들을 묶고 중심을 갱신합니다. labels_의 번호는 정답 클래스나 순위가 아니며 실행 조건에 따라 번호가 달라질 수 있습니다.',
+'데이터의 스케일, K, 초기 중심이 결과에 영향을 줍니다. n_init은 여러 초기화 시도를 제어합니다. 점들의 분포를 보고 군집이 의미 있는지 해석하며, 항상 원형 군집이 존재한다고 가정하지 마세요.'],['K개 중심 초기화','가장 가까운 중심에 배정','그룹 평균으로 중심 갱신','수렴까지 반복'],['속성','의미'],[['labels_','샘플별 군집 번호'],['cluster_centers_','군집 중심 좌표'],['n_clusters','미리 정하는 그룹 수'],['random_state / n_init','재현 조건 / 초기화 반복']],['ml-clustering'],['K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요.'])
+example('ml-performance-metrics','교과서 119쪽 performance_evaluation_metrics.py — 유방암 데이터 혼동행렬·지표','''import pandas as pd
+from sklearn.datasets import load_breast_cancer   # 유방암 데이터 세트
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
+                                        # 모델 성능 평가 지표 함수들 임포트
+
+cancer = load_breast_cancer()
+X = pd.DataFrame(cancer.data, columns=cancer.feature_names)
+y = pd.Series(cancer.target)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,
+                                    random_state=42) # stratify=y는 생략(간소화 목적)
+
+model = LogisticRegression(max_iter=5000, random_state=42, solver='liblinear')
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+conf_matrix = confusion_matrix(y_test, y_pred)
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+print("\\n - 혼동 행렬:\\n", conf_matrix)
+print(f" - 정확도: {accuracy:.4f} - 정밀도: {precision:.4f}")
+print(f" - 재현율: {recall:.4f} - F1 점수: {f1:.4f}")
+''','scikit-learn pandas',checks='assert conf_matrix.tolist() == [[59,4],[2,106]]')
+topic(3,'ml-metrics','모델 평가와 선택 · 분류 지표','117–120','어떤 종류의 실수가 더 중요한가요?',[
+'양성으로 삼는 클래스를 먼저 정합니다. TP는 실제 양성을 양성으로, TN은 실제 음성을 음성으로 맞힌 수입니다. FP는 음성을 양성으로, FN은 양성을 음성으로 틀린 수입니다.',
+'정확도는 전체 정답 비율입니다. 정밀도는 양성 예측 중 실제 양성의 비율, 재현율은 실제 양성 중 찾아낸 비율입니다. F1은 정밀도와 재현율의 조화평균입니다. 클래스 불균형이 있으면 정확도만으로 비교하기 어렵습니다.'],['양성 의미 정하기','예측 임계값 선택','TP·FP·FN·TN 세기','목표에 맞는 지표 해석'],['지표','계산','질문'],[['정확도','(TP+TN)/전체','전체에서 얼마나 맞혔나?'],['정밀도','TP/(TP+FP)','양성이라고 한 것 중 맞은 비율?'],['재현율','TP/(TP+FN)','실제 양성 중 찾은 비율?'],['F1','2PR/(P+R)','두 지표의 균형은?']],['ml-performance-metrics'],['임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요.'])
+example('ml-train-test-split2','교과서 112~113쪽 train_test_split2.py — 훈련·테스트 R² 비교','''import pandas as pd
+from sklearn.model_selection import train_test_split # 데이터 분할 함수
+from sklearn.linear_model import LinearRegression      # 예시 모델 (선형 회귀)
+from sklearn.datasets import load_diabetes             # 예제 데이터 세트
+
+diabetes = load_diabetes()
+X = pd.DataFrame(diabetes.data, columns=diabetes.feature_names) # 특징 데이터
+y = pd.Series(diabetes.target)   # 목표 변수 데이터
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+print(" - 훈련 데이터 형태:", X_train.shape, y_train.shape)
+print(" - 테스트 데이터 형태:", X_test.shape, y_test.shape)
+
+linear_model = LinearRegression()
+linear_model.fit(X_train, y_train)             # 훈련 데이터로 학습
+r2_train = linear_model.score(X_train, y_train) # 훈련 데이터 R²
+r2_test = linear_model.score(X_test, y_test)   # 테스트 데이터 R²
+print(" - 훈련 데이터 R²:", r2_train)          # 일반적으로 테스트 데이터보다 높음
+print(" - 테스트 데이터 R²:", r2_test)          # 훈련 데이터보다 낮음 (일반화 성능)
+''','scikit-learn pandas',checks='assert round(r2_train,4) == 0.5244')
+example('ml-cross-val-score','교과서 114~115쪽 cross_val_score.py — 5-겹 교차 검증','''import pandas as pd
+from sklearn.datasets import load_diabetes            # 예제 데이터 세트 (회귀)
+from sklearn.linear_model import LinearRegression     # 예시 모델
+from sklearn.model_selection import cross_val_score # 교차 검증 함수
+import numpy as np                                    # 평균 계산을 위해
+
+diabetes = load_diabetes()
+X = pd.DataFrame(diabetes.data, columns=diabetes.feature_names) # 특징 데이터
+y = pd.Series(diabetes.target)                        # 목표 변수 데이터
+
+linear_model = LinearRegression()                     # 선형 회귀 모델 객체 생성
+scores = cross_val_score(linear_model, X, y, scoring='r2', cv=5)
+print(f"\\n - 각 폴드별 R² 점수: {scores}")
+print(f" - 교차 검증 평균 R² 점수: {np.mean(scores):.4f}")
+print(f" - 교차 검증 R² 점수의 표준편차: {np.std(scores):.4f}")
+''','scikit-learn pandas numpy',checks='assert len(scores) == 5')
+example('ml-grid-search-cv','교과서 115~117쪽 grid_search_cv.py — GridSearchCV로 K 값 찾기','''from sklearn.datasets import load_iris               # 간단한 분류 데이터 세트
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV     # 그리드 서치
+import numpy as np                                   # 결과 출력을 위해
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+knn = KNeighborsClassifier()
+param_grid = {'n_neighbors': [3, 5, 7]} # K 값만 3, 5, 7로 단순화
+
+grid_search = GridSearchCV(knn, param_grid, cv=5, scoring='accuracy')
+grid_search.fit(X, y)
+
+print(f"\\n - 최적 하이퍼파라미터: {grid_search.best_params_}")
+print(f" - 최고 교차 검증 정확도: {grid_search.best_score_:.4f}")
+''','scikit-learn numpy',checks='assert grid_search.best_params_["n_neighbors"] == 7',note='최고 교차 검증 정확도는 scikit-learn 버전에 따라 다를 수 있습니다 — 교과서는 0.9733, 이 실습 환경(scikit-learn 1.9.1)은 0.9800입니다. 최적 K(7)는 동일합니다.')
+example('ml-learning-curve','교과서 124~126쪽 learning_curve.py — 학습 곡선으로 과대·과소 적합 진단','''import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt # 그래프 시각화를 위한 라이브러리
+from sklearn.datasets import load_breast_cancer       # 유방암 데이터 세트 사용
+from sklearn.model_selection import learning_curve # 학습 곡선 생성
+from sklearn.linear_model import LogisticRegression
+
+cancer = load_breast_cancer()
+X, y = cancer.data, cancer.target
+model = LogisticRegression(max_iter=5000, random_state=42, solver='liblinear')
+
+train_sizes, train_scores, test_scores = learning_curve(
+    model, X, y, cv=5, n_jobs=-1, train_sizes=np.linspace(0.1, 1.0, 5)
+)
+train_scores_mean = np.mean(train_scores, axis=1)
+train_scores_std = np.std(train_scores, axis=1)
+test_scores_mean = np.mean(test_scores, axis=1)
+test_scores_std = np.std(test_scores, axis=1)
+
+plt.figure(figsize=(10, 6))                             # 그래프 크기 설정
+plt.title("Learning Curve for Logistic Regression") # 그래프 제목
+plt.xlabel("Training Examples")                         # x축 라벨
+plt.ylabel("Score (Accuracy)")                          # y축 라벨
+plt.grid()                                              # 격자선 표시
+plt.plot(train_sizes, train_scores_mean, 'o-', color="r", label="Training Score")
+plt.fill_between(train_sizes, train_scores_mean - train_scores_std,
+                  train_scores_mean + train_scores_std, alpha=0.1, color="r")
+
+plt.plot(train_sizes, test_scores_mean, 'o-', color="g", label="Cross-validation Score")
+plt.fill_between(
+    train_sizes, test_scores_mean - test_scores_std,
+    test_scores_mean + test_scores_std, alpha=0.1, color="g")
+
+plt.legend(loc="best")                                  # 범례 표시
+plt.savefig("learning_curve.png")
+''','numpy scikit-learn matplotlib',checks='assert len(train_sizes) == 5',note='교과서는 plt.show()로 화면에 띄우지만, 브라우저 실습에서는 matplotlib 백엔드를 Agg로 지정하고 plt.savefig()로 저장한 그림을 보여줍니다 — 이 부분만 교과서 코드에 추가했습니다.')
+topic(3,'ml-selection','모델 평가와 선택 · 교차 검증·튜닝·학습 곡선','112–116, 124–128','한 번 나눈 점수만으로 모델을 선택해도 될까요?',[
 '교차 검증은 훈련 자료를 여러 묶음으로 나누어 검증 역할을 번갈아 맡깁니다. GridSearchCV는 설정 후보를 교차 검증으로 비교합니다. 전처리도 각 훈련 묶음에서 다시 학습하도록 Pipeline을 사용합니다.',
-'학습 곡선은 훈련 샘플 수에 따른 훈련·검증 성능을 함께 보여 줍니다. 두 곡선의 간격과 수준을 보고 데이터 추가, 모델 복잡도 조절, 규제, 특성 개선 등을 검토합니다. 데이터 스케일 정규화와 모델 규제(regularization)는 다른 개념입니다.'],['최종 테스트 별도 보관','훈련 부분에서 교차 검증','GridSearchCV로 설정 선택','학습 곡선·오류 분석','테스트 한 번 평가'],['관찰','가능한 해석','다음 실험'],[['훈련↑ 검증↓','과대 적합','복잡도 감소·자료 추가'],['훈련↓ 검증↓','과소 적합','특성·모델 개선'],['분할마다 점수 차이','불안정한 추정','평균·편차 함께 보고']],['ml-selection','ml-learning-curve'],['best_score_와 최종 테스트 점수가 다른 이유를 설명하세요.'])
+'학습 곡선은 훈련 샘플 수에 따른 훈련·검증 성능을 함께 보여 줍니다. 두 곡선의 간격과 수준을 보고 데이터 추가, 모델 복잡도 조절, 규제, 특성 개선 등을 검토합니다. 데이터 스케일 정규화와 모델 규제(regularization)는 다른 개념입니다.'],['최종 테스트 별도 보관','훈련 부분에서 교차 검증','GridSearchCV로 설정 선택','학습 곡선·오류 분석','테스트 한 번 평가'],['관찰','가능한 해석','다음 실험'],[['훈련↑ 검증↓','과대 적합','복잡도 감소·자료 추가'],['훈련↓ 검증↓','과소 적합','특성·모델 개선'],['분할마다 점수 차이','불안정한 추정','평균·편차 함께 보고']],['ml-train-test-split2','ml-cross-val-score','ml-grid-search-cv','ml-learning-curve'],['best_score_와 최종 테스트 점수가 다른 이유를 설명하세요.'])
 topic(3,'ml-project','모델 구현·평가 프로젝트와 단원 정리','129–131 + 확장','입력부터 결과 설명까지 재현 가능한 보고서를 만드세요.',[
 '문제와 목표값, 데이터 출처, 특성, 분할 조건, 전처리, 모델, 평가 결과를 한 흐름으로 연결하세요. 비교 대상과 난수 조건을 기록하고, 점수가 낮아진 사례를 찾아 개선안을 제안합니다.',
-'스팸 분류의 FP와 정밀도, 가격 같은 수치 예측과 회귀, 정답 없는 고객 군집, AI 포함 관계, 과대 적합 방지, DataFrame.describe를 모두 설명할 수 있는지 확인하세요.'],['문제·데이터 카드','분할·전처리 코드','모델 비교·선택','최종 지표·한계','저널·코드 제출'],['산출물','포함할 것'],[['실행 코드','재현 조건과 패키지'],['결과 표','훈련·검증·테스트 역할'],['해석','오류 사례와 개선 근거']],['ml-selection'],['같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요.'])
+'스팸 분류의 FP와 정밀도, 가격 같은 수치 예측과 회귀, 정답 없는 고객 군집, AI 포함 관계, 과대 적합 방지, DataFrame.describe를 모두 설명할 수 있는지 확인하세요.'],['문제·데이터 카드','분할·전처리 코드','모델 비교·선택','최종 지표·한계','저널·코드 제출'],['산출물','포함할 것'],[['실행 코드','재현 조건과 패키지'],['결과 표','훈련·검증·테스트 역할'],['해석','오류 사례와 개선 근거']],['ml-grid-search-cv'],['같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요.'])
 
 # IV. Synthetic data removes missing textbook image-file dependencies.
 SCENE='''import cv2
@@ -813,9 +1051,11 @@ print("최종 테스트 자료는 이 묶음들과 별도로 보관합니다.")
 import unit3_density
 import unit3_pre_api
 import unit3_tips
-unit3_density.apply()
-unit3_pre_api.apply()
-unit3_tips.apply()
+# (#131 C) 3단원은 PPT 슬라이드 기반 deck_lesson_section으로 렌더링해 pre_api·tips·
+# lesson['examples'] 슬롯을 쓰지 않는다(verify.py의 같은 취지 주석 참고). 이 세 모듈의
+# apply()는 이제 존재하지 않는 예제 id(ml-tools 등, 교과서 코드로 교체되며 이름이
+# 바뀌거나 나뉨)를 참조해 빌드가 깨지므로 호출하지 않는다. 모듈 자체는 하위 호환을
+# 위해 import만 하고(최상위 ex() 정의는 그대로 등록됨), apply()는 건너뛴다.
 import unit4_density
 import unit4_pre_api
 import unit4_tips
