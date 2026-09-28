@@ -10,6 +10,31 @@ import {
 import {sortOpenHelp} from './help-model.js';
 import {timestampMillis, PRESENCE_HEARTBEAT_MS, PRESENCE_STALE_MS} from './follow-model.js';
 
+// (#135) 예측·코드 읽기 답변을 소단원 아래로 붙이려면 예제id → {unit, topicId, title, keyLines}가
+// 필요하다. catalog.topics[...][].examples가 이미 예제→소단원 대응을 담고 있으므로(#132),
+// catalog.examples(제목·keyLines)와 합쳐 인덱스를 만든다.
+export function exampleIndexFromCatalog(catalog) {
+ const index = {};
+ const topics = catalog && catalog.topics;
+ const exampleMeta = asMap(catalog && catalog.examples);
+ if (topics && typeof topics === 'object') {
+  for (const [page, rows] of Object.entries(topics)) {
+   const unitMatch = /unit0([1-4])/.exec(page);
+   if (!unitMatch || !Array.isArray(rows)) continue;
+   const unit = Number(unitMatch[1]);
+   for (const row of rows) {
+    if (!row || !row.id || !Array.isArray(row.examples)) continue;
+    for (const eid of row.examples) {
+     if (typeof eid !== 'string' || !eid) continue;
+     const meta = exampleMeta[eid] || {};
+     index[eid] = {unit, topicId: row.id, title: meta.title || eid, keyLines: Array.isArray(meta.keyLines) ? meta.keyLines : []};
+    }
+   }
+  }
+ }
+ return index;
+}
+
 export const PRESENCE_FRESH_MS = PRESENCE_HEARTBEAT_MS;
 export const PRESENCE_RECENT_MS = PRESENCE_STALE_MS;
 export const CSV_HEADER = ['학번', '이름', '번호', '접속', '현재 위치', '완료율', '정답률', '도움', '이해도', '마지막 활동'];
@@ -465,19 +490,54 @@ const TOPIC_JOURNAL_RE = /^j-(u([1-4])-.+)$/;
 const TASK_ITEM_RE = /^d-u([1-4])-(.+)-(\d+)$/;
 const TASK_SUBMIT_RE = /^d-u([1-4])-(.+)-submitted$/;
 
-export function journalRows(state, titles, tasks) {
+// (#135) 예측 p-{예제id}[-match|-why|-actual] / 코드 읽기 c-{예제id}-{ref}. 예제id 자체에
+// 하이픈이 들어 있어(예: 'cv-yolo-count') 정규식만으로는 못 나누므로, exampleIndex가 아는
+// id 중 가장 긴 것부터 접두로 시도한다.
+function matchExampleId(rest, exampleIds) {
+ for (const id of exampleIds) {
+  if (rest === id) return {id, suffix: ''};
+  if (rest.startsWith(`${id}-`)) return {id, suffix: rest.slice(id.length + 1)};
+ }
+ return null;
+}
+
+export function journalRows(state, titles, tasks, exampleIndex) {
  const journals = asMap(state && state.journals);
  const taskLabels = asMap(tasks);
+ const examples = asMap(exampleIndex);
+ const exampleIds = Object.keys(examples).sort((a, b) => b.length - a.length);
  const byUnit = new Map();
  const topicItems = new Map();
  const taskEntries = new Map(); // `${unit}::${topicId}::${i}` -> {unit, topicId, i, text}
  const taskSubmitted = new Map(); // `${unit}::${topicId}` -> ISO 시각 문자열
+ const predictEntries = new Map(); // exampleId -> {predict, match, why, actual}
+ const codeReadEntries = new Map(); // exampleId -> [{ref, text}]
  for (const [key, text] of Object.entries(journals)) {
   const value = typeof text === 'string' ? text.trim() : '';
   const submitMatch = TASK_SUBMIT_RE.exec(key);
   if (submitMatch && value) {
    taskSubmitted.set(`${submitMatch[1]}::${submitMatch[2]}`, value);
    continue;
+  }
+  if (exampleIds.length && key.startsWith('p-') && value) {
+   const found = matchExampleId(key.slice(2), exampleIds);
+   if (found) {
+    const rec = predictEntries.get(found.id) || {};
+    if (found.suffix === '') rec.predict = value;
+    else if (found.suffix === 'match') rec.match = value;
+    else if (found.suffix === 'why') rec.why = value;
+    else if (found.suffix === 'actual') rec.actual = value;
+    predictEntries.set(found.id, rec);
+    continue;
+   }
+  }
+  if (exampleIds.length && key.startsWith('c-') && value) {
+   const found = matchExampleId(key.slice(2), exampleIds);
+   if (found && found.suffix) {
+    if (!codeReadEntries.has(found.id)) codeReadEntries.set(found.id, []);
+    codeReadEntries.get(found.id).push({ref: found.suffix, text: value});
+    continue;
+   }
   }
   if (!value) continue;
   const unitMatch = /^u([1-4])-(learn|error|next)$/.exec(key);
@@ -515,6 +575,36 @@ export function journalRows(state, titles, tasks) {
    submitted: Boolean(submittedAt),
    submittedAt
   });
+ }
+ for (const [eid, rec] of predictEntries.entries()) {
+  const meta = examples[eid];
+  if (!meta || !rec.predict) continue;
+  const matchWord = rec.match === 'same' ? '같았어요' : rec.match === 'diff' ? '달랐어요' : '';
+  let text = rec.predict;
+  if (rec.actual) text += `\n실제/PC 결과: ${rec.actual}`;
+  if (rec.why) text += `\n왜 달랐나요: ${rec.why}`;
+  if (!topicItems.has(meta.unit)) topicItems.set(meta.unit, []);
+  topicItems.get(meta.unit).push({
+   key: `${meta.topicId}-predict-${eid}`,
+   label: `${topicTitle(`u${meta.unit}-${meta.topicId}`, titles)} · 예제 ${meta.title} · 예측${matchWord ? ` (${matchWord})` : ''}`,
+   text,
+   topicId: `${meta.topicId}-predict-${eid}`
+  });
+ }
+ for (const [eid, lines] of codeReadEntries.entries()) {
+  const meta = examples[eid];
+  if (!meta) continue;
+  const codeByRef = new Map((meta.keyLines || []).map((kl) => [kl.ref, kl.code]));
+  for (const {ref, text} of lines) {
+   const code = codeByRef.get(ref) || '';
+   if (!topicItems.has(meta.unit)) topicItems.set(meta.unit, []);
+   topicItems.get(meta.unit).push({
+    key: `${meta.topicId}-code-${eid}-${ref}`,
+    label: `${topicTitle(`u${meta.unit}-${meta.topicId}`, titles)} · 예제 ${meta.title} · 줄 ${ref}${code ? ` \`${code}\`` : ''} 설명`,
+    text,
+    topicId: `${meta.topicId}-code-${eid}-${ref}`
+   });
+  }
  }
  const units = new Set([...byUnit.keys(), ...topicItems.keys()]);
  return [...units]

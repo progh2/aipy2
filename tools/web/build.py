@@ -12,6 +12,7 @@ import textbook
 import slots
 import deck_u2
 import deck_u3
+import key_lines
 from focus_blocks import mark_focus_blocks
 textbook.attach(units)
 DECKS={2:deck_u2.LESSONS,3:deck_u3.LESSONS}
@@ -37,6 +38,11 @@ ROOT=Path(__file__).resolve().parents[2]
 WEB=ROOT/'web'
 
 def dump(path,obj): path.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
+# (#135) 예측·코드 읽기: 예제에 핵심 줄(key_lines.KEY_LINES) 자료를 붙여 unit{u}.json/catalog.json에 싣는다.
+def example_payload(eid):
+ ex=dict(examples[eid])
+ ex['keyLines']=key_lines.resolve({**ex,'id':eid})
+ return ex
 def nav(prefix): return f'''<a class="skip" href="#main">본문으로 건너뛰기</a><header class="top"><a class="brand" href="{prefix}index.html">{mascot.image(prefix,"welcome","eager","pai-brand")}인공지능 파이썬 실무</a><nav aria-label="주 메뉴"><a href="{prefix}before-you-start.html">시작하기 전에</a><a href="{prefix}units/unit01/index.html">Ⅰ 모듈</a><a href="{prefix}units/unit02/index.html">Ⅱ GUI</a><a href="{prefix}units/unit03/index.html">Ⅲ ML</a><a href="{prefix}units/unit04/index.html">Ⅳ CV</a></nav><div class="account" id="account" aria-live="polite"></div></header>'''
 # 페이지 공통 스크립트는 layout()에 둡니다(app/auth/follow/sync/understanding/help/assignments).
 # 단원 페이지에만 필요한 모듈은 여기. 학습 기록 동기화(sync.js)는 대문·교사 화면도
@@ -57,7 +63,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  # 부른다)에서만 정적 컨테이너를 낸다. 내용은 progress-bar.js가 catalog.json의 'progress'를
  # 읽어 채운다 — <main> 밖에 둬서 mark_focus_blocks·교사 초점 동기화 대상에서 빠진다.
  progress_bar='<div id="progress-bar" class="progress-bar" hidden aria-hidden="true"></div>' if topic else ''
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=m0929c"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{progress_bar}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q132b" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=15"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script><script type="module" src="{prefix}assets/progress-bar.js?v=1"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=m0929d"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{progress_bar}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q135b" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=15"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script><script type="module" src="{prefix}assets/progress-bar.js?v=1"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -88,9 +94,51 @@ with zipfile.ZipFile(WEB/'downloads/pai-character-pack.zip','w',zipfile.ZIP_DEFL
 
 pairs=[('hello-tk','hello-pyside','첫 인사 앱'),('widgets-label-entry-tk','widgets-pyside-form','입력 폼'),('widgets-tk','widgets-pyside','위젯 도감'),('layout-pack-tk','layout-pyside','pack / 상자 배치'),('layout-grid-tk','layout-pyside-form','격자 폼'),('layout-tk','layout-pyside','레이아웃 비교'),('events-bind-tk','events-pyside-signal','이벤트 연결'),('memo-tk','memo-pyside','메모장'),('project-button-tk','project-pyside','기능 연결'),('project-tk','project-pyside','생활 도우미'),('memo-plus-tk','memo-plus-pyside','개선 메모장')]
 
+# (#135 항목1) 실행 전 예측 — 편집기 위. 예측을 적어야 [실행]이 켜진다(app.js가 #run을
+# disabled로 두고, #predict-input의 input 이벤트로 활성화한다). 라벨 문구는 웹 실행/PC 문법
+# 확인에 따라 selectExample()이 바꾼다.
+def predict_box_html():
+ return ('<div class="predict-box" id="predict-box">'
+  '<label for="predict-input" id="predict-label">실행하면 무엇이 나올지(화면이 어떻게 뜰지) 한 줄로 예측해 보세요</label>'
+  '<textarea id="predict-input" data-journal="" rows="2" placeholder="예: 화면에 ...가 출력될 것이다"></textarea>'
+  '<p class="small predict-hint" id="predict-hint" role="status">예측을 적어야 실행할 수 있어요.</p>'
+  '</div>')
+
+# PC 문법 확인 예제는 브라우저에서 실제 실행 결과를 알 수 없으므로, 학생이 PC에서 실행해 본
+# 결과를 직접 적는다. 비교 블록(predict-result)과 달리 실행 여부와 무관하게 처음부터 보여야
+# 적을 수 있으므로 hidden 박스 밖에 둔다(setupPredict가 웹 예제에서는 이 블록 자체를 숨긴다).
+def predict_pc_report_html():
+ return ('<div class="predict-pc-report" id="predict-pc-report-wrap" hidden>'
+  '<label for="predict-pc-report">PC에서 실행해 본 결과</label>'
+  '<textarea id="predict-pc-report" data-journal="" rows="3" placeholder="PC에서 실행하고 눈으로 본 화면·출력을 적으세요"></textarea></div>')
+
+# 실행 후: 예측 대 실제(웹 실행) 또는 예측 대 PC 실행 결과(문법 확인 모드) 비교 + 같았는지·왜 달랐는지.
+def predict_result_html():
+ return ('<div class="predict-result" id="predict-result" hidden>'
+  '<p class="small"><b>내 예측</b> · <span id="predict-shown"></span></p>'
+  '<p class="small" id="predict-actual-wrap"><b id="predict-actual-label">실제 출력</b> · <span id="predict-actual"></span></p>'
+  '<p class="small">예측과 같았나요?</p>'
+  '<div class="predict-match" role="group" aria-label="예측과 실제 비교">'
+  '<label><input type="radio" name="predict-match" id="predict-match-same" value="same"> 같았어요</label>'
+  '<label><input type="radio" name="predict-match" id="predict-match-diff" value="diff"> 달랐어요</label>'
+  '</div>'
+  '<div id="predict-why-wrap" hidden><label for="predict-why">왜 달랐나요?</label>'
+  '<textarea id="predict-why" data-journal="" rows="2" placeholder="예상과 다르게 나온 이유를 적어 보세요"></textarea></div>'
+  '</div>')
+
+# (#135 항목2) 코드 읽기 — 편집기 아래. 핵심 줄은 key_lines.py에서 고르고, build.py가
+# data/unit{u}.json의 examples[id].keyLines로 실어 app.js가 렌더링한다(항목 자체는 예제마다
+# 달라 정적 HTML로 못 박지 않는다).
+def code_read_html():
+ return ('<section class="code-read" id="code-read">'
+  '<h3>코드 읽기</h3>'
+  '<p class="small">핵심 줄이 무엇을 하는지 자기 말로 써 보세요. 예제·슬라이드 설명을 그대로 옮기면 안내가 뜹니다.</p>'
+  '<div id="code-read-list"></div>'
+  '</section>')
+
 def editor_markup(u,show_select=False):
  select_markup='<label>예제 선택<select id="example-select" aria-label="예제 선택"></select></label>' if show_select else ''
- return f'''<section class="lab" id="lab"><div class="section-head"><div><p class="eyebrow">CODE WORKSPACE</p><h2>코드를 바꾸는 실습실</h2></div><span class="pill" id="run-mode">실행 환경</span></div>{select_markup}<p class="note run-mode-guide"><b>Python 실행</b>: 브라우저에서 바로 실행합니다. <b>문법 확인</b>: GUI 창·카메라·대용량 패키지를 사용하는 PC 실습 예제입니다. 웹에서는 문법만 검사하고, 실제 동작은 내려받아 PC에서 확인하세요.</p><p id="example-note" class="note"></p>{mascot.runtime_guide(u)}<div class="editor-layout"><aside class="file-panel"><p class="eyebrow">PROJECT FILES</p><div id="file-tree"></div><button id="add-file">+ 파일 추가</button><button id="delete-file">현재 파일 삭제</button></aside><div class="editor-main"><div class="editor-bar"><div class="editor-bar-file"><strong id="file-name">main.py</strong><span id="entry-indicator" class="entry-indicator"></span><button id="use-as-entry" type="button" hidden>이 파일로 실행</button></div><div><button id="copy-code">복사</button><button id="download-file">파일 저장</button></div></div><label class="sr-only" for="code-editor">Python 소스 편집기</label><textarea id="code-editor" spellcheck="false" autocapitalize="off"></textarea></div></div><div class="input-grid"><label>실행 파일<select id="entry-file"></select></label><label>input()에 전달할 값 · 한 줄에 하나<textarea id="stdin" rows="2" placeholder="6"></textarea></label><label>실행 인자 · JSON 문자열 배열<input id="argv" value='[]' placeholder='["param1", "param2"]'></label></div><div class="actions"><button class="primary" id="run">Python 실행</button><button id="check-example">검사</button><button id="stop" disabled>중지</button><button id="reset-code">예제 원본 복원</button><button id="download-project">프로젝트 ZIP</button></div><p class="small" id="runtime-info">실행 엔진은 처음 실행할 때 내려받습니다. 패키지 크기에 따라 최초 준비에 최대 3분이 걸릴 수 있으며 네트워크가 필요합니다. 실행은 최대 30초이며 중지 후 다시 실행할 수 있습니다.</p><div id="plot-output" class="plot-output" aria-live="polite"></div><pre id="output" role="status" aria-live="polite">실행할 예제를 선택하세요.</pre></section>'''
+ return f'''<section class="lab" id="lab"><div class="section-head"><div><p class="eyebrow">CODE WORKSPACE</p><h2>코드를 바꾸는 실습실</h2></div><span class="pill" id="run-mode">실행 환경</span></div>{select_markup}<p class="note run-mode-guide"><b>Python 실행</b>: 브라우저에서 바로 실행합니다. <b>문법 확인</b>: GUI 창·카메라·대용량 패키지를 사용하는 PC 실습 예제입니다. 웹에서는 문법만 검사하고, 실제 동작은 내려받아 PC에서 확인하세요.</p><p id="example-note" class="note"></p>{mascot.runtime_guide(u)}{predict_box_html()}<div class="editor-layout"><aside class="file-panel"><p class="eyebrow">PROJECT FILES</p><div id="file-tree"></div><button id="add-file">+ 파일 추가</button><button id="delete-file">현재 파일 삭제</button></aside><div class="editor-main"><div class="editor-bar"><div class="editor-bar-file"><strong id="file-name">main.py</strong><span id="entry-indicator" class="entry-indicator"></span><button id="use-as-entry" type="button" hidden>이 파일로 실행</button></div><div><button id="copy-code">복사</button><button id="download-file">파일 저장</button></div></div><label class="sr-only" for="code-editor">Python 소스 편집기</label><textarea id="code-editor" spellcheck="false" autocapitalize="off"></textarea></div></div><div class="input-grid"><label>실행 파일<select id="entry-file"></select></label><label>input()에 전달할 값 · 한 줄에 하나<textarea id="stdin" rows="2" placeholder="6"></textarea></label><label>실행 인자 · JSON 문자열 배열<input id="argv" value='[]' placeholder='["param1", "param2"]'></label></div><div class="actions"><button class="primary" id="run" disabled>Python 실행</button><button id="check-example" disabled>검사</button><button id="stop" disabled>중지</button><button id="reset-code">예제 원본 복원</button><button id="download-project">프로젝트 ZIP</button></div><p class="small" id="runtime-info">실행 엔진은 처음 실행할 때 내려받습니다. 패키지 크기에 따라 최초 준비에 최대 3분이 걸릴 수 있으며 네트워크가 필요합니다. 실행은 최대 30초이며 중지 후 다시 실행할 수 있습니다.</p><div id="plot-output" class="plot-output" aria-live="polite"></div><pre id="output" role="status" aria-live="polite">실행할 예제를 선택하세요.</pre>{predict_pc_report_html()}{predict_result_html()}{code_read_html()}</section>'''
 
 # (#132) 새 창으로 연 연습문제·예제·튜토리얼·보강 자료 탭은 follow.js가 window.opener 없이도
 # (rel=noopener를 쓰므로 opener는 항상 비어 있다) 판별할 수 있어야 한다. 그래서 이 탭들로
@@ -316,7 +364,7 @@ for u,lessons in units.items():
  title=design.META[u][0]
  lesson_ids=[l['id'] for l in lessons]
  ids=unit_example_ids(u,lessons)
- dump(WEB/f'data/unit{u}.json',dict(unit=u,lessons=lessons,examples={k:examples[k] for k in ids},questions=[q for q in questions if q['unit']==u],pairs=pairs if u==2 else []))
+ dump(WEB/f'data/unit{u}.json',dict(unit=u,lessons=lessons,examples={k:example_payload(k) for k in ids},questions=[q for q in questions if q['unit']==u],pairs=pairs if u==2 else []))
  first=next((l for l in lessons if has_practice(u,l)),lessons[0])
  rail=textbook.toc(u,lessons)
  cards=''.join(f'<a class="topic-card" href="{textbook.topic_file(l["id"])}"><span class="number">{i+1:02}</span><h3>{esc(l["title"])}</h3><p>{esc(l["lead"])}</p><span>이 주제로 →</span></a>' for i,l in enumerate(lessons))
@@ -445,12 +493,12 @@ session_body = '''<main id="main" class="admin-page teacher-manage"><p class="ey
 ops_body = '''<main id="main" class="admin-page teacher-manage"><p class="eyebrow">TEACHER / OPS</p><h1>입학년도 운영</h1><p class="lead">입학년도로 학생을 모아 졸업·보관을 정리해요. 학년·반은 명단의 학번으로 관리하고, 학습 기록은 입학년도로 이어져요.</p><p class="teacher-context">지금 고른 반: <strong data-class-label>반을 선택하세요</strong> · 코호트 조회는 반과 관계없이 할 수 있습니다.</p><section class="admin-card" id="ops-gate">권한을 확인합니다…</section><div id="ops-tools" hidden><section class="admin-card"><h2>코호트 조회 <span id="ops-count" class="pill"></span></h2><p class="small" id="ops-scope">입학년도를 고르면 그 코호트만 보여 줍니다. 반 선택과 관계없이 모을 수 있습니다.</p><div class="ops-filters"><label>입학년도<select id="ops-year"><option value="">입학년도 선택</option></select></label><label class="assign-check"><input id="ops-include-archived" type="checkbox"> 보관한 학생도 보기</label><label class="assign-check"><input id="ops-class-only" type="checkbox"> 위에서 고른 반만</label></div><div class="actions"><button id="ops-load" type="button">불러오기</button></div><div id="ops-list" class="admin-table"></div></section><section class="admin-card"><h2>졸업·정리</h2><p class="small">먼저 요약 CSV를 내려받으세요. 보관하면 수업 반 목록에서만 빠져요. 학습 기록·제출물은 지우지 않아요. 명단 한 줄만 지워요. 학습 기록은 남아요. 학습 기록·제출물·이해도 신호는 한꺼번에 지우지 않아요.</p><div class="actions"><button id="ops-export" type="button">요약 CSV 내보내기</button><button id="ops-archive" type="button">코호트 보관</button><button id="ops-remove" type="button">명단에서만 제거</button></div><p id="ops-archive-note" class="small" aria-live="polite"></p><details class="ops-smoke"><summary>나래 스모크 (1회)</summary><ol><li>교사 로그인 후 운영 화면에서 입학년도를 고르고 목록이 맞는지 확인합니다.</li><li>명단: 학생의 학년·반이 바뀌면 명단 관리에서 학번을 고칩니다. 입학년도는 그대로 둡니다.</li><li>졸업 정리: CSV를 받은 다음, 확인 문구를 입력해 보관합니다. 학습 기록은 지워지지 않아야 합니다.</li><li>학생 화면: 헤더 개인정보 또는 대문 학습 기록에서 안내를 확인하고, JSON 내보내기가 그대로인지 봅니다.</li></ol></details></section></div><p><a href="admin.html">명단 관리로 →</a></p></main>'''
 (WEB/'teacher/admin.html').write_text(teacher_manage('roster','학생 명단 관리',admin_body,'<script type="module" src="../assets/admin.js?v=6"></script>'))
 (WEB/'teacher/ops.html').write_text(teacher_manage('ops','입학년도 운영',ops_body,'<script type="module" src="../assets/ops.js?v=3"></script>'))
-(WEB/'teacher/board.html').write_text(teacher_manage('board','반 현황 보드',board_body,'<script type="module" src="../assets/teacher-board.js?v=10"></script>'))
+(WEB/'teacher/board.html').write_text(teacher_manage('board','반 현황 보드',board_body,'<script type="module" src="../assets/teacher-board.js?v=11"></script>'))
 (WEB/'teacher/session.html').write_text(teacher_manage('session','수업 세션',session_body,'<script type="module" src="../assets/teacher-session.js?v=5"></script>'))
 assign_body = '''<main id="main" class="admin-page teacher-manage"><p class="eyebrow">TEACHER / ASSIGNMENTS</p><h1>과제와 제출</h1><p class="lead">기존 문제·예제로 과제를 만들고, 반별 제출 소스·출력을 확인해요.</p><p class="teacher-context">지금 보는 반: <strong data-class-label>반을 선택하세요</strong></p><section class="admin-card" id="assign-gate">권한을 확인합니다…</section><div id="assign-tools" hidden><section class="admin-card" id="assign-form"><h2>과제 만들기</h2><p class="small" id="assign-form-note">새 과제를 만듭니다.</p><label>제목<input id="assign-title" maxlength="80" placeholder="예: 9월 12일 모듈 과제"></label><label>설명<textarea id="assign-desc" rows="3" maxlength="500" placeholder="오늘 수업에서 검사한 뒤 제출하세요."></textarea></label><p class="small">공개할 반</p><div id="assign-classes" class="assign-checks"></div><div class="assign-dates"><label>공개 시각<input id="assign-open-at" type="datetime-local"></label><label>마감 시각<input id="assign-due-at" type="datetime-local"></label></div><label class="assign-check"><input id="assign-open" type="checkbox" checked> 학생에게 공개</label><h3>문제·예제 고르기</h3><p class="small">목록은 사이트가 이미 가진 문제·예제입니다. 콘텐츠가 늘어나면 여기도 같이 늘어납니다.</p><div class="filter-row assign-filters"><label>단원<select id="target-unit"><option value="">모든 단원</option><option value="1">1단원</option><option value="2">2단원</option><option value="3">3단원</option><option value="4">4단원</option></select></label><label>종류<select id="target-type"><option value="">문제·예제</option><option value="question">문제</option><option value="example">예제</option></select></label><label>검색<input id="target-search" type="search" placeholder="번호, 제목, 주제"></label></div><p id="target-count" class="small">고른 항목 0개</p><div id="target-picker" class="target-picker"></div><div class="actions"><button class="primary" id="assign-save" type="button">과제 저장</button><button id="assign-new" type="button">새로 만들기</button><button id="assign-delete" type="button">과제 삭제</button></div></section><section class="admin-card"><h2>이 반 과제</h2><div id="assign-list" class="admin-rows"></div></section><section class="admin-card" id="review-panel"><h2>제출 확인</h2><p class="small" id="review-note">과제를 고르면 이 반 제출물이 나타납니다.</p><label>과제<select id="review-assignment"></select></label><div class="actions"><button type="button" id="reverify-class">이 반 다시 채점</button></div><p class="small" id="reverify-note">이 브라우저에서 다시 실행해 저장된 채점과 비교해요. 제출 기록은 바꾸지 않아요.</p><div id="submission-list" class="admin-rows"></div><div id="submission-detail" class="assign-detail"><p class="small">목록에서 제출물을 고르면 소스와 출력을 봅니다.</p></div></section></div><p><a href="board.html">현황 보드로 →</a></p></main>'''
 (WEB/'teacher/assignments.html').write_text(teacher_manage('assignments','과제와 제출',assign_body,'<script type="module" src="../assets/teacher-assignments.js?v=2"></script>'))
 answers_body = '''<main id="main" class="admin-page teacher-manage"><p class="eyebrow">TEACHER / ANSWERS</p><h1>답변 내역</h1><p class="lead">학생이 실습하며 제출한 문항 답과 학습 저널을 반별로, 학생별로 확인합니다.</p><section class="admin-card"><h2>지금 수업하는 반</h2><p class="teacher-class-banner"><strong data-class-label>반을 선택하세요</strong></p></section><div class="answers-layout"><section class="admin-card answers-roster-col" id="answers-roster"><h2>학생 목록</h2><p class="small" id="answers-roster-note">학번순입니다. 학생을 누르면 답변을 봅니다.</p><div id="answers-roster-list"></div></section><section class="admin-card answers-detail-col" id="answers-detail"><h2>답변 보기</h2><div id="answers-detail-body"><p class="small">학생을 선택하면 답변과 저널을 봅니다.</p></div></section></div><p><a href="board.html">현황 보드로 →</a></p></main>'''
-(WEB/'teacher/answers.html').write_text(teacher_manage('answers','답변 내역',answers_body,'<script type="module" src="../assets/teacher-answers.js?v=2"></script>'))
+(WEB/'teacher/answers.html').write_text(teacher_manage('answers','답변 내역',answers_body,'<script type="module" src="../assets/teacher-answers.js?v=3"></script>'))
 example_unit = {}
 for u, lessons in units.items():
  for lesson in lessons:
@@ -463,7 +511,10 @@ dump(WEB/'data/catalog.json',{
  # tasks: '직접 해 보세요' 과제 문장. 교사 화면(board-model journalRows)이 d-u{n}-{topic}-{i} 답변에
  # 과제 문장을 붙여 보여 줄 때 쓴다(#132).
  'topics':{f'units/unit0{u}/index.html':[{'id':l['id'],'title':l['title'],'examples':list(lesson_practice_ids(u,l)),'href':f'units/unit0{u}/{l["id"]}.html','practiceHref':f'units/unit0{u}/{textbook.question_file(l["id"])}','tasks':list(l['tasks'] or [])} for l in lessons] for u,lessons in units.items()},
- 'examples':{k:{'id':k,'title':v['title'],'unit':example_unit.get(k),'mode':v.get('mode',''),'href':(f'units/unit0{example_unit[k]}/{textbook.example_file(k)}' if k in example_unit else '')} for k,v in examples.items()},
+ # keyLines: 예측·코드 읽기(#135)에서 교사 화면(journalRows)이 "예제 ○○ · 줄 N `code`"를
+ # 보여줄 때 쓴다. catalog는 topics[...][].examples로 예제→소단원을 이미 대응해 두므로
+ # 여기서는 topic id를 따로 싣지 않는다(board-model.js exampleIndexFromCatalog가 topics에서 구성).
+ 'examples':{k:{'id':k,'title':v['title'],'unit':example_unit.get(k),'mode':v.get('mode',''),'href':(f'units/unit0{example_unit[k]}/{textbook.example_file(k)}' if k in example_unit else ''),'keyLines':key_lines.resolve({**v,'id':k})} for k,v in examples.items()},
  'questions':[{
   'id':q['id'],'unit':q['unit'],'topic':q['topic'],'kind':q['kind'],'prompt':q['prompt'],
   **({'options':q['options']} if q.get('options') else {}),

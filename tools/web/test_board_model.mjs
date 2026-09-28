@@ -5,7 +5,7 @@ import {
  heatmapTone, isStuckOnTopic, filterStuck, buildStudentCards, sortStudentCards,
  classQuestionTotals, questionStats, csvCell, classCsv, cardAccuracyLabel,
  answerRows, filterAnswerRows, groupAnswerRowsByUnit, unitAnswerTotals, journalRows,
- formatAnswerValue, answerStatusLabel, isSubjectiveKind,
+ formatAnswerValue, answerStatusLabel, isSubjectiveKind, exampleIndexFromCatalog,
  PRESENCE_FRESH_MS, PRESENCE_RECENT_MS, CSV_HEADER
 } from '../../web/assets/board-model.js';
 import {titlesFromCatalog, tasksFromCatalog} from '../../web/assets/understanding-model.js';
@@ -19,9 +19,13 @@ const catalog = {
  topics: {
   'units/unit01/index.html': [
    {id: 'overview', title: '모듈이 필요한 이유'},
-   {id: 'define', title: '모듈 정의', tasks: ['모듈을 하나 만들어 import 해 보세요.', '만든 모듈에 함수를 추가해 보세요.']}
+   {id: 'define', title: '모듈 정의', tasks: ['모듈을 하나 만들어 import 해 보세요.', '만든 모듈에 함수를 추가해 보세요.'], examples: ['reuse']}
   ],
-  'units/unit02/index.html': [{id: 'ui', title: 'GUI 시작'}]
+  'units/unit02/index.html': [{id: 'ui', title: 'GUI 시작', examples: ['hello-tk']}]
+ },
+ examples: {
+  reuse: {title: '한 번 만든 함수를 두 프로그램에서 사용하기', keyLines: [{ref: '1', file: '', line: 1, code: 'import calculator'}]},
+  'hello-tk': {title: '첫 인사 앱', keyLines: [{ref: '11', file: '', line: 11, code: 'root = tk.Tk()'}]}
  }
 };
 const topics = topicListFromCatalog(catalog);
@@ -239,6 +243,35 @@ const taskUnsubmitted = journalRows({journals: {'d-u1-define-1': '아직 제출 
 const unsubmittedItem = taskUnsubmitted[0].items.find((it) => it.topicId === 'define-task1');
 eq(unsubmittedItem.submitted, false, 'task item without submit marker is not submitted');
 eq(unsubmittedItem.submittedAt, '', 'task item without submit marker has no timestamp');
+
+// (#135) 예제id → {unit, topicId, title, keyLines}. catalog.topics[...][].examples(#132)에
+// catalog.examples의 제목·keyLines를 합쳐 만든다.
+const exampleIndex = exampleIndexFromCatalog(catalog);
+eq(exampleIndex.reuse, {unit: 1, topicId: 'define', title: '한 번 만든 함수를 두 프로그램에서 사용하기', keyLines: [{ref: '1', file: '', line: 1, code: 'import calculator'}]}, 'example index for reuse');
+eq(exampleIndex['hello-tk'].topicId, 'ui', 'example index topic for hello-tk');
+eq(exampleIndexFromCatalog({}), {}, 'example index empty catalog');
+
+// (#135) 예측(p-{id}[-match|-why|-actual])·코드 읽기(c-{id}-{ref})는 그 예제가 속한 소단원
+// 아래에 "예제 ○○ · 예측" / "예제 ○○ · 줄 N `code` 설명"으로 붙는다.
+const predictState = {
+ journals: {
+  'p-reuse': '두 결과가 각각 출력된다',
+  'p-reuse-match': 'diff',
+  'p-reuse-why': 'calculator.py를 안 봤다',
+  'c-reuse-1': '계산기 모듈을 불러온다'
+ }
+};
+const predictJournals = journalRows(predictState, titlesFromCatalog(catalog), {}, exampleIndex);
+eq(predictJournals.length, 1, 'predict journal grouped under unit 1');
+const predictItem = predictJournals[0].items.find((it) => it.topicId.includes('predict-reuse'));
+eq(predictItem.label, '모듈 정의 · 예제 한 번 만든 함수를 두 프로그램에서 사용하기 · 예측 (달랐어요)', 'predict item label with match word');
+eq(predictItem.text, '두 결과가 각각 출력된다\n왜 달랐나요: calculator.py를 안 봤다', 'predict item text includes why');
+const codeItem = predictJournals[0].items.find((it) => it.topicId.includes('code-reuse'));
+eq(codeItem.label, '모듈 정의 · 예제 한 번 만든 함수를 두 프로그램에서 사용하기 · 줄 1 `import calculator` 설명', 'code read item label includes code snippet');
+eq(codeItem.text, '계산기 모듈을 불러온다', 'code read item text');
+
+// exampleIndex 없이 호출하면(#132 기존 호출 호환) p-/c- 키는 그냥 무시된다.
+eq(journalRows(predictState, titlesFromCatalog(catalog), {}), [], 'predict keys ignored without exampleIndex');
 
 eq(answerRows({}, questions), [], 'answer rows empty state');
 eq(unitAnswerTotals({}, questions), [{unit: 1, total: 2, answered: 0, correct: 0}, {unit: 2, total: 1, answered: 0, correct: 0}], 'unit totals no answers');

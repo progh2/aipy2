@@ -19,6 +19,11 @@ function resolveResume(){
  if($('#resume')){const href=resumeHrefFn(state.last);if(href)$('#resume').href=href;}
 }
 import(prefix+'assets/resume-model.js').then((m)=>{resumeHrefFn=m.resumeHref;resolveResume();}).catch(()=>{});
+// #135 실행 전 예측·코드 읽기 순수 로직(키 생성·유사도 판정). classic script라 정적 import를
+// 못 쓰므로 동적으로 불러온다. 아직 못 불러왔을 때는 아래 헬퍼들이 같은 형식의 키를 그대로
+// 만들어 쓰고, 유사도 판정만 건너뛴다(치명적이지 않은 보조 안내라서).
+let PM=null;
+import(prefix+'assets/predict-model.js').then((m)=>{PM=m;refreshRunGate();}).catch(()=>{});
 let state={version:1,complete:{},answers:{},journals:{},projects:{},last:''};
 let storageWorks=true;
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved && saved.version===1) state={...state,...saved};}catch{storageWorks=false;}
@@ -216,6 +221,89 @@ function renderFiles(){
  $('#file-name').textContent=fileName;
  updateEntryIndicator();
 }
+// #135 항목1·2: 실행 전 예측(p-{id}[-match|-why|-actual])·코드 읽기(c-{id}-{ref}) 순수 로직
+// 래퍼. PM(predict-model.js)이 아직 안 실려도 같은 형식의 문자열을 만들어 저장은 막지 않는다.
+function predictKeys(id){
+ if(PM)return{p:PM.predictKey(id),match:PM.predictMatchKey(id),why:PM.predictWhyKey(id),actual:PM.predictActualKey(id)};
+ return{p:'p-'+id,match:'p-'+id+'-match',why:'p-'+id+'-why',actual:'p-'+id+'-actual'};
+}
+function codeReadKeyOf(id,ref){return PM?PM.codeReadKey(id,ref):('c-'+id+'-'+ref);}
+// data-journal 텍스트영역을 나중에 동적으로 만들 때 쓴다. 페이지 로드 시 한 번만 도는
+// 전역 [data-journal] 초기화(위 125행)는 이미 있던 요소만 챙기므로, 코드 읽기처럼 예제를
+// 고른 뒤에야 생기는 요소는 여기서 값 채우기만 하고 저장은 각자 oninput에서 한다(중복 바인딩 방지).
+function loadJournalValue(el,key){el.dataset.journal=key;el.value=state.journals[key]||'';}
+function refreshRunGate(){
+ const input=$('#predict-input');if(!input||!hasLab)return;
+ const ok=PM?PM.hasPrediction(input.value):Boolean(input.value&&input.value.trim());
+ if($('#run'))$('#run').disabled=!ok;
+ if($('#check-example'))$('#check-example').disabled=!ok||!(currentId&&data.examples[currentId]&&data.examples[currentId].checks);
+ if($('#predict-hint'))$('#predict-hint').hidden=ok;
+}
+function resetPredictResult(){
+ const box=$('#predict-result');if(!box)return;
+ box.hidden=true;$('#predict-shown').textContent='';$('#predict-actual').textContent='';
+ const same=$('#predict-match-same'),diff=$('#predict-match-diff');
+ if(same)same.checked=false;if(diff)diff.checked=false;
+ if($('#predict-why-wrap'))$('#predict-why-wrap').hidden=true;
+}
+function revealPredictCompare(id,actualText){
+ const keys=predictKeys(id),box=$('#predict-result');if(!box)return;
+ box.hidden=false;
+ $('#predict-shown').textContent=state.journals[keys.p]||'(예측 없음)';
+ $('#predict-actual').textContent=actualText||'';
+ const savedMatch=state.journals[keys.match]||'';
+ const same=$('#predict-match-same'),diff=$('#predict-match-diff');
+ if(same){same.checked=savedMatch==='same';same.onchange=()=>{state.journals[keys.match]='same';save('journal');if($('#predict-why-wrap'))$('#predict-why-wrap').hidden=true;};}
+ if(diff){diff.checked=savedMatch==='diff';diff.onchange=()=>{state.journals[keys.match]='diff';save('journal');if($('#predict-why-wrap'))$('#predict-why-wrap').hidden=false;};}
+ if($('#predict-why-wrap'))$('#predict-why-wrap').hidden=savedMatch!=='diff';
+ const why=$('#predict-why');
+ if(why){loadJournalValue(why,keys.why);why.oninput=()=>{state.journals[keys.why]=why.value;save('journal');};}
+}
+// 웹 실행 예제는 [실행] 결과를, PC 문법 확인 예제는 학생이 적는 "PC에서 실행해 본 결과"를
+// 예측과 나란히 보여준다. 두 경우 모두 실제 텍스트는 p-{id}-actual에 저장한다.
+function setupPredict(ex,id){
+ const input=$('#predict-input');if(!input)return;
+ const keys=predictKeys(id);
+ loadJournalValue(input,keys.p);
+ input.oninput=()=>{state.journals[keys.p]=input.value;save('journal');refreshRunGate();};
+ if($('#predict-label'))$('#predict-label').textContent=ex.mode==='web'
+  ?'실행하면 무엇이 나올지(화면이 어떻게 뜰지) 한 줄로 예측해 보세요'
+  :'이 코드를 실행하면 PC에서 어떤 결과가 나올지(창이 어떻게 뜰지) 한 줄로 예측해 보세요';
+ if($('#predict-actual-label'))$('#predict-actual-label').textContent=ex.mode==='web'?'실제 출력':'PC 실행 결과';
+ const pcWrap=$('#predict-pc-report-wrap'),pcReport=$('#predict-pc-report');
+ if(pcWrap)pcWrap.hidden=ex.mode==='web';
+ if(pcReport){
+  loadJournalValue(pcReport,keys.actual);
+  pcReport.oninput=()=>{state.journals[keys.actual]=pcReport.value;save('journal');if(pcReport.value.trim())revealPredictCompare(id,pcReport.value);};
+ }
+ refreshRunGate();
+ const savedActual=state.journals[keys.actual]||'';
+ if(savedActual)revealPredictCompare(id,savedActual);else resetPredictResult();
+}
+// 예제·슬라이드 설명 중 지금 화면에 보이는 문장들 — 코드 읽기 답이 이 문장과 거의 같으면
+// "자기 말로 다시 써 보세요" 안내만 한다(막지는 않음).
+function codeReadReferenceTexts(){
+ return $$('.slide-explain, .lesson-prose, .lesson-lead, #example-note').map(n=>n.textContent||'');
+}
+function renderCodeRead(ex,id){
+ const list=$('#code-read-list');if(!list)return;
+ list.replaceChildren();
+ const lines=Array.isArray(ex.keyLines)?ex.keyLines:[];
+ for(const kl of lines){
+  const item=node('div','code-read-item');
+  const refLabel=(kl.file?kl.file+' ':'')+kl.line+'번째 줄';
+  item.append(node('p','code-read-ref',refLabel),node('pre','code-read-code',kl.code));
+  const label=node('label','code-read-label','이 줄은 무엇을 하나요? 자기 말로 써 보세요');
+  const ta=node('textarea','code-read-input');ta.rows=2;
+  const key=codeReadKeyOf(id,kl.ref);
+  loadJournalValue(ta,key);
+  const note=node('p','small code-read-note','자기 말로 다시 써 보세요. 예제·슬라이드 설명과 너무 비슷해요.');
+  const checkCopy=()=>{note.hidden=!(PM&&PM.looksCopied(ta.value,codeReadReferenceTexts()));};
+  ta.oninput=()=>{state.journals[key]=ta.value;save('journal');checkCopy();};
+  checkCopy();
+  label.append(ta);item.append(label,note);list.append(item);
+ }
+}
 function selectExample(id,scroll=false,workspace=null){
  if(!hasLab)return;
  const select=$('#example-select');
@@ -240,6 +328,8 @@ if(currentId)stash();currentId=id;exampleDirty=false;const ex=data.examples[id],
  const deps=(ex.files['requirements.txt']||'').split(/\s+/).filter(Boolean).join(' ')||(id.includes('pyside')?'PySide6':id.includes('pyqt')?'PyQt6':/(^|-)wx(-|$)/.test(id)||id.endsWith('-wx')?'wxPython':id.includes('kivy')?'Kivy':'');
  const installNote=deps?` 이 예제는 외부 라이브러리가 필요해 설치 없이는 동작하지 않습니다. 먼저 python -m pip install ${deps} 를 실행하세요.`:(id.includes('tk')?' tkinter는 파이썬에 기본 포함되어 별도 설치가 필요 없습니다. 창이 안 뜨면 파이썬 설치 시 tcl/tk 옵션을 확인하세요.':' 표준 라이브러리만 사용하므로 별도 설치가 필요 없습니다.');
  $('#example-note').textContent=(ex.note||'')+(ex.mode==='pc'?' 이 코드는 PC에서 실행하세요. 웹에서는 Python 문법만 확인합니다. ZIP 다운로드 후 예제 폴더를 VS Code로 열고 python main.py를 실행하세요.'+installNote:' 파일을 오가며 편집한 뒤 실행 파일을 선택하세요. 각 실행은 새 가상 프로젝트에서 시작합니다.');
+ setupPredict(ex,id);
+ renderCodeRead(ex,id);
  $('#plot-output').replaceChildren();
  $('#output').textContent=`${ex.title}\n${ex.mode==='web'?'실행 결과가 여기에 표시됩니다.':'문법 검사는 패키지 설치·데이터·장치·실제 프로그램 동작까지 검사하지 않습니다.'}`;
  paiGuide('thinking',ex.mode==='web'?'실행 전에 결과를 먼저 예상해 볼까요?':'웹에서 확인한 뒤, PC에서도 시험해요.',ex.mode==='web'?'어떤 파일을 실행하나요? 입력값을 바꾸면 어떤 결과가 나올지 먼저 적어 보세요.':'문법 확인은 첫 단계예요. 다운로드한 예제를 실행하고 입력·결과·오류 처리를 확인하세요.');
@@ -268,6 +358,12 @@ async function runExample(check=false){
  const result=await execute({files,entry,stdin:$('#stdin').value,args,checks:check?ex.checks:'',syntax:ex.mode!=='web'},s=>out.textContent+=s);
  if(result.images)for(const picture of result.images){const fig=node('figure'),img=node('img');img.src='data:image/png;base64,'+picture.data;img.alt='Python 실행 결과: '+picture.name;const caption=node('figcaption','',picture.name+' · 실제 실행 결과');const link=node('a','','PNG 저장');link.href=img.src;link.download=picture.name;fig.append(img,caption,link);$('#plot-output').append(fig);}
  if(result.ok)out.textContent+='\n실행 완료'+(check?' · 준비된 검사 통과':'')+'\n';
+ // #135 항목1: 웹에서 실제 실행한 예제는 방금 나온 출력을 "실제 출력"으로 예측과 나란히 보여준다.
+ // PC 문법 확인 모드는 실제 동작을 여기서 알 수 없으므로 predict-pc-report 입력에서 비교한다.
+ if(ex.mode==='web' && !result.busy && !result.stopped){
+  const keys=predictKeys(currentId);state.journals[keys.actual]=out.textContent;save('journal');
+  revealPredictCompare(currentId,out.textContent);
+ }
  const saved=state.projects[currentId]||{};
  const checkInfo={type:'example',id:currentId,ok:!!result.ok,checked:!!check,output:out.textContent,attempts:(Number(saved.attempts)||0)+(check?1:0)};
  if(check){state.projects[currentId]={...saved,files,entry,stdin:$('#stdin').value,args:$('#argv').value,lastOk:!!result.ok,lastOutput:out.textContent,attempts:checkInfo.attempts};save('answer');}
@@ -423,7 +519,7 @@ if(!hasLab && !hasPractice && !hasRail){
  if(hasLab){
   const select=$('#example-select');
   if(select)for(const id of exampleIds){const ex=data.examples[id];if(!ex)continue;const opt=node('option','',ex.title);opt.value=ex.id;select.append(opt);}
-  $$('[data-example]').forEach(b=>b.onclick=()=>selectExample(b.dataset.example,true,b.closest('[data-workspace]')));
+  $$('[data-example]:not(body)').forEach(b=>b.onclick=()=>selectExample(b.dataset.example,true,b.closest('[data-workspace]')));
   // 예제 전용 페이지는 data-example으로 어느 예제인지 이미 정해져 있으므로 선택 UI 없이 바로 불러온다.
   if(pageExample && data.examples[pageExample]) selectExample(pageExample);
   else if(exampleIds[0]) selectExample(exampleIds[0]);

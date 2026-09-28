@@ -1,6 +1,6 @@
 /* 함께 풀기·수업 리포트(M7/F9) 순수 헬퍼. 막대에는 이름을 넣지 않습니다. */
 import {inClass, labelClass} from './class-picker.js';
-import {completedTopicIds, completeRate, topicListFromCatalog} from './board-model.js';
+import {completedTopicIds, completeRate, topicListFromCatalog} from './board-model.js?v=q135';
 import {countUnderstanding, groupHardByTopic, topicTitle, titlesFromCatalog, studentLabel} from './understanding-model.js';
 import {sortOpenHelp} from './help-model.js';
 import {timestampMillis, focusFields, DEFAULT_PAGE} from './follow-model.js';

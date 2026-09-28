@@ -669,7 +669,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import homework1"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "import homework2"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"두 숙제가 각자 add를 가지고 있습니다.\")"
+        },
+        {
+          "ref": "homework1.py_1",
+          "file": "homework1.py",
+          "line": 1,
+          "code": "def add(a, b):"
+        },
+        {
+          "ref": "homework2.py_1",
+          "file": "homework2.py",
+          "line": 1,
+          "code": "def add(a, b):"
+        }
+      ]
     },
     "reuse": {
       "id": "reuse",
@@ -701,7 +733,33 @@
         "history": "한 파일에 함수를 두고 여러 프로그램이 불러 쓰는 방식은 1970년대부터 라이브러리의 기본이었습니다. 파이썬은 그 단위를 .py 모듈로 단순화했습니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import calculator"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(calculator.add(3, 5))"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(calculator.add(10, -2))"
+        },
+        {
+          "ref": "calculator.py_1",
+          "file": "calculator.py",
+          "line": 1,
+          "code": "def add(a, b):"
+        }
+      ]
     },
     "two-adds": {
       "id": "two-adds",
@@ -734,7 +792,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import calculator"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "import counter"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"합:\", calculator.add(3, 5))"
+        },
+        {
+          "ref": "calculator.py_1",
+          "file": "calculator.py",
+          "line": 1,
+          "code": "def add(a, b):"
+        },
+        {
+          "ref": "counter.py_1",
+          "file": "counter.py",
+          "line": 1,
+          "code": "def add(n):"
+        }
+      ]
     },
     "sum-input": {
       "id": "sum-input",
@@ -766,7 +856,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from sumnummod import sumnum"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"두 수의 합 :\", sumnum())"
+        },
+        {
+          "ref": "sumnummod.py_1",
+          "file": "sumnummod.py",
+          "line": 1,
+          "code": "def sumnum():"
+        },
+        {
+          "ref": "sumnummod.py_2",
+          "file": "sumnummod.py",
+          "line": 2,
+          "code": "n1 = int(input(\"첫 번째 수: \"))"
+        },
+        {
+          "ref": "sumnummod.py_3",
+          "file": "sumnummod.py",
+          "line": 3,
+          "code": "n2 = int(input(\"두 번째 수: \"))"
+        }
+      ]
     },
     "circle-top": {
       "id": "circle-top",
@@ -793,7 +915,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import circle"
+        },
+        {
+          "ref": "circle.py_1",
+          "file": "circle.py",
+          "line": 1,
+          "code": "PI = 3.14"
+        },
+        {
+          "ref": "circle.py_2",
+          "file": "circle.py",
+          "line": 2,
+          "code": "r = 3"
+        },
+        {
+          "ref": "circle.py_3",
+          "file": "circle.py",
+          "line": 3,
+          "code": "print(\"반지름이 {}인 원의 둘레: {}\".format(r, r * 2 * PI))"
+        },
+        {
+          "ref": "circle.py_4",
+          "file": "circle.py",
+          "line": 4,
+          "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))"
+        }
+      ]
     },
     "circle-function": {
       "id": "circle-function",
@@ -820,7 +974,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import circle_area"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "circle_area.circlearea(3)"
+        },
+        {
+          "ref": "circle_area.py_1",
+          "file": "circle_area.py",
+          "line": 1,
+          "code": "PI = 3.14"
+        },
+        {
+          "ref": "circle_area.py_3",
+          "file": "circle_area.py",
+          "line": 3,
+          "code": "def circlearea(r):"
+        },
+        {
+          "ref": "circle_area.py_4",
+          "file": "circle_area.py",
+          "line": 4,
+          "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))"
+        }
+      ]
     },
     "circle-mixed": {
       "id": "circle-mixed",
@@ -852,7 +1038,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import circle_area2"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "circle_area2.circlearea(3)"
+        },
+        {
+          "ref": "circle_area2.py_1",
+          "file": "circle_area2.py",
+          "line": 1,
+          "code": "PI = 3.14"
+        },
+        {
+          "ref": "circle_area2.py_3",
+          "file": "circle_area2.py",
+          "line": 3,
+          "code": "def circlearea(r):"
+        },
+        {
+          "ref": "circle_area2.py_4",
+          "file": "circle_area2.py",
+          "line": 4,
+          "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))"
+        }
+      ]
     },
     "class-module": {
       "id": "class-module",
@@ -884,7 +1102,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from shapes import Circle"
+        },
+        {
+          "ref": "shapes.py_1",
+          "file": "shapes.py",
+          "line": 1,
+          "code": "import math"
+        },
+        {
+          "ref": "shapes.py_3",
+          "file": "shapes.py",
+          "line": 3,
+          "code": "class Circle:"
+        },
+        {
+          "ref": "shapes.py_4",
+          "file": "shapes.py",
+          "line": 4,
+          "code": "def __init__(self, radius):"
+        },
+        {
+          "ref": "shapes.py_7",
+          "file": "shapes.py",
+          "line": 7,
+          "code": "def area(self):"
+        }
+      ]
     },
     "main-guard": {
       "id": "main-guard",
@@ -911,7 +1161,39 @@
         "history": "__name__ 검사는 “이 파일이 프로그램의 입구인가, 부품인가”를 가릅니다. 스크립트와 모듈을 같은 파일에 두는 파이썬의 오랜 습관입니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import circle_area3"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"main.py의 이름:\", __name__)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "circle_area3.circlearea(3)"
+        },
+        {
+          "ref": "circle_area3.py_4",
+          "file": "circle_area3.py",
+          "line": 4,
+          "code": "def circlearea(r):"
+        },
+        {
+          "ref": "circle_area3.py_5",
+          "file": "circle_area3.py",
+          "line": 5,
+          "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))"
+        }
+      ]
     },
     "rectangle": {
       "id": "rectangle",
@@ -938,7 +1220,33 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import rectEx1"
+        },
+        {
+          "ref": "rectEx1.py_1",
+          "file": "rectEx1.py",
+          "line": 1,
+          "code": "def rect(width, height):"
+        },
+        {
+          "ref": "rectEx1.py_2",
+          "file": "rectEx1.py",
+          "line": 2,
+          "code": "print(\"가로가 {} 세로가 {}인 사각형의 넓이: {}\".format(width, height, width*height))"
+        },
+        {
+          "ref": "rectEx1.py_4",
+          "file": "rectEx1.py",
+          "line": 4,
+          "code": "if __name__ == \"__main__\":"
+        }
+      ]
     },
     "import-0": {
       "id": "import-0",
@@ -965,7 +1273,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import greet"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        },
+        {
+          "ref": "greet.py_4",
+          "file": "greet.py",
+          "line": 4,
+          "code": "def bye():"
+        },
+        {
+          "ref": "greet.py_5",
+          "file": "greet.py",
+          "line": 5,
+          "code": "print(\"안녕히 가세요\")"
+        }
+      ]
     },
     "import-1": {
       "id": "import-1",
@@ -992,7 +1332,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from greet import hello"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        },
+        {
+          "ref": "greet.py_4",
+          "file": "greet.py",
+          "line": 4,
+          "code": "def bye():"
+        },
+        {
+          "ref": "greet.py_5",
+          "file": "greet.py",
+          "line": 5,
+          "code": "print(\"안녕히 가세요\")"
+        }
+      ]
     },
     "import-2": {
       "id": "import-2",
@@ -1019,7 +1391,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from greet import hello, bye"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        },
+        {
+          "ref": "greet.py_4",
+          "file": "greet.py",
+          "line": 4,
+          "code": "def bye():"
+        },
+        {
+          "ref": "greet.py_5",
+          "file": "greet.py",
+          "line": 5,
+          "code": "print(\"안녕히 가세요\")"
+        }
+      ]
     },
     "import-3": {
       "id": "import-3",
@@ -1051,7 +1455,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from greet import *"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        },
+        {
+          "ref": "greet.py_4",
+          "file": "greet.py",
+          "line": 4,
+          "code": "def bye():"
+        },
+        {
+          "ref": "greet.py_5",
+          "file": "greet.py",
+          "line": 5,
+          "code": "print(\"안녕히 가세요\")"
+        }
+      ]
     },
     "import-4": {
       "id": "import-4",
@@ -1078,7 +1514,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import greet as g"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        },
+        {
+          "ref": "greet.py_4",
+          "file": "greet.py",
+          "line": 4,
+          "code": "def bye():"
+        },
+        {
+          "ref": "greet.py_5",
+          "file": "greet.py",
+          "line": 5,
+          "code": "print(\"안녕히 가세요\")"
+        }
+      ]
     },
     "import-clash": {
       "id": "import-clash",
@@ -1111,7 +1579,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from greet import hello"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "from farewell import hello as bye_hello"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        },
+        {
+          "ref": "farewell.py_1",
+          "file": "farewell.py",
+          "line": 1,
+          "code": "def hello():"
+        }
+      ]
     },
     "package-0": {
       "id": "package-0",
@@ -1145,7 +1645,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from nature.animals import bird"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/flower.py_1",
+          "file": "nature/plants/flower.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "package-1": {
       "id": "package-1",
@@ -1179,7 +1711,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from nature.animals import bird as b"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/flower.py_1",
+          "file": "nature/plants/flower.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "package-2": {
       "id": "package-2",
@@ -1213,7 +1777,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from nature.animals.bird import wild"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/flower.py_1",
+          "file": "nature/plants/flower.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "package-3": {
       "id": "package-3",
@@ -1247,7 +1843,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from nature.animals.bird import *"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/flower.py_1",
+          "file": "nature/plants/flower.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "package-4": {
       "id": "package-4",
@@ -1281,7 +1909,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import nature.animals.bird"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/flower.py_1",
+          "file": "nature/plants/flower.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "all": {
       "id": "all",
@@ -1315,7 +1975,39 @@
         "history": "__all__은 “별표로 공개할 이름”을 적는 약속입니다. 없는 이름을 숨기는 보안 기능이 아니라, from … import *의 목록일 뿐입니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from nature.plants import *"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/flower.py_1",
+          "file": "nature/plants/flower.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "animal-check": {
       "id": "animal-check",
@@ -1350,7 +2042,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from nature.animals import *"
+        },
+        {
+          "ref": "mainanimal2.py_1",
+          "file": "mainanimal2.py",
+          "line": 1,
+          "code": "from nature.animals.lion import wild"
+        },
+        {
+          "ref": "nature/animals/bird.py_1",
+          "file": "nature/animals/bird.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/animals/lion.py_1",
+          "file": "nature/animals/lion.py",
+          "line": 1,
+          "code": "def wild():"
+        },
+        {
+          "ref": "nature/plants/tree.py_1",
+          "file": "nature/plants/tree.py",
+          "line": 1,
+          "code": "def wild():"
+        }
+      ]
     },
     "stars": {
       "id": "stars",
@@ -1377,7 +2101,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from star import makestar"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "import star as s"
+        },
+        {
+          "ref": "star.py_1",
+          "file": "star.py",
+          "line": 1,
+          "code": "def makestar(c, r):"
+        },
+        {
+          "ref": "star.py_3",
+          "file": "star.py",
+          "line": 3,
+          "code": "print(\"*\" * c)"
+        },
+        {
+          "ref": "star.py_5",
+          "file": "star.py",
+          "line": 5,
+          "code": "if __name__ == \"__main__\":"
+        }
+      ]
     },
     "os": {
       "id": "os",
@@ -1408,7 +2164,39 @@
         "history": "os 모듈은 운영체제가 달라도 같은 파이썬 이름으로 폴더를 다루게 하려고 만들어졌습니다. 웹 실습의 폴더는 그 개념을 가상 파일로 보여 줍니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import os"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"운영체제:\", os.name)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"현재 폴더:\", os.getcwd())"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "f.write(\"모듈 실습\")"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "print(os.listdir(\"practice\"))"
+        }
+      ]
     },
     "os-pc": {
       "id": "os-pc",
@@ -1439,7 +2227,33 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import os"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"현재 운영체제 :\", os.name)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"현재 작업 디렉터리 :\", os.getcwd())"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "os.system(\"dir\" if os.name == \"nt\" else \"ls\")"
+        }
+      ]
     },
     "sys": {
       "id": "sys",
@@ -1470,7 +2284,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import sys"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"실행 파일명 :\", sys.argv[0])"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "for i, value in enumerate(sys.argv[1:], start=1):"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(\"인자\", i, \":\", value)"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "print(\"이 줄은 실행되지 않습니다.\")"
+        }
+      ]
     },
     "sys-modules": {
       "id": "sys-modules",
@@ -1506,7 +2352,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import sys"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"sys.path[0] (지금 폴더):\", sys.path[0])"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"불러오기 전 math:\", \"math\" in sys.modules)"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "import math"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "import math"
+        }
+      ]
     },
     "math": {
       "id": "math",
@@ -1537,7 +2415,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import math"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"파이:\", math.pi)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"e:\", math.e)"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(\"올림:\", math.ceil(3.5))"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "print(\"내림:\", math.floor(3.5))"
+        }
+      ]
     },
     "math-circle": {
       "id": "math-circle",
@@ -1573,7 +2483,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import math"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "def circle_area(r):"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "print(circle_area(3))"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "print(\"소수 둘째 자리:\", round(circle_area(3), 2))"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "print(\"거듭제곱 연산자:\", 2 ** 10, \" / math.pow:\", math.pow(2, 10))"
+        }
+      ]
     },
     "math-signed": {
       "id": "math-signed",
@@ -1609,7 +2551,33 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import math"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(\"양수 3.5 → ceil\", math.ceil(3.5), \"/ floor\", math.floor(3.5))"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"음수 -3.5 → ceil\", math.ceil(-3.5), \"/ floor\", math.floor(-3.5))"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(\"0에 가까운 쪽이 올림인가?\", math.ceil(-3.5) == -3)"
+        }
+      ]
     },
     "random": {
       "id": "random",
@@ -1640,7 +2608,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import random"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "print(random.random())"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "print(random.choice(season))"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "result = random.shuffle(letters)"
+        },
+        {
+          "ref": "11",
+          "file": "",
+          "line": 11,
+          "code": "print(random.sample(list(range(1, 10)), 3))"
+        }
+      ]
     },
     "random-seed": {
       "id": "random-seed",
@@ -1671,7 +2671,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import random"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "random.seed(42)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "first = [random.randrange(1, 7) for _ in range(5)]"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "random.seed(42)"
+        },
+        {
+          "ref": "8",
+          "file": "",
+          "line": 8,
+          "code": "print(\"같은가?\", first == second)"
+        }
+      ]
     },
     "random-sample": {
       "id": "random-sample",
@@ -1707,7 +2739,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import random"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "random.seed(7)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "names = [\"민지\", \"수빈\", \"하늘\", \"지우\"]"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "picked = random.sample(names, 2)"
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "copied = names.copy()"
+        }
+      ]
     },
     "dice": {
       "id": "dice",
@@ -1733,7 +2797,33 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import random"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "n = int(input(\"주사위 면 수: \"))"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(\"면 수는 1 이상이어야 합니다.\")"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "print(\"주사위 값:\", random.randrange(1, n + 1))"
+        }
+      ]
     },
     "gift": {
       "id": "gift",
@@ -1759,7 +2849,27 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import random"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "presents = [\"문구용품\", \"과자\", \"인형\"]"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(random.choice(presents))"
+        }
+      ]
     },
     "datetime": {
       "id": "datetime",
@@ -1785,7 +2895,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from datetime import datetime"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "now = datetime.now()"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(now)"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(now.year, now.month, now.day)"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "start = datetime(now.year, 1, 1)"
+        }
+      ]
     },
     "weekday-fixed": {
       "id": "weekday-fixed",
@@ -1821,7 +2963,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from datetime import date"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "day = date(2026, 9, 15)"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "week = \"월화수목금토일\""
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(day.isoformat(), week[day.weekday()] + \"요일\")"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "print(\"weekday()는 월요일 0:\", day.weekday())"
+        }
+      ]
     },
     "christmas": {
       "id": "christmas",
@@ -1847,7 +3021,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from datetime import date"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "today = date.today()"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "target = date(today.year, 12, 25)"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "target = date(today.year + 1, 12, 25)"
+        },
+        {
+          "ref": "6",
+          "file": "",
+          "line": 6,
+          "code": "print(\"다음 크리스마스까지\", (target - today).days, \"일\")"
+        }
+      ]
     },
     "pypi-names": {
       "id": "pypi-names",
@@ -1883,7 +3089,33 @@
         "history": "설치 이름과 import 이름이 다른 전통은 오래된 패키지에서 흔합니다. Beautiful Soup의 beautifulsoup4/bs4가 교실에서 가장 자주 만나는 예입니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "pairs = ["
+        },
+        {
+          "ref": "7",
+          "file": "",
+          "line": 7,
+          "code": "print(\"설치 이름 → import 이름\")"
+        },
+        {
+          "ref": "9",
+          "file": "",
+          "line": 9,
+          "code": "print(f\"{install:16} → {imported:8}  ({use})\")"
+        },
+        {
+          "ref": "10",
+          "file": "",
+          "line": 10,
+          "code": "print(\"pip 명령은 터미널에서 실행합니다. 코드 입력창이 아닙니다.\")"
+        }
+      ]
     },
     "stdlib-json": {
       "id": "stdlib-json",
@@ -1919,7 +3151,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import json"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "data = {\"scores\": [70, 80, 90]}"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "text = json.dumps(data, ensure_ascii=False)"
+        },
+        {
+          "ref": "4",
+          "file": "",
+          "line": 4,
+          "code": "print(text)"
+        },
+        {
+          "ref": "5",
+          "file": "",
+          "line": 5,
+          "code": "print(json.loads(text)[\"scores\"])"
+        }
+      ]
     },
     "thirdparty": {
       "id": "thirdparty",
@@ -1951,7 +3215,27 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import numpy as np"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "scores = np.array([70, 80, 90])"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(scores.mean())"
+        }
+      ]
     },
     "review-two-files": {
       "id": "review-two-files",
@@ -1983,7 +3267,27 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import greet"
+        },
+        {
+          "ref": "greet.py_1",
+          "file": "greet.py",
+          "line": 1,
+          "code": "def hello():"
+        },
+        {
+          "ref": "greet.py_2",
+          "file": "greet.py",
+          "line": 2,
+          "code": "print(\"안녕하세요\")"
+        }
+      ]
     },
     "final-output": {
       "id": "final-output",
@@ -2016,7 +3320,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "import addcal"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "import subcal"
+        },
+        {
+          "ref": "3",
+          "file": "",
+          "line": 3,
+          "code": "print(\"두 수의 합 :\", addcal.addnum(5, 3))"
+        },
+        {
+          "ref": "addcal.py_1",
+          "file": "addcal.py",
+          "line": 1,
+          "code": "def addnum(a, b):"
+        },
+        {
+          "ref": "subcal.py_1",
+          "file": "subcal.py",
+          "line": 1,
+          "code": "def subnum(a, b):"
+        }
+      ]
     },
     "project-roll": {
       "id": "project-roll",
@@ -2049,7 +3385,39 @@
         "history": "",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from core.logic import roll"
+        },
+        {
+          "ref": "core/logic.py_1",
+          "file": "core/logic.py",
+          "line": 1,
+          "code": "from datetime import date"
+        },
+        {
+          "ref": "core/logic.py_2",
+          "file": "core/logic.py",
+          "line": 2,
+          "code": "import random"
+        },
+        {
+          "ref": "core/logic.py_10",
+          "file": "core/logic.py",
+          "line": 10,
+          "code": "today = today or date.today()"
+        },
+        {
+          "ref": "core/logic.py_14",
+          "file": "core/logic.py",
+          "line": 14,
+          "code": "names = list(dict.fromkeys(name.strip() for name in names if name.strip()))"
+        }
+      ]
     },
     "core": {
       "id": "core",
@@ -2092,7 +3460,39 @@
         "history": "기능 모듈을 화면보다 먼저 만드는 순서는 GUI 단원의 생활 도우미와 같습니다. 1단원에서는 return 값만 검사합니다.",
         "youtube": []
       },
-      "screenshots": []
+      "screenshots": [],
+      "keyLines": [
+        {
+          "ref": "1",
+          "file": "",
+          "line": 1,
+          "code": "from core.logic import roll, days_left, draw"
+        },
+        {
+          "ref": "2",
+          "file": "",
+          "line": 2,
+          "code": "from datetime import date"
+        },
+        {
+          "ref": "core/logic.py_1",
+          "file": "core/logic.py",
+          "line": 1,
+          "code": "from datetime import date"
+        },
+        {
+          "ref": "core/logic.py_10",
+          "file": "core/logic.py",
+          "line": 10,
+          "code": "today = today or date.today()"
+        },
+        {
+          "ref": "core/logic.py_14",
+          "file": "core/logic.py",
+          "line": 14,
+          "code": "names = list(dict.fromkeys(name.strip() for name in names if name.strip()))"
+        }
+      ]
     }
   },
   "questions": [

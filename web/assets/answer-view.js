@@ -1,7 +1,7 @@
 /* 학생 답안·저널 한 줄을 문항 지문·정답과 함께 그리는 공유 렌더링 함수(#128).
    board.html 학생 상세 패널(#104)과 answers.html 답변 내역 페이지가 이 모듈을 함께 쓴다.
    중복 구현을 피하려고 DOM 생성만 여기 모으고, 데이터 가공은 board-model.js의 순수 함수에 맡긴다. */
-import {answerStatusLabel, formatAnswerValue, UNIT_ROMAN} from './board-model.js';
+import {answerStatusLabel, formatAnswerValue, UNIT_ROMAN} from './board-model.js?v=q135';
 import {topicTitle} from './understanding-model.js';
 
 function node(tag, cls, text) {

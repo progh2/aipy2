@@ -10,8 +10,8 @@ import {parseClassId} from './class-picker.js';
 import {titlesFromCatalog, tasksFromCatalog} from './understanding-model.js';
 import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, formatRate,
- cardAccuracyLabel, answerRows, unitAnswerTotals, journalRows, UNIT_ROMAN
-} from './board-model.js';
+ cardAccuracyLabel, answerRows, unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
+} from './board-model.js?v=q135';
 import {renderAnswerRow, renderJournalUnitGroup} from './answer-view.js';
 import {groupAnswerRowsBySubunit, studentSummaryLabel, hasAnswerRecord} from './teacher-answers-model.js';
 
@@ -27,6 +27,7 @@ const node = (tag, cls, text) => {
 let classIdValue = '';
 let titles = {};
 let tasks = {};
+let exampleIndex = {};
 let topics = [];
 let questions = [];
 let rosterUnsub = null;
@@ -188,7 +189,7 @@ function paintDetail(card) {
   topicBox.append(ul);
   unitHost.append(topicBox);
  }
- const journals = journalRows(state, titles, tasks);
+ const journals = journalRows(state, titles, tasks, exampleIndex);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
@@ -286,6 +287,7 @@ async function startTeacherAnswers() {
   const catalog = await (await fetch(`${prefix}data/catalog.json`)).json();
   titles = titlesFromCatalog(catalog);
   tasks = tasksFromCatalog(catalog);
+  exampleIndex = exampleIndexFromCatalog(catalog);
   topics = topicListFromCatalog(catalog);
   questions = Array.isArray(catalog.questions) ? catalog.questions : [];
  } catch (error) {
