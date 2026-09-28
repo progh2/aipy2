@@ -7,7 +7,7 @@
 import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {parseClassId} from './class-picker.js';
-import {titlesFromCatalog} from './understanding-model.js';
+import {titlesFromCatalog, tasksFromCatalog} from './understanding-model.js';
 import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, formatRate,
  cardAccuracyLabel, answerRows, unitAnswerTotals, journalRows, UNIT_ROMAN
@@ -26,6 +26,7 @@ const node = (tag, cls, text) => {
 
 let classIdValue = '';
 let titles = {};
+let tasks = {};
 let topics = [];
 let questions = [];
 let rosterUnsub = null;
@@ -187,7 +188,7 @@ function paintDetail(card) {
   topicBox.append(ul);
   unitHost.append(topicBox);
  }
- const journals = journalRows(state, titles);
+ const journals = journalRows(state, titles, tasks);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
@@ -284,6 +285,7 @@ async function startTeacherAnswers() {
  try {
   const catalog = await (await fetch(`${prefix}data/catalog.json`)).json();
   titles = titlesFromCatalog(catalog);
+  tasks = tasksFromCatalog(catalog);
   topics = topicListFromCatalog(catalog);
   questions = Array.isArray(catalog.questions) ? catalog.questions : [];
  } catch (error) {

@@ -213,6 +213,10 @@ def ex_html(eid):
  if eid not in _ex_html_cache:
   _ex_html_cache[eid]=(WEB/f'units/unit0{example_unit[eid]}/ex-{eid}.html').read_text()
  return _ex_html_cache[eid]
+# (#132) 코드 전 설명·역사·영상 팁·실행 화면은 소단원 설명 페이지가 아니라 보강 자료 전용
+# 페이지(extra-{소단원id}.html)에 있다 — 아래 pre_api/tips 검증은 이 페이지를 읽는다.
+def extra_html(u,lid):
+ return (WEB/f'units/unit0{u}/extra-{lid}.html').read_text()
 assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/unit02/index.html','units/unit03/index.html','units/unit04/index.html']
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
 assert catalog['topics']['units/unit01/index.html'][0]['href']=='units/unit01/overview.html'
@@ -324,7 +328,9 @@ for eid in unit1_pre_api.unit1_pre_coverage():
  assert examples[eid]['pre_api'], ('unit1 pre_api', eid)
 for lesson in units[1]:
  page=(WEB/f'units/unit01/{lesson["id"]}.html').read_text()
- assert '코드 전에 알아 두기' in page, lesson['id']
+ extra=extra_html(1,lesson['id'])
+ assert '코드 전에 알아 두기' in extra, lesson['id']
+ assert '코드 전에 알아 두기' not in page, lesson['id']
  for eid in lesson['examples']:
   assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
 for lid in unit1_tips.unit1_history_lessons():
@@ -335,43 +341,50 @@ assert not unit1['math']['tips']['youtube']
 assert not unit1['project']['tips']['youtube']
 assert not unit1['review']['tips']['youtube']
 overview_page=(WEB/'units/unit01/overview.html').read_text()
+overview_extra=extra_html(1,'overview')
 assert 'id="pre-api"' in ex_html('reuse')
 assert 'id="pre-api"' in ex_html('copy-twice')
-assert 'id="content-tips"' in overview_page
-assert '더 알아보는 팁' in overview_page
+assert 'id="content-tips"' in overview_extra
+assert '더 알아보는 팁' in overview_extra
 # The modules video now lives on 'imports' only (#63 dedup).
-assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' not in overview_page
-assert 'Python 1.5' in overview_page
-imports_page=(WEB/'units/unit01/imports.html').read_text()
-assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' in imports_page
+assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' not in overview_extra
+assert 'Python 1.5' in overview_extra
+imports_extra=extra_html(1,'imports')
+assert 'https://www.youtube.com/watch?v=CqvZ3vGoGs0' in imports_extra
 math_page=(WEB/'units/unit01/math.html').read_text()
+math_extra=extra_html(1,'math')
 assert 'id="pre-api"' in ex_html('math-signed')
 assert 'math-circle' in math_page and 'math-signed' in math_page
-assert '역사 한 줄' in math_page
-assert 'https://www.youtube.com/' not in math_page
-entrypoint_page=(WEB/'units/unit01/entrypoint.html').read_text()
-assert 'https://www.youtube.com/watch?v=sugvnHA7ElY' in entrypoint_page
+assert '역사 한 줄' in math_extra
+assert 'https://www.youtube.com/' not in math_extra
+entrypoint_extra=extra_html(1,'entrypoint')
+assert 'https://www.youtube.com/watch?v=sugvnHA7ElY' in entrypoint_extra
 thirdparty_page=(WEB/'units/unit01/thirdparty.html').read_text()
+thirdparty_extra=extra_html(1,'thirdparty')
 assert 'pypi-names' in thirdparty_page and 'stdlib-json' in thirdparty_page
-assert 'https://www.youtube.com/watch?v=U2ZN104hIcc' in thirdparty_page
+assert 'https://www.youtube.com/watch?v=U2ZN104hIcc' in thirdparty_extra
 assert 'id="pre-api"' in ex_html('pypi-names')
-packages_page=(WEB/'units/unit01/packages.html').read_text()
-assert 'https://www.youtube.com/watch?v=HGOBQPFzWKo' in packages_page
+packages_extra=extra_html(1,'packages')
+assert 'https://www.youtube.com/watch?v=HGOBQPFzWKo' in packages_extra
 random_page=(WEB/'units/unit01/random.html').read_text()
-assert 'https://www.youtube.com/watch?v=KzqSDvzOFNA' in random_page
+random_extra=extra_html(1,'random')
+assert 'https://www.youtube.com/watch?v=KzqSDvzOFNA' in random_extra
 assert 'random-seed' in random_page
 datetime_page=(WEB/'units/unit01/datetime.html').read_text()
-assert 'https://www.youtube.com/watch?v=eirjjyP2qcQ' in datetime_page
+datetime_extra=extra_html(1,'datetime')
+assert 'https://www.youtube.com/watch?v=eirjjyP2qcQ' in datetime_extra
 assert 'weekday-fixed' in datetime_page
 os_page=(WEB/'units/unit01/os-sys.html').read_text()
-assert 'https://www.youtube.com/watch?v=tJxcKyFMTGo' in os_page
+os_extra=extra_html(1,'os-sys')
+assert 'https://www.youtube.com/watch?v=tJxcKyFMTGo' in os_extra
 assert 'sys-modules' in os_page
 project1=(WEB/'units/unit01/project.html').read_text()
 assert 'project-roll' in project1 and 'id="pre-api"' in ex_html('project-roll')
 assert 'id="pre-api"' in ex_html('core')
 review1=(WEB/'units/unit01/review.html').read_text()
+review1_extra=extra_html(1,'review')
 assert 'review-two-files' in review1
-assert '역사 한 줄' in review1
+assert '역사 한 줄' in review1_extra
 assert '실행하면 이렇게 보여요' not in overview_page
 assert '실행하면 이렇게 보여요' not in math_page
 # (#131) 3단원 ml-* density/pre_api/tips/screenshots 옛 검증 블록을 제거했다 —
@@ -398,7 +411,9 @@ for eid in unit4_pre_api.unit4_pre_coverage():
  assert examples[eid]['pre_api'], ('unit4 pre_api', eid)
 for lesson in units[4]:
  page=(WEB/f'units/unit04/{lesson["id"]}.html').read_text()
- assert '코드 전에 알아 두기' in page, lesson['id']
+ extra=extra_html(4,lesson['id'])
+ assert '코드 전에 알아 두기' in extra, lesson['id']
+ assert '코드 전에 알아 두기' not in page, lesson['id']
  for eid in lesson['examples']:
   assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
 for lid in unit4_tips.unit4_history_lessons():
@@ -408,54 +423,65 @@ for lid in unit4_tips.unit4_youtube_lessons():
 assert not unit4['cv-transform']['tips']['youtube']
 assert not unit4['cv-project']['tips']['youtube']
 overview4=(WEB/'units/unit04/cv-overview.html').read_text()
+overview4_extra=extra_html(4,'cv-overview')
 assert 'id="pre-api"' in ex_html('cv-process-vs-vision')
 assert 'id="pre-api"' in ex_html('cv-use-fields')
-assert 'id="content-tips"' in overview4
-assert '더 알아보는 팁' in overview4
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in overview4
-assert 'MIT' in overview4 or '여름' in overview4
+assert 'id="content-tips"' in overview4_extra
+assert '더 알아보는 팁' in overview4_extra
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in overview4_extra
+assert 'MIT' in overview4_extra or '여름' in overview4_extra
 assert '실행하면 이렇게 보여요' not in overview4
 pixels4=(WEB/'units/unit04/cv-pixels.html').read_text()
+pixels4_extra=extra_html(4,'cv-pixels')
 assert 'cv-shape-size' in pixels4 and 'cv-bgr-rgb' in pixels4
 assert 'id="pre-api"' in ex_html('cv-shape-size')
 # The Crash Course CV video now lives on 'cv-overview' only (#63 dedup).
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pixels4
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pixels4_extra
 pipeline4=(WEB/'units/unit04/cv-pipeline.html').read_text()
+pipeline4_extra=extra_html(4,'cv-pipeline')
 assert 'cv-plate-stages' in pipeline4 and 'cv-eval-criteria' in pipeline4
-assert '역사 한 줄' in pipeline4
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pipeline4
+assert '역사 한 줄' in pipeline4_extra
+assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pipeline4_extra
 transform4=(WEB/'units/unit04/cv-transform.html').read_text()
-assert '역사 한 줄' in transform4
-assert 'https://www.youtube.com/' not in transform4
+transform4_extra=extra_html(4,'cv-transform')
+assert '역사 한 줄' in transform4_extra
+assert 'https://www.youtube.com/' not in transform4_extra
 assert 'assets/science/cv-perspective.png' in transform4
 assert 'id="screenshots"' in ex_html('cv-perspective')
 filters4=(WEB/'units/unit04/cv-filters.html').read_text()
+filters4_extra=extra_html(4,'cv-filters')
 assert 'cv-threshold-kinds' in filters4
-assert 'https://www.youtube.com/watch?v=C_zFhWdM4ic' in filters4
+assert 'https://www.youtube.com/watch?v=C_zFhWdM4ic' in filters4_extra
 assert 'assets/science/cv-filters.png' in filters4
 assert 'id="screenshots"' in ex_html('cv-filters')
 features4=(WEB/'units/unit04/cv-features.html').read_text()
+features4_extra=extra_html(4,'cv-features')
 assert 'cv-feature-kinds' in features4
-assert 'https://www.youtube.com/watch?v=uihBwtPIBxM' in features4
+assert 'https://www.youtube.com/watch?v=uihBwtPIBxM' in features4_extra
 assert 'assets/science/cv-features.png' in features4
 libraries4=(WEB/'units/unit04/cv-libraries.html').read_text()
-assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in libraries4
+libraries4_extra=extra_html(4,'cv-libraries')
+assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in libraries4_extra
 assert 'assets/science/cv-sobel.png' in libraries4
 assert 'id="screenshots"' in ex_html('cv-skimage')
 io4=(WEB/'units/unit04/cv-io.html').read_text()
+io4_extra=extra_html(4,'cv-io')
 # The OpenCV course video now lives on 'cv-libraries' only (#63 dedup).
-assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' not in io4
+assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' not in io4_extra
 assert 'assets/science/cv-io.png' in io4
 haar4=(WEB/'units/unit04/cv-haar.html').read_text()
+haar4_extra=extra_html(4,'cv-haar')
 assert 'cv-haar-vs-id' in haar4 and 'id="pre-api"' in ex_html('cv-haar-vs-id')
-assert 'https://www.youtube.com/watch?v=uEJ71VlUmMQ' in haar4
+assert 'https://www.youtube.com/watch?v=uEJ71VlUmMQ' in haar4_extra
 yolo4=(WEB/'units/unit04/cv-yolo.html').read_text()
+yolo4_extra=extra_html(4,'cv-yolo')
 assert 'cv-count' in yolo4
-assert 'https://www.youtube.com/watch?v=Cgxsv1riJhI' in yolo4
+assert 'https://www.youtube.com/watch?v=Cgxsv1riJhI' in yolo4_extra
 project4=(WEB/'units/unit04/cv-project.html').read_text()
+project4_extra=extra_html(4,'cv-project')
 assert 'cv-scan-card' in project4 and 'id="pre-api"' in ex_html('cv-scan-card')
-assert '역사 한 줄' in project4
-assert 'https://www.youtube.com/' not in project4
+assert '역사 한 줄' in project4_extra
+assert 'https://www.youtube.com/' not in project4_extra
 assert examples['cv-io']['screenshots'] and examples['cv-filters']['screenshots']
 assert examples['cv-features']['screenshots'] and examples['cv-perspective']['screenshots']
 assert examples['cv-skimage']['screenshots']
@@ -861,4 +887,69 @@ for p in WEB.rglob('*.html'):
   assert FB_VALUE_RE.match(v),(p,'data-fb 형식이 아님',v)
  assert len(values)==len(set(values)),(p,'data-fb 중복',values)
 assert fb_pages_checked>0,'data-fb가 매겨진 학생 페이지가 없음'
-print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages.')
+
+# (#132) 연습문제·예제·튜토리얼·보강 자료는 새 창(target=_blank rel=noopener)으로 연다 — 수업
+# 흐름(설명·문제 풀이)이 다른 탭 때문에 끊기지 않게. rel=noopener를 쓰므로 follow.js는
+# window.opener 대신 링크의 ?w=1 쿼리 표식으로 "새 창에서 열렸다"를 판별한다(follow-model.js
+# isPoppedTabMarker) — 그래서 새 창으로 여는 링크는 항상 이 표식을 달아야 한다.
+POPPED_NAME_RE=re.compile(r'^(q-[a-z0-9-]+\.html|practice\.html|ex-[a-z0-9-]+\.html|tut-[a-z0-9-]+\.html|extra-[a-z0-9-]+\.html)$')
+def is_popped_page(p):
+ return bool(POPPED_NAME_RE.match(p.name))
+class AnchorTags(HTMLParser):
+ def __init__(self):super().__init__();self.anchors=[]
+ def handle_starttag(self,tag,attrs):
+  if tag=='a':self.anchors.append(dict(attrs))
+popped_entry_checked=0
+for p in WEB.rglob('units/unit0[1-4]/*.html'):
+ fam_popped=is_popped_page(p)
+ parser=AnchorTags();parser.feed(p.read_text())
+ for a in parser.anchors:
+  href=a.get('href') or ''
+  u=urlsplit(href)
+  if u.scheme or u.netloc:continue
+  name=Path(unquote(u.path)).name
+  if not POPPED_NAME_RE.match(name):continue
+  target_page=(p.parent/unquote(u.path)).resolve() if u.path else p
+  same_page=target_page==p.resolve()
+  if same_page:continue  # 같은 popped 페이지 안의 문항 앵커 등은 새 창을 열 필요가 없다.
+  if fam_popped:continue  # 이미 새 창 안에서의 이동은 같은 창을 쓴다(가족 내 이동).
+  # 메인 흐름(소단원 설명·단원 인덱스 등)에서 연습문제·예제·튜토리얼·보강 자료로 나가는
+  # 모든 링크는 새 창이어야 하고, follow.js가 판별할 ?w=1 표식을 달아야 한다.
+  assert a.get('target')=='_blank',('popped link must open in new tab',p,href)
+  assert a.get('rel')=='noopener',('popped link must use rel=noopener',p,href)
+  assert 'w=1' in u.query,('popped link must carry ?w=1 for follow.js popped-tab detection',p,href)
+  popped_entry_checked+=1
+assert popped_entry_checked>0,'새 창으로 여는 연습문제·예제·튜토리얼·보강 자료 링크를 하나도 못 찾음'
+
+# tut-*.html · extra-*.html가 실제로 만들어졌는지 — 앞서 Links 검사가 이미 존재·앵커 무결성을
+# 확인했다(#132) — 여기서는 최소 개수만 다시 확인해 build.py 쪽 회귀(생성 자체가 빠지는 경우)를 잡는다.
+tut_pages=list(WEB.rglob('units/unit0[1-4]/tut-*.html'))
+extra_pages=list(WEB.rglob('units/unit0[1-4]/extra-*.html'))
+assert len(tut_pages)>0,'튜토리얼 전용 페이지(tut-*.html)가 하나도 없음'
+assert len(extra_pages)>0,'보강 자료 전용 페이지(extra-*.html)가 하나도 없음'
+
+# 소단원 설명 페이지에는 튜토리얼 전체 단계·보강 자료 본문이 인라인으로 남아 있으면 안 된다
+# (#132) — 카드 링크만 있어야 한다. tutorial-steps는 tut 페이지 전용 클래스, content-slots
+# pre-api/content-tips/content-shots는 extra 페이지 전용 클래스다.
+topic_pages=[WEB/f'units/unit0{u}/{l["id"]}.html' for u in units for l in units[u]]
+for p in topic_pages:
+ html=p.read_text()
+ assert 'class="tutorial-steps"' not in html,(p,'튜토리얼 본문이 소단원 설명 페이지에 인라인으로 남아 있음')
+ assert 'content-slots pre-api' not in html,(p,'코드 전 설명이 소단원 설명 페이지에 인라인으로 남아 있음')
+ assert 'content-slots content-tips' not in html,(p,'역사·영상 팁이 소단원 설명 페이지에 인라인으로 남아 있음')
+ assert 'content-slots content-shots' not in html,(p,'실행 화면이 소단원 설명 페이지에 인라인으로 남아 있음')
+ assert 'id="questions"' not in html,(p,'문항 본문이 소단원 설명 페이지에 인라인으로 남아 있음')
+
+# 직접 해 보세요: 항목(li) 수 = 입력칸(textarea[data-journal^="d-"]) 수, 제출 버튼도 있어야 한다.
+task_boxes_checked=0
+for p in topic_pages:
+ html=p.read_text()
+ for key,inner in re.findall(r'<div class="task-box"[^>]*data-task-key="([^"]+)"[^>]*>(.*?)</ol>',html,re.S):
+  n_items=inner.count('<li>')
+  n_areas=len(re.findall(r'<textarea[^>]*data-journal="d-'+re.escape(key)+r'-\d+"',inner))
+  assert n_items==n_areas and n_items>0,(p,key,'직접 해 보세요 항목 수와 입력칸 수가 다름',n_items,n_areas)
+  assert f'data-task-submit="{key}"' in html,(p,key,'제출 버튼이 없음')
+  task_boxes_checked+=1
+assert task_boxes_checked>0,'직접 해 보세요 입력칸을 하나도 못 찾음'
+
+print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages; {popped_entry_checked} new-tab practice/example/tutorial/extra links; {len(tut_pages)} tutorial pages; {len(extra_pages)} extra pages; {task_boxes_checked} task boxes.')

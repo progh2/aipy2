@@ -461,19 +461,36 @@ export function unitAnswerTotals(state, questions = []) {
 export const JOURNAL_LABELS = {learn: '이해한 개념', error: '오류와 해결', next: '다음 도전'};
 const JOURNAL_ORDER = ['learn', 'error', 'next'];
 const TOPIC_JOURNAL_RE = /^j-(u([1-4])-.+)$/;
+// #132 '직접 해 보세요' 항목 답변과 제출 표시. d-u{단원}-{소단원id}-{번호} / -submitted.
+const TASK_ITEM_RE = /^d-u([1-4])-(.+)-(\d+)$/;
+const TASK_SUBMIT_RE = /^d-u([1-4])-(.+)-submitted$/;
 
-export function journalRows(state, titles) {
+export function journalRows(state, titles, tasks) {
  const journals = asMap(state && state.journals);
+ const taskLabels = asMap(tasks);
  const byUnit = new Map();
  const topicItems = new Map();
+ const taskEntries = new Map(); // `${unit}::${topicId}::${i}` -> {unit, topicId, i, text}
+ const taskSubmitted = new Map(); // `${unit}::${topicId}` -> ISO 시각 문자열
  for (const [key, text] of Object.entries(journals)) {
   const value = typeof text === 'string' ? text.trim() : '';
+  const submitMatch = TASK_SUBMIT_RE.exec(key);
+  if (submitMatch && value) {
+   taskSubmitted.set(`${submitMatch[1]}::${submitMatch[2]}`, value);
+   continue;
+  }
   if (!value) continue;
   const unitMatch = /^u([1-4])-(learn|error|next)$/.exec(key);
   if (unitMatch) {
    const unit = Number(unitMatch[1]);
    if (!byUnit.has(unit)) byUnit.set(unit, {});
    byUnit.get(unit)[unitMatch[2]] = value;
+   continue;
+  }
+  const taskMatch = TASK_ITEM_RE.exec(key);
+  if (taskMatch) {
+   const [, unitStr, topicId, iStr] = taskMatch;
+   taskEntries.set(`${unitStr}::${topicId}::${iStr}`, {unit: Number(unitStr), topicId, i: Number(iStr), text: value});
    continue;
   }
   const topicMatch = TOPIC_JOURNAL_RE.exec(key);
@@ -483,6 +500,21 @@ export function journalRows(state, titles) {
    if (!topicItems.has(unit)) topicItems.set(unit, []);
    topicItems.get(unit).push({key: topicId, label: topicTitle(topicId, titles), text: value, topicId});
   }
+ }
+ for (const entry of taskEntries.values()) {
+  const {unit, topicId, i, text} = entry;
+  const taskLabel = taskLabels[`u${unit}-${topicId}-${i}`] || '';
+  const label = `직접 해 보세요 ${i}${taskLabel ? `: ${taskLabel}` : ''}`;
+  const submittedAt = taskSubmitted.get(`${unit}::${topicId}`) || '';
+  if (!topicItems.has(unit)) topicItems.set(unit, []);
+  topicItems.get(unit).push({
+   key: `${topicId}-task${i}`,
+   label: `${topicTitle(`u${unit}-${topicId}`, titles)} · ${label}`,
+   text,
+   topicId: `${topicId}-task${i}`,
+   submitted: Boolean(submittedAt),
+   submittedAt
+  });
  }
  const units = new Set([...byUnit.keys(), ...topicItems.keys()]);
  return [...units]

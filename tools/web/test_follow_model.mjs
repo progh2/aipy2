@@ -7,7 +7,7 @@ import {
  isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
  DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId, parseAnchor, anchorId, blockAnchor,
- blockOnlyAllowed
+ blockOnlyAllowed, isPoppedPage, poppedFocusDecision, isPoppedTabMarker
 } from '../../web/assets/follow-model.js';
 
 function eq(actual, expected, label) {
@@ -292,5 +292,37 @@ eq(focusFromUnitClick({href: '#u1-q041', currentPage: 'units/unit01/practice.htm
  {page: 'units/unit01/practice.html', topicAnchor: 'u1-q041', exampleId: null}, 'practice page question anchor focus allowed');
 eq(focusFromUnitClick({href: '#lab', currentPage: 'units/unit01/practice.html'}), null,
  'practice page non-question anchor stays blocked');
+
+// ── (#132) 새 창(팝업) 페이지 판별과, 그런 탭에서의 초점 처리 표. ──
+eq(isPoppedPage('units/unit01/q-widgets.html'), true, 'q-*.html은 팝업 페이지');
+eq(isPoppedPage('units/unit01/practice.html'), true, 'practice.html은 팝업 페이지');
+eq(isPoppedPage('units/unit01/ex-loop.html'), true, 'ex-*.html은 팝업 페이지');
+eq(isPoppedPage('units/unit02/tut-widgets-greeting.html'), true, 'tut-*.html은 팝업 페이지');
+eq(isPoppedPage('units/unit01/extra-define.html'), true, 'extra-*.html은 팝업 페이지');
+eq(isPoppedPage('units/unit01/widgets.html'), false, '소단원 설명 페이지는 팝업 페이지가 아님');
+eq(isPoppedPage('units/unit01/index.html'), false, '단원 인덱스는 팝업 페이지가 아님');
+
+eq(isPoppedTabMarker('?w=1'), true, '?w=1 쿼리는 팝업 탭 표식');
+eq(isPoppedTabMarker('?w=1&x=2'), true, '다른 쿼리와 섞여도 인식');
+eq(isPoppedTabMarker(''), false, '쿼리 없음은 팝업 탭 아님');
+eq(isPoppedTabMarker('?w=0'), false, 'w=1이 아니면 팝업 탭 아님');
+
+const POPPED_TABLE = [
+ // [currentPage, focus, expectedAction, expectedAnchor?]
+ ['units/unit01/q-widgets.html', {page: 'units/unit01/q-widgets.html', topicAnchor: 'u1-q041'}, 'scroll', 'u1-q041'],
+ ['units/unit01/q-widgets.html', {page: 'units/unit02/index.html'}, 'notice'],
+ ['units/unit01/ex-loop.html', {page: 'units/unit03/index.html', topicAnchor: 'ml-knn'}, 'notice'],
+ ['units/unit01/ex-loop.html', {page: 'units/unit01/index.html', exampleId: 'loop'}, 'scroll'],
+ ['units/unit01/practice.html', null, 'none']
+];
+for (const [page, focus, action, anchor] of POPPED_TABLE) {
+ const d = poppedFocusDecision(page, focus, true);
+ eq(d.action, action, `poppedFocusDecision(${page}, ${JSON.stringify(focus)})`);
+ if (anchor !== undefined) eq(d.topicAnchor, anchor, `poppedFocusDecision anchor for ${page}`);
+}
+// isPopped=false면 항상 'follow' — 원래 탭은 그대로 shouldNavigate 흐름을 타야 한다.
+eq(poppedFocusDecision('units/unit01/widgets.html', {page: 'units/unit02/index.html'}, false), {action: 'follow'},
+ '팝업 탭이 아니면 그대로 따라가기 흐름');
+console.log('PASS: 새 창(팝업) 페이지 판별·초점 처리 표');
 
 console.log('PASS: follow-model helpers');

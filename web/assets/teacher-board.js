@@ -8,7 +8,7 @@ import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {inClass, parseClassId} from './class-picker.js';
 import {
- titlesFromCatalog, topicTitle, studentLabel, countUnderstanding, groupHardByTopic
+ titlesFromCatalog, tasksFromCatalog, topicTitle, studentLabel, countUnderstanding, groupHardByTopic
 } from './understanding-model.js';
 import {sortOpenHelp} from './help-model.js';
 import {
@@ -30,6 +30,7 @@ const node = (tag, cls, text) => {
 
 let classIdValue = '';
 let titles = {};
+let tasks = {};
 let topics = [];
 let questions = [];
 let progressUnsub = null;
@@ -545,7 +546,7 @@ function renderAnswerSection(card) {
    wrap.append(renderAnswerUnitGroup(unit, unitRows, totalInfo, {open: groups.length <= 1, titles}));
   }
  }
- const journals = journalRows(state, titles);
+ const journals = journalRows(state, titles, tasks);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
@@ -788,6 +789,7 @@ async function startTeacherBoard() {
  try {
   const catalog = await (await fetch(`${prefix}data/catalog.json`)).json();
   titles = titlesFromCatalog(catalog);
+  tasks = tasksFromCatalog(catalog);
   topics = topicListFromCatalog(catalog);
   questions = Array.isArray(catalog.questions) ? catalog.questions : [];
  } catch (error) {
