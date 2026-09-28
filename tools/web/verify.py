@@ -24,20 +24,20 @@ import unit4_tips
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
-assert [sum(q['unit']==u for q in questions) for u in [1,2]]==[60,70]
+assert [sum(q['unit']==u for q in questions) for u in [1,2]]==[60,40]
 assert len({q['id'] for q in questions})==len(questions)
 assert set(units)=={1,2,3,4}
-assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:70,3:44,4:39}
+assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:40,3:44,4:39}
 assert set(QUESTION_HINTS) == {q['id'] for q in questions}, '문항과 힌트 목록 불일치'
 # (#116) 문항 topic은 반드시 그 단원의 실제 소단원 id여야 q-{topic}.html로 연결된다.
 # review처럼 문제를 일부러 만들지 않은 소단원만 허용 목록으로 예외를 둔다.
 LESSON_IDS={u:{l['id'] for l in units[u]} for u in units}
-EMPTY_TOPIC_ALLOWED={(2,'review')}
+EMPTY_TOPIC_ALLOWED={(2,'review'),(2,'project')}
 # (#131) 2단원 개편으로 'pyside' 소단원 페이지를 삭제했다. questions.py·question_topics.py의
 # 문항 정의(topic='pyside' 12개)는 D/E가 별도로 정리 중이므로 여기서는 고치지 않고, 이제
 # 어떤 소단원도 가리키지 않는 topic만 허용 목록으로 봐 준다 — 렌더링은 build.py가 이미
 # 소단원별 페이지에서 건너뛰고, 단원 전체 문제 목록(practice.html)에는 그대로 남는다.
-ORPHANED_TOPICS_ALLOWED={(2,'pyside')}
+ORPHANED_TOPICS_ALLOWED=set()
 # (#131) 2·3단원은 PPT 슬라이드 기반 소단원 페이지(deck_u2/deck_u3)를 쓴다 —
 # pre-api/tips/screenshots/density 문단은 더 이상 렌더링하지 않는다. 'project'(2단원)는
 # 교과서 슬라이드가 없는 확장 페이지라 deck-slide 0개를 허용한다.
