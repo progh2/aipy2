@@ -1,0 +1,297 @@
+{
+ "all": {
+  "text": "나무는 식물입니다."
+ },
+ "animal-check": {
+  "text": "새는 동물입니다.\n사자는 동물입니다."
+ },
+ "christmas": {
+  "text": "다음 크리스마스까지 87 일"
+ },
+ "circle-function": {
+  "text": "반지름이 3인 원의 넓이: 28.26"
+ },
+ "circle-mixed": {
+  "text": "반지름이 4인 원의 넓이: 50.24\n반지름이 3인 원의 넓이: 28.26"
+ },
+ "circle-top": {
+  "text": "반지름이 3인 원의 둘레: 18.84\n반지름이 3인 원의 넓이: 28.26"
+ },
+ "class-module": {
+  "text": "28.274333882308138"
+ },
+ "copy-twice": {
+  "text": "숙제1: 8\n숙제2: 8\n두 숙제가 각자 add를 가지고 있습니다."
+ },
+ "core": {
+  "text": "주사위: 4\n남은 날짜: 1\n추첨: ['민지', '수빈']"
+ },
+ "cv-bgr-rgb": {
+  "text": "OpenCV 기본 읽기 BGR: (20, 80, 240)\n화면·Pillow RGB: (240, 80, 20)\n가운데 G는 그대로입니다. 순서를 바꾸지 않으면 빨강과 파랑이 뒤바뀝니다."
+ },
+ "cv-count": {
+  "text": "Frame 0 {'person': 2, 'car': 1}\nFrame 1 {'person': 1, 'car': 1}"
+ },
+ "cv-eval-criteria": {
+  "text": "20장 시험\n느린 정확 맞춤 19 / 시간 400 ms / 조명 약함\n빠른 대충 맞춤 12 / 시간 20 ms / 조명 보통\n균형 맞춤 17 / 시간 80 ms / 조명 보통\n실시간 안내면 지연도 보고, 교실 조명이 바뀌면 안정성도 봅니다."
+ },
+ "cv-feature-kinds": {
+  "text": "목적: 도형 개수와 면적\n고른 도구: 윤곽선\n에지: 밝기가 급변하는 경계\n코너: 여러 방향으로 바뀌는 위치\n윤곽선: 이진 영역의 둘레와 면적\n에지를 찾았다고 물체의 종류나 신원을 안 것은 아닙니다."
+ },
+ "cv-haar-vs-id": {
+  "text": "찾은 얼굴 수: 2\n상자 0: 원점 (100, 50) 크기 80×90\n상자 1: 원점 (220, 40) 크기 70×80\n위치만 있습니다. 이름·감정은 이 결과로 단정하지 않습니다.\nROI 눈 좌표 (12, 18) → 원본 (112, 68)"
+ },
+ "cv-human-vs-computer": {
+  "text": "격자: [[40, 40, 200], [40, 40, 200]]\n사람: 오른쪽 밝은 덩어리를 컵으로 봄\n컴퓨터: 값 200이 모인 칸의 좌표만 계산\n조명·가림·각도가 바뀌면 같은 컵도 다른 숫자가 됩니다."
+ },
+ "cv-pillow": {
+  "img": [
+   "assets/results/cv-pillow-1.webp",
+   "assets/results/cv-pillow-2.webp",
+   "assets/results/cv-pillow-3.webp"
+  ],
+  "text": "size (width, height): (240, 160)"
+ },
+ "cv-pipeline-steps": {
+  "text": "입력: 교차로 카메라 한 장\n전처리: 크기 축소·회색조\n특징·위치: 차량 상자\n의미 해석: 차선 안 정차\n출력·평가: 표시 + 오탐·누락 수\n한 단계가 틀리면 다음 단계도 같이 흔들립니다."
+ },
+ "cv-pixels": {
+  "text": "height, width: 2 3\nInverted: [[255, 191, 127], [63, 31, 0]]\nBinary: [[0, 0, 0], [255, 255, 255]]"
+ },
+ "cv-plate-stages": {
+  "text": "검출 단계 · 위치: (40, 80, 120, 36)\n인식 단계 · 내용: 12가3456\n위치를 잘 찾아도 글자를 잘못 읽을 수 있습니다. 오류를 단계별로 셉니다.\n검출 성공? True / 인식 길이 OK? True"
+ },
+ "cv-process-vs-vision": {
+  "text": "영상 처리 · 가운데 밝기: 195\n컴퓨터 비전 · 찾은 것: [('네모', (30, 30, 90, 100)), ('원', (155, 55, 70, 70))]\n다듬은 이미지는 새 그림이고, 검출 결과는 위치와 이름입니다."
+ },
+ "cv-scan-card": {
+  "text": "입력: 기울고 어두운 문서 한 장\n목표: 글자가 읽히는 이진 이미지\n처리: ['원근 보정', '가우시안 블러', '대비 조정', '이진화']\n비교: 순서 하나 빼고 같은 입력으로 다시 실행\n확인: 경계가 살아 있는지, 글자가 뭉개지지 않는지\n한계: 한 순서가 모든 사진에 최선은 아님\n확장: 정적 이미지로 검증한 뒤 카메라 입력\nGUI 버튼은 처리 함수만 호출하고, 배열 코드와 창 코드를 나눕니다."
+ },
+ "cv-shape-size": {
+  "text": "shape: (2, 3, 3) → 높이 2 너비 3 채널 3\n픽셀 수: 6\n원소 수 size: 18\nPillow.size는 (너비, 높이)이고, OpenCV shape는 (높이, 너비, 채널)입니다."
+ },
+ "cv-threshold-kinds": {
+  "text": "고정 127: [0, 0, 0, 255, 255]\nOtsu 예 100: [0, 0, 255, 255, 255] (실제 Otsu는 분포로 기준을 고름)\n적응형 가운데: 0 지역 기준 103.0\nTHRESH_BINARY는 기준과 같으면 0입니다."
+ },
+ "cv-use-fields": {
+  "text": "사서: 빈자리 안내  →  오판 예: 가방을 사람으로\n교통 보조: 보행·차량 위치  →  오판 예: 그늘을 차로\n검사원: 흠집 후보  →  오판 예: 먼지를 결함으로\n촬영 자료의 이용 범위와 틀린 경우의 비용을 함께 적으세요."
+ },
+ "datetime": {
+  "text": "2026-09-29 01:33:52.072702\n2026 9 29\n1 33 52\n요일 번호: 1\n오늘은 2026년 9월 29일 화요일입니다.\n올해 지난 시간: 271 days, 1:33:52.072702"
+ },
+ "dice": {
+  "text": "주사위 면 수: 주사위 값: 2\n\n(입력한 값: 6)"
+ },
+ "events-click-counter": {
+  "img": [
+   "assets/results/events-click-counter-1.webp"
+  ]
+ },
+ "final-output": {
+  "text": "두 수의 합 : 4\n두 수의 합 : 8\n두 수의 차 : 5"
+ },
+ "gift": {
+  "text": "문구용품"
+ },
+ "import-0": {
+  "text": "안녕하세요\n안녕히 가세요"
+ },
+ "import-1": {
+  "text": "안녕하세요"
+ },
+ "import-2": {
+  "text": "안녕하세요\n안녕히 가세요"
+ },
+ "import-3": {
+  "text": "안녕하세요\n안녕히 가세요"
+ },
+ "import-4": {
+  "text": "안녕히 가세요"
+ },
+ "import-clash": {
+  "text": "안녕하세요\n안녕히 가세요"
+ },
+ "layout-same-form": {
+  "img": [
+   "assets/results/layout-same-form-1.webp"
+  ]
+ },
+ "layout-tk": {
+  "img": [
+   "assets/results/layout-tk-1.webp"
+  ]
+ },
+ "main-guard": {
+  "text": "circle_area3의 이름: circle_area3\nmain.py의 이름: __main__\n반지름이 3인 원의 넓이: 28.26"
+ },
+ "math": {
+  "text": "파이: 3.141592653589793\ne: 2.718281828459045\n올림: 4\n내림: 3\n팩토리얼: 120\n최대 공약수: 14\n거듭제곱: 1024.0\n음수의 올림·내림: -3 -4"
+ },
+ "math-circle": {
+  "text": "28.274333882308138\n소수 둘째 자리: 28.27\n거듭제곱 연산자: 1024  / math.pow: 1024.0"
+ },
+ "math-signed": {
+  "text": "양수 3.5 → ceil 4 / floor 3\n음수 -3.5 → ceil -3 / floor -4\n0에 가까운 쪽이 올림인가? True"
+ },
+ "memo-steps": {
+  "img": [
+   "assets/results/memo-steps-1.webp"
+  ]
+ },
+ "memo-tk": {
+  "img": [
+   "assets/results/memo-tk-1.webp"
+  ]
+ },
+ "ml-clustering": {
+  "img": [
+   "assets/results/ml-clustering-1.webp"
+  ],
+  "text": " - 생성된 데이터 형태 (X): (300, 2)\n - 생성된 데이터 미리보기 (상위 3개):\n    Feature_1  Feature_2\n0  -9.113944   6.813616\n1  -9.354576   7.092790\n2  -2.015671   8.281780\n - 각 데이터 포인트의 할당된 군집 레이블 (일부): [3 3 0 1 3 1 2 1 0 2]\n - 각 군집의 중심점:\n [[-2.60516878  8.99280115]\n [-6.85126211 -6.85031833]\n [ 4.68687447  2.01434593]\n [-8.83456141  7.24430734]]\n - 군집 내 응집도: 203.89"
+ },
+ "ml-cross-val-score": {
+  "text": "\n - 각 폴드별 R² 점수: [0.42955615 0.52259939 0.48268054 0.42649776 0.55024834]\n - 교차 검증 평균 R² 점수: 0.4823\n - 교차 검증 R² 점수의 표준편차: 0.0493"
+ },
+ "ml-grid-search-cv": {
+  "text": "\n - 최적 하이퍼파라미터: {'n_neighbors': 7}\n - 최고 교차 검증 정확도: 0.9800"
+ },
+ "ml-head-describe-info": {
+  "text": "--- 데이터프레임 상위 3행 (df.head(3)) ---\n      Name  Score   City\n0    Alice     90  Seoul\n1      Bob     85  Busan\n2  Charlie     78  Seoul\n\n--- 숫자 데이터 통계 요약 (df.describe()) ---\n           Score\ncount   6.000000\nmean   80.000000\nstd    10.936178\nmin    65.000000\n25%    72.000000\n50%    81.500000\n75%    88.750000\nmax    92.000000\n\n--- 데이터프레임 요약 정보 (df.info()) ---\n<class 'pandas.DataFrame'>\nRangeIndex: 6 entries, 0 to 5\nData columns (total 3 columns):\n #   Column  Non-Null Count  Dtype\n---  ------  --------------  -----\n 0   Name    6 non-null      str  \n 1   Score   6 non-null      int64\n 2   City    6 non-null      str  \ndtypes: int64(1), str(2)\nmemory usage: 276.0 bytes"
+ },
+ "ml-knn-exam": {
+  "text": "원본 데이터 미리보기 (특징 X)\n    sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)\n0                5.1               3.5                1.4               0.2\n1                4.9               3.0                1.4               0.2\n2                4.7               3.2                1.3               0.2\n3                4.6               3.1                1.5               0.2\n4                5.0               3.6                1.4               0.2\n원본 데이터 미리보기(목표 변수 y)\n 0    0\n1    0\n2    0\n3    0\n4    0\ndtype: int64\n - 훈련 데이터 형태: (105, 4), (105,)\n - 테스트 데이터 형태: (45, 4), (45,)\n[2 1 2 1 2]"
+ },
+ "ml-learning-curve": {
+  "img": [
+   "assets/results/ml-learning-curve-1.webp"
+  ]
+ },
+ "ml-linear-regression": {
+  "text": " - 특징(X) 데이터 미리보기 (상위 5개) \n         age       sex       bmi  ...        s4        s5        s6\n0  0.038076  0.050680  0.061696  ... -0.002592  0.019907 -0.017646\n1 -0.001882 -0.044642 -0.051474  ... -0.039493 -0.068332 -0.092204\n2  0.085299  0.050680  0.044451  ... -0.002592  0.002861 -0.025930\n3 -0.089063 -0.044642 -0.011595  ...  0.034309  0.022688 -0.009362\n4  0.005383 -0.044642 -0.036385  ... -0.002592 -0.031988 -0.046641\n\n[5 rows x 10 columns]\n\n - 목표 변수(y) 미리보기 (상위 3개):\n 0    151.0\n1     75.0\n2    141.0\ndtype: float64\n - 원본 데이터 형태: (442, 10), (442,)\n - 훈련 데이터 형태: (309, 10), (309,)\n - 테스트 데이터 형태: (133, 10), (133,)\n - 모델의 계수: [  29.25401303 -261.7064691   546.29972304  388.39834056 -901.95966819\n  506.76324136  121.15435079  288.03526689  659.26895081   41.37670105]\n - 모델의 절편: 151.0082\n - 테스트 데이터에 대한 예측 결과 (일부):\n[138.46970031 181.10052342 125.34400904 292.75977277 123.8830531 ]"
+ },
+ "ml-matplot-exam": {
+  "img": [
+   "assets/results/ml-matplot-exam-1.webp"
+  ]
+ },
+ "ml-missing-values": {
+  "text": "결측치 확인 (각 열의 결측치 개수):\nName     1\nScore    1\nCity     0\ndtype: int64\n\n결측치가 있는 행 제거 후 데이터:\n    Name  Score   City\n0  Alice   90.0  Seoul\n\n결측치를 0으로 채운 후 데이터:\n    Name  Score   City\n0  Alice   90.0  Seoul\n1    Bob    0.0  Busan\n2      0   70.0  Seoul\n\nName 결측치를 'Unknown'으로 채운 후 데이터:\n      Name  Score   City\n0    Alice   90.0  Seoul\n1      Bob    NaN  Busan\n2  Unknown   70.0  Seoul\n\n'Score' 결측치를 평균(80.00)으로 채운 후 데이터:\n    Name  Score   City\n0  Alice   90.0  Seoul\n1    Bob   80.0  Busan\n2    NaN   70.0  Seoul\n\n'Score' 결측치를 중앙값(80.00)으로 채운 후 데이터:\n    Name  Score   City\n0  Alice   90.0  Seoul\n1    Bob   80.0  Busan\n2    NaN   70.0  Seoul"
+ },
+ "ml-normalization": {
+  "text": "--- 원본 데이터 (정규화 전) ---\n   Feature1  Feature2\n0        10       100\n1        20       200\n2        30       300\n3        40       400\n\n--- 정규화된 데이터 ---\n   Feature1  Feature2\n0  0.000000  0.000000\n1  0.333333  0.333333\n2  0.666667  0.666667\n3  1.000000  1.000000"
+ },
+ "ml-numpy-exam": {
+  "text": "NumPy 배열: [10 20 30]\n5를 더한 결과: [15 25 35]\n\n합쳐진 배열: [1 2 3 4]"
+ },
+ "ml-one-hot-encoding": {
+  "text": " - 원본 데이터\n   도시   직업\n0  서울   학생\n1  부산  직장인\n2  서울  직장인\n3  제주   학생\n4  부산   학생\n\n--- 2. 원-핫 인코딩된 데이터 ---\n   도시_서울  도시_제주  직업_학생\n0      1      0      1\n1      0      0      0\n2      1      0      0\n3      0      1      1\n4      0      0      1"
+ },
+ "ml-pandas-exam": {
+  "text": "학생 점수표:\n   이름  점수\n0  철수  85\n1  영희  92\n\n'점수' 칼럼:\n 0    85\n1    92\nName: 점수, dtype: int64"
+ },
+ "ml-performance-metrics": {
+  "text": "\n - 혼동 행렬:\n [[ 59   4]\n [  2 106]]\n - 정확도: 0.9649 - 정밀도: 0.9636\n - 재현율: 0.9815 - F1 점수: 0.9725"
+ },
+ "ml-read-data": {
+  "text": "CSV에서 불러온 데이터:\n    Name   Score\n0  Alice      90\n1    Bob      85\n\nExcel에서 불러온 데이터:\n    Name  Score\n0  Alice     90\n1    Bob     85"
+ },
+ "ml-regression-metrics": {
+  "text": "\n - 평균 제곱 오차 (MSE): 0.5306\n - 평균 절대 오차 (MAE): 0.5272\n - 결정계수 (R-squared): 0.5958"
+ },
+ "ml-sklearn-exam": {
+  "text": "공부 시간 2시간일 때 예측: 0"
+ },
+ "ml-standardization": {
+  "text": "   Feature1  Feature2  Feature3\n0 -1.414214 -0.707107 -0.538285\n1 -0.707107  0.707107 -0.512652\n2  0.000000 -1.414214 -0.487019\n3  0.707107  0.000000  1.999343\n4  1.414214  1.414214 -0.461387\n각 특성의 평균 : [ 30. 150.  22.]\n각 특성의 표준편차 : [14.14213562 70.71067812 39.01281841]"
+ },
+ "ml-train-test-split": {
+  "text": "\n--- 3. 분할된 데이터의 형태 확인 ---\n - 훈련 특징 데이터 (X_train) 형태: (3, 2)\n - 테스트 특징 데이터 (X_test) 형태: (2, 2)\n - 훈련 목표 변수 (y_train) 형태: (3,)\n - 테스트 목표 변수 (y_test) 형태: (2,)"
+ },
+ "ml-train-test-split2": {
+  "text": " - 훈련 데이터 형태: (309, 10) (309,)\n - 테스트 데이터 형태: (133, 10) (133,)\n - 훈련 데이터 R²: 0.5244124363545946\n - 테스트 데이터 R²: 0.4772897164322618"
+ },
+ "os": {
+  "text": "운영체제: posix\n현재 폴더: 내 프로젝트 폴더\n['note.txt']"
+ },
+ "os-pc": {
+  "text": "main.py\n현재 운영체제 : posix\n현재 작업 디렉터리 : 내 프로젝트 폴더"
+ },
+ "package-0": {
+  "text": "새는 동물입니다."
+ },
+ "package-1": {
+  "text": "새는 동물입니다."
+ },
+ "package-2": {
+  "text": "새는 동물입니다."
+ },
+ "package-3": {
+  "text": "새는 동물입니다."
+ },
+ "package-4": {
+  "text": "새는 동물입니다."
+ },
+ "project-helper-app": {
+  "img": [
+   "assets/results/project-helper-app-1.webp"
+  ]
+ },
+ "project-roll": {
+  "text": "6면: 5\n20면: 3"
+ },
+ "pypi-names": {
+  "text": "설치 이름 → import 이름\nbeautifulsoup4   → bs4       (HTML에서 정보 추출)\npillow           → PIL       (이미지 크기·형식)\nnumpy            → numpy     (배열·수치 계산)\nscikit-learn     → sklearn   (머신러닝)\npip 명령은 터미널에서 실행합니다. 코드 입력창이 아닙니다."
+ },
+ "random": {
+  "text": "0.126765482055468\n6.554156760347674\n3\n5\n봄\n원본: ['라', '나', '다', '마', '가'] 반환값: None\n[2, 4, 3]"
+ },
+ "random-sample": {
+  "text": "추첨: ['하늘', '민지']\n원본: ['민지', '수빈', '하늘', '지우']\n섞은 복사본: ['수빈', '민지', '하늘', '지우']\n원본 유지: ['민지', '수빈', '하늘', '지우']"
+ },
+ "random-seed": {
+  "text": "[6, 1, 1, 6, 3]\n[6, 1, 1, 6, 3]\n같은가? True"
+ },
+ "rectangle": {
+  "text": "가로가 2 세로가 4인 사각형의 넓이: 8"
+ },
+ "reuse": {
+  "text": "8\n8"
+ },
+ "review-two-files": {
+  "text": "안녕하세요"
+ },
+ "stars": {
+  "text": "****\n****\n****\n**\n**"
+ },
+ "stdlib-json": {
+  "text": "{\"scores\": [70, 80, 90]}\n[70, 80, 90]"
+ },
+ "sum-input": {
+  "text": "첫 번째 수: 두 번째 수: 두 수의 합 : 8\n\n(입력한 값: 3, 5)"
+ },
+ "sys": {
+  "text": "실행 파일명 : main.py"
+ },
+ "sys-modules": {
+  "text": "sys.path[0] (지금 폴더): 내 프로젝트 폴더\n불러오기 전 math: False\n불러온 뒤 math: True\n두 번째 import 뒤에도 pi: 3.141592653589793"
+ },
+ "thirdparty": {
+  "text": "80.0"
+ },
+ "two-adds": {
+  "text": "합: 8\n하나 증가: 2"
+ },
+ "weekday-fixed": {
+  "text": "2026-09-15 화요일\nweekday()는 월요일 0: 1\n일요일은 6: 6"
+ },
+ "widgets-greeting": {
+  "img": [
+   "assets/results/widgets-greeting-1.webp"
+  ]
+ },
+ "widgets-tk": {
+  "img": [
+   "assets/results/widgets-tk-1.webp"
+  ]
+ }
+}

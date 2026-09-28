@@ -15,6 +15,21 @@ import deck_u3
 from focus_blocks import mark_focus_blocks
 textbook.attach(units)
 DECKS={2:deck_u2.LESSONS,3:deck_u3.LESSONS}
+# (#132) render_results.py가 만든 실행 결과 매니페스트. 없으면 빈 dict — 섹션을
+# 조용히 생략한다(재실행 없이도 build.py는 항상 성공해야 한다).
+_results_path=Path(__file__).parent/'results.json'
+RESULTS=json.loads(_results_path.read_text()) if _results_path.is_file() else {}
+
+def run_result_html(eid):
+ r=RESULTS.get(eid)
+ if not r: return ''
+ text_html=f'<pre class="run-result-text">{esc(r["text"])}</pre>' if r.get('text') else ''
+ imgs=r.get('img') or []
+ img_html=''
+ if imgs:
+  figs=''.join(f'<figure><img src="../../{esc(src)}" loading="lazy" alt="{esc(examples.get(eid,{}).get("title",eid))} 실행 결과"></figure>' for src in imgs)
+  img_html=f'<div class="run-result-imgs">{figs}</div>'
+ return f'<section class="run-result" id="run-result"><h3>실행 결과</h3><p class="small">교사 PC에서 실제로 실행해 캡처한 화면입니다. 입력값·환경에 따라 달라질 수 있습니다.</p>{text_html}{img_html}</section>'
 teacher_notes=design.prepare(units)
 for u in units:
  (Path(__file__).resolve().parents[2]/f"web/units/unit0{u}").mkdir(parents=True,exist_ok=True)
@@ -38,7 +53,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  if topic: extra+=f' data-topic="{esc(topic)}"'
  if lessons: extra+=f' data-lessons="{" ".join(lessons)}"'
  if example: extra+=f' data-example="{esc(example)}"'
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=deck4"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q132" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=14"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=q132r"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q132" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=14"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -128,11 +143,24 @@ def deck_slide_path(u,n):
  return f'assets/slides/u{u}/s{n:0{w}d}.webp'
 
 def tutorial_card(item):
- def step_html(s):
+ steps_list=item.get('steps',())
+ # (#132) 단원II 튜토리얼은 tools/web/render_results.py가 마지막 단계의 완성 코드를
+ # 실제로 실행해 캡처한다. 매니페스트는 튜토리얼 id로 키를 두므로, 그 결과를 마지막
+ # 단계 카드에 붙인다. steps 항목 자체에 result_img/result_text가 있으면(수동 지정)
+ # 그쪽을 우선한다.
+ tut_result=RESULTS.get(item.get('id'))
+ def step_html(s,is_last):
   code=f'<pre><code>{esc(s["code"])}</code></pre>' if s.get('code') else ''
   expect=f'<p class="small">확인: {esc(s["expect"])}</p>' if s.get('expect') else ''
-  return f'<li><p>{esc(s["text"])}</p>{code}{expect}</li>'
- steps=''.join(step_html(s) for s in item.get('steps',()))
+  result_img=s.get('result_img') or (tut_result.get('img',[None])[0] if is_last and tut_result and tut_result.get('img') else None)
+  result_text=s.get('result_text') or (tut_result.get('text') if is_last and tut_result else None)
+  result_html=''
+  if result_img or result_text:
+   img_html=f'<img src="../../{esc(result_img)}" loading="lazy" alt="{esc(item.get("title",""))} 실행 화면">' if result_img else ''
+   text_html=f'<pre class="run-result-text">{esc(result_text)}</pre>' if result_text else ''
+   result_html=f'<div class="step-result">{img_html}{text_html}</div>'
+  return f'<li><p>{esc(s["text"])}</p>{code}{expect}{result_html}</li>'
+ steps=''.join(step_html(s,i==len(steps_list)-1) for i,s in enumerate(steps_list))
  # item에 pc=True가 있으면(예: GUI 창을 여는 튜토리얼) 브라우저에서 실행할 수 없다는
  # 안내를 카드 상단에 붙인다. 기본은 표시하지 않으므로 3단원 등 다른 튜토리얼의
  # 동작은 그대로다.
@@ -299,7 +327,7 @@ for u,lessons in units.items():
    ex_nav+=f'<a class="button" href="{textbook.topic_file(l["id"])}">소단원 설명으로</a>'
    ex_nav+=f'<a class="button primary" href="{textbook.example_file(next_e)}">다음 실습: {esc(examples[next_e]["title"])} →</a>' if next_e else f'<a class="button primary" href="{textbook.question_file(l["id"])}">이 소단원 문제 풀기 →</a>'
    ex_nav+='</div>'
-   ex_body=ex_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{ex_rail}</aside><main id="main">'+ex_desc+editor_markup(u)+lesson_journal_block(u,l,prefix)+ex_nav+'</main></div>'
+   ex_body=ex_hero+f'<div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{ex_rail}</aside><main id="main">'+ex_desc+editor_markup(u)+run_result_html(eid)+lesson_journal_block(u,l,prefix)+ex_nav+'</main></div>'
    (WEB/f'units/unit0{u}/{textbook.example_file(eid)}').write_text(mark_focus_blocks(layout(f'{ex["title"]} · {l["title"]} · {title}',ex_body,prefix,u,topic=l['id'],lessons=lesson_ids,example=eid)))
  # 단원 전체 문제 전용 페이지(#106).
  unit_qcount=sum(q['unit']==u for q in questions)

@@ -861,4 +861,31 @@ for p in WEB.rglob('*.html'):
   assert FB_VALUE_RE.match(v),(p,'data-fb 형식이 아님',v)
  assert len(values)==len(set(values)),(p,'data-fb 중복',values)
 assert fb_pages_checked>0,'data-fb가 매겨진 학생 페이지가 없음'
+
+# (#132) 실행 결과 매니페스트(tools/web/render_results.py 산출물): id가 실제
+# 예제·튜토리얼을 가리키는지, img 경로가 web/ 아래에 실제로 존재하는지 확인한다.
+# 매니페스트가 없으면(아직 한 번도 안 돌렸으면) 전체를 건너뛴다 — build.py도 같은
+# 방식으로 조용히 생략하므로 이 스크립트가 필수 전제 조건이 되지 않게 한다.
+results_path=Path(__file__).parent/'results.json'
+if results_path.is_file():
+ results=json.loads(results_path.read_text())
+ tutorial_ids=set()
+ import deck_u2,deck_u3
+ for deck in (deck_u2.LESSONS, deck_u3.LESSONS):
+  for lesson in deck.values():
+   for it in (lesson.get('practice') or []):
+    if isinstance(it,dict) and it.get('kind')=='tutorial':
+     tutorial_ids.add(it['id'])
+ assert results,'results.json이 비어 있음(생성 실패 의심)'
+ for rid,entry in results.items():
+  assert rid in examples or rid in tutorial_ids,(rid,'results.json의 id가 예제·튜토리얼 어디에도 없음')
+  assert set(entry)<={'img','text'},(rid,'알 수 없는 키',entry)
+  if 'text' in entry:
+   assert isinstance(entry['text'],str) and entry['text'].strip(),(rid,'text가 비어 있음')
+  for img in entry.get('img') or []:
+   assert img.startswith('assets/results/'),(rid,img)
+   assert (WEB/img).is_file(),(rid,img,'파일 없음')
+   assert (WEB/img).stat().st_size>200,(rid,img,'파일이 너무 작음')
+ print(f'PASS: results.json {len(results)} entries checked ({sum(len(v.get("img") or []) for v in results.values())} images).')
+
 print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages.')

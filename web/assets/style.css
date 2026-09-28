@@ -182,3 +182,14 @@ h3{font-size:22px}
 @media(max-width:640px){.slide-explain p{font-size:14.5px}.tutorial-card{padding:14px 16px}}
 .question-prompt pre.question-code{background:#111d33;color:#e5ecf6;padding:14px 16px;border-radius:8px;font-size:14px;line-height:1.7;margin:4px 0 16px;white-space:pre;overflow:auto}
 .question-prompt h3{margin-bottom:10px}
+
+/* #132: ex-*.html "실행 결과" — render_results.py가 만든 정적 텍스트·이미지 */
+.run-result{background:#fff;border:2px solid #bcc9dd;border-radius:13px;padding:24px 28px;margin:24px 0}
+.run-result h3{font-size:17px;margin-bottom:6px}
+.run-result .small{margin-top:0;margin-bottom:14px}
+.run-result-text{background:#0f1c28;color:#d5eadf;padding:16px 18px;border-radius:9px;font:13px/1.8 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 12px}
+.run-result-imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.run-result-imgs figure{margin:0;padding:10px;background:#f8faff;border:1px solid var(--line);border-radius:10px}
+.run-result-imgs img{display:block;width:100%;height:auto;max-height:320px;object-fit:contain;background:#fff;border-radius:6px}
+.tutorial-steps .step-result{margin-top:10px}
+.tutorial-steps .step-result img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
