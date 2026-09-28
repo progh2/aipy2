@@ -31,6 +31,15 @@ export function inClass(entry, id) {
  return Boolean(id) && classId(entry) === id;
 }
 
+// roster·progress 등 collection을 반 하나로 좁힐 때 쓰는 Firestore where 조건. grade·classroom
+// 두 필드 등호(#127)만 쓰므로 복합 색인 없이(단일 필드 색인 병합) 동작한다. id가 잘못됐으면
+// null을 돌려줘 호출부가 컬렉션 전체를 구독하는 안전한 경로로 빠지게 한다.
+export function classQueryFilters(id) {
+ const parsed = parseClassId(id);
+ if (!parsed) return null;
+ return [['grade', parsed.grade], ['classroom', parsed.classroom]];
+}
+
 export function classesFromRoster(rows) {
  const map = new Map();
  for (const row of rows || []) {

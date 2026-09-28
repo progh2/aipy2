@@ -2,7 +2,7 @@
 import {
  classId, parseClassId, labelClass, inClass, classesFromRoster, isArchived,
  storageKey, readSelectedClass, writeSelectedClass, resolveSelectedClass, classDetail,
- resolveTeacherClassId
+ resolveTeacherClassId, classQueryFilters
 } from '../../web/assets/class-picker.js';
 
 const store = new Map();
@@ -52,5 +52,9 @@ eq(resolveTeacherClassId('t@e-mirim.hs.kr', {classId: '2-4'}), '2-4', 'resolve p
 eq(resolveTeacherClassId('t@e-mirim.hs.kr', null), '2-3', 'resolve saved teacher class');
 eq(resolveTeacherClassId('nobody@e-mirim.hs.kr', {classId: ''}), '', 'resolve empty class');
 eq(resolveTeacherClassId('t@e-mirim.hs.kr', {classId: 'nope'}), '2-3', 'resolve invalid published falls back');
+
+eq(classQueryFilters('2-3'), [['grade', 2], ['classroom', 3]], 'classQueryFilters');
+eq(classQueryFilters('nope'), null, 'classQueryFilters invalid id');
+eq(classQueryFilters(''), null, 'classQueryFilters empty id');
 
 console.log('PASS: class-picker helpers');

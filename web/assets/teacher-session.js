@@ -3,7 +3,7 @@ import {ready} from './firebase-config.js';
 import {load} from './auth.js';
 import {dataFailureNote} from './auth-model.js';
 import {labelClass} from './class-picker.js';
-import {inClass} from './class-picker.js';
+import {inClass, classQueryFilters} from './class-picker.js';
 import {
  isSessionLive, timestampMillis, countPresence, catalogPages, catalogTopics,
  catalogExamples, sessionFields, sessionEndFields, existingAttentionNonce,
@@ -553,7 +553,16 @@ function listen(id) {
     $('presence-counts').textContent = '따라오는 중 — / 따로 보는 중 —';
    }
   );
-  rosterUnsub = store.onSnapshot(store.collection(db, 'roster'), (snap) => {
+  // roster·progress를 반(학년+반) 단위로 좁힌다(#127). 보드(teacher-board.js #125-4)는 반을
+  // 옮긴 학생(#123)을 이메일로 계속 매칭하려고 학년까지만 거르지만, 세션 화면은 애초에 이
+  // 화면에서 쓰는 rosterRows·progressRows가 전부 inClass(row, classIdValue) 필터를 거쳐야만
+  // 쓰이므로(classCompletion·missingSubmitters·refreshTogether 등) 반까지 등호로 좁혀도
+  // 결과가 같다 — 다른 반 학생의 자료를 참조하는 로직이 없다.
+  const filters = classQueryFilters(id);
+  const byClass = (name) => filters
+   ? store.query(store.collection(db, name), store.where(filters[0][0], '==', filters[0][1]), store.where(filters[1][0], '==', filters[1][1]))
+   : store.collection(db, name); // id 형식이 깨졌을 때의 안전망(정상 흐름에선 오지 않음)
+  rosterUnsub = store.onSnapshot(byClass('roster'), (snap) => {
    if (gen !== listenGen) return;
    rosterRows = [];
    snap.forEach((doc) => {
@@ -562,12 +571,12 @@ function listen(id) {
    });
    rememberBaseline();
   }, (error) => { if (gen === listenGen) console.error('[teacher-session]', error); });
-  progressUnsub = store.onSnapshot(store.collection(db, 'progress'), (snap) => {
+  progressUnsub = store.onSnapshot(byClass('progress'), (snap) => {
    if (gen !== listenGen) return;
    progressRows = [];
    snap.forEach((doc) => {
     const data = doc.data();
-    if (inClass(data, id)) progressRows.push({id: doc.id, uid: data.uid || doc.id, ...data});
+    progressRows.push({id: doc.id, uid: data.uid || doc.id, ...data});
    });
    rememberBaseline();
    if (togetherQuestionId) refreshTogether(false);
