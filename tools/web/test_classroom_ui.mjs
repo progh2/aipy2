@@ -101,7 +101,7 @@ try {
  await self.uncheck();assert.equal(await page.locator('#question-progress').getAttribute('value'),'0');
  console.log('PASS written self-assessment progress');
  // 편집기가 있는 곳은 이제 예제 전용 페이지뿐이다(#101). 페이지를 열자마자 선택 UI 없이 코드가 채워져 있어야 한다.
- for(const [path,label] of [['/units/unit01/ex-reuse.html','Python 실행'],['/units/unit02/ex-layout-pack-tk.html','문법 확인']]){
+ for(const [path,label] of [['/units/unit01/ex-reuse.html','Python 실행'],['/units/unit02/ex-layout-tk.html','문법 확인']]){
   await open(path);
   assert.match(await page.locator('#run').textContent(),new RegExp(label));
   assert.match(await page.locator('.run-mode-guide').textContent(),/Python 실행.*문법 확인.*PC/);
