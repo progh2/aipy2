@@ -25,8 +25,11 @@ def lesson(unit,id,title,pages,lead,paragraphs,examples_=(),tasks=(),extra=False
            pre_api=None, glossary=None, tips=None, history=None, youtube=None, screenshots=None, screenshot=None):
     units[unit].append(attach(dict(id=id,title=title,pages=pages,lead=lead,paragraphs=paragraphs,examples=list(examples_),tasks=list(tasks),extra=extra),
         pre_api=pre_api,glossary=glossary,tips=tips,history=history,youtube=youtube,screenshots=screenshots,screenshot=screenshot))
-def q(unit,topic,kind,prompt,answer,hint,explain,options=None,starter='',checks='',level='기본',ref='보강'):
-    id = f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}'
+def q(unit,topic,kind,prompt,answer,hint,explain,options=None,starter='',checks='',level='기본',ref='보강',qid=None):
+    # qid: 문항 id를 직접 지정한다(2·3단원 문항 재편, 2026-09-28). 학생 답안이 id로 저장되므로
+    # 유지하는 문항은 옛 id를, 새로 쓰거나 크게 바꾼 문항은 쓰지 않은 번호(예: u2-q101~)를 준다.
+    id = qid or f'u{unit}-q{sum(x["unit"]==unit for x in questions)+1:03}'
+    assert qid is None or (qid.startswith(f'u{unit}-q') and all(x['id']!=qid for x in questions)), f'{qid}: 문항 id 형식·중복 확인'
     hints = QUESTION_HINTS[id]
     assert hints['prompt'] == prompt, f'{id}: 지문 변경 시 question_hints.json도 함께 검토하세요.'
     # 기존 호출의 hint 인자는 호환용이며, 화면에는 검토한 두 단계 힌트만 제공합니다.
