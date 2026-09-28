@@ -7,7 +7,8 @@ import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, focusFromUnitClick, focusWritePayload, focusHref,
- sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce, blockAnchor, blockOnlyAllowed
+ sessionFields, expiresAtMillis, existingAttentionNonce, wholeNonce, blockAnchor, blockOnlyAllowed,
+ focusFields
 } from './follow-model.js';
 
 const node = (tag, cls, text) => {
@@ -153,20 +154,31 @@ function paintCue() {
   return;
  }
  injectFocusButtons();
+ injectDetailFocusButtons();
  if (!root) {
   root = node('div', 'teacher-focus-ui');
   root.id = 'teacher-focus-ui';
   const status = node('p', 'teacher-focus-status', '');
   status.id = 'teacher-focus-status';
+  const toggleLabel = node('label', 'teacher-focus-detail-toggle', '');
+  const toggle = node('input', '', '');
+  toggle.type = 'checkbox';
+  toggle.checked = detailChipsEnabled();
+  toggle.addEventListener('change', () => {
+   setDetailChipsEnabled(toggle.checked);
+   if (toggle.checked) injectDetailFocusButtons();
+  });
+  toggleLabel.append(toggle, document.createTextNode(' 📍 세부 초점 버튼 보이기'));
   const close = node('button', 'teacher-focus-close', '✕');
   close.type = 'button';
   close.title = '안내 닫기';
   close.addEventListener('click', () => { root.hidden = true; });
-  root.append(status, close);
+  root.append(status, toggleLabel, close);
   const header = document.querySelector('header.top');
   if (header) header.after(root);
   else document.body.prepend(root);
  }
+ setDetailChipsEnabled(detailChipsEnabled());
  document.body.classList.add('teacher-focus-live');
  // 스크롤 추적으로 세션 문서가 2초마다 갱신되므로, 반·세션 상태가 실제로 바뀔 때만 띠를 다시 펼친다(깜빡임 방지).
  const cueState = `${classIdValue}|${isSessionLive(current) ? 'live' : 'idle'}`;
@@ -223,6 +235,153 @@ function injectFocusButtons() {
 }
 function removeFocusButtons() {
  document.querySelectorAll('.focus-send').forEach((el) => el.remove());
+ removeDetailFocusButtons();
+}
+
+// ── 세부 초점 버튼(#140): 소단원 화면 안의 슬라이드·설명·과제·실습 카드 등 각 요소에 작은
+//    📍 칩을 붙인다. 클릭하면 그 요소의 블록 앵커(blockAnchor, follow-model.js)로 초점을 보낸다.
+//    본문 레이아웃을 밀지 않도록 절대 위치 오버레이로만 붙이고, 기본은 hover(또는 focus-within)
+//    할 때만 보인다 — 버튼이 항상 다 보이면 화면이 산만해진다.
+const DETAIL_CHIPS_KEY = 'aipy-focus-detail-chips';
+
+function detailChipsEnabled() {
+ try {
+  return localStorage.getItem(DETAIL_CHIPS_KEY) !== '0';
+ } catch { return true; }
+}
+
+function setDetailChipsEnabled(on) {
+ try { localStorage.setItem(DETAIL_CHIPS_KEY, on ? '1' : '0'); } catch { /* 사생활 모드 */ }
+ document.body.classList.toggle('teacher-focus-detail-off', !on);
+}
+
+// 요소 자신이 data-fb를 가지고 있으면 그것을, 없으면 안(첫 자손)에서, 그래도 없으면 밖(조상)에서
+// 가장 가까운 [data-fb]를 찾는다. 동적으로 만들어지는 요소(코드 읽기 줄 등)는 대개 조상에서 찾는다.
+function fbBlockFor(el) {
+ if (!el) return null;
+ if (el.dataset && el.dataset.fb) return el.dataset.fb;
+ const desc = el.querySelector && el.querySelector('[data-fb]');
+ if (desc) return desc.dataset.fb;
+ const anc = el.closest && el.closest('[data-fb]');
+ return anc ? anc.dataset.fb : null;
+}
+
+function detailChipButton(label) {
+ const b = node('button', 'focus-chip', '');
+ b.type = 'button';
+ b.title = '학생 화면을 이 위치로 옮깁니다';
+ const icon = node('span', 'focus-chip-icon', '📍');
+ icon.setAttribute('aria-hidden', 'true');
+ const text = node('span', 'focus-chip-label', label);
+ b.append(icon, text);
+ return b;
+}
+
+// el에 칩을 하나 붙인다(이미 자기 칩이 있으면 건너뛴다). buildAnchor()는 anchorId(소단원/문항
+// 컨테이너 id, 없으면 '')를 받아 최종 앵커 문자열을 돌려준다 — 페이지 종류마다 컨테이너 규칙이
+// 달라서 호출부에서 결정한다.
+function attachDetailChip(el, label, containerId) {
+ if (!el || !el.appendChild) return;
+ if ([...el.children].some((c) => c.classList && c.classList.contains('focus-chip'))) return;
+ el.classList.add('focus-chip-host');
+ const chip = detailChipButton(label);
+ chip.addEventListener('click', (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  if (!canSend()) return;
+  const block = fbBlockFor(el);
+  const anchor = blockAnchor(containerId || '', block, 0);
+  if (!anchor) return;
+  sendFocus(focusFields({page: currentPage(), topicAnchor: anchor, exampleId: null}));
+ });
+ el.appendChild(chip);
+}
+
+// 소단원 컨테이너(section.lesson[id]) 안에서만 쓰는 세밀한 규칙. task-box는 상자 전체 칩 +
+// 항목(li)마다 칩을 둘 다 붙인다(교사가 "이 항목만" 짚을 수 있게).
+const LESSON_DETAIL_RULES = [
+ {sel: 'figure.deck-slide', label: '📍 이 슬라이드'},
+ {sel: '.slide-explain', label: '📍 이 설명'},
+ {sel: 'details.slide-reveal', label: '📍 답 보기'},
+ {sel: '.task-box', label: '📍 과제'},
+ {sel: '.task-box li', label: '📍 과제 항목'},
+ {sel: '.lesson-workspace', label: '📍 실습 카드'}
+];
+// 위 규칙에 안 걸리는 나머지 h3·pre·table(1·4단원처럼 슬라이드가 없는 페이지)은 일반 규칙으로
+// 잡되, 위 상자들 안에 있는 것은 중복이라 건너뛴다.
+const LESSON_GENERIC_EXCLUDE = '.task-box, .lesson-workspace, .code-read, .slide-explain, details.slide-reveal, figure.deck-slide';
+const LESSON_GENERIC_RULES = [
+ {sel: 'h3', label: '📍 이 설명'},
+ {sel: 'pre', label: '📍 이 코드'},
+ {sel: 'table', label: '📍 이 표'}
+];
+const PAGE_EXTRA_RULES = [
+ {sel: '.exercise-section .example-card', label: '📍 연습문제'},
+ {sel: '#journal', label: '📍 저널'}
+];
+// 예제 페이지(ex-*)용 규칙. 이 페이지들은 소단원 컨테이너가 없어(blockOnlyAllowed) id 없는
+// 블록 전용 앵커('~b{n}@0')를 쓴다.
+const EX_DETAIL_RULES = [
+ {sel: '#predict-box', label: '📍 예측'},
+ {sel: '#lab', label: '📍 편집기'},
+ {sel: '.run-result', label: '📍 실행 결과'},
+ // 변형 미션 섹션(다른 작업에서 추가 중) — 있을 때만 처리한다.
+ {sel: '.mission, [data-mission]', label: '📍 미션'}
+];
+
+let codeReadObserver = null;
+
+function attachCodeReadChips() {
+ const list = document.getElementById('code-read-list');
+ if (!list) return;
+ [...list.children].forEach((item, idx) => {
+  attachDetailChip(item, `📍 코드 줄 ${idx + 1}`, '');
+ });
+}
+
+function injectDetailFocusButtons() {
+ if (!canSend()) return;
+ const main = document.querySelector('main');
+ if (!main) return;
+ main.querySelectorAll('section.lesson[id]').forEach((lesson) => {
+  const containerId = lesson.id;
+  LESSON_DETAIL_RULES.forEach(({sel, label}) => {
+   lesson.querySelectorAll(sel).forEach((el) => attachDetailChip(el, label, containerId));
+  });
+  LESSON_GENERIC_RULES.forEach(({sel, label}) => {
+   lesson.querySelectorAll(sel).forEach((el) => {
+    if (el.closest(LESSON_GENERIC_EXCLUDE)) return;
+    attachDetailChip(el, label, containerId);
+   });
+  });
+ });
+ // 이 페이지 자체가 예제·연습문제 목록처럼 소단원 컨테이너가 없는 페이지(blockOnlyAllowed)면
+ // #journal 등도 이 페이지에 머무는 id 없는 블록 전용 앵커를 써야 한다 — lessonIdNear가 돌려주는
+ // body.dataset.topic(그 소단원 id)을 그대로 쓰면 다른 페이지(소단원 설명 페이지)로 잘못 이동한다.
+ const pageIsBlockOnly = blockOnlyAllowed(currentPage());
+ PAGE_EXTRA_RULES.forEach(({sel, label}) => {
+  main.querySelectorAll(sel).forEach((el) => {
+   const containerId = pageIsBlockOnly ? '' : (lessonIdNear(el) || '');
+   attachDetailChip(el, label, containerId);
+  });
+ });
+ // 예제 페이지(section.lesson 없음)는 id 없는 블록 전용 앵커만 허용된다(blockOnlyAllowed).
+ if (pageIsBlockOnly) {
+  EX_DETAIL_RULES.forEach(({sel, label}) => {
+   main.querySelectorAll(sel).forEach((el) => attachDetailChip(el, label, ''));
+  });
+  attachCodeReadChips();
+  const list = document.getElementById('code-read-list');
+  if (list && !codeReadObserver) {
+   codeReadObserver = new MutationObserver(() => attachCodeReadChips());
+   codeReadObserver.observe(list, {childList: true});
+  }
+ }
+}
+
+function removeDetailFocusButtons() {
+ document.querySelectorAll('.focus-chip').forEach((el) => el.remove());
+ document.querySelectorAll('.focus-chip-host').forEach((el) => el.classList.remove('focus-chip-host'));
 }
 
 function lessonIdNear(el) {
