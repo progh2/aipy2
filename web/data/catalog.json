@@ -36,7 +36,12 @@
           "two-adds"
         ],
         "href": "units/unit01/overview.html",
-        "practiceHref": "units/unit01/q-overview.html"
+        "practiceHref": "units/unit01/q-overview.html",
+        "tasks": [
+          "모듈과 패키지를 파일과 폴더에 대응하여 설명하세요.",
+          "한 파일과 여러 모듈 방식의 장단점을 각각 적으세요.",
+          "13쪽 확인학습: 두 수를 입력받아 합을 반환하는 모듈을 만드세요."
+        ]
       },
       {
         "id": "define",
@@ -49,7 +54,11 @@
           "class-module"
         ],
         "href": "units/unit01/define.html",
-        "practiceHref": "units/unit01/q-define.html"
+        "practiceHref": "units/unit01/q-define.html",
+        "tasks": [
+          "실행 전에 출력되는 줄 수와 순서를 예상하세요.",
+          "원의 반지름을 바꾸고 계산 결과를 확인하세요."
+        ]
       },
       {
         "id": "entrypoint",
@@ -59,7 +68,11 @@
           "rectangle"
         ],
         "href": "units/unit01/entrypoint.html",
-        "practiceHref": "units/unit01/q-entrypoint.html"
+        "practiceHref": "units/unit01/q-entrypoint.html",
+        "tasks": [
+          "rectEx1의 조건문을 제거했을 때와 있을 때의 출력을 비교하세요.",
+          "__main__이 파일 이름이라는 설명이 왜 틀렸는지 적으세요."
+        ]
       },
       {
         "id": "imports",
@@ -73,7 +86,11 @@
           "import-clash"
         ],
         "href": "units/unit01/imports.html",
-        "practiceHref": "units/unit01/q-imports.html"
+        "practiceHref": "units/unit01/q-imports.html",
+        "tasks": [
+          "같은 hello 함수를 네 가지 방식으로 호출하세요.",
+          "두 모듈에 같은 함수가 있을 때 이름을 구별해 호출하세요."
+        ]
       },
       {
         "id": "packages",
@@ -89,7 +106,11 @@
           "stars"
         ],
         "href": "units/unit01/packages.html",
-        "practiceHref": "units/unit01/q-packages.html"
+        "practiceHref": "units/unit01/q-packages.html",
+        "tasks": [
+          "__all__에 flower를 추가하고 달라진 결과를 확인하세요.",
+          "animals 패키지에 새 모듈을 추가하고 불러오세요."
+        ]
       },
       {
         "id": "os-sys",
@@ -101,7 +122,11 @@
           "sys-modules"
         ],
         "href": "units/unit01/os-sys.html",
-        "practiceHref": "units/unit01/q-os-sys.html"
+        "practiceHref": "units/unit01/q-os-sys.html",
+        "tasks": [
+          "실행 인자를 0개·1개·2개로 바꿔 보세요.",
+          "sys.exit 앞뒤에 출력문을 넣고 순서를 설명하세요."
+        ]
       },
       {
         "id": "math",
@@ -112,7 +137,11 @@
           "math-signed"
         ],
         "href": "units/unit01/math.html",
-        "practiceHref": "units/unit01/q-math.html"
+        "practiceHref": "units/unit01/q-math.html",
+        "tasks": [
+          "3.5 대신 -3.5를 사용해 올림과 내림을 설명하세요.",
+          "math.pi를 활용하는 원 넓이 함수를 작성하세요."
+        ]
       },
       {
         "id": "random",
@@ -125,7 +154,11 @@
           "gift"
         ],
         "href": "units/unit01/random.html",
-        "practiceHref": "units/unit01/q-random.html"
+        "practiceHref": "units/unit01/q-random.html",
+        "tasks": [
+          "중복 없는 명단에서 2명을 뽑고 원본이 유지되는지 확인하세요.",
+          "주사위 결과가 특정 숫자여야 한다는 검사가 부적절한 이유를 적으세요."
+        ]
       },
       {
         "id": "datetime",
@@ -136,7 +169,11 @@
           "christmas"
         ],
         "href": "units/unit01/datetime.html",
-        "practiceHref": "units/unit01/q-datetime.html"
+        "practiceHref": "units/unit01/q-datetime.html",
+        "tasks": [
+          "2026-12-24, 2026-12-25, 2026-12-26을 기준으로 각각 시험하세요.",
+          "현재 날짜와 요일을 한글 문장으로 출력하세요."
+        ]
       },
       {
         "id": "thirdparty",
@@ -147,7 +184,11 @@
           "thirdparty"
         ],
         "href": "units/unit01/thirdparty.html",
-        "practiceHref": "units/unit01/q-thirdparty.html"
+        "practiceHref": "units/unit01/q-thirdparty.html",
+        "tasks": [
+          "이미지 크기 변경·게임·웹페이지에서 제목 추출에 맞는 패키지를 고르세요.",
+          "설치 이름과 import 이름이 다른 예를 두 개 적으세요."
+        ]
       },
       {
         "id": "review",
@@ -157,7 +198,11 @@
           "final-output"
         ],
         "href": "units/unit01/review.html",
-        "practiceHref": "units/unit01/q-review.html"
+        "practiceHref": "units/unit01/q-review.html",
+        "tasks": [
+          "힌트 없이 두 파일을 만들고 import하여 호출하세요.",
+          "단원 연습에서 틀린 문제를 다시 풀고 오류 원인을 저널에 남기세요."
+        ]
       },
       {
         "id": "project",
@@ -167,7 +212,11 @@
           "core"
         ],
         "href": "units/unit01/project.html",
-        "practiceHref": "units/unit01/q-project.html"
+        "practiceHref": "units/unit01/q-project.html",
+        "tasks": [
+          "파일 트리와 각 파일의 역할을 제출 설명에 적으세요.",
+          "정상 입력·경계 입력·잘못된 입력을 하나씩 시험하세요."
+        ]
       }
     ],
     "units/unit02/index.html": [
@@ -178,14 +227,22 @@
           "hello-tk"
         ],
         "href": "units/unit02/ui.html",
-        "practiceHref": "units/unit02/q-ui.html"
+        "practiceHref": "units/unit02/q-ui.html",
+        "tasks": [
+          "좋은 UI와 불편한 UI 사례를 한 가지씩 설명하세요.",
+          "버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요."
+        ]
       },
       {
         "id": "libraries",
         "title": "파이썬 GUI 라이브러리",
         "examples": [],
         "href": "units/unit02/libraries.html",
-        "practiceHref": "units/unit02/q-libraries.html"
+        "practiceHref": "units/unit02/q-libraries.html",
+        "tasks": [
+          "같은 앱을 학교 실습용과 터치 키오스크용으로 만들 때 선택 근거를 비교하세요.",
+          "48쪽 확인학습: UI 정의, GUI 장점, NUI 설명, 라이브러리 특징을 점검하세요."
+        ]
       },
       {
         "id": "widgets",
@@ -194,7 +251,11 @@
           "widgets-tk"
         ],
         "href": "units/unit02/widgets.html",
-        "practiceHref": "units/unit02/q-widgets.html"
+        "practiceHref": "units/unit02/q-widgets.html",
+        "tasks": [
+          "회원 가입 화면의 이름·소개·약관 동의·학년 선택에 알맞은 위젯을 고르세요.",
+          "체크박스와 라디오 버튼의 차이를 직접 조작하며 설명하세요."
+        ]
       },
       {
         "id": "layout",
@@ -203,14 +264,23 @@
           "layout-tk"
         ],
         "href": "units/unit02/layout.html",
-        "practiceHref": "units/unit02/q-layout.html"
+        "practiceHref": "units/unit02/q-layout.html",
+        "tasks": [
+          "같은 입력 폼 비교 예제에서 넓게·좁게를 눌러 place의 오른쪽과 pack·grid의 입력칸 너비를 비교하세요.",
+          "grid의 안내는 두 행(rowspan), 확인 버튼은 여러 열(columnspan)에 걸칩니다. sticky와 weight를 각각 빼고 변화 원인을 설명하세요.",
+          "창을 너무 좁히면 pack·grid도 모든 내용을 담을 수 없습니다. 필요한 최소 창 크기를 찾아보세요."
+        ]
       },
       {
         "id": "events",
         "title": "이벤트 처리",
         "examples": [],
         "href": "units/unit02/events.html",
-        "practiceHref": "units/unit02/q-events.html"
+        "practiceHref": "units/unit02/q-events.html",
+        "tasks": [
+          "인사 버튼에 빈 이름을 넣어도 동작하도록 만드세요.",
+          "버튼을 두 번 눌렀을 때 상태가 어떻게 바뀌는지 추적하세요."
+        ]
       },
       {
         "id": "memo",
@@ -219,21 +289,34 @@
           "memo-tk"
         ],
         "href": "units/unit02/memo.html",
-        "practiceHref": "units/unit02/q-memo.html"
+        "practiceHref": "units/unit02/q-memo.html",
+        "tasks": [
+          "새 파일 저장, 기존 파일 열기, 대화 상자 취소를 각각 시험하세요.",
+          "파일 열기 코드의 순서를 섞은 뒤 다시 배열하세요.",
+          "메뉴를 누르기 전에 파일 대화 상자가 뜬다면 어떤 코드를 확인할까요?"
+        ]
       },
       {
         "id": "project",
         "title": "통합 프로젝트 · 우리 반 생활 도우미",
         "examples": [],
         "href": "units/unit02/project.html",
-        "practiceHref": "units/unit02/q-project.html"
+        "practiceHref": "units/unit02/q-project.html",
+        "tasks": [
+          "빈 입력, 중복 항목을 넣어 시험하세요.",
+          "완성한 코드와 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
+        ]
       },
       {
         "id": "review",
         "title": "2단원 마무리 · 개념에서 앱까지",
         "examples": [],
         "href": "units/unit02/review.html",
-        "practiceHref": "units/unit02/q-review.html"
+        "practiceHref": "units/unit02/q-review.html",
+        "tasks": [
+          "예제 없이 창·버튼·콜백·이벤트 루프를 작성하세요.",
+          "교과서 확인학습과 종합평가 연계 문제를 풀고 틀린 이유를 기록하세요."
+        ]
       }
     ],
     "units/unit03/index.html": [
@@ -242,35 +325,50 @@
         "title": "머신러닝이란? — AI·머신러닝·딥러닝의 관계",
         "examples": [],
         "href": "units/unit03/ml-overview.html",
-        "practiceHref": "units/unit03/q-ml-overview.html"
+        "practiceHref": "units/unit03/q-ml-overview.html",
+        "tasks": [
+          "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요."
+        ]
       },
       {
         "id": "ml-use",
         "title": "머신러닝의 필요성과 활용",
         "examples": [],
         "href": "units/unit03/ml-use.html",
-        "practiceHref": "units/unit03/q-ml-use.html"
+        "practiceHref": "units/unit03/q-ml-use.html",
+        "tasks": [
+          "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요."
+        ]
       },
       {
         "id": "ml-process",
         "title": "머신러닝 문제 해결 과정",
         "examples": [],
         "href": "units/unit03/ml-process.html",
-        "practiceHref": "units/unit03/q-ml-process.html"
+        "practiceHref": "units/unit03/q-ml-process.html",
+        "tasks": [
+          "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요."
+        ]
       },
       {
         "id": "ml-terms",
         "title": "머신러닝의 주요 용어",
         "examples": [],
         "href": "units/unit03/ml-terms.html",
-        "practiceHref": "units/unit03/q-ml-terms.html"
+        "practiceHref": "units/unit03/q-ml-terms.html",
+        "tasks": [
+          "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요."
+        ]
       },
       {
         "id": "ml-methods",
         "title": "머신러닝 학습 방법의 종류",
         "examples": [],
         "href": "units/unit03/ml-methods.html",
-        "practiceHref": "units/unit03/q-ml-methods.html"
+        "practiceHref": "units/unit03/q-ml-methods.html",
+        "tasks": [
+          "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요."
+        ]
       },
       {
         "id": "ml-libraries",
@@ -282,7 +380,10 @@
           "ml-matplot-exam"
         ],
         "href": "units/unit03/ml-libraries.html",
-        "practiceHref": "units/unit03/q-ml-libraries.html"
+        "practiceHref": "units/unit03/q-ml-libraries.html",
+        "tasks": [
+          "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요."
+        ]
       },
       {
         "id": "ml-preprocess",
@@ -297,7 +398,10 @@
           "ml-train-test-split"
         ],
         "href": "units/unit03/ml-preprocess.html",
-        "practiceHref": "units/unit03/q-ml-preprocess.html"
+        "practiceHref": "units/unit03/q-ml-preprocess.html",
+        "tasks": [
+          "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요."
+        ]
       },
       {
         "id": "ml-classification",
@@ -306,7 +410,10 @@
           "ml-knn-exam"
         ],
         "href": "units/unit03/ml-classification.html",
-        "practiceHref": "units/unit03/q-ml-classification.html"
+        "practiceHref": "units/unit03/q-ml-classification.html",
+        "tasks": [
+          "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요."
+        ]
       },
       {
         "id": "ml-regression",
@@ -316,7 +423,10 @@
           "ml-regression-metrics"
         ],
         "href": "units/unit03/ml-regression.html",
-        "practiceHref": "units/unit03/q-ml-regression.html"
+        "practiceHref": "units/unit03/q-ml-regression.html",
+        "tasks": [
+          "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요."
+        ]
       },
       {
         "id": "ml-cluster",
@@ -325,7 +435,10 @@
           "ml-clustering"
         ],
         "href": "units/unit03/ml-cluster.html",
-        "practiceHref": "units/unit03/q-ml-cluster.html"
+        "practiceHref": "units/unit03/q-ml-cluster.html",
+        "tasks": [
+          "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요."
+        ]
       },
       {
         "id": "ml-metrics",
@@ -334,7 +447,10 @@
           "ml-performance-metrics"
         ],
         "href": "units/unit03/ml-metrics.html",
-        "practiceHref": "units/unit03/q-ml-metrics.html"
+        "practiceHref": "units/unit03/q-ml-metrics.html",
+        "tasks": [
+          "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요."
+        ]
       },
       {
         "id": "ml-selection",
@@ -346,14 +462,20 @@
           "ml-learning-curve"
         ],
         "href": "units/unit03/ml-selection.html",
-        "practiceHref": "units/unit03/q-ml-selection.html"
+        "practiceHref": "units/unit03/q-ml-selection.html",
+        "tasks": [
+          "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요."
+        ]
       },
       {
         "id": "ml-project",
         "title": "모델 구현·평가 프로젝트와 단원 정리",
         "examples": [],
         "href": "units/unit03/ml-project.html",
-        "practiceHref": "units/unit03/q-ml-project.html"
+        "practiceHref": "units/unit03/q-ml-project.html",
+        "tasks": [
+          "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요."
+        ]
       }
     ],
     "units/unit04/index.html": [
@@ -366,7 +488,10 @@
           "cv-human-vs-computer"
         ],
         "href": "units/unit04/cv-overview.html",
-        "practiceHref": "units/unit04/q-cv-overview.html"
+        "practiceHref": "units/unit04/q-cv-overview.html",
+        "tasks": [
+          "학교에서 사용할 비전 기술의 이점과 오판 시 문제를 함께 설명하세요."
+        ]
       },
       {
         "id": "cv-pixels",
@@ -377,7 +502,10 @@
           "cv-bgr-rgb"
         ],
         "href": "units/unit04/cv-pixels.html",
-        "practiceHref": "units/unit04/q-cv-pixels.html"
+        "practiceHref": "units/unit04/q-cv-pixels.html",
+        "tasks": [
+          "픽셀 실험실에서 기준이 128일 때 값 128이 어느 색이 되는지 확인하세요."
+        ]
       },
       {
         "id": "cv-pipeline",
@@ -388,7 +516,10 @@
           "cv-eval-criteria"
         ],
         "href": "units/unit04/cv-pipeline.html",
-        "practiceHref": "units/unit04/q-cv-pipeline.html"
+        "practiceHref": "units/unit04/q-cv-pipeline.html",
+        "tasks": [
+          "번호판 검출과 문자 인식을 서로 다른 단계로 그려 보세요."
+        ]
       },
       {
         "id": "cv-libraries",
@@ -398,7 +529,10 @@
           "cv-skimage"
         ],
         "href": "units/unit04/cv-libraries.html",
-        "practiceHref": "units/unit04/q-cv-libraries.html"
+        "practiceHref": "units/unit04/q-cv-libraries.html",
+        "tasks": [
+          "같은 240×160 이미지에서 Pillow.size와 OpenCV.shape가 어떻게 다른지 적으세요."
+        ]
       },
       {
         "id": "cv-io",
@@ -408,7 +542,10 @@
           "cv-display"
         ],
         "href": "units/unit04/cv-io.html",
-        "practiceHref": "units/unit04/q-cv-io.html"
+        "practiceHref": "units/unit04/q-cv-io.html",
+        "tasks": [
+          "축소 후 픽셀 수와 원소 수를 계산하고 shape로 검증하세요."
+        ]
       },
       {
         "id": "cv-filters",
@@ -418,7 +555,10 @@
           "cv-filters"
         ],
         "href": "units/unit04/cv-filters.html",
-        "practiceHref": "units/unit04/q-cv-filters.html"
+        "practiceHref": "units/unit04/q-cv-filters.html",
+        "tasks": [
+          "커널 3과 15, 고정 임계값 80과 180의 결과를 비교하세요."
+        ]
       },
       {
         "id": "cv-transform",
@@ -428,7 +568,10 @@
           "cv-click-card"
         ],
         "href": "units/unit04/cv-transform.html",
-        "practiceHref": "units/unit04/q-cv-transform.html"
+        "practiceHref": "units/unit04/q-cv-transform.html",
+        "tasks": [
+          "원본과 목적지에서 두 점 순서만 뒤바꾸면 어떤 문제가 생길지 예상하세요."
+        ]
       },
       {
         "id": "cv-features",
@@ -438,7 +581,10 @@
           "cv-features"
         ],
         "href": "units/unit04/cv-features.html",
-        "practiceHref": "units/unit04/q-cv-features.html"
+        "practiceHref": "units/unit04/q-cv-features.html",
+        "tasks": [
+          "네모와 원에서 코너 수가 왜 다른지 관찰하세요."
+        ]
       },
       {
         "id": "cv-haar",
@@ -449,7 +595,10 @@
           "cv-camera"
         ],
         "href": "units/unit04/cv-haar.html",
-        "practiceHref": "units/unit04/q-cv-haar.html"
+        "practiceHref": "units/unit04/q-cv-haar.html",
+        "tasks": [
+          "같은 사진에서 minNeighbors를 바꾸고 오탐·누락 표를 작성하세요."
+        ]
       },
       {
         "id": "cv-yolo",
@@ -460,7 +609,10 @@
           "cv-yolo-count"
         ],
         "href": "units/unit04/cv-yolo.html",
-        "practiceHref": "units/unit04/q-cv-yolo.html"
+        "practiceHref": "units/unit04/q-cv-yolo.html",
+        "tasks": [
+          "conf를 바꿨을 때 물체를 놓치는 경우와 오탐이 어떻게 달라지는지 기록하세요."
+        ]
       },
       {
         "id": "cv-project",
@@ -469,7 +621,10 @@
           "cv-scan-card"
         ],
         "href": "units/unit04/cv-project.html",
-        "practiceHref": "units/unit04/q-cv-project.html"
+        "practiceHref": "units/unit04/q-cv-project.html",
+        "tasks": [
+          "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요."
+        ]
       }
     ]
   },

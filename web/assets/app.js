@@ -123,6 +123,39 @@ $$('[data-clear]').forEach(b=>b.addEventListener('click',()=>{if(confirm('이 �
  showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save('complete');updateProgress();showCompletion();renderRailTodo();});
 });
 $$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save('journal');});});
+/* 직접 해 보세요 제출(#132). 항목 textarea는 이미 위 [data-journal]로 자동 저장·동기화된다.
+   여기서는 "제출" 버튼 하나만 더한다: d-{key}-submitted 저널 키에 ISO 시각을 남기고,
+   제출 뒤 답을 고치면(같은 브라우저에 한해) '수정됨' 표시로 되돌린다. 수정 여부 자체는
+   기기 간 동기화 대상이 아니라서 sessionStorage가 아니라 이 브라우저 localStorage에만 남긴다. */
+$$('[data-task-submit]').forEach(btn=>{
+ const box=btn.closest('.task-box');if(!box)return;
+ const key=btn.dataset.taskSubmit;
+ const submitKey='d-'+key+'-submitted';
+ const areas=[...box.querySelectorAll('textarea[data-journal^="d-'+key+'-"]')];
+ const statusEl=box.querySelector('[data-task-status]');
+ const dirtyKey='pai-task-dirty:'+key;
+ function paint(){
+  const submittedAt=state.journals[submitKey];
+  if(!statusEl)return;
+  if(!submittedAt){statusEl.textContent='';statusEl.className='task-status small';return;}
+  let dirty=false;try{dirty=localStorage.getItem(dirtyKey)==='1';}catch{}
+  if(dirty){statusEl.textContent='수정됨 — 다시 제출하세요';statusEl.className='task-status small task-status-dirty';}
+  else{let when=submittedAt;try{when=new Date(submittedAt).toLocaleString('ko-KR');}catch{}statusEl.textContent='제출했어요 · '+when;statusEl.className='task-status small task-status-done';}
+ }
+ areas.forEach(area=>area.addEventListener('input',()=>{
+  if(state.journals[submitKey]){try{localStorage.setItem(dirtyKey,'1');}catch{}paint();}
+ }));
+ btn.addEventListener('click',()=>{
+  const blanks=areas.filter(a=>!a.value.trim());
+  if(blanks.length){toast('빈 칸을 채운 뒤 제출하세요.');blanks[0].focus();return;}
+  state.journals[submitKey]=new Date().toISOString();
+  save('journal');
+  try{localStorage.removeItem(dirtyKey);}catch{}
+  paint();
+  toast('제출했습니다.');
+ });
+ paint();
+});
 if($('#download-journal'))$('#download-journal').onclick=()=>{let text=`# ${unit}단원 학습 저널\n\n작성일: ${new Date().toLocaleDateString('ko-KR')}\n`;for(const [key,title]of [['learn','이해한 개념'],['error','오류와 해결 근거'],['next','시험 결과와 다음 도전']])text+=`\n## ${title}\n\n${state.journals[`u${unit}-${key}`]||''}\n`;download(`unit${unit}-journal.md`,text);};
 if(!unit){window.aipyLearning.ready=true;document.dispatchEvent(new CustomEvent('aipy:learning-ready'));return;}
 const hasLab=Boolean($('#lab')), hasPractice=Boolean($('#practice')), hasRail=Boolean($('aside.rail'));
@@ -445,11 +478,12 @@ function renderRailTodo(){
    list.append(li);continue;
   }
   const link=node('a','rail-todo-link');
-  link.href=!r.done?`${r.lesson.id}.html#${r.lesson.id}`:`q-${r.lesson.id}.html`;
+  if(!r.done){link.href=`${r.lesson.id}.html#${r.lesson.id}`;}
+  else{link.href=`q-${r.lesson.id}.html`;link.target='_blank';link.rel='noopener';}
   link.append(node('span','rail-todo-title',r.lesson.title));
   const badges=node('span','rail-todo-badges');
   if(!r.done)badges.append(node('span','rail-todo-badge warn','완료 체크 안 함'));
-  if(r.left>0)badges.append(node('span','rail-todo-badge','문제 '+r.left+'개 남음'));
+  if(r.left>0)badges.append(node('span','rail-todo-badge',(r.done?'문제 '+r.left+'개 남음 ↗':'문제 '+r.left+'개 남음')));
   link.append(badges);li.append(link);list.append(li);
  }
  box.append(list);

@@ -7,8 +7,14 @@ import {
  isSessionLive, pageFromPath, shouldNavigate, focusHref, focusKey, topicFromHash,
  visibleTopic, presenceFields, readPendingFocus, writePendingFocus, readFollowing,
  writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS, samePage, unitFromPage,
- parseAnchor
+ parseAnchor, isPoppedTabMarker, poppedFocusDecision
 } from './follow-model.js';
+
+// (#132) 연습문제·예제·튜토리얼·보강 자료는 새 창(target=_blank rel=noopener)으로 연다.
+// rel=noopener 탓에 window.opener는 항상 비어 있으므로, 그 링크들이 붙이는 ?w=1 쿼리
+// 표식으로 "이 탭은 수업 원래 탭이 아니라 학생이 따로 연 탭"임을 판별한다. window.opener가
+// 남아 있는 경우(다른 경로로 새 창이 열린 경우)도 함께 판별에 넣는다.
+const isPoppedTab = Boolean(window.opener) || isPoppedTabMarker(location.search);
 import {titlesFromCatalog} from './understanding-model.js';
 
 const prefix = document.body.dataset.prefix || '';
@@ -67,6 +73,17 @@ function hideNotice() {
  const box = document.getElementById('follow-notice');
  if (box) { box.hidden = true; box.replaceChildren(); }
  clearTimeout(noticeTimer);
+}
+
+// (#132) 새 창(따로 연 탭)에서, 교사 초점이 이 탭과 다른 페이지를 가리킬 때만 쓰는 작은 안내.
+// showNotice(focus)와 달리 이동 버튼을 주지 않는다 — 이 탭은 옮기지 않기로 한 탭이기 때문이다.
+function showPoppedNotice() {
+ const box = ensureNotice();
+ box.replaceChildren();
+ box.append(node('p', 'follow-notice-text', '선생님이 다른 곳을 보고 있어요 — 원래 수업 창을 확인하세요.'));
+ box.hidden = false;
+ clearTimeout(noticeTimer);
+ noticeTimer = setTimeout(hideNotice, 8000);
 }
 
 function showNotice(focus) {
@@ -250,6 +267,18 @@ function applyFocus(focus, force) {
  if (!focus || (!following && !force)) return;
  const key = focusKey(focus);
  if (!force && key && key === lastFocusKey) return;
+ if (isPoppedTab) {
+  // 새 창(따로 연 탭)은 교사 초점 때문에 다른 페이지로 이동하지 않는다(#132). 같은 페이지
+  // 안의 다른 위치를 가리키면 스크롤만 하고, 다른 페이지를 가리키면 작은 안내만 띄운다.
+  const decision = poppedFocusDecision(currentPage(), focus, true);
+  lastFocusKey = key || lastFocusKey;
+  if (decision.action === 'scroll') {
+   whenLearningReady(() => { if (decision.topicAnchor && !isEditingCode()) scrollToId(decision.topicAnchor, force); });
+  } else if (decision.action === 'notice') {
+   showPoppedNotice();
+  }
+  return;
+ }
  if (shouldNavigate(currentPage(), focus)) {
   // resolveFocusLocation(follow-model.js)이 앵커의 비율을 알아서 떼고 목적지를 판정한다.
   const href = focusHref(prefix, focus);

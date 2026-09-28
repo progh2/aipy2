@@ -137,6 +137,26 @@ export function titlesFromCatalog(catalog) {
  return titles;
 }
 
+// (#132) '직접 해 보세요' 과제 문장. catalog.topics[...][].tasks(문자열 배열)에서
+// 'u{단원}-{소단원id}-{번호(1부터)}' 키로 펼친다. board-model journalRows()가 d-u{n}-{topic}-{i}
+// 답변에 이 문장을 붙여 "직접 해 보세요 i: (문장)"으로 보여 줄 때 쓴다.
+export function tasksFromCatalog(catalog) {
+ const tasks = {};
+ const topics = catalog && catalog.topics;
+ if (!topics || typeof topics !== 'object') return tasks;
+ for (const [page, rows] of Object.entries(topics)) {
+  const unit = /unit0([1-4])/.exec(page);
+  if (!unit || !Array.isArray(rows)) continue;
+  for (const row of rows) {
+   if (!row || !row.id || !Array.isArray(row.tasks)) continue;
+   row.tasks.forEach((text, idx) => {
+    if (typeof text === 'string' && text.trim()) tasks[`u${unit[1]}-${row.id}-${idx + 1}`] = text;
+   });
+  }
+ }
+ return tasks;
+}
+
 export function titlesFromLessons(lessons, unit) {
  const titles = {};
  const n = Number(unit);

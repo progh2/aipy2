@@ -64,7 +64,16 @@ export function renderJournalUnitGroup(jr) {
  details.append(node('summary', '', `${UNIT_ROMAN[jr.unit] || jr.unit} 단원 저널`));
  const dl = node('dl', 'journal-list');
  for (const item of jr.items) {
-  dl.append(node('dt', '', item.label));
+  // #132 '직접 해 보세요' 항목은 제출 여부·시각을 라벨 옆에 붙인다.
+  let label = item.label;
+  if (item.submittedAt) {
+   let when = item.submittedAt;
+   try { when = new Date(item.submittedAt).toLocaleString('ko-KR'); } catch { /* 그대로 둠 */ }
+   label += ` · 제출함 ${when}`;
+  } else if (item.submitted === false) {
+   label += ' · 미제출';
+  }
+  dl.append(node('dt', '', label));
   dl.append(node('dd', '', item.text));
  }
  details.append(dl);

@@ -8,7 +8,7 @@ import {
  formatAnswerValue, answerStatusLabel, isSubjectiveKind,
  PRESENCE_FRESH_MS, PRESENCE_RECENT_MS, CSV_HEADER
 } from '../../web/assets/board-model.js';
-import {titlesFromCatalog} from '../../web/assets/understanding-model.js';
+import {titlesFromCatalog, tasksFromCatalog} from '../../web/assets/understanding-model.js';
 
 function eq(actual, expected, label) {
  const left = JSON.stringify(actual), right = JSON.stringify(expected);
@@ -19,7 +19,7 @@ const catalog = {
  topics: {
   'units/unit01/index.html': [
    {id: 'overview', title: '모듈이 필요한 이유'},
-   {id: 'define', title: '모듈 정의'}
+   {id: 'define', title: '모듈 정의', tasks: ['모듈을 하나 만들어 import 해 보세요.', '만든 모듈에 함수를 추가해 보세요.']}
   ],
   'units/unit02/index.html': [{id: 'ui', title: 'GUI 시작'}]
  }
@@ -211,6 +211,34 @@ eq(journals[1].items[0].label, '다음 도전', 'journal unit2 label');
 
 const journalsNoTitles = journalRows({journals: {'j-u1-unknown-topic': '메모'}});
 eq(journalsNoTitles[0].items[0].label, 'u1-unknown-topic', 'topic journal without titles falls back to id');
+
+// (#132) '직접 해 보세요' 답변(d-u{n}-{topic}-{i})은 과제 문장을 라벨에 붙이고, 제출 시각이
+// 있으면 담아 준다. 아직 제출하지 않았으면 submitted:false로 표시한다.
+const taskLabels = tasksFromCatalog(catalog);
+eq(taskLabels, {
+ 'u1-define-1': '모듈을 하나 만들어 import 해 보세요.',
+ 'u1-define-2': '만든 모듈에 함수를 추가해 보세요.'
+}, 'tasksFromCatalog flattens per-topic task sentences');
+const taskState = {
+ journals: {
+  'd-u1-define-1': '내가 만든 answer.py를 import했다.',
+  'd-u1-define-2': '  ',
+  'd-u1-define-submitted': '2026-09-29T01:00:00.000Z'
+ }
+};
+const taskJournals = journalRows(taskState, titlesFromCatalog(catalog), taskLabels);
+eq(taskJournals.length, 1, 'task journal grouped under unit 1');
+const taskItem = taskJournals[0].items.find((it) => it.topicId === 'define-task1');
+eq(Boolean(taskItem), true, 'task item 1 present (item 2 blank, skipped)');
+eq(taskItem.label, '모듈 정의 · 직접 해 보세요 1: 모듈을 하나 만들어 import 해 보세요.', 'task item label includes sentence');
+eq(taskItem.text, '내가 만든 answer.py를 import했다.', 'task item text');
+eq(taskItem.submitted, true, 'task item shows submitted');
+eq(taskItem.submittedAt, '2026-09-29T01:00:00.000Z', 'task item keeps submitted timestamp');
+
+const taskUnsubmitted = journalRows({journals: {'d-u1-define-1': '아직 제출 전'}}, titlesFromCatalog(catalog), taskLabels);
+const unsubmittedItem = taskUnsubmitted[0].items.find((it) => it.topicId === 'define-task1');
+eq(unsubmittedItem.submitted, false, 'task item without submit marker is not submitted');
+eq(unsubmittedItem.submittedAt, '', 'task item without submit marker has no timestamp');
 
 eq(answerRows({}, questions), [], 'answer rows empty state');
 eq(unitAnswerTotals({}, questions), [{unit: 1, total: 2, answered: 0, correct: 0}, {unit: 2, total: 1, answered: 0, correct: 0}], 'unit totals no answers');

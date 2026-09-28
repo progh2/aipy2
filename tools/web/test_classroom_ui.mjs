@@ -111,6 +111,48 @@ try {
   await page.setViewportSize({width:390,height:844});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  }
+ // (#132) 직접 해 보세요: 항목별 입력칸 + 제출. 새로고침에도 남고, 제출 후 고치면 '수정됨'.
+ await open('/units/unit01/overview.html');
+ const taskBox=page.locator('.task-box[data-task-key="u1-overview"]');
+ const areas=taskBox.locator('textarea[data-journal^="d-u1-overview-"]');
+ assert.equal(await areas.count(),3,'overview 소단원 직접 해 보세요 항목 3개');
+ const status=taskBox.locator('[data-task-status]');
+ assert.equal((await status.textContent()).trim(),'','제출 전에는 상태 문구 없음');
+ await taskBox.locator('[data-task-submit]').click();
+ assert.match(await page.locator('#toast').textContent(),/빈 칸/,'빈 칸이면 제출을 막고 토스트로 안내');
+ assert.equal((await status.textContent()).trim(),'','빈 칸 제출 시도 뒤에도 제출 표시는 그대로 없음');
+ await areas.nth(0).fill('모듈이 필요한 이유를 적었다.');
+ await areas.nth(1).fill('예제를 고쳐 봤다.');
+ await areas.nth(2).fill('다음에 더 해볼 것.');
+ await taskBox.locator('[data-task-submit]').click();
+ assert.match(await status.textContent(),/제출했어요/,'모든 칸을 채우면 제출 시각 표시');
+ await page.reload();await page.waitForFunction(()=>window.aipyLearning?.ready);
+ assert.equal(await areas.nth(0).inputValue(),'모듈이 필요한 이유를 적었다.','새로고침에도 답이 남음');
+ assert.match(await status.textContent(),/제출했어요/,'새로고침에도 제출 표시가 남음');
+ await areas.nth(0).fill('모듈이 필요한 이유를 다시 적었다.');
+ assert.match(await status.textContent(),/수정됨/,'제출 뒤 고치면 수정됨으로 바뀜');
+ console.log('PASS 직접 해 보세요 입력·제출·새로고침 유지·수정됨 표시');
+
+ // (#132) 연습문제·예제·튜토리얼·보강 자료 링크는 새 창(target=_blank rel=noopener)이고
+ // follow.js가 판별할 ?w=1 표식을 달고 있어야 한다.
+ await open('/units/unit01/overview.html');
+ const practiceLink=page.locator('#practice-link a.practice-card');
+ assert.equal(await practiceLink.getAttribute('target'),'_blank');
+ assert.equal(await practiceLink.getAttribute('rel'),'noopener');
+ assert.match(await practiceLink.getAttribute('href'),/\?w=1/);
+ const exCard=page.locator('.example-links a.example-card').first();
+ assert.equal(await exCard.getAttribute('target'),'_blank');
+ assert.match(await exCard.getAttribute('href'),/\?w=1/);
+ console.log('PASS 연습문제·예제 링크는 새 창(target=_blank)과 ?w=1 표식을 가짐');
+
+ // (#132) 새 창 표식(?w=1)을 달고 문제 페이지를 열어도 오류 없이 정상 로드된다. 실제 교사
+ // 초점을 받았을 때 이동하지 않는지는 follow-model.js의 poppedFocusDecision 표 테스트
+ // (test_follow_model.mjs)로 순수 함수 단위에서 이미 확인했다 — 여기서는 그 판별에 쓰는
+ // ?w=1 표식이 실제 페이지에서 그대로 유지되는지만 스모크로 본다.
+ await open('/units/unit01/q-overview.html?w=1');
+ assert.equal(await page.evaluate(()=>location.search.includes('w=1')),true,'팝업 표식이 URL에 남아 있음');
+ console.log('PASS 새 창 표식(?w=1)을 단 문제 페이지가 오류 없이 로드됨');
+
  assert.deepEqual(errors,[]);
  console.log('PASS run modes, auto-filled editor, no selection UI and 390px mobile layout');
 

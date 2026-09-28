@@ -411,3 +411,31 @@ export function catalogExamples(catalog, topic) {
 export function emptyOption(label) {
  return {id: '', title: label};
 }
+
+// (#132) 학생이 새 창(연습문제 q-*·practice.html, 예제 ex-*, 튜토리얼 tut-*, 보강 자료
+// extra-*)으로 연 탭은 수업 흐름의 "원래 탭"이 아니다. 교사 초점이 다른 페이지를 가리켜도
+// 그 탭을 이동시키면 학생이 풀던 문제·읽던 자료가 사라진다 — 그래서 이동하지 않는다.
+export function isPoppedPage(page) {
+ const p = normalizePage(page);
+ return /^units\/unit0[1-4]\/(q-[a-z0-9-]+\.html|practice\.html|ex-[a-z0-9-]+\.html|tut-[a-z0-9-]+\.html|extra-[a-z0-9-]+\.html)$/.test(p);
+}
+
+// 새 창(팝업) 여부는 window.opener 유무나 링크에 붙인 ?w=1 같은 쿼리 표식으로 판단한다.
+// 이 함수는 그 판단 결과(isPopped)를 받아, popped 탭이면 순수하게 "이동할지/스크롤만 할지/
+// 안내만 할지"를 결정한다 — DOM·location에는 손대지 않아 노드에서 표로 검증할 수 있다.
+export function poppedFocusDecision(currentPage, focus, isPopped) {
+ if (!isPopped) return {action: 'follow'};
+ if (!focus || !focus.page) return {action: 'none'};
+ const there = resolveFocusLocation(focus);
+ if (!there.page) return {action: 'none'};
+ if (samePage(currentPage, there.page)) return {action: 'scroll', topicAnchor: there.topicAnchor};
+ return {action: 'notice'};
+}
+
+export function isPoppedTabMarker(search) {
+ try {
+  return new URLSearchParams(search || '').get('w') === '1';
+ } catch {
+  return false;
+ }
+}

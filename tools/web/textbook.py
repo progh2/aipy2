@@ -58,6 +58,12 @@ def example_file(example_id):
 def question_file(lesson_id):
  return f'q-{lesson_id}.html'
 
+def extra_file(lesson_id):
+ return f'extra-{lesson_id}.html'
+
+def tutorial_file(tutorial_id):
+ return f'tut-{tutorial_id}.html'
+
 def topic_href(lesson_id, base='', hash_page=False):
  if hash_page:
   return f'{base}#{lesson_id}'
