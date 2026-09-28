@@ -220,3 +220,12 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
 .run-result-imgs img{display:block;width:100%;height:auto;max-height:320px;object-fit:contain;background:#fff;border-radius:6px}
 .tutorial-steps .step-result{margin-top:10px}
 .tutorial-steps .step-result img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+/* (#136) 탐구 활동처럼 질문·답이 함께 있던 슬라이드를 답 보기 전/후로 나눈다. */
+.slide-reveal{border:2px solid #2E7D5B;background:#F1FAF4;border-radius:10px;padding:4px 18px 18px;margin:0 0 28px}
+.slide-reveal summary{cursor:pointer;padding:12px 0;font-weight:700;font-size:15.5px;color:#2E7D5B;list-style:none;display:flex;align-items:center;gap:6px}
+.slide-reveal summary::-webkit-details-marker{display:none}
+.slide-reveal summary::before{content:'▶';font-size:11px;transition:transform .15s}
+.slide-reveal[open] summary::before{transform:rotate(90deg)}
+.slide-reveal .deck-slide{margin:6px 0 22px}
+.slide-reveal:not([open]) .when-open{display:none}
+.slide-reveal[open] .when-closed{display:none}
