@@ -60,7 +60,7 @@ try {
  assert.equal(await page.locator('[data-understanding="understood"]').getAttribute('aria-pressed'),'true');
  assert.notEqual(await page.locator('.hard-comment-field').textContent(),'어디가 막혔나요?');
  console.log('PASS completion position, badge, understanding switches and reload');
- const q=JSON.parse(await readFile(new URL('../../web/data/unit2.json',import.meta.url))).questions.find(q=>q.id==='u2-q009');
+ const q=JSON.parse(await readFile(new URL('../../web/data/unit2.json',import.meta.url))).questions.find(q=>q.id==='u2-q108') // (#131) 옛 u2-q009 삭제 — 같은 소단원의 빈칸 문항;
  // 소단원 문제는 독립 페이지(q-{소단원id}.html)로 옮겨졌다(#106) — 여기서 문항이 뜨는지 확인한다.
  await open('/units/unit02/q-widgets.html');
  const topicTotal=JSON.parse(await readFile(new URL('../../web/data/unit2.json',import.meta.url))).questions.filter(x=>x.topic==='widgets').length;
