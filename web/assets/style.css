@@ -169,7 +169,7 @@ h3{font-size:22px}
 
 /* #131: 2·3단원 소단원 페이지 — PPT 슬라이드 화면 + 설명 + 실습(튜토리얼 카드) */
 .deck-slide{margin:22px 0;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#eef1f6;box-shadow:0 6px 18px #17244310}
-.deck-slide img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#eef1f6}
+.deck-slide img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#eef1f6}
 .slide-explain{max-width:68ch;margin:0 0 28px}
 .slide-explain p{font-size:15.5px;line-height:1.95;color:var(--ink)}
 .tutorial-card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0;background:#f8faff}

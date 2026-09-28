@@ -4,7 +4,7 @@
     {
       "id": "ui",
       "title": "사용자 인터페이스 · CLI, GUI, NUI",
-      "pages": "40–44",
+      "pages": "43–44",
       "lead": "사용자가 어떤 행동으로 프로그램에 의도를 전달하나요?",
       "paragraphs": [
         "UI는 사람과 시스템이 상호 작용하는 접점입니다. 화면의 버튼·입력창·메뉴뿐 아니라 색상·글꼴·배치·피드백도 사용 편의성에 영향을 줍니다. 같은 기능이라도 저장 버튼을 찾기 어렵다면 사용자는 실수하기 쉽습니다.",
@@ -35,9 +35,9 @@
     },
     {
       "id": "libraries",
-      "title": "GUI 라이브러리 비교 갤러리",
-      "pages": "45–48 + 보강",
-      "lead": "같은 인사 앱을 여섯 가지 방식으로 비교하세요.",
+      "title": "파이썬 GUI 라이브러리",
+      "pages": "45–46",
+      "lead": "파이썬에서 GUI를 만들 때 쓰는 대표 라이브러리 네 가지의 특징을 비교하세요.",
       "paragraphs": [
         "교과서의 tkinter, PyQt, wxPython, Kivy에 PySide6와 ttk를 보강했습니다. tkinter는 Tcl/Tk 연결이며 파이썬 배포에 흔히 포함됩니다. 다만 일부 Linux 환경은 python3-tk를 별도 설치해야 합니다. ttk는 Tk의 테마 위젯입니다.",
         "PySide6와 PyQt6는 Qt 6를 파이썬에서 사용하는 서로 다른 바인딩입니다. 이 과정의 추가 실습은 Qt 공식 바인딩인 PySide6의 Qt Widgets를 사용합니다. 두 라이브러리의 외형은 같은 Qt 스타일을 쓰면 비슷하며 화면만으로 구분하기 어렵습니다.",
@@ -111,9 +111,9 @@
     },
     {
       "id": "layout",
-      "title": "배치 관리자와 반응하는 화면",
-      "pages": "51 + 보강",
-      "lead": "창을 늘렸을 때도 사용하기 좋은 화면을 만드세요.",
+      "title": "배치 관리자",
+      "pages": "51",
+      "lead": "pack·grid·place, 위젯을 어디에 둘지 정하는 세 가지 방법을 비교하세요.",
       "paragraphs": [
         "학생마다 화면 해상도·화면 배율·글꼴과 창 크기가 다릅니다. 내 PC에서 place(x, y)와 고정 너비로 맞춘 화면도 다른 PC나 좁은 창에서는 입력칸·버튼이 잘리거나 겹칠 수 있습니다. 좌표를 하나씩 다시 계산하는 대신 pack의 순서·방향, grid의 행·열 규칙으로 공간을 나누세요.",
         "pack과 grid도 확장 설정이 필요합니다. place에는 relx·rely·relwidth처럼 상대 위치·크기를 지정하는 방법도 있으므로 place 자체가 항상 깨지는 것은 아닙니다. 아래 비교는 고정 좌표·고정 크기의 한계를 보여 주는 교과서 밖 보강 예제입니다.",
@@ -148,8 +148,8 @@
     },
     {
       "id": "events",
-      "title": "이벤트 · 사용자의 행동에 반응하기",
-      "pages": "51, 54 + 보강",
+      "title": "이벤트 처리",
+      "pages": "51",
       "lead": "버튼 생성 시점과 클릭 시점은 다릅니다.",
       "paragraphs": [
         "콜백은 나중에 호출할 함수입니다. command=greet는 함수 자체를 전달합니다. command=greet()는 지금 함수를 실행하고 반환값을 전달하므로 의도와 다릅니다. 인자가 필요하면 lambda: greet(name)처럼 호출을 감쌉니다.",
@@ -189,7 +189,7 @@
     },
     {
       "id": "memo",
-      "title": "교과서 메모장 · 여덟 단계로 완성",
+      "title": "GUI 앱 개발 · 나만의 메모장 만들기",
       "pages": "52–55",
       "lead": "열기와 저장을 만드는 동안 1단원의 import와 함수가 다시 등장합니다.",
       "paragraphs": [
@@ -230,9 +230,9 @@
     },
     {
       "id": "project",
-      "title": "통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
-      "pages": "수행평가 연결 + 확장",
-      "lead": "1단원의 패키지에 화면을 연결하여 앱을 완성합니다.",
+      "title": "통합 프로젝트 · 우리 반 생활 도우미",
+      "pages": "수행평가 연결 · 확장",
+      "lead": "1단원의 기능 모듈에 tkinter 화면을 연결하여 앱을 완성합니다.",
       "paragraphs": [
         "같은 core.logic을 tkinter와 PySide6에서 임포트합니다. 각 GUI는 입력값을 읽어 함수에 전달하고 결과를 표시합니다. core에는 tkinter·PySide6 코드가 없으므로 웹에서도 기능을 검사할 수 있습니다.",
         "기본 완성 조건: 위젯 배치, 버튼 이벤트, 모듈 분리, 잘못된 입력 안내입니다. 확장 과제: 추첨 인원 입력, 결과 기록, 설명 문구 개선 중 하나를 선택하세요. 두 버전 모두 실행하고 같은 입력의 의미가 유지되는지 비교합니다.",
@@ -244,8 +244,8 @@
         "project-pyside"
       ],
       "tasks": [
-        "빈 입력, 0면 주사위, 잘못된 날짜, 중복 이름을 시험하세요.",
-        "프로젝트 ZIP과 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
+        "빈 입력, 중복 항목을 넣어 시험하세요.",
+        "완성한 코드와 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요."
       ],
       "extra": true,
       "pre_api": [],
@@ -282,7 +282,212 @@
       "textbook": []
     }
   ],
-  "examples": {},
+  "examples": {
+    "hello-tk": {
+      "id": "hello-tk",
+      "title": "인사 앱 · tkinter",
+      "files": {
+        "main.py": "import tkinter as tk\n\ndef greet():\n    name = entry.get().strip() or \"여러분\"\n    result.config(text=f\"{name}님, 안녕하세요!\")\n\ndef reset():\n    entry.delete(0, tk.END)\n    result.config(text=\"이름을 입력하세요.\")\n\nroot = tk.Tk()\nroot.title(\"인사 실습 · tkinter\")\nroot.geometry(\"480x260\")\ntk.Label(root, text=\"나의 첫 GUI\", font=(\"sans-serif\", 20)).pack(pady=16)\nentry = tk.Entry(root)\nentry.pack(fill=\"x\", padx=30)\ntk.Button(root, text=\"인사하기\", command=greet).pack(pady=8)\ntk.Button(root, text=\"초기화\", command=reset).pack()\nresult = tk.Label(root, text=\"이름을 입력하세요.\")\nresult.pack(pady=12)\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "tk.Tk",
+          "signature": "root = tk.Tk()",
+          "note": "빈 창을 만듭니다. 이 창이 Label·Entry·Button의 부모입니다."
+        },
+        {
+          "name": "title / geometry",
+          "signature": "root.title(\"제목\")\nroot.geometry(\"480x260\")",
+          "note": "창 제목과 처음 크기를 정합니다. 크기를 빼도 위젯을 붙이면 창이 맞춰집니다."
+        },
+        {
+          "name": "Label",
+          "signature": "tk.Label(parent, text=..., font=...)",
+          "note": "글자를 보여 줍니다. 나중에 config(text=...)로 바꿀 수 있습니다."
+        },
+        {
+          "name": "Entry",
+          "signature": "entry = tk.Entry(parent)",
+          "note": "한 줄 입력을 받습니다. get()으로 읽고, delete(0, tk.END)로 지웁니다."
+        },
+        {
+          "name": "Button",
+          "signature": "tk.Button(parent, text=..., command=함수)",
+          "note": "클릭하면 command에 넣은 함수를 실행합니다. command=함수()처럼 괄호를 붙이면 버튼을 만들 때 바로 실행됩니다."
+        },
+        {
+          "name": "pack",
+          "signature": "위젯.pack(pady=8, fill=\"x\")",
+          "note": "위젯을 창에 붙입니다. 생성만 하고 pack을 빼면 화면에 보이지 않습니다."
+        },
+        {
+          "name": "mainloop",
+          "signature": "root.mainloop()",
+          "note": "클릭·입력을 기다리는 이벤트 루프입니다. 이 줄 아래의 코드는 창을 닫을 때까지 실행되지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "위젯",
+          "meaning": "창 안의 부품입니다. Label·Entry·Button이 위젯입니다."
+        },
+        {
+          "term": "이벤트 루프",
+          "meaning": "사용자의 클릭·입력을 순서대로 받아 처리하는 반복입니다. mainloop가 그 역할을 합니다."
+        }
+      ],
+      "tips": {
+        "history": "Tk는 1991년 John Ousterhout가 Tcl에 붙인 GUI 툴킷입니다. 파이썬 표준 라이브러리의 tkinter는 이 Tk를 연결하므로, 많은 환경에서 별도 설치 없이 창과 버튼을 만들 수 있습니다.",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "tk.png",
+          "alt": "tkinter 인사 앱 실행 화면 · 이름 입력창과 인사 및 초기화 버튼",
+          "caption": "같은 인사 앱을 Linux에서 실행해 캡처한 화면입니다. OS·테마에 따라 외형은 달라집니다."
+        }
+      ]
+    },
+    "widgets-tk": {
+      "id": "widgets-tk",
+      "title": "tkinter 위젯 9종 체험",
+      "files": {
+        "main.py": "import tkinter as tk\nroot = tk.Tk()\nroot.title(\"tkinter 위젯 도감\")\nframe = tk.Frame(root, padx=16, pady=16)\nframe.pack(fill=\"both\", expand=True)\ntk.Label(frame, text=\"Label: 설명을 표시합니다\").pack()\ntk.Entry(frame).pack(fill=\"x\")\ntk.Text(frame, height=3).pack(fill=\"x\")\nchecked = tk.BooleanVar()\ntk.Checkbutton(frame, text=\"학습 완료\", variable=checked).pack()\nchoice = tk.StringVar(value=\"A\")\nfor value in [\"A\", \"B\"]:\n    tk.Radiobutton(frame, text=value, variable=choice, value=value).pack()\nlistbox = tk.Listbox(frame, height=3)\nfor value in [\"모듈\", \"패키지\", \"GUI\"]:\n    listbox.insert(tk.END, value)\nlistbox.pack()\ncanvas = tk.Canvas(frame, width=240, height=60, bg=\"white\")\ncanvas.create_oval(10, 10, 50, 50, fill=\"gold\")\ncanvas.pack()\ntk.Button(frame, text=\"상태 출력\", command=lambda: print(checked.get(), choice.get())).pack()\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "Frame",
+          "signature": "frame = tk.Frame(parent, padx=16, pady=16)",
+          "note": "위젯을 묶는 상자입니다. 안쪽 여백(padx/pady)을 한곳에서 정할 수 있습니다."
+        },
+        {
+          "name": "Text",
+          "signature": "tk.Text(parent, height=3)",
+          "note": "여러 줄 입력입니다. Entry는 한 줄, Text는 여러 줄입니다."
+        },
+        {
+          "name": "BooleanVar / Checkbutton",
+          "signature": "checked = tk.BooleanVar()\ntk.Checkbutton(parent, text=..., variable=checked)",
+          "note": "체크 상태는 위젯이 아니라 변수에 저장됩니다. checked.get()이 True/False입니다."
+        },
+        {
+          "name": "StringVar / Radiobutton",
+          "signature": "choice = tk.StringVar(value=\"A\")\ntk.Radiobutton(..., variable=choice, value=\"A\")",
+          "note": "같은 variable을 쓰는 라디오는 하나만 선택됩니다. value가 서로 달라야 합니다."
+        },
+        {
+          "name": "Listbox",
+          "signature": "listbox.insert(tk.END, value)",
+          "note": "목록에서 고릅니다. insert로 항목을 넣고, curselection()으로 고른 위치를 읽습니다."
+        },
+        {
+          "name": "Canvas",
+          "signature": "canvas.create_oval(x1, y1, x2, y2, fill=...)",
+          "note": "도형·그림을 그리는 공간입니다. 버튼·입력칸이 아니라 좌표로 그립니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품입니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "layout-tk": {
+      "id": "layout-tk",
+      "title": "tkinter · 같은 입력 폼의 pack·grid·place 비교",
+      "files": {
+        "main.py": "import tkinter as tk\nroot = tk.Tk()\nroot.title(\"창 크기를 바꾸어 배치 비교\")\nroot.geometry(\"560x590\")\ncontrols = tk.Frame(root)\ncontrols.pack(fill=\"x\", padx=12, pady=8)\ntk.Button(controls, text=\"넓게\", command=lambda: root.geometry(\"560x590\")).pack(side=\"left\")\ntk.Button(controls, text=\"좁게\", command=lambda: root.geometry(\"340x590\")).pack(side=\"left\")\n# 같은 두 입력칸과 확인 버튼입니다. 부모 Frame마다 배치를 나눕니다.\nfor kind in [\"pack\", \"grid\", \"place\"]:\n    frame = tk.LabelFrame(root, text=kind, height=150)\n    frame.pack(fill=\"x\", padx=12, pady=8)\n    if kind == \"pack\":\n        for title in [\"이름\", \"학번\"]:\n            row = tk.Frame(frame)\n            row.pack(fill=\"x\", padx=8, pady=6)\n            tk.Label(row, text=title, width=6).pack(side=\"left\")\n            tk.Entry(row, width=8).pack(side=\"left\", expand=True, fill=\"x\")\n        tk.Button(frame, text=\"확인\").pack(fill=\"x\", padx=8, pady=8)\n    elif kind == \"grid\":\n        frame.columnconfigure(1, weight=1)\n        for row, title in enumerate([\"이름\", \"학번\"]):\n            tk.Label(frame, text=title).grid(row=row, column=0, sticky=\"e\", padx=8, pady=6)\n            tk.Entry(frame, width=8).grid(row=row, column=1, sticky=\"ew\", padx=8)\n        tk.Label(frame, text=\"두 칸 모두\\n입력하세요\").grid(row=0, column=2, rowspan=2, sticky=\"ns\", padx=8)\n        tk.Button(frame, text=\"확인\").grid(row=2, column=0, columnspan=3, sticky=\"ew\", padx=8, pady=8)\n    else:\n        # 좌표와 너비를 고정하면 좁은 창에서 입력칸·버튼이 잘립니다.\n        for row, title in enumerate([\"이름\", \"학번\"]):\n            tk.Label(frame, text=title).place(x=8, y=8 + row*36)\n            tk.Entry(frame).place(x=80, y=8 + row*36, width=400)\n        tk.Button(frame, text=\"확인\").place(x=8, y=90, width=472)\nroot.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "교과서 밖 보강 예제입니다. 넓게·좁게를 번갈아 누르세요. 고정 좌표 place의 오른쪽이 잘리고, pack·grid 입력칸은 주어진 너비에 맞춰 변합니다.",
+      "pre_api": [
+        {
+          "name": "LabelFrame",
+          "signature": "tk.LabelFrame(root, text=\"pack\")",
+          "note": "제목이 있는 상자입니다. 서로 다른 배치를 비교할 때 부모를 나눕니다."
+        },
+        {
+          "name": "grid의 행·열과 병합",
+          "signature": "위젯.grid(row=0, column=2, rowspan=2)\n위젯.grid(row=2, column=0, columnspan=3)",
+          "note": "두 행의 라벨·입력칸을 정렬하고 안내는 두 행, 확인 버튼은 세 열에 걸쳐 배치합니다."
+        },
+        {
+          "name": "place",
+          "signature": "위젯.place(x=80, y=8, width=400)",
+          "note": "이 예제는 픽셀 좌표·너비를 고정합니다. 상대 위치·크기 옵션을 쓰는 place와 구분하세요."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "부모를 나누기",
+          "meaning": "같은 Frame 안에서는 pack과 grid를 섞지 않습니다. pack 예제의 각 입력 행도 별도 Frame입니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "memo-tk": {
+      "id": "memo-tk",
+      "title": "교과서 메모장 · tkinter 전체 코드",
+      "files": {
+        "main.py": "import tkinter as tk\nfrom tkinter import filedialog\n\ndef open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path:\n        with open(file_path, \"r\", encoding=\"utf-8\") as file:\n            content = file.read()\n        text_area.delete(\"1.0\", tk.END)\n        text_area.insert(tk.END, content)\n\ndef save_file():\n    file_path = filedialog.asksaveasfilename(defaultextension=\".txt\")\n    if file_path:\n        with open(file_path, \"w\", encoding=\"utf-8\") as file:\n            file.write(text_area.get(\"1.0\", tk.END))\n\nwindow = tk.Tk()\nwindow.title(\"나만의 메모장\")\nwindow.geometry(\"600x400\")\ntext_area = tk.Text(window, wrap=\"word\")\ntext_area.pack(expand=True, fill=\"both\")\nmenu_bar = tk.Menu(window)\nwindow.config(menu=menu_bar)\nfile_menu = tk.Menu(menu_bar, tearoff=False)\nmenu_bar.add_cascade(label=\"파일\", menu=file_menu)\nfile_menu.add_command(label=\"열기\", command=open_file)\nfile_menu.add_command(label=\"저장\", command=save_file)\nfile_menu.add_separator()\nfile_menu.add_command(label=\"종료\", command=window.quit)\nwindow.mainloop()\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "Menu / add_cascade",
+          "signature": "menu = tk.Menu(window)\nwindow.config(menu=menu)\nmenu.add_cascade(label=\"파일\", menu=file_menu)",
+          "note": "창 위쪽 메뉴 줄을 만듭니다. add_cascade는 \"파일\"처럼 펼쳐지는 상위 메뉴입니다."
+        },
+        {
+          "name": "add_command",
+          "signature": "file_menu.add_command(label=\"열기\", command=open_file)",
+          "note": "메뉴 항목에 함수를 연결합니다. Button의 command와 같습니다. command=open_file()처럼 괄호를 붙이면 창을 열 때 대화 상자가 뜹니다."
+        },
+        {
+          "name": "tearoff=False",
+          "signature": "tk.Menu(menu, tearoff=False)",
+          "note": "메뉴를 창 밖으로 떼는 점선을 숨깁니다. 교과서 예제의 흔한 보완입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "단계 6–8",
+          "meaning": "메뉴를 붙이고 mainloop로 기다린 뒤, 한글 파일을 저장했다가 다시 열어 봅니다. 열기·저장 함수는 앞 단계와 같습니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    }
+  },
   "questions": [
     {
       "id": "u2-q003",

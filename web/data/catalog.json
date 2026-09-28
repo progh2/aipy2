@@ -174,13 +174,15 @@
       {
         "id": "ui",
         "title": "사용자 인터페이스 · CLI, GUI, NUI",
-        "examples": [],
+        "examples": [
+          "hello-tk"
+        ],
         "href": "units/unit02/ui.html",
         "practiceHref": "units/unit02/q-ui.html"
       },
       {
         "id": "libraries",
-        "title": "GUI 라이브러리 비교 갤러리",
+        "title": "파이썬 GUI 라이브러리",
         "examples": [],
         "href": "units/unit02/libraries.html",
         "practiceHref": "units/unit02/q-libraries.html"
@@ -188,34 +190,40 @@
       {
         "id": "widgets",
         "title": "창과 위젯 · 화면을 구성하는 부품",
-        "examples": [],
+        "examples": [
+          "widgets-tk"
+        ],
         "href": "units/unit02/widgets.html",
         "practiceHref": "units/unit02/q-widgets.html"
       },
       {
         "id": "layout",
-        "title": "배치 관리자와 반응하는 화면",
-        "examples": [],
+        "title": "배치 관리자",
+        "examples": [
+          "layout-tk"
+        ],
         "href": "units/unit02/layout.html",
         "practiceHref": "units/unit02/q-layout.html"
       },
       {
         "id": "events",
-        "title": "이벤트 · 사용자의 행동에 반응하기",
+        "title": "이벤트 처리",
         "examples": [],
         "href": "units/unit02/events.html",
         "practiceHref": "units/unit02/q-events.html"
       },
       {
         "id": "memo",
-        "title": "교과서 메모장 · 여덟 단계로 완성",
-        "examples": [],
+        "title": "GUI 앱 개발 · 나만의 메모장 만들기",
+        "examples": [
+          "memo-tk"
+        ],
         "href": "units/unit02/memo.html",
         "practiceHref": "units/unit02/q-memo.html"
       },
       {
         "id": "project",
-        "title": "통합 프로젝트 · 두 GUI, 하나의 기능 모듈",
+        "title": "통합 프로젝트 · 우리 반 생활 도우미",
         "examples": [],
         "href": "units/unit02/project.html",
         "practiceHref": "units/unit02/q-project.html"
@@ -666,9 +674,9 @@
     "hello-tk": {
       "id": "hello-tk",
       "title": "인사 앱 · tkinter",
-      "unit": null,
+      "unit": 2,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit02/ex-hello-tk.html"
     },
     "hello-ttk": {
       "id": "hello-ttk",
@@ -708,9 +716,9 @@
     "widgets-tk": {
       "id": "widgets-tk",
       "title": "tkinter 위젯 9종 체험",
-      "unit": null,
+      "unit": 2,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit02/ex-widgets-tk.html"
     },
     "widgets-pyside": {
       "id": "widgets-pyside",
@@ -722,9 +730,9 @@
     "layout-tk": {
       "id": "layout-tk",
       "title": "tkinter · 같은 입력 폼의 pack·grid·place 비교",
-      "unit": null,
+      "unit": 2,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit02/ex-layout-tk.html"
     },
     "layout-pyside": {
       "id": "layout-pyside",
@@ -736,9 +744,9 @@
     "memo-tk": {
       "id": "memo-tk",
       "title": "교과서 메모장 · tkinter 전체 코드",
-      "unit": null,
+      "unit": 2,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit02/ex-memo-tk.html"
     },
     "memo-pyside": {
       "id": "memo-pyside",

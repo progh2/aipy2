@@ -366,11 +366,11 @@ class GreetingApp(App):
         self.result.text = "Enter your name."
 GreetingApp().run()'''},mode='pc',note='Kivy 기본 글꼴의 한글 지원을 가정하지 않습니다. 한글 글꼴을 지정하면 한국어 문구로 바꿀 수 있습니다.',
     screenshots=[{'src':'kivy.png','alt':'Kivy 인사 앱 실행 화면 · 이름 입력창과 Greet 및 Reset 버튼','caption':'같은 인사 앱을 Kivy로 실행한 화면입니다. 기본 글꼴을 위해 영어 문구를 사용합니다.'}])
-lesson(2,'ui','사용자 인터페이스 · CLI, GUI, NUI','40–44','사용자가 어떤 행동으로 프로그램에 의도를 전달하나요?',[
+lesson(2,'ui','사용자 인터페이스 · CLI, GUI, NUI','43–44','사용자가 어떤 행동으로 프로그램에 의도를 전달하나요?',[
 'UI는 사람과 시스템이 상호 작용하는 접점입니다. 화면의 버튼·입력창·메뉴뿐 아니라 색상·글꼴·배치·피드백도 사용 편의성에 영향을 줍니다. 같은 기능이라도 저장 버튼을 찾기 어렵다면 사용자는 실수하기 쉽습니다.',
 'CLI는 명령어 입력 방식입니다. 반복 작업 자동화와 정확한 명령 전달에 유용하지만 문법을 배워야 합니다. GUI는 아이콘·메뉴·버튼 같은 시각 요소를 조작합니다. NUI는 음성·손짓·터치 등 자연스러운 행동을 사용합니다. 터치 GUI처럼 분류가 겹치는 사례도 있습니다.',
 '생각 열기: 파일 100개 이름을 바꾸는 일과 사진 한 장을 자르는 일에 각각 어떤 인터페이스를 선택할까요? 편리함은 사용자 경험과 작업 목적에 따라 달라집니다. 44쪽 탐구의 dir 입력은 CLI, 아이콘 클릭은 GUI, 손짓으로 TV 조작은 NUI입니다.'],[],['좋은 UI와 불편한 UI 사례를 한 가지씩 설명하세요.','버튼의 색만으로 오류를 알리면 누가 불편할지 생각하세요.'])
-lesson(2,'libraries','GUI 라이브러리 비교 갤러리','45–48 + 보강','같은 인사 앱을 여섯 가지 방식으로 비교하세요.',[
+lesson(2,'libraries','파이썬 GUI 라이브러리','45–46','파이썬에서 GUI를 만들 때 쓰는 대표 라이브러리 네 가지의 특징을 비교하세요.',[
 '교과서의 tkinter, PyQt, wxPython, Kivy에 PySide6와 ttk를 보강했습니다. tkinter는 Tcl/Tk 연결이며 파이썬 배포에 흔히 포함됩니다. 다만 일부 Linux 환경은 python3-tk를 별도 설치해야 합니다. ttk는 Tk의 테마 위젯입니다.',
 'PySide6와 PyQt6는 Qt 6를 파이썬에서 사용하는 서로 다른 바인딩입니다. 이 과정의 추가 실습은 Qt 공식 바인딩인 PySide6의 Qt Widgets를 사용합니다. 두 라이브러리의 외형은 같은 Qt 스타일을 쓰면 비슷하며 화면만으로 구분하기 어렵습니다.',
 'wxPython은 wxWidgets 기반으로 운영체제의 위젯을 활용합니다. Kivy는 자체 그리기 방식으로 터치와 여러 플랫폼의 인터페이스를 구성합니다. 배포 대상·필요 위젯·학습 자료·환경 지원을 기준으로 선택하세요.',
@@ -407,7 +407,7 @@ root.mainloop()'''},mode='pc',
         {'name':'Listbox','signature':'listbox.insert(tk.END, value)','note':'목록에서 고릅니다. insert로 항목을 넣고, curselection()으로 고른 위치를 읽습니다.'},
         {'name':'Canvas','signature':'canvas.create_oval(x1, y1, x2, y2, fill=...)','note':'도형·그림을 그리는 공간입니다. 버튼·입력칸이 아니라 좌표로 그립니다.'},
     ],
-    tips={'history':'위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품이고, 나중에 보는 Qt·wx·Kivy도 같은 역할을 다른 이름으로 제공합니다.'})
+    tips={'history':'위젯(widget)은 window와 gadget을 붙인 말로, 창 안의 재사용 부품을 가리킵니다. Tk의 Label·Button·Entry가 바로 그 부품입니다.'})
 ex('widgets-pyside','PySide6 위젯과 그리기 공간',{'main.py':'''import sys
 from PySide6.QtWidgets import (QApplication, QWidget, QVBoxLayout, QLabel,
     QLineEdit, QPlainTextEdit, QCheckBox, QRadioButton, QListWidget,
@@ -510,12 +510,12 @@ sys.exit(app.exec())'''},mode='pc',
         {'name':'QHBoxLayout / QVBoxLayout','signature':'horizontal = QHBoxLayout()\nvertical.addLayout(horizontal)','note':'가로 묶음과 세로 묶음입니다. 레이아웃 안에 다른 레이아웃을 넣을 수 있습니다.'},
         {'name':'QGridLayout.addWidget','signature':'grid.addWidget(위젯, 행, 열)','note':'0부터 세는 행·열입니다. i // 3이 행, i % 3이 열입니다.'},
     ])
-lesson(2,'layout','배치 관리자와 반응하는 화면','51 + 보강','창을 늘렸을 때도 사용하기 좋은 화면을 만드세요.',[
+lesson(2,'layout','배치 관리자','51','pack·grid·place, 위젯을 어디에 둘지 정하는 세 가지 방법을 비교하세요.',[
 '학생마다 화면 해상도·화면 배율·글꼴과 창 크기가 다릅니다. 내 PC에서 place(x, y)와 고정 너비로 맞춘 화면도 다른 PC나 좁은 창에서는 입력칸·버튼이 잘리거나 겹칠 수 있습니다. 좌표를 하나씩 다시 계산하는 대신 pack의 순서·방향, grid의 행·열 규칙으로 공간을 나누세요.',
 'pack과 grid도 확장 설정이 필요합니다. place에는 relx·rely·relwidth처럼 상대 위치·크기를 지정하는 방법도 있으므로 place 자체가 항상 깨지는 것은 아닙니다. 아래 비교는 고정 좌표·고정 크기의 한계를 보여 주는 교과서 밖 보강 예제입니다.',
 'pack(expand=True, fill="both")에서 expand는 여유 공간 배분, fill은 배정 영역 안에서 위젯을 늘리는 방향입니다. grid의 sticky="ew"와 columnconfigure(weight=1)는 가로 확장에 사용합니다. 같은 부모 안에서 pack과 grid를 혼용하지 마세요. 다른 Frame 안에서는 각각 사용할 수 있습니다.',
 'Qt의 QVBoxLayout·QHBoxLayout·QGridLayout은 자식 위젯의 크기와 배치를 관리합니다. QWidget에 레이아웃을 설정하고 addWidget 또는 addLayout으로 구성합니다. tkinter 코드를 단어만 바꾸는 대신 배치 의도를 옮기세요.'],['layout-tk','layout-pyside'],['같은 입력 폼 비교 예제에서 넓게·좁게를 눌러 place의 오른쪽과 pack·grid의 입력칸 너비를 비교하세요.','grid의 안내는 두 행(rowspan), 확인 버튼은 여러 열(columnspan)에 걸칩니다. sticky와 weight를 각각 빼고 변화 원인을 설명하세요.','창을 너무 좁히면 pack·grid도 모든 내용을 담을 수 없습니다. 필요한 최소 창 크기를 찾아보세요.'])
-lesson(2,'events','이벤트 · 사용자의 행동에 반응하기','51, 54 + 보강','버튼 생성 시점과 클릭 시점은 다릅니다.',[
+lesson(2,'events','이벤트 처리','51','버튼 생성 시점과 클릭 시점은 다릅니다.',[
 '콜백은 나중에 호출할 함수입니다. command=greet는 함수 자체를 전달합니다. command=greet()는 지금 함수를 실행하고 반환값을 전달하므로 의도와 다릅니다. 인자가 필요하면 lambda: greet(name)처럼 호출을 감쌉니다.',
 'tkinter의 mainloop는 이벤트 루프입니다. PySide6에서는 clicked.connect(greet)로 버튼의 시그널과 함수를 연결하고 app.exec()로 이벤트 루프를 시작합니다. connect(greet())도 같은 이유로 잘못된 사용입니다.',
 '입력 변화는 tkinter의 bind나 변수 추적, PySide6의 textChanged 같은 시그널로 다룰 수 있습니다. GUI 이벤트 안에서 긴 반복·time.sleep을 실행하면 화면 반응이 늦어집니다. 주기 작업에는 after 또는 QTimer를 사용하고 긴 작업 분리는 심화 주제로 다룹니다.'],['hello-tk','hello-pyside'],['인사 버튼에 빈 이름을 넣어도 동작하도록 만드세요.','버튼을 두 번 눌렀을 때 상태가 어떻게 바뀌는지 추적하세요.'])
@@ -537,16 +537,17 @@ def save_file():
             file.write(text_area.get("1.0", tk.END))
 
 window = tk.Tk()
-window.title("나만의 메모장 · tkinter")
-window.geometry("640x420")
+window.title("나만의 메모장")
+window.geometry("600x400")
 text_area = tk.Text(window, wrap="word")
 text_area.pack(expand=True, fill="both")
-menu = tk.Menu(window)
-window.config(menu=menu)
-file_menu = tk.Menu(menu, tearoff=False)
-menu.add_cascade(label="파일", menu=file_menu)
+menu_bar = tk.Menu(window)
+window.config(menu=menu_bar)
+file_menu = tk.Menu(menu_bar, tearoff=False)
+menu_bar.add_cascade(label="파일", menu=file_menu)
 file_menu.add_command(label="열기", command=open_file)
 file_menu.add_command(label="저장", command=save_file)
+file_menu.add_separator()
 file_menu.add_command(label="종료", command=window.quit)
 window.mainloop()'''
 ex('memo-tk','교과서 메모장 · tkinter 전체 코드',{'main.py':tk_memo},mode='pc',
@@ -605,7 +606,7 @@ ex('memo-pyside','메모장 · PySide6 전체 코드',{'main.py':qt_memo},mode='
         {'name':'QFileDialog','signature':'path, _ = QFileDialog.getOpenFileName(...)','note':'(경로, 선택한 필터) 튜플을 반환합니다. path, _로 받습니다. 취소하면 빈 경로입니다.'},
         {'name':'setPlainText / toPlainText','signature':'editor.setPlainText(글)\neditor.toPlainText()','note':'여러 줄 텍스트를 넣거나 읽습니다. QLineEdit의 setText/text와 이름을 구별하세요.'},
     ])
-lesson(2,'memo','교과서 메모장 · 여덟 단계로 완성','52–55','열기와 저장을 만드는 동안 1단원의 import와 함수가 다시 등장합니다.',[
+lesson(2,'memo','GUI 앱 개발 · 나만의 메모장 만들기','52–55','열기와 저장을 만드는 동안 1단원의 import와 함수가 다시 등장합니다.',[
 '① tkinter와 filedialog를 임포트합니다. ② Tk()로 창을 만들고 title로 제목을 정합니다. ③ Text(window, wrap="word")를 생성하고 pack(expand=True, fill="both")로 창을 채웁니다.',
 '④ 열기 함수: askopenfilename → 취소 여부 확인 → UTF-8로 읽기 → delete("1.0", END)로 기존 내용 제거 → insert로 새 내용 삽입입니다. "1.0"은 첫 줄 0번째 문자입니다.',
 '⑤ 저장 함수: asksaveasfilename(defaultextension=".txt") → 취소 확인 → Text.get으로 읽기 → UTF-8 파일 쓰기입니다. 교과서의 END는 Text가 유지하는 마지막 개행까지 포함합니다. 추가 개행을 제외하려면 "end-1c"를 사용합니다.',
@@ -710,11 +711,11 @@ if __name__ == "__main__":
 lesson(1,'project','1단원 프로젝트 · 우리 반 기능 패키지','보강 · 수행평가 연결','GUI 없이도 시험할 수 있는 기능부터 만듭니다.',[
 'core/logic.py에 주사위, 날짜 계산, 명단 추첨 함수를 작성하세요. 함수는 결과를 반환하고 main.py에서 출력합니다. 화면·입력·계산을 분리하면 다음 단원에서 GUI만 추가할 수 있습니다.',
 '기본: 제공된 기능을 실행하고 인자를 바꿉니다. 도전: 중복 명단 정리와 잘못된 입력을 처리합니다. 확장: 새 기능을 하나 추가하고 테스트 입력 3개를 설명합니다.'],['core'],['파일 트리와 각 파일의 역할을 제출 설명에 적으세요.','정상 입력·경계 입력·잘못된 입력을 하나씩 시험하세요.'],extra=True)
-lesson(2,'project','통합 프로젝트 · 두 GUI, 하나의 기능 모듈','수행평가 연결 + 확장','1단원의 패키지에 화면을 연결하여 앱을 완성합니다.',[
+lesson(2,'project','통합 프로젝트 · 우리 반 생활 도우미','수행평가 연결 · 확장','1단원의 기능 모듈에 tkinter 화면을 연결하여 앱을 완성합니다.',[
 '같은 core.logic을 tkinter와 PySide6에서 임포트합니다. 각 GUI는 입력값을 읽어 함수에 전달하고 결과를 표시합니다. core에는 tkinter·PySide6 코드가 없으므로 웹에서도 기능을 검사할 수 있습니다.',
 '기본 완성 조건: 위젯 배치, 버튼 이벤트, 모듈 분리, 잘못된 입력 안내입니다. 확장 과제: 추첨 인원 입력, 결과 기록, 설명 문구 개선 중 하나를 선택하세요. 두 버전 모두 실행하고 같은 입력의 의미가 유지되는지 비교합니다.',
 '운영 계획의 수행①은 기능·이벤트 10점, 모듈 구조·코드 품질 5점, 저널 5점입니다. 이 사이트의 체크·연습 점수는 공식 성적이 아닙니다. PySide6 학습은 확장 경로이며 별도 평가 조건을 추가하지 않습니다.',
-'수행평가에서는 교사가 명시적으로 허용하지 않은 AI 도움 없이 스스로 작성해야 합니다. 저널에는 구현 내용, 오류, 해결 근거를 기록하고 코드와 함께 제출하세요.'],['core','project-tk','project-pyside'],['빈 입력, 0면 주사위, 잘못된 날짜, 중복 이름을 시험하세요.','프로젝트 ZIP과 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요.'],extra=True)
+'수행평가에서는 교사가 명시적으로 허용하지 않은 AI 도움 없이 스스로 작성해야 합니다. 저널에는 구현 내용, 오류, 해결 근거를 기록하고 코드와 함께 제출하세요.'],['core','project-tk','project-pyside'],['빈 입력, 중복 항목을 넣어 시험하세요.','완성한 코드와 학습 기록을 내려받아 선생님이 정한 경로로 제출하세요.'],extra=True)
 lesson(2,'review','2단원 마무리 · 개념에서 앱까지','56–59','어떤 위젯을 왜 배치했고, 어떤 이벤트에 반응하는지 설명하세요.',[
 '중단원 정리: Tk 객체가 창을 만들고, 위젯이 입력·표시 기능을 맡고, 배치 관리자가 위치를 정하며, 이벤트 함수가 사용자 행동에 반응합니다. mainloop가 이벤트를 기다립니다.',
 '57쪽 확인학습의 IDLE 코드에서 컨테이너는 Frame, 클릭 요소는 Button, 이 요소들의 통칭은 위젯입니다. 종합 평가에서는 Tk 객체, UI 편의성, UI 정의, GUI 사례, 버튼 콜백, 배치 방식, pack 호출을 모두 확인합니다.',

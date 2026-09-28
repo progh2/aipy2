@@ -38,7 +38,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  if topic: extra+=f' data-topic="{esc(topic)}"'
  if lessons: extra+=f' data-lessons="{" ".join(lessons)}"'
  if example: extra+=f' data-example="{esc(example)}"'
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=deck1"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=m125" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=14"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=deck2"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css"><link rel="stylesheet" href="{prefix}assets/account.css?v=14"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}teacher/index.html">교사용 수업 요약</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=m125" defer></script><script src="{prefix}assets/learning-design.js?v=1" defer></script><script type="module" src="{prefix}assets/auth.js?v=8"></script><script type="module" src="{prefix}assets/follow.js?v=14"></script><script type="module" src="{prefix}assets/sync.js?v=5"></script><script type="module" src="{prefix}assets/understanding.js?v=3"></script><script type="module" src="{prefix}assets/help.js?v=2"></script><script type="module" src="{prefix}assets/assignments.js?v=1"></script><script type="module" src="{prefix}assets/notes.js?v=6"></script><script type="module" src="{prefix}assets/editlock.js?v=2"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -133,7 +133,11 @@ def tutorial_card(item):
   expect=f'<p class="small">확인: {esc(s["expect"])}</p>' if s.get('expect') else ''
   return f'<li><p>{esc(s["text"])}</p>{code}{expect}</li>'
  steps=''.join(step_html(s) for s in item.get('steps',()))
- return f'<div class="tutorial-card" id="{esc(item["id"])}"><h4>{esc(item["title"])}</h4><ol class="tutorial-steps">{steps}</ol></div>'
+ # item에 pc=True가 있으면(예: GUI 창을 여는 튜토리얼) 브라우저에서 실행할 수 없다는
+ # 안내를 카드 상단에 붙인다. 기본은 표시하지 않으므로 3단원 등 다른 튜토리얼의
+ # 동작은 그대로다.
+ pc_note='<p class="note">이 튜토리얼은 GUI 창을 엽니다. 웹 실습실에서는 실행되지 않으니 코드를 복사해 PC의 파이썬(IDLE 등)에서 실행하며 따라 하세요.</p>' if item.get('pc') else ''
+ return f'<div class="tutorial-card" id="{esc(item["id"])}"><h4>{esc(item["title"])}</h4>{pc_note}<ol class="tutorial-steps">{steps}</ol></div>'
 
 def practice_items_html(items):
  return ''.join(example_card(it) if isinstance(it,str) else tutorial_card(it) for it in items)
@@ -146,7 +150,11 @@ def deck_lesson_section(u,l,prefix):
   s+=f'<figure class="deck-slide"><img src="{prefix}{deck_slide_path(u,sl["n"])}" alt="{esc(sl.get("alt",""))}" loading="lazy" width="1280" height="720"></figure>'
   explain=sl.get('explain') or []
   if explain:
-   s+='<div class="slide-explain">'+''.join(p if '<' in p else f'<p>{esc(p)}</p>' for p in explain)+'</div>'
+   # 문단 문자열에 <b>/<code> 같은 인라인 태그만 있어도 이미 블록 태그(<p>/<pre> 등)로
+   # 감싼 것으로 오인해 <p> 래핑을 건너뛰면 문단 사이 공백이 사라져 붙어 보인다(#131).
+   # 실제로 블록 태그로 시작할 때만 그대로 두고, 그 외에는 <p>로 감싼다.
+   block_tag=re.compile(r'^\s*<(p|pre|div|ul|ol|table|figure|blockquote)\b',re.I)
+   s+='<div class="slide-explain">'+''.join(p if block_tag.match(p) else f'<p>{p}</p>' for p in explain)+'</div>'
  if l['tasks']: s+='<div class="task-box"><h3>직접 해 보세요</h3><ol>'+''.join(f'<li>{esc(t)}</li>' for t in l['tasks'])+'</ol></div>'
  practice_items=d.get('practice') or []
  if practice_items:

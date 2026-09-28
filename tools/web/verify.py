@@ -235,6 +235,19 @@ for u, lessons in units.items():
    if lesson['id']!='libraries':
     for banned in BANNED_LIBS:
      assert banned not in html, (banned,'off-curriculum library mentioned on deck page',topic_page)
+   # (#131) 2단원(및 DECKS 기반 소단원)은 슬라이드마다 설명이 있어야 하고, 실습에 넣은
+   # 튜토리얼은 최소 1단계 이상이어야 한다. 빈 explain·steps로 남겨 두는 회귀를 막는다.
+   if u==2:
+    deck_lesson=DECKS[u].get(lesson['id'],{})
+    slides=deck_lesson.get('slides') or []
+    for sl in slides:
+     assert sl.get('explain'), ('slide missing explain text',lesson['id'],sl.get('n'))
+    for it in (deck_lesson.get('practice') or []):
+     if isinstance(it,dict):
+      assert it.get('kind')=='tutorial', ('unknown practice item kind',lesson['id'],it)
+      assert it.get('steps') and len(it['steps'])>=1, ('tutorial with no steps',lesson['id'],it.get('id'))
+      for st in it['steps']:
+       assert (st.get('text') or '').strip(), ('tutorial step missing text',lesson['id'],it.get('id'))
   else:
    assert 'class="lesson-prose"' in html
   practice_ids=lesson_practice_ids(u,lesson)
