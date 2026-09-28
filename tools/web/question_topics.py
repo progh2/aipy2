@@ -83,28 +83,12 @@ UNIT2 = {
     'u2-q054': 'memo',     # setCentralWidget(editor)
 }
 
-# unit 3 — 자유 한글 라벨('AI 관계'·'학습 방식'·'pandas' 등)을 페이지 인용과
-# 소단원 본문 내용을 함께 확인해 재배정한다. 128~131쪽은 여러 개념을 섞은
-# 종합 평가/탐구 묶음 페이지라 내용으로 판단했다(unit1 36쪽·unit4 195쪽과 같은 패턴).
+# unit 3 — 자유 한글 라벨('pandas'·'모델'·'평가' 등)을 페이지 인용과 소단원 본문
+# 내용을 함께 확인해 재배정한다. 2026-09-28(#131) 3단원 문항 재편: 옛 u3-q001~018
+# (보기 2개 선택형)은 5지선다 신규 문항(u3-q101~123)으로 교체하며 폐기했다. 신규
+# 문항은 later_units.py에서 실제 lesson id를 topic으로 바로 넘기므로 이 표에는 없어도
+# 정확하다(원래 표 설명대로 3·4단원 자동 배정 규칙과 같은 패턴).
 UNIT3 = {
-    'u3-q001': 'ml-overview',       # AI ⊃ ML ⊃ DL 포함 관계
-    'u3-q002': 'ml-methods',        # 비지도 학습 정의
-    'u3-q003': 'ml-methods',        # 회귀 문제 유형
-    'u3-q004': 'ml-methods',        # 강화 학습
-    'u3-q005': 'ml-cluster',        # KMeans
-    'u3-q006': 'ml-terms',          # 데이터 누수(미래 정답을 X에)
-    'u3-q007': 'ml-preprocess',     # StandardScaler.fit은 훈련 데이터
-    'u3-q008': 'ml-libraries',      # DataFrame에 문자열 열
-    'u3-q009': 'ml-metrics',        # 정밀도 · 스팸 FP
-    'u3-q010': 'ml-selection',      # 과대 적합
-    'u3-q011': 'ml-methods',        # 분류 문제 판별
-    'u3-q012': 'ml-classification', # 지도 학습 알고리즘 vs KMeans
-    'u3-q013': 'ml-preprocess',     # 정규화 후 범위 밖 값
-    'u3-q014': 'ml-terms',          # 하이퍼파라미터
-    'u3-q015': 'ml-selection',      # 테스트로 반복 선택하면 안 됨
-    'u3-q016': 'ml-regression',     # R² 음수 가능
-    'u3-q017': 'ml-cluster',        # 군집 번호는 순위가 아님
-    'u3-q018': 'ml-metrics',        # 정확도·정밀도·재현율은 분류
     'u3-q019': 'ml-libraries',      # import pandas as pd
     'u3-q020': 'ml-libraries',      # pd.DataFrame
     'u3-q021': 'ml-libraries',      # df.describe()
