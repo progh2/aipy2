@@ -113,4 +113,62 @@ try {
  }
  assert.deepEqual(errors,[]);
  console.log('PASS run modes, auto-filled editor, no selection UI and 390px mobile layout');
+
+ // ── 상단 진도 막대(#137) ────────────────────────────────────────────────
+ await page.setViewportSize({width:1280,height:900});
+ await open('/units/unit02/widgets.html');
+ await page.waitForFunction(()=>{
+  const bar=document.getElementById('progress-bar');
+  return bar && !bar.hidden && bar.querySelector('.progress-bar-seg');
+ });
+ const progressCatalog=JSON.parse(await readFile(new URL('../../web/data/catalog.json',import.meta.url)));
+ const unit2Lessons=progressCatalog.progress['2'].lessons;
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg').count(),unit2Lessons.length,'one segment per lesson in the unit');
+ assert.equal(await page.locator('#progress-bar .progress-bar-path').textContent(),unit2Lessons[2].breadcrumb,'breadcrumb matches current lesson');
+ assert.equal(await page.locator('#progress-bar .progress-bar-count').textContent(),'소단원 3/8 · 중단원 2/3','counter text shows lesson/mid position');
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg.current').count(),1,'exactly one current segment');
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg[aria-current]').count(),0,'aria-current lives on the link, not the segment');
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg a[aria-current="page"]').count(),1,'current segment link is marked aria-current');
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg.done').count(),2,'segments before current are done');
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg.upcoming').count(),5,'segments after current are upcoming');
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg.boundary').count(),2,'a boundary marks each middle-section change');
+ assert.equal(await page.getAttribute('#progress-bar .progress-bar-seg:nth-child(3) a','href'),'widgets.html','segment link points to its lesson page');
+ // 스크롤을 끝까지 내리면 막대 예고 문구가 뜬다(소단원 끝 또는 마지막 소단원 안내).
+ await page.evaluate(()=>window.scrollTo(0,document.documentElement.scrollHeight));
+ await page.waitForFunction(()=>(document.querySelector('#progress-bar .progress-bar-end')||{}).textContent?.trim());
+ const endText=await page.locator('#progress-bar .progress-bar-end').textContent();
+ assert.match(endText,/이 소단원 끝|마지막 소단원/,'end-of-lesson hint appears near the bottom of the page');
+ // 페이지가 없는 곳(단원 인덱스)에는 막대 자체가 없어야 한다.
+ await open('/units/unit02/index.html');
+ assert.equal(await page.locator('#progress-bar').count(),0,'unit index page has no progress bar container');
+ // 390px 모바일: 경로 텍스트는 숨고 막대(칸)는 남는다.
+ await open('/units/unit02/widgets.html');
+ await page.waitForFunction(()=>{
+  const bar=document.getElementById('progress-bar');
+  return bar && !bar.hidden && bar.querySelector('.progress-bar-seg');
+ });
+ await page.setViewportSize({width:390,height:844});
+ assert.equal(await page.locator('#progress-bar .progress-bar-path').isVisible(),false,'breadcrumb path hides on narrow screens');
+ assert.equal(await page.locator('#progress-bar .progress-bar-track').isVisible(),true,'segment track stays visible on narrow screens');
+ // 이 페이지는 실습 카드 그리드(.example-card)에 진도 막대와 무관한 기존 390px 가로 넘침이 있다
+ // (git stash로 대조: 막대를 뺀 기존 빌드도 동일하게 넘친다) — 여기서는 막대 자신이 뷰포트를
+ // 벗어나지 않는지만 좁혀서 확인한다.
+ const barBox=await page.locator('#progress-bar').boundingBox();
+ assert.ok(barBox && barBox.x>=0 && barBox.x+barBox.width<=390+0.5,'progress bar itself stays within the 390px viewport');
+ await page.setViewportSize({width:1280,height:900});
+ // 완료 체크 시 ✓ 표시.
+ await open('/units/unit02/widgets.html');
+ await page.waitForFunction(()=>window.aipyLearning?.ready);
+ await page.locator('[data-complete="u2-widgets"]').check();
+ await page.waitForFunction(()=>document.querySelector('#progress-bar .progress-bar-seg.current .seg-check'));
+ assert.equal(await page.locator('#progress-bar .progress-bar-seg.current .seg-check').count(),1,'completed current lesson shows a checkmark');
+ // ex-/q- 딸린 페이지에도 같은 소단원 막대가 뜬다.
+ await open('/units/unit02/q-widgets.html');
+ await page.waitForFunction(()=>{
+  const bar=document.getElementById('progress-bar');
+  return bar && !bar.hidden && bar.querySelector('.progress-bar-seg.current');
+ });
+ assert.equal(await page.locator('#progress-bar .progress-bar-path').textContent(),unit2Lessons[2].breadcrumb,'question page shows the same lesson breadcrumb');
+ assert.deepEqual(errors,[]);
+ console.log('PASS progress bar: segments/breadcrumb/counter/boundaries/mobile/completion/end hint');
 } finally {await browser.close();}

@@ -217,6 +217,18 @@ assert [p['id'] for p in catalog['pages']]==['units/unit01/index.html','units/un
 assert catalog['topics']['units/unit01/index.html'][0]['id']=='overview'
 assert catalog['topics']['units/unit01/index.html'][0]['href']=='units/unit01/overview.html'
 assert catalog['topics']['units/unit02/index.html'][2]['href']=='units/unit02/widgets.html'
+# (#137) 상단 진도 막대의 소단원 순서(catalog['progress'][u]['lessons'])는 레일 목차(=catalog['topics'],
+# units[u]와 같은 순서로 build.py가 낸다)와 항상 같아야 진도 막대·목차·이전/다음 이동이 어긋나지 않는다.
+progress=catalog['progress']
+for u,lessons in units.items():
+ rail_ids=[t['id'] for t in catalog['topics'][f'units/unit0{u}/index.html']]
+ bar_ids=[l['id'] for l in progress[str(u)]['lessons']]
+ assert bar_ids==rail_ids, ('progress bar lesson order differs from rail toc order',u,bar_ids,rail_ids)
+ assert bar_ids==[l['id'] for l in lessons], ('progress bar lesson order differs from units[u]',u)
+ for l in progress[str(u)]['lessons']:
+  assert isinstance(l['mid'],int) and l['mid']>=0
+  assert l['breadcrumb'].startswith(progress[str(u)]['roman'])
+ assert progress[str(u)]['groups'], ('unit has no middle-section groups',u)
 for u, lessons in units.items():
  for lesson in lessons:
   topic_page=WEB/f'units/unit0{u}/{lesson["id"]}.html'
@@ -226,6 +238,11 @@ for u, lessons in units.items():
   assert f'data-topic="{lesson["id"]}"' in html
   assert 'assets/follow.js' in html
   assert lesson['lead'] in html
+  # (#137) 상단 진도 막대: 소단원 페이지는 반드시 정적 컨테이너를 낸다. 내용은 progress-bar.js가
+  # catalog.json의 'progress'로 채우므로 여기서는 <main> 밖 컨테이너·스크립트만 확인한다.
+  assert '<div id="progress-bar" class="progress-bar" hidden aria-hidden="true"></div>' in html, ('missing progress bar container', topic_page)
+  assert html.index('id="progress-bar"') < html.index('<main id="main"'), ('progress bar must sit outside <main>', topic_page)
+  assert 'assets/progress-bar.js' in html
   # (#130) 소단원 설명·실습·문제 페이지는 저널 칸 하나를 data-journal="j-u{u}-{소단원id}"로 공유한다.
   journal_key=f'j-u{u}-{lesson["id"]}'
   assert html.count(f'data-journal="{journal_key}"')==1, ('missing/duplicate lesson journal', topic_page)
@@ -262,6 +279,12 @@ for u, lessons in units.items():
     assert f'data-example="{eid}"' in ex_page_html
     assert f'data-topic="{lesson["id"]}"' in ex_page_html
     assert ex_page_html.count(f'data-journal="{journal_key}"')==1, ('missing/duplicate lesson journal', ex_page)
+    assert '<div id="progress-bar" class="progress-bar" hidden aria-hidden="true"></div>' in ex_page_html, ('missing progress bar container', ex_page)
+  q_page=WEB/f'units/unit0{u}/q-{lesson["id"]}.html'
+  assert q_page.exists(), ('missing question page', q_page)
+  q_html=q_page.read_text()
+  assert f'data-topic="{lesson["id"]}"' in q_html
+  assert '<div id="progress-bar" class="progress-bar" hidden aria-hidden="true"></div>' in q_html, ('missing progress bar container', q_page)
   # (#116) 소단원 전용 문제 페이지의 문항 수가 데이터와 일치하는지 확인한다.
   q_page=WEB/f'units/unit0{u}/q-{lesson["id"]}.html'
   assert q_page.exists(), ('missing question page', q_page)

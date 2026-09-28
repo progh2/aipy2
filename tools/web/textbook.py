@@ -63,6 +63,33 @@ def topic_href(lesson_id, base='', hash_page=False):
   return f'{base}#{lesson_id}'
  return f'{base}{topic_file(lesson_id)}'
 
+def progress_data(units):
+ """상단 진도 막대(#137)용 데이터. 대단원별로 중단원 그룹과 소단원 순서를 낸다.
+ 소단원 순서는 units[u](= toc()가 쓰는 것과 같은 목록)를 그대로 따르므로 레일 목차와 항상 일치한다."""
+ result={}
+ for u,ls in units.items():
+  middles=BOOK[u][2]
+  groups=[{'label':f'{m:02} {title}','pages':pages} for m,(title,pages,_,_) in enumerate(middles,1)]
+  extra_mid=len(middles)
+  has_extra=any(not MAP[u][l['id']] for l in ls)
+  if has_extra:
+   groups.append({'label':'복습·추가 실습','pages':None})
+  lessons=[]
+  for l in ls:
+   pairs=MAP[u][l['id']]
+   if pairs:
+    m,s=pairs[0]
+    middle_title=middles[m-1][0]
+    small_title=middles[m-1][2][s-1][0]
+    mid=m-1
+    breadcrumb=f'{ROMAN[u]} {BOOK[u][0]} › {m:02} {middle_title} › {s:02} {small_title}'
+   else:
+    mid=extra_mid
+    breadcrumb=f'{ROMAN[u]} {BOOK[u][0]} › 복습·추가 실습 › {l["title"]}'
+   lessons.append({'id':l['id'],'title':l['title'],'mid':mid,'breadcrumb':breadcrumb})
+  result[u]={'roman':ROMAN[u],'title':BOOK[u][0],'groups':groups,'lessons':lessons}
+ return result
+
 def toc(u,ls,base='',hash_page=False):
  s=f'<nav class="book-toc" aria-label="교과서 단원 목차"><h2>{unit_label(u)}</h2><p>대단원 · {BOOK[u][1]}쪽</p>'
  for m,(title,pages,smalls,reviews) in enumerate(BOOK[u][2],1):
