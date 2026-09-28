@@ -27,7 +27,7 @@ ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
 assert [sum(q['unit']==u for q in questions) for u in [1,2]]==[60,40]
 assert len({q['id'] for q in questions})==len(questions)
 assert set(units)=={1,2,3,4}
-assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:40,3:44,4:39}
+assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:40,3:50,4:39}
 assert set(QUESTION_HINTS) == {q['id'] for q in questions}, '문항과 힌트 목록 불일치'
 # (#116) 문항 topic은 반드시 그 단원의 실제 소단원 id여야 q-{topic}.html로 연결된다.
 # review처럼 문제를 일부러 만들지 않은 소단원만 허용 목록으로 예외를 둔다.
