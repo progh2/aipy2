@@ -262,6 +262,24 @@ for u, lessons in units.items():
    assert (u,lesson['id']) in EMPTY_TOPIC_ALLOWED, (u,lesson['id'],'문항 0개인데 허용 목록에 없음')
    assert '이 소단원 전용 문제는 없습니다' in q_html
    assert 'practice.html' in q_html
+# (#131 C) 3단원 slide/explain/practice 데이터 자체의 무결성 — 렌더링된 HTML이
+# 아니라 tools/web/deck_u3.LESSONS를 직접 검사한다.
+U3_THEORY_ONLY={'ml-overview','ml-use','ml-process','ml-terms','ml-methods'}
+for lid, ldata in deck_u3.LESSONS.items():
+ for sl in ldata.get('slides', ()):
+  assert sl.get('explain'), ('u3 슬라이드에 explain 없음', lid, sl['n'])
+ practice_items=ldata.get('practice') or []
+ if lid in U3_THEORY_ONLY:
+  assert not practice_items, ('이론 소단원인데 practice가 있음', lid)
+ for it in practice_items:
+  if isinstance(it, str):
+   assert it in examples, ('u3 practice가 참조하는 예제 없음', lid, it)
+  else:
+   assert it.get('kind')=='tutorial', ('u3 practice dict는 튜토리얼이어야 함', lid, it)
+   assert it.get('id') and it.get('title'), ('u3 튜토리얼에 id/title 없음', lid, it)
+   assert len(it.get('steps') or ())>=1, ('u3 튜토리얼 steps가 비어 있음', lid, it.get('id'))
+   for st in it['steps']:
+    assert st.get('text'), ('u3 튜토리얼 step에 text 없음', lid, it['id'])
 unit_index=(WEB/'units/unit01/index.html').read_text()
 assert 'data-lessons=' in unit_index
 assert 'overview.html' in unit_index

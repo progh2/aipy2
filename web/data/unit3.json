@@ -3,8 +3,8 @@
   "lessons": [
     {
       "id": "ml-overview",
-      "title": "AI·머신러닝·딥러닝의 관계",
-      "pages": "62–67",
+      "title": "머신러닝이란? — AI·머신러닝·딥러닝의 관계",
+      "pages": "63–67",
       "lead": "규칙을 직접 쓰는 것과 데이터에서 규칙을 배우는 것은 어떻게 다를까요?",
       "paragraphs": [
         "인공지능은 지능적인 문제 해결 기술의 넓은 범위입니다. 머신러닝은 데이터에서 패턴을 학습하는 접근이며, 딥러닝은 여러 층의 신경망을 사용하는 머신러닝의 한 종류입니다. 모든 AI가 머신러닝인 것은 아닙니다.",
@@ -45,7 +45,7 @@
       },
       "screenshots": [],
       "visual": [
-        "AI·머신러닝·딥러닝의 관계 · 한눈에 보기",
+        "머신러닝이란? — AI·머신러닝·딥러닝의 관계 · 한눈에 보기",
         [
           "인공지능｜가장 넓은 범위",
           "머신러닝｜데이터로 학습",
@@ -85,7 +85,7 @@
     },
     {
       "id": "ml-use",
-      "title": "머신러닝이 필요한 문제와 활용",
+      "title": "머신러닝의 필요성과 활용",
       "pages": "68–70",
       "lead": "정확한 규칙을 쓰기 어려운 문제를 찾아보세요.",
       "paragraphs": [
@@ -121,7 +121,7 @@
       },
       "screenshots": [],
       "visual": [
-        "머신러닝이 필요한 문제와 활용 · 한눈에 보기",
+        "머신러닝의 필요성과 활용 · 한눈에 보기",
         [
           "문제 찾기",
           "입력 데이터 정하기",
@@ -162,8 +162,8 @@
     },
     {
       "id": "ml-process",
-      "title": "문제 해결 과정과 데이터 분할",
-      "pages": "71–75, 101–102",
+      "title": "머신러닝 문제 해결 과정",
+      "pages": "71–75",
       "lead": "모델을 만들기 전에 성공 기준을 정하세요.",
       "paragraphs": [
         "문제 정의 → 수집·탐색 → 전처리 → 모델 선택 → 학습·평가 → 해석·응용으로 진행합니다. 실제 프로젝트에서는 결과를 보고 앞 단계로 돌아가 수정하기도 합니다.",
@@ -203,7 +203,7 @@
       },
       "screenshots": [],
       "visual": [
-        "문제 해결 과정과 데이터 분할 · 한눈에 보기",
+        "머신러닝 문제 해결 과정 · 한눈에 보기",
         [
           "문제·성공 기준",
           "수집·탐색",
@@ -251,7 +251,7 @@
     },
     {
       "id": "ml-terms",
-      "title": "특성·레이블·모델·하이퍼파라미터",
+      "title": "머신러닝의 주요 용어",
       "pages": "76–78",
       "lead": "표의 어느 열을 X로, 어느 열을 y로 사용할까요?",
       "paragraphs": [
@@ -293,7 +293,7 @@
       },
       "screenshots": [],
       "visual": [
-        "특성·레이블·모델·하이퍼파라미터 · 한눈에 보기",
+        "머신러닝의 주요 용어 · 한눈에 보기",
         [
           "행｜샘플 1개",
           "입력 열 X｜특성 여러 개",
@@ -334,8 +334,8 @@
     },
     {
       "id": "ml-methods",
-      "title": "지도·비지도·강화 학습",
-      "pages": "79–84",
+      "title": "머신러닝 학습 방법의 종류",
+      "pages": "79–82",
       "lead": "정답을 배우나요, 구조를 찾나요, 행동의 보상을 배우나요?",
       "paragraphs": [
         "지도 학습은 입력과 정답의 관계를 학습합니다. 범주를 예측하면 분류, 연속적인 수치를 예측하면 회귀입니다. 비지도 학습은 정답 없이 군집이나 낮은 차원의 구조를 찾습니다.",
@@ -370,7 +370,7 @@
       },
       "screenshots": [],
       "visual": [
-        "지도·비지도·강화 학습 · 한눈에 보기",
+        "머신러닝 학습 방법의 종류 · 한눈에 보기",
         [
           "정답 있음｜지도 학습",
           "정답 없음｜비지도 학습",
@@ -415,8 +415,8 @@
     },
     {
       "id": "ml-libraries",
-      "title": "머신러닝 라이브러리와 그래프",
-      "pages": "85–89",
+      "title": "파이썬 머신러닝 라이브러리 소개",
+      "pages": "86–89",
       "lead": "배열·표·모델·그래프 도구를 연결해 보세요.",
       "paragraphs": [
         "NumPy는 다차원 배열과 벡터 연산, pandas는 Series·DataFrame과 표 탐색, scikit-learn은 전처리·학습·평가 도구를 제공합니다. Matplotlib은 그래프 구성, Seaborn은 표 데이터의 통계 시각화를 돕습니다.",
@@ -457,7 +457,7 @@
       },
       "screenshots": [],
       "visual": [
-        "머신러닝 라이브러리와 그래프 · 한눈에 보기",
+        "파이썬 머신러닝 라이브러리 소개 · 한눈에 보기",
         [
           "NumPy｜배열",
           "pandas｜표 정리",
@@ -503,8 +503,8 @@
     },
     {
       "id": "ml-preprocess",
-      "title": "결측치·이상치·스케일·범주 처리",
-      "pages": "90–100",
+      "title": "데이터 준비와 전처리",
+      "pages": "90–102",
       "lead": "값을 바꾼 이유와 기준을 남겨 보세요.",
       "paragraphs": [
         "CSV는 read_csv, Excel은 read_excel로 읽습니다. 결측치는 isna로 확인한 뒤 dropna로 제거하거나 fillna·SimpleImputer로 채울 수 있습니다. 이상치는 입력 오류인지 드문 정상 관측인지 먼저 확인합니다. 임의 삭제는 데이터의 의미를 바꿀 수 있습니다.",
@@ -539,7 +539,7 @@
       },
       "screenshots": [],
       "visual": [
-        "결측치·이상치·스케일·범주 처리 · 한눈에 보기",
+        "데이터 준비와 전처리 · 한눈에 보기",
         [
           "불러오기·자료형 확인",
           "분할 후 훈련 부분 탐색",
@@ -586,7 +586,7 @@
     },
     {
       "id": "ml-classification",
-      "title": "분류: k-NN·로지스틱·트리·SVM",
+      "title": "주요 알고리즘 활용 · 분류",
       "pages": "103–105",
       "lead": "이름에 회귀가 들어 있어도 범주를 예측하는 모델이 있어요.",
       "paragraphs": [
@@ -628,7 +628,7 @@
       },
       "screenshots": [],
       "visual": [
-        "분류: k-NN·로지스틱·트리·SVM · 한눈에 보기",
+        "주요 알고리즘 활용 · 분류 · 한눈에 보기",
         [
           "붓꽃 X,y",
           "분할",
@@ -675,7 +675,7 @@
     },
     {
       "id": "ml-regression",
-      "title": "회귀와 수치 오차",
+      "title": "주요 알고리즘 활용 · 회귀 / 회귀와 수치 오차",
       "pages": "106–107, 121–123",
       "lead": "예측 숫자는 정답에서 얼마나 떨어져 있나요?",
       "paragraphs": [
@@ -717,7 +717,7 @@
       },
       "screenshots": [],
       "visual": [
-        "회귀와 수치 오차 · 한눈에 보기",
+        "주요 알고리즘 활용 · 회귀 / 회귀와 수치 오차 · 한눈에 보기",
         [
           "입력 특성",
           "가중합 + 절편",
@@ -764,7 +764,7 @@
     },
     {
       "id": "ml-cluster",
-      "title": "K-평균 군집화",
+      "title": "주요 알고리즘 활용 · 군집화",
       "pages": "108–111",
       "lead": "정답 이름 없이 비슷한 점들을 묶을 수 있을까요?",
       "paragraphs": [
@@ -805,7 +805,7 @@
       },
       "screenshots": [],
       "visual": [
-        "K-평균 군집화 · 한눈에 보기",
+        "주요 알고리즘 활용 · 군집화 · 한눈에 보기",
         [
           "K개 중심 초기화",
           "가장 가까운 중심에 배정",
@@ -846,7 +846,7 @@
     },
     {
       "id": "ml-metrics",
-      "title": "혼동행렬·정확도·정밀도·재현율",
+      "title": "모델 평가와 선택 · 분류 지표",
       "pages": "117–120",
       "lead": "어떤 종류의 실수가 더 중요한가요?",
       "paragraphs": [
@@ -887,7 +887,7 @@
       },
       "screenshots": [],
       "visual": [
-        "혼동행렬·정확도·정밀도·재현율 · 한눈에 보기",
+        "모델 평가와 선택 · 분류 지표 · 한눈에 보기",
         [
           "양성 의미 정하기",
           "예측 임계값 선택",
@@ -933,7 +933,7 @@
     },
     {
       "id": "ml-selection",
-      "title": "교차 검증·튜닝·학습 곡선",
+      "title": "모델 평가와 선택 · 교차 검증·튜닝·학습 곡선",
       "pages": "112–116, 124–128",
       "lead": "한 번 나눈 점수만으로 모델을 선택해도 될까요?",
       "paragraphs": [
@@ -975,7 +975,7 @@
       },
       "screenshots": [],
       "visual": [
-        "교차 검증·튜닝·학습 곡선 · 한눈에 보기",
+        "모델 평가와 선택 · 교차 검증·튜닝·학습 곡선 · 한눈에 보기",
         [
           "최종 테스트 별도 보관",
           "훈련 부분에서 교차 검증",
@@ -1081,7 +1081,436 @@
       "textbook": []
     }
   ],
-  "examples": {},
+  "examples": {
+    "ml-tools": {
+      "id": "ml-tools",
+      "title": "NumPy·pandas로 표 탐색하기",
+      "files": {
+        "main.py": "import numpy as np\nimport pandas as pd\nvalues = np.array([10, 20, 30])\nprint(values + 5)\nprint(np.concatenate(([1, 2], [3, 4])))\ndf = pd.DataFrame({\"name\": [\"A\", \"B\", \"C\"], \"score\": [75, 90, 85]})\nprint(df.head())\nprint(df.describe())\ndf.info()\n",
+        "requirements.txt": "numpy\npandas\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert df.shape == (3, 2)\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "numpy.array",
+          "signature": "np.array([10, 20, 30])",
+          "note": "같은 형의 값을 담는 배열입니다. + 5처럼 원소마다 연산할 수 있습니다."
+        },
+        {
+          "name": "DataFrame",
+          "signature": "pd.DataFrame({\"name\": [...], \"score\": [...]})",
+          "note": "열 이름이 있는 표입니다. head는 앞부분, describe는 수치 요약, info는 자료형과 결측입니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "shape",
+          "meaning": "배열이나 표의 축별 길이입니다. (행, 열)을 먼저 확인합니다."
+        }
+      ],
+      "tips": {
+        "history": "표 계산은 스프레드시트보다 코드로 반복하기 위해 pandas가 만들어졌습니다. 배열 연산의 뼈대는 NumPy입니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-chart": {
+      "id": "ml-chart",
+      "title": "빈도표를 막대그래프로",
+      "files": {
+        "main.py": "import matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nfrom collections import Counter\ncounts = Counter([\"apple\", \"banana\", \"apple\", \"pear\", \"banana\", \"apple\"])\nplt.bar(list(counts), list(counts.values()))\nplt.ylabel(\"Count\")\nplt.title(\"Fruit frequency\")\nplt.savefig(\"frequency.png\")\nprint(dict(counts))\n",
+        "requirements.txt": "matplotlib\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "실제 Python이 저장한 PNG를 실행 결과 아래에서 확인할 수 있습니다.",
+      "pre_api": [
+        {
+          "name": "Counter",
+          "signature": "Counter([\"apple\", \"banana\", \"apple\"])",
+          "note": "항목별 개수 딕셔너리입니다. 막대 높이는 이 개수와 같아야 합니다."
+        },
+        {
+          "name": "plt.bar / savefig",
+          "signature": "plt.bar(이름, 개수)\nplt.savefig(\"frequency.png\")",
+          "note": "실행한 Python이 PNG를 만듭니다. 웹 결과 아래에 그림이 붙습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "Agg",
+          "meaning": "화면 창 없이 그림을 파일로 저장하는 Matplotlib 백엔드입니다. 웹·서버에서 씁니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "assets/science/ml-chart.png",
+          "alt": "과일 빈도 막대그래프",
+          "caption": "제공 예제를 실행해 저장한 막대그래프입니다. 막대 높이는 Counter 개수와 같습니다."
+        }
+      ]
+    },
+    "ml-seaborn": {
+      "id": "ml-seaborn",
+      "title": "Seaborn countplot과 Excel 입출력",
+      "files": {
+        "main.py": "import pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nframe = pd.DataFrame({\"fruit\": [\"apple\", \"banana\", \"apple\"]})\nframe.to_excel(\"fruit.xlsx\", index=False)\nprint(pd.read_excel(\"fruit.xlsx\").head())\nsns.countplot(data=frame, x=\"fruit\")\nplt.savefig(\"fruit.png\")\n",
+        "requirements.txt": "pandas\nseaborn\nmatplotlib\nopenpyxl\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "Excel 입출력과 seaborn 비교 예제입니다. python -m pip install -r requirements.txt 후 PC에서 실행하세요.",
+      "pre_api": [
+        {
+          "name": "to_excel / read_excel",
+          "signature": "frame.to_excel(\"fruit.xlsx\")\npd.read_excel(...)",
+          "note": "엑셀 입출력입니다. openpyxl이 필요하고 PC에서 실행합니다."
+        },
+        {
+          "name": "sns.countplot",
+          "signature": "sns.countplot(data=frame, x=\"fruit\")",
+          "note": "범주 열의 빈도를 막대로 그립니다. Matplotlib 위에 통계 그림을 얹습니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-clean": {
+      "id": "ml-clean",
+      "title": "CSV·결측치·이상치 탐색",
+      "files": {
+        "main.py": "import pandas as pd\nframe = pd.read_csv(\"scores.csv\")\nprint(frame.head())\nprint(\"Missing:\", frame.isna().sum())\nprint(\"Drop missing:\", frame.dropna())\n# 이 예제는 탐색용 표입니다. 예측 모델에서는 분할 후 훈련 데이터로 통계량을 구합니다.\nmedian = frame[\"score\"].median()\nfilled = frame.fillna({\"name\": \"Unknown\", \"score\": median})\nprint(\"Filled:\", filled)\nprint(\"Outside score range:\", filled[(filled.score < 0) | (filled.score > 100)])\n",
+        "scores.csv": "name,score\nA,80\nB,\n,90\nD,1000\n",
+        "requirements.txt": "pandas\n"
+      },
+      "mode": "web",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert filled.isna().sum().sum() == 0\n",
+      "note": "",
+      "pre_api": [
+        {
+          "name": "isna / dropna / fillna",
+          "signature": "frame.isna().sum()\nframe.dropna()\nframe.fillna(...)",
+          "note": "결측 개수를 본 뒤 지우거나 채웁니다. 예측 모델에서는 분할 후 훈련 통계량으로 채웁니다."
+        },
+        {
+          "name": "이상치 범위",
+          "signature": "score < 0 또는 score > 100",
+          "note": "1000점이 오타인지 실제 값인지 확인하기 전에 삭제하지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "탐색과 학습",
+          "meaning": "이 예제는 표를 살펴보는 용도입니다. 모델에 넣을 때는 분할 후 훈련 통계량을 씁니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-scale": {
+      "id": "ml-scale",
+      "title": "훈련 데이터로만 전처리 배우기",
+      "files": {
+        "main.py": "import numpy as np\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder\ntrain = np.array([[10., 1.], [20., np.nan], [30., 3.]])\ntest = np.array([[50., 2.]])\nimputer = SimpleImputer(strategy=\"median\")\ntrain_filled = imputer.fit_transform(train)\ntest_filled = imputer.transform(test)\nfor scaler in [MinMaxScaler(), StandardScaler()]:\n    print(type(scaler).__name__)\n    print(scaler.fit_transform(train_filled))\n    print(\"Test:\", scaler.transform(test_filled))\nencoder = OneHotEncoder(handle_unknown=\"ignore\", sparse_output=False)\nprint(encoder.fit_transform([[\"Seoul\"], [\"Busan\"], [\"Seoul\"]]))\nprint(\"Unseen city:\", encoder.transform([[\"Jeju\"]]))\n",
+        "requirements.txt": "numpy\nscikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert test_filled.shape == (1, 2)\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
+      "pre_api": [
+        {
+          "name": "SimpleImputer",
+          "signature": "imputer.fit_transform(train)\nimputer.transform(test)",
+          "note": "중앙값 등 채울 값을 훈련에서 배웁니다. 테스트에는 transform만 씁니다."
+        },
+        {
+          "name": "Scaler / OneHotEncoder",
+          "signature": "MinMaxScaler · StandardScaler · OneHotEncoder",
+          "note": "handle_unknown=\"ignore\"면 본 적 없는 범주는 0 벡터가 됩니다. 새 도시는 훈련 목록에 없습니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-classify": {
+      "id": "ml-classify",
+      "title": "붓꽃 분류 모델 네 가지 비교",
+      "files": {
+        "main.py": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.svm import SVC\nfrom sklearn.metrics import accuracy_score\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)\nmodels = [KNeighborsClassifier(5), LogisticRegression(max_iter=1000), DecisionTreeClassifier(max_depth=3, random_state=42), SVC()]\nfor model in models:\n    pipe = make_pipeline(StandardScaler(), model)\n    pipe.fit(X_train, y_train)\n    pred = pipe.predict(X_test)\n    print(type(model).__name__, round(accuracy_score(y_test, pred), 3))\n# 이 비교는 관찰용입니다. 실제 모델 선택은 훈련 부분의 교차 검증으로 합니다.\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(pred) == len(y_test)\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
+      "pre_api": [
+        {
+          "name": "train_test_split",
+          "signature": "train_test_split(..., stratify=y, random_state=42)",
+          "note": "같은 난수면 같은 분할입니다. stratify=y는 품종 비율을 유지합니다."
+        },
+        {
+          "name": "make_pipeline",
+          "signature": "make_pipeline(StandardScaler(), model)",
+          "note": "스케일을 파이프라인 안에서 훈련합니다. 테스트에 따로 fit하지 않습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "관찰용 비교",
+          "meaning": "테스트로 네 모델을 한 번 보는 실습입니다. 실제 선택은 훈련 부분 교차 검증으로 합니다."
+        }
+      ],
+      "tips": {
+        "history": "같은 자료로 여러 분류기를 나란히 두는 비교는 교재와 경진 대회의 기본 습관입니다. 선택은 테스트가 아니라 검증으로 합니다.",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-regression": {
+      "id": "ml-regression",
+      "title": "회귀 예측과 MAE·MSE·R²",
+      "files": {
+        "main.py": "from sklearn.datasets import load_diabetes\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score\nX, y = load_diabetes(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)\nmodel = LinearRegression().fit(X_train, y_train)\npred = model.predict(X_test)\nprint(\"Train R2:\", model.score(X_train, y_train))\nprint(\"Test MAE:\", mean_absolute_error(y_test, pred))\nprint(\"Test MSE:\", mean_squared_error(y_test, pred))\nprint(\"Test R2:\", r2_score(y_test, pred))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert mean_absolute_error(y_test, pred) >= 0\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. 내장 자료로 회귀 원리를 연습하는 예제이며 실제 개인에 대한 예측 용도로 사용하지 않습니다.",
+      "pre_api": [
+        {
+          "name": "LinearRegression",
+          "signature": "model.fit(X_train, y_train)\nmodel.predict(X_test)",
+          "note": "특성의 가중합과 절편으로 숫자를 예측합니다. score는 훈련 R²입니다."
+        },
+        {
+          "name": "오차 지표",
+          "signature": "mean_absolute_error · mean_squared_error · r2_score",
+          "note": "MAE는 원래 단위, MSE는 제곱, R²는 평균 예측과 비교합니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "내장 자료",
+          "meaning": "diabetes 자료는 원리 연습용입니다. 실제 개인 건강을 예측하는 용도가 아닙니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-housing": {
+      "id": "ml-housing",
+      "title": "교과서 연결 · 주택 자료 회귀",
+      "files": {
+        "main.py": "from sklearn.datasets import fetch_california_housing\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score\nX, y = fetch_california_housing(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\npred = LinearRegression().fit(X_train, y_train).predict(X_test)\nprint(\"MAE\", mean_absolute_error(y_test, pred))\nprint(\"MSE\", mean_squared_error(y_test, pred))\nprint(\"R2\", r2_score(y_test, pred))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. 첫 실행에 외부 데이터 다운로드가 필요합니다. 네트워크가 없으면 내장 자료 회귀 예제를 사용하세요.",
+      "pre_api": [
+        {
+          "name": "fetch_california_housing",
+          "signature": "fetch_california_housing(return_X_y=True)",
+          "note": "첫 실행에 자료를 내려받습니다. 네트워크가 없으면 내장 diabetes 예제를 쓰세요. 개인 예측용이 아닙니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-cluster": {
+      "id": "ml-cluster",
+      "title": "군집 중심과 산점도",
+      "files": {
+        "main.py": "import matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\nX, _ = make_blobs(n_samples=120, centers=3, random_state=42, cluster_std=0.7)\nmodel = KMeans(n_clusters=3, n_init=10, random_state=42)\nlabels = model.fit_predict(X)\ncenters = model.cluster_centers_\nprint(\"Centers:\", centers)\nplt.scatter(X[:, 0], X[:, 1], c=labels)\nplt.scatter(centers[:, 0], centers[:, 1], marker=\"X\", s=180, c=\"red\")\nplt.title(\"K-means: groups and centers\")\nplt.savefig(\"clusters.png\")\n",
+        "requirements.txt": "scikit-learn\nmatplotlib\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(set(labels)) == 3\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
+      "pre_api": [
+        {
+          "name": "KMeans",
+          "signature": "KMeans(n_clusters=3, n_init=10, random_state=42)",
+          "note": "labels_는 샘플별 번호, cluster_centers_는 중심 좌표입니다. 번호는 실행마다 뒤바뀔 수 있습니다."
+        },
+        {
+          "name": "산점도",
+          "signature": "plt.scatter(..., c=labels)\nplt.savefig(\"clusters.png\")",
+          "note": "색은 그룹 이름입니다. 항상 동그란 덩어리가 있다고 가정하지 마세요."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "원형 가정",
+          "meaning": "K-평균은 중심에 가까운 덩어리를 잘 찾습니다. 길쭉하거나 고리가 있으면 다른 방법을 검토합니다."
+        }
+      ],
+      "tips": {
+        "history": "중심을 옮기며 묶는 방법은 통계 군집화의 고전입니다. 그림의 색은 이름일 뿐 순위가 아닙니다.",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "assets/science/ml-cluster.png",
+          "alt": "K-평균 군집과 중심점",
+          "caption": "제공 예제의 산점도입니다. 색은 군집 번호, 빨간 X는 중심입니다. 번호에 순위는 없습니다."
+        }
+      ]
+    },
+    "ml-metrics": {
+      "id": "ml-metrics",
+      "title": "혼동행렬과 분류 지표",
+      "files": {
+        "main.py": "from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score\ny_true = [1, 0, 1, 1, 0, 0]\ny_pred = [1, 1, 1, 0, 0, 0]\nprint(\"rows=true, columns=predicted; labels=[0,1]\")\nprint(confusion_matrix(y_true, y_pred, labels=[0, 1]))\nfor metric in [accuracy_score, precision_score, recall_score, f1_score]:\n    print(metric.__name__, metric(y_true, y_pred))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert confusion_matrix(y_true, y_pred).tolist() == [[2,1],[1,2]]\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
+      "pre_api": [
+        {
+          "name": "confusion_matrix",
+          "signature": "confusion_matrix(y_true, y_pred, labels=[0, 1])",
+          "note": "행이 실제, 열이 예측입니다. labels를 지정해야 0/1 순서가 고정됩니다."
+        },
+        {
+          "name": "네 지표",
+          "signature": "accuracy · precision · recall · f1",
+          "note": "같은 예측 쌍으로 네 숫자를 비교합니다. 한 지표만으로 모델을 고르지 않습니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-selection": {
+      "id": "ml-selection",
+      "title": "교차 검증과 GridSearchCV",
+      "files": {
+        "main.py": "from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.neighbors import KNeighborsClassifier\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)\npipe = make_pipeline(StandardScaler(), KNeighborsClassifier())\nprint(\"CV:\", cross_val_score(pipe, X_train, y_train, cv=3))\nsearch = GridSearchCV(pipe, {\"kneighborsclassifier__n_neighbors\": [3, 5, 7]}, cv=3, scoring=\"accuracy\", n_jobs=1)\nsearch.fit(X_train, y_train)\nprint(\"Best:\", search.best_params_, search.best_score_)\nprint(\"Final test:\", search.score(X_test, y_test))\n",
+        "requirements.txt": "scikit-learn\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert search.best_params_[\"kneighborsclassifier__n_neighbors\"] in [3,5,7]\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
+      "pre_api": [
+        {
+          "name": "cross_val_score",
+          "signature": "cross_val_score(pipe, X_train, y_train, cv=3)",
+          "note": "훈련 부분만 나눕니다. 테스트는 넘기지 않습니다."
+        },
+        {
+          "name": "GridSearchCV",
+          "signature": "GridSearchCV(pipe, {이웃 수: [3,5,7]}, cv=3)",
+          "note": "설정 후보를 교차 검증으로 비교합니다. best_score_와 최종 테스트 점수는 다를 수 있습니다."
+        }
+      ],
+      "glossary": [
+        {
+          "term": "n_jobs=1",
+          "meaning": "병렬을 켜지 않습니다. 교실 컴퓨터에서 재현하기 쉽게 한 코어로 둡니다."
+        }
+      ],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": []
+    },
+    "ml-learning-curve": {
+      "id": "ml-learning-curve",
+      "title": "학습 곡선으로 과대·과소 적합 살펴보기",
+      "files": {
+        "main.py": "import numpy as np\nimport matplotlib\nmatplotlib.use(\"Agg\")\nimport matplotlib.pyplot as plt\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import learning_curve, StratifiedKFold\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\nX, y = load_iris(return_X_y=True)\nmodel = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))\ncv = StratifiedKFold(3, shuffle=True, random_state=42)\nsizes, train, valid = learning_curve(model, X, y, train_sizes=[0.4, 0.7, 1.0], cv=cv, shuffle=True, random_state=42, n_jobs=1)\nplt.plot(sizes, train.mean(axis=1), \"o-\", label=\"Training\")\nplt.plot(sizes, valid.mean(axis=1), \"s--\", label=\"Validation\")\nplt.xlabel(\"Training samples\")\nplt.ylabel(\"Accuracy\")\nplt.legend()\nplt.savefig(\"learning-curve.png\")\nprint(\"Sizes:\", sizes)\nprint(\"Validation:\", np.round(valid.mean(axis=1), 3))\n",
+        "requirements.txt": "numpy\nscikit-learn\nmatplotlib\n"
+      },
+      "mode": "pc",
+      "entry": "main.py",
+      "stdin": "",
+      "args": "",
+      "checks": "assert len(sizes)==3\n",
+      "note": "전체 scikit-learn 모델은 PC에서 실행합니다. 브라우저에서는 연결된 원리 실습으로 입력·계산·결과를 먼저 확인하세요. ",
+      "pre_api": [
+        {
+          "name": "learning_curve",
+          "signature": "learning_curve(model, X, y, train_sizes=[...], cv=...)",
+          "note": "훈련 샘플을 늘리며 훈련·검증 점수를 그립니다. 간격과 수준을 보고 다음 실험을 정합니다."
+        }
+      ],
+      "glossary": [],
+      "tips": {
+        "history": "",
+        "youtube": []
+      },
+      "screenshots": [
+        {
+          "src": "assets/science/ml-learning-curve.png",
+          "alt": "훈련·검증 학습 곡선",
+          "caption": "제공 예제의 학습 곡선입니다. 샘플 수에 따라 두 점수가 어떻게 달라지는지 봅니다."
+        }
+      ]
+    }
+  },
   "questions": [
     {
       "id": "u3-q101",
@@ -1918,7 +2347,7 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 62–67 연계",
+      "ref": "교과서 63–67 연계",
       "tag": ""
     },
     {
@@ -1952,7 +2381,7 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 71–75, 101–102 연계",
+      "ref": "교과서 71–75 연계",
       "tag": ""
     },
     {
@@ -1986,7 +2415,7 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 79–84 연계",
+      "ref": "교과서 79–82 연계",
       "tag": ""
     },
     {
@@ -2003,7 +2432,7 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 85–89 연계",
+      "ref": "교과서 86–89 연계",
       "tag": ""
     },
     {
@@ -2020,7 +2449,7 @@
       "starter": "",
       "checks": "",
       "level": "기본",
-      "ref": "교과서 90–100 연계",
+      "ref": "교과서 90–102 연계",
       "tag": ""
     },
     {

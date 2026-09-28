@@ -231,85 +231,104 @@
     "units/unit03/index.html": [
       {
         "id": "ml-overview",
-        "title": "AI·머신러닝·딥러닝의 관계",
+        "title": "머신러닝이란? — AI·머신러닝·딥러닝의 관계",
         "examples": [],
         "href": "units/unit03/ml-overview.html",
         "practiceHref": "units/unit03/q-ml-overview.html"
       },
       {
         "id": "ml-use",
-        "title": "머신러닝이 필요한 문제와 활용",
+        "title": "머신러닝의 필요성과 활용",
         "examples": [],
         "href": "units/unit03/ml-use.html",
         "practiceHref": "units/unit03/q-ml-use.html"
       },
       {
         "id": "ml-process",
-        "title": "문제 해결 과정과 데이터 분할",
+        "title": "머신러닝 문제 해결 과정",
         "examples": [],
         "href": "units/unit03/ml-process.html",
         "practiceHref": "units/unit03/q-ml-process.html"
       },
       {
         "id": "ml-terms",
-        "title": "특성·레이블·모델·하이퍼파라미터",
+        "title": "머신러닝의 주요 용어",
         "examples": [],
         "href": "units/unit03/ml-terms.html",
         "practiceHref": "units/unit03/q-ml-terms.html"
       },
       {
         "id": "ml-methods",
-        "title": "지도·비지도·강화 학습",
+        "title": "머신러닝 학습 방법의 종류",
         "examples": [],
         "href": "units/unit03/ml-methods.html",
         "practiceHref": "units/unit03/q-ml-methods.html"
       },
       {
         "id": "ml-libraries",
-        "title": "머신러닝 라이브러리와 그래프",
-        "examples": [],
+        "title": "파이썬 머신러닝 라이브러리 소개",
+        "examples": [
+          "ml-tools",
+          "ml-chart",
+          "ml-seaborn"
+        ],
         "href": "units/unit03/ml-libraries.html",
         "practiceHref": "units/unit03/q-ml-libraries.html"
       },
       {
         "id": "ml-preprocess",
-        "title": "결측치·이상치·스케일·범주 처리",
-        "examples": [],
+        "title": "데이터 준비와 전처리",
+        "examples": [
+          "ml-clean",
+          "ml-scale"
+        ],
         "href": "units/unit03/ml-preprocess.html",
         "practiceHref": "units/unit03/q-ml-preprocess.html"
       },
       {
         "id": "ml-classification",
-        "title": "분류: k-NN·로지스틱·트리·SVM",
-        "examples": [],
+        "title": "주요 알고리즘 활용 · 분류",
+        "examples": [
+          "ml-classify"
+        ],
         "href": "units/unit03/ml-classification.html",
         "practiceHref": "units/unit03/q-ml-classification.html"
       },
       {
         "id": "ml-regression",
-        "title": "회귀와 수치 오차",
-        "examples": [],
+        "title": "주요 알고리즘 활용 · 회귀 / 회귀와 수치 오차",
+        "examples": [
+          "ml-regression",
+          "ml-housing"
+        ],
         "href": "units/unit03/ml-regression.html",
         "practiceHref": "units/unit03/q-ml-regression.html"
       },
       {
         "id": "ml-cluster",
-        "title": "K-평균 군집화",
-        "examples": [],
+        "title": "주요 알고리즘 활용 · 군집화",
+        "examples": [
+          "ml-cluster"
+        ],
         "href": "units/unit03/ml-cluster.html",
         "practiceHref": "units/unit03/q-ml-cluster.html"
       },
       {
         "id": "ml-metrics",
-        "title": "혼동행렬·정확도·정밀도·재현율",
-        "examples": [],
+        "title": "모델 평가와 선택 · 분류 지표",
+        "examples": [
+          "ml-metrics"
+        ],
         "href": "units/unit03/ml-metrics.html",
         "practiceHref": "units/unit03/q-ml-metrics.html"
       },
       {
         "id": "ml-selection",
-        "title": "교차 검증·튜닝·학습 곡선",
-        "examples": [],
+        "title": "모델 평가와 선택 · 교차 검증·튜닝·학습 곡선",
+        "examples": [
+          "ml-selection",
+          "ml-learning-curve"
+        ],
         "href": "units/unit03/ml-selection.html",
         "practiceHref": "units/unit03/q-ml-selection.html"
       },
@@ -1009,86 +1028,86 @@
     "ml-tools": {
       "id": "ml-tools",
       "title": "NumPy·pandas로 표 탐색하기",
-      "unit": null,
+      "unit": 3,
       "mode": "web",
-      "href": ""
+      "href": "units/unit03/ex-ml-tools.html"
     },
     "ml-chart": {
       "id": "ml-chart",
       "title": "빈도표를 막대그래프로",
-      "unit": null,
+      "unit": 3,
       "mode": "web",
-      "href": ""
+      "href": "units/unit03/ex-ml-chart.html"
     },
     "ml-seaborn": {
       "id": "ml-seaborn",
       "title": "Seaborn countplot과 Excel 입출력",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-seaborn.html"
     },
     "ml-clean": {
       "id": "ml-clean",
       "title": "CSV·결측치·이상치 탐색",
-      "unit": null,
+      "unit": 3,
       "mode": "web",
-      "href": ""
+      "href": "units/unit03/ex-ml-clean.html"
     },
     "ml-scale": {
       "id": "ml-scale",
       "title": "훈련 데이터로만 전처리 배우기",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-scale.html"
     },
     "ml-classify": {
       "id": "ml-classify",
       "title": "붓꽃 분류 모델 네 가지 비교",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-classify.html"
     },
     "ml-regression": {
       "id": "ml-regression",
       "title": "회귀 예측과 MAE·MSE·R²",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-regression.html"
     },
     "ml-housing": {
       "id": "ml-housing",
       "title": "교과서 연결 · 주택 자료 회귀",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-housing.html"
     },
     "ml-cluster": {
       "id": "ml-cluster",
       "title": "군집 중심과 산점도",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-cluster.html"
     },
     "ml-metrics": {
       "id": "ml-metrics",
       "title": "혼동행렬과 분류 지표",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-metrics.html"
     },
     "ml-selection": {
       "id": "ml-selection",
       "title": "교차 검증과 GridSearchCV",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-selection.html"
     },
     "ml-learning-curve": {
       "id": "ml-learning-curve",
       "title": "학습 곡선으로 과대·과소 적합 살펴보기",
-      "unit": null,
+      "unit": 3,
       "mode": "pc",
-      "href": ""
+      "href": "units/unit03/ex-ml-learning-curve.html"
     },
     "cv-pixels": {
       "id": "cv-pixels",
