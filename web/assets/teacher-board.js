@@ -15,8 +15,9 @@ import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, filterStuck,
  questionStats, classQuestionTotals, classCsv, cardAccuracyLabel, formatRate,
  heatmapTone, historyItems, answerRows, filterAnswerRows, groupAnswerRowsByUnit,
- unitAnswerTotals, journalRows, formatAnswerValue, answerStatusLabel, UNIT_ROMAN
+ unitAnswerTotals, journalRows, UNIT_ROMAN
 } from './board-model.js';
+import {renderAnswerUnitGroup, renderJournalUnitGroup} from './answer-view.js';
 
 const $ = (id) => document.getElementById(id);
 const prefix = document.body.dataset.prefix || '';
@@ -494,31 +495,6 @@ function refreshDetailIfSelected(uid) {
  if (card && card.uid === uid) paintDetail(card, {keepFocus: true});
 }
 
-function statusTone(status) {
- if (status === 'done') return 'good';
- if (status === 'retry') return 'warn';
- return 'muted';
-}
-
-function renderAnswerRow(row) {
- const li = node('li', 'answer-row');
- const head = node('div', 'answer-row-head');
- const info = node('span', 'answer-row-info');
- info.append(node('b', '', row.kind || '문항'), node('span', 'small', ` · ${UNIT_ROMAN[row.unit] || ''} ${row.topic || ''}`.trim()));
- head.append(info, node('span', `answer-status answer-status--${statusTone(row.status)}`, answerStatusLabel(row)));
- const prompt = node('p', 'answer-prompt', row.prompt.length > 60 ? `${row.prompt.slice(0, 60)}…` : row.prompt);
- prompt.title = row.prompt;
- const meta = node('p', 'small', `시도 ${row.attempts}회`);
- const valueBox = node('pre', 'answer-value', formatAnswerValue(row.value) || '(빈 답안)');
- li.append(head, prompt, meta, valueBox);
- if (row.correctAnswer != null && row.correctAnswer !== '') {
-  const det = node('details', 'answer-key');
-  det.append(node('summary', '', '정답 보기'), node('pre', '', formatAnswerValue(row.correctAnswer)));
-  li.append(det);
- }
- return li;
-}
-
 function renderAnswerSection(card) {
  const wrap = node('div', 'student-detail-answers');
  const filterBar = node('div', 'answer-filter-bar');
@@ -566,29 +542,13 @@ function renderAnswerSection(card) {
   const groups = groupAnswerRowsByUnit(filtered);
   for (const [unit, unitRows] of groups) {
    const totalInfo = totalsByUnit.get(unit);
-   const details = node('details', 'answer-unit-group');
-   details.open = groups.length <= 1;
-   details.append(node('summary', '', `${UNIT_ROMAN[unit] || unit} 단원 · 푼 문항 ${totalInfo ? totalInfo.answered : unitRows.length} / 전체 ${totalInfo ? totalInfo.total : unitRows.length}`));
-   const ul = node('ul', 'answer-row-list');
-   for (const row of unitRows) ul.append(renderAnswerRow(row));
-   details.append(ul);
-   wrap.append(details);
+   wrap.append(renderAnswerUnitGroup(unit, unitRows, totalInfo, {open: groups.length <= 1, titles}));
   }
  }
  const journals = journalRows(state);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
-  for (const jr of journals) {
-   const details = node('details', 'answer-unit-group');
-   details.append(node('summary', '', `${UNIT_ROMAN[jr.unit] || jr.unit} 단원 저널`));
-   const dl = node('dl', 'journal-list');
-   for (const item of jr.items) {
-    dl.append(node('dt', '', item.label));
-    dl.append(node('dd', '', item.text));
-   }
-   details.append(dl);
-   wrap.append(details);
-  }
+  for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
  }
  return wrap;
 }

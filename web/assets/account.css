@@ -134,6 +134,10 @@
 .journal-list{margin:8px 0 0}
 .journal-list dt{font-weight:700;font-size:12px;margin-top:8px}
 .journal-list dd{margin:2px 0 0;font-size:13px;white-space:pre-wrap}
+/* 답변 내역(#128) — 단원 안에서 소단원별로 한 번 더 묶는다 */
+.answer-subunit{margin:10px 0;padding-top:10px;border-top:1px dashed var(--line)}
+.answer-subunit:first-child{border-top:none;padding-top:0}
+.answer-subunit h4{margin:0 0 4px;font-size:13px;color:var(--muted)}
 @media (max-width:640px){
  .student-card-grid{grid-template-columns:1fr}
  .student-detail-panel{width:100%}

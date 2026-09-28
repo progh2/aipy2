@@ -121,10 +121,24 @@ ops_model=subprocess.run(['node',str(Path(__file__).parent/'test_ops_model.mjs')
 assert ops_model.returncode==0, ops_model.stdout+ops_model.stderr
 ops_boot=subprocess.run(['node',str(Path(__file__).parent/'test_ops_boot.mjs')],capture_output=True,text=True)
 assert ops_boot.returncode==0, ops_boot.stdout+ops_boot.stderr
-for name in ['admin.html','ops.html','board.html','session.html','assignments.html']:
+teacher_answers_model=subprocess.run(['node',str(Path(__file__).parent/'test_teacher_answers_model.mjs')],capture_output=True,text=True)
+assert teacher_answers_model.returncode==0, teacher_answers_model.stdout+teacher_answers_model.stderr
+for name in ['admin.html','ops.html','board.html','session.html','assignments.html','answers.html']:
  html=(WEB/'teacher'/name).read_text()
  assert 'id="teacher-shell"' in html, name
  assert 'teacher-shell.js' in html, name
+answers=(WEB/'teacher/answers.html').read_text()
+assert 'teacher-answers.js' in answers
+assert 'id="answers-roster-list"' in answers and '학번순입니다' in answers
+assert 'id="answers-detail-body"' in answers
+teacher_shell_js=(WEB/'assets/teacher-shell.js').read_text()
+assert "href: 'answers.html'" in teacher_shell_js and "label: '답변 내역'" in teacher_shell_js
+teacher_answers_js=(WEB/'assets/teacher-answers.js').read_text()
+assert 'getDoc' in teacher_answers_js
+assert 'aipyAnswersDemo' in teacher_answers_js
+assert '아직 제출한 답변이 없습니다' in teacher_answers_js
+board_js=(WEB/'assets/teacher-board.js').read_text()
+assert 'renderAnswerUnitGroup' in board_js and 'answer-view.js' in board_js
 session=(WEB/'teacher/session.html').read_text()
 assert 'teacher-session.js' in session
 assert 'id="session-start"' in session and '세션 시작' in session

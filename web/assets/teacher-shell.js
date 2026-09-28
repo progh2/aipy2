@@ -1,4 +1,4 @@
-/* 교사 관리 화면의 공통 뼈대. 헤더 아래 반 선택과 명단/보드/세션/과제 내비게이션을 붙입니다.
+/* 교사 관리 화면의 공통 뼈대. 헤더 아래 반 선택과 명단/보드/세션/과제/답변 내역 내비게이션을 붙입니다.
    이 스크립트는 관리 페이지에만 넣습니다. 로그인·설정 실패는 학습을 막지 않습니다. */
 import {ready} from './firebase-config.js';
 import {load, readTeacherFlag} from './auth.js';
@@ -13,7 +13,8 @@ const PAGES = [
  {id: 'ops', href: 'ops.html', label: '운영'},
  {id: 'board', href: 'board.html', label: '현황 보드'},
  {id: 'session', href: 'session.html', label: '수업 세션'},
- {id: 'assignments', href: 'assignments.html', label: '과제'}
+ {id: 'assignments', href: 'assignments.html', label: '과제'},
+ {id: 'answers', href: 'answers.html', label: '답변 내역'}
 ];
 
 const host = document.getElementById('teacher-shell');
