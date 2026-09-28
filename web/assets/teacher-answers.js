@@ -174,7 +174,7 @@ function paintDetail(card) {
   topicBox.append(ul);
   unitHost.append(topicBox);
  }
- const journals = journalRows(state);
+ const journals = journalRows(state, titles);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));

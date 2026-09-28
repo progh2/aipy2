@@ -8,6 +8,7 @@ import {
  formatAnswerValue, answerStatusLabel, isSubjectiveKind,
  PRESENCE_FRESH_MS, PRESENCE_RECENT_MS, CSV_HEADER
 } from '../../web/assets/board-model.js';
+import {titlesFromCatalog} from '../../web/assets/understanding-model.js';
 
 function eq(actual, expected, label) {
  const left = JSON.stringify(actual), right = JSON.stringify(expected);
@@ -169,7 +170,7 @@ const detailState = {
   'u1-q002': {value: '모듈', status: 'done', attempts: 1},
   'u2-q010': {value: ['a', 'b', 'c'], status: 'retry', attempts: 1}
  },
- journals: {'u1-learn': ' 모듈 개념을 배웠다 ', 'u1-error': '', 'u2-next': 'GUI 이벤트 처리 도전'}
+ journals: {'u1-learn': ' 모듈 개념을 배웠다 ', 'u1-error': '', 'u2-next': 'GUI 이벤트 처리 도전', 'j-u1-define': ' import 시점을 헷갈렸다 '}
 };
 const rows = answerRows(detailState, questions);
 eq(rows.length, 3, 'answer rows count');
@@ -200,10 +201,16 @@ eq(grouped[0][1].length, 2, 'unit1 group size');
 const unitTotals = unitAnswerTotals(detailState, questions);
 eq(unitTotals, [{unit: 1, total: 2, answered: 2, correct: 1}, {unit: 2, total: 1, answered: 1, correct: 0}], 'unit answer totals');
 
-const journals = journalRows(detailState);
+// (#130) 소단원 저널(j-u{n}-{anchor})은 같은 단원 그룹에 topic 항목으로 합쳐지고, titles가
+// 있으면 소단원 anchor 대신 실제 제목을 보여 준다.
+const journals = journalRows(detailState, titlesFromCatalog(catalog));
 eq(journals.length, 2, 'journal rows by unit');
-eq(journals[0], {unit: 1, items: [{key: 'learn', label: '이해한 개념', text: '모듈 개념을 배웠다'}]}, 'journal unit1 trims and skips empty');
+eq(journals[0].items[0], {key: 'learn', label: '이해한 개념', text: '모듈 개념을 배웠다'}, 'journal unit1 trims and skips empty');
+eq(journals[0].items[1], {key: 'u1-define', label: '모듈 정의', text: 'import 시점을 헷갈렸다', topicId: 'u1-define'}, 'topic journal uses catalog title');
 eq(journals[1].items[0].label, '다음 도전', 'journal unit2 label');
+
+const journalsNoTitles = journalRows({journals: {'j-u1-unknown-topic': '메모'}});
+eq(journalsNoTitles[0].items[0].label, 'u1-unknown-topic', 'topic journal without titles falls back to id');
 
 eq(answerRows({}, questions), [], 'answer rows empty state');
 eq(unitAnswerTotals({}, questions), [{unit: 1, total: 2, answered: 0, correct: 0}, {unit: 2, total: 1, answered: 0, correct: 0}], 'unit totals no answers');

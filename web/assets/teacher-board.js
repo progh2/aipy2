@@ -545,7 +545,7 @@ function renderAnswerSection(card) {
    wrap.append(renderAnswerUnitGroup(unit, unitRows, totalInfo, {open: groups.length <= 1, titles}));
   }
  }
- const journals = journalRows(state);
+ const journals = journalRows(state, titles);
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));

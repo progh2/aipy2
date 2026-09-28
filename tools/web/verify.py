@@ -214,6 +214,9 @@ for u, lessons in units.items():
   assert 'class="lesson-prose"' in html
   assert 'assets/follow.js' in html
   assert lesson['lead'] in html
+  # (#130) 소단원 설명·실습·문제 페이지는 저널 칸 하나를 data-journal="j-u{u}-{소단원id}"로 공유한다.
+  journal_key=f'j-u{u}-{lesson["id"]}'
+  assert html.count(f'data-journal="{journal_key}"')==1, ('missing/duplicate lesson journal', topic_page)
   if lesson['examples']:
    assert f'id="{lesson["id"]}-lab"' in html
    assert all(eid in html for eid in lesson['examples'])
@@ -224,10 +227,12 @@ for u, lessons in units.items():
     assert 'id="lab"' in ex_page_html
     assert f'data-example="{eid}"' in ex_page_html
     assert f'data-topic="{lesson["id"]}"' in ex_page_html
+    assert ex_page_html.count(f'data-journal="{journal_key}"')==1, ('missing/duplicate lesson journal', ex_page)
   # (#116) 소단원 전용 문제 페이지의 문항 수가 데이터와 일치하는지 확인한다.
   q_page=WEB/f'units/unit0{u}/q-{lesson["id"]}.html'
   assert q_page.exists(), ('missing question page', q_page)
   q_html=q_page.read_text()
+  assert q_html.count(f'data-journal="{journal_key}"')==1, ('missing/duplicate lesson journal', q_page)
   lesson_qcount=sum(q['unit']==u and q['topic']==lesson['id'] for q in questions)
   if lesson_qcount:
    assert f'문항 {lesson_qcount}개' in q_html, (lesson['id'],lesson_qcount)

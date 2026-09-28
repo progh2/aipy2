@@ -457,27 +457,42 @@ export function unitAnswerTotals(state, questions = []) {
 }
 
 // 학습 저널 3칸(u{n}-learn/error/next)을 단원별로 묶는다. 빈 칸은 건너뛴다.
+// #130: 소단원 저널(j-u{n}-{anchor})도 같은 단원 그룹에 topic 항목으로 합친다.
 export const JOURNAL_LABELS = {learn: '이해한 개념', error: '오류와 해결', next: '다음 도전'};
 const JOURNAL_ORDER = ['learn', 'error', 'next'];
+const TOPIC_JOURNAL_RE = /^j-(u([1-4])-.+)$/;
 
-export function journalRows(state) {
+export function journalRows(state, titles) {
  const journals = asMap(state && state.journals);
  const byUnit = new Map();
+ const topicItems = new Map();
  for (const [key, text] of Object.entries(journals)) {
   const value = typeof text === 'string' ? text.trim() : '';
   if (!value) continue;
-  const match = /^u([1-4])-(learn|error|next)$/.exec(key);
-  if (!match) continue;
-  const unit = Number(match[1]);
-  if (!byUnit.has(unit)) byUnit.set(unit, {});
-  byUnit.get(unit)[match[2]] = value;
+  const unitMatch = /^u([1-4])-(learn|error|next)$/.exec(key);
+  if (unitMatch) {
+   const unit = Number(unitMatch[1]);
+   if (!byUnit.has(unit)) byUnit.set(unit, {});
+   byUnit.get(unit)[unitMatch[2]] = value;
+   continue;
+  }
+  const topicMatch = TOPIC_JOURNAL_RE.exec(key);
+  if (topicMatch) {
+   const topicId = topicMatch[1];
+   const unit = Number(topicMatch[2]);
+   if (!topicItems.has(unit)) topicItems.set(unit, []);
+   topicItems.get(unit).push({key: topicId, label: topicTitle(topicId, titles), text: value, topicId});
+  }
  }
- return [...byUnit.entries()]
-  .sort((a, b) => a[0] - b[0])
-  .map(([unit, entries]) => ({
-   unit,
-   items: JOURNAL_ORDER.filter((key) => entries[key]).map((key) => ({key, label: JOURNAL_LABELS[key], text: entries[key]}))
-  }))
+ const units = new Set([...byUnit.keys(), ...topicItems.keys()]);
+ return [...units]
+  .sort((a, b) => a - b)
+  .map((unit) => {
+   const entries = byUnit.get(unit) || {};
+   const unitLevelItems = JOURNAL_ORDER.filter((key) => entries[key]).map((key) => ({key, label: JOURNAL_LABELS[key], text: entries[key]}));
+   const topicLevelItems = (topicItems.get(unit) || []).sort((a, b) => a.topicId.localeCompare(b.topicId));
+   return {unit, items: [...unitLevelItems, ...topicLevelItems]};
+  })
   .filter((row) => row.items.length > 0);
 }
 

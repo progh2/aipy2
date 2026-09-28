@@ -236,12 +236,14 @@ function applyExample(id) {
  window.aipyLearning.selectExample(id);
 }
 
-// (#126) 예제 페이지에서 교사가 편집기(#lab, data-fb 붙어 있음)를 보고 있으면 학생도 그 위치로
-// 스크롤될 수 있다 — 학생이 코드를 입력하는 중이면 자동 스크롤로 입력 포커스를 빼앗지 않는다.
-// 따라가기 상태 자체는 그대로 두고(안내·페이지 이동은 계속) 스크롤 이동만 건너뛴다.
+// (#126, #130) 예제 페이지에서 교사가 편집기(#lab, data-fb 붙어 있음)를 보고 있으면 학생도 그
+// 위치로 스크롤될 수 있다 — 학생이 코드나 저널을 입력하는 중이면 자동 스크롤로 입력 포커스를
+// 빼앗지 않는다. 따라가기 상태 자체는 그대로 두고(안내·페이지 이동은 계속) 스크롤 이동만 건너뛴다.
 function isEditingCode() {
  const el = document.activeElement;
- return Boolean(el && el.id === 'code-editor');
+ if (!el) return false;
+ if (el.id === 'code-editor') return true;
+ return el.tagName === 'TEXTAREA' && el.hasAttribute('data-journal');
 }
 
 function applyFocus(focus, force) {
