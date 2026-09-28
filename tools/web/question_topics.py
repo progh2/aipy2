@@ -89,19 +89,22 @@ UNIT2 = {
 # 문항은 later_units.py에서 실제 lesson id를 topic으로 바로 넘기므로 이 표에는 없어도
 # 정확하다(원래 표 설명대로 3·4단원 자동 배정 규칙과 같은 패턴).
 UNIT3 = {
-    'u3-q019': 'ml-libraries',      # import pandas as pd
-    'u3-q020': 'ml-libraries',      # pd.DataFrame
-    'u3-q021': 'ml-libraries',      # df.describe()
-    'u3-q022': 'ml-classification', # model.fit
-    'u3-q023': 'ml-classification', # model.predict
-    'u3-q024': 'ml-metrics',        # 정밀도 계산
-    'u3-q025': 'ml-regression',     # MSE 계산
     'u3-q026': 'ml-process',        # 데이터 누수 없는 파이프라인 순서
     'u3-q027': 'ml-selection',      # 교차 검증·튜닝·최종 평가 순서
     'u3-q028': 'ml-regression',     # mae() 구현
     'u3-q029': 'ml-metrics',        # precision() 구현
     'u3-q030': 'ml-preprocess',     # fill() 결측 평균 대체
     'u3-q031': 'ml-regression',     # predict(x,w,b) 오류 수정
+    # 2026-09-28(#131 검토 반영): 옛 u3-q019~025(단순 암기 빈칸)를 코드 출력·계산
+    # 적용형 5지선다로 교체(u3-q124~131).
+    'u3-q124': 'ml-libraries',      # DataFrame shape 출력
+    'u3-q125': 'ml-libraries',      # Series.mean() 출력
+    'u3-q126': 'ml-classification', # fit(X_test,y_test) 오류 찾기
+    'u3-q127': 'ml-classification', # train_test_split shape 출력
+    'u3-q128': 'ml-metrics',        # 정밀도·재현율 비교
+    'u3-q129': 'ml-regression',     # MAE·MSE 비교
+    'u3-q130': 'ml-libraries',      # describe() 반환 항목
+    'u3-q131': 'ml-selection',      # cross_val_score 길이
 }
 
 # unit 4 — 마찬가지로 자유 한글 라벨. 195쪽은 여러 소단원을 아우르는 종합

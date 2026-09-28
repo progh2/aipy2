@@ -2895,30 +2895,30 @@
       "unit": 3,
       "topic": "ml-use",
       "kind": "선택",
-      "prompt": "다음 중 머신러닝보다 규칙 기반 프로그램(if문 등)이 더 적합한 경우는?",
+      "prompt": "다음 중 머신러닝을 활용하는 것이 적절한 이유로 옳지 않은 것은?",
       "options": [
-        "입력한 두 수를 더해 합을 구하는 계산기",
-        "손글씨 숫자 이미지를 0~9로 분류하는 프로그램",
-        "고객의 구매 패턴으로 이탈 가능성을 예측하는 프로그램",
-        "다음 날 기온을 과거 데이터로 예측하는 프로그램",
-        "수십만 장의 사진에서 고양이를 찾는 프로그램"
+        "정답이 항상 하나로 고정된 사칙연산처럼 규칙이 단순하고 명확하다",
+        "유사한 사례들을 일반화해 새로운 입력에도 대응해야 한다",
+        "문제의 입력과 출력 사이에 통계적인 규칙성이 있다",
+        "충분한 양의 학습 데이터를 구할 수 있다",
+        "정확한 규칙을 사람이 일일이 정의하기 어려운 복잡한 패턴이 있다"
       ],
-      "answer": "입력한 두 수를 더해 합을 구하는 계산기"
+      "answer": "정답이 항상 하나로 고정된 사칙연산처럼 규칙이 단순하고 명확하다"
     },
     {
       "id": "u3-q104",
       "unit": 3,
       "topic": "ml-use",
       "kind": "선택",
-      "prompt": "학습 데이터가 현실을 충분히 대표하지 못할 때 나타날 수 있는 문제로 가장 적절한 것은?",
+      "prompt": "학습 데이터가 실제 사용 환경의 분포를 충분히 대표하지 못할 때에 대한 설명으로 가장 적절한 것은?",
       "options": [
-        "특정 조건에서 예측 오류가 늘어날 수 있다",
-        "데이터를 적게 모아도 정확도가 자동으로 올라간다",
-        "전처리가 필요 없어진다",
-        "모델 학습 속도가 항상 빨라진다",
-        "모델이 항상 100% 정확해진다"
+        "전처리(정규화·인코딩)만 잘하면 대표성 부족 문제가 사라진다",
+        "훈련 정확도가 높으면 대표성 문제가 없다는 뜻이다",
+        "대표성 문제는 회귀에서만 발생하고 분류에서는 발생하지 않는다",
+        "데이터 양만 많으면 대표성 문제는 항상 저절로 해결된다",
+        "데이터에 없는 조건에서는 예측 오류가 늘어날 수 있어 사용 범위와 한계를 함께 안내해야 한다"
       ],
-      "answer": "특정 조건에서 예측 오류가 늘어날 수 있다"
+      "answer": "데이터에 없는 조건에서는 예측 오류가 늘어날 수 있어 사용 범위와 한계를 함께 안내해야 한다"
     },
     {
       "id": "u3-q105",
@@ -2932,30 +2932,30 @@
       "unit": 3,
       "topic": "ml-terms",
       "kind": "선택",
-      "prompt": "다음 중 데이터 누수(data leakage)에 해당하는 예는?",
+      "prompt": "다음 두 코드 중 데이터 누수(data leakage)가 있는 것은?\nA)\nX_train, X_test, y_train, y_test = train_test_split(X, y)\nscaler = StandardScaler().fit(X_train)\nX_train2, X_test2 = scaler.transform(X_train), scaler.transform(X_test)\nB)\nscaler = StandardScaler().fit(X)\nX_train, X_test, y_train, y_test = train_test_split(scaler.transform(X), y)",
       "options": [
-        "훈련·검증·테스트로 나눈 뒤 훈련 데이터로만 모델을 학습한다",
-        "다음 날 대출 수를 예측하는 모델의 입력 특성(X)에 실제 다음 날 대출 수를 포함한다",
-        "테스트 데이터는 최종 평가에 한 번만 사용한다",
-        "훈련 데이터로만 평균과 표준편차를 구해 표준화한다",
-        "교차 검증으로 여러 번 검증 점수를 구한다"
+        "스케일러는 훈련·테스트 어느 쪽으로 fit해도 결과가 같다",
+        "A, B 모두 데이터 누수가 없다",
+        "B. 분할 전 전체 데이터로 스케일러를 학습해 테스트 정보가 훈련 기준에 섞인다",
+        "A. 훈련 데이터로만 스케일러를 학습해 테스트 정보가 섞이지 않는다",
+        "A, B 모두 데이터 누수가 있다"
       ],
-      "answer": "다음 날 대출 수를 예측하는 모델의 입력 특성(X)에 실제 다음 날 대출 수를 포함한다"
+      "answer": "B. 분할 전 전체 데이터로 스케일러를 학습해 테스트 정보가 훈련 기준에 섞인다"
     },
     {
       "id": "u3-q107",
       "unit": 3,
       "topic": "ml-terms",
       "kind": "선택",
-      "prompt": "k-NN 모델에서 n_neighbors=5처럼 학습을 시작하기 전에 사람이 정하는 값을 부르는 이름은?",
+      "prompt": "다음 중 하이퍼파라미터에 대한 설명으로 옳은 것은?",
       "options": [
-        "레이블(y)",
-        "잔차",
-        "학습된 파라미터(가중치)",
-        "특성(X)",
-        "하이퍼파라미터"
+        "입력으로 사용하는 특성(X) 값 자체를 의미한다",
+        "예측하려는 정답 열 y를 가리키는 다른 이름이다",
+        "예측값과 실제값의 차이인 잔차를 의미한다",
+        "k-NN의 n_neighbors처럼 학습을 시작하기 전에 사람이 정하는 값이다",
+        "모델이 fit() 과정에서 데이터로부터 자동으로 계산해 정하는 값이다"
       ],
-      "answer": "하이퍼파라미터"
+      "answer": "k-NN의 n_neighbors처럼 학습을 시작하기 전에 사람이 정하는 값이다"
     },
     {
       "id": "u3-q108",
@@ -2981,8 +2981,8 @@
       "options": [
         "분류",
         "회귀",
+        "차원 축소",
         "강화 학습",
-        "시계열 예측",
         "군집화"
       ],
       "answer": "군집화"
@@ -3022,30 +3022,30 @@
       "unit": 3,
       "topic": "ml-preprocess",
       "kind": "선택",
-      "prompt": "StandardScaler와 같은 전처리 도구의 fit()은 어떤 데이터로 호출해야 하나요?",
+      "prompt": "다음 코드에서 전처리 원칙에 어긋나는 줄은?\nscaler = StandardScaler()\nscaler.fit(X_train)\nX_train_s = scaler.transform(X_train)\nscaler.fit(X_test)\nX_test_s = scaler.transform(X_test)",
       "options": [
-        "테스트 데이터",
-        "훈련과 테스트를 합친 전체 데이터",
-        "검증 데이터만",
-        "훈련 데이터",
-        "새로 들어오는 입력 데이터 하나씩"
+        "scaler.fit(X_train) — 훈련 데이터로 fit하면 안 된다",
+        "scaler.fit(X_test) — 테스트 데이터로 다시 fit하면 훈련 때와 다른 기준이 적용된다",
+        "네 줄 모두 문제가 없다",
+        "X_train_s = scaler.transform(X_train) — transform을 쓰면 안 된다",
+        "StandardScaler() — 이 클래스를 쓰면 안 된다"
       ],
-      "answer": "훈련 데이터"
+      "answer": "scaler.fit(X_test) — 테스트 데이터로 다시 fit하면 훈련 때와 다른 기준이 적용된다"
     },
     {
       "id": "u3-q113",
       "unit": 3,
       "topic": "ml-preprocess",
       "kind": "선택",
-      "prompt": "훈련 데이터의 최댓값이 100일 때 MinMaxScaler를 학습(fit)시킨 뒤, 값이 130인 새로운 데이터를 변환(transform)하면 결과는?",
+      "prompt": "다음 코드의 출력은?\nfrom sklearn.preprocessing import MinMaxScaler\nimport numpy as np\nscaler = MinMaxScaler().fit(np.array([[10.],[20.],[30.]]))\nprint(scaler.transform(np.array([[50.]])))",
       "options": [
+        "[[2.]]",
+        "[[0.5]]",
+        "[[1.]]",
         "오류가 발생해 변환할 수 없다",
-        "항상 0~1 사이로 강제된다",
-        "1보다 큰 값이 나올 수 있다",
-        "입력값과 항상 같아진다",
-        "항상 음수가 된다"
+        "[[5.]]"
       ],
-      "answer": "1보다 큰 값이 나올 수 있다"
+      "answer": "[[2.]]"
     },
     {
       "id": "u3-q114",
@@ -3067,30 +3067,30 @@
       "unit": 3,
       "topic": "ml-regression",
       "kind": "선택",
-      "prompt": "테스트 데이터에서 R²가 -0.3으로 나왔다. 이에 대한 해석으로 옳은 것은?",
+      "prompt": "다음 코드의 출력과 그 의미로 옳은 것은?\nfrom sklearn.metrics import r2_score\ny_true = [3, 5, 7, 9]\ny_pred = [9, 1, 9, 1]\nprint(round(r2_score(y_true, y_pred), 1))",
       "options": [
-        "R²는 항상 0 이상이므로 계산 오류이다",
-        "오차가 전혀 없다는 뜻이다",
-        "모델이 정답을 100% 정확히 맞혔다는 뜻이다",
-        "평균값으로 예측하는 것보다 오차가 더 크다는 뜻이다",
-        "분류 정확도가 30%라는 뜻이다"
+        "1.0, 완벽하게 예측했다는 뜻이다",
+        "-5.0, 평균값으로 예측하는 것보다 오차가 훨씬 크다는 뜻이다",
+        "-5.0, 코드에 오류가 있다는 뜻이다",
+        "5.0, 정확도가 5배 높다는 뜻이다",
+        "0.5, 절반은 맞혔다는 뜻이다"
       ],
-      "answer": "평균값으로 예측하는 것보다 오차가 더 크다는 뜻이다"
+      "answer": "-5.0, 평균값으로 예측하는 것보다 오차가 훨씬 크다는 뜻이다"
     },
     {
       "id": "u3-q116",
       "unit": 3,
       "topic": "ml-cluster",
       "kind": "선택",
-      "prompt": "정답 레이블 없이 고객 데이터를 유사한 특성별로 몇 개의 그룹으로 나누고 싶을 때 사용할 도구는?",
+      "prompt": "다음 코드에서 X는 서로 떨어진 세 무리로 이루어진 90개의 점이다. print(len(set(labels)))의 출력은?\nfrom sklearn.cluster import KMeans\nkm = KMeans(n_clusters=3, n_init=10, random_state=42)\nlabels = km.fit_predict(X)\nprint(len(set(labels)))",
       "options": [
-        "train_test_split",
-        "StandardScaler",
-        "KMeans",
-        "LinearRegression",
-        "GridSearchCV"
+        "3",
+        "1",
+        "90",
+        "30",
+        "정답 레이블이 없어 알 수 없다"
       ],
-      "answer": "KMeans"
+      "answer": "3"
     },
     {
       "id": "u3-q117",
@@ -3127,15 +3127,15 @@
       "unit": 3,
       "topic": "ml-metrics",
       "kind": "선택",
-      "prompt": "정확도·정밀도·재현율·F1은 주로 어떤 문제에 사용하는 평가 지표인가요?",
+      "prompt": "다음 중 평가 지표와 사용 문제 유형의 연결로 옳지 않은 것은?",
       "options": [
-        "차원 축소 문제",
-        "군집화(Clustering) 문제",
-        "분류(Classification) 문제",
-        "강화 학습의 보상 설계",
-        "회귀(Regression) 문제"
+        "결정계수(R²) – 회귀 문제",
+        "평균절대오차(MAE) – 회귀 문제",
+        "재현율(Recall) – 분류 문제",
+        "정밀도(Precision) – 회귀 문제",
+        "F1 점수 – 분류 문제"
       ],
-      "answer": "분류(Classification) 문제"
+      "answer": "정밀도(Precision) – 회귀 문제"
     },
     {
       "id": "u3-q120",
@@ -3188,6 +3188,126 @@
         "과대 적합 여부를 확인하지 않은 최종 점수"
       ],
       "answer": "데이터 출처, 분할 방법, 전처리 기준, 난수 조건, 평가 지표와 결과"
+    },
+    {
+      "id": "u3-q124",
+      "unit": 3,
+      "topic": "ml-libraries",
+      "kind": "선택",
+      "prompt": "다음 코드를 실행한 결과로 옳은 것은?\nimport pandas as pd\ndf = pd.DataFrame({\"name\": [\"A\", \"B\", \"C\"], \"score\": [75, 90, 85]})\nprint(df.shape)",
+      "options": [
+        "(2, 3)",
+        "(75, 90, 85)",
+        "(2,)",
+        "(3,)",
+        "(3, 2)"
+      ],
+      "answer": "(3, 2)"
+    },
+    {
+      "id": "u3-q125",
+      "unit": 3,
+      "topic": "ml-libraries",
+      "kind": "선택",
+      "prompt": "다음 코드를 실행한 결과로 옳은 것은?\nimport pandas as pd\ndf = pd.DataFrame({\"score\": [70, 80, 90, 100]})\nprint(df[\"score\"].mean())",
+      "options": [
+        "85.0",
+        "80.0",
+        "90.0",
+        "340.0",
+        "87.5"
+      ],
+      "answer": "85.0"
+    },
+    {
+      "id": "u3-q126",
+      "unit": 3,
+      "topic": "ml-classification",
+      "kind": "선택",
+      "prompt": "다음 코드에서 모델 학습·평가 원칙에 어긋나는 부분은?\nmodel = KNeighborsClassifier(n_neighbors=5)\nmodel.fit(X_test, y_test)\npred = model.predict(X_train)",
+      "options": [
+        "테스트 데이터로 모델을 학습(fit)했다",
+        "KNeighborsClassifier 대신 다른 모델을 써야 한다",
+        "predict의 인자로 X_train을 사용했다",
+        "fit과 predict의 순서가 바뀌었다",
+        "n_neighbors 값이 너무 크다"
+      ],
+      "answer": "테스트 데이터로 모델을 학습(fit)했다"
+    },
+    {
+      "id": "u3-q127",
+      "unit": 3,
+      "topic": "ml-classification",
+      "kind": "선택",
+      "prompt": "붓꽃 데이터(150개)를 다음과 같이 나눌 때 출력으로 옳은 것은?\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\nprint(X_train.shape, X_test.shape)",
+      "options": [
+        "(105,) (45,)",
+        "(120, 4) (30, 4)",
+        "(45, 4) (105, 4)",
+        "(150, 4) (150, 4)",
+        "(105, 4) (45, 4)"
+      ],
+      "answer": "(105, 4) (45, 4)"
+    },
+    {
+      "id": "u3-q128",
+      "unit": 3,
+      "topic": "ml-metrics",
+      "kind": "선택",
+      "prompt": "다음 코드의 출력은?\nfrom sklearn.metrics import precision_score, recall_score\ny_true = [1]*10 + [0]*8\ny_pred = [1]*8 + [0]*2 + [1]*4 + [0]*4\ntp, fp, fn, tn = 8, 4, 2, 6\nprint(round(tp/(tp+fp), 2), round(tp/(tp+fn), 2))",
+      "options": [
+        "0.67 0.6",
+        "0.8 0.67",
+        "0.75 0.75",
+        "0.67 0.8",
+        "1.0 0.8"
+      ],
+      "answer": "0.67 0.8"
+    },
+    {
+      "id": "u3-q129",
+      "unit": 3,
+      "topic": "ml-regression",
+      "kind": "선택",
+      "prompt": "다음 코드의 출력은?\nfrom sklearn.metrics import mean_absolute_error, mean_squared_error\ny_true = [2, 4, 6]\ny_pred = [3, 4, 4]\nprint(round(mean_absolute_error(y_true, y_pred), 2), round(mean_squared_error(y_true, y_pred), 2))",
+      "options": [
+        "1.0 1.67",
+        "0.33 1.67",
+        "1.0 1.0",
+        "1.67 1.0",
+        "3.0 9.0"
+      ],
+      "answer": "1.0 1.67"
+    },
+    {
+      "id": "u3-q130",
+      "unit": 3,
+      "topic": "ml-libraries",
+      "kind": "선택",
+      "prompt": "sales_df.describe()가 기본으로 반환하는 값에 포함되지 않는 것은?",
+      "options": [
+        "최빈값(mode)",
+        "평균(mean)",
+        "최솟값(min)",
+        "표준편차(std)",
+        "최댓값(max)"
+      ],
+      "answer": "최빈값(mode)"
+    },
+    {
+      "id": "u3-q131",
+      "unit": 3,
+      "topic": "ml-selection",
+      "kind": "선택",
+      "prompt": "다음 코드의 출력은? (훈련 데이터는 105개)\nfrom sklearn.model_selection import cross_val_score\nscores = cross_val_score(pipe, X_train, y_train, cv=5)\nprint(len(scores))",
+      "options": [
+        "5",
+        "21",
+        "훈련 데이터 개수와 같다",
+        "105",
+        "1"
+      ],
+      "answer": "5"
     },
     {
       "id": "u4-q001",
@@ -3382,62 +3502,6 @@
       "answer": "scikit-image의 분석 기능"
     },
     {
-      "id": "u3-q019",
-      "unit": 3,
-      "topic": "ml-libraries",
-      "kind": "빈칸",
-      "prompt": "import pandas as ____",
-      "answer": "pd"
-    },
-    {
-      "id": "u3-q020",
-      "unit": 3,
-      "topic": "ml-libraries",
-      "kind": "빈칸",
-      "prompt": "pd.____(sales_info)로 표를 만듭니다.",
-      "answer": "DataFrame"
-    },
-    {
-      "id": "u3-q021",
-      "unit": 3,
-      "topic": "ml-libraries",
-      "kind": "빈칸",
-      "prompt": "sales_df.____()로 수치형 요약 통계를 구합니다.",
-      "answer": "describe"
-    },
-    {
-      "id": "u3-q022",
-      "unit": 3,
-      "topic": "ml-classification",
-      "kind": "빈칸",
-      "prompt": "model.____(X_train,y_train)으로 학습합니다.",
-      "answer": "fit"
-    },
-    {
-      "id": "u3-q023",
-      "unit": 3,
-      "topic": "ml-classification",
-      "kind": "빈칸",
-      "prompt": "model.____(X_test)로 새 입력을 예측합니다.",
-      "answer": "predict"
-    },
-    {
-      "id": "u3-q024",
-      "unit": 3,
-      "topic": "ml-metrics",
-      "kind": "빈칸",
-      "prompt": "TP=6, FP=2일 때 정밀도는? 소수로 쓰세요.",
-      "answer": "0.75"
-    },
-    {
-      "id": "u3-q025",
-      "unit": 3,
-      "topic": "ml-regression",
-      "kind": "빈칸",
-      "prompt": "실제 [1,3], 예측 [2,2]의 MSE는?",
-      "answer": "1"
-    },
-    {
       "id": "u4-q017",
       "unit": 4,
       "topic": "cv-haar",
@@ -3570,95 +3634,95 @@
       "prompt": "counts(names)가 현재 프레임의 클래스별 개수 딕셔너리를 반환하게 만드세요."
     },
     {
-      "id": "u3-q032",
+      "id": "u3-q132",
       "unit": 3,
       "topic": "ml-overview",
       "kind": "서술",
-      "prompt": "주변의 AI 서비스 하나에서 입력과 출력을 찾아 설명하세요."
+      "prompt": "머신러닝이 비교적 최근에야 널리 쓰이게 된 이유를 데이터·계산 자원·학습 알고리즘의 발전이라는 관점에서 설명하세요."
     },
     {
-      "id": "u3-q033",
+      "id": "u3-q133",
       "unit": 3,
       "topic": "ml-use",
       "kind": "서술",
-      "prompt": "학교 도서 대출량을 예측한다면 어떤 데이터를 모을지 표로 적으세요."
+      "prompt": "머신러닝을 적용하기에 적합한 문제와, 오히려 일반 프로그램(규칙 기반)이 더 적합한 문제를 예를 들어 구분해 설명하세요."
     },
     {
-      "id": "u3-q034",
+      "id": "u3-q134",
       "unit": 3,
       "topic": "ml-process",
       "kind": "서술",
-      "prompt": "도서 대출 예측의 성공 기준을 평균 오차로 표현해 보세요."
+      "prompt": "훈련·검증·테스트로 데이터를 나누어야 하는 이유와, 평균·최댓값 같은 전처리 기준을 어느 데이터에서 구해야 하는지 설명하세요."
     },
     {
-      "id": "u3-q035",
+      "id": "u3-q135",
       "unit": 3,
       "topic": "ml-terms",
       "kind": "서술",
-      "prompt": "미래 대출 수를 특성에 넣으면 왜 잘못된 평가가 되는지 설명하세요."
+      "prompt": "특성(X)과 레이블(y)의 차이를 설명하고, 예측 시점에는 알 수 없는 정보를 X에 포함하면 어떤 문제가 생기는지 설명하세요."
     },
     {
-      "id": "u3-q036",
+      "id": "u3-q136",
       "unit": 3,
       "topic": "ml-methods",
       "kind": "서술",
-      "prompt": "미로 탈출에 보상을 설계하고 반복 제자리 움직임을 막는 방법을 설명하세요."
+      "prompt": "지도 학습, 비지도 학습, 강화 학습을 정답(레이블)의 유무와 학습 신호를 기준으로 구분해 설명하세요."
     },
     {
-      "id": "u3-q037",
+      "id": "u3-q137",
       "unit": 3,
       "topic": "ml-libraries",
       "kind": "서술",
-      "prompt": "과일 종류와 개수를 바꾸고 그래프가 바뀌는지 확인하세요."
+      "prompt": "NumPy, pandas, scikit-learn, Matplotlib(또는 Seaborn)이 머신러닝 프로젝트에서 각각 어떤 역할을 하는지 설명하세요."
     },
     {
-      "id": "u3-q038",
+      "id": "u3-q138",
       "unit": 3,
       "topic": "ml-preprocess",
       "kind": "서술",
-      "prompt": "1000점이 실제 값인지 입력 실수인지 확인할 질문을 적으세요."
+      "prompt": "결측치를 dropna로 제거하는 방법과 fillna(또는 SimpleImputer)로 채우는 방법을 각각 언제 쓰는 것이 적절한지 설명하고, 정규화(MinMaxScaler)와 표준화(StandardScaler)의 차이도 설명하세요."
     },
     {
-      "id": "u3-q039",
+      "id": "u3-q139",
       "unit": 3,
       "topic": "ml-classification",
       "kind": "서술",
-      "prompt": "k를 3과 7로 바꾸고 같은 분할에서 결과를 비교하세요."
+      "prompt": "k-NN 같은 분류 모델에서 하이퍼파라미터(k 값 등)가 작을 때와 클 때 과대 적합·과소 적합이 각각 어떻게 나타날 수 있는지 설명하세요."
     },
     {
-      "id": "u3-q040",
+      "id": "u3-q140",
       "unit": 3,
       "topic": "ml-regression",
       "kind": "서술",
-      "prompt": "기울기 실험에서 MSE가 가장 작은 위치를 찾으세요."
+      "prompt": "MAE, MSE, R²가 각각 무엇을 나타내며 서로 어떤 차이가 있는지 설명하세요."
     },
     {
-      "id": "u3-q041",
+      "id": "u3-q141",
       "unit": 3,
       "topic": "ml-cluster",
       "kind": "서술",
-      "prompt": "K를 2·3·4로 바꾸고 중심 위치와 군집의 의미를 비교하세요."
+      "prompt": "K-평균 군집화에서 군집 개수 K는 누가 정하는지, 그리고 군집 번호가 정답 레이블이 아닌 이유를 설명하세요."
     },
     {
-      "id": "u3-q042",
+      "id": "u3-q142",
       "unit": 3,
       "topic": "ml-metrics",
       "kind": "서술",
-      "prompt": "임계값을 올릴 때 FP와 FN이 어떻게 달라지는지 관찰하세요."
+      "prompt": "혼동행렬의 TP·FP·FN·TN을 이용해 정밀도와 재현율이 각각 무엇을 뜻하는지 설명하고, 정밀도가 재현율보다 더 중요한 상황의 예를 드세요."
     },
     {
-      "id": "u3-q043",
+      "id": "u3-q143",
       "unit": 3,
       "topic": "ml-selection",
       "kind": "서술",
-      "prompt": "best_score_와 최종 테스트 점수가 다른 이유를 설명하세요."
+      "prompt": "교차 검증이 한 번의 훈련/검증 분할보다 더 안정적인 평가를 제공하는 이유를 설명하세요."
     },
     {
-      "id": "u3-q044",
+      "id": "u3-q144",
       "unit": 3,
       "topic": "ml-project",
       "kind": "서술",
-      "prompt": "같은 파이프라인에서 k 후보 하나를 추가하고 선택 근거를 기록하세요."
+      "prompt": "학습 곡선에서 훈련 정확도는 높은데 검증 정확도가 낮게 나타났다(과대 적합 의심). 이때 취할 수 있는 조치를 두 가지 이상 설명하세요."
     },
     {
       "id": "u4-q029",
