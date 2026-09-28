@@ -268,9 +268,10 @@
         "id": "ml-libraries",
         "title": "파이썬 머신러닝 라이브러리 소개",
         "examples": [
-          "ml-tools",
-          "ml-chart",
-          "ml-seaborn"
+          "ml-sklearn-exam",
+          "ml-numpy-exam",
+          "ml-pandas-exam",
+          "ml-matplot-exam"
         ],
         "href": "units/unit03/ml-libraries.html",
         "practiceHref": "units/unit03/q-ml-libraries.html"
@@ -279,8 +280,13 @@
         "id": "ml-preprocess",
         "title": "데이터 준비와 전처리",
         "examples": [
-          "ml-clean",
-          "ml-scale"
+          "ml-read-data",
+          "ml-head-describe-info",
+          "ml-missing-values",
+          "ml-normalization",
+          "ml-standardization",
+          "ml-one-hot-encoding",
+          "ml-train-test-split"
         ],
         "href": "units/unit03/ml-preprocess.html",
         "practiceHref": "units/unit03/q-ml-preprocess.html"
@@ -289,7 +295,7 @@
         "id": "ml-classification",
         "title": "주요 알고리즘 활용 · 분류",
         "examples": [
-          "ml-classify"
+          "ml-knn-exam"
         ],
         "href": "units/unit03/ml-classification.html",
         "practiceHref": "units/unit03/q-ml-classification.html"
@@ -298,8 +304,8 @@
         "id": "ml-regression",
         "title": "주요 알고리즘 활용 · 회귀 / 회귀와 수치 오차",
         "examples": [
-          "ml-regression",
-          "ml-housing"
+          "ml-linear-regression",
+          "ml-regression-metrics"
         ],
         "href": "units/unit03/ml-regression.html",
         "practiceHref": "units/unit03/q-ml-regression.html"
@@ -308,7 +314,7 @@
         "id": "ml-cluster",
         "title": "주요 알고리즘 활용 · 군집화",
         "examples": [
-          "ml-cluster"
+          "ml-clustering"
         ],
         "href": "units/unit03/ml-cluster.html",
         "practiceHref": "units/unit03/q-ml-cluster.html"
@@ -317,7 +323,7 @@
         "id": "ml-metrics",
         "title": "모델 평가와 선택 · 분류 지표",
         "examples": [
-          "ml-metrics"
+          "ml-performance-metrics"
         ],
         "href": "units/unit03/ml-metrics.html",
         "practiceHref": "units/unit03/q-ml-metrics.html"
@@ -326,7 +332,9 @@
         "id": "ml-selection",
         "title": "모델 평가와 선택 · 교차 검증·튜닝·학습 곡선",
         "examples": [
-          "ml-selection",
+          "ml-train-test-split2",
+          "ml-cross-val-score",
+          "ml-grid-search-cv",
           "ml-learning-curve"
         ],
         "href": "units/unit03/ml-selection.html",
@@ -1025,86 +1033,142 @@
       "mode": "pc",
       "href": ""
     },
-    "ml-tools": {
-      "id": "ml-tools",
-      "title": "NumPy·pandas로 표 탐색하기",
+    "ml-sklearn-exam": {
+      "id": "ml-sklearn-exam",
+      "title": "교과서 86쪽 sklearn_exam.py — 공부 시간으로 합격 예측",
+      "unit": 3,
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-sklearn-exam.html"
+    },
+    "ml-numpy-exam": {
+      "id": "ml-numpy-exam",
+      "title": "교과서 87쪽 numpy_exam.py — 배열 계산과 이어 붙이기",
       "unit": 3,
       "mode": "web",
-      "href": "units/unit03/ex-ml-tools.html"
+      "href": "units/unit03/ex-ml-numpy-exam.html"
     },
-    "ml-chart": {
-      "id": "ml-chart",
-      "title": "빈도표를 막대그래프로",
+    "ml-pandas-exam": {
+      "id": "ml-pandas-exam",
+      "title": "교과서 87~88쪽 pandas_exam.py — DataFrame 만들고 칼럼 선택",
       "unit": 3,
       "mode": "web",
-      "href": "units/unit03/ex-ml-chart.html"
+      "href": "units/unit03/ex-ml-pandas-exam.html"
     },
-    "ml-seaborn": {
-      "id": "ml-seaborn",
-      "title": "Seaborn countplot과 Excel 입출력",
-      "unit": 3,
-      "mode": "pc",
-      "href": "units/unit03/ex-ml-seaborn.html"
-    },
-    "ml-clean": {
-      "id": "ml-clean",
-      "title": "CSV·결측치·이상치 탐색",
+    "ml-matplot-exam": {
+      "id": "ml-matplot-exam",
+      "title": "교과서 88~89쪽 matplot_exam.py — Seaborn 막대그래프",
       "unit": 3,
       "mode": "web",
-      "href": "units/unit03/ex-ml-clean.html"
+      "href": "units/unit03/ex-ml-matplot-exam.html"
     },
-    "ml-scale": {
-      "id": "ml-scale",
-      "title": "훈련 데이터로만 전처리 배우기",
+    "ml-read-data": {
+      "id": "ml-read-data",
+      "title": "교과서 90~91쪽 read_data.py — CSV·Excel 불러오기",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-scale.html"
+      "href": "units/unit03/ex-ml-read-data.html"
     },
-    "ml-classify": {
-      "id": "ml-classify",
-      "title": "붓꽃 분류 모델 네 가지 비교",
+    "ml-head-describe-info": {
+      "id": "ml-head-describe-info",
+      "title": "교과서 91~93쪽 head_describe_info.py — head·describe·info",
+      "unit": 3,
+      "mode": "web",
+      "href": "units/unit03/ex-ml-head-describe-info.html"
+    },
+    "ml-missing-values": {
+      "id": "ml-missing-values",
+      "title": "교과서 93~96쪽 missing_values.py — 결측치 확인·제거·채우기",
+      "unit": 3,
+      "mode": "web",
+      "href": "units/unit03/ex-ml-missing-values.html"
+    },
+    "ml-normalization": {
+      "id": "ml-normalization",
+      "title": "교과서 96~98쪽 normalization.py — 정규화(Min-Max)",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-classify.html"
+      "href": "units/unit03/ex-ml-normalization.html"
     },
-    "ml-regression": {
-      "id": "ml-regression",
-      "title": "회귀 예측과 MAE·MSE·R²",
+    "ml-standardization": {
+      "id": "ml-standardization",
+      "title": "교과서 98~99쪽 standardization.py — 표준화(Standardization)",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-regression.html"
+      "href": "units/unit03/ex-ml-standardization.html"
     },
-    "ml-housing": {
-      "id": "ml-housing",
-      "title": "교과서 연결 · 주택 자료 회귀",
+    "ml-one-hot-encoding": {
+      "id": "ml-one-hot-encoding",
+      "title": "교과서 100~101쪽 one_hot_encoding.py — 원-핫 인코딩",
+      "unit": 3,
+      "mode": "web",
+      "href": "units/unit03/ex-ml-one-hot-encoding.html"
+    },
+    "ml-train-test-split": {
+      "id": "ml-train-test-split",
+      "title": "교과서 101~102쪽 train_test_split.py — 훈련/테스트 분할",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-housing.html"
+      "href": "units/unit03/ex-ml-train-test-split.html"
     },
-    "ml-cluster": {
-      "id": "ml-cluster",
-      "title": "군집 중심과 산점도",
+    "ml-knn-exam": {
+      "id": "ml-knn-exam",
+      "title": "교과서 104~105쪽 knn.py — K-최근접 이웃으로 붓꽃 분류",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-cluster.html"
+      "href": "units/unit03/ex-ml-knn-exam.html"
     },
-    "ml-metrics": {
-      "id": "ml-metrics",
-      "title": "혼동행렬과 분류 지표",
+    "ml-linear-regression": {
+      "id": "ml-linear-regression",
+      "title": "교과서 106~108쪽 linear_regression.py — 당뇨병 데이터로 선형 회귀",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-metrics.html"
+      "href": "units/unit03/ex-ml-linear-regression.html"
     },
-    "ml-selection": {
-      "id": "ml-selection",
-      "title": "교차 검증과 GridSearchCV",
+    "ml-regression-metrics": {
+      "id": "ml-regression-metrics",
+      "title": "교과서 122~123쪽 regression_metrics.py — 캘리포니아 주택 가격 MSE·MAE·R²",
       "unit": 3,
       "mode": "pc",
-      "href": "units/unit03/ex-ml-selection.html"
+      "href": "units/unit03/ex-ml-regression-metrics.html"
+    },
+    "ml-clustering": {
+      "id": "ml-clustering",
+      "title": "교과서 108~110쪽 clustering.py — K-평균으로 4개 군집 찾기",
+      "unit": 3,
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-clustering.html"
+    },
+    "ml-performance-metrics": {
+      "id": "ml-performance-metrics",
+      "title": "교과서 119쪽 performance_evaluation_metrics.py — 유방암 데이터 혼동행렬·지표",
+      "unit": 3,
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-performance-metrics.html"
+    },
+    "ml-train-test-split2": {
+      "id": "ml-train-test-split2",
+      "title": "교과서 112~113쪽 train_test_split2.py — 훈련·테스트 R² 비교",
+      "unit": 3,
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-train-test-split2.html"
+    },
+    "ml-cross-val-score": {
+      "id": "ml-cross-val-score",
+      "title": "교과서 114~115쪽 cross_val_score.py — 5-겹 교차 검증",
+      "unit": 3,
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-cross-val-score.html"
+    },
+    "ml-grid-search-cv": {
+      "id": "ml-grid-search-cv",
+      "title": "교과서 115~117쪽 grid_search_cv.py — GridSearchCV로 K 값 찾기",
+      "unit": 3,
+      "mode": "pc",
+      "href": "units/unit03/ex-ml-grid-search-cv.html"
     },
     "ml-learning-curve": {
       "id": "ml-learning-curve",
-      "title": "학습 곡선으로 과대·과소 적합 살펴보기",
+      "title": "교과서 124~126쪽 learning_curve.py — 학습 곡선으로 과대·과소 적합 진단",
       "unit": 3,
       "mode": "pc",
       "href": "units/unit03/ex-ml-learning-curve.html"

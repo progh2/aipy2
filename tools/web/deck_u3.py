@@ -213,7 +213,7 @@ LESSONS = {
             '<p>그래프가 보이지 않으면 <code>plt.show()</code>를 빠뜨리지 않았는지, 코드가 오류 없이 끝났는지부터 확인합니다. <b>탐구(89쪽)</b>: <code>plt.plot([1, 5, 2])</code>는 y값만 주면 x는 0, 1, 2가 자동으로 붙습니다.</p>',
         ]),
         ],
-        practice=['ml-tools','ml-chart','ml-seaborn'],
+        practice=['ml-sklearn-exam','ml-numpy-exam','ml-pandas-exam','ml-matplot-exam'],
     ),
     'ml-preprocess': dict(
         title='데이터 준비와 전처리',
@@ -272,7 +272,7 @@ LESSONS = {
             '<p><code>fit</code>은 최솟값·최댓값, 평균·표준편차 같은 기준을 배우는 단계입니다. 테스트 데이터에 다시 <code>fit</code>을 하면 시험 문제를 미리 보고 채점 기준을 정하는 셈이 되는 <b>데이터 누수(Data Leakage)</b>가 발생해, 모델 평가 점수가 실제보다 좋게 나와 과대 적합을 놓치게 만듭니다. 교과서 96~99쪽 예제는 분할 전 데이터 전체에 <code>fit_transform</code>을 쓰는데, 개념 학습용으로는 문제없지만 수행②처럼 훈련/테스트를 나눈 뒤에는 반드시 올바른 순서를 지켜야 합니다.</p>',
         ]),
         ],
-        practice=['ml-clean','ml-scale'],
+        practice=['ml-read-data','ml-head-describe-info','ml-missing-values','ml-normalization','ml-standardization','ml-one-hot-encoding','ml-train-test-split'],
     ),
     'ml-classification': dict(
         title='주요 알고리즘 활용 · 분류',
@@ -299,7 +299,7 @@ LESSONS = {
             '<p>이 그림·이 분할에서는 오히려 <code>K=1</code>의 테스트 점수가 더 높게 나왔습니다 — 한 번의 분할 점수만으로 성급하게 결론 내리면 안 되는 이유이며, 그래서 Ⅲ-8차시에서 배우는 <b>교차 검증</b>이 필요합니다.</p>',
         ]),
         ],
-        practice=['ml-classify', dict(kind='tutorial', id='ml-knn-k-compare', title='따라 하기 · knn.py에서 K를 1, 5, 15로 바꿔 보기', steps=[
+        practice=['ml-knn-exam', dict(kind='tutorial', id='ml-knn-k-compare', title='따라 하기 · knn.py에서 K를 1, 5, 15로 바꿔 보기', steps=[
             dict(text='104쪽 knn.py와 같은 분할(test_size=0.3, random_state=42, stratify=y)에서 K=1로 K-최근접 이웃을 학습시키고 훈련·테스트 정확도를 출력하세요.',
                  code="from sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.metrics import accuracy_score\n\nX, y = load_iris(return_X_y=True)\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.3, random_state=42, stratify=y)\n\nmodel = KNeighborsClassifier(n_neighbors=1)\nmodel.fit(X_train, y_train)\nprint('훈련 정확도:', round(accuracy_score(y_train, model.predict(X_train)), 3))\nprint('테스트 정확도:', round(accuracy_score(y_test, model.predict(X_test)), 3))",
                  expect='훈련 정확도: 1.0 / 테스트 정확도: 0.933 — 훈련 데이터를 통째로 외운 과대 적합의 모습입니다.'),
@@ -332,7 +332,7 @@ LESSONS = {
             '<p><b>R² ≈ 0.5958</b>은 모델이 주택 가격의 전체 변동성 중 약 59.58%를 설명한다는 뜻입니다. 절반 이상을 설명하고 있지만 아직 개선의 여지가 있습니다. 큰 오차를 강력하게 제어해야 하면 MSE, 오차를 직관적으로 이해하고 이상치에 덜 민감하게 보려면 MAE, 전반적인 설명력을 확인하려면 R²를 선택합니다. (교과서 123쪽)</p>',
         ]),
         ],
-        practice=['ml-regression','ml-housing'],
+        practice=['ml-linear-regression','ml-regression-metrics'],
     ),
     'ml-cluster': dict(
         title='주요 알고리즘 활용 · 군집화',
@@ -355,16 +355,16 @@ LESSONS = {
             '<p>그런데 K=4 이후로는 거의 줄지 않습니다. 이렇게 <b>감소 폭이 확 꺾이는 지점(팔꿈치)</b>이 적절한 K이며, 여기서는 4입니다. <code>for</code>문으로 <code>KMeans</code>를 여러 번 돌려 <code>inertia_</code>를 모으면 되는 실험으로, 분류에서 본 K 실험과 같은 패턴입니다. 수행②에서 군집화를 고른다면 엘보 그래프가 곧 ‘K 선택의 근거’가 됩니다.</p>',
         ]),
         ],
-        practice=['ml-cluster', dict(kind='tutorial', id='ml-kmeans-n-clusters', title='따라 하기 · clustering.py에서 n_clusters를 2, 3, 4로 바꿔 보기', steps=[
-            dict(text='108쪽 clustering.py와 같은 방식으로 3개 군집을 갖는 가상 데이터를 만들고, n_clusters=2로 K-평균을 학습시켜 응집도(inertia_)를 확인하세요.',
-                 code="from sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\n\nX, _ = make_blobs(n_samples=120, centers=3, random_state=42, cluster_std=0.7)\nmodel = KMeans(n_clusters=2, n_init=10, random_state=42)\nmodel.fit(X)\nprint('n_clusters=2 응집도:', round(model.inertia_, 2))",
-                 expect='n_clusters=2 응집도: 2103.78'),
-            dict(text='n_clusters를 3으로 바꿔 다시 실행하세요 — 데이터를 만들 때 실제로 3개 무리로 생성했습니다.',
-                 code="model = KMeans(n_clusters=3, n_init=10, random_state=42)\nmodel.fit(X)\nprint('n_clusters=3 응집도:', round(model.inertia_, 2))",
-                 expect='n_clusters=3 응집도: 108.0 — n_clusters=2보다 크게 줄어듭니다.'),
-            dict(text='n_clusters를 4로 바꿔 다시 실행하고, 81쪽 엘보 방법처럼 응집도가 꺾이는 지점이 몇인지 설명하세요.',
-                 code="model = KMeans(n_clusters=4, n_init=10, random_state=42)\nmodel.fit(X)\nprint('n_clusters=4 응집도:', round(model.inertia_, 2))",
-                 expect='n_clusters=4 응집도: 92.22 — 3에서 4로 늘려도 별로 줄지 않으므로 적절한 K는 3입니다(실제 무리 수와 일치).'),
+        practice=['ml-clustering', dict(kind='tutorial', id='ml-kmeans-n-clusters', title='따라 하기 · clustering.py에서 n_clusters를 2, 3, 4로 바꿔 보기', steps=[
+            dict(text='109쪽 clustering.py와 같은 가상 데이터(4개 군집, make_blobs(n_samples=300, n_features=2, centers=4, cluster_std=0.60, random_state=42))를 만들고, n_clusters=2로 K-평균을 학습시켜 응집도(inertia_)를 확인하세요.',
+                 code="from sklearn.datasets import make_blobs\nfrom sklearn.cluster import KMeans\n\nX, _ = make_blobs(n_samples=300, n_features=2, centers=4, cluster_std=0.60,\n                   random_state=42)\nmodel = KMeans(n_clusters=2, init='k-means++', max_iter=300, random_state=42, n_init=10)\nmodel.fit(X)\nprint('n_clusters=2 응집도:', round(model.inertia_, 2))",
+                 expect='n_clusters=2 응집도: 9051.82'),
+            dict(text='n_clusters를 3으로 바꿔 다시 실행하세요.',
+                 code="model = KMeans(n_clusters=3, init='k-means++', max_iter=300, random_state=42, n_init=10)\nmodel.fit(X)\nprint('n_clusters=3 응집도:', round(model.inertia_, 2))",
+                 expect='n_clusters=3 응집도: 1773.74 — n_clusters=2보다 크게 줄어듭니다.'),
+            dict(text='n_clusters를 4로 바꿔 다시 실행하고(교과서 clustering.py의 설정), 81쪽 엘보 방법처럼 응집도가 꺾이는 지점이 몇인지 설명하세요 — 데이터를 실제로 몇 개 무리로 만들었는지도 확인하세요.',
+                 code="model = KMeans(n_clusters=4, init='k-means++', max_iter=300, random_state=42, n_init=10)\nmodel.fit(X)\nprint('n_clusters=4 응집도:', round(model.inertia_, 2))",
+                 expect='n_clusters=4 응집도: 203.89(교과서 109쪽과 동일) — 3에서 4로 늘리자 응집도가 크게 줄어드는데, make_blobs에서 실제로 centers=4로 만들었기 때문입니다.'),
         ])],
     ),
     'ml-metrics': dict(
@@ -392,13 +392,13 @@ LESSONS = {
             '<p>이 데이터는 <code>target=1</code>(양성)이 긍정(Positive)이므로, 지표를 읽기 전에 ‘무엇이 1인가’부터 확인하는 습관이 중요합니다. 수행② 보고서에 혼동 행렬 그림을 넣으면 ‘지표 2개 이상 산출·해석’ 근거를 한눈에 보여 줄 수 있습니다.</p>',
         ]),
         ],
-        practice=['ml-metrics', dict(kind='tutorial', id='ml-precision-recall-by-hand', title='따라 하기 · 정밀도·재현율을 손으로 계산해 sklearn과 맞춰 보기', steps=[
-            dict(text='ml-metrics 예제의 y_true, y_pred로 TP·FP·FN을 직접 세어 정밀도·재현율을 계산하세요.',
-                 code="y_true = [1, 0, 1, 1, 0, 0]\ny_pred = [1, 1, 1, 0, 0, 0]\n\nTP = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)\nFP = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)\nFN = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)\nprecision = TP / (TP + FP)\nrecall = TP / (TP + FN)\nprint('TP,FP,FN =', TP, FP, FN)\nprint('정밀도:', round(precision, 3), '재현율:', round(recall, 3))",
-                 expect='TP,FP,FN = 2 1 1 / 정밀도: 0.667 재현율: 0.667'),
-            dict(text='같은 값을 scikit-learn의 precision_score·recall_score로도 계산해 손으로 구한 값과 같은지 확인하세요.',
-                 code="from sklearn.metrics import precision_score, recall_score\nprint('정밀도:', round(precision_score(y_true, y_pred), 3))\nprint('재현율:', round(recall_score(y_true, y_pred), 3))",
-                 expect='정밀도: 0.667 / 재현율: 0.667 — 손으로 구한 값과 같습니다.'),
+        practice=['ml-performance-metrics', dict(kind='tutorial', id='ml-precision-recall-by-hand', title='따라 하기 · 정밀도·재현율을 손으로 계산해 sklearn과 맞춰 보기', steps=[
+            dict(text='119쪽 performance_evaluation_metrics.py의 혼동 행렬 [[59, 4], [2, 106]]에서 target=1(양성)을 긍정으로 두고 TP·FP·FN을 확인해 정밀도·재현율을 직접 계산하세요.',
+                 code="TN, FP, FN, TP = 59, 4, 2, 106  # 교과서 119쪽 혼동 행렬 그대로\nprecision = TP / (TP + FP)\nrecall = TP / (TP + FN)\nprint('TP,FP,FN,TN =', TP, FP, FN, TN)\nprint('정밀도:', round(precision, 4), '재현율:', round(recall, 4))",
+                 expect='TP,FP,FN,TN = 106 4 2 59 / 정밀도: 0.9636 재현율: 0.9815'),
+            dict(text='같은 유방암 데이터·모델을 실행해 scikit-learn의 precision_score·recall_score 값과 손으로 구한 값이 같은지 확인하세요(performance_evaluation_metrics.py 실행 코드 그대로).',
+                 code="import pandas as pd\nfrom sklearn.datasets import load_breast_cancer\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import precision_score, recall_score\n\ncancer = load_breast_cancer()\nX = pd.DataFrame(cancer.data, columns=cancer.feature_names)\ny = pd.Series(cancer.target)\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\nmodel = LogisticRegression(max_iter=5000, random_state=42, solver='liblinear')\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)\nprint('정밀도:', round(precision_score(y_test, y_pred), 4))\nprint('재현율:', round(recall_score(y_test, y_pred), 4))",
+                 expect='정밀도: 0.9636 / 재현율: 0.9815 — 손으로 구한 값과 같습니다.'),
         ])],
     ),
     'ml-selection': dict(
@@ -438,7 +438,7 @@ LESSONS = {
             '<p><b>지표</b>: 문제 유형(분류/회귀)에 맞는 지표를 2개 이상 산출했는가. <b>해석</b>: 오류의 유형(FP/FN 등)을 읽고 개선 방안을 서술했는가. 지표 숫자가 높은 것보다, 낮은 이유를 설명할 수 있는 것이 더 높은 평가를 받습니다.</p>',
         ]),
         ],
-        practice=['ml-selection','ml-learning-curve'],
+        practice=['ml-train-test-split2','ml-cross-val-score','ml-grid-search-cv','ml-learning-curve'],
     ),
     'ml-project': dict(
         title='모델 구현·평가 프로젝트와 단원 정리',
