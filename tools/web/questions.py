@@ -78,57 +78,52 @@ coding(1,'sys','문자열 실행 인자 두 개의 합을 반환하세요.','def
 choice(2,'libraries','운영체제 고유 위젯을 활용하는 라이브러리는?','wxPython',['tkinter','PyQt6','wxPython','Kivy','Django'],'wxWidgets를 기반으로 합니다.','네이티브 위젯을 활용합니다.','교과서 48쪽 4',qid='u2-q003')
 choice(2,'libraries','IDLE 구현에 사용된 GUI 라이브러리는?','tkinter',['Kivy','tkinter','Django','Flask','Pygame'],'파이썬의 기본 개발 환경입니다.','실제 프로그램의 tkinter 활용 사례입니다.','교과서 46·55쪽',qid='u2-q005')
 
-# -- events: 버튼 콜백의 실행 시점(51·54쪽).
-choice(2,'events','버튼 command=say_hello의 실행 시점은?','버튼을 클릭할 때',['버튼 생성 전','항상 실행하지 않음','버튼을 클릭할 때','창 제목 변경 때','import 때'],'괄호가 없으므로 함수 자체를 전달했습니다.','이벤트 발생 때 콜백을 호출합니다.','교과서 51·54쪽 연계',qid='u2-q007')
-
-# -- widgets: tkinter 위젯 이름 8종(50쪽 표). Qt 대응 문항(pyside)은 삭제.
-widgets=[('설명 글자 표시','Label'),('클릭 명령','Button'),('한 줄 입력','Entry'),('여러 줄 텍스트','Text'),('독립 선택','Checkbutton'),('그룹 중 하나 선택','Radiobutton'),('항목 목록','Listbox'),('컨테이너','Frame')]
-for i,(desc,tk) in enumerate(widgets):
- blank(2,'widgets',f'tkinter에서 {desc}에 사용하는 위젯 이름은?',tk,'위젯 도감에서 역할을 확인하세요.',f'{tk}는 {desc}을 담당합니다.','교과서 50쪽 연계',qid=f'u2-q{9+2*i:03}')
-blank(2,'widgets','tkinter에서 그림과 도형을 그릴 위젯 이름은?','Canvas','그림을 그리는 바탕입니다.','create_oval 같은 메서드로 그립니다.','교과서 50쪽',qid='u2-q026')
-
-# -- layout: pack/grid/place(51쪽).
-blank(2,'layout','행과 열을 지정하는 tkinter 배치 메서드는?','grid','row와 column을 받습니다.','폼과 격자 구성에 유용합니다.','교과서 51쪽',qid='u2-q028')
-blank(2,'layout','좌표로 배치하는 tkinter 메서드는?','place','x와 y를 지정합니다.','창 크기 변화도 고려해야 합니다.','교과서 51쪽',qid='u2-q029')
-
-# -- events: 콜백 연결 문법(보강)과 이벤트 루프(54쪽).
+# -- events: 콜백 연결 문법(코드 완성 — 이미 코드가 제시되는 형태라 유지).
+#    grid()/place()/mainloop() 이름 암기 문항(구 q028·029·032)은 삭제하고
+#    새 코드 예측·오류 찾기(u2-q117·118·121·123·132)로 대체한다.
 blank(2,'events','btn = tk.Button(root, command=____)에 함수 greet를 연결하세요.','greet','지금 실행하지 않습니다.','함수 자체를 전달하므로 괄호를 붙이지 않습니다.',qid='u2-q030')
-blank(2,'events','tkinter 이벤트 루프 호출은?','root.mainloop()','루트 변수 이름은 root입니다.','사용자 이벤트를 기다립니다.','교과서 54쪽',qid='u2-q032')
 
 # -- memo: Text 위젯 인덱스(53쪽).
-blank(2,'memo','tkinter Text의 처음 위치 문자열은?','1.0','줄은 1, 문자는 0부터 셉니다.','첫 줄의 첫 위치입니다.','교과서 53쪽',qid='u2-q034')
 blank(2,'memo','tkinter Text의 마지막 자동 개행을 빼고 읽는 끝 위치는?','end-1c','끝에서 문자 하나를 제외합니다.','저장할 때 불필요한 개행 누적을 줄입니다.',level='심화',qid='u2-q035')
 
-# -- events: command=hello() 즉시 호출 오류(51쪽 개념의 흔한 오개념).
-blank(2,'events','command=hello()에서 의도하지 않은 즉시 호출을 고치세요.','command=hello','괄호를 제거하세요.','함수를 전달해야 클릭 때 실행됩니다.',qid='u2-q037')
+# -- events: command=hello() 즉시 호출 오류(51쪽 개념의 흔한 오개념). 클릭 없이
+#    미리 실행돼 버리는 사례라 실제로 판단이 필요해 심화로 올린다.
+blank(2,'events','command=hello()에서 의도하지 않은 즉시 호출을 고치세요.','command=hello','괄호를 제거하세요.','함수를 전달해야 클릭 때 실행됩니다.',level='심화',qid='u2-q037')
 # -- memo: 파일 열기 코드(52쪽)의 delete 라인 그대로.
 blank(2,'memo','tkinter Text에서 기존 내용을 제거하는 코드는?','text_area.delete("1.0", tk.END)','새 파일을 열기 전에 이전 내용을 지웁니다.','insert만 하면 기존 텍스트에 덧붙게 됩니다.',qid='u2-q042')
-# -- widgets: Entry.get()은 교과서 표 밖 심화 보강.
-blank(2,'widgets','Tk 입력창 entry의 한 줄 값을 읽는 코드는?','entry.get()','get 메서드를 사용합니다.','Entry는 Text와 달리 위치 인자가 필요 없습니다.',level='심화',qid='u2-q043')
 
 # -- memo: 파일 열기·저장 순서(52~53쪽 코드 그대로).
-q(2,'memo','순서','파일 열기 처리를 순서대로 배열하세요.',['파일 선택 대화 상자','취소 여부 확인','UTF-8로 파일 읽기','기존 텍스트 지우기','새 텍스트 넣기'],'취소했을 때 빈 경로를 열면 안 됩니다.','읽기에 성공한 뒤 기존 내용을 바꿉니다.','',ref='교과서 53쪽 연계',qid='u2-q045')
-q(2,'memo','순서','저장 순서를 배열하세요.',['저장 경로 선택','취소 여부 확인','편집기 텍스트 읽기','UTF-8로 파일 쓰기'],'사용자가 경로를 선택해야 합니다.','대화 상자 취소 시 쓰기를 건너뜁니다.',qid='u2-q047')
+q(2,'memo','순서','파일 열기 처리를 순서대로 배열하세요.',['파일 선택 대화 상자','취소 여부 확인','UTF-8로 파일 읽기','기존 텍스트 지우기','새 텍스트 넣기'],'취소했을 때 빈 경로를 열면 안 됩니다.','읽기에 성공한 뒤 기존 내용을 바꿉니다.','',ref='교과서 53쪽 연계',level='심화',qid='u2-q045')
+q(2,'memo','순서','저장 순서를 배열하세요.',['저장 경로 선택','취소 여부 확인','편집기 텍스트 읽기','UTF-8로 파일 쓰기'],'사용자가 경로를 선택해야 합니다.','대화 상자 취소 시 쓰기를 건너뜁니다.',level='심화',qid='u2-q047')
 
-# -- 응용 판단(layout/memo/events): GUI 배치·파일·반응성 적용 문제.
-choice(2,'layout','한 부모 안에서 pack과 grid를 섞으면?','배치 충돌 오류가 날 수 있습니다.',['항상 자동 변환됩니다.','배치 충돌 오류가 날 수 있습니다.','Tk가 Qt로 바뀝니다.','텍스트만 사라집니다.','항상 잘 동작합니다.'],'다른 Frame으로 나누면 됩니다.','동일 부모 안에서 혼용하지 않습니다.',qid='u2-q049')
-choice(2,'memo','파일 대화 상자를 취소했다면?','함수에서 돌아갑니다.',['빈 경로를 엽니다.','파일을 삭제합니다.','함수에서 돌아갑니다.','아무 파일이나 저장합니다.','텍스트를 무조건 지웁니다.'],'경로가 빈 값인지 검사합니다.','기존 내용을 유지해야 합니다.',qid='u2-q050')
-choice(2,'events','긴 time.sleep을 GUI 콜백에서 실행하면?','화면 반응이 멈출 수 있습니다.',['자동으로 병렬 실행됩니다.','더 부드러워집니다.','화면 반응이 멈출 수 있습니다.','창 크기가 커집니다.','코드가 저장됩니다.'],'이벤트 루프가 기다립니다.','타이머와 작업 분리를 고려합니다.',qid='u2-q051')
-
-# GUI-independent functions: genuinely runnable web tests.
-coding(2,'events','빈 이름에는 "여러분"을 사용하는 인사 함수를 작성하세요.','def greeting(name):\n    pass','def greeting(name):\n    return f"{name.strip() or \'여러분\'}님, 안녕하세요!"','assert greeting(" 민지 ")=="민지님, 안녕하세요!"\nassert greeting(" ")=="여러분님, 안녕하세요!"','입력 정리를 GUI 밖의 함수로 만듭니다.','입력 공백과 빈 이름을 검사합니다.',qid='u2-q055')
-coding(2,'memo','텍스트의 글자 수와 줄 수를 튜플로 반환하세요. 빈 문서는 (0,0)입니다.','def stats(text):\n    pass','def stats(text):\n    return len(text), len(text.splitlines())','assert stats("")==(0,0)\nassert stats("가나\\n다")== (4,2)\nassert stats("가\\n")== (2,1)','splitlines로 줄을 구분합니다.','이 과제는 마지막 개행 뒤의 빈 줄을 추가 줄로 세지 않습니다.',qid='u2-q056')
-# project 소단원은 존폐 미정이므로 review로 재배정(내용은 그대로 유지).
-coding(2,'review','추첨 인원 문자열을 1~total의 정수로 검사하세요. 잘못된 값은 None입니다.','def parse_count(text,total):\n    pass','def parse_count(text,total):\n    try:\n        n=int(text)\n        return n if 1<=n<=total else None\n    except ValueError:\n        return None','assert parse_count("2",3)==2\nassert parse_count("0",3) is None\nassert parse_count("x",3) is None\nassert parse_count("4",3) is None','변환 오류와 범위 오류를 나누세요.','GUI의 경고 표시와 검증 로직을 분리합니다.',qid='u2-q057')
-coding(2,'memo','저장 취소인 빈 경로에는 False, 유효 경로에는 True를 반환하세요.','def should_save(path):\n    return True','def should_save(path):\n    return bool(path)','assert should_save("") is False\nassert should_save("memo.txt") is True','빈 경로는 false로 평가됩니다.','취소했을 때 파일 작업을 건너뛰게 합니다.','오류 수정',qid='u2-q058')
-coding(2,'events','상태 n을 1 증가시키되 최대 10을 넘지 않게 하세요.','def increment(n):\n    return n+1','def increment(n):\n    return min(n+1,10)','assert increment(0)==1\nassert increment(9)==10\nassert increment(10)==10','버튼 연속 클릭의 경계를 생각하세요.','UI 상태에도 경계 조건 검사가 필요합니다.','오류 수정',qid='u2-q059')
-coding(2,'memo','제목에 미저장 표시 *를 붙이는 함수를 작성하세요.','def title(name,modified):\n    pass','def title(name,modified):\n    return ("* " if modified else "")+name','assert title("메모장",True)=="* 메모장"\nassert title("메모장",False)=="메모장"','불리언 상태에 따라 접두어를 선택합니다.','같은 함수를 두 GUI에서 사용할 수 있습니다.',qid='u2-q060')
-written(2,'review','모듈 구조·이벤트·입력 오류 처리의 구현 근거를 작성하세요.','core에서 계산을 담당하고 GUI는 입력·표시를 맡습니다. 버튼에 함수를 연결하고 잘못된 값을 경고로 안내합니다.','실제 파일명과 시험 입력을 포함하세요.','기능, 구조, 저널을 평가 기준에 연결하세요.',qid='u2-q063')
 written(2,'ui','UI가 사용자 편의성과 어떤 관련이 있는지 설명하세요.','찾기 쉬운 버튼, 읽기 쉬운 글자, 명확한 피드백은 작업 시간과 실수를 줄입니다.','구체적인 화면 요소 하나를 근거로 드세요.','UI 요소와 실제 사용 효과를 연결하세요.','교과서 58쪽 2',qid='u2-q068')
+# -- events: 콜백 참조 vs 호출 예측(코드 예측형 — #131 후속 피드백에서 우수 사례로 지목되어 계열을 늘렸다).
 q(2,'events','예측','calls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\nprint(len(calls))','0','함수를 저장하는 것과 호출하는 것은 다릅니다.','callback()을 호출해야 리스트가 바뀝니다.',qid='u2-q069')
-q(2,'events','예측','calls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))','2','콜백을 두 번 호출했습니다.','GUI 클릭도 연결된 함수를 호출하는 사건입니다.',qid='u2-q070')
+q(2,'events','예측','calls=[]\ndef hello():\n    calls.append("인사")\ncallback=hello\ncallback()\ncallback()\nprint(len(calls))','2','콜백을 두 번 호출했습니다.','GUI 클릭도 연결된 함수를 호출하는 사건입니다.',level='심화',qid='u2-q070')
 
 choice(1,'thirdparty','관계형 데이터베이스를 객체 형태로 다루는 경량 ORM은?','Peewee',['Peewee','Pillow','Pygame','Kivy','math'],'교과서의 패키지 목록을 확인하세요.','Peewee는 데이터베이스 모델과 쿼리를 Python 객체로 다루도록 돕습니다.','교과서 33쪽')
+
+# -- #131 후속(코디네이터 피드백): 뻔한 암기·허수 보기·GUI와 무관한 순수
+# 함수형 문항을 코드 제시형(예측·오류 찾기·코드 완성)으로 교체한다. 아래
+# tkinter 동작은 모두 `xvfb-run -a python3`으로 직접 실행해 확인했다
+# (문항 옆 ref에 '실행 검증'으로 표시). 위젯 9종의 단순 이름 암기는
+# '상황 → 위젯' 매칭 2문항으로 압축한다.
+written(2,'widgets','메모장 화면에 다음 요소가 필요하다. 각 요소에 알맞은 tkinter 위젯 이름을 쓰세요.\n① 설명 문구만 보여 주고 입력은 받지 않는 안내 글자\n② 사용자가 누르면 저장 동작이 실행되는 버튼\n③ 이름처럼 한 줄짜리 값을 입력받는 칸\n④ 메모 내용처럼 여러 줄을 입력·표시하는 칸\n⑤ 여러 위젯을 하나로 묶는 컨테이너','① Label ② Button ③ Entry ④ Text ⑤ Frame','표시용인지 입력용인지, 한 줄인지 여러 줄인지 구분하세요.','컨테이너는 다른 위젯을 그룹으로 묶을 때 씁니다.','교과서 50쪽',qid='u2-q115')
+written(2,'widgets','설정 화면에 다음 요소가 필요하다. 각 요소에 알맞은 tkinter 위젯 이름을 쓰세요.\n① 자동 저장 여부처럼 여러 옵션을 각각 독립적으로 켜고 끄는 요소\n② 글꼴 크기처럼 여러 선택지 중 하나만 고르게 하는 요소\n③ 최근에 연 파일처럼 여러 항목을 목록으로 나열해 그중 하나를 고르는 요소\n④ 그림이나 도형을 직접 그릴 수 있는 공간','① Checkbutton ② Radiobutton ③ Listbox ④ Canvas','체크 박스와 라디오 버튼의 차이는 동시에 여러 개를 고를 수 있는지입니다.','목록에서 고르는 것과 그림을 그리는 것은 서로 다른 위젯입니다.','교과서 50쪽',qid='u2-q116')
+q(2,'layout','예측','import tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text="A").pack()\ntk.Label(root, text="B").pack()\ntk.Label(root, text="C").pack()\nroot.mainloop()','A, B, C 순서로 위에서 아래로 쌓인다','pack()의 기본 방향을 떠올리세요.','생성한 순서와 화면에 쌓이는 순서를 비교하세요.',ref='실행 검증',qid='u2-q117')
+written(2,'layout','다음 코드에서 위젯 b를 먼저 만들었지만 실행 화면에서는 위젯 a가 왼쪽(B보다 작은 x좌표)에 나타난다. 그 이유를 한 문장으로 설명하세요.\nimport tkinter as tk\nroot = tk.Tk()\nb = tk.Label(root, text="B"); b.grid(row=0, column=1)\na = tk.Label(root, text="A"); a.grid(row=0, column=0)\nroot.mainloop()','grid()는 위젯을 만든 순서가 아니라 지정한 row·column 값으로 위치를 정하기 때문이다.','grid는 행과 열 번호로 위치를 지정합니다.','코드가 실행된 순서와 화면에 배치되는 규칙은 다릅니다.',level='심화',qid='u2-q118')
+written(2,'widgets','다음 코드를 실행하면 버튼이 화면에 보이지 않는다(xvfb 실행으로 winfo_ismapped()==0 확인). 빠진 한 줄을 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text="Go")\nroot.mainloop()','btn.pack() (또는 btn.grid()·btn.place())','위젯은 생성만으로는 화면에 나타나지 않습니다.','배치 관리자 중 하나를 호출해야 합니다.','실행 검증',level='심화',qid='u2-q119')
+written(2,'events','다음 코드를 실행하면 버튼을 한 번도 클릭하지 않았는데 print(len(calls))가 1을 출력한다(xvfb 실행으로 확인). 그 이유를 설명하세요.\ncalls = []\ndef hello():\n    calls.append("run")\n\nimport tkinter as tk\nroot = tk.Tk()\nbtn = tk.Button(root, text="클릭", command=hello())\nprint(len(calls))','command=hello()는 괄호가 있어 버튼을 만드는 시점에 hello가 즉시 호출되고, 그 반환값(None)이 command에 전달되기 때문이다.','괄호가 있으면 지금 당장 실행하라는 뜻입니다.','클릭 이벤트가 아니라 버튼 생성 줄 자체가 hello()를 호출합니다.','실행 검증',level='심화',qid='u2-q120')
+written(2,'layout','다음 코드는 실행하면 TclError가 발생한다(xvfb 실행으로 "cannot use geometry manager grid inside . which already has slaves managed by pack" 오류 확인). 오류가 나지 않도록 고치는 방법을 한 가지 쓰세요.\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text="이름").pack()\ntk.Entry(root).grid(row=0, column=1)\nroot.mainloop()','같은 부모(root) 안에서는 pack()과 grid() 중 하나만 써야 한다. Entry도 pack()으로 바꾸거나, Entry를 별도 Frame에 넣어 그 Frame만 root에 pack()한다.','같은 부모 안에서 배치 관리자를 섞으면 충돌합니다.','다른 Frame으로 나누면 각 Frame 안에서는 다른 방식을 써도 됩니다.','실행 검증',level='심화',qid='u2-q121')
+written(2,'memo','다음은 교과서 53쪽 save_file() 함수이다. 사용자가 대화 상자에서 "취소"를 눌렀다면 file_path에는 어떤 값이 들어오며, 그 다음 코드는 어떻게 동작하는가?\ndef save_file():\n    file_path = filedialog.asksaveasfilename(defaultextension=".txt")\n    if file_path:\n        with open(file_path, \'w\', encoding=\'utf-8\') as file:\n            file.write(text_area.get(\'1.0\', tk.END))','file_path에는 빈 문자열("")이 들어오고, if file_path가 거짓으로 평가되어 open() 이하가 실행되지 않고 함수가 그대로 끝난다.','빈 문자열은 조건문에서 거짓으로 취급됩니다.','취소했을 때 파일을 쓰지 않아야 기존 파일이 안전합니다.','교과서 53쪽',level='심화',qid='u2-q122')
+written(2,'events','다음 코드에는 window.mainloop() 호출이 없다. 실행하면 어떤 일이 일어나는지 설명하세요(xvfb 실행으로 창이 뜨지 못한 채 0.2초 만에 종료됨을 확인).\nimport tkinter as tk\nroot = tk.Tk()\ntk.Label(root, text="안녕").pack()\nprint("끝")','이벤트 루프가 시작되지 않아 "끝"이 출력된 뒤 프로그램이 곧바로 종료된다. 창이 화면에 제대로 뜨지 못하고 사라진다.','mainloop()는 사용자 이벤트를 기다리는 반복문입니다.','이 호출이 없으면 프로그램이 끝까지 실행되어 버립니다.','실행 검증',qid='u2-q123')
+coding(2,'memo','53쪽 save_file()의 file_path = filedialog.asksaveasfilename(...) 다음 줄인 if file_path: 조건을 함수로 옮기세요. 취소(빈 문자열)면 False, 유효한 경로면 True를 반환합니다.','def should_save(path):\n    return True','def should_save(path):\n    return bool(path)','assert should_save("") is False\nassert should_save("memo.txt") is True','빈 문자열은 False로 평가됩니다.','if file_path: 조건과 같은 판단을 하는 함수입니다.','교과서 53쪽',level='심화',qid='u2-q124')
+blank(2,'memo','다음은 교과서 53쪽 save_file() 함수이다. 빈칸 ①에 들어갈 코드를 쓰세요.\ndef save_file():\n    file_path = filedialog.asksaveasfilename(defaultextension=".txt")\n    if file_path:\n        with open(file_path, \'w\', encoding=\'utf-8\') as file:\n            ①','file.write(text_area.get(\'1.0\', tk.END))','편집기의 전체 내용을 문자열로 읽어야 합니다.','파일 쓰기는 open()이 반환한 file 객체로 합니다.','교과서 53쪽',qid='u2-q127')
+blank(2,'memo','다음은 교과서 52쪽 open_file() 함수이다. 빈칸 ①에 들어갈 코드를 쓰세요.\ndef open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path:\n        with open(file_path, \'r\', encoding=\'utf-8\') as file:\n            text = file.read()\n            ①\n            text_area.insert(tk.END, text)','text_area.delete(\'1.0\', tk.END)','새 내용을 넣기 전에 기존 내용부터 지워야 합니다.','insert만 하면 이전 텍스트 뒤에 새 텍스트가 덧붙습니다.','교과서 52쪽',level='심화',qid='u2-q128')
+written(2,'memo','교과서의 나만의 메모장 코드에서 open_file()과 save_file()은 모두 사용자의 "취소"를 어떻게 공통으로 처리하는지 설명하세요.\ndef open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path: ...\ndef save_file():\n    file_path = filedialog.asksaveasfilename(...)\n    if file_path: ...','두 함수 모두 대화 상자의 반환값이 빈 문자열이면 if file_path가 거짓이 되어 open() 이하를 실행하지 않고 그대로 끝난다. 그 덕분에 취소했을 때 기존 텍스트가 지워지거나 잘못된 경로에 저장되는 문제를 막는다.','두 함수의 두 번째 줄 조건문 형태가 똑같습니다.','대화 상자가 취소되면 항상 빈 문자열을 돌려줍니다.','교과서 52~53쪽',level='심화',qid='u2-q129')
+choice(2,'events','다음처럼 버튼 클릭 이벤트 처리 함수 안에서 time.sleep(5)를 실행하면 어떤 문제가 생기는가?\ndef on_click():\n    time.sleep(5)\n    label.config(text="완료")\n\nbtn = tk.Button(root, text="실행", command=on_click)','5초 동안 다른 버튼 클릭이나 창 이동 등 화면 반응이 멈춘다.',['5초 동안 다른 버튼 클릭이나 창 이동 등 화면 반응이 멈춘다.','sleep이 실행되는 동안 새 스레드가 자동으로 생겨 화면은 그대로 반응한다.','sleep(5)는 5밀리초만 멈추므로 체감상 문제가 없다.','label.config가 먼저 실행되고 그 다음에 5초가 지나간다.','이벤트 루프가 알아서 sleep을 건너뛴다.'],'tkinter의 mainloop()는 하나의 스레드에서 이벤트를 순서대로 처리합니다.','sleep은 그 스레드 전체를 멈추게 해 다른 이벤트도 처리하지 못합니다.','보강',level='심화',qid='u2-q130')
+q(2,'events','예측','handlers = []\ndef add_handler(name):\n    handlers.append(name)\n\nbtn1_command = add_handler\nbtn2_command = add_handler("저장")\n\nprint(handlers)','[\'저장\']','괄호가 있으면 그 자리에서 바로 실행됩니다.','btn1_command은 함수를 참조만 했고, btn2_command는 호출까지 했습니다.',level='심화',qid='u2-q131')
+q(2,'layout','예측','import tkinter as tk\nroot = tk.Tk()\nroot.geometry("300x200")\ne = tk.Entry(root)\ne.place(x=50, y=80)\nroot.mainloop()','x=50, y=80 위치','place()는 좌표를 직접 지정합니다.','창의 크기(300x200)와 상관없이 지정한 좌표에 그대로 나타납니다.',ref='실행 검증',qid='u2-q132')
 
 # -- 신규(#131): 교과서 확인 학습(48·57쪽)·종합 평가(58~59쪽) 원문 그대로 +
 # 라이브러리 선택 서술 재작성(PySide6 언급 삭제).
@@ -136,7 +131,6 @@ choice(2,'ui','다음 중 사용자 인터페이스(User Interface)의 설명으
 written(2,'ui','GUI 프로그래밍을 하면 어떤 장점이 있는지 서술하시오.','사용자가 마우스나 버튼으로 프로그램을 쉽게 조작할 수 있고, 텍스트 기반 CLI보다 직관적이고 시각적이다.','명령어를 몰라도 사용할 수 있다는 점을 떠올리세요.','마우스·터치 조작과 시각적 피드백을 함께 언급하세요.','교과서 48쪽 2·정답 202쪽',qid='u2-q102')
 written(2,'ui','NUI 프로그래밍이 무엇인지 서술하시오.','음성, 손짓, 터치, 눈동자 움직임 등 사람의 자연스러운 신체 동작을 이용해 컴퓨터와 상호 작용할 수 있도록 만드는 프로그램 개발 방식이다. 별도의 조작법을 배우지 않아도 직관적으로 사용할 수 있다.','자연스러운 신체 동작이 핵심 키워드입니다.','별도 학습이 필요 없다는 점과 스마트 기기 사례를 함께 적으세요.','교과서 48쪽 3·정답 202쪽',qid='u2-q103')
 written(2,'libraries','아래의 GUI 라이브러리와 설명을 바르게 연결하시오.\n① tkinter  ② PyQt  ③ wxPython  ④ Kivy\n㉠ 멀티 플랫폼, 터치 중심 GUI 프레임워크  ㉡ 운영체제 네이티브 스타일 제공  ㉢ C++ Qt 기반, 상업용 앱에도 적합  ㉣ 파이썬 기본 GUI 라이브러리','①-㉣, ②-㉢, ③-㉡, ④-㉠','tkinter는 설치가 필요 없는 기본 라이브러리입니다.','wxPython은 운영체제 고유(네이티브) 위젯을 사용합니다.','교과서 48쪽 4',qid='u2-q104')
-choice(2,'widgets','다음 중 Tkinter의 GUI 창을 생성하는 객체는 무엇인지 골라 보자.','Tk()',['Tk()','Entry()','Frame()','Label()','Button()'],'루트 창(root window)을 만드는 클래스입니다.','다른 보기는 모두 위젯이며 창 자체가 아닙니다.','교과서 51쪽',qid='u2-q105')
 blank(2,'memo','다음은 IDLE에서 macOS와 관련된 macosx.py 코드의 일부이다. 빈칸에 공통으로 들어갈 모듈 이름을 쓰세요.\nimport ____\n\ndef _init_tk_type():\n    global _tk_type\n    if platform == \'darwin\':\n        root = ____.Tk()','tkinter','root.Tk()를 만들 수 있는 모듈입니다.','이 단원에서 계속 사용해 온 GUI 기본 라이브러리입니다.','교과서 55쪽',qid='u2-q106')
 written(2,'widgets','다음은 56쪽 디버거 GUI 코드의 일부이다. ①·②·③에 들어갈 말을 각각 쓰세요.\nfrom tkinter import *\nfrom tkinter.ttk import ① , Scrollbar\n...\nself.bframe = bframe = ① (top)\n...\nself.bcont = b = ② (bframe, text="Go", command=self.cont)\n...\n①과 ②처럼 사용자와 상호 작용하는 인터페이스 요소를 ③이라 한다.','① Frame ② Button ③ 위젯','①은 여러 위젯을 묶는 컨테이너, ②는 클릭 버튼입니다.','①·②를 모두 포함하는 상위 개념이 ③입니다.','교과서 57쪽',qid='u2-q107')
 blank(2,'widgets','tkinter에서 GUI 창을 생성할 때 사용하는 기본 객체는 무엇인가?','Tk() 객체','tk.Tk()로 만듭니다.','이 객체가 프로그램의 기본 창(root window)입니다.','교과서 58쪽 1',qid='u2-q108')
