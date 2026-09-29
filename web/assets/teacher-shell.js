@@ -14,7 +14,8 @@ const PAGES = [
  {id: 'board', href: 'board.html', label: '현황 보드'},
  {id: 'session', href: 'session.html', label: '수업 세션'},
  {id: 'assignments', href: 'assignments.html', label: '과제'},
- {id: 'answers', href: 'answers.html', label: '답변 내역'}
+ {id: 'answers', href: 'answers.html', label: '답변 내역'},
+ {id: 'summary', href: 'index.html', label: '수업 요약'}
 ];
 
 const host = document.getElementById('teacher-shell');
