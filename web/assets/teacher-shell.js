@@ -28,6 +28,36 @@ function node(tag, cls, text) {
  return el;
 }
 
+// (#141) 교사 권한이 확인되기 전에는 관리 화면 본문을 숨기고, 교사가 아니면 '교사 전용' 안내만 보인다.
+// 학생 데이터는 원래 firestore.rules가 막지만(비교사 목록 조회 거부), 보드·세션 화면 틀이 학생에게
+// 보이던 문제를 막는다. ?demo=1(가짜 데이터 미리보기)은 잠그지 않는다. 네트워크 오류로 권한을
+// 확인하지 못한 경우엔 교사가 수업 중 잠기지 않도록 본문을 연다(데이터는 규칙이 계속 보호).
+const DEMO = new URLSearchParams(location.search).get('demo') === '1';
+let pendingTimer = 0;
+function lockNote() { return document.getElementById('teacher-lock-note'); }
+function settleGate() {
+ clearTimeout(pendingTimer);
+ document.body.classList.remove('teacher-pending');
+}
+function lockTeacherPage(message) {
+ settleGate();
+ document.body.classList.add('teacher-locked');
+ let note = lockNote();
+ if (!note) {
+  note = node('section', 'teacher-lock-note admin-card');
+  note.id = 'teacher-lock-note';
+  const main = document.querySelector('main');
+  if (main) main.prepend(note); else document.body.append(note);
+ }
+ note.replaceChildren(node('h2', '', '교사 전용 페이지입니다'), node('p', '', message));
+}
+function unlockTeacherPage() {
+ settleGate();
+ document.body.classList.remove('teacher-locked');
+ const note = lockNote();
+ if (note) note.remove();
+}
+
 function currentPage() {
  return (host && host.dataset.teacherPage) || document.body.dataset.teacherPage || 'roster';
 }
@@ -102,12 +132,14 @@ async function review(user) {
  if (!ready) {
   setPicker({classes: [], disabled: true, emptyText: teacherPickerEmpty({ready: false})});
   publishClass('');
+  if (!DEMO) lockTeacherPage('로그인 기능을 불러오지 못했습니다. 교사 계정으로 다시 접속하세요.');
   return;
  }
  if (!user) {
   teacherEmail = '';
   setPicker({classes: [], disabled: true, emptyText: teacherPickerEmpty({ready: true, user: null})});
   publishClass('');
+  if (!DEMO) lockTeacherPage('학교 교사 계정으로 로그인해야 볼 수 있습니다.');
   return;
  }
  const email = (user.email || '').toLowerCase();
@@ -120,8 +152,12 @@ async function review(user) {
    emptyText: teacherPickerEmpty({ready: true, user, teacher: false, error})
   });
   publishClass('');
+  if (DEMO) settleGate();
+  else if (error) unlockTeacherPage();
+  else lockTeacherPage('이 계정에는 교사 권한이 없습니다.');
   return;
  }
+ unlockTeacherPage();
  await refreshTeacherClasses();
 }
 
@@ -131,6 +167,11 @@ function startTeacherShell() {
   return;
  }
  renderChrome();
+ if (!DEMO) {
+  document.body.classList.add('teacher-pending');
+  // 로그인 확인 이벤트가 끝내 오지 않으면(스크립트 로드 실패 등) 화면을 영구히 가리지 않는다.
+  pendingTimer = setTimeout(settleGate, 10000);
+ }
  document.addEventListener('aipy:account', (event) => review(event.detail.user));
  document.addEventListener('aipy:roster-changed', () => refreshTeacherClasses());
  if (window.aipyAccount) review(window.aipyAccount.user);

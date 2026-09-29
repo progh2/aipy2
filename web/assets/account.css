@@ -400,3 +400,9 @@ body.teacher-focus-detail-off .focus-chip{display:none}
  white-space:nowrap;cursor:pointer}
 .teacher-focus-detail-toggle input{margin:0}
 @media print{.focus-chip{display:none!important}}
+
+/* (#141) 교사 권한 확인 전·비교사: 관리 화면 본문 숨김(제목과 교사 전용 안내만) */
+body.teacher-pending main.teacher-manage > :not(.eyebrow):not(h1),
+body.teacher-locked main.teacher-manage > :not(.eyebrow):not(h1):not(#teacher-lock-note){display:none!important}
+body.teacher-locked .teacher-shell-bar{display:none!important}
+.teacher-lock-note{border-left:4px solid #C0392B}
