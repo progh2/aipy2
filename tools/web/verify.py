@@ -24,6 +24,21 @@ import unit4_tips
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
+
+# (#135-5) 단계적 축소(fading scaffolding) — 튜토리얼 step의 mode 값과 그에 맞는
+# 필드 조합을 검사한다. full(기존과 동일: code, mode 생략 가능)/blank(빈칸 code +
+# answer_code + blanks)/describe(코드 없이 answer_code만)만 허용한다.
+def check_tutorial_step_modes(loc,step_list):
+ for st in step_list:
+  mode=st.get('mode','full')
+  assert mode in ('full','blank','describe'), ('알 수 없는 tutorial step mode',loc,mode)
+  if mode=='blank':
+   assert st.get('code') and '____' in st['code'], ('blank 단계에 ____ 빈칸이 없음',loc,st.get('text'))
+   assert (st.get('answer_code') or '').strip(), ('blank 단계에 answer_code 없음',loc,st.get('text'))
+   assert st.get('blanks'), ('blank 단계에 힌트(blanks) 없음',loc,st.get('text'))
+  elif mode=='describe':
+   assert not st.get('code'), ('describe 단계에 code가 남아 있음',loc,st.get('text'))
+   assert (st.get('answer_code') or '').strip(), ('describe 단계에 answer_code 없음',loc,st.get('text'))
 assert [sum(q['unit']==u for q in questions) for u in [1,2]]==[60,40]
 assert len({q['id'] for q in questions})==len(questions)
 assert set(units)=={1,2,3,4}
@@ -281,6 +296,7 @@ for u, lessons in units.items():
       assert it.get('steps') and len(it['steps'])>=1, ('tutorial with no steps',lesson['id'],it.get('id'))
       for st in it['steps']:
        assert (st.get('text') or '').strip(), ('tutorial step missing text',lesson['id'],it.get('id'))
+      check_tutorial_step_modes((lesson['id'],it.get('id')),it['steps'])
   else:
    assert 'class="lesson-prose"' in html
   practice_ids=lesson_practice_ids(u,lesson)
@@ -332,6 +348,7 @@ for lid, ldata in deck_u3.LESSONS.items():
    assert len(it.get('steps') or ())>=1, ('u3 튜토리얼 steps가 비어 있음', lid, it.get('id'))
    for st in it['steps']:
     assert st.get('text'), ('u3 튜토리얼 step에 text 없음', lid, it['id'])
+   check_tutorial_step_modes((lid,it.get('id')),it['steps'])
 unit_index=(WEB/'units/unit01/index.html').read_text()
 assert 'data-lessons=' in unit_index
 assert 'overview.html' in unit_index
