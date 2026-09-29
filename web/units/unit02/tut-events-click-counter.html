@@ -13,7 +13,7 @@ root.mainloop()</code></pre><p class="small" data-fb="b5">확인: &quot;클릭 �
     count_label.____(text=f&quot;클릭 수: {count}&quot;)
 
 click_button = tk.Button(root, text=&quot;누르기&quot;, command=click)
-click_button.pack()</code></pre><div class="tut-hints"><p class="small" data-fb="b8">빈칸 힌트</p><ul><li>첫 번째 빈칸: 함수 밖 변수를 함수 안에서 수정하려 할 때 쓰는 키워드 (global)</li><li>두 번째 빈칸: 위젯의 속성을 바꾸는 메서드 이름 (config)</li></ul></div><p class="small" data-fb="b9">확인: &quot;누르기&quot; 버튼을 누를 때마다 &quot;클릭 수: 1&quot;, &quot;클릭 수: 2&quot;처럼 숫자가 하나씩 늘어납니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-events-click-counter-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b10"><code>def click():
+click_button.pack()</code></pre><div class="tut-hints"><p class="small" data-fb="b8">빈칸 힌트</p><ul><li>첫 번째 빈칸: 함수 밖 변수를 함수 안에서 수정하려 할 때 쓰는 키워드</li><li>두 번째 빈칸: 위젯의 속성을 바꾸는 메서드 이름</li></ul></div><p class="small" data-fb="b9">확인: &quot;누르기&quot; 버튼을 누를 때마다 &quot;클릭 수: 1&quot;, &quot;클릭 수: 2&quot;처럼 숫자가 하나씩 늘어납니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-events-click-counter-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b10"><code>def click():
     global count
     count += 1
     count_label.config(text=f&quot;클릭 수: {count}&quot;)

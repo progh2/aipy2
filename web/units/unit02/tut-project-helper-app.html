@@ -16,7 +16,7 @@ root.mainloop()</code></pre><p class="small" data-fb="b5">확인: 할 일을 입
         task_entry.____(0, tk.END)
 
 add_button = tk.Button(root, text=&quot;추가&quot;, command=add_task)
-add_button.pack(pady=4)</code></pre><div class="tut-hints"><p class="small" data-fb="b8">빈칸 힌트</p><ul><li>첫 번째 빈칸: Listbox 끝에 항목을 추가하는 메서드 이름 (insert)</li><li>두 번째 빈칸: Entry의 내용을 지우는 메서드 이름 (delete)</li></ul></div><p class="small" data-fb="b9">확인: 할 일을 쓰고 &quot;추가&quot;를 누르면 목록에 줄이 하나 늘고 입력칸이 비워집니다. 빈 채로 누르면 아무 일도 일어나지 않습니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-project-helper-app-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b10"><code>def add_task():
+add_button.pack(pady=4)</code></pre><div class="tut-hints"><p class="small" data-fb="b8">빈칸 힌트</p><ul><li>첫 번째 빈칸: Listbox 끝에 항목을 추가하는 메서드 이름</li><li>두 번째 빈칸: Entry의 내용을 지우는 메서드 이름</li></ul></div><p class="small" data-fb="b9">확인: 할 일을 쓰고 &quot;추가&quot;를 누르면 목록에 줄이 하나 늘고 입력칸이 비워집니다. 빈 채로 누르면 아무 일도 일어나지 않습니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-project-helper-app-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b10"><code>def add_task():
     text = task_entry.get().strip()
     if text:
         task_list.insert(tk.END, text)

@@ -7,13 +7,13 @@ name_entry = tk.Entry(root)
 name_entry.pack(pady=10)
 
 root.mainloop()</code></pre><p class="small" data-fb="b5">확인: 빈 입력창 하나가 있는 작은 창이 뜹니다.</p></li><li class="tut-blank"><p data-fb="b6">인사말을 보여 줄 Label을 Entry 아래에 추가합니다. mainloop() 앞에 두 줄을 더합니다.</p><pre data-fb="b7"><code>greeting = tk.____(root, text=&quot;이름을 입력하세요&quot;)
-greeting.____(pady=10)</code></pre><div class="tut-hints"><p class="small" data-fb="b8">빈칸 힌트</p><ul><li>첫 번째 빈칸: 텍스트를 표시하는 위젯 클래스 이름 (Label)</li><li>두 번째 빈칸: 위젯을 화면에 배치하는 메서드 이름 (pack)</li></ul></div><p class="small" data-fb="b9">확인: 입력창 아래에 &quot;이름을 입력하세요&quot;라는 글자가 보입니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-widgets-greeting-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b10"><code>greeting = tk.Label(root, text=&quot;이름을 입력하세요&quot;)
+greeting.____(pady=10)</code></pre><div class="tut-hints"><p class="small" data-fb="b8">빈칸 힌트</p><ul><li>첫 번째 빈칸: 텍스트를 표시하는 위젯 클래스 이름</li><li>두 번째 빈칸: 위젯을 화면에 배치하는 메서드 이름</li></ul></div><p class="small" data-fb="b9">확인: 입력창 아래에 &quot;이름을 입력하세요&quot;라는 글자가 보입니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-widgets-greeting-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b10"><code>greeting = tk.Label(root, text=&quot;이름을 입력하세요&quot;)
 greeting.pack(pady=10)</code></pre></details></li><li class="tut-blank"><p data-fb="b11">버튼을 누르면 입력한 이름으로 인사말을 바꾸는 함수를 만들고, Button의 command에 연결합니다. 역시 mainloop() 앞에 추가합니다.</p><pre data-fb="b12"><code>def greet():
     name = name_entry.____()
     greeting.____(text=f&quot;{name}님, 안녕하세요!&quot;)
 
 greet_button = tk.Button(root, text=&quot;인사하기&quot;, command=____)
-greet_button.pack(pady=10)</code></pre><div class="tut-hints"><p class="small" data-fb="b13">빈칸 힌트</p><ul><li>첫 번째 빈칸: Entry에 입력된 문자열을 읽어오는 메서드 이름 (get)</li><li>두 번째 빈칸: 위젯의 속성을 바꾸는 메서드 이름 (config)</li><li>세 번째 빈칸: 클릭 시 호출할 함수 이름 — 괄호 없이 (greet)</li></ul></div><p class="small" data-fb="b14">확인: 입력창에 이름을 쓰고 &quot;인사하기&quot; 버튼을 누르면 라벨의 문구가 &quot;○○○님, 안녕하세요!&quot;로 바뀝니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-widgets-greeting-2" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b15"><code>def greet():
+greet_button.pack(pady=10)</code></pre><div class="tut-hints"><p class="small" data-fb="b13">빈칸 힌트</p><ul><li>첫 번째 빈칸: Entry에 입력된 문자열을 읽어오는 메서드 이름</li><li>두 번째 빈칸: 위젯의 속성을 바꾸는 메서드 이름</li><li>세 번째 빈칸: 클릭 시 호출할 함수 이름 — 괄호 없이</li></ul></div><p class="small" data-fb="b14">확인: 입력창에 이름을 쓰고 &quot;인사하기&quot; 버튼을 누르면 라벨의 문구가 &quot;○○○님, 안녕하세요!&quot;로 바뀝니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-widgets-greeting-2" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b15"><code>def greet():
     name = name_entry.get()
     greeting.config(text=f&quot;{name}님, 안녕하세요!&quot;)
 

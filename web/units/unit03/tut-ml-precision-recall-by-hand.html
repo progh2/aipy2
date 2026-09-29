@@ -16,7 +16,7 @@ model = LogisticRegression(max_iter=5000, random_state=42, solver=&#x27;liblinea
 model.fit(X_train, y_train)
 y_pred = model.____(X_test)
 print(&#x27;정밀도:&#x27;, round(____(y_test, y_pred), 4))
-print(&#x27;재현율:&#x27;, round(recall_score(y_test, y_pred), 4))</code></pre><div class="tut-hints"><p class="small" data-fb="b7">빈칸 힌트</p><ul><li>첫 번째 빈칸: 학습된 모델로 예측값을 내는 메서드 이름 (predict)</li><li>두 번째 빈칸: scikit-learn에서 정밀도를 계산하는 함수 이름 (precision_score)</li></ul></div><p class="small" data-fb="b8">확인: 정밀도: 0.9636 / 재현율: 0.9815 — 손으로 구한 값과 같습니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-ml-precision-recall-by-hand-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b9"><code>import pandas as pd
+print(&#x27;재현율:&#x27;, round(recall_score(y_test, y_pred), 4))</code></pre><div class="tut-hints"><p class="small" data-fb="b7">빈칸 힌트</p><ul><li>첫 번째 빈칸: 학습된 모델로 예측값을 내는 메서드 이름</li><li>두 번째 빈칸: scikit-learn에서 정밀도를 계산하는 함수 이름</li></ul></div><p class="small" data-fb="b8">확인: 정밀도: 0.9636 / 재현율: 0.9815 — 손으로 구한 값과 같습니다.</p><label class="tut-journal-label small">내 코드 붙여 두기<textarea data-journal="t-ml-precision-recall-by-hand-1" rows="4" placeholder="여기에 직접 작성한 코드를 붙여 두세요"></textarea></label><details class="tut-answer"><summary>정답 코드 보기</summary><pre data-fb="b9"><code>import pandas as pd
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
