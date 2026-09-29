@@ -144,6 +144,64 @@ try {
  await page.fill('#predict-pc-report','실제로 창이 떴다');
  await page.waitForFunction(()=>!document.querySelector('#predict-result').hidden);
  console.log('PASS PC 문법 확인 예제는 PC 실행 결과 입력으로 예측을 비교함');
+ // (#135-3) 변형 미션: 3단원 ex-ml-numpy-exam. 원본 코드로 [확인]을 누르면 "아직"이고,
+ // 미션이 요구하는 대로 코드를 고치면 통과 기록이 남고 새로고침에도 유지된다.
+ await open('/units/unit03/ex-ml-numpy-exam.html');
+ const missionSection=page.locator('#mission-section');
+ assert.equal(await missionSection.isVisible(),true,'미션 섹션이 보여야 함');
+ const missionItems=page.locator('#mission-list .mission-item');
+ assert.equal(await missionItems.count(),2,'ml-numpy-exam에는 미션 2개');
+ const mission1=missionItems.nth(0);
+ assert.match(await mission1.locator('.mission-level').textContent(),/쉬움/);
+ await page.fill('#predict-input','바뀐 결과가 출력된다');
+ await mission1.locator('button').click();
+ await page.waitForFunction(()=>{
+  const el=document.querySelector('#mission-list .mission-item .mission-status');
+  return el && el.textContent && el.textContent.trim()!=='아직 확인하지 않았어요.' && !el.textContent.includes('검사하는 중');
+ });
+ assert.match(await mission1.locator('.mission-status').textContent(),/아직이에요/,'원본 코드로는 미션을 통과할 수 없음');
+ await page.fill('#code-editor',`import numpy as np
+my_array = np.array([10, 20, 30])
+print("NumPy 배열:", my_array)
+
+result = my_array + 10
+print("5를 더한 결과:", result)
+
+array_part1 = np.array([1, 2])
+array_part2 = np.array([3, 4])
+combined_array = np.concatenate((array_part1, array_part2))
+print("합쳐진 배열:", combined_array)
+`);
+ await mission1.locator('button').click();
+ await page.waitForFunction(()=>{
+  const el=document.querySelector('#mission-list .mission-item .mission-status');
+  return el && (el.textContent.includes('통과') || el.textContent.includes('아직이에요'));
+ },{timeout:60000});
+ assert.match(await mission1.locator('.mission-status').textContent(),/통과했어요/,'코드를 고치면 미션 통과');
+ await page.reload();await page.waitForFunction(()=>window.aipyLearning?.ready);
+ assert.match(await page.locator('#mission-list .mission-item').nth(0).locator('.mission-status').textContent(),/통과했어요/,'통과 기록이 새로고침에도 남음');
+ console.log('PASS 변형 미션 확인·통과 기록·새로고침 유지');
+
+ // (#135-2) 2단원 변형 미션(구조 검사): tkinter는 실행하지 않고 ast로 소스만 검사한다.
+ await open('/units/unit02/ex-hello-tk.html');
+ const missionSection2=page.locator('#mission-section');
+ assert.equal(await missionSection2.isVisible(),true,'2단원 예제도 미션 섹션이 보여야 함');
+ const mission2=page.locator('#mission-list .mission-item').first();
+ await mission2.locator('button').click();
+ await page.waitForFunction(()=>{
+  const el=document.querySelector('#mission-list .mission-item .mission-status');
+  return el && el.textContent && el.textContent.trim()!=='아직 확인하지 않았어요.' && !el.textContent.includes('검사하는 중');
+ });
+ assert.match(await mission2.locator('.mission-status').textContent(),/아직이에요/,'원본 title 그대로면 구조 검사 실패');
+ await page.fill('#code-editor',(await page.locator('#code-editor').inputValue()).replace('인사 실습 · tkinter','나의 인사 앱'));
+ await mission2.locator('button').click();
+ await page.waitForFunction(()=>{
+  const el=document.querySelector('#mission-list .mission-item .mission-status');
+  return el && (el.textContent.includes('통과') || el.textContent.includes('아직이에요'));
+ },{timeout:60000});
+ assert.match(await mission2.locator('.mission-status').textContent(),/통과했어요/,'title을 바꾸면 구조 검사 통과');
+ console.log('PASS 2단원 구조 검사 미션(ast) 확인·통과');
+
  // (#132) 직접 해 보세요: 항목별 입력칸 + 제출. 새로고침에도 남고, 제출 후 고치면 '수정됨'.
  await open('/units/unit01/overview.html');
  const taskBox=page.locator('.task-box[data-task-key="u1-overview"]');

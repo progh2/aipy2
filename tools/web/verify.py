@@ -19,6 +19,7 @@ import unit1_pre_api
 import unit1_tips
 import unit4_pre_api
 import unit4_tips
+import missions
 # (#131) unit2_pre_api/unit2_tips/unit3_pre_api/unit3_tips는 pre-api/tips 슬롯을
 # 더는 렌더링하지 않는 2·3단원과 무관해져 여기서는 더 쓰지 않는다(1·4단원은 그대로).
 import os
@@ -85,6 +86,50 @@ for ex in examples.values():
     script='import runpy\nns=runpy.run_path('+repr(ex['entry'])+',run_name="__main__")\nexec('+repr(ex['checks'])+',ns)'
     p=subprocess.run([sys.executable,'-c',script],cwd=d,input=ex['stdin']+'\n',text=True,capture_output=True,timeout=40)
     assert p.returncode==0,(ex['id'],p.stderr)
+# (#135-3) 3단원 변형 미션: solution+check는 통과해야 하고, 원본 예제 코드(수정 전)+check는
+# 반드시 실패해야 한다(그래야 미션이 실제로 뭔가를 바꾸도록 요구한다는 뜻). missions.py에
+# 있는 예제는 모두 mode='web'·pandas/numpy/matplotlib만 쓰는 순수 웹 실행 예제로 골랐다
+# (sklearn 등을 쓰는 예제는 python-worker.js가 브라우저 실행 자체를 막으므로 대상에서 뺐다).
+mission_checked=0
+for eid,mission_list in missions.MISSIONS.items():
+ assert eid in examples,(eid,'missions.py가 존재하지 않는 예제를 가리킴')
+ ex=examples[eid]
+ assert ex['mode']=='web',(eid,'미션은 mode=web 예제에만 둔다')
+ for m in mission_list:
+  assert m['level'] in ('쉬움','보통','도전'),(eid,'미션 난이도 표기 오류',m['level'])
+  assert m['text'].strip() and m['hint'].strip() and m['check'].strip(),(eid,'미션 문구 누락')
+  with tempfile.TemporaryDirectory(prefix='aipy-verify-mission-') as d:
+   for name,src in ex['files'].items():
+    p=Path(d)/name;p.parent.mkdir(parents=True,exist_ok=True)
+    p.write_text(m['solution'] if name==ex['entry'] else src)
+   script='import runpy\nns=runpy.run_path('+repr(ex['entry'])+',run_name="__main__")\nexec('+repr(m['check'])+',ns)'
+   p=subprocess.run([sys.executable,'-c',script],cwd=d,input=ex['stdin']+'\n',text=True,capture_output=True,timeout=40)
+   assert p.returncode==0,(eid,'solution+check 실패',p.stderr)
+  with tempfile.TemporaryDirectory(prefix='aipy-verify-mission-orig-') as d:
+   for name,src in ex['files'].items():
+    p=Path(d)/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(src)
+   script='import runpy\nns=runpy.run_path('+repr(ex['entry'])+',run_name="__main__")\nexec('+repr(m['check'])+',ns)'
+   p=subprocess.run([sys.executable,'-c',script],cwd=d,input=ex['stdin']+'\n',text=True,capture_output=True,timeout=40)
+   assert p.returncode!=0,(eid,'원본 코드가 미션 check를 이미 통과함 — 변형이 아님')
+  mission_checked+=1
+# (#135-2) 2단원 변형 미션(구조 검사): GUI(tkinter) 코드는 display가 없어 실행할 수 없으므로
+# 실제로 실행하지 않고, check 코드가 받는 것과 똑같이 `source`(entry 파일 텍스트)만 주고
+# 그 자리에서 바로 exec한다(부작용 없는 ast.parse 기반 검사라 서브프로세스가 필요 없다).
+for eid,mission_list in missions.AST_MISSIONS.items():
+ assert eid in examples,(eid,'AST_MISSIONS가 존재하지 않는 예제를 가리킴')
+ ex=examples[eid]
+ for m in mission_list:
+  assert m['level'] in ('쉬움','보통','도전'),(eid,'미션 난이도 표기 오류',m['level'])
+  assert m['text'].strip() and m['hint'].strip() and m['check'].strip(),(eid,'미션 문구 누락')
+  ast.parse(m['solution'])
+  try:
+   exec(compile(m['check'],'<verify>','exec'),{'source':ex['files'][ex['entry']]})
+  except AssertionError:
+   pass
+  else:
+   raise AssertionError((eid,'원본 코드가 구조 검사를 이미 통과함 — 변형이 아님'))
+  exec(compile(m['check'],'<verify>','exec'),{'source':m['solution']})
+  mission_checked+=1
 for q in questions:
  if q['options']:assert q['answer'] in q['options']
  if q['starter']:
@@ -1029,4 +1074,4 @@ for p in topic_pages:
   task_boxes_checked+=1
 assert task_boxes_checked>0,'직접 해 보세요 입력칸을 하나도 못 찾음'
 
-print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages; {popped_entry_checked} new-tab practice/example/tutorial/extra links; {len(tut_pages)} tutorial pages; {len(extra_pages)} extra pages; {task_boxes_checked} task boxes.')
+print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages; {popped_entry_checked} new-tab practice/example/tutorial/extra links; {len(tut_pages)} tutorial pages; {len(extra_pages)} extra pages; {task_boxes_checked} task boxes; {mission_checked} missions (solution pass / original fail).')

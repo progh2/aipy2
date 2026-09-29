@@ -976,7 +976,8 @@
           "line": 10,
           "code": "print(\"다듬은 이미지는 새 그림이고, 검출 결과는 위치와 이름입니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-use-fields": {
       "id": "cv-use-fields",
@@ -1027,7 +1028,8 @@
           "line": 8,
           "code": "print(\"촬영 자료의 이용 범위와 틀린 경우의 비용을 함께 적으세요.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-human-vs-computer": {
       "id": "cv-human-vs-computer",
@@ -1090,7 +1092,8 @@
           "line": 9,
           "code": "print(\"조명·가림·각도가 바뀌면 같은 컵도 다른 숫자가 됩니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-pixels": {
       "id": "cv-pixels",
@@ -1158,7 +1161,8 @@
           "line": 5,
           "code": "print(\"height, width:\", len(pixels), len(pixels[0]))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-shape-size": {
       "id": "cv-shape-size",
@@ -1226,7 +1230,8 @@
           "line": 5,
           "code": "print(\"shape:\", shape, \"→ 높이\", height, \"너비\", width, \"채널\", channels)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-bgr-rgb": {
       "id": "cv-bgr-rgb",
@@ -1289,7 +1294,8 @@
           "line": 8,
           "code": "print(\"OpenCV 기본 읽기 BGR:\", bgr)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-pipeline-steps": {
       "id": "cv-pipeline-steps",
@@ -1346,7 +1352,8 @@
           "line": 11,
           "code": "print(\"한 단계가 틀리면 다음 단계도 같이 흔들립니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-plate-stages": {
       "id": "cv-plate-stages",
@@ -1414,7 +1421,8 @@
           "line": 6,
           "code": "read_text = len(plate[\"글자\"]) >= 4"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-eval-criteria": {
       "id": "cv-eval-criteria",
@@ -1471,7 +1479,8 @@
           "line": 9,
           "code": "print(\"실시간 안내면 지연도 보고, 교실 조명이 바뀌면 안정성도 봅니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-pillow": {
       "id": "cv-pillow",
@@ -1540,7 +1549,8 @@
           "line": 7,
           "code": "small = img.resize((120, 80))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-skimage": {
       "id": "cv-skimage",
@@ -1610,7 +1620,8 @@
           "line": 12,
           "code": "axes[1].imshow(edges, cmap=\"gray\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-io": {
       "id": "cv-io",
@@ -1685,7 +1696,8 @@
           "line": 16,
           "code": "matrix = cv2.getRotationMatrix2D(center, 30, 1.0)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-display": {
       "id": "cv-display",
@@ -1744,7 +1756,8 @@
           "line": 6,
           "code": "cv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-threshold-kinds": {
       "id": "cv-threshold-kinds",
@@ -1812,7 +1825,8 @@
           "line": 7,
           "code": "local_t = sum(block) / len(block) - 7"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-filters": {
       "id": "cv-filters",
@@ -1887,7 +1901,8 @@
           "line": 14,
           "code": "otsu, outputs[\"otsu\"] = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-perspective": {
       "id": "cv-perspective",
@@ -1957,7 +1972,8 @@
           "line": 12,
           "code": "result = cv2.warpPerspective(img, M, (200,120))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-click-card": {
       "id": "cv-click-card",
@@ -2021,7 +2037,8 @@
           "line": 27,
           "code": "M = cv2.getPerspectiveTransform(src,dst)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-feature-kinds": {
       "id": "cv-feature-kinds",
@@ -2084,7 +2101,8 @@
           "line": 9,
           "code": "print(\"고른 도구:\", picked)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-features": {
       "id": "cv-features",
@@ -2154,7 +2172,8 @@
           "line": 12,
           "code": "marked = img.copy()"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-haar-vs-id": {
       "id": "cv-haar-vs-id",
@@ -2222,7 +2241,8 @@
           "line": 6,
           "code": "eye_in_roi = (12, 18)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-haar": {
       "id": "cv-haar",
@@ -2291,7 +2311,8 @@
           "line": 10,
           "code": "smile = cv2.CascadeClassifier(cv2.data.haarcascades + \"haarcascade_smile.xml\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-camera": {
       "id": "cv-camera",
@@ -2350,7 +2371,8 @@
           "line": 13,
           "code": "gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-count": {
       "id": "cv-count",
@@ -2401,7 +2423,8 @@
           "line": 4,
           "code": "print(\"Frame\", i, dict(Counter(names)))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-yolo": {
       "id": "cv-yolo",
@@ -2470,7 +2493,8 @@
           "line": 10,
           "code": "cls = int(box.cls.item())"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-yolo-count": {
       "id": "cv-yolo-count",
@@ -2529,7 +2553,8 @@
           "line": 14,
           "code": "counts = Counter(result.names[int(box.cls.item())] for box in result.boxes)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-scan-card": {
       "id": "cv-scan-card",
@@ -2580,7 +2605,8 @@
           "line": 12,
           "code": "print(\"GUI 버튼은 처리 함수만 호출하고, 배열 코드와 창 코드를 나눕니다.\")"
         }
-      ]
+      ],
+      "missions": []
     }
   },
   "questions": [

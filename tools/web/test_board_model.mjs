@@ -24,7 +24,7 @@ const catalog = {
   'units/unit02/index.html': [{id: 'ui', title: 'GUI 시작', examples: ['hello-tk']}]
  },
  examples: {
-  reuse: {title: '한 번 만든 함수를 두 프로그램에서 사용하기', keyLines: [{ref: '1', file: '', line: 1, code: 'import calculator'}]},
+  reuse: {title: '한 번 만든 함수를 두 프로그램에서 사용하기', keyLines: [{ref: '1', file: '', line: 1, code: 'import calculator'}], missions: [{level: '쉬움', text: '더하기 대신 빼기 결과를 출력하세요.'}, {level: '보통', text: '세 번째 함수를 추가하세요.'}]},
   'hello-tk': {title: '첫 인사 앱', keyLines: [{ref: '11', file: '', line: 11, code: 'root = tk.Tk()'}]}
  }
 };
@@ -247,7 +247,7 @@ eq(unsubmittedItem.submittedAt, '', 'task item without submit marker has no time
 // (#135) 예제id → {unit, topicId, title, keyLines}. catalog.topics[...][].examples(#132)에
 // catalog.examples의 제목·keyLines를 합쳐 만든다.
 const exampleIndex = exampleIndexFromCatalog(catalog);
-eq(exampleIndex.reuse, {unit: 1, topicId: 'define', title: '한 번 만든 함수를 두 프로그램에서 사용하기', keyLines: [{ref: '1', file: '', line: 1, code: 'import calculator'}]}, 'example index for reuse');
+eq(exampleIndex.reuse, {unit: 1, topicId: 'define', title: '한 번 만든 함수를 두 프로그램에서 사용하기', keyLines: [{ref: '1', file: '', line: 1, code: 'import calculator'}], missions: [{level: '쉬움', text: '더하기 대신 빼기 결과를 출력하세요.'}, {level: '보통', text: '세 번째 함수를 추가하세요.'}]}, 'example index for reuse');
 eq(exampleIndex['hello-tk'].topicId, 'ui', 'example index topic for hello-tk');
 eq(exampleIndexFromCatalog({}), {}, 'example index empty catalog');
 
@@ -272,6 +272,14 @@ eq(codeItem.text, '계산기 모듈을 불러온다', 'code read item text');
 
 // exampleIndex 없이 호출하면(#132 기존 호출 호환) p-/c- 키는 그냥 무시된다.
 eq(journalRows(predictState, titlesFromCatalog(catalog), {}), [], 'predict keys ignored without exampleIndex');
+
+// (#135-3) 변형 미션 통과. m-{예제id}-{번호} = ISO 시각 문자열 → "예제 ○○ · 미션 n(난이도) 통과 {시각}".
+const missionState = {journals: {'m-reuse-1': '2026-09-29T01:00:00.000Z'}};
+const missionJournals = journalRows(missionState, titlesFromCatalog(catalog), {}, exampleIndex);
+eq(missionJournals.length, 1, 'mission journal grouped under unit 1');
+const missionItem = missionJournals[0].items.find((it) => it.topicId.includes('mission-reuse'));
+eq(missionItem.label, `모듈 정의 · 예제 한 번 만든 함수를 두 프로그램에서 사용하기 · 미션 1(쉬움) 통과 ${new Date('2026-09-29T01:00:00.000Z').toLocaleString('ko-KR')}`, 'mission item label includes level and timestamp');
+eq(journalRows(missionState, titlesFromCatalog(catalog), {}), [], 'mission keys ignored without exampleIndex');
 
 eq(answerRows({}, questions), [], 'answer rows empty state');
 eq(unitAnswerTotals({}, questions), [{unit: 1, total: 2, answered: 0, correct: 0}, {unit: 2, total: 1, answered: 0, correct: 0}], 'unit totals no answers');

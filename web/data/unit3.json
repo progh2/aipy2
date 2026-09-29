@@ -907,7 +907,8 @@
           "line": 13,
           "code": "prediction = model.predict(np.array([[2]]))"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-numpy-exam": {
       "id": "ml-numpy-exam",
@@ -959,6 +960,20 @@
           "file": "",
           "line": 11,
           "code": "combined_array = np.concatenate((array_part1, array_part2))"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "5를 더하는 대신 10을 더하도록 바꾸고, result가 [20, 30, 40]이 되게 하세요.",
+          "hint": "result = my_array + 5 줄의 5를 10으로 바꾸면 됩니다.",
+          "check": "assert list(result) == [20, 30, 40], \"result가 [20, 30, 40]이 아닙니다.\""
+        },
+        {
+          "level": "보통",
+          "text": "array_part1과 array_part2를 이어붙일 때 array_part2를 한 번 더 이어붙여, combined_array가 [1, 2, 3, 4, 3, 4]가 되도록 바꾸세요.",
+          "hint": "np.concatenate((a, b))의 튜플 안에 array_part2를 한 번 더 넣어 보세요: (array_part1, array_part2, array_part2)",
+          "check": "assert list(combined_array) == [1, 2, 3, 4, 3, 4], \"combined_array가 [1, 2, 3, 4, 3, 4]가 아닙니다.\""
         }
       ]
     },
@@ -1013,6 +1028,20 @@
           "line": 5,
           "code": "print(my_df)"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "'민수', 88점인 학생을 한 명 추가해 표에 3명이 나오도록 하세요.",
+          "hint": "data 딕셔너리의 '이름' 리스트에 '민수'를, '점수' 리스트에 88을 추가하세요.",
+          "check": "assert len(my_df) == 3 and 88 in list(my_df[\"점수\"]), \"3명 표에 88점 학생이 있어야 합니다.\""
+        },
+        {
+          "level": "보통",
+          "text": "모든 학생에게 '등급' 칼럼을 추가하고 값을 전부 'A'로 채우세요.",
+          "hint": "my_df['등급'] = 'A' 한 줄을 표를 만든 뒤에 추가하면 모든 행에 같은 값이 채워집니다.",
+          "check": "assert \"등급\" in my_df.columns and list(my_df[\"등급\"]) == [\"A\"]*len(my_df), \"등급 칼럼이 모두 A여야 합니다.\""
+        }
       ]
     },
     "ml-matplot-exam": {
@@ -1065,6 +1094,20 @@
           "file": "",
           "line": 7,
           "code": "data_for_plot = pd.DataFrame({'fruits': ['apple', 'banana', 'apple']})"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "과일 목록에 'cherry'를 추가해 data_for_plot이 4개 행이 되도록 하세요.",
+          "hint": "'fruits' 리스트 ['apple', 'banana', 'apple']에 'cherry'를 추가하세요.",
+          "check": "assert data_for_plot.shape == (4, 1), \"data_for_plot이 4행이어야 합니다.\""
+        },
+        {
+          "level": "보통",
+          "text": "banana를 두 번 더 추가해서 banana 개수가 apple 개수보다 많아지게 하세요.",
+          "hint": "'fruits' 리스트에 'banana'를 두 번 더 넣으면 banana 3개, apple 2개가 됩니다.",
+          "check": "assert (data_for_plot[\"fruits\"]==\"banana\").sum() > (data_for_plot[\"fruits\"]==\"apple\").sum(), \"banana가 apple보다 많아야 합니다.\""
         }
       ]
     },
@@ -1119,7 +1162,8 @@
           "line": 13,
           "code": "df_excel = pd.read_excel('data.xlsx')"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-head-describe-info": {
       "id": "ml-head-describe-info",
@@ -1171,6 +1215,20 @@
           "file": "",
           "line": 8,
           "code": "print(df.head(3))"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "Score 88점, City 'Seoul'인 'Grace'라는 학생을 추가해 표가 7명이 되도록 하세요.",
+          "hint": "세 리스트(Name, Score, City) 끝에 각각 'Grace', 88, 'Seoul'을 추가하세요.",
+          "check": "assert df.shape == (7, 3) and \"Grace\" in list(df[\"Name\"]), \"Grace가 포함된 7행 표여야 합니다.\""
+        },
+        {
+          "level": "보통",
+          "text": "City별 인원 수를 value_counts()로 구해 city_counts 변수에 저장하세요.",
+          "hint": "df['City'].value_counts()를 city_counts 변수에 담고 print로 확인하세요.",
+          "check": "assert city_counts[\"Seoul\"] == 3, \"Seoul이 3명이어야 합니다.\""
         }
       ]
     },
@@ -1225,6 +1283,20 @@
           "line": 28,
           "code": "df_fill_mean = df_missing.fillna({'Score': score_mean})"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "Score의 결측치를 0 대신 -1로 채우는 df_fill_neg를 만드세요.",
+          "hint": "df_missing.fillna({'Score': -1})을 df_fill_neg에 저장하세요.",
+          "check": "assert df_fill_neg[\"Score\"][1] == -1, \"Bob의 Score가 -1로 채워져야 합니다.\""
+        },
+        {
+          "level": "보통",
+          "text": "평균 대신 Score 열의 최솟값으로 결측치를 채우는 score_min, df_fill_min을 만드세요.",
+          "hint": "df_missing['Score'].min()을 score_min에, df_missing.fillna({'Score': score_min})을 df_fill_min에 저장하세요.",
+          "check": "assert score_min == 70 and df_fill_min[\"Score\"][1] == 70, \"최솟값 70으로 채워져야 합니다.\""
+        }
       ]
     },
     "ml-normalization": {
@@ -1278,7 +1350,8 @@
           "line": 11,
           "code": "df_normalized = pd.DataFrame(scaler_minmax.fit_transform(df_norm), columns=df_norm.columns)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-standardization": {
       "id": "ml-standardization",
@@ -1331,7 +1404,8 @@
           "line": 14,
           "code": "df_standardized = pd.DataFrame(df_standardized, columns=df.columns)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-one-hot-encoding": {
       "id": "ml-one-hot-encoding",
@@ -1383,6 +1457,20 @@
           "file": "",
           "line": 9,
           "code": "df_encoded = pd.get_dummies(df_onehot, columns=['도시', '직업'], drop_first=True, dtype=int)"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "drop_first=True를 False로 바꿔 '도시_부산' 칼럼도 남도록 하세요.",
+          "hint": "get_dummies(...) 호출의 drop_first=True를 drop_first=False로 바꾸세요.",
+          "check": "assert \"도시_부산\" in df_encoded.columns, \"도시_부산 칼럼이 있어야 합니다.\""
+        },
+        {
+          "level": "보통",
+          "text": "직업이 '자영업'이고 도시가 '서울'인 사람을 한 명 추가해 df_onehot이 6명이 되도록 하세요.",
+          "hint": "'도시' 리스트에 '서울', '직업' 리스트에 '자영업'을 추가하세요.",
+          "check": "assert df_onehot.shape[0] == 6, \"df_onehot이 6행이어야 합니다.\""
         }
       ]
     },
@@ -1437,7 +1525,8 @@
           "line": 7,
           "code": "X = df[['공부 시간', '수면 시간']]"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-knn-exam": {
       "id": "ml-knn-exam",
@@ -1490,7 +1579,8 @@
           "line": 20,
           "code": "y_pred = knn_model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-linear-regression": {
       "id": "ml-linear-regression",
@@ -1543,7 +1633,8 @@
           "line": 22,
           "code": "y_pred = linear_model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-regression-metrics": {
       "id": "ml-regression-metrics",
@@ -1596,7 +1687,8 @@
           "line": 17,
           "code": "y_pred = model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-clustering": {
       "id": "ml-clustering",
@@ -1649,7 +1741,8 @@
           "line": 25,
           "code": "scatter = plt.scatter(X[:, 0], X[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.8)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-performance-metrics": {
       "id": "ml-performance-metrics",
@@ -1702,7 +1795,8 @@
           "line": 17,
           "code": "y_pred = model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-train-test-split2": {
       "id": "ml-train-test-split2",
@@ -1755,7 +1849,8 @@
           "line": 17,
           "code": "r2_test = linear_model.score(X_test, y_test)   # 테스트 데이터 R²"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-cross-val-score": {
       "id": "ml-cross-val-score",
@@ -1808,7 +1903,8 @@
           "line": 12,
           "code": "scores = cross_val_score(linear_model, X, y, scoring='r2', cv=5)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-grid-search-cv": {
       "id": "ml-grid-search-cv",
@@ -1861,7 +1957,8 @@
           "line": 12,
           "code": "grid_search = GridSearchCV(knn, param_grid, cv=5, scoring='accuracy')"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-learning-curve": {
       "id": "ml-learning-curve",
@@ -1914,7 +2011,8 @@
           "line": 18,
           "code": "test_scores_mean = np.mean(test_scores, axis=1)"
         }
-      ]
+      ],
+      "missions": []
     }
   },
   "questions": [

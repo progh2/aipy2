@@ -56,6 +56,14 @@ try:
             if _name.endswith('.py'):
                 ast.parse(_source, filename=_name)
         print('문법 확인 통과 · 실제 동작은 PC에서 실행하여 확인하세요.')
+        # (#135-2) GUI(tkinter) 예제는 창을 실제로 띄울 수 없어 실행하지 않는다. 대신
+        # 학생 코드 문자열(source)을 ast로 구조 검사한다 — 기존 mode='pc' 예제는
+        # checks가 비어 있어(대부분) 이 분기가 그대로 지나간다.
+        if _lab.get('checks'):
+            _check_ns = {'source': _lab['files'].get(_lab['entry'], ''), 'files': _lab['files']}
+            exec(compile(_lab['checks'], '<학습 검사>', 'exec'), _check_ns)
+            _result['checked'] = True
+            print('✓ 준비된 구조 검사를 통과했습니다.')
     else:
         _namespace = runpy.run_path(os.path.join(_base, _lab['entry']), run_name='__main__')
         if _lab.get('checks'):

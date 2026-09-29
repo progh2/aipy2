@@ -16,7 +16,7 @@ import {
  questionStats, classQuestionTotals, classCsv, cardAccuracyLabel, formatRate,
  heatmapTone, historyItems, answerRows, filterAnswerRows, groupAnswerRowsByUnit,
  unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
-} from './board-model.js?v=q135';
+} from './board-model.js?v=q135b';
 import {renderAnswerUnitGroup, renderJournalUnitGroup} from './answer-view.js';
 
 const $ = (id) => document.getElementById(id);
