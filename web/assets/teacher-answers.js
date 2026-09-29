@@ -12,8 +12,10 @@ import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, formatRate,
  cardAccuracyLabel, answerRows, unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
 } from './board-model.js?v=q135b';
-import {renderAnswerRow, renderJournalUnitGroup} from './answer-view.js';
-import {groupAnswerRowsBySubunit, studentSummaryLabel, hasAnswerRecord} from './teacher-answers-model.js';
+import {renderAnswerRow, renderJournalUnitGroup, renderProjectUnitGroup} from './answer-view.js?v=q135d';
+import {
+ groupAnswerRowsBySubunit, studentSummaryLabel, hasAnswerRecord, groupProjectRowsBySubunit, pendingProjectUnits
+} from './teacher-answers-model.js?v=q135d';
 
 const $ = (id) => document.getElementById(id);
 const prefix = document.body.dataset.prefix || '';
@@ -37,6 +39,9 @@ let progressRows = [];
 let selectedKey = '';
 // uid -> {status: 'loading'|'ready'|'empty'|'error', data?}. students/{uid}/state/current를 학생당 1회만 조회(#104와 동일 규칙).
 let detailStateCache = new Map();
+// unit(1~4) -> {status: 'loading'|'ready'|'error', data?}. 예제 원본 코드는 catalog.json에 없고
+// data/unit{n}.json에만 있어(#135-4), 학생 프로젝트가 있는 단원만 그때 그때 받아 캐시한다.
+let unitFilesCache = new Map();
 
 function note(id, text) {
  const el = $(id);
@@ -121,6 +126,39 @@ function refreshDetailIfSelected(uid) {
  if (card && card.uid === uid) paintDetail(card);
 }
 
+// data/unit{n}.json을 단원당 1회만 받아 캐시한다. 실패해도 다시 시도하지 않는다(다른 캐시들과 동일 규칙).
+async function ensureUnitFiles(unit) {
+ if (!unit || unitFilesCache.has(unit)) return;
+ unitFilesCache.set(unit, {status: 'loading'});
+ try {
+  const data = await (await fetch(`${prefix}data/unit${unit}.json`)).json();
+  unitFilesCache.set(unit, {status: 'ready', data});
+ } catch (error) {
+  console.warn('[teacher-answers] unit', unit, error);
+  unitFilesCache.set(unit, {status: 'error'});
+ }
+ if (selectedKey) {
+  const card = liveCards().find((item) => item.key === selectedKey);
+  if (card) paintDetail(card);
+ }
+}
+
+// state.projects에 있는 예제마다 원본 files를 모은다. 아직 못 받은 단원은 fetch를 걸어 두고
+// (도착하면 다시 그린다) 이번 그리기에서는 조용히 건너뛴다.
+function originalFilesFor(state) {
+ const result = {};
+ for (const eid of Object.keys((state && state.projects) || {})) {
+  const meta = exampleIndex[eid];
+  if (!meta) continue;
+  const entry = unitFilesCache.get(meta.unit);
+  if (entry && entry.status === 'ready') {
+   const files = entry.data.examples && entry.data.examples[eid] && entry.data.examples[eid].files;
+   if (files) result[eid] = files;
+  }
+ }
+ return result;
+}
+
 function reloadButton(card) {
  const again = node('button', 'answer-filter-btn answer-reload', '↻ 새로 읽기');
  again.type = 'button';
@@ -194,6 +232,13 @@ function paintDetail(card) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
  }
+ const originalFiles = originalFilesFor(state);
+ for (const unit of pendingProjectUnits(state.projects, exampleIndex, originalFiles)) ensureUnitFiles(unit);
+ const projectGroups = groupProjectRowsBySubunit(state.projects, exampleIndex, originalFiles, titles);
+ if (projectGroups.length) {
+  wrap.append(node('h3', '', '예제 코드'));
+  for (const group of projectGroups) wrap.append(renderProjectUnitGroup(group));
+ }
  body.replaceChildren(wrap);
 }
 
@@ -204,6 +249,7 @@ function stop() {
  progressRows = [];
  selectedKey = '';
  detailStateCache = new Map();
+ unitFilesCache = new Map();
 }
 
 // roster·progress는 학년 단위로만 구독하고(#125-4 패턴), 화면 필터는 buildStudentCards의
@@ -271,10 +317,38 @@ function renderAnswersDemo() {
    answers: {
     'u1-q001': {status: 'done', attempts: 1, value: '저장한 Python 파일은 모듈이 될 수 없습니다.'}
    },
-   journals: {'u1-learn': '모듈을 나눠 쓰는 이유를 배웠다.'}
+   journals: {'u1-learn': '모듈을 나눠 쓰는 이유를 배웠다.'},
+   // #135-4 데모: 원본을 고친 예제(copy-twice) 배지가 보이도록 print 한 줄을 더했다.
+   projects: {
+    'copy-twice': {
+     files: {
+      'main.py': 'import homework1\nimport homework2\nprint("두 숙제가 각자 add를 가지고 있습니다.")\nprint("고쳐 봤어요")\n',
+      'homework1.py': 'def add(a, b):\n    return a + b\n\nprint("숙제1:", add(3, 5))\n',
+      'homework2.py': 'def add(a, b):\n    return a + b\n\nprint("숙제2:", add(10, -2))\n'
+     },
+     entry: 'main.py'
+    }
+   }
   }
  });
- detailStateCache.set('demo-2', {status: 'empty'});
+ // #135-4 데모: 원본과 똑같이 저장한 예제 배지("원본과 동일")도 함께 보인다.
+ detailStateCache.set('demo-2', {
+  status: 'ready',
+  data: {
+   answers: {},
+   journals: {},
+   projects: {
+    'copy-twice': {
+     files: {
+      'main.py': 'import homework1\nimport homework2\nprint("두 숙제가 각자 add를 가지고 있습니다.")\n',
+      'homework1.py': 'def add(a, b):\n    return a + b\n\nprint("숙제1:", add(3, 5))\n',
+      'homework2.py': 'def add(a, b):\n    return a + b\n\nprint("숙제2:", add(10, -2))\n'
+     },
+     entry: 'main.py'
+    }
+   }
+  }
+ });
  paintRosterList();
 }
 

@@ -17,7 +17,8 @@ import {
  heatmapTone, historyItems, answerRows, filterAnswerRows, groupAnswerRowsByUnit,
  unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
 } from './board-model.js?v=q135b';
-import {renderAnswerUnitGroup, renderJournalUnitGroup} from './answer-view.js';
+import {renderAnswerUnitGroup, renderJournalUnitGroup, renderProjectUnitGroup} from './answer-view.js?v=q135d';
+import {groupProjectRowsBySubunit, pendingProjectUnits} from './teacher-answers-model.js?v=q135d';
 
 const $ = (id) => document.getElementById(id);
 const prefix = document.body.dataset.prefix || '';
@@ -48,6 +49,9 @@ let selectedKey = '';
 // uid -> {status: 'loading'|'ready'|'empty'|'error', data?}. students/{uid}/state/current를 학생당 1회만 조회.
 let detailStateCache = new Map();
 let detailFilter = 'all';
+// unit(1~4) -> {status: 'loading'|'ready'|'error', data?}. 예제 원본 코드는 data/unit{n}.json에만
+// 있어(#135-4), 학생 프로젝트가 있는 단원만 그때 그때 받아 캐시한다.
+let unitFilesCache = new Map();
 
 function note(id, text) {
  const el = $(id);
@@ -497,6 +501,39 @@ function refreshDetailIfSelected(uid) {
  if (card && card.uid === uid) paintDetail(card, {keepFocus: true});
 }
 
+// data/unit{n}.json을 단원당 1회만 받아 캐시한다. 실패해도 다시 시도하지 않는다(다른 캐시들과 동일 규칙).
+async function ensureUnitFiles(unit) {
+ if (!unit || unitFilesCache.has(unit)) return;
+ unitFilesCache.set(unit, {status: 'loading'});
+ try {
+  const data = await (await fetch(`${prefix}data/unit${unit}.json`)).json();
+  unitFilesCache.set(unit, {status: 'ready', data});
+ } catch (error) {
+  console.warn('[teacher-board] unit', unit, error);
+  unitFilesCache.set(unit, {status: 'error'});
+ }
+ if (selectedKey) {
+  const card = liveCards().find((item) => item.key === selectedKey);
+  if (card) paintDetail(card, {keepFocus: true});
+ }
+}
+
+// state.projects에 있는 예제마다 원본 files를 모은다. 아직 못 받은 단원은 fetch를 걸어 두고
+// (도착하면 다시 그린다) 이번 그리기에서는 조용히 건너뛴다.
+function originalFilesFor(state) {
+ const result = {};
+ for (const eid of Object.keys((state && state.projects) || {})) {
+  const meta = exampleIndex[eid];
+  if (!meta) continue;
+  const entry = unitFilesCache.get(meta.unit);
+  if (entry && entry.status === 'ready') {
+   const files = entry.data.examples && entry.data.examples[eid] && entry.data.examples[eid].files;
+   if (files) result[eid] = files;
+  }
+ }
+ return result;
+}
+
 function renderAnswerSection(card) {
  const wrap = node('div', 'student-detail-answers');
  const filterBar = node('div', 'answer-filter-bar');
@@ -551,6 +588,13 @@ function renderAnswerSection(card) {
  if (journals.length) {
   wrap.append(node('h3', '', '학습 저널'));
   for (const jr of journals) wrap.append(renderJournalUnitGroup(jr));
+ }
+ const originalFiles = originalFilesFor(state);
+ for (const unit of pendingProjectUnits(state.projects, exampleIndex, originalFiles)) ensureUnitFiles(unit);
+ const projectGroups = groupProjectRowsBySubunit(state.projects, exampleIndex, originalFiles, titles);
+ if (projectGroups.length) {
+  wrap.append(node('h3', '', '예제 코드'));
+  for (const group of projectGroups) wrap.append(renderProjectUnitGroup(group));
  }
  return wrap;
 }
@@ -653,6 +697,7 @@ function stop() {
  filterTopic = '';
  selectedKey = '';
  detailStateCache = new Map();
+ unitFilesCache = new Map();
  detailFilter = 'all';
  paintUnderstanding();
  paintHelp();

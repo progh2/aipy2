@@ -58,6 +58,28 @@ export function renderAnswerUnitGroup(unit, unitRows, totalInfo, {open = false, 
  return details;
 }
 
+// 예제 코드 수정 배지 하나. diff는 code-diff-model.js의 projectDiffSummary() 결과.
+function projectDiffBadge(diff) {
+ if (diff.same) return node('span', 'answer-status answer-status--muted', '원본과 동일');
+ return node('span', 'answer-status answer-status--good', `+${diff.added} −${diff.removed}줄 수정`);
+}
+
+// 예제 코드 그룹 1개(teacher-answers-model.js groupProjectRowsBySubunit()의 한 항목).
+export function renderProjectUnitGroup(group) {
+ const details = node('details', 'answer-unit-group');
+ details.append(node('summary', '', `${UNIT_ROMAN[group.unit] || group.unit} 단원 · ${group.topicTitle || group.topic || '(주제 없음)'}`));
+ const ul = node('ul', 'answer-row-list');
+ for (const item of group.items) {
+  const li = node('li', 'answer-row');
+  const head = node('div', 'answer-row-head');
+  head.append(node('span', 'answer-row-info', item.title), projectDiffBadge(item.diff));
+  li.append(head);
+  ul.append(li);
+ }
+ details.append(ul);
+ return details;
+}
+
 // 저널 그룹 1개(journalRows()의 한 항목 → details.answer-unit-group).
 export function renderJournalUnitGroup(jr) {
  const details = node('details', 'answer-unit-group');
