@@ -11,7 +11,7 @@ import {titlesFromCatalog, tasksFromCatalog} from './understanding-model.js';
 import {
  topicListFromCatalog, buildStudentCards, sortStudentCards, formatRate,
  cardAccuracyLabel, answerRows, unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
-} from './board-model.js?v=q135';
+} from './board-model.js?v=q135b';
 import {renderAnswerRow, renderJournalUnitGroup} from './answer-view.js';
 import {groupAnswerRowsBySubunit, studentSummaryLabel, hasAnswerRecord} from './teacher-answers-model.js';
 

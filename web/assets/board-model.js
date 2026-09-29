@@ -27,7 +27,7 @@ export function exampleIndexFromCatalog(catalog) {
     for (const eid of row.examples) {
      if (typeof eid !== 'string' || !eid) continue;
      const meta = exampleMeta[eid] || {};
-     index[eid] = {unit, topicId: row.id, title: meta.title || eid, keyLines: Array.isArray(meta.keyLines) ? meta.keyLines : []};
+     index[eid] = {unit, topicId: row.id, title: meta.title || eid, keyLines: Array.isArray(meta.keyLines) ? meta.keyLines : [], missions: Array.isArray(meta.missions) ? meta.missions : []};
     }
    }
   }
@@ -512,6 +512,7 @@ export function journalRows(state, titles, tasks, exampleIndex) {
  const taskSubmitted = new Map(); // `${unit}::${topicId}` -> ISO 시각 문자열
  const predictEntries = new Map(); // exampleId -> {predict, match, why, actual}
  const codeReadEntries = new Map(); // exampleId -> [{ref, text}]
+ const missionEntries = new Map(); // exampleId -> [{n, at}]
  for (const [key, text] of Object.entries(journals)) {
   const value = typeof text === 'string' ? text.trim() : '';
   const submitMatch = TASK_SUBMIT_RE.exec(key);
@@ -536,6 +537,15 @@ export function journalRows(state, titles, tasks, exampleIndex) {
    if (found && found.suffix) {
     if (!codeReadEntries.has(found.id)) codeReadEntries.set(found.id, []);
     codeReadEntries.get(found.id).push({ref: found.suffix, text: value});
+    continue;
+   }
+  }
+  // (#135-3) 변형 미션 통과 시각. m-{예제id}-{번호} = ISO 시각 문자열.
+  if (exampleIds.length && key.startsWith('m-') && value) {
+   const found = matchExampleId(key.slice(2), exampleIds);
+   if (found && /^\d+$/.test(found.suffix)) {
+    if (!missionEntries.has(found.id)) missionEntries.set(found.id, []);
+    missionEntries.get(found.id).push({n: Number(found.suffix), at: value});
     continue;
    }
   }
@@ -603,6 +613,21 @@ export function journalRows(state, titles, tasks, exampleIndex) {
     label: `${topicTitle(`u${meta.unit}-${meta.topicId}`, titles)} · 예제 ${meta.title} · 줄 ${ref}${code ? ` \`${code}\`` : ''} 설명`,
     text,
     topicId: `${meta.topicId}-code-${eid}-${ref}`
+   });
+  }
+ }
+ for (const [eid, entries] of missionEntries.entries()) {
+  const meta = examples[eid];
+  if (!meta) continue;
+  for (const {n, at} of entries) {
+   const level = (meta.missions && meta.missions[n - 1] && meta.missions[n - 1].level) || '';
+   const when = at ? new Date(at).toLocaleString('ko-KR') : '';
+   if (!topicItems.has(meta.unit)) topicItems.set(meta.unit, []);
+   topicItems.get(meta.unit).push({
+    key: `${meta.topicId}-mission-${eid}-${n}`,
+    label: `${topicTitle(`u${meta.unit}-${meta.topicId}`, titles)} · 예제 ${meta.title} · 미션 ${n}${level ? `(${level})` : ''} 통과 ${when}`,
+    text: '통과',
+    topicId: `${meta.topicId}-mission-${eid}-${n}`
    });
   }
  }

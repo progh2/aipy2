@@ -664,7 +664,8 @@
           "line": 1,
           "code": "def add(a, b):"
         }
-      ]
+      ],
+      "missions": []
     },
     "sum-input": {
       "id": "sum-input",
@@ -703,7 +704,8 @@
           "line": 3,
           "code": "n2 = int(input(\"두 번째 수: \"))"
         }
-      ]
+      ],
+      "missions": []
     },
     "circle-top": {
       "id": "circle-top",
@@ -742,7 +744,8 @@
           "line": 4,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "circle-function": {
       "id": "circle-function",
@@ -781,7 +784,8 @@
           "line": 4,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "circle-mixed": {
       "id": "circle-mixed",
@@ -820,7 +824,8 @@
           "line": 4,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "class-module": {
       "id": "class-module",
@@ -859,7 +864,8 @@
           "line": 7,
           "code": "def area(self):"
         }
-      ]
+      ],
+      "missions": []
     },
     "main-guard": {
       "id": "main-guard",
@@ -898,7 +904,8 @@
           "line": 5,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "rectangle": {
       "id": "rectangle",
@@ -931,7 +938,8 @@
           "line": 4,
           "code": "if __name__ == \"__main__\":"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-0": {
       "id": "import-0",
@@ -970,7 +978,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-1": {
       "id": "import-1",
@@ -1009,7 +1018,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-2": {
       "id": "import-2",
@@ -1048,7 +1058,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-3": {
       "id": "import-3",
@@ -1087,7 +1098,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-4": {
       "id": "import-4",
@@ -1126,7 +1138,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-0": {
       "id": "package-0",
@@ -1165,7 +1178,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-1": {
       "id": "package-1",
@@ -1204,7 +1218,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-2": {
       "id": "package-2",
@@ -1243,7 +1258,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-3": {
       "id": "package-3",
@@ -1282,7 +1298,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-4": {
       "id": "package-4",
@@ -1321,7 +1338,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "all": {
       "id": "all",
@@ -1360,7 +1378,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "animal-check": {
       "id": "animal-check",
@@ -1399,7 +1418,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "stars": {
       "id": "stars",
@@ -1438,7 +1458,8 @@
           "line": 5,
           "code": "if __name__ == \"__main__\":"
         }
-      ]
+      ],
+      "missions": []
     },
     "os": {
       "id": "os",
@@ -1477,7 +1498,8 @@
           "line": 7,
           "code": "print(os.listdir(\"practice\"))"
         }
-      ]
+      ],
+      "missions": []
     },
     "os-pc": {
       "id": "os-pc",
@@ -1510,7 +1532,8 @@
           "line": 4,
           "code": "os.system(\"dir\" if os.name == \"nt\" else \"ls\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "sys": {
       "id": "sys",
@@ -1549,7 +1572,8 @@
           "line": 6,
           "code": "print(\"이 줄은 실행되지 않습니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "math": {
       "id": "math",
@@ -1588,7 +1612,8 @@
           "line": 5,
           "code": "print(\"내림:\", math.floor(3.5))"
         }
-      ]
+      ],
+      "missions": []
     },
     "random": {
       "id": "random",
@@ -1627,7 +1652,8 @@
           "line": 11,
           "code": "print(random.sample(list(range(1, 10)), 3))"
         }
-      ]
+      ],
+      "missions": []
     },
     "dice": {
       "id": "dice",
@@ -1660,7 +1686,8 @@
           "line": 6,
           "code": "print(\"주사위 값:\", random.randrange(1, n + 1))"
         }
-      ]
+      ],
+      "missions": []
     },
     "gift": {
       "id": "gift",
@@ -1687,7 +1714,8 @@
           "line": 3,
           "code": "print(random.choice(presents))"
         }
-      ]
+      ],
+      "missions": []
     },
     "datetime": {
       "id": "datetime",
@@ -1726,7 +1754,8 @@
           "line": 9,
           "code": "start = datetime(now.year, 1, 1)"
         }
-      ]
+      ],
+      "missions": []
     },
     "christmas": {
       "id": "christmas",
@@ -1765,7 +1794,8 @@
           "line": 6,
           "code": "print(\"다음 크리스마스까지\", (target - today).days, \"일\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "thirdparty": {
       "id": "thirdparty",
@@ -1792,7 +1822,8 @@
           "line": 3,
           "code": "print(scores.mean())"
         }
-      ]
+      ],
+      "missions": []
     },
     "final-output": {
       "id": "final-output",
@@ -1831,7 +1862,8 @@
           "line": 1,
           "code": "def subnum(a, b):"
         }
-      ]
+      ],
+      "missions": []
     },
     "hello-tk": {
       "id": "hello-tk",
@@ -1869,6 +1901,12 @@
           "file": "",
           "line": 14,
           "code": "tk.Label(root, text=\"나의 첫 GUI\", font=(\"sans-serif\", 20)).pack(pady=16)"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "창 제목(title)을 '나의 인사 앱'으로 바꾸세요."
         }
       ]
     },
@@ -1909,7 +1947,8 @@
           "line": 15,
           "code": "ttk.Label(root, text=\"나의 첫 GUI\", font=(\"sans-serif\", 20)).pack(pady=16)"
         }
-      ]
+      ],
+      "missions": []
     },
     "hello-pyside": {
       "id": "hello-pyside",
@@ -1948,7 +1987,8 @@
           "line": 18,
           "code": "entry = QLineEdit()"
         }
-      ]
+      ],
+      "missions": []
     },
     "hello-pyqt": {
       "id": "hello-pyqt",
@@ -1987,7 +2027,8 @@
           "line": 18,
           "code": "entry = QLineEdit()"
         }
-      ]
+      ],
+      "missions": []
     },
     "hello-wx": {
       "id": "hello-wx",
@@ -2026,7 +2067,8 @@
           "line": 7,
           "code": "entry = wx.TextCtrl(panel)"
         }
-      ]
+      ],
+      "missions": []
     },
     "hello-kivy": {
       "id": "hello-kivy",
@@ -2065,7 +2107,8 @@
           "line": 21,
           "code": "button.bind(on_press=self.greet)"
         }
-      ]
+      ],
+      "missions": []
     },
     "widgets-tk": {
       "id": "widgets-tk",
@@ -2103,6 +2146,12 @@
           "file": "",
           "line": 7,
           "code": "tk.Entry(frame).pack(fill=\"x\")"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "Listbox에 새 항목 '컴퓨터 비전'을 추가하세요."
         }
       ]
     },
@@ -2143,7 +2192,8 @@
           "line": 15,
           "code": "checked = QCheckBox(\"학습 완료\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "layout-tk": {
       "id": "layout-tk",
@@ -2181,6 +2231,12 @@
           "file": "",
           "line": 8,
           "code": "tk.Button(controls, text=\"좁게\", command=lambda: root.geometry(\"340x590\")).pack(side=\"left\")"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "'좁게' 버튼을 눌렀을 때의 창 크기를 340x590에서 300x590으로 줄이세요."
         }
       ]
     },
@@ -2221,7 +2277,8 @@
           "line": 12,
           "code": "grid = QGridLayout()"
         }
-      ]
+      ],
+      "missions": []
     },
     "memo-tk": {
       "id": "memo-tk",
@@ -2259,6 +2316,12 @@
           "file": "",
           "line": 21,
           "code": "text_area = tk.Text(window, wrap=\"word\")"
+        }
+      ],
+      "missions": [
+        {
+          "level": "보통",
+          "text": "파일 메뉴에 '새로 만들기' 항목을 하나 더 추가하세요."
         }
       ]
     },
@@ -2299,7 +2362,8 @@
           "line": 33,
           "code": "Path(path).write_text(self.editor.toPlainText(), encoding=\"utf-8\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "core": {
       "id": "core",
@@ -2338,7 +2402,8 @@
           "line": 14,
           "code": "names = list(dict.fromkeys(name.strip() for name in names if name.strip()))"
         }
-      ]
+      ],
+      "missions": []
     },
     "project-tk": {
       "id": "project-tk",
@@ -2377,7 +2442,8 @@
           "line": 22,
           "code": "entry = tk.Entry(root)"
         }
-      ]
+      ],
+      "missions": []
     },
     "project-pyside": {
       "id": "project-pyside",
@@ -2416,7 +2482,8 @@
           "line": 21,
           "code": "self.result = QLabel(\"결과가 여기에 표시됩니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "memo-plus-tk": {
       "id": "memo-plus-tk",
@@ -2455,7 +2522,8 @@
           "line": 55,
           "code": "content = Path(name).read_text(encoding=\"utf-8\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "memo-plus-pyside": {
       "id": "memo-plus-pyside",
@@ -2494,7 +2562,8 @@
           "line": 51,
           "code": "content = Path(name).read_text(encoding=\"utf-8\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "copy-twice": {
       "id": "copy-twice",
@@ -2533,7 +2602,8 @@
           "line": 1,
           "code": "def add(a, b):"
         }
-      ]
+      ],
+      "missions": []
     },
     "two-adds": {
       "id": "two-adds",
@@ -2572,7 +2642,8 @@
           "line": 1,
           "code": "def add(n):"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-clash": {
       "id": "import-clash",
@@ -2611,7 +2682,8 @@
           "line": 1,
           "code": "def hello():"
         }
-      ]
+      ],
+      "missions": []
     },
     "sys-modules": {
       "id": "sys-modules",
@@ -2650,7 +2722,8 @@
           "line": 6,
           "code": "import math"
         }
-      ]
+      ],
+      "missions": []
     },
     "math-circle": {
       "id": "math-circle",
@@ -2689,7 +2762,8 @@
           "line": 8,
           "code": "print(\"거듭제곱 연산자:\", 2 ** 10, \" / math.pow:\", math.pow(2, 10))"
         }
-      ]
+      ],
+      "missions": []
     },
     "math-signed": {
       "id": "math-signed",
@@ -2722,7 +2796,8 @@
           "line": 4,
           "code": "print(\"0에 가까운 쪽이 올림인가?\", math.ceil(-3.5) == -3)"
         }
-      ]
+      ],
+      "missions": []
     },
     "random-seed": {
       "id": "random-seed",
@@ -2761,7 +2836,8 @@
           "line": 8,
           "code": "print(\"같은가?\", first == second)"
         }
-      ]
+      ],
+      "missions": []
     },
     "random-sample": {
       "id": "random-sample",
@@ -2800,7 +2876,8 @@
           "line": 7,
           "code": "copied = names.copy()"
         }
-      ]
+      ],
+      "missions": []
     },
     "weekday-fixed": {
       "id": "weekday-fixed",
@@ -2839,7 +2916,8 @@
           "line": 5,
           "code": "print(\"weekday()는 월요일 0:\", day.weekday())"
         }
-      ]
+      ],
+      "missions": []
     },
     "pypi-names": {
       "id": "pypi-names",
@@ -2872,7 +2950,8 @@
           "line": 10,
           "code": "print(\"pip 명령은 터미널에서 실행합니다. 코드 입력창이 아닙니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "stdlib-json": {
       "id": "stdlib-json",
@@ -2911,7 +2990,8 @@
           "line": 5,
           "code": "print(json.loads(text)[\"scores\"])"
         }
-      ]
+      ],
+      "missions": []
     },
     "project-roll": {
       "id": "project-roll",
@@ -2950,7 +3030,8 @@
           "line": 14,
           "code": "names = list(dict.fromkeys(name.strip() for name in names if name.strip()))"
         }
-      ]
+      ],
+      "missions": []
     },
     "review-two-files": {
       "id": "review-two-files",
@@ -2977,7 +3058,8 @@
           "line": 2,
           "code": "print(\"안녕하세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "ui-cli": {
       "id": "ui-cli",
@@ -2985,7 +3067,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "widgets-label-entry-tk": {
       "id": "widgets-label-entry-tk",
@@ -2993,7 +3076,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "widgets-choice-tk": {
       "id": "widgets-choice-tk",
@@ -3001,7 +3085,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "widgets-list-canvas-tk": {
       "id": "widgets-list-canvas-tk",
@@ -3009,7 +3094,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "widgets-pyside-form": {
       "id": "widgets-pyside-form",
@@ -3017,7 +3103,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "layout-pack-tk": {
       "id": "layout-pack-tk",
@@ -3025,7 +3112,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "layout-grid-tk": {
       "id": "layout-grid-tk",
@@ -3033,7 +3121,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "layout-pyside-form": {
       "id": "layout-pyside-form",
@@ -3041,7 +3130,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "events-callback": {
       "id": "events-callback",
@@ -3049,7 +3139,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "events-command-tk": {
       "id": "events-command-tk",
@@ -3057,7 +3148,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "events-bind-tk": {
       "id": "events-bind-tk",
@@ -3065,7 +3157,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "events-after-tk": {
       "id": "events-after-tk",
@@ -3073,7 +3166,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "events-pyside-signal": {
       "id": "events-pyside-signal",
@@ -3081,7 +3175,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "memo-window-tk": {
       "id": "memo-window-tk",
@@ -3089,7 +3184,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "memo-files-tk": {
       "id": "memo-files-tk",
@@ -3097,7 +3193,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "pyside-first": {
       "id": "pyside-first",
@@ -3105,7 +3202,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "pyside-ui-file": {
       "id": "pyside-ui-file",
@@ -3113,7 +3211,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "review-scratch-tk": {
       "id": "review-scratch-tk",
@@ -3121,7 +3220,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "project-button-tk": {
       "id": "project-button-tk",
@@ -3129,7 +3229,8 @@
       "unit": null,
       "mode": "pc",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-sklearn-exam": {
       "id": "ml-sklearn-exam",
@@ -3168,7 +3269,8 @@
           "line": 13,
           "code": "prediction = model.predict(np.array([[2]]))"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-numpy-exam": {
       "id": "ml-numpy-exam",
@@ -3206,6 +3308,16 @@
           "file": "",
           "line": 11,
           "code": "combined_array = np.concatenate((array_part1, array_part2))"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "5를 더하는 대신 10을 더하도록 바꾸고, result가 [20, 30, 40]이 되게 하세요."
+        },
+        {
+          "level": "보통",
+          "text": "array_part1과 array_part2를 이어붙일 때 array_part2를 한 번 더 이어붙여, combined_array가 [1, 2, 3, 4, 3, 4]가 되도록 바꾸세요."
         }
       ]
     },
@@ -3246,6 +3358,16 @@
           "line": 5,
           "code": "print(my_df)"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "'민수', 88점인 학생을 한 명 추가해 표에 3명이 나오도록 하세요."
+        },
+        {
+          "level": "보통",
+          "text": "모든 학생에게 '등급' 칼럼을 추가하고 값을 전부 'A'로 채우세요."
+        }
       ]
     },
     "ml-matplot-exam": {
@@ -3284,6 +3406,16 @@
           "file": "",
           "line": 7,
           "code": "data_for_plot = pd.DataFrame({'fruits': ['apple', 'banana', 'apple']})"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "과일 목록에 'cherry'를 추가해 data_for_plot이 4개 행이 되도록 하세요."
+        },
+        {
+          "level": "보통",
+          "text": "banana를 두 번 더 추가해서 banana 개수가 apple 개수보다 많아지게 하세요."
         }
       ]
     },
@@ -3324,7 +3456,8 @@
           "line": 13,
           "code": "df_excel = pd.read_excel('data.xlsx')"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-head-describe-info": {
       "id": "ml-head-describe-info",
@@ -3362,6 +3495,16 @@
           "file": "",
           "line": 8,
           "code": "print(df.head(3))"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "Score 88점, City 'Seoul'인 'Grace'라는 학생을 추가해 표가 7명이 되도록 하세요."
+        },
+        {
+          "level": "보통",
+          "text": "City별 인원 수를 value_counts()로 구해 city_counts 변수에 저장하세요."
         }
       ]
     },
@@ -3402,6 +3545,16 @@
           "line": 28,
           "code": "df_fill_mean = df_missing.fillna({'Score': score_mean})"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "Score의 결측치를 0 대신 -1로 채우는 df_fill_neg를 만드세요."
+        },
+        {
+          "level": "보통",
+          "text": "평균 대신 Score 열의 최솟값으로 결측치를 채우는 score_min, df_fill_min을 만드세요."
+        }
       ]
     },
     "ml-normalization": {
@@ -3441,7 +3594,8 @@
           "line": 11,
           "code": "df_normalized = pd.DataFrame(scaler_minmax.fit_transform(df_norm), columns=df_norm.columns)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-standardization": {
       "id": "ml-standardization",
@@ -3480,7 +3634,8 @@
           "line": 14,
           "code": "df_standardized = pd.DataFrame(df_standardized, columns=df.columns)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-one-hot-encoding": {
       "id": "ml-one-hot-encoding",
@@ -3518,6 +3673,16 @@
           "file": "",
           "line": 9,
           "code": "df_encoded = pd.get_dummies(df_onehot, columns=['도시', '직업'], drop_first=True, dtype=int)"
+        }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "drop_first=True를 False로 바꿔 '도시_부산' 칼럼도 남도록 하세요."
+        },
+        {
+          "level": "보통",
+          "text": "직업이 '자영업'이고 도시가 '서울'인 사람을 한 명 추가해 df_onehot이 6명이 되도록 하세요."
         }
       ]
     },
@@ -3558,7 +3723,8 @@
           "line": 7,
           "code": "X = df[['공부 시간', '수면 시간']]"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-knn-exam": {
       "id": "ml-knn-exam",
@@ -3597,7 +3763,8 @@
           "line": 20,
           "code": "y_pred = knn_model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-linear-regression": {
       "id": "ml-linear-regression",
@@ -3636,7 +3803,8 @@
           "line": 22,
           "code": "y_pred = linear_model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-regression-metrics": {
       "id": "ml-regression-metrics",
@@ -3675,7 +3843,8 @@
           "line": 17,
           "code": "y_pred = model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-clustering": {
       "id": "ml-clustering",
@@ -3714,7 +3883,8 @@
           "line": 25,
           "code": "scatter = plt.scatter(X[:, 0], X[:, 1], c=cluster_labels, cmap='viridis', s=50, alpha=0.8)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-performance-metrics": {
       "id": "ml-performance-metrics",
@@ -3753,7 +3923,8 @@
           "line": 17,
           "code": "y_pred = model.predict(X_test)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-train-test-split2": {
       "id": "ml-train-test-split2",
@@ -3792,7 +3963,8 @@
           "line": 17,
           "code": "r2_test = linear_model.score(X_test, y_test)   # 테스트 데이터 R²"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-cross-val-score": {
       "id": "ml-cross-val-score",
@@ -3831,7 +4003,8 @@
           "line": 12,
           "code": "scores = cross_val_score(linear_model, X, y, scoring='r2', cv=5)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-grid-search-cv": {
       "id": "ml-grid-search-cv",
@@ -3870,7 +4043,8 @@
           "line": 12,
           "code": "grid_search = GridSearchCV(knn, param_grid, cv=5, scoring='accuracy')"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-learning-curve": {
       "id": "ml-learning-curve",
@@ -3909,7 +4083,8 @@
           "line": 18,
           "code": "test_scores_mean = np.mean(test_scores, axis=1)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-pixels": {
       "id": "cv-pixels",
@@ -3948,7 +4123,8 @@
           "line": 5,
           "code": "print(\"height, width:\", len(pixels), len(pixels[0]))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-pillow": {
       "id": "cv-pillow",
@@ -3987,7 +4163,8 @@
           "line": 7,
           "code": "small = img.resize((120, 80))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-skimage": {
       "id": "cv-skimage",
@@ -4026,7 +4203,8 @@
           "line": 12,
           "code": "axes[1].imshow(edges, cmap=\"gray\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-io": {
       "id": "cv-io",
@@ -4065,7 +4243,8 @@
           "line": 16,
           "code": "matrix = cv2.getRotationMatrix2D(center, 30, 1.0)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-display": {
       "id": "cv-display",
@@ -4104,7 +4283,8 @@
           "line": 6,
           "code": "cv2.rectangle(img, (30, 30), (120, 130), (40, 80, 220), -1)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-filters": {
       "id": "cv-filters",
@@ -4143,7 +4323,8 @@
           "line": 14,
           "code": "otsu, outputs[\"otsu\"] = cv2.threshold(gray,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-perspective": {
       "id": "cv-perspective",
@@ -4182,7 +4363,8 @@
           "line": 12,
           "code": "result = cv2.warpPerspective(img, M, (200,120))"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-click-card": {
       "id": "cv-click-card",
@@ -4221,7 +4403,8 @@
           "line": 27,
           "code": "M = cv2.getPerspectiveTransform(src,dst)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-features": {
       "id": "cv-features",
@@ -4260,7 +4443,8 @@
           "line": 12,
           "code": "marked = img.copy()"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-haar": {
       "id": "cv-haar",
@@ -4299,7 +4483,8 @@
           "line": 10,
           "code": "smile = cv2.CascadeClassifier(cv2.data.haarcascades + \"haarcascade_smile.xml\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-camera": {
       "id": "cv-camera",
@@ -4338,7 +4523,8 @@
           "line": 13,
           "code": "gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-yolo": {
       "id": "cv-yolo",
@@ -4377,7 +4563,8 @@
           "line": 10,
           "code": "cls = int(box.cls.item())"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-yolo-count": {
       "id": "cv-yolo-count",
@@ -4416,7 +4603,8 @@
           "line": 14,
           "code": "counts = Counter(result.names[int(box.cls.item())] for box in result.boxes)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-count": {
       "id": "cv-count",
@@ -4443,7 +4631,8 @@
           "line": 4,
           "code": "print(\"Frame\", i, dict(Counter(names)))"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-split-small": {
       "id": "ml-split-small",
@@ -4482,7 +4671,8 @@
           "line": 6,
           "code": "print(\"Validation:\", validation)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-scale-small": {
       "id": "ml-scale-small",
@@ -4521,7 +4711,8 @@
           "line": 9,
           "code": "def normalize(v):"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-knn-small": {
       "id": "ml-knn-small",
@@ -4560,7 +4751,8 @@
           "line": 7,
           "code": "prediction = Counter(label for _,label in neighbors).most_common(1)[0][0]"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-line-small": {
       "id": "ml-line-small",
@@ -4599,7 +4791,8 @@
           "line": 7,
           "code": "mae = sum(abs(a-p) for a,p in zip(y,pred))/len(y)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-kmeans-small": {
       "id": "ml-kmeans-small",
@@ -4638,7 +4831,8 @@
           "line": 7,
           "code": "groups[index].append(value)"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-confusion-small": {
       "id": "ml-confusion-small",
@@ -4677,7 +4871,8 @@
           "line": 8,
           "code": "tn = sum(a==0 and b==0 for a,b in zip(truth,pred))"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-cv-small": {
       "id": "ml-cv-small",
@@ -4716,7 +4911,8 @@
           "line": 7,
           "code": "print(\"최종 테스트 자료는 이 묶음들과 별도로 보관합니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "ml-rule-vs-learn": {
       "id": "ml-rule-vs-learn",
@@ -4724,7 +4920,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-nesting": {
       "id": "ml-nesting",
@@ -4732,7 +4929,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-history-cases": {
       "id": "ml-history-cases",
@@ -4740,7 +4938,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-when-not": {
       "id": "ml-when-not",
@@ -4748,7 +4947,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-loan-data": {
       "id": "ml-loan-data",
@@ -4756,7 +4956,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-inspect": {
       "id": "ml-inspect",
@@ -4764,7 +4965,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-success-mae": {
       "id": "ml-success-mae",
@@ -4772,7 +4974,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-xy-table": {
       "id": "ml-xy-table",
@@ -4780,7 +4983,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-param-hyper": {
       "id": "ml-param-hyper",
@@ -4788,7 +4992,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-leakage": {
       "id": "ml-leakage",
@@ -4796,7 +5001,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-classify-vs-regress": {
       "id": "ml-classify-vs-regress",
@@ -4804,7 +5010,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-unsupervised-groups": {
       "id": "ml-unsupervised-groups",
@@ -4812,7 +5019,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-rl-reward": {
       "id": "ml-rl-reward",
@@ -4820,7 +5028,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-logistic-name": {
       "id": "ml-logistic-name",
@@ -4828,7 +5037,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "ml-report-card": {
       "id": "ml-report-card",
@@ -4836,7 +5046,8 @@
       "unit": null,
       "mode": "web",
       "href": "",
-      "keyLines": []
+      "keyLines": [],
+      "missions": []
     },
     "cv-process-vs-vision": {
       "id": "cv-process-vs-vision",
@@ -4875,7 +5086,8 @@
           "line": 10,
           "code": "print(\"다듬은 이미지는 새 그림이고, 검출 결과는 위치와 이름입니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-use-fields": {
       "id": "cv-use-fields",
@@ -4902,7 +5114,8 @@
           "line": 8,
           "code": "print(\"촬영 자료의 이용 범위와 틀린 경우의 비용을 함께 적으세요.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-human-vs-computer": {
       "id": "cv-human-vs-computer",
@@ -4941,7 +5154,8 @@
           "line": 9,
           "code": "print(\"조명·가림·각도가 바뀌면 같은 컵도 다른 숫자가 됩니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-shape-size": {
       "id": "cv-shape-size",
@@ -4980,7 +5194,8 @@
           "line": 5,
           "code": "print(\"shape:\", shape, \"→ 높이\", height, \"너비\", width, \"채널\", channels)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-bgr-rgb": {
       "id": "cv-bgr-rgb",
@@ -5019,7 +5234,8 @@
           "line": 8,
           "code": "print(\"OpenCV 기본 읽기 BGR:\", bgr)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-pipeline-steps": {
       "id": "cv-pipeline-steps",
@@ -5052,7 +5268,8 @@
           "line": 11,
           "code": "print(\"한 단계가 틀리면 다음 단계도 같이 흔들립니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-plate-stages": {
       "id": "cv-plate-stages",
@@ -5091,7 +5308,8 @@
           "line": 6,
           "code": "read_text = len(plate[\"글자\"]) >= 4"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-eval-criteria": {
       "id": "cv-eval-criteria",
@@ -5124,7 +5342,8 @@
           "line": 9,
           "code": "print(\"실시간 안내면 지연도 보고, 교실 조명이 바뀌면 안정성도 봅니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-threshold-kinds": {
       "id": "cv-threshold-kinds",
@@ -5163,7 +5382,8 @@
           "line": 7,
           "code": "local_t = sum(block) / len(block) - 7"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-feature-kinds": {
       "id": "cv-feature-kinds",
@@ -5202,7 +5422,8 @@
           "line": 9,
           "code": "print(\"고른 도구:\", picked)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-haar-vs-id": {
       "id": "cv-haar-vs-id",
@@ -5241,7 +5462,8 @@
           "line": 6,
           "code": "eye_in_roi = (12, 18)"
         }
-      ]
+      ],
+      "missions": []
     },
     "cv-scan-card": {
       "id": "cv-scan-card",
@@ -5268,7 +5490,8 @@
           "line": 12,
           "code": "print(\"GUI 버튼은 처리 함수만 호출하고, 배열 코드와 창 코드를 나눕니다.\")"
         }
-      ]
+      ],
+      "missions": []
     }
   },
   "questions": [

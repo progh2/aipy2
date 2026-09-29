@@ -701,7 +701,8 @@
           "line": 1,
           "code": "def add(a, b):"
         }
-      ]
+      ],
+      "missions": []
     },
     "reuse": {
       "id": "reuse",
@@ -759,7 +760,8 @@
           "line": 1,
           "code": "def add(a, b):"
         }
-      ]
+      ],
+      "missions": []
     },
     "two-adds": {
       "id": "two-adds",
@@ -824,7 +826,8 @@
           "line": 1,
           "code": "def add(n):"
         }
-      ]
+      ],
+      "missions": []
     },
     "sum-input": {
       "id": "sum-input",
@@ -888,7 +891,8 @@
           "line": 3,
           "code": "n2 = int(input(\"두 번째 수: \"))"
         }
-      ]
+      ],
+      "missions": []
     },
     "circle-top": {
       "id": "circle-top",
@@ -947,7 +951,8 @@
           "line": 4,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "circle-function": {
       "id": "circle-function",
@@ -1006,7 +1011,8 @@
           "line": 4,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r * r * PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "circle-mixed": {
       "id": "circle-mixed",
@@ -1070,7 +1076,8 @@
           "line": 4,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "class-module": {
       "id": "class-module",
@@ -1134,7 +1141,8 @@
           "line": 7,
           "code": "def area(self):"
         }
-      ]
+      ],
+      "missions": []
     },
     "main-guard": {
       "id": "main-guard",
@@ -1193,7 +1201,8 @@
           "line": 5,
           "code": "print(\"반지름이 {}인 원의 넓이: {}\".format(r, r*r*PI))"
         }
-      ]
+      ],
+      "missions": []
     },
     "rectangle": {
       "id": "rectangle",
@@ -1246,7 +1255,8 @@
           "line": 4,
           "code": "if __name__ == \"__main__\":"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-0": {
       "id": "import-0",
@@ -1305,7 +1315,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-1": {
       "id": "import-1",
@@ -1364,7 +1375,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-2": {
       "id": "import-2",
@@ -1423,7 +1435,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-3": {
       "id": "import-3",
@@ -1487,7 +1500,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-4": {
       "id": "import-4",
@@ -1546,7 +1560,8 @@
           "line": 5,
           "code": "print(\"안녕히 가세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "import-clash": {
       "id": "import-clash",
@@ -1611,7 +1626,8 @@
           "line": 1,
           "code": "def hello():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-0": {
       "id": "package-0",
@@ -1677,7 +1693,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-1": {
       "id": "package-1",
@@ -1743,7 +1760,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-2": {
       "id": "package-2",
@@ -1809,7 +1827,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-3": {
       "id": "package-3",
@@ -1875,7 +1894,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "package-4": {
       "id": "package-4",
@@ -1941,7 +1961,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "all": {
       "id": "all",
@@ -2007,7 +2028,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "animal-check": {
       "id": "animal-check",
@@ -2074,7 +2096,8 @@
           "line": 1,
           "code": "def wild():"
         }
-      ]
+      ],
+      "missions": []
     },
     "stars": {
       "id": "stars",
@@ -2133,7 +2156,8 @@
           "line": 5,
           "code": "if __name__ == \"__main__\":"
         }
-      ]
+      ],
+      "missions": []
     },
     "os": {
       "id": "os",
@@ -2196,7 +2220,8 @@
           "line": 7,
           "code": "print(os.listdir(\"practice\"))"
         }
-      ]
+      ],
+      "missions": []
     },
     "os-pc": {
       "id": "os-pc",
@@ -2253,7 +2278,8 @@
           "line": 4,
           "code": "os.system(\"dir\" if os.name == \"nt\" else \"ls\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "sys": {
       "id": "sys",
@@ -2316,7 +2342,8 @@
           "line": 6,
           "code": "print(\"이 줄은 실행되지 않습니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "sys-modules": {
       "id": "sys-modules",
@@ -2384,7 +2411,8 @@
           "line": 6,
           "code": "import math"
         }
-      ]
+      ],
+      "missions": []
     },
     "math": {
       "id": "math",
@@ -2447,7 +2475,8 @@
           "line": 5,
           "code": "print(\"내림:\", math.floor(3.5))"
         }
-      ]
+      ],
+      "missions": []
     },
     "math-circle": {
       "id": "math-circle",
@@ -2515,7 +2544,8 @@
           "line": 8,
           "code": "print(\"거듭제곱 연산자:\", 2 ** 10, \" / math.pow:\", math.pow(2, 10))"
         }
-      ]
+      ],
+      "missions": []
     },
     "math-signed": {
       "id": "math-signed",
@@ -2577,7 +2607,8 @@
           "line": 4,
           "code": "print(\"0에 가까운 쪽이 올림인가?\", math.ceil(-3.5) == -3)"
         }
-      ]
+      ],
+      "missions": []
     },
     "random": {
       "id": "random",
@@ -2640,7 +2671,8 @@
           "line": 11,
           "code": "print(random.sample(list(range(1, 10)), 3))"
         }
-      ]
+      ],
+      "missions": []
     },
     "random-seed": {
       "id": "random-seed",
@@ -2703,7 +2735,8 @@
           "line": 8,
           "code": "print(\"같은가?\", first == second)"
         }
-      ]
+      ],
+      "missions": []
     },
     "random-sample": {
       "id": "random-sample",
@@ -2771,7 +2804,8 @@
           "line": 7,
           "code": "copied = names.copy()"
         }
-      ]
+      ],
+      "missions": []
     },
     "dice": {
       "id": "dice",
@@ -2823,7 +2857,8 @@
           "line": 6,
           "code": "print(\"주사위 값:\", random.randrange(1, n + 1))"
         }
-      ]
+      ],
+      "missions": []
     },
     "gift": {
       "id": "gift",
@@ -2869,7 +2904,8 @@
           "line": 3,
           "code": "print(random.choice(presents))"
         }
-      ]
+      ],
+      "missions": []
     },
     "datetime": {
       "id": "datetime",
@@ -2927,7 +2963,8 @@
           "line": 9,
           "code": "start = datetime(now.year, 1, 1)"
         }
-      ]
+      ],
+      "missions": []
     },
     "weekday-fixed": {
       "id": "weekday-fixed",
@@ -2995,7 +3032,8 @@
           "line": 5,
           "code": "print(\"weekday()는 월요일 0:\", day.weekday())"
         }
-      ]
+      ],
+      "missions": []
     },
     "christmas": {
       "id": "christmas",
@@ -3053,7 +3091,8 @@
           "line": 6,
           "code": "print(\"다음 크리스마스까지\", (target - today).days, \"일\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "pypi-names": {
       "id": "pypi-names",
@@ -3115,7 +3154,8 @@
           "line": 10,
           "code": "print(\"pip 명령은 터미널에서 실행합니다. 코드 입력창이 아닙니다.\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "stdlib-json": {
       "id": "stdlib-json",
@@ -3183,7 +3223,8 @@
           "line": 5,
           "code": "print(json.loads(text)[\"scores\"])"
         }
-      ]
+      ],
+      "missions": []
     },
     "thirdparty": {
       "id": "thirdparty",
@@ -3235,7 +3276,8 @@
           "line": 3,
           "code": "print(scores.mean())"
         }
-      ]
+      ],
+      "missions": []
     },
     "review-two-files": {
       "id": "review-two-files",
@@ -3287,7 +3329,8 @@
           "line": 2,
           "code": "print(\"안녕하세요\")"
         }
-      ]
+      ],
+      "missions": []
     },
     "final-output": {
       "id": "final-output",
@@ -3352,7 +3395,8 @@
           "line": 1,
           "code": "def subnum(a, b):"
         }
-      ]
+      ],
+      "missions": []
     },
     "project-roll": {
       "id": "project-roll",
@@ -3417,7 +3461,8 @@
           "line": 14,
           "code": "names = list(dict.fromkeys(name.strip() for name in names if name.strip()))"
         }
-      ]
+      ],
+      "missions": []
     },
     "core": {
       "id": "core",
@@ -3492,7 +3537,8 @@
           "line": 14,
           "code": "names = list(dict.fromkeys(name.strip() for name in names if name.strip()))"
         }
-      ]
+      ],
+      "missions": []
     }
   },
   "questions": [

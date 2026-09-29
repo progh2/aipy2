@@ -188,7 +188,7 @@ function execute(payload,onOutput){
  running=true;setStopDisabled(false);
  return new Promise(resolve=>{
   jobResolve=resolve;jobOutput=onOutput;
-  if(!worker)worker=new Worker(prefix+'assets/python-worker.js?v=science1');
+  if(!worker)worker=new Worker(prefix+'assets/python-worker.js?v=q135m2');
   clearTimeout(timer);timer=setTimeout(()=>stop('실행 엔진 준비 시간이 초과되었습니다. 네트워크를 확인하고 다시 실행하세요.'),180000);
   worker.onmessage=({data:m})=>{
    if(m.type==='loading')onOutput(m.text+'\n');
@@ -304,6 +304,51 @@ function renderCodeRead(ex,id){
   label.append(ta);item.append(label,note);list.append(item);
  }
 }
+// (#135-3·4) 변형 미션: 예제마다 준비된 작은 변형을 학생 코드에 직접 적용해 보고
+// [확인]으로 검사한다. 실행 경로는 기존 검사 버튼(runExample)과 동일한 execute()·
+// pyodide 워커를 그대로 쓴다 — 통과하면 저널 m-{예제id}-{번호}에 ISO 시각을 남긴다.
+async function runMission(ex,id,index,mission,statusEl,btn){
+ if(running)return toast('현재 실행을 마치거나 중지하세요.');
+ stash();
+ const entry=$('#entry-file').value;
+ if(!entry || !files[entry])return toast('실행할 Python 파일을 선택하세요.');
+ let args;try{args=JSON.parse($('#argv').value||'[]');}catch{args=[];}
+ btn.disabled=true;statusEl.textContent='검사하는 중…';statusEl.className='mission-status';
+ const result=await execute({files,entry,stdin:$('#stdin').value,args,checks:mission.check,syntax:ex.mode!=='web'},()=>{});
+ btn.disabled=false;
+ if(result.busy)return;
+ if(result.ok && result.checked){
+  const key='m-'+id+'-'+index;
+  state.journals[key]=new Date().toISOString();save('journal');
+  statusEl.textContent='통과했어요! · '+new Date(state.journals[key]).toLocaleString('ko-KR');
+  statusEl.className='mission-status success';
+  paiGuide('celebrate','미션을 통과했어요!','다른 방법으로도 같은 결과를 만들 수 있는지 생각해 보세요.');
+ }else{
+  statusEl.textContent='아직이에요. 코드를 고치고 다시 [확인]을 눌러 보세요.';
+  statusEl.className='mission-status retry';
+ }
+}
+function renderMissions(ex,id){
+ const section=$('#mission-section'),list=$('#mission-list');
+ if(!section||!list)return;
+ const items=Array.isArray(ex.missions)?ex.missions:[];
+ section.hidden=items.length===0;
+ list.replaceChildren();
+ items.forEach((m,i)=>{
+  const n=i+1,key='m-'+id+'-'+n;
+  const card=node('div','mission-item');
+  card.append(node('p','mission-level',m.level),node('p','mission-text',m.text));
+  const passedAt=state.journals[key];
+  const status=node('p',passedAt?'mission-status success':'mission-status',passedAt?'통과했어요! · '+new Date(passedAt).toLocaleString('ko-KR'):'아직 확인하지 않았어요.');
+  status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const btn=node('button','primary','확인');btn.type='button';
+  btn.onclick=()=>runMission(ex,id,n,m,status,btn);
+  const hintDetails=node('details','mission-hint');
+  hintDetails.append(node('summary','','힌트 보기'),node('pre','',m.hint));
+  card.append(btn,status,hintDetails);
+  list.append(card);
+ });
+}
 function selectExample(id,scroll=false,workspace=null){
  if(!hasLab)return;
  const select=$('#example-select');
@@ -330,6 +375,7 @@ if(currentId)stash();currentId=id;exampleDirty=false;const ex=data.examples[id],
  $('#example-note').textContent=(ex.note||'')+(ex.mode==='pc'?' 이 코드는 PC에서 실행하세요. 웹에서는 Python 문법만 확인합니다. ZIP 다운로드 후 예제 폴더를 VS Code로 열고 python main.py를 실행하세요.'+installNote:' 파일을 오가며 편집한 뒤 실행 파일을 선택하세요. 각 실행은 새 가상 프로젝트에서 시작합니다.');
  setupPredict(ex,id);
  renderCodeRead(ex,id);
+ renderMissions(ex,id);
  $('#plot-output').replaceChildren();
  $('#output').textContent=`${ex.title}\n${ex.mode==='web'?'실행 결과가 여기에 표시됩니다.':'문법 검사는 패키지 설치·데이터·장치·실제 프로그램 동작까지 검사하지 않습니다.'}`;
  paiGuide('thinking',ex.mode==='web'?'실행 전에 결과를 먼저 예상해 볼까요?':'웹에서 확인한 뒤, PC에서도 시험해요.',ex.mode==='web'?'어떤 파일을 실행하나요? 입력값을 바꾸면 어떤 결과가 나올지 먼저 적어 보세요.':'문법 확인은 첫 단계예요. 다운로드한 예제를 실행하고 입력·결과·오류 처리를 확인하세요.');

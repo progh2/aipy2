@@ -40,7 +40,7 @@ let writing = false;
 let reverifyRows = [];
 let reverifying = false;
 const unitCache = {};
-const runner = createPythonRunner({workerUrl: `${prefix}assets/python-worker.js?v=science1`});
+const runner = createPythonRunner({workerUrl: `${prefix}assets/python-worker.js?v=q135m2`});
 
 function toast(text) {
  const box = document.getElementById('toast');

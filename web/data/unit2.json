@@ -388,6 +388,14 @@
           "line": 14,
           "code": "tk.Label(root, text=\"나의 첫 GUI\", font=(\"sans-serif\", 20)).pack(pady=16)"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "창 제목(title)을 '나의 인사 앱'으로 바꾸세요.",
+          "hint": "root.title(\"인사 실습 · tkinter\") 줄의 문자열을 \"나의 인사 앱\"으로 바꾸면 됩니다.",
+          "check": "import ast\ntree = ast.parse(source)\ncalls = [n for n in ast.walk(tree) if isinstance(n, ast.Call)]\ntitles = [n for n in calls if isinstance(n.func, ast.Attribute) and n.func.attr==\"title\"]\nassert any(isinstance(a, ast.Constant) and isinstance(a.value, str) and a.value==\"나의 인사 앱\" for n in titles for a in n.args), \"root.title(...) 문구를 \\'나의 인사 앱\\'으로 바꿔야 합니다.\""
+        }
       ]
     },
     "widgets-tk": {
@@ -471,6 +479,14 @@
           "line": 7,
           "code": "tk.Entry(frame).pack(fill=\"x\")"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "Listbox에 새 항목 '컴퓨터 비전'을 추가하세요.",
+          "hint": "listbox.insert(tk.END, \"컴퓨터 비전\")을 listbox.pack() 앞에 추가하세요.",
+          "check": "import ast\ntree = ast.parse(source)\ninserts = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr==\"insert\"]\nassert any(isinstance(a, ast.Constant) and a.value==\"컴퓨터 비전\" for n in inserts for a in n.args), \"listbox.insert(tk.END, \\'컴퓨터 비전\\')처럼 새 항목을 추가해야 합니다.\""
+        }
       ]
     },
     "layout-tk": {
@@ -544,6 +560,14 @@
           "line": 8,
           "code": "tk.Button(controls, text=\"좁게\", command=lambda: root.geometry(\"340x590\")).pack(side=\"left\")"
         }
+      ],
+      "missions": [
+        {
+          "level": "쉬움",
+          "text": "'좁게' 버튼을 눌렀을 때의 창 크기를 340x590에서 300x590으로 줄이세요.",
+          "hint": "\"좁게\" 버튼의 command=lambda: root.geometry(\"340x590\") 줄에서 340을 300으로 바꾸세요.",
+          "check": "import ast\ntree = ast.parse(source)\ncalls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr==\"geometry\"]\nassert any(isinstance(a, ast.Constant) and a.value==\"300x590\" for n in calls for a in n.args), \"geometry(\\'300x590\\')처럼 좁게 버튼의 크기를 300x590으로 바꿔야 합니다.\""
+        }
       ]
     },
     "memo-tk": {
@@ -616,6 +640,14 @@
           "file": "",
           "line": 21,
           "code": "text_area = tk.Text(window, wrap=\"word\")"
+        }
+      ],
+      "missions": [
+        {
+          "level": "보통",
+          "text": "파일 메뉴에 '새로 만들기' 항목을 하나 더 추가하세요.",
+          "hint": "file_menu.add_command(label=\"새로 만들기\", command=...)을 다른 add_command 줄 사이에 추가하세요.",
+          "check": "import ast\ntree = ast.parse(source)\ncalls = [n for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr==\"add_command\"]\nassert len(calls) >= 4, \"파일 메뉴에 add_command 항목을 하나 더 추가해야 합니다.\""
         }
       ]
     }
