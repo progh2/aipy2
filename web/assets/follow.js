@@ -166,9 +166,15 @@ function ensureUi() {
  attention.hidden = true;
  attention.setAttribute('role', 'status');
  root.append(bar, attention);
+ // (#142) 진도 막대(#progress-bar)가 있는 페이지는 그 바로 아래에 둔다 — 헤더 바로 다음에
+ // 꽂으면 진도 막대와 같은 자리를 다투게 된다(둘 다 sticky). 진도 막대가 없는 페이지는
+ // 헤더 바로 아래.
+ const progressBar = document.getElementById('progress-bar');
  const header = document.querySelector('header.top');
- if (header) header.after(root);
+ const anchor = progressBar || header;
+ if (anchor) anchor.after(root);
  else document.body.prepend(root);
+ if (window.aipyOffsets) window.aipyOffsets.sync();
  return root;
 }
 

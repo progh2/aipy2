@@ -304,4 +304,79 @@ print("합쳐진 배열:", combined_array)
  assert.equal(await page.locator('#progress-bar .progress-bar-path').textContent(),unit2Lessons[2].breadcrumb,'question page shows the same lesson breadcrumb');
  assert.deepEqual(errors,[]);
  console.log('PASS progress bar: segments/breadcrumb/counter/boundaries/mobile/completion/end hint');
+
+ // ── 명시적 저장 버튼(#142) ────────────────────────────────────────────────
+ await open('/units/unit01/overview.html');
+ const journalArea=page.locator('textarea[data-journal="j-u1-overview"]');
+ const journalSaveControl=page.locator('textarea[data-journal="j-u1-overview"] + div.save-control');
+ const journalSaveBtn=journalSaveControl.locator('button.save-btn');
+ const journalStatus=journalSaveControl.locator('span.save-status');
+ assert.equal((await journalStatus.textContent()).trim(),'','빈 저널은 저장 상태 문구가 없음');
+ await journalArea.fill('오늘 배운 것을 적었다.');
+ assert.match(await journalStatus.textContent(),/입력 중/,'입력 중에는 "저장 안 됨 · 입력 중…" 문구');
+ await journalSaveBtn.click();
+ await page.waitForFunction(()=>{
+  const el=document.querySelector('textarea[data-journal="j-u1-overview"] + div.save-control span.save-status');
+  return el && /저장됨/.test(el.textContent);
+ });
+ assert.match(await journalStatus.textContent(),/저장됨/,'저장 버튼을 누르면 저장됨 문구로 바뀜');
+ await page.reload();await page.waitForFunction(()=>window.aipyLearning?.ready);
+ assert.equal(await journalArea.inputValue(),'오늘 배운 것을 적었다.','저장 버튼으로 저장한 저널이 새로고침에도 남음');
+ console.log('PASS 명시적 저장 버튼: 입력 중 → 저장 → 새로고침 유지');
+
+ // 저장 버튼이 붙은 칸 수 = 대상 입력칸 수(.task-box 밖의 모든 [data-journal]) — 소단원·예제 페이지 각각.
+ async function assertSaveControlsMatch(label){
+  const targets=await page.evaluate(()=>[...document.querySelectorAll('[data-journal]')].filter(el=>!el.closest('.task-box')).length);
+  const controls=await page.locator('.save-control').count();
+  assert.ok(targets>0,`${label}: 대상 입력칸이 있어야 함`);
+  assert.equal(controls,targets,`${label}: 저장 버튼 수(${controls}) == 대상 입력칸 수(${targets})`);
+ }
+ await assertSaveControlsMatch('overview.html(소단원)');
+ await open('/units/unit01/ex-reuse.html');
+ await assertSaveControlsMatch('ex-reuse.html(예제)');
+ console.log('PASS 저장 버튼 수 == 대상 입력칸 수(소단원·예제 페이지)');
+
+ // ── 따라가기 UI 항상 보이기(#142) ────────────────────────────────────────
+ // 실제 세션(Firestore) 없이 CSS 고정 위치·top 계산만 확인한다: follow.js와 같은 마크업을
+ // #progress-bar 뒤에 수동으로 꽂고, 스크롤 후에도 뷰포트 안에 남는지·진도 막대와 겹치지
+ // 않는지를 1280px·390px에서 본다.
+ await page.setViewportSize({width:1280,height:900});
+ await open('/units/unit02/widgets.html');
+ await page.waitForFunction(()=>{
+  const bar=document.getElementById('progress-bar');
+  return bar && !bar.hidden && bar.querySelector('.progress-bar-seg');
+ });
+ await page.evaluate(()=>{
+  // follow.js가 이미 세션 없는 hidden #follow-ui를 붙여 뒀다 — 지우고 우리 테스트용으로 다시 붙인다.
+  document.getElementById('follow-ui')?.remove();
+  const root=document.createElement('div');
+  root.id='follow-ui';root.className='follow-ui';
+  root.innerHTML='<div class="follow-bar"><p class="follow-status" id="follow-status">선생님 화면을 따라가는 중</p>'
+   +'<button class="follow-rejoin" id="follow-rejoin" type="button">선생님 화면으로 이동</button></div>'
+   +'<p class="follow-attention" id="follow-attention" hidden>선생님이 여기를 보고 있어요</p>';
+  document.body.classList.add('follow-active');
+  const bar=document.getElementById('progress-bar');
+  const header=document.querySelector('header.top');
+  (bar||header).after(root);
+  if(window.aipyOffsets)window.aipyOffsets.sync();
+ });
+ const followUi=page.locator('#follow-ui');
+ assert.equal(await followUi.isVisible(),true,'follow UI가 보여야 함');
+ const progressBarBox=await page.locator('#progress-bar').boundingBox();
+ let followBox=await followUi.boundingBox();
+ assert.ok(followBox.y>=progressBarBox.y+progressBarBox.height-1,'follow UI가 진도 막대 아래에 있어 겹치지 않음(1280px)');
+ await page.evaluate(()=>window.scrollTo(0,1200));
+ await page.waitForTimeout(80);
+ followBox=await followUi.boundingBox();
+ assert.ok(followBox && followBox.y>=0 && followBox.y<200,'스크롤해도 follow UI가 뷰포트 상단 근처에 고정됨(1280px)');
+ // 390px 모바일 — 예전에는 top:auto로 고정이 풀렸다(#142 회귀 방지).
+ await page.setViewportSize({width:390,height:844});
+ await page.evaluate(()=>{if(window.aipyOffsets)window.aipyOffsets.sync();});
+ await page.evaluate(()=>window.scrollTo(0,1200));
+ await page.waitForTimeout(80);
+ followBox=await followUi.boundingBox();
+ assert.ok(followBox && followBox.y>=0 && followBox.y<200,'스크롤해도 follow UI가 뷰포트 상단 근처에 고정됨(390px)');
+ assert.ok(followBox.x>=0 && followBox.x+followBox.width<=390+0.5,'follow UI가 390px 뷰포트 너비 안에 있음');
+ await page.setViewportSize({width:1280,height:900});
+ console.log('PASS 따라가기 UI: 진도 막대와 겹치지 않고, 스크롤 후에도 데스크톱·모바일 모두 고정');
 } finally {await browser.close();}

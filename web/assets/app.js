@@ -102,6 +102,47 @@ window.aipyLearning={ready:false,key:KEY,saveLocal(){save('leave');},saveLocalQu
 window.addEventListener('pagehide',()=>{try{window.aipyLearning.saveLocal();}catch{}});
 function download(name,content,type='text/plain;charset=utf-8'){const url=URL.createObjectURL(new Blob([content],{type}));const a=node('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 async function copy(text){try{await navigator.clipboard.writeText(text);toast('복사했습니다.');}catch{const area=node('textarea');area.value=text;document.body.append(area);area.select();const ok=document.execCommand('copy');area.remove();toast(ok?'복사했습니다.':'복사가 제한되었습니다. 코드를 선택하여 복사하세요.');}}
+/* (#142) 제출 버튼이 없는 자동 저장 입력칸에 붙이는 작은 [저장] 버튼 + 상태 문구.
+   자동 저장 자체(각 입력칸의 oninput → save('journal'))는 그대로 두고, 이 버튼은
+   ① 즉시 저장 ② 로그인 상태면 서버 동기화를 그 자리에서 한 번 플러시(window.aipySync.flush)
+   한다. [직접 해 보세요](.task-box, 이미 [제출하기] 있음)와 연습문제(이미 제출 버튼 있음)는
+   제외 — 이미 안내가 있는 칸에 중복으로 붙이지 않는다. 같은 요소에 두 번 붙지 않도록
+   dataset 플래그로 막는다.*/
+function fmtClock(){return new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});}
+function isSignedIn(){return document.body.dataset.account==='signed-in';}
+function attachSaveControl(el){
+ if(!el || el.dataset.aipySaveAttached)return;
+ if(el.closest('.task-box'))return; // 직접 해 보세요는 이미 제출 버튼이 있다
+ el.dataset.aipySaveAttached='1';
+ const wrap=node('div','save-control');
+ const btn=node('button','save-btn','저장');btn.type='button';
+ const status=node('span','save-status small','');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+ wrap.append(btn,status);
+ el.insertAdjacentElement('afterend',wrap);
+ function paintSaved(){
+  const signedIn=isSignedIn();
+  status.textContent=(signedIn?'저장됨':'이 브라우저에 저장됨')+' · '+fmtClock()+(signedIn?' · 다른 기기와 동기화':'');
+  status.classList.remove('save-status-dirty');status.classList.add('save-status-ok');
+ }
+ function paintDirty(){
+  status.textContent='저장 안 됨 · 입력 중…';
+  status.classList.add('save-status-dirty');status.classList.remove('save-status-ok');
+ }
+ el.addEventListener('input',paintDirty);
+ async function doSave(){
+  save('journal');
+  if(window.aipySync && typeof window.aipySync.flush==='function'){
+   try{await window.aipySync.flush();}catch{}
+  }
+  paintSaved();
+ }
+ btn.addEventListener('click',doSave);
+ // 편집 잠금 등으로 읽기 전용이 되면 저장 버튼도 함께 비활성화한다(#121 editlock과 충돌 없이).
+ function syncDisabled(){btn.disabled=Boolean(el.readOnly||el.disabled);}
+ syncDisabled();
+ new MutationObserver(syncDisabled).observe(el,{attributes:true,attributeFilter:['readonly','disabled']});
+ if(el.value)paintSaved();
+}
 function updateProgress(){for(const item of $$('[data-unit-progress]')){const u=Number(item.dataset.unitProgress),total=Number(item.dataset.total)||1;const count=Object.entries(state.complete).filter(([k,v])=>k.startsWith(`u${u}-`)&&v).length;const value=Math.min(100,Math.round(count/total*100));item.textContent=`${value}%`;$$(`[data-unit-bar="${u}"]`).forEach(e=>e.value=value);}}
 updateProgress();
 if(!storageWorks)toast('기록을 불러오지 못했습니다. 이 세션의 기록은 내보내기로 보관하세요.');
@@ -127,7 +168,7 @@ $$('[data-clear]').forEach(b=>b.addEventListener('click',()=>{if(confirm('이 �
  box._paintComplete=showCompletion;
  showCompletion();box.addEventListener('change',()=>{state.complete[box.dataset.complete]=box.checked;save('complete');updateProgress();showCompletion();renderRailTodo();});
 });
-$$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save('journal');});});
+$$('[data-journal]').forEach(area=>{area.value=state.journals[area.dataset.journal]||'';area.addEventListener('input',()=>{state.journals[area.dataset.journal]=area.value;save('journal');});attachSaveControl(area);});
 /* 직접 해 보세요 제출(#132). 항목 textarea는 이미 위 [data-journal]로 자동 저장·동기화된다.
    여기서는 "제출" 버튼 하나만 더한다: d-{key}-submitted 저널 키에 ISO 시각을 남기고,
    제출 뒤 답을 고치면(같은 브라우저에 한해) '수정됨' 표시로 되돌린다. 수정 여부 자체는
@@ -301,7 +342,7 @@ function renderCodeRead(ex,id){
   const checkCopy=()=>{note.hidden=!(PM&&PM.looksCopied(ta.value,codeReadReferenceTexts()));};
   ta.oninput=()=>{state.journals[key]=ta.value;save('journal');checkCopy();};
   checkCopy();
-  label.append(ta);item.append(label,note);list.append(item);
+  label.append(ta);attachSaveControl(ta);item.append(label,note);list.append(item);
  }
 }
 // (#135-3·4) 변형 미션: 예제마다 준비된 작은 변형을 학생 코드에 직접 적용해 보고

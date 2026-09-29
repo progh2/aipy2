@@ -153,20 +153,29 @@
  .heatmap-cell{width:12px;height:12px}
 }
 
-/* 학생 따라가기 막대. 세션이 없거나 로그인 실패면 숨깁니다. */
-.follow-ui{position:sticky;top:78px;z-index:19;background:#10243d;color:#e8eef6;border-bottom:1px solid #2c4566;box-shadow:0 8px 18px #10243d14}
+/* 학생 따라가기 막대(#142). 세션이 없거나 로그인 실패면 숨깁니다. 진도 막대(#progress-bar)
+   바로 아래에 오도록 follow.js가 DOM 위치를 그 뒤에 꽂고, top은 헤더 실제 높이(--header-h)
+   + 진도 막대 실제 높이(--progress-h, 없는 페이지는 0)를 progress-bar.js가 채운 값을 쓴다.
+   그래야 스크롤해도 항상 보이고, 진도 막대와 겹치지 않는다. */
+.follow-ui{position:sticky;top:calc(var(--header-h,78px) + var(--progress-h,0px));z-index:19;background:#10243d;color:#e8eef6;border-bottom:1px solid #2c4566;box-shadow:0 8px 18px #10243d14}
 .follow-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px max(5%,calc((100vw - 1100px)/2))}
 .follow-status{margin:0;font-size:14px;font-weight:700}
 .follow-rejoin{background:var(--gold);border-color:var(--gold);color:var(--ink)}
 .follow-attention{margin:0;padding:8px max(5%,calc((100vw - 1100px)/2)) 10px;background:#7a3d00;color:#fff8e8;font-size:13px;font-weight:700}
-body.follow-active{scroll-padding-top:140px}
-body.follow-active .lesson{scroll-margin-top:150px}
+body.follow-active{scroll-padding-top:calc(var(--header-h,78px) + var(--progress-h,0px) + 62px)}
+body.follow-active .lesson{scroll-margin-top:calc(var(--header-h,78px) + var(--progress-h,0px) + 72px)}
 @media (max-width:640px){
  .teacher-shell{position:relative;top:auto}
  .teacher-shell-bar{padding:12px 5%}
  .class-picker select{min-width:0;width:100%}
- .follow-ui{top:auto;position:sticky}
- body.follow-active{scroll-padding-top:170px}
+ /* 모바일에서도 고정 유지(예전엔 top:auto로 사실상 고정이 풀렸다) — 버튼 한 줄로 낮춘다. */
+ .follow-ui{position:sticky;top:calc(var(--header-h,78px) + var(--progress-h,0px))}
+ .follow-bar{padding:6px 5%;gap:8px}
+ .follow-status{font-size:12.5px}
+ .follow-rejoin{padding:5px 10px;font-size:12px}
+ .follow-attention{padding:6px 5% 8px;font-size:12px}
+ body.follow-active{scroll-padding-top:calc(var(--header-h,78px) + var(--progress-h,0px) + 46px)}
+ body.follow-active .lesson{scroll-margin-top:calc(var(--header-h,78px) + var(--progress-h,0px) + 56px)}
 }
 @media print{.follow-ui{display:none!important}}
 

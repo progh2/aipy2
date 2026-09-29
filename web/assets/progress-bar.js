@@ -6,6 +6,36 @@ import {
  lessonIndex, counterText, segmentStates, regionAt, regionLabel, endMessage, clampFraction,
 } from './progress-model.js';
 
+// (#142) 헤더·진도 막대 실제 높이를 --header-h·--progress-h로 게시한다. 이 값은 따라가기 UI
+// (follow.js/account.css)·헤더 밑 sticky 요소들이 겹치지 않게 쓰는 공용 좌표다. 진도 막대가
+// 없는 페이지(단원 목차·홈 등)에서도 --header-h는 필요하므로, 아래 topic 가드보다 먼저,
+// 항상 실행한다.
+(() => {
+ const body = document.body;
+ const header = document.querySelector('header.top');
+ function sync() {
+  const bar = document.getElementById('progress-bar');
+  const headerH = header && header.offsetHeight && !body.classList.contains('hide-header') && !body.classList.contains('presenting')
+   ? header.offsetHeight : 0;
+  const barH = bar && !bar.hidden ? bar.offsetHeight : 0;
+  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
+  document.documentElement.style.setProperty('--progress-h', `${barH}px`);
+  document.documentElement.style.scrollPaddingTop = `${headerH + barH + 12}px`;
+  document.documentElement.style.setProperty('--rail-top', `${headerH + barH + 12}px`);
+ }
+ sync();
+ window.addEventListener('resize', sync);
+ window.addEventListener('load', sync);
+ const classObserver = new MutationObserver(sync);
+ classObserver.observe(body, {attributes: true, attributeFilter: ['class']});
+ const bar = document.getElementById('progress-bar');
+ if (bar) {
+  const barObserver = new MutationObserver(sync);
+  barObserver.observe(bar, {attributes: true, attributeFilter: ['hidden'], childList: true, subtree: true});
+ }
+ window.aipyOffsets = {sync};
+})();
+
 (async () => {
  const root = document.getElementById('progress-bar');
  if (!root) return;
@@ -169,18 +199,8 @@ import {
  });
  onScroll();
 
- // ── 헤더 높이·접기 상태에 맞춰 sticky 위치·scroll-padding-top을 맞춘다 ─────
- function syncOffsets() {
-  const header = document.querySelector('header.top');
-  const headerH = header && header.offsetHeight && !body.classList.contains('hide-header') && !body.classList.contains('presenting')
-   ? header.offsetHeight : 0;
-  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
-  const barH = root.offsetHeight || 0;
-  document.documentElement.style.scrollPaddingTop = `${headerH + barH + 12}px`;
-  document.documentElement.style.setProperty('--rail-top', `${headerH + barH + 12}px`);
- }
- syncOffsets();
- window.addEventListener('resize', syncOffsets);
- const classObserver = new MutationObserver(syncOffsets);
- classObserver.observe(body, {attributes: true, attributeFilter: ['class']});
+ // 헤더 높이·진도 막대 높이·접기 상태에 맞춘 --header-h/--progress-h/scroll-padding-top은
+ // 위쪽의 공용 sync()가 담당한다(모든 페이지 공통). 여기서는 막대가 실제로 그려진 뒤
+ // 한 번 더 맞춰 준다(막대 트랙 렌더로 높이가 막 잡힌 시점).
+ if (window.aipyOffsets) window.aipyOffsets.sync();
 })();
