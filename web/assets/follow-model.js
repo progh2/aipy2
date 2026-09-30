@@ -439,3 +439,24 @@ export function isPoppedTabMarker(search) {
   return false;
  }
 }
+
+// (#143) '의도적으로 다른 곳을 본다'의 판정. wheel·touchmove가 편집기·textarea·pre 같은
+// 내부 스크롤 영역 안에서 일어나면 창(window)은 실제로 움직이지 않는다 — 그래서 창이 실제로
+// 스크롤된 거리로만 판정한다. 프로그램(따라가기)이 스크롤을 거는 동안(ignoreUntil)에는 사용자
+// 입력 때문이 아니므로 무시한다. lastFollowY가 아직 없으면(따라간 적이 없으면) 거리를 0으로 본다
+// — 페이지를 막 열었을 때 바로 독립으로 튕기는 것을 막는다.
+export function shouldMarkIndependent({lastFollowY, currentY, viewportH, ignoreUntil, now} = {}) {
+ if ((now || 0) < (ignoreUntil || 0)) return false;
+ if (!viewportH) return false;
+ const base = lastFollowY == null ? currentY : lastFollowY;
+ const dist = Math.abs((currentY || 0) - (base || 0));
+ return dist >= viewportH * 0.6;
+}
+
+// (#143) '입력 중'을 활성 요소가 편집 가능하고, 최근(기본 6초) 안에 그 요소에서 input·keydown이
+// 있었을 때로만 한정한다. 포커스가 남아 있기만 해서는(예: 저널 작성 후 그대로 둔 경우) '입력 중'이
+// 아니다 — 그래야 이후 스크롤 초점을 계속 건너뛰는 문제가 없다.
+export function isRecentlyEditing({focused, lastActivityAt, now, thresholdMs = 6000} = {}) {
+ if (!focused || !lastActivityAt) return false;
+ return (now || 0) - lastActivityAt < thresholdMs;
+}

@@ -7,7 +7,8 @@ import {
  isUnitLessonPage, presenceFields, readPendingFocus, writePendingFocus, readFollowing, writeFollowing,
  catalogTopics, catalogExamples, SESSION_TTL_MS, PRESENCE_STALE_MS, PENDING_FOCUS_KEY,
  DEFAULT_PAGE, isLessonTopic, resolveFocusLocation, pageTopicId, parseAnchor, anchorId, blockAnchor,
- blockOnlyAllowed, isPoppedPage, poppedFocusDecision, isPoppedTabMarker
+ blockOnlyAllowed, isPoppedPage, poppedFocusDecision, isPoppedTabMarker,
+ shouldMarkIndependent, isRecentlyEditing
 } from '../../web/assets/follow-model.js';
 
 function eq(actual, expected, label) {
@@ -324,5 +325,31 @@ for (const [page, focus, action, anchor] of POPPED_TABLE) {
 eq(poppedFocusDecision('units/unit01/widgets.html', {page: 'units/unit02/index.html'}, false), {action: 'follow'},
  '팝업 탭이 아니면 그대로 따라가기 흐름');
 console.log('PASS: 새 창(팝업) 페이지 판별·초점 처리 표');
+
+// ── (#143) shouldMarkIndependent: 창(window)이 실제로 스크롤된 거리로만 '따로 본다'를 판정. ──
+const VP = 800; // viewport height
+eq(shouldMarkIndependent({lastFollowY: 1000, currentY: 1000, viewportH: VP, ignoreUntil: 0, now: 100}),
+ false, '거리 0이면 독립 아님');
+eq(shouldMarkIndependent({lastFollowY: 1000, currentY: 1000 + VP * 0.59, viewportH: VP, ignoreUntil: 0, now: 100}),
+ false, '화면 높이 59%는 아직 독립 아님');
+eq(shouldMarkIndependent({lastFollowY: 1000, currentY: 1000 + VP * 0.6, viewportH: VP, ignoreUntil: 0, now: 100}),
+ true, '화면 높이 60%는 독립');
+eq(shouldMarkIndependent({lastFollowY: 1000, currentY: 1000 - VP * 0.6, viewportH: VP, ignoreUntil: 0, now: 100}),
+ true, '반대 방향(위)도 거리로 판정');
+eq(shouldMarkIndependent({lastFollowY: 1000, currentY: 1000 + VP, viewportH: VP, ignoreUntil: 500, now: 100}),
+ false, '프로그램 스크롤 중(ignoreUntil 이전)에는 무시');
+eq(shouldMarkIndependent({lastFollowY: null, currentY: 5000, viewportH: VP, ignoreUntil: 0, now: 100}),
+ false, '따라간 적 없으면(lastFollowY 없음) 거리를 0으로 봐 독립 아님');
+eq(shouldMarkIndependent({lastFollowY: 1000, currentY: 1000 + VP, viewportH: 0, ignoreUntil: 0, now: 100}),
+ false, '뷰포트 높이를 모르면 판정하지 않음');
+console.log('PASS: shouldMarkIndependent — 창 스크롤 거리 기반 독립 판정(60% 임계값)');
+
+// ── (#143) isRecentlyEditing: 포커스가 남아 있는 것과 '지금 입력 중'을 구분. ──
+eq(isRecentlyEditing({focused: true, lastActivityAt: 1000, now: 1000 + 5999}), true, '5.999초는 아직 입력 중');
+eq(isRecentlyEditing({focused: true, lastActivityAt: 1000, now: 1000 + 6000}), false, '6초가 지나면 입력 중 아님');
+eq(isRecentlyEditing({focused: true, lastActivityAt: 0, now: 1000}), false, '활동 기록이 없으면 입력 중 아님');
+eq(isRecentlyEditing({focused: false, lastActivityAt: 1000, now: 1000 + 10}), false, '포커스가 없으면 입력 중 아님(최근 활동이 있어도)');
+eq(isRecentlyEditing({focused: true, lastActivityAt: 1000, now: 1000 + 3000, thresholdMs: 2000}), false, '기준 시간을 좁게 주면 그에 따른다');
+console.log('PASS: isRecentlyEditing — 포커스+최근 활동(기본 6초) 기반 입력 중 판정');
 
 console.log('PASS: follow-model helpers');

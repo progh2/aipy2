@@ -7,14 +7,16 @@ import {
  isSessionLive, pageFromPath, shouldNavigate, focusHref, focusKey, topicFromHash,
  visibleTopic, presenceFields, readPendingFocus, writePendingFocus, readFollowing,
  writeFollowing, sessionStartChanged, PRESENCE_HEARTBEAT_MS, samePage, unitFromPage,
- parseAnchor, isPoppedTabMarker, poppedFocusDecision
-} from './follow-model.js';
+ parseAnchor, isPoppedTabMarker, poppedFocusDecision, shouldMarkIndependent, isRecentlyEditing
+} from './follow-model.js?v=q143';
 
 // (#132) 연습문제·예제·튜토리얼·보강 자료는 새 창(target=_blank rel=noopener)으로 연다.
-// rel=noopener 탓에 window.opener는 항상 비어 있으므로, 그 링크들이 붙이는 ?w=1 쿼리
-// 표식으로 "이 탭은 수업 원래 탭이 아니라 학생이 따로 연 탭"임을 판별한다. window.opener가
-// 남아 있는 경우(다른 경로로 새 창이 열린 경우)도 함께 판별에 넣는다.
-const isPoppedTab = Boolean(window.opener) || isPoppedTabMarker(location.search);
+// rel=noopener 탓에 window.opener는 항상 비어 있다 — 그래서 "새 창인가"는 오직 그 링크들이
+// 붙이는 ?w=1 쿼리 표식으로만 판별한다(#143). window.opener 유무는 더 이상 보지 않는다:
+// 학교 포털·클래스룸이 window.open으로 사이트를 열면 수업 탭 전체가 opener를 갖게 되어,
+// 그 탭 전체가 "새 창"으로 오인되어 교사 초점을 따라 다른 페이지로 못 넘어가는 사고가 있었다.
+// [이 창에서 따라가기] 버튼으로 끌 수 있어야 해서 let으로 둔다.
+let isPoppedTab = isPoppedTabMarker(location.search);
 import {titlesFromCatalog} from './understanding-model.js';
 
 const prefix = document.body.dataset.prefix || '';
@@ -39,6 +41,15 @@ let lastNoticeKey = '';
 let lastAppliedExample = '';
 let noticeTimer = 0;
 let titles = {};
+// (#143) 창(window)이 마지막으로 따라가기로 도착한 위치. wheel·touchmove가 편집기 등 내부
+// 스크롤 영역 안에서 일어나면 창은 움직이지 않으므로, 이 값과의 실제 거리로만 '따로 본다'를 판정한다.
+let lastFollowY = null;
+// (#143) 편집 가능한 요소에서 마지막으로 input·keydown이 있었던 시각. 포커스가 남아만 있는
+// 것과 '지금 입력 중'을 구분하는 데 쓴다.
+let lastEditActivityAt = 0;
+// (#143) 입력 중이라 미룬 스크롤 초점. 입력이 멈추면(6초 무입력 또는 blur) 한 번 적용한다.
+let pendingScroll = null;
+let pendingScrollTimer = 0;
 fetch(`${prefix}data/catalog.json`).then((r) => r.json()).then((c) => { titles = titlesFromCatalog(c); }).catch(() => {});
 
 // 초점 위치를 사람이 읽을 이름으로
@@ -76,14 +87,39 @@ function hideNotice() {
 }
 
 // (#132) 새 창(따로 연 탭)에서, 교사 초점이 이 탭과 다른 페이지를 가리킬 때만 쓰는 작은 안내.
-// showNotice(focus)와 달리 이동 버튼을 주지 않는다 — 이 탭은 옮기지 않기로 한 탭이기 때문이다.
+// showNotice(focus)와 달리 이 탭을 옮기지는 않는다 — 대신 (#143) 학교 포털·클래스룸이 새 창으로
+// 사이트 전체를 열어 버린 학생을 위해, 이 탭을 수업 탭으로 직접 전환하는 버튼을 준다.
 function showPoppedNotice() {
  const box = ensureNotice();
  box.replaceChildren();
  box.append(node('p', 'follow-notice-text', '선생님이 다른 곳을 보고 있어요 — 원래 수업 창을 확인하세요.'));
+ const actions = node('div', 'follow-notice-actions');
+ const takeOver = node('button', 'primary', '이 창에서 따라가기');
+ takeOver.type = 'button';
+ takeOver.addEventListener('click', () => { hideNotice(); becomeClassroomTab(); });
+ const close = node('button', '', '닫기');
+ close.type = 'button';
+ close.addEventListener('click', hideNotice);
+ actions.append(takeOver, close);
+ box.append(actions);
  box.hidden = false;
  clearTimeout(noticeTimer);
  noticeTimer = setTimeout(hideNotice, 8000);
+}
+
+// (#143) [이 창에서 따라가기]: 이 탭을 "새 창(팝업)"이 아니라 수업의 원래 탭으로 취급하도록
+// 전환한다. 주소의 ?w=1 표식을 지우고(다시 열어도 팝업으로 오인하지 않도록), 지금 교사가
+// 보고 있는 위치로 한 번 이동·스크롤한다.
+function becomeClassroomTab() {
+ isPoppedTab = false;
+ try {
+  const url = new URL(location.href);
+  url.searchParams.delete('w');
+  history.replaceState(null, '', url.pathname + url.search + url.hash);
+ } catch (error) {
+  console.warn('[follow] 주소 표식을 지우지 못했습니다.', error);
+ }
+ if (liveSession && liveSession.focus && liveSession.focus.page) applyFocus(liveSession.focus, true);
 }
 
 function showNotice(focus) {
@@ -202,7 +238,9 @@ function paintUi() {
   status.textContent = '선생님 화면을 따라가는 중';
   rejoin.textContent = '선생님 화면으로 이동';
  } else {
-  status.textContent = '잠깐 혼자 보는 중';
+  // (#143) 이유를 짧게 덧붙인다 — 화면을 직접 움직여서든, 다른 페이지(404 등)에서 넘어와서든
+  // 같은 문구로 안내한다. '잠깐 혼자 보는 중' 문자열 자체는 그대로 두고(검증 대상) 이유만 더한다.
+  status.textContent = '잠깐 혼자 보는 중 · 화면을 직접 움직여 따로 보는 중이에요';
   rejoin.textContent = '선생님 화면으로 돌아가기';
  }
 }
@@ -237,6 +275,8 @@ function scrollToId(anchor, force) {
  if (!el) return false;
  if (frac == null) {
   ignoreScrollUntil = Date.now() + 1400;
+  // scrollIntoView(block:'start')의 도착 지점을 미리 어림잡아 '따라간 위치'로 기록한다(#143).
+  lastFollowY = window.scrollY + el.getBoundingClientRect().top;
   el.scrollIntoView({behavior: prefersSmooth() ? 'smooth' : 'auto', block: 'start'});
   flash(el);
  } else {
@@ -246,6 +286,7 @@ function scrollToId(anchor, force) {
   const delta = Math.abs(target - window.scrollY);
   if (!force && delta < window.innerHeight * FOLLOW_MOVE_THRESHOLD) return true;
   ignoreScrollUntil = Date.now() + 1400;
+  lastFollowY = target;
   // 짧은 거리는 즉시 이동한다 — 연속 갱신이 smooth 애니메이션과 겹쳐 흔들리는 것을 줄인다.
   // 긴 거리는 그대로 smooth. scrollTo를 다시 호출하면 진행 중인 스크롤의 목표만 갈아탄다.
   const behavior = (!prefersSmooth() || delta < window.innerHeight * 0.05) ? 'auto' : 'smooth';
@@ -260,13 +301,50 @@ function applyExample(id) {
 }
 
 // (#126, #130) 예제 페이지에서 교사가 편집기(#lab, data-fb 붙어 있음)를 보고 있으면 학생도 그
-// 위치로 스크롤될 수 있다 — 학생이 코드나 저널을 입력하는 중이면 자동 스크롤로 입력 포커스를
-// 빼앗지 않는다. 따라가기 상태 자체는 그대로 두고(안내·페이지 이동은 계속) 스크롤 이동만 건너뛴다.
-function isEditingCode() {
- const el = document.activeElement;
+// 위치로 스크롤될 수 있다 — 학생이 코드·저널·예측·코드 읽기(모두 [data-journal] 버킷을 쓴다)를
+// 입력하는 중이면 자동 스크롤로 입력 포커스를 빼앗지 않는다. 따라가기 상태 자체는 그대로 두고
+// (안내·페이지 이동은 계속) 스크롤 이동만 건너뛴다.
+function isEditableFocusTarget(el) {
  if (!el) return false;
  if (el.id === 'code-editor') return true;
  return el.tagName === 'TEXTAREA' && el.hasAttribute('data-journal');
+}
+
+// (#143) '입력 중'은 포커스가 남아 있는 것만으로는 안 된다 — 최근(6초 안)에 그 요소에서
+// input·keydown이 있었을 때만이다. 그래야 저널 등에 입력한 뒤 포커스를 남겨 둬도 이후 초점이
+// 계속 건너뛰지 않는다.
+function isEditingCode() {
+ return isRecentlyEditing({
+  focused: isEditableFocusTarget(document.activeElement),
+  lastActivityAt: lastEditActivityAt,
+  now: Date.now()
+ });
+}
+
+function trackEditActivity(event) {
+ if (isEditableFocusTarget(event.target)) lastEditActivityAt = Date.now();
+}
+
+// (#143) 입력 중이라 미룬 스크롤을 기억해 두고, 입력이 멈추면(6초 무입력 또는 blur) 한 번 적용한다.
+function deferScroll(anchor, force) {
+ pendingScroll = {anchor, force};
+ if (!pendingScrollTimer) pendingScrollTimer = setInterval(resolvePendingScroll, 800);
+}
+
+function resolvePendingScroll() {
+ if (!pendingScroll) return;
+ if (isEditingCode()) return;
+ const {anchor, force} = pendingScroll;
+ pendingScroll = null;
+ clearInterval(pendingScrollTimer);
+ pendingScrollTimer = 0;
+ scrollToId(anchor, force);
+}
+
+// 편집 가능한 요소가 이 스크롤 지점을 가리키면 즉시 이동, 입력 중이면 미룬다(#143).
+function scrollUnlessEditing(anchor, force) {
+ if (isEditingCode()) deferScroll(anchor, force);
+ else scrollToId(anchor, force);
 }
 
 function applyFocus(focus, force) {
@@ -279,7 +357,7 @@ function applyFocus(focus, force) {
   const decision = poppedFocusDecision(currentPage(), focus, true);
   lastFocusKey = key || lastFocusKey;
   if (decision.action === 'scroll') {
-   whenLearningReady(() => { if (decision.topicAnchor && !isEditingCode()) scrollToId(decision.topicAnchor, force); });
+   whenLearningReady(() => { if (decision.topicAnchor) scrollUnlessEditing(decision.topicAnchor, force); });
   } else if (decision.action === 'notice') {
    showPoppedNotice();
   }
@@ -302,12 +380,12 @@ function applyFocus(focus, force) {
  }
  lastFocusKey = key || lastFocusKey;
  whenLearningReady(() => {
-  if (focus.topicAnchor && !isEditingCode()) scrollToId(focus.topicAnchor, force);
+  if (focus.topicAnchor) scrollUnlessEditing(focus.topicAnchor, force);
   // 같은 예제를 다시 적용하면 편집기가 초기화되므로, 예제가 바뀌었을 때만 연다.
   if (focus.exampleId && (force || focus.exampleId !== lastAppliedExample)) {
    lastAppliedExample = focus.exampleId;
    applyExample(focus.exampleId);
-   if (!focus.topicAnchor && !isEditingCode()) scrollToId('lab', force);
+   if (!focus.topicAnchor) scrollUnlessEditing('lab', force);
   }
  });
 }
@@ -339,6 +417,18 @@ function markIndependent() {
 
 function onUserScrollIntent() {
  markIndependent();
+}
+
+// (#143) wheel·touchmove 자체가 아니라, 창(window)이 실제로 얼마나 스크롤됐는지로만 '따로
+// 본다'를 판정한다(follow-model.js의 shouldMarkIndependent). 편집기·textarea·pre 같은 내부
+// 스크롤 영역 안에서 일어난 휠·터치는 window.scrollY를 바꾸지 않으므로 자연히 무시된다.
+function onWindowScroll() {
+ if (shouldMarkIndependent({
+  lastFollowY, currentY: window.scrollY, viewportH: window.innerHeight,
+  ignoreUntil: ignoreScrollUntil, now: Date.now()
+ })) {
+  markIndependent();
+ }
 }
 
 async function writePresence() {
@@ -392,6 +482,9 @@ function dropSession() {
  seenNonce = null;
  stopHeartbeat();
  hideUi();
+ pendingScroll = null;
+ clearInterval(pendingScrollTimer);
+ pendingScrollTimer = 0;
 }
 
 function onSessionSnap(snapshot) {
@@ -485,6 +578,18 @@ function onAccount(detail) {
  listenSession();
 }
 
+// (#143) 이벤트 대상이 입력칸(또는 그 안)이면 스크롤 의도로 보지 않는다 — 코드 편집기·저널·
+// 예측·코드 읽기 textarea·input에서 스페이스나 방향키를 눌러도 따라가기가 꺼지면 안 된다.
+function isEditableEventTarget(target) {
+ let el = target;
+ while (el && el.nodeType === 1) {
+  const tag = el.tagName;
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable) return true;
+  el = el.parentElement;
+ }
+ return false;
+}
+
 function startFollow() {
  if (document.getElementById('teacher-shell')) return;
  if (!document.getElementById('account')) return;
@@ -493,12 +598,23 @@ function startFollow() {
  hideUi();
  document.addEventListener('aipy:account', (event) => onAccount(event.detail));
  if (window.aipyAccount) onAccount(window.aipyAccount);
- window.addEventListener('wheel', onUserScrollIntent, {passive: true});
- window.addEventListener('touchmove', onUserScrollIntent, {passive: true});
+ // (#143) wheel·touchmove 자체는 더 이상 즉시 '따로 본다'로 판정하지 않는다 — 창이 실제로
+ // 스크롤된 거리로만 판정한다(onWindowScroll). 편집기 등 내부 스크롤 영역 안의 휠·터치는
+ // window.scrollY를 바꾸지 않으므로 자연히 무시된다.
+ window.addEventListener('scroll', onWindowScroll, {passive: true});
  window.addEventListener('keydown', (event) => {
+  if (event.defaultPrevented) return;
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
+  if (isEditableEventTarget(event.target)) return;
   if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
    onUserScrollIntent();
   }
+ });
+ // (#143) '입력 중' 판정을 위한 최근 활동 시각 기록 + 입력이 멈추면(blur) 미룬 스크롤 적용.
+ document.addEventListener('input', trackEditActivity, true);
+ document.addEventListener('keydown', trackEditActivity, true);
+ document.addEventListener('focusout', (event) => {
+  if (isEditableFocusTarget(event.target)) setTimeout(resolvePendingScroll, 0);
  });
  document.addEventListener('visibilitychange', () => {
   if (document.hidden) stopHeartbeat();
