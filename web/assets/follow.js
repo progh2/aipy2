@@ -274,7 +274,7 @@ function scrollToId(anchor, force) {
  const el = (block && document.querySelector(`[data-fb="${block}"]`)) || document.getElementById(id);
  if (!el) return false;
  if (frac == null) {
-  ignoreScrollUntil = Date.now() + 1400;
+  ignoreScrollUntil = Date.now() + 2500;
   // scrollIntoView(block:'start')의 도착 지점을 미리 어림잡아 '따라간 위치'로 기록한다(#143).
   lastFollowY = window.scrollY + el.getBoundingClientRect().top;
   el.scrollIntoView({behavior: prefersSmooth() ? 'smooth' : 'auto', block: 'start'});
@@ -285,7 +285,7 @@ function scrollToId(anchor, force) {
   const target = Math.max(0, window.scrollY + r.top + frac * r.height - 110 * z);
   const delta = Math.abs(target - window.scrollY);
   if (!force && delta < window.innerHeight * FOLLOW_MOVE_THRESHOLD) return true;
-  ignoreScrollUntil = Date.now() + 1400;
+  ignoreScrollUntil = Date.now() + 2500;
   lastFollowY = target;
   // 짧은 거리는 즉시 이동한다 — 연속 갱신이 smooth 애니메이션과 겹쳐 흔들리는 것을 줄인다.
   // 긴 거리는 그대로 smooth. scrollTo를 다시 호출하면 진행 중인 스크롤의 목표만 갈아탄다.
