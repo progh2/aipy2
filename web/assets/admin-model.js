@@ -1,6 +1,6 @@
 /* 명단 관리(admin.js)용 순수 로직. DOM·Firebase 없이 CSV 파싱·학번 검증·반영 payload를
    검사할 수 있게 admin.js에서 분리했다(#125-6). admin.js는 이 파일을 import해서 쓴다. */
-import {SCHOOL_DOMAIN} from './firebase-config.js';
+import {SCHOOL_DOMAIN} from './firebase-config.js?v=a144';
 
 export const SCHOOL = SCHOOL_DOMAIN;
 

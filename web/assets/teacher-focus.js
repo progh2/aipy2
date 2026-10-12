@@ -1,8 +1,8 @@
 /* 교사 단원 페이지 초점. 로그인·admins 확인 + 선택한 반의 활성 세션이 있을 때만
    주제 앵커·예제 클릭으로 sessions/{반}.focus를 갱신합니다. 아니면 기존 학습만 합니다.
    반은 window.aipyClass, 없으면 aipy-teacher-class:{email} localStorage에서 읽습니다. */
-import {ready} from './firebase-config.js';
-import {load, readTeacherFlag} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load, readTeacherFlag} from './auth.js?v=a144';
 import {dataFailureNote} from './auth-model.js';
 import {publishClass, resolveTeacherClassId, labelClass} from './class-picker.js';
 import {

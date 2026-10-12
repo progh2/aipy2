@@ -1,3 +1,4 @@
+import {AUTH_DOMAIN_STORAGE_KEY, pickAuthDomain} from './auth-domain-model.js';
 /* Firebase 프로젝트 설정.
    apiKey는 비밀키가 아니라 프로젝트 식별자이므로 공개 저장소에 커밋해도 됩니다.
    실제 접근 권한은 firebase/firestore.rules가 판단합니다.
@@ -10,6 +11,10 @@ export const firebaseConfig = {
   messagingSenderId: "1053376050119",
   appId: "1:1053376050119:web:57f64c6eccc52e5605dfe2"
 };
+// (#144) 학교망 일부가 기본 인증 주소(firebaseapp.com)를 막는다. 이 기기에서 막혔다고 확인된 경우
+// auth.js가 같은 프로젝트의 대체 주소(web.app)를 localStorage에 기억해 두고, 다음 로드부터 그 주소를 쓴다.
+export const DEFAULT_AUTH_DOMAIN = firebaseConfig.authDomain;
+try { firebaseConfig.authDomain = pickAuthDomain(DEFAULT_AUTH_DOMAIN, localStorage.getItem(AUTH_DOMAIN_STORAGE_KEY)); } catch { /* 사생활 모드 */ }
 export const SCHOOL_DOMAIN = 'e-mirim.hs.kr';
 export const SDK = 'https://www.gstatic.com/firebasejs/12.9.0';
 export const ready = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.authDomain);

@@ -4,8 +4,8 @@
    반 이동 학생을 이메일로 계속 매칭하기 위해서, listen() 주석 참고). 화면별 반 필터는
    inClass(row, classIdValue)로 한다.
    학생 상세 패널을 열 때만 students/{uid}/state/current를 1회 조회해 답안·저널을 보여 줍니다(#104). */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {inClass, parseClassId} from './class-picker.js';
 import {
  titlesFromCatalog, tasksFromCatalog, topicTitle, studentLabel, countUnderstanding, groupHardByTopic

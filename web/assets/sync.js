@@ -1,8 +1,8 @@
 /* 학습 기록 클라우드 미러. 화면은 app.js의 localStorage를 즉시 읽고 쓰며,
    이 모듈은 로그인된 뒤에만 백그라운드로 students/{uid}/state/current 와 progress/{uid} 를 맞춥니다.
    실패·미로그인·권한 거부는 학습을 막지 않고 로컬만 사용합니다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {
  LEARNING_KEY, CODE_IDLE_MS, CHOICE_KEY, shouldFlushNow, stampChanged, mergeStates, mapsChanged,
  progressFields, statePayload, cloudToState, cloneState, projectPreview, emptyState,

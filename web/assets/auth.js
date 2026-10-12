@@ -1,7 +1,8 @@
 /* 학교 Google 계정 로그인. 정적 호스팅(GitHub Pages)에서 그대로 동작하며,
    학교 도메인 확인과 반·번호 위조 방지는 Firestore 규칙이 최종 판단합니다.
    설정이 비어 있으면 아무 UI도 만들지 않고 조용히 종료합니다. */
-import {firebaseConfig, SCHOOL_DOMAIN, SDK, ready} from './firebase-config.js';
+import {firebaseConfig, SCHOOL_DOMAIN, SDK, ready, DEFAULT_AUTH_DOMAIN} from './firebase-config.js?v=a144';
+import {AUTH_DOMAIN_STORAGE_KEY, authDomainCandidates, decideAuthDomain} from './auth-domain-model.js';
 import {UNDERSTANDING_KEY} from './understanding-model.js';
 import {privacyButton, mountPrivacyNotice, openPrivacyDialog} from './privacy-model.js';
 import {
@@ -56,7 +57,8 @@ export async function load() {
    import(`${SDK}/firebase-auth.js`),
    import(`${SDK}/firebase-firestore.js`)
   ]);
-  const instance = app.initializeApp(firebaseConfig);
+  // 같은 페이지에서 다른 경로로 이미 초기화됐으면 그 앱을 쓴다(중복 초기화 오류 방지, #144).
+  const instance = app.getApps().length ? app.getApp() : app.initializeApp(firebaseConfig);
   const value = {authMod, store, auth: createAuth(authMod, instance), db: store.getFirestore(instance)};
   fb = value;
   return value;
@@ -86,15 +88,75 @@ function publish(user, profile) {
  document.dispatchEvent(new CustomEvent('aipy:account', {detail: {user, profile}}));
 }
 
+// (#144) 로그인 창 주소(authDomain)가 이 기기의 네트워크에서 열리는지 미리 확인한다. 막혔으면
+// 같은 프로젝트의 대체 주소로 바꿔 두고, 로그인 버튼을 누를 때 페이지를 한 번 새로 고쳐 그 주소로
+// 로그인 창을 연다(팝업은 클릭 직후에만 열 수 있어 확인과 팝업을 한 번에 할 수 없다).
+const ACTIVE_AUTH_DOMAIN = firebaseConfig.authDomain;
+const RELOGIN_KEY = 'aipy-relogin-after-domain-switch';
+let authDomainState = {action: 'unknown', domain: ACTIVE_AUTH_DOMAIN};
+let authProbe = null;
+
+function probeDomain(domain, ms = 4000) {
+ const ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+ const timer = setTimeout(() => ctrl && ctrl.abort(), ms);
+ return fetch(`https://${domain}/__/auth/iframe`, {mode: 'no-cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined})
+  .then(() => true, () => false)
+  .finally(() => clearTimeout(timer));
+}
+
+function checkAuthDomain() {
+ if (authProbe) return authProbe;
+ authProbe = (async () => {
+  const reachable = {};
+  reachable[ACTIVE_AUTH_DOMAIN] = await probeDomain(ACTIVE_AUTH_DOMAIN);
+  if (!reachable[ACTIVE_AUTH_DOMAIN]) {
+   for (const d of authDomainCandidates(DEFAULT_AUTH_DOMAIN)) {
+    if (!(d in reachable)) reachable[d] = await probeDomain(d);
+   }
+  }
+  authDomainState = decideAuthDomain(DEFAULT_AUTH_DOMAIN, ACTIVE_AUTH_DOMAIN, reachable);
+  if (authDomainState.action === 'switch') {
+   try { localStorage.setItem(AUTH_DOMAIN_STORAGE_KEY, authDomainState.domain); } catch { /* 사생활 모드 */ }
+   console.info('[auth] 로그인 주소가 막혀 대체 주소로 바꿉니다:', ACTIVE_AUTH_DOMAIN, '→', authDomainState.domain);
+  }
+  return authDomainState;
+ })();
+ return authProbe;
+}
+
+function consumeReloginFlag() {
+ try {
+  const v = sessionStorage.getItem(RELOGIN_KEY);
+  if (v) sessionStorage.removeItem(RELOGIN_KEY);
+  return v === '1';
+ } catch { return false; }
+}
+
+// 로그인 버튼: 대체 주소로 바꿔야 하면 새로 고침 후 다시 누르게 안내하고, 모두 막혔으면 알려 준다.
+function beginSignIn(forceChooser) {
+ if (authDomainState.action === 'switch') {
+  try { sessionStorage.setItem(RELOGIN_KEY, '1'); } catch { /* 무시 */ }
+  renderBusy('학교망에서 열리는 로그인 주소로 바꾸는 중…');
+  location.reload();
+  return;
+ }
+ if (authDomainState.action === 'blocked') {
+  toast('이 컴퓨터의 네트워크에서 로그인 서버가 막혀 있어요. 선생님께 알려 주세요. (학습은 이 브라우저에 저장됩니다)');
+ }
+ signIn(forceChooser);
+}
+
 function renderSignedOut() {
  const button = node('button', 'account-signin', `학교 계정으로 로그인`);
  button.type = 'button';
- button.addEventListener('click', () => signIn(false));
+ button.addEventListener('click', () => beginSignIn(false));
  const switchBtn = node('button', 'account-switch', '다른 계정');
  switchBtn.type = 'button';
- switchBtn.addEventListener('click', () => signIn(true));
+ switchBtn.addEventListener('click', () => beginSignIn(true));
  const note = node('span', 'account-note', `@${SCHOOL_DOMAIN} 계정만 사용합니다.`);
  slot.replaceChildren(button, switchBtn, note);
+ checkAuthDomain();
+ if (consumeReloginFlag()) toast('학교망에서 열리는 로그인 주소로 바꿨어요. [학교 계정으로 로그인]을 다시 눌러 주세요.');
 }
 
 function renderBusy(text) {

@@ -1,7 +1,7 @@
 /* 교사 관리 화면의 공통 뼈대. 헤더 아래 반 선택과 명단/보드/세션/과제/답변 내역 내비게이션을 붙입니다.
    이 스크립트는 관리 페이지에만 넣습니다. 로그인·설정 실패는 학습을 막지 않습니다. */
-import {ready} from './firebase-config.js';
-import {load, readTeacherFlag} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load, readTeacherFlag} from './auth.js?v=a144';
 import {teacherPickerEmpty} from './auth-model.js';
 import {
  classesFromRoster, resolveSelectedClass, writeSelectedClass, publishClass,

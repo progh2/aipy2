@@ -856,7 +856,7 @@ assert 'showBootError' in ops_js
 assert '운영 화면을 시작하지 못했습니다. 새로고침하세요.' in ops_js
 assert 'teacherAccessMessage' in ops_js
 assert '권한을 확인하지 못했습니다. 네트워크를 확인하고 새로고침하세요.' in (WEB/'assets/auth-model.js').read_text()
-assert "from './firebase-config.js'" in ops_js
+assert "from './firebase-config.js" in ops_js  # (#144) 버전 쿼리(?v=) 허용
 assert ops_js.rfind("if ($('ops-gate')) startOps();") > ops_js.find('let uiBound')
 ops_model_js=(WEB/'assets/ops-model.js').read_text()
 assert '입학년도는 그대로예요. 학년·반만 바뀌고 이전 학습 기록이 이어져요.' in ops_model_js

@@ -3,8 +3,8 @@
    편집을 허용하고, 다른 기기가 이미 쥐고 있으면 이 기기는 읽기 전용으로 시작한다.
    Firestore editLocks/{uid} 문서 하나로 판단하며, 실패해도 학습(코드 실행·읽기)은 막지 않는다.
    #121: 같은 브라우저의 두 탭도 서로 다른 잠금 소유자로 구분한다(탭id는 sessionStorage). */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {
  LOCK_FRESH_MS, HEARTBEAT_MS, LOCK_NOTE, deviceLabel, isFresh, heldByOther, lockFields, newDeviceId,
  newTabId, combineDeviceId, lockOwnerLabel

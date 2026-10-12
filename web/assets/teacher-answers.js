@@ -4,8 +4,8 @@
    학생 상세는 board.js 학생 상세 패널(#104)과 같은 규칙으로 students/{uid}/state/current를
    학생당 1회만 읽고 캐시한다 — 반 전체 state를 한꺼번에 읽지 않는다. 답안 줄·저널 렌더링은
    board.js와 answer-view.js를 공유해 중복 구현하지 않는다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {parseClassId} from './class-picker.js';
 import {titlesFromCatalog, tasksFromCatalog} from './understanding-model.js';
 import {

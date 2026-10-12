@@ -1,7 +1,7 @@
 /* 학생 따라가기. 활성 세션이 있을 때만 UI를 붙이고, 실패하면 기존 학습만 남깁니다.
    M2 학습 기록 미러에 의존하지 않습니다. 코드는 localStorage(app.js)에 저장한 뒤 이동합니다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {classId} from './class-picker.js';
 import {
  isSessionLive, pageFromPath, shouldNavigate, focusHref, focusKey, topicFromHash,

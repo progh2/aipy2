@@ -1,7 +1,7 @@
 /* 주제 끝 이해도 버튼. 완료 체크 옆에 붙이고, 로컬을 먼저 저장한 뒤 progress.understanding 을 맞춥니다.
    로그인·네트워크 실패는 학습을 막지 않습니다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {progressFields} from './sync-model.js';
 import {
  UNDERSTANDING_KEY, UNDERSTANDING_WRITE_MS, COMMENT_MAX, UNDERSTANDING_VALUES,

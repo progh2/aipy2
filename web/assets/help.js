@@ -1,6 +1,6 @@
 /* 실습실·문제·주제 옆 도움 요청. 큐에 올린 뒤에도 학습은 그대로 이어집니다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {classId} from './class-picker.js';
 import {NOT_GRADED_NOTE, isTopicId} from './understanding-model.js';
 import {

@@ -1,7 +1,7 @@
 /* 교사용 과제 정의·제출 확인. 헤더에서 고른 반(window.aipyClass)을 기본으로 씁니다.
    문항·예제 목록은 data/catalog.json이며 항목을 코드에 적지 않습니다. */
-import {ready} from './firebase-config.js';
-import {load, readTeacherFlag} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load, readTeacherFlag} from './auth.js?v=a144';
 import {teacherAccessMessage, dataFailureNote} from './auth-model.js';
 import {classesFromRoster, inClass, labelClass} from './class-picker.js';
 import {

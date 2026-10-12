@@ -1,8 +1,8 @@
 /* 교사 운영 도구. 입학년도로 조회하고 졸업 정리를 합니다.
    (일괄 진급 기능은 2026-09 요청으로 제거 — 매년 반이 개별적으로 바뀌어 의미가 없음)
    학습 기록은 일괄 삭제하지 않습니다. 쓰기는 교사 권한이 있을 때만 규칙이 허용합니다. */
-import {ready} from './firebase-config.js';
-import {load, readTeacherFlag} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load, readTeacherFlag} from './auth.js?v=a144';
 import {teacherAccessMessage, dataFailureNote} from './auth-model.js';
 import {labelClass} from './class-picker.js';
 import {

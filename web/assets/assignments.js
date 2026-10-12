@@ -1,7 +1,7 @@
 /* 학생 과제 제출. 단원 실습·문제 영역에 붙이며, 생성 HTML을 고치지 않습니다.
    로그인·권한 실패는 학습을 막지 않습니다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {classId} from './class-picker.js';
 import {
  assignmentVisible, isLate, statusLabel, reviewLabel, submitButtonLabel, statusChips,

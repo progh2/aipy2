@@ -1,8 +1,8 @@
 /* 포스트잇 메모(#99). 로그인한 학생·교사가 페이지 오른쪽에 메모를 붙입니다.
    위치(y)는 문서 기준 px, 공개 범위는 비공개(기본)/학생에게 공개/모두 공개.
    저장은 Firestore notes 컬렉션(규칙이 공개 범위별 읽기를 제한). 실패해도 학습을 막지 않습니다. */
-import {ready} from './firebase-config.js';
-import {load, readTeacherFlag} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load, readTeacherFlag} from './auth.js?v=a144';
 import {pageFromPath} from './follow-model.js';
 import {
  NOTE_COLORS, NOTE_VISIBILITY, NOTE_VISIBILITY_LABELS, NOTE_TEXT_MAX, NOTE_WRITE_MS,

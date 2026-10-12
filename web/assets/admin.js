@@ -1,7 +1,7 @@
 /* 교사용 명단 관리. 콘솔에서 문서를 손으로 만들지 않도록 CSV로 일괄 등록합니다.
    쓰기 권한은 admins/{교사이메일} 문서가 있을 때만 규칙이 허용합니다.
    목록·내보내기는 헤더에서 고른 반(grade-classroom)만 보여 줍니다. */
-import {load, SCHOOL, readTeacherFlag} from './auth.js';
+import {load, SCHOOL, readTeacherFlag} from './auth.js?v=a144';
 import {teacherAccessMessage} from './auth-model.js';
 import {inClass, labelClass, isArchived} from './class-picker.js';
 import {

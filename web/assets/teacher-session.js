@@ -1,6 +1,6 @@
 /* 교사 수업 세션. 헤더에서 고른 반(window.aipyClass)의 sessions/{학년}-{반}을 만들고 초점을 보냅니다. */
-import {ready} from './firebase-config.js';
-import {load} from './auth.js';
+import {ready} from './firebase-config.js?v=a144';
+import {load} from './auth.js?v=a144';
 import {dataFailureNote} from './auth-model.js';
 import {labelClass} from './class-picker.js';
 import {inClass, classQueryFilters} from './class-picker.js';
