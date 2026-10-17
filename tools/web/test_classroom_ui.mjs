@@ -379,4 +379,24 @@ print("합쳐진 배열:", combined_array)
  assert.ok(followBox.x>=0 && followBox.x+followBox.width<=390+0.5,'follow UI가 390px 뷰포트 너비 안에 있음');
  await page.setViewportSize({width:1280,height:900});
  console.log('PASS 따라가기 UI: 진도 막대와 겹치지 않고, 스크롤 후에도 데스크톱·모바일 모두 고정');
+
+ // 성취수준 참고 지표 화면(#145-B) — ?demo=1은 로그인 없이 5명 데모 데이터를 바로 계산해 보여준다.
+ await page.goto(base+'/teacher/achievement.html?demo=1');
+ await page.waitForFunction(()=>!!document.querySelector('#distribution-table table'));
+ assert.equal(await page.locator('.ach-disclaimer').count(),1,'참고 지표 고정 안내 문구가 있어야 함');
+ const distRows=page.locator('#distribution-table table tbody tr');
+ assert.equal(await distRows.count(),13,'성취기준 13개 분포 행');
+ const matrixRows=page.locator('#student-matrix table tbody tr');
+ assert.equal(await matrixRows.count(),5,'데모 학생 5명 행');
+ assert.equal(await page.locator('#csv-export').isDisabled(),false,'데이터가 있으면 CSV 버튼이 활성화되어야 함');
+ assert.equal(await page.locator('#print-report').isDisabled(),false,'데이터가 있으면 인쇄 버튼이 활성화되어야 함');
+ await page.locator('#student-matrix table tbody tr').first().locator('button.assign-sub-btn').click();
+ await page.waitForFunction(()=>!!document.querySelector('.ach-report'));
+ assert.ok((await page.locator('.ach-report h3').textContent()).length>0,'학생을 고르면 개인 리포트 제목이 나와야 함');
+ assert.equal(await page.locator('.ach-report-item').count(),13,'개인 리포트에 성취기준 13개 항목');
+ await page.screenshot({path:'/tmp/ach-screenshot.png',fullPage:true});
+ await page.emulateMedia({media:'print'});
+ await page.screenshot({path:'/tmp/ach-print-screenshot.png',fullPage:true});
+ await page.emulateMedia({media:'screen'});
+ console.log('PASS 성취수준 참고 지표(데모): 분포표 13행, 학생 5명, 개인 리포트 13항목, 인쇄 미리보기 캡처');
 } finally {await browser.close();}

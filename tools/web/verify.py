@@ -1091,4 +1091,40 @@ for p in topic_pages:
   task_boxes_checked+=1
 assert task_boxes_checked>0,'직접 해 보세요 입력칸을 하나도 못 찾음'
 
-print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages; {popped_entry_checked} new-tab practice/example/tutorial/extra links; {len(tut_pages)} tutorial pages; {len(extra_pages)} extra pages; {task_boxes_checked} task boxes; {mission_checked} missions (solution pass / original fail).')
+# 성취수준 참고 지표(#145-B): standards.json의 13개 성취기준 코드 완비, 매핑된 소단원 id가
+# 실제 단원 lessons에 존재하는지, 5단계(A~E) 기술이 모두 있는지 검사한다.
+standards_data=json.loads((WEB/'data/standards.json').read_text())
+assert isinstance(standards_data.get('note'),str) and standards_data['note'].strip(),'standards.json에 교사 검토용 초안 안내(note)가 없음'
+assert standards_data.get('levelsOrder')==['A','B','C','D','E']
+std_list=standards_data.get('standards') or []
+assert len(std_list)==13,f'성취기준은 13개여야 함 (실제 {len(std_list)})'
+assert len({s['code'] for s in std_list})==13,'성취기준 코드 중복'
+EXPECTED_STD_CODES={f'12파실0{area}-0{n}' for area,n in [(1,1),(1,2),(1,3),(2,1),(2,2),(2,3),(3,1),(3,2),(3,3),(3,4),(4,1),(4,2),(4,3)]}
+assert {s['code'] for s in std_list}==EXPECTED_STD_CODES,'성취기준 13개 코드가 교육과정 문서와 다름'
+standards_checked=0
+for s in std_list:
+ assert set(s.get('levels',{}))=={'A','B','C','D','E'},(s['code'],'5단계 성취수준 기술이 모두 있어야 함')
+ for lv,text in s['levels'].items():
+  assert isinstance(text,str) and len(text.strip())>=10,(s['code'],lv,'성취수준 기술이 비었거나 너무 짧음')
+ subunits=s.get('subunits') or []
+ assert subunits,(s['code'],'매핑된 소단원이 없음')
+ for su in subunits:
+  u=su.get('unit')
+  assert u in LESSON_IDS,(s['code'],u,'알 수 없는 단원')
+  assert su.get('id') in LESSON_IDS[u],(s['code'],u,su.get('id'),'해당 단원의 실제 소단원 id가 아님')
+  assert su.get('why'),(s['code'],su.get('id'),'소단원 매핑 근거(why)가 없음')
+  standards_checked+=1
+assert standards_checked>0
+
+# 교사 화면·공통 모듈이 실제로 생성·존재하는지(성취수준 참고 지표 화면, #145-B).
+assert (WEB/'teacher/achievement.html').is_file(),'teacher/achievement.html이 생성되지 않음'
+achievement_html=(WEB/'teacher/achievement.html').read_text()
+assert 'teacher-achievement.js' in achievement_html
+assert 'id="distribution-table"' in achievement_html and 'id="student-matrix"' in achievement_html and 'id="student-report"' in achievement_html
+assert '웹 실습 기록 기반 참고 지표' in achievement_html,'화면 고정 안내 문구가 없음'
+teacher_shell_js=(WEB/'assets/teacher-shell.js').read_text()
+assert "id: 'achievement'" in teacher_shell_js,'teacher-shell.js 내비게이션에 성취수준 메뉴가 없음'
+class_state_loader_js=(WEB/'assets/class-state-loader.js').read_text()
+assert 'export async function loadClassStates' in class_state_loader_js
+
+print(f'PASS: {len(examples)} example syntax checks; all browser Python examples; {len(questions)} question records and executable answers; internal links and ZIP archives; {fb_blocks_total} focus blocks across {fb_pages_checked} student pages; {popped_entry_checked} new-tab practice/example/tutorial/extra links; {len(tut_pages)} tutorial pages; {len(extra_pages)} extra pages; {task_boxes_checked} task boxes; {mission_checked} missions (solution pass / original fail); {len(std_list)} achievement standards mapped to {standards_checked} subunits.')
