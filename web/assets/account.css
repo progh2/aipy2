@@ -410,6 +410,32 @@ body.teacher-focus-detail-off .focus-chip{display:none}
 .teacher-focus-detail-toggle input{margin:0}
 @media print{.focus-chip{display:none!important}}
 
+/* 성취수준 참고 지표(#145-B) */
+.ach-disclaimer{margin:10px 0;padding:10px 14px;border-radius:10px;background:#fff1d6;color:#7a5b12;font-size:13px;font-weight:600;line-height:1.5}
+.ach-settings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px 14px;margin:10px 0}
+.ach-settings-grid label{margin:0;font-size:12.5px;font-weight:600}
+.ach-settings-grid input{width:100%;margin-top:4px;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:#fff;font:inherit}
+.ach-level{display:inline-flex;align-items:center;justify-content:center;min-width:1.8em;padding:2px 8px;border-radius:999px;font:700 12px var(--mono);background:#eef1f6;color:var(--muted)}
+.ach-level--A{background:#e3f3ea;color:#176c5f}
+.ach-level--B{background:#eaf3e3;color:#3c7a2e}
+.ach-level--C{background:#fff4de;color:#8a5e10}
+.ach-level--D{background:#fdeee5;color:#a4471f}
+.ach-level--E{background:#fdeae5;color:#a3301f}
+.ach-level--x{background:#eef1f6;color:var(--muted)}
+#student-matrix table td,#distribution-table table td{vertical-align:middle}
+#student-matrix table button.assign-sub-btn{width:auto;padding:4px 10px;font-size:13px;white-space:nowrap}
+.ach-report{display:flex;flex-direction:column;gap:12px}
+.ach-report-list{display:flex;flex-direction:column;gap:14px}
+.ach-report-item{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--paper)}
+.ach-report-item h4{margin:0 0 4px;font-size:14px}
+.ach-report-item p{margin:4px 0;font-size:13px;line-height:1.5}
+@media print{
+ .achievement-page .ach-settings-grid,.achievement-page #settings-card,.achievement-page .actions,.achievement-page #load-progress{display:none!important}
+ body:has(.achievement-page) .teacher-shell{display:none!important}
+ .achievement-page .ach-report-item{break-inside:avoid}
+ .achievement-page #matrix-card,.achievement-page #distribution-card,.achievement-page #report-card{break-after:page}
+}
+
 /* (#141) 교사 권한 확인 전·비교사: 관리 화면 본문 숨김(제목과 교사 전용 안내만) */
 body.teacher-pending main.teacher-manage > :not(.eyebrow):not(h1),
 body.teacher-locked main.teacher-manage > :not(.eyebrow):not(h1):not(#teacher-lock-note){display:none!important}

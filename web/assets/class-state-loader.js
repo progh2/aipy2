@@ -52,3 +52,33 @@ export async function loadStatesForUids(uids, fetchOne, {concurrency = DEFAULT_C
  await Promise.all(Array.from({length: limit}, worker));
  return result;
 }
+
+// --- (#145-B) 성취수준 화면용 단순 시그니처. 위 loadStatesForUids와 같은 일을 db/store를 받아 수행한다.
+export async function loadClassStates({db, store, students, concurrency = 5, onProgress} = {}) {
+ const results = new Map();
+ const list = Array.isArray(students) ? students.filter((s) => s && s.uid) : [];
+ if (!db || !store || !list.length) return results;
+ let cursor = 0;
+ let done = 0;
+ const report = () => { if (typeof onProgress === 'function') onProgress(done, list.length); };
+ report();
+ async function worker() {
+  while (cursor < list.length) {
+   const i = cursor;
+   cursor += 1;
+   const uid = list[i].uid;
+   try {
+    const snap = await store.getDoc(store.doc(db, 'students', uid, 'state', 'current'));
+    results.set(uid, snap.exists() ? snap.data() : null);
+   } catch (error) {
+    console.error('[class-state-loader]', uid, error);
+    results.set(uid, null);
+   }
+   done += 1;
+   report();
+  }
+ }
+ const workerCount = Math.max(1, Math.min(Number(concurrency) || 5, list.length));
+ await Promise.all(Array.from({length: workerCount}, () => worker()));
+ return results;
+}
