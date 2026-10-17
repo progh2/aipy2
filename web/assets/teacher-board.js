@@ -17,8 +17,8 @@ import {
  heatmapTone, historyItems, answerRows, filterAnswerRows, groupAnswerRowsByUnit,
  unitAnswerTotals, journalRows, exampleIndexFromCatalog, UNIT_ROMAN
 } from './board-model.js?v=q135b';
-import {renderAnswerUnitGroup, renderJournalUnitGroup, renderProjectUnitGroup} from './answer-view.js?v=q135d';
-import {groupProjectRowsBySubunit, pendingProjectUnits} from './teacher-answers-model.js?v=q135d';
+import {renderAnswerUnitGroup, renderJournalUnitGroup, renderProjectUnitGroup} from './answer-view.js?v=q145a';
+import {groupProjectRowsBySubunit, pendingProjectUnits} from './teacher-answers-model.js?v=q145a';
 
 const $ = (id) => document.getElementById(id);
 const prefix = document.body.dataset.prefix || '';

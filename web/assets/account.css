@@ -417,3 +417,35 @@ body.teacher-locked .teacher-shell-bar{display:none!important}
 .teacher-lock-note{border-left:4px solid #C0392B}
 body.teacher-pending main.teacher-page > :not(.eyebrow):not(h1),
 body.teacher-locked main.teacher-page > :not(.eyebrow):not(h1):not(#teacher-lock-note){display:none!important}
+
+/* #145-A 답변 내역 페이지 확장 — 탭, 학생 요약, 소단원 섹션, 반 전체 표, 인쇄. */
+.answers-tabs{display:flex;gap:8px;margin:10px 0 16px}
+.answers-tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer}
+.answers-tab.is-active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.student-summary{display:flex;flex-wrap:wrap;gap:10px 18px;margin:10px 0 14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.student-summary-cell{display:flex;flex-direction:column;gap:2px;min-width:92px}
+.student-summary-cell strong{font-size:16px}
+.answer-subunit-block{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0}
+.answer-subunit-block summary{cursor:pointer;font-weight:700;font-size:13px}
+.answer-subunit-block h5{margin:10px 0 4px;font-size:12px;color:var(--muted)}
+.answers-class-panel{margin-top:10px}
+.class-overview-table-wrap{overflow:auto;max-width:100%}
+.class-overview-table{border-collapse:collapse;font-size:12px;white-space:nowrap}
+.class-overview-table th,.class-overview-table td{border:1px solid var(--line);padding:4px 6px}
+.class-overview-table thead th{background:#f4f6fb;position:sticky;top:0}
+.class-overview-table th:first-child,.class-overview-table td:first-child{position:sticky;left:0;background:#fff;text-align:left;z-index:1}
+.class-overview-name{white-space:nowrap}
+.class-overview-cell{border:0;background:transparent;cursor:pointer;font:inherit;padding:2px 4px;border-radius:4px}
+.class-overview-cell:hover{background:#eef3fc}
+.answers-class-progress{font-size:12px;color:var(--muted)}
+@media print{
+ #teacher-shell[data-teacher-page="answers"] ~ main .answers-tabs,
+ #teacher-shell[data-teacher-page="answers"] ~ main .answers-roster-col,
+ #teacher-shell[data-teacher-page="answers"] ~ main .answers-class-panel,
+ #teacher-shell[data-teacher-page="answers"] ~ main .answer-reload,
+ #teacher-shell[data-teacher-page="answers"] ~ main .answers-print-btn,
+ #teacher-shell[data-teacher-page="answers"] ~ main > section.admin-card{display:none!important}
+ #teacher-shell[data-teacher-page="answers"] ~ main .answers-detail-col{border:0;padding:0;box-shadow:none}
+ #teacher-shell[data-teacher-page="answers"] ~ main .answer-subunit-block{break-inside:avoid}
+ #teacher-shell[data-teacher-page="answers"] ~ main .answer-unit-group{break-inside:avoid-page}
+}
