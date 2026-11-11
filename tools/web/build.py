@@ -12,11 +12,12 @@ import textbook
 import slots
 import deck_u2
 import deck_u3
+import deck_u4
 import key_lines
 import missions
 from focus_blocks import mark_focus_blocks
 textbook.attach(units)
-DECKS={2:deck_u2.LESSONS,3:deck_u3.LESSONS}
+DECKS={2:deck_u2.LESSONS,3:deck_u3.LESSONS,4:deck_u4.LESSONS}
 # (#132) render_results.py가 만든 실행 결과 매니페스트. 없으면 빈 dict — 섹션을
 # 조용히 생략한다(재실행 없이도 build.py는 항상 성공해야 한다).
 _results_path=Path(__file__).parent/'results.json'
@@ -214,11 +215,11 @@ def example_card(e):
 # 함수들만 고치면 되고, deck_u2.py/deck_u3.py의 explain·practice를 채우는
 # 쪽(B·C)은 build.py를 건드릴 필요가 없다.
 def deck_slide_path(u,n):
- w=2 if u==2 else 3
+ w=3 if u==3 else 2
  return f'assets/slides/u{u}/s{n:0{w}d}.webp'
 
 def deck_slide_q_path(u,n):
- w=2 if u==2 else 3
+ w=3 if u==3 else 2
  return f'assets/slides/u{u}/s{n:0{w}d}q.webp'
 
 # --- 직접 해 보세요: 항목별 입력칸 + 제출(#132) --------------------------

@@ -17,11 +17,10 @@ import later_units
 import slots as content_slots
 import unit1_pre_api
 import unit1_tips
-import unit4_pre_api
-import unit4_tips
 import missions
-# (#131) unit2_pre_api/unit2_tips/unit3_pre_api/unit3_tips는 pre-api/tips 슬롯을
-# 더는 렌더링하지 않는 2·3단원과 무관해져 여기서는 더 쓰지 않는다(1·4단원은 그대로).
+# (#131 후속) unit2_pre_api/unit2_tips/unit3_pre_api/unit3_tips/unit4_pre_api/unit4_tips는
+# pre-api/tips/screenshots 슬롯을 더는 렌더링하지 않는 2·3·4단원과 무관해져 여기서는
+# 더 쓰지 않는다(1단원만 그대로 lesson_section·슬롯 구조를 쓴다).
 import os
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLBACKEND='Agg')
 ROOT=Path(__file__).resolve().parents[2];WEB=ROOT/'web'
@@ -43,7 +42,7 @@ def check_tutorial_step_modes(loc,step_list):
 assert [sum(q['unit']==u for q in questions) for u in [1,2]]==[60,40]
 assert len({q['id'] for q in questions})==len(questions)
 assert set(units)=={1,2,3,4}
-assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:40,3:57,4:39}
+assert {u:sum(q['unit']==u for q in questions) for u in units} == {1:60,2:40,3:57,4:41}
 assert set(QUESTION_HINTS) == {q['id'] for q in questions}, '문항과 힌트 목록 불일치'
 # (#116) 문항 topic은 반드시 그 단원의 실제 소단원 id여야 q-{topic}.html로 연결된다.
 # review처럼 문제를 일부러 만들지 않은 소단원만 허용 목록으로 예외를 둔다.
@@ -54,11 +53,11 @@ EMPTY_TOPIC_ALLOWED={(2,'review'),(2,'project')}
 # 어떤 소단원도 가리키지 않는 topic만 허용 목록으로 봐 준다 — 렌더링은 build.py가 이미
 # 소단원별 페이지에서 건너뛰고, 단원 전체 문제 목록(practice.html)에는 그대로 남는다.
 ORPHANED_TOPICS_ALLOWED=set()
-# (#131) 2·3단원은 PPT 슬라이드 기반 소단원 페이지(deck_u2/deck_u3)를 쓴다 —
-# pre-api/tips/screenshots/density 문단은 더 이상 렌더링하지 않는다. 'project'(2단원)는
+# (#131 후속) 2·3·4단원은 PPT 슬라이드 기반 소단원 페이지(deck_u2/deck_u3/deck_u4)를
+# 쓴다 — pre-api/tips/screenshots/density 문단은 더 이상 렌더링하지 않는다. 'project'(2단원)는
 # 교과서 슬라이드가 없는 확장 페이지라 deck-slide 0개를 허용한다.
-import deck_u2, deck_u3
-DECKS={2:deck_u2.LESSONS,3:deck_u3.LESSONS}
+import deck_u2, deck_u3, deck_u4
+DECKS={2:deck_u2.LESSONS,3:deck_u3.LESSONS,4:deck_u4.LESSONS}
 EMPTY_SLIDES_ALLOWED={(2,'project')}
 BANNED_LIBS=('PySide','PyQt','wxPython','Kivy')
 def lesson_practice_ids(u,lesson):
@@ -320,7 +319,7 @@ for u, lessons in units.items():
    # webp가 둘 다 있어야 하며, 답 설명(explain_answer)이 비어 있으면 안 된다.
    for sl in (DECKS[u].get(lesson['id'],{}).get('slides') or ()):
     if sl.get('reveal'):
-     w=2 if u==2 else 3
+     w=3 if u==3 else 2
      n=sl['n']
      qwebp=WEB/f'assets/slides/u{u}/s{n:0{w}d}q.webp'
      fullwebp=WEB/f'assets/slides/u{u}/s{n:0{w}d}.webp'
@@ -486,105 +485,30 @@ assert '실행하면 이렇게 보여요' not in overview_page
 assert '실행하면 이렇게 보여요' not in math_page
 # (#131) 3단원 ml-* density/pre_api/tips/screenshots 옛 검증 블록을 제거했다 —
 # 위 새 for 루프의 deck-slide·banned-library 검사로 대체됐다.
-# #61: Unit IV density · pre_api · history/youtube (console shots stay empty unless a real science render exists).
+# (#131 후속) 4단원은 PPT 슬라이드 기반 소단원 페이지(deck_u4)를 쓴다 — pre-api/tips/
+# screenshots/density 문단은 더 이상 렌더링하지 않는다. slide/explain/practice 데이터
+# 자체의 무결성은 렌더링된 HTML이 아니라 tools/web/deck_u4.LESSONS를 직접 검사한다
+# (3단원과 같은 방식, #131 C 참고).
 unit4={lesson['id']:lesson for lesson in units[4]}
-assert len(unit4['cv-overview']['examples'])>=3
-assert len(unit4['cv-pixels']['examples'])>=3
-assert len(unit4['cv-pipeline']['examples'])>=3
-assert len(unit4['cv-filters']['examples'])>=2
-assert len(unit4['cv-features']['examples'])>=2
-assert len(unit4['cv-haar']['examples'])>=3
-assert len(unit4['cv-yolo']['examples'])>=3
-assert len(unit4['cv-project']['examples'])>=1  # 원근 변환 예제는 cv-transform 소단원에만 배치
-assert 'cv-process-vs-vision' in unit4['cv-overview']['examples'] and 'cv-use-fields' in unit4['cv-overview']['examples']
-assert 'cv-shape-size' in unit4['cv-pixels']['examples'] and 'cv-bgr-rgb' in unit4['cv-pixels']['examples']
-assert 'cv-pipeline-steps' in unit4['cv-pipeline']['examples'] and 'cv-plate-stages' in unit4['cv-pipeline']['examples']
-assert 'cv-threshold-kinds' in unit4['cv-filters']['examples']
-assert 'cv-feature-kinds' in unit4['cv-features']['examples']
-assert 'cv-haar-vs-id' in unit4['cv-haar']['examples']
-assert 'cv-scan-card' in unit4['cv-project']['examples']
-for eid in unit4_pre_api.unit4_pre_coverage():
- assert examples[eid]['pre_api'] or examples[eid]['glossary'], ('unit4 pre_api/glossary', eid)
- assert examples[eid]['pre_api'], ('unit4 pre_api', eid)
-for lesson in units[4]:
- page=(WEB/f'units/unit04/{lesson["id"]}.html').read_text()
- extra=extra_html(4,lesson['id'])
- assert '코드 전에 알아 두기' in extra, lesson['id']
- assert '코드 전에 알아 두기' not in page, lesson['id']
- for eid in lesson['examples']:
-  assert 'id="pre-api"' in ex_html(eid), (lesson['id'], eid)
-for lid in unit4_tips.unit4_history_lessons():
- assert unit4[lid]['tips']['history'], ('unit4 history', lid)
-for lid in unit4_tips.unit4_youtube_lessons():
- assert unit4[lid]['tips']['youtube'], ('unit4 youtube', lid)
-assert not unit4['cv-transform']['tips']['youtube']
-assert not unit4['cv-project']['tips']['youtube']
-overview4=(WEB/'units/unit04/cv-overview.html').read_text()
-overview4_extra=extra_html(4,'cv-overview')
-assert 'id="pre-api"' in ex_html('cv-process-vs-vision')
-assert 'id="pre-api"' in ex_html('cv-use-fields')
-assert 'id="content-tips"' in overview4_extra
-assert '더 알아보는 팁' in overview4_extra
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' in overview4_extra
-assert 'MIT' in overview4_extra or '여름' in overview4_extra
-assert '실행하면 이렇게 보여요' not in overview4
-pixels4=(WEB/'units/unit04/cv-pixels.html').read_text()
-pixels4_extra=extra_html(4,'cv-pixels')
-assert 'cv-shape-size' in pixels4 and 'cv-bgr-rgb' in pixels4
-assert 'id="pre-api"' in ex_html('cv-shape-size')
-# The Crash Course CV video now lives on 'cv-overview' only (#63 dedup).
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pixels4_extra
-pipeline4=(WEB/'units/unit04/cv-pipeline.html').read_text()
-pipeline4_extra=extra_html(4,'cv-pipeline')
-assert 'cv-plate-stages' in pipeline4 and 'cv-eval-criteria' in pipeline4
-assert '역사 한 줄' in pipeline4_extra
-assert 'https://www.youtube.com/watch?v=-4E2-0sxVUM' not in pipeline4_extra
-transform4=(WEB/'units/unit04/cv-transform.html').read_text()
-transform4_extra=extra_html(4,'cv-transform')
-assert '역사 한 줄' in transform4_extra
-assert 'https://www.youtube.com/' not in transform4_extra
-assert 'assets/science/cv-perspective.png' in transform4
-assert 'id="screenshots"' in ex_html('cv-perspective')
-filters4=(WEB/'units/unit04/cv-filters.html').read_text()
-filters4_extra=extra_html(4,'cv-filters')
-assert 'cv-threshold-kinds' in filters4
-assert 'https://www.youtube.com/watch?v=C_zFhWdM4ic' in filters4_extra
-assert 'assets/science/cv-filters.png' in filters4
-assert 'id="screenshots"' in ex_html('cv-filters')
-features4=(WEB/'units/unit04/cv-features.html').read_text()
-features4_extra=extra_html(4,'cv-features')
-assert 'cv-feature-kinds' in features4
-assert 'https://www.youtube.com/watch?v=uihBwtPIBxM' in features4_extra
-assert 'assets/science/cv-features.png' in features4
-libraries4=(WEB/'units/unit04/cv-libraries.html').read_text()
-libraries4_extra=extra_html(4,'cv-libraries')
-assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' in libraries4_extra
-assert 'assets/science/cv-sobel.png' in libraries4
-assert 'id="screenshots"' in ex_html('cv-skimage')
-io4=(WEB/'units/unit04/cv-io.html').read_text()
-io4_extra=extra_html(4,'cv-io')
-# The OpenCV course video now lives on 'cv-libraries' only (#63 dedup).
-assert 'https://www.youtube.com/watch?v=oXlwWbU8l2o' not in io4_extra
-assert 'assets/science/cv-io.png' in io4
-haar4=(WEB/'units/unit04/cv-haar.html').read_text()
-haar4_extra=extra_html(4,'cv-haar')
-assert 'cv-haar-vs-id' in haar4 and 'id="pre-api"' in ex_html('cv-haar-vs-id')
-assert 'https://www.youtube.com/watch?v=uEJ71VlUmMQ' in haar4_extra
-yolo4=(WEB/'units/unit04/cv-yolo.html').read_text()
-yolo4_extra=extra_html(4,'cv-yolo')
-assert 'cv-count' in yolo4
-assert 'https://www.youtube.com/watch?v=Cgxsv1riJhI' in yolo4_extra
-project4=(WEB/'units/unit04/cv-project.html').read_text()
-project4_extra=extra_html(4,'cv-project')
-assert 'cv-scan-card' in project4 and 'id="pre-api"' in ex_html('cv-scan-card')
-assert '역사 한 줄' in project4_extra
-assert 'https://www.youtube.com/' not in project4_extra
-assert examples['cv-io']['screenshots'] and examples['cv-filters']['screenshots']
-assert examples['cv-features']['screenshots'] and examples['cv-perspective']['screenshots']
-assert examples['cv-skimage']['screenshots']
-assert not examples['cv-process-vs-vision']['screenshots']
-assert not examples['cv-scan-card']['screenshots']
-assert not unit4['cv-overview']['screenshots']
+U4_THEORY_ONLY={'cv-overview','cv-pipeline','cv-project'}
+for lid, ldata in deck_u4.LESSONS.items():
+ assert lid in LESSON_IDS[4], ('deck_u4에 없는 소단원id', lid)
+ for sl in ldata.get('slides', ()):
+  assert sl.get('explain'), ('u4 슬라이드에 explain 없음', lid, sl['n'])
+ practice_items=ldata.get('practice') or []
+ if lid in U4_THEORY_ONLY:
+  assert not practice_items, ('이론 소단원인데 practice가 있음', lid)
+ for it in practice_items:
+  if isinstance(it, str):
+   assert it in examples, ('u4 practice가 참조하는 예제 없음', lid, it)
+  else:
+   assert it.get('kind')=='tutorial', ('u4 practice dict는 튜토리얼이어야 함', lid, it)
+   assert it.get('id') and it.get('title'), ('u4 튜토리얼에 id/title 없음', lid, it)
+   assert len(it.get('steps') or ())>=1, ('u4 튜토리얼 steps가 비어 있음', lid, it.get('id'))
+   for st in it['steps']:
+    assert st.get('text'), ('u4 튜토리얼 step에 text 없음', lid, it['id'])
+   check_tutorial_step_modes((lid,it.get('id')),it['steps'])
+assert set(deck_u4.LESSONS)==LESSON_IDS[4], ('deck_u4 소단원id가 later_units.py의 4단원 목록과 불일치', set(deck_u4.LESSONS)^LESSON_IDS[4])
 # (#131) 2단원 'libraries' 갤러리 페이지(pyqt/ttk/wx/kivy pre-api) 검증은 갤러리
 # 삭제와 함께 뺐다 — 위 새 for 루프의 deck-slide·banned-library 검사로 대체됐다.
 assert len(catalog['questions'])==len(questions)

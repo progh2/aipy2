@@ -1,8 +1,8 @@
-"""PPT 슬라이드 PNG를 웹용 webp로 변환한다 (#131).
+"""PPT 슬라이드 PNG를 웹용 webp로 변환한다 (#131, 4단원은 후속).
 
-deck_u2.LESSONS / deck_u3.LESSONS 안에서 실제로 쓰는 슬라이드 번호만 모아,
-원본 PNG(가로 1280 근처)를 web/assets/slides/u{2,3}/s{NN|NNN}.webp로 만든다.
-build.py는 이 webp만 참조한다 — 원본 PNG는 저장소에 들어가지 않는다.
+deck_u2.LESSONS / deck_u3.LESSONS / deck_u4.LESSONS 안에서 실제로 쓰는 슬라이드
+번호만 모아, 원본 PNG(가로 1280 근처)를 web/assets/slides/u{2,3,4}/s{NN|NNN}.webp로
+만든다. build.py는 이 webp만 참조한다 — 원본 PNG는 저장소에 들어가지 않는다.
 
 사용법
 ------
@@ -35,12 +35,13 @@ QUALITY = 80
 
 
 def digits(unit):
-    return 2 if unit == 2 else 3
+    return 3 if unit == 3 else 2
 
 
 def used_slides(unit):
-    import deck_u2, deck_u3
-    lessons = (deck_u2.LESSONS if unit == 2 else deck_u3.LESSONS).values()
+    import deck_u2, deck_u3, deck_u4
+    decks = {2: deck_u2.LESSONS, 3: deck_u3.LESSONS, 4: deck_u4.LESSONS}
+    lessons = decks[unit].values()
     return sorted({s['n'] for lesson in lessons for s in lesson.get('slides', ())})
 
 
@@ -62,7 +63,7 @@ def main():
 
     total_converted = 0
     total_skipped = 0
-    for unit in (2, 3):
+    for unit in (2, 3, 4):
         w = digits(unit)
         src_dir = src_root / f'u{unit}'
         dst_dir = WEB / 'assets/slides' / f'u{unit}'

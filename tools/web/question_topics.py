@@ -82,25 +82,11 @@ UNIT3 = {
     'u3-q131': 'ml-selection',      # cross_val_score 길이
 }
 
-# unit 4 — 마찬가지로 자유 한글 라벨. 195쪽은 여러 소단원을 아우르는 종합
-# 평가 묶음 페이지라 내용으로 판단했다.
+# unit 4 — 2026-11 재편(#131 3단원 방식 준용)으로 u4-q001~016은 questions.py가
+# 실제 lesson id를 topic으로 바로 전달하도록 later_units.py를 고쳤으므로
+# 더 이상 override가 필요 없다(원래 표 설명대로 3단원 신규 문항과 같은 패턴).
+# 195쪽은 여러 소단원을 아우르는 종합 평가 묶음 페이지라 내용으로 판단했다.
 UNIT4 = {
-    'u4-q001': 'cv-overview',   # 영상 처리 vs 컴퓨터 비전
-    'u4-q002': 'cv-pixels',     # shape (2,3,3) 픽셀 수
-    'u4-q003': 'cv-pixels',     # size 값
-    'u4-q004': 'cv-io',         # imread 기본 컬러 순서 BGR
-    'u4-q005': 'cv-io',         # imread 실패 시 None
-    'u4-q006': 'cv-io',         # cv2.resize 크기 인자 순서
-    'u4-q007': 'cv-filters',    # THRESH_BINARY 경계값
-    'u4-q008': 'cv-filters',    # 적응형 이진화
-    'u4-q009': 'cv-features',   # 코너 · 파노라마 대응
-    'u4-q010': 'cv-features',   # 윤곽선 · 면적/외곽
-    'u4-q011': 'cv-haar',       # Haar 검출과 신원 확인은 다름
-    'u4-q012': 'cv-haar',       # ROI 눈 좌표 → 전역 좌표
-    'u4-q013': 'cv-yolo',       # 프레임별 합계는 고유 방문자 수 아님
-    'u4-q014': 'cv-pipeline',   # 처리 속도 외 평가 기준
-    'u4-q015': 'cv-libraries',  # 실시간 입출력+검출 대표 도구 OpenCV
-    'u4-q016': 'cv-libraries',  # 픽셀 단위 분석 도구 scikit-image
     'u4-q017': 'cv-haar',       # haarcascade_frontalface_default.xml
     'u4-q018': 'cv-haar',       # detectMultiScale
     'u4-q019': 'cv-io',         # cv2.imshow

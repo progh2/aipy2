@@ -486,11 +486,7 @@
       {
         "id": "cv-overview",
         "title": "컴퓨터 비전과 영상 처리",
-        "examples": [
-          "cv-process-vs-vision",
-          "cv-use-fields",
-          "cv-human-vs-computer"
-        ],
+        "examples": [],
         "href": "units/unit04/cv-overview.html",
         "practiceHref": "units/unit04/q-cv-overview.html",
         "tasks": [
@@ -501,9 +497,7 @@
         "id": "cv-pixels",
         "title": "픽셀·해상도·RGB·그레이스케일",
         "examples": [
-          "cv-pixels",
-          "cv-shape-size",
-          "cv-bgr-rgb"
+          "cv-pixels"
         ],
         "href": "units/unit04/cv-pixels.html",
         "practiceHref": "units/unit04/q-cv-pixels.html",
@@ -514,11 +508,7 @@
       {
         "id": "cv-pipeline",
         "title": "알고리즘·처리 과정·평가 기준",
-        "examples": [
-          "cv-pipeline-steps",
-          "cv-plate-stages",
-          "cv-eval-criteria"
-        ],
+        "examples": [],
         "href": "units/unit04/cv-pipeline.html",
         "practiceHref": "units/unit04/q-cv-pipeline.html",
         "tasks": [
@@ -555,7 +545,6 @@
         "id": "cv-filters",
         "title": "블러·에지·이진화",
         "examples": [
-          "cv-threshold-kinds",
           "cv-filters"
         ],
         "href": "units/unit04/cv-filters.html",
@@ -581,7 +570,6 @@
         "id": "cv-features",
         "title": "에지·코너·윤곽선으로 중요한 부분 찾기",
         "examples": [
-          "cv-feature-kinds",
           "cv-features"
         ],
         "href": "units/unit04/cv-features.html",
@@ -594,7 +582,6 @@
         "id": "cv-haar",
         "title": "얼굴·눈·웃음 검출과 웹캠",
         "examples": [
-          "cv-haar-vs-id",
           "cv-haar",
           "cv-camera"
         ],
@@ -608,9 +595,9 @@
         "id": "cv-yolo",
         "title": "YOLOv8 객체 탐지와 개수 표시",
         "examples": [
-          "cv-count",
           "cv-yolo",
-          "cv-yolo-count"
+          "cv-yolo-count",
+          "cv-count"
         ],
         "href": "units/unit04/cv-yolo.html",
         "practiceHref": "units/unit04/q-cv-yolo.html",
@@ -621,9 +608,7 @@
       {
         "id": "cv-project",
         "title": "컴퓨터 비전 프로젝트와 단원 정리",
-        "examples": [
-          "cv-scan-card"
-        ],
+        "examples": [],
         "href": "units/unit04/cv-project.html",
         "practiceHref": "units/unit04/q-cv-project.html",
         "tasks": [
@@ -5052,9 +5037,9 @@
     "cv-process-vs-vision": {
       "id": "cv-process-vs-vision",
       "title": "사진을 다듬기 vs 의미를 판단하기",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-process-vs-vision.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5092,9 +5077,9 @@
     "cv-use-fields": {
       "id": "cv-use-fields",
       "title": "사서·교통·검사원 역할 · 이점과 오판",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-use-fields.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5120,9 +5105,9 @@
     "cv-human-vs-computer": {
       "id": "cv-human-vs-computer",
       "title": "사람은 맥락, 컴퓨터는 숫자",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-human-vs-computer.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5160,9 +5145,9 @@
     "cv-shape-size": {
       "id": "cv-shape-size",
       "title": "shape의 픽셀 수와 size의 원소 수",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-shape-size.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5200,9 +5185,9 @@
     "cv-bgr-rgb": {
       "id": "cv-bgr-rgb",
       "title": "OpenCV BGR과 화면 RGB",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-bgr-rgb.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5240,9 +5225,9 @@
     "cv-pipeline-steps": {
       "id": "cv-pipeline-steps",
       "title": "입력부터 평가까지 한 줄로",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-pipeline-steps.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5274,9 +5259,9 @@
     "cv-plate-stages": {
       "id": "cv-plate-stages",
       "title": "번호판 위치와 글자는 다른 단계",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-plate-stages.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5314,9 +5299,9 @@
     "cv-eval-criteria": {
       "id": "cv-eval-criteria",
       "title": "정확도만으로 고르지 않기",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-eval-criteria.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5348,9 +5333,9 @@
     "cv-threshold-kinds": {
       "id": "cv-threshold-kinds",
       "title": "고정·분포·주변으로 이진화하기",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-threshold-kinds.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5388,9 +5373,9 @@
     "cv-feature-kinds": {
       "id": "cv-feature-kinds",
       "title": "선·점·닫힌 경계 고르기",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-feature-kinds.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5428,9 +5413,9 @@
     "cv-haar-vs-id": {
       "id": "cv-haar-vs-id",
       "title": "얼굴 상자 ≠ 누구인지",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-haar-vs-id.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -5468,9 +5453,9 @@
     "cv-scan-card": {
       "id": "cv-scan-card",
       "title": "문서 스캔 보고서 카드",
-      "unit": 4,
+      "unit": null,
       "mode": "web",
-      "href": "units/unit04/ex-cv-scan-card.html",
+      "href": "",
       "keyLines": [
         {
           "ref": "1",
@@ -6993,8 +6978,11 @@
       "prompt": "이미지 밝기를 부드럽게 만드는 작업은?",
       "level": "기본",
       "options": [
+        "객체 추적",
         "개인 식별",
-        "영상 처리"
+        "의미 해석",
+        "영상 처리",
+        "컴퓨터 비전"
       ],
       "answer": "영상 처리"
     },
@@ -7006,8 +6994,11 @@
       "prompt": "shape가 (2,3,3)인 이미지의 픽셀 수는?",
       "level": "기본",
       "options": [
+        "9",
         "18",
-        "6"
+        "3",
+        "6",
+        "2"
       ],
       "answer": "6"
     },
@@ -7019,7 +7010,10 @@
       "prompt": "같은 배열의 size 값은?",
       "level": "기본",
       "options": [
+        "2",
+        "9",
         "18",
+        "3",
         "6"
       ],
       "answer": "18"
@@ -7032,8 +7026,11 @@
       "prompt": "OpenCV imread의 기본 컬러 순서는?",
       "level": "기본",
       "options": [
+        "그레이스케일",
+        "BGR",
         "RGB",
-        "BGR"
+        "HSV",
+        "RGBA"
       ],
       "answer": "BGR"
     },
@@ -7045,8 +7042,11 @@
       "prompt": "imread가 파일을 못 읽으면 보통 무엇을 반환하나요?",
       "level": "기본",
       "options": [
+        "빈 리스트",
         "None",
-        "빈 문자열"
+        "0",
+        "빈 문자열",
+        "예외(오류) 발생"
       ],
       "answer": "None"
     },
@@ -7058,8 +7058,11 @@
       "prompt": "cv2.resize(img,(80,60))의 결과 높이와 너비는?",
       "level": "기본",
       "options": [
+        "높이 60, 너비 80",
         "높이 80, 너비 60",
-        "높이 60, 너비 80"
+        "원본 크기와 같음",
+        "높이 60, 너비 60",
+        "높이 80, 너비 80"
       ],
       "answer": "높이 60, 너비 80"
     },
@@ -7071,8 +7074,11 @@
       "prompt": "THRESH_BINARY 기준 127에서 값 127의 결과는?",
       "level": "기본",
       "options": [
-        "0",
-        "255"
+        "1",
+        "255",
+        "64",
+        "127",
+        "0"
       ],
       "answer": "0"
     },
@@ -7084,8 +7090,11 @@
       "prompt": "그림자가 있는 문서에서 영역별 기준을 적용하는 것은?",
       "level": "기본",
       "options": [
-        "적응형 이진화",
-        "고정 이진화"
+        "Canny 에지 검출",
+        "가우시안 블러",
+        "오츠(Otsu) 이진화",
+        "고정 이진화",
+        "적응형 이진화"
       ],
       "answer": "적응형 이진화"
     },
@@ -7097,8 +7106,11 @@
       "prompt": "파노라마에서 공통 위치 단서로 쓰기 좋은 것은?",
       "level": "기본",
       "options": [
+        "히스토그램",
         "전체 이미지 평균",
-        "코너"
+        "윤곽선",
+        "코너",
+        "에지"
       ],
       "answer": "코너"
     },
@@ -7110,8 +7122,11 @@
       "prompt": "물체의 면적과 외곽 경계를 구할 때 활용할 것은?",
       "level": "기본",
       "options": [
+        "에지",
+        "키보드 이벤트",
+        "코너",
         "윤곽선",
-        "키보드 이벤트"
+        "히스토그램"
       ],
       "answer": "윤곽선"
     },
@@ -7123,8 +7138,11 @@
       "prompt": "Haar 얼굴 검출 결과만으로 사람의 이름을 알 수 있나요?",
       "level": "기본",
       "options": [
+        "스마일 검출 결과로 이름을 추정할 수 있다",
         "자동으로 알 수 있다",
-        "알 수 없다"
+        "검출된 얼굴 수만큼 이름도 함께 반환된다",
+        "알 수 없다",
+        "눈과 웃음까지 검출되면 이름도 알 수 있다"
       ],
       "answer": "알 수 없다"
     },
@@ -7136,8 +7154,11 @@
       "prompt": "얼굴 ROI의 눈 좌표를 원본 위치로 바꾸려면?",
       "level": "기본",
       "options": [
+        "얼굴 원점 좌표를 더한다",
+        "얼굴 원점 좌표를 뺀다",
+        "좌표를 2로 나눈다",
         "이미지 너비를 곱한다",
-        "얼굴 원점 좌표를 더한다"
+        "이미지 높이를 곱한다"
       ],
       "answer": "얼굴 원점 좌표를 더한다"
     },
@@ -7149,6 +7170,9 @@
       "prompt": "각 프레임의 person 수를 합하면 고유 방문자 수인가요?",
       "level": "기본",
       "options": [
+        "프레임 수가 적을 때만 맞다",
+        "YOLO 버전에 따라 다르다",
+        "카메라가 1대일 때만 맞다",
         "아니다",
         "항상 맞다"
       ],
@@ -7163,6 +7187,9 @@
       "level": "기본",
       "options": [
         "오탐·누락과 조건별 안정성",
+        "모니터 해상도",
+        "사용한 프로그래밍 언어의 종류",
+        "코드의 줄 수",
         "창의 배경색만"
       ],
       "answer": "오탐·누락과 조건별 안정성"
@@ -7175,8 +7202,11 @@
       "prompt": "실시간 영상 입출력과 검출을 함께 다루는 대표 도구는?",
       "level": "기본",
       "options": [
+        "Pillow",
+        "scikit-learn",
+        "pandas",
         "OpenCV",
-        "pandas"
+        "Matplotlib"
       ],
       "answer": "OpenCV"
     },
@@ -7188,8 +7218,11 @@
       "prompt": "픽셀 단위 영역 분석 도구를 고를 때 고려할 것은?",
       "level": "기본",
       "options": [
-        "scikit-image의 분석 기능",
-        "random의 주사위 기능"
+        "Pillow의 저장 형식만",
+        "random의 주사위 기능",
+        "OpenCV의 실시간 처리 속도만",
+        "Matplotlib의 범례 색상만",
+        "scikit-image의 분석 기능"
       ],
       "answer": "scikit-image의 분석 기능"
     },
@@ -7530,7 +7563,7 @@
       "answer": "DataFrame"
     },
     {
-      "id": "u4-q029",
+      "id": "u4-q101",
       "unit": 4,
       "topic": "cv-overview",
       "kind": "서술",
@@ -7538,7 +7571,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q030",
+      "id": "u4-q102",
       "unit": 4,
       "topic": "cv-pixels",
       "kind": "서술",
@@ -7546,7 +7579,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q031",
+      "id": "u4-q103",
       "unit": 4,
       "topic": "cv-pipeline",
       "kind": "서술",
@@ -7554,7 +7587,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q032",
+      "id": "u4-q104",
       "unit": 4,
       "topic": "cv-libraries",
       "kind": "서술",
@@ -7562,7 +7595,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q033",
+      "id": "u4-q105",
       "unit": 4,
       "topic": "cv-io",
       "kind": "서술",
@@ -7570,7 +7603,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q034",
+      "id": "u4-q106",
       "unit": 4,
       "topic": "cv-filters",
       "kind": "서술",
@@ -7578,7 +7611,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q035",
+      "id": "u4-q107",
       "unit": 4,
       "topic": "cv-transform",
       "kind": "서술",
@@ -7586,7 +7619,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q036",
+      "id": "u4-q108",
       "unit": 4,
       "topic": "cv-features",
       "kind": "서술",
@@ -7594,7 +7627,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q037",
+      "id": "u4-q109",
       "unit": 4,
       "topic": "cv-haar",
       "kind": "서술",
@@ -7602,7 +7635,7 @@
       "level": "기본"
     },
     {
-      "id": "u4-q038",
+      "id": "u4-q110",
       "unit": 4,
       "topic": "cv-yolo",
       "kind": "서술",
@@ -7610,12 +7643,44 @@
       "level": "기본"
     },
     {
-      "id": "u4-q039",
+      "id": "u4-q111",
       "unit": 4,
       "topic": "cv-project",
       "kind": "서술",
       "prompt": "2단원 GUI의 버튼에서 이미지 처리 함수를 호출하는 앱을 설계하세요.",
       "level": "기본"
+    },
+    {
+      "id": "u4-q150",
+      "unit": 4,
+      "topic": "cv-filters",
+      "kind": "선택",
+      "prompt": "다음은 컴퓨터 비전 기술의 실제 적용 시나리오이다. 가장 적합한 해결 방법을 선택하시오.\n시나리오: 한 병원에서 X-ray 이미지를 분석하여 골절을 자동으로 검출하는 시스템을 개발하려고 한다. 시스템은 먼저 X-ray 이미지의 화질을 개선하고, 뼈의 경계선을 찾은 후, 골절 부위를 정확히 식별해야 한다.",
+      "level": "기본",
+      "options": [
+        "화질 개선: 히스토그램 평활화 → 경계선 검출: Canny 에지 검출 → 골절 식별: 객체 검출",
+        "화질 개선: 이진화 → 경계선 검출: 윤곽선 검출 → 골절 식별: 객체 검출",
+        "화질 개선: 이진화 → 경계선 검출: 윤곽선 검출 → 골절 식별: 이미지 분할",
+        "화질 개선: 샤프닝 → 경계선 검출: 변화 감지 → 골절 식별: 패턴 분석",
+        "화질 개선: 블러링 → 경계선 검출: 코너 검출 → 골절 식별: 이미지 분류"
+      ],
+      "answer": "화질 개선: 히스토그램 평활화 → 경계선 검출: Canny 에지 검출 → 골절 식별: 객체 검출"
+    },
+    {
+      "id": "u4-q151",
+      "unit": 4,
+      "topic": "cv-project",
+      "kind": "선택",
+      "prompt": "다음 이미지 전처리 기법들을 올바른 순서로 배열하여 문서 스캔 앱의 처리 과정을 완성하시오.\n주어진 기법: A. 이진화(글씨와 배경 분리)  B. 원근 변환(기울어진 문서를 정면으로)  C. 히스토그램 평활화(어두운 이미지 밝기 개선)  D. 가우시안 블러(노이즈 제거)\n상황: 스마트폰으로 기울어지고 어둡게 찍힌 문서 사진을 깨끗한 스캔 문서로 변환",
+      "level": "기본",
+      "options": [
+        "이진화(A) → 원근 변환(B) → 히스토그램 평활화(C) → 가우시안 블러(D)",
+        "가우시안 블러(D) → 히스토그램 평활화(C) → 이진화(A) → 원근 변환(B)",
+        "원근 변환(B) → 이진화(A) → 가우시안 블러(D) → 히스토그램 평활화(C)",
+        "히스토그램 평활화(C) → 가우시안 블러(D) → 원근 변환(B) → 이진화(A)",
+        "원근 변환(B) → 가우시안 블러(D) → 히스토그램 평활화(C) → 이진화(A)"
+      ],
+      "answer": "히스토그램 평활화(C) → 가우시안 블러(D) → 원근 변환(B) → 이진화(A)"
     }
   ],
   "progress": {
