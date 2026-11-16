@@ -33,7 +33,7 @@ const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.class
 // Five expressions have distinct learning roles; guidance remains readable as text.
 const paiLabels={welcome:'반가워요',thinking:'생각 중',idea:'아하!',debug:'오류 탐정',celebrate:'해냈어요'};
 function paiImage(mood,cls='pai-feedback-image'){
- const img=node('img',cls);img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt='';img.width=62;img.height=62;img.decoding='async';return img;
+ const img=node('img',cls);img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=sen1`;img.alt='';img.width=62;img.height=62;img.decoding='async';return img;
 }
 function paiFeedback(el,text,mood){
  const copy=node('div','pai-feedback-copy');copy.append(node('b','',`파이 · ${paiLabels[mood]}`),node('p','',text));
@@ -41,7 +41,7 @@ function paiFeedback(el,text,mood){
 }
 function paiGuide(mood,title,text){
  const box=$('#pai-run-guide');if(!box)return;
- box.dataset.paiMood=mood;const img=box.querySelector('img');img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt='';
+ box.dataset.paiMood=mood;const img=box.querySelector('img');img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=sen1`;img.alt='';
  box.querySelector('.pai-label').textContent=`파이의 실습 안내 · ${paiLabels[mood]}`;
  box.querySelector('strong').textContent=title;box.querySelector('p').textContent=text;
 }
@@ -51,7 +51,7 @@ if(moodButtons.length){
  let index=0,automatic=!motion.matches,moodTimer;
  function showMood(next){
   index=next;const button=moodButtons[index],mood=button.dataset.paiPreview,img=$('.pai-hero-image');
-  img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=girl2`;img.alt=button.dataset.paiAlt;
+  img.src=prefix+`assets/mascot/pai-${mood}-v1.webp?v=sen1`;img.alt=button.dataset.paiAlt;
   $('#pai-mood-title').textContent=paiLabels[mood];$('#pai-mood-description').textContent=button.dataset.paiDescription;
   moodButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
  }
