@@ -274,3 +274,9 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
 .tut-answer pre{margin-top:8px}
 .tut-journal-label{margin:10px 0 8px}
 .tut-journal-label textarea{font-size:13px}
+/* 레일 '아직 남은 것'은 목차 번호용 고정폭 글꼴 규칙(.rail a span)을 받지 않는다 */
+.rail .rail-todo-link span{font-family:var(--sans)}
+.rail .rail-todo-title{color:var(--ink)}
+.rail .rail-todo-badge{color:var(--muted)}
+.rail .rail-todo-badge.warn{color:#c0392b}
+.rail .rail-todo-title{overflow-wrap:break-word}

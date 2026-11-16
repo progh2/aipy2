@@ -657,13 +657,13 @@ function renderRailTodo(){
   const li=node('li','rail-todo-item');
   if(r.done && r.left===0){
    li.classList.add('rail-todo-ok');
-   li.append(node('span','rail-todo-check','✔'),node('span','rail-todo-title',r.lesson.title));
+   li.append(node('span','rail-todo-check','✔'),node('span','rail-todo-title',r.lesson.title.replace(/·/g,'·\u200b')));
    list.append(li);continue;
   }
   const link=node('a','rail-todo-link');
   if(!r.done){link.href=`${r.lesson.id}.html#${r.lesson.id}`;}
   else{link.href=`q-${r.lesson.id}.html`;link.target='_blank';link.rel='noopener';}
-  link.append(node('span','rail-todo-title',r.lesson.title));
+  link.append(node('span','rail-todo-title',r.lesson.title.replace(/·/g,'·\u200b')));
   const badges=node('span','rail-todo-badges');
   if(!r.done)badges.append(node('span','rail-todo-badge warn','완료 체크 안 함'));
   if(r.left>0)badges.append(node('span','rail-todo-badge',(r.done?'문제 '+r.left+'개 남음 ↗':'문제 '+r.left+'개 남음')));
