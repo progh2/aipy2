@@ -1047,6 +1047,9 @@ assert 'teacher-achievement.js' in achievement_html
 assert 'id="distribution-table"' in achievement_html and 'id="student-matrix"' in achievement_html and 'id="student-report"' in achievement_html
 assert '웹 실습 기록 기반 참고 지표' in achievement_html,'화면 고정 안내 문구가 없음'
 teacher_shell_js=(WEB/'assets/teacher-shell.js').read_text()
+assert (WEB/'teacher/progress.html').is_file() and 'teacher-progress.js' in (WEB/'teacher/progress.html').read_text(),'teacher/progress.html이 생성되지 않음'
+assert "id: 'progress'" in teacher_shell_js,'teacher-shell.js 내비게이션에 반별 입력 현황 메뉴가 없음'
+assert 'progress.html' in (WEB/'teacher/index.html').read_text(),'교사 요약 화면에 반별 입력 현황 링크가 없음'
 assert "id: 'achievement'" in teacher_shell_js,'teacher-shell.js 내비게이션에 성취수준 메뉴가 없음'
 class_state_loader_js=(WEB/'assets/class-state-loader.js').read_text()
 assert 'export async function loadClassStates' in class_state_loader_js

@@ -16,6 +16,7 @@ const PAGES = [
  {id: 'assignments', href: 'assignments.html', label: '과제'},
  {id: 'answers', href: 'answers.html', label: '답변 내역'},
  {id: 'achievement', href: 'achievement.html', label: '성취수준'},
+ {id: 'progress', href: 'progress.html', label: '반별 입력 현황'},
  {id: 'summary', href: 'index.html', label: '수업 요약'}
 ];
 

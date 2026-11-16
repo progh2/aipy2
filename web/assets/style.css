@@ -334,3 +334,61 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
  .myrec-link,.myrec-todo-link{color:#000}
  .myrec-fill{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* 교사용 반별 입력 현황판(teacher/progress.html) */
+.tprog-page{max-width:1500px}
+.tprog-demo{background:#fff1f1;border:2px solid #c0392b;color:#8a1f14;font-weight:700;padding:8px 14px;border-radius:8px}
+.tprog-actions{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.tprog-btn,.tprog-mode,.tprog-tab{padding:7px 14px;font-size:14px}
+.tprog-modes,.tprog-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tprog-mode.is-active,.tprog-tab.is-active{background:var(--navy);border-color:var(--navy);color:#fff}
+.tprog-print-title{display:none}
+.tprog-sum-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.tprog-sum-item{display:block;text-align:left;padding:10px 12px;font-weight:400;background:#fff}
+.tprog-sum-item.is-active{border-color:var(--navy);box-shadow:0 0 0 2px var(--navy)}
+.tprog-sum-title{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+.tprog-bar{display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;font-size:12px;margin:3px 0}
+.tprog-bar-track{display:block;height:8px;background:#e3e9f2;border-radius:6px;overflow:hidden}
+.tprog-bar-fill{display:block;height:100%;background:var(--teal)}
+.tprog-missing{margin-top:14px;padding:12px 14px;background:#f8faff;border:1px solid var(--line);border-radius:8px}
+.tprog-missing h3{font-size:16px;margin-bottom:6px}
+.tprog-missing-names{font-size:14px;margin-bottom:8px}
+.tprog-layout{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
+.tprog-grid{overflow:auto;max-height:75vh}
+.tprog-table{border-collapse:separate;border-spacing:0;font-size:12px;width:auto}
+.tprog-table th,.tprog-table td{padding:3px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+.tprog-table thead th{position:sticky;top:0;background:#f0f4f9;z-index:2;min-width:98px;font-size:12px}
+.tprog-table .tprog-name{position:sticky;left:0;background:#f0f4f9;z-index:3;text-align:left;white-space:nowrap;min-width:110px;padding:4px 8px}
+.tprog-flag{font-size:11px;color:#a44517;font-weight:400}
+.tprog-cell{display:flex;flex-direction:column;align-items:flex-start;gap:0;width:100%;min-width:92px;padding:4px 6px;font-size:11px;font-weight:400;line-height:1.35;border-radius:6px;text-align:left}
+.tprog-lv{font-weight:800;font-size:11px}
+.tprog-full{background:#cfeedd;border-color:#5fae84;color:#0d4a2c}
+.tprog-part{background:#fff0b8;border-color:#d1a52a;color:#5c4300}
+.tprog-none{background:#eceff4;border-color:#b4bdca;color:#4a5568}
+.tprog-na{background:#fff;border:1px dashed #b4bdca;color:#7a8599}
+.tprog-dim{opacity:.35}
+.tprog-hl{background:#ffd9d4;border:2px solid #c0392b;color:#7a1a10}
+.tprog-cell.is-selected{outline:3px solid var(--navy);outline-offset:1px}
+.tprog-detail{position:sticky;top:90px;max-height:80vh;overflow:auto}
+.tprog-detail h3{font-size:17px}
+.tprog-detail h4{font-size:14px;margin:14px 0 6px}
+.tprog-badges{font-size:13px;color:var(--muted)}
+@media(max-width:900px){.tprog-layout{grid-template-columns:minmax(0,1fr)}.tprog-detail{position:static;max-height:none}}
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ body.tprog-body-print,body{background:#fff}
+ .tprog-page ~ *,.top,#teacher-shell,.tprog-noprint,.tprog-modes,.tprog-demo~.tprog-noprint,footer,#toast,.skip,.tprog-page .eyebrow,.tprog-page .lead,.tprog-page>h1{display:none!important}
+ .tprog-demo{display:block}
+ .tprog-demo[hidden]{display:none!important}
+ .tprog-print-title{display:block;font-size:14px;margin:0 0 6px}
+ .tprog-tab:not(.is-active){display:none}
+ .tprog-tab{border:0;padding:0;font-weight:800;color:#000;background:none}
+ .tprog-layout{display:block}
+ .tprog-grid-card{border:0;padding:0}
+ .tprog-grid{overflow:visible;max-height:none}
+ .tprog-table{font-size:8px;width:100%}
+ .tprog-table thead th,.tprog-table .tprog-name{position:static;min-width:0}
+ .tprog-cell{min-width:0;padding:1px 3px;font-size:7px;-webkit-print-color-adjust:exact;print-color-adjust:exact;border:1px solid #888}
+ button.tprog-cell{display:flex!important}
+ .tprog-table tr{break-inside:avoid}
+}
