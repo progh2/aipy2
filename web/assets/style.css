@@ -280,3 +280,57 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
 .rail .rail-todo-badge{color:var(--muted)}
 .rail .rail-todo-badge.warn{color:#c0392b}
 .rail .rail-todo-title{overflow-wrap:break-word}
+
+/* 학생용 내 학습 기록 (my.html) */
+.myrec-page{max-width:1000px;margin:0 auto;padding:40px 5% 60px}
+.myrec-page h1{font-size:clamp(28px,4vw,40px)}
+.myrec-notice{background:#edf3fc;border-left:3px solid #7188ad;padding:10px 14px;font-size:13px;color:#425471;margin:0 0 16px}
+.myrec-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 20px}
+.myrec-first{background:#fff9e3;border:1px solid #eadfbf;border-radius:8px;padding:12px 14px;font-size:14px}
+.myrec-summary{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:20px}
+.myrec-overall{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.myrec-rate{font:800 44px var(--mono);color:var(--navy);margin:0}
+.myrec-rate-label{color:var(--muted);font-size:14px;margin:0}
+.myrec-unit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.myrec-unit-card{border:1px solid var(--line);border-radius:10px;padding:14px;background:#f8faff;min-width:0}
+.myrec-unit-card h3{font-size:16px;margin-bottom:10px}
+.myrec-meter{margin-bottom:10px}
+.myrec-meter-head{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+.myrec-meter-head b{font-family:var(--mono);color:var(--ink)}
+.myrec-track{height:7px;border-radius:8px;background:#e0e7ee;overflow:hidden;margin-top:4px}
+.myrec-fill{display:block;height:100%;background:var(--teal);border-radius:8px}
+.myrec-todo{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:24px}
+.myrec-todo h2,.myrec-page section>h2{font-size:22px;margin-bottom:12px}
+.myrec-todo-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.myrec-todo-list li{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;border-top:1px solid var(--line);padding-top:8px}
+.myrec-todo-list li:first-child{border-top:0;padding-top:0}
+.myrec-todo-link{font-weight:700;font-size:14px}
+.myrec-todo-q{font-size:13px}
+.myrec-todo-why{font-size:12px;color:var(--muted)}
+.myrec-more{margin-top:10px}
+.myrec-more summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--navy)}
+.myrec-empty,.myrec-none{color:var(--muted);font-size:13px;margin:6px 0}
+.myrec-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.myrec-filter[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.myrec-unit{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 16px;margin-bottom:14px}
+.myrec-unit-sum{cursor:pointer;font-weight:800;font-size:15px;padding:10px 0;line-height:1.5}
+.myrec-sub{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:8px 0;background:#fcfdff}
+.myrec-sub-sum{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px 14px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.myrec-sub-title{min-width:0;flex:1 1 240px}
+.myrec-badges{display:flex;gap:6px;flex-wrap:wrap}
+.myrec-links{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;margin:10px 0 0}
+.myrec-h{font-size:13px;color:var(--muted);margin:14px 0 6px}
+.myrec-journal{white-space:pre-wrap;background:#f5f7fb;border-radius:6px;padding:10px 12px;font-size:13px;margin:0}
+.myrec-page .answer-value{white-space:pre-wrap;overflow-wrap:anywhere}
+@media (max-width:640px){.myrec-page{padding:24px 4% 40px}.myrec-unit{padding:4px 10px}.myrec-rate{font-size:36px}}
+@media (max-width:640px){.top nav{gap:16px}}
+@media print{
+ .myrec-toolbar,.myrec-filters,.myrec-more>summary,.myrec-notice,.myrec-todo-q{display:none!important}
+ .myrec-more>*{display:block}
+ .myrec-page{padding:0;max-width:none}
+ .myrec-sub,.myrec-unit-card{break-inside:avoid}
+ .myrec-unit{border:0;padding:0}
+ .myrec-sub{background:#fff}
+ .myrec-link,.myrec-todo-link{color:#000}
+ .myrec-fill{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
