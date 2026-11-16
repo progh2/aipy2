@@ -493,5 +493,5 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
  .review-links a::after{content:" (" attr(href) ")";font-size:11px;color:#555}
 }
 .review-entry .number{font-size:22px;min-width:48px}
-/* 메뉴가 7개로 늘어 좁은 화면에서는 가로 스크롤 대신 두 줄로 */
-@media(max-width:760px){.top nav{flex-wrap:wrap;overflow:visible;row-gap:4px!important;column-gap:16px!important}.top nav a{font-size:14px}}
+/* 좁은 화면 메뉴는 한 줄 가로 스크롤(머리 높이를 늘리지 않음) — 뒤쪽 메뉴가 잘려 보이도록 오른쪽에 여백 */
+@media(max-width:760px){.top nav{padding-right:24px;scrollbar-width:none}.top nav::-webkit-scrollbar{display:none}}
