@@ -123,6 +123,7 @@ UNIT1 = dict(
                 'math는 pi, e 상수와 ceil, floor, factorial, gcd, pow 등 수학 계산을 제공합니다.',
                 'random은 random(), uniform(), randrange(), choice(), shuffle(), sample()을, datetime은 now(), year, month, day, weekday() 등을 제공합니다.',
                 '표준 라이브러리 밖의 제3자 모듈이 써드파티 패키지이며 PyPI에서 공유됩니다. pip install 프로젝트명으로 설치합니다.',
+                'datetime.now()로 현재 날짜·시각을 구하고 year, month, day, hour, minute, second 속성으로 각 값을 꺼냅니다(32쪽).',
             ],
             code=dict(
                 title='mathmodule.py 일부 (29쪽)',
@@ -210,6 +211,7 @@ UNIT2 = dict(
                 'Tk 객체(root = tk.Tk())는 프로그램의 기본 창이며 모든 위젯은 이 창 위에 생성됩니다.',
                 '위젯은 Label, Button, Entry, Text, Checkbutton, Radiobutton, Listbox, Canvas, Frame 등입니다. 배치 관리자는 pack()(순차), grid()(행과 열), place()(좌표)입니다.',
                 '이벤트 처리는 버튼 클릭 같은 동작에 반응하는 함수(callback)를 연결하는 것입니다. 예: Button(root, text="누르기", command=인사)',
+                "레이블 글자를 바꿀 때는 label.config(text=...)를 쓰고, 버튼 함수 안에서 바깥 변수 값을 바꾸려면 global로 선언합니다(웹 실습 '이벤트 처리').",
             ],
             code=dict(
                 title='이벤트 처리 예 (51쪽)',
@@ -222,7 +224,7 @@ UNIT2 = dict(
             ),
             pitfalls=[
                 'GUI 창을 만드는 객체는 Tk()입니다. Entry(), Frame(), Label(), Button()은 창이 아니라 위젯입니다(51쪽 탐구 활동).',
-                '위젯은 생성만 해서는 보이지 않습니다. pack(), grid(), place() 같은 배치 관리자로 위치를 정해야 합니다(51쪽).',
+                '위젯은 만들기만 하면 끝이 아니라 pack(), grid(), place() 같은 배치 관리자로 위치와 정렬을 정해야 합니다(51쪽).',
             ],
             checks=[
                 ('pack(), grid(), place()는 각각 위젯을 어떻게 배치하나요?', 'pack()은 위에서 아래로 차례대로, grid()는 행과 열로, place()는 좌표(x, y)를 지정해 배치합니다(51쪽).'),
@@ -236,11 +238,12 @@ UNIT2 = dict(
                 'tk.Tk()로 창을 만들고 title()로 제목, geometry()로 크기를 정합니다. Text(window, wrap="word")는 여러 줄 입력 영역이며 pack(expand=1, fill="both")으로 남는 공간을 채웁니다.',
                 '파일 열기는 askopenfilename()으로 경로를 받아 읽은 뒤 Text에 넣고, 저장은 asksaveasfilename()으로 경로를 받아 Text 내용을 씁니다.',
                 'Menu로 파일 메뉴를 만들어 열기, 저장, 종료를 command로 연결하고, 마지막에 mainloop()로 이벤트 루프를 실행합니다.',
+                'asksaveasfilename(defaultextension=".txt")는 저장할 때 확장자를 입력하지 않으면 .txt를 붙여 줍니다(53쪽 코드).',
             ],
             code=dict(
                 title='open_file 함수 (53쪽)',
                 files=[
-                    ('open_file_part.py', "def open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path:\n        with open(file_path, 'r', encoding='utf-8') as file:\n            text = file.read()\n        text_area.delete('1.0', tk.END)\n        text_area.insert(tk.END, text)\n"),
+                    ('open_file_part.py', "def open_file():\n    file_path = filedialog.askopenfilename()\n    if file_path:\n        with open(file_path, 'r', encoding='utf-8') as file:\n            text = file.read()\n            text_area.delete('1.0', tk.END)\n            text_area.insert(tk.END, text)\n"),
                 ],
                 run=None,
                 result=None,
