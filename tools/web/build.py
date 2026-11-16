@@ -1,3 +1,4 @@
+import hashlib
 import re
 """Build static GitHub Pages site: python3 tools/web/build.py"""
 from pathlib import Path
@@ -68,7 +69,7 @@ def layout(title,body,prefix='',unit=0,scripts='',topic='',lessons=(),example=''
  # 부른다)에서만 정적 컨테이너를 낸다. 내용은 progress-bar.js가 catalog.json의 'progress'를
  # 읽어 채운다 — <main> 밖에 둬서 mark_focus_blocks·교사 초점 동기화 대상에서 빠진다.
  progress_bar='<div id="progress-bar" class="progress-bar" hidden aria-hidden="true"></div>' if topic else ''
- return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=q152"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css?v=q139"><link rel="stylesheet" href="{prefix}assets/account.css?v=19"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{progress_bar}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q153" defer></script><script src="{prefix}assets/learning-design.js?v=1x" defer></script><script type="module" src="{prefix}assets/auth.js?v=a144"></script><script type="module" src="{prefix}assets/follow.js?v=19x"></script><script type="module" src="{prefix}assets/sync.js?v=5x"></script><script type="module" src="{prefix}assets/understanding.js?v=3x"></script><script type="module" src="{prefix}assets/help.js?v=2x"></script><script type="module" src="{prefix}assets/assignments.js?v=1x"></script><script type="module" src="{prefix}assets/notes.js?v=6x"></script><script type="module" src="{prefix}assets/editlock.js?v=2x"></script><script type="module" src="{prefix}assets/progress-bar.js?v=2x"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
+ return f'''<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · AI Python Lab</title><meta name="description" content="교과서와 함께 배우는 인공지능 파이썬 실무. 모듈·GUI·머신러닝·컴퓨터 비전의 시각 자료와 코드 실습."><link rel="stylesheet" href="{prefix}assets/style.css?v=q154"><link rel="stylesheet" href="{prefix}assets/mascot.css"><link rel="stylesheet" href="{prefix}assets/learning-design.css?v=q139"><link rel="stylesheet" href="{prefix}assets/account.css?v=19"></head><body data-unit="{unit}" data-prefix="{prefix}"{extra}>{nav(prefix)}{progress_bar}{body}<footer><p>미림마이스터고등학교 · 2학년 · 함기훈 선생님</p><p>교과서: 멘토르 「인공지능 파이썬 실무」 · 2026학년도 2학기 운영 계획 기반</p><a href="#" id="privacy-link">개인정보 안내</a> · <a href="{prefix}mascot.html">우리 과목 친구 파이</a> · <a href="{prefix}sources.html">출처·교과서 대응표·보완 사항</a> · <a href="https://www.mtrschool.co.kr/post/3095" target="_blank" rel="noopener">멘토르 교과서 안내 ↗</a></footer><div id="toast" role="status" aria-live="polite"></div><script src="{prefix}assets/app.js?v=q154" defer></script><script src="{prefix}assets/learning-design.js?v=1x" defer></script><script type="module" src="{prefix}assets/auth.js?v=a144"></script><script type="module" src="{prefix}assets/follow.js?v=19x"></script><script type="module" src="{prefix}assets/sync.js?v=5x"></script><script type="module" src="{prefix}assets/understanding.js?v=3x"></script><script type="module" src="{prefix}assets/help.js?v=2x"></script><script type="module" src="{prefix}assets/assignments.js?v=1x"></script><script type="module" src="{prefix}assets/notes.js?v=6x"></script><script type="module" src="{prefix}assets/editlock.js?v=2x"></script><script type="module" src="{prefix}assets/progress-bar.js?v=2x"></script>{unit_scripts(prefix,unit)}{scripts}</body></html>'''
 
 def progress_tools(): return '''<div class="record-tools"><button data-export>학습 기록 내보내기</button><label class="file-button">기록 불러오기<input type="file" data-import accept="application/json,.json"></label><button data-clear>이 브라우저의 기록 지우기</button></div><p class="small">코드·풀이·저널은 이 브라우저에 바로 저장됩니다. 학교 계정으로 로그인하면 다른 기기와 이어서 볼 수 있습니다. 공용 PC에서는 로그아웃할 때 이 브라우저 기록을 지울 수 있습니다. 서버로 제출되거나 공식 성적으로 처리되지 않습니다.</p><div id="privacy-notice" class="privacy-notice"></div>'''
 
@@ -214,13 +215,18 @@ def example_card(e):
 # tools/web/deck_u2.py · deck_u3.py의 LESSONS를 그대로 읽어 렌더링한다. 이
 # 함수들만 고치면 되고, deck_u2.py/deck_u3.py의 explain·practice를 채우는
 # 쪽(B·C)은 build.py를 건드릴 필요가 없다.
+def _slide_ver(rel):
+ # 그림을 다시 렌더링하면 주소가 바뀌어 학생 브라우저가 새 그림을 받는다(#149).
+ f=WEB/rel
+ return rel+('?v='+hashlib.md5(f.read_bytes()).hexdigest()[:8] if f.exists() else '')
+
 def deck_slide_path(u,n):
  w=3 if u==3 else 2
- return f'assets/slides/u{u}/s{n:0{w}d}.webp'
+ return _slide_ver(f'assets/slides/u{u}/s{n:0{w}d}.webp')
 
 def deck_slide_q_path(u,n):
  w=3 if u==3 else 2
- return f'assets/slides/u{u}/s{n:0{w}d}q.webp'
+ return _slide_ver(f'assets/slides/u{u}/s{n:0{w}d}q.webp')
 
 # --- 직접 해 보세요: 항목별 입력칸 + 제출(#132) --------------------------
 # app.js의 [data-journal] 자동 저장(=저널 버킷, 로그인 시 Firebase 동기화)을 그대로 쓴다.
@@ -406,8 +412,8 @@ for u,lessons in units.items():
  rail=textbook.toc(u,lessons)
  cards=''.join(f'<a class="topic-card" href="{textbook.topic_file(l["id"])}"><span class="number">{i+1:02}</span><h3>{esc(l["title"])}</h3><p>{esc(l["lead"])}</p><span>이 주제로 →</span></a>' for i,l in enumerate(lessons))
  body=f'<section class="unit-hero pai-unit-hero">{mascot.image(prefix,"idea" if u==1 else "welcome","eager","pai-unit-image")}<p class="eyebrow">UNIT 0{u} / LEARN BY DOING</p><h1>{textbook.unit_label(u)}</h1><p>{design.META[u][2]}</p><div class="tags"><span>교과서 {design.META[u][1]}쪽</span><span>{len(lessons)}개 학습 주제</span></div><div class="actions"><a class="button primary" href="{textbook.topic_file(first["id"])}">첫 주제 시작하기 <span>↗</span></a><a class="button" href="summary.html">그림으로 정리</a><a class="button" href="{w1('practice.html')}" target="_blank" rel="noopener">문제 풀기 ↗</a><a class="button" href="../../downloads/unit{u}-examples.zip">전체 예제 ZIP ↓</a></div></section><div class="course-layout"><aside class="rail"><p class="eyebrow">교과서 목차</p>{rail}<a href="{w1('practice.html')}" target="_blank" rel="noopener">연습 문제 ↗</a><a href="#journal">학습 저널</a></aside><main id="main">'
- body+=design.experiments(u)
  body+=f'<section class="section topic-index" aria-labelledby="topic-index-title"><p class="eyebrow">INDEPENDENT LESSONS</p><h2 id="topic-index-title">학습 주제</h2><p>각 주제는 설명·실습·과제가 있는 독립 페이지입니다. 예전 <code>index.html#주제</code> 주소는 해당 페이지로 이어집니다.</p><div class="topic-grid">{cards}</div></section>'
+ body+=design.experiments(u)   # 실험실은 학습 주제 목록 아래(2·3·4단원 순서 통일)
  body+=practice_card(u)+journal_block(u,prefix)+'<div class="actions end-nav">'+(f'<a class="button primary" href="../unit0{u+1}/index.html">다음: {design.META[u+1][0]} →</a>' if u<4 else '<a class="button" href="../../index.html">전체 단원으로 →</a>')+'</div></main></div>'
  (WEB/f'units/unit0{u}/index.html').write_text(mark_focus_blocks(layout(title,body,prefix,u,lessons=lesson_ids)))
  for i,l in enumerate(lessons):

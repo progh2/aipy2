@@ -643,6 +643,8 @@ function renderRailTodo(){
  let box=rail.querySelector('.rail-todo');
  if(!box){box=node('section','rail-todo');rail.prepend(box);}
  box.replaceChildren(node('p','eyebrow','아직 남은 것'));
+ // 좁은 화면에서는 목록을 접어 본문이 바로 보이게(#149). 펼침 상태는 사용자가 누를 때만 바뀐다.
+ const narrow=window.matchMedia('(max-width:960px)').matches;
  const rows=data.lessons.map(l=>{
   const done=!!state.complete[`u${unit}-${l.id}`];
   const left=(data.questions||[]).filter(q=>q.topic===l.id && answerRecord(q).status!=='done').length;
@@ -669,7 +671,11 @@ function renderRailTodo(){
   if(r.left>0)badges.append(node('span','rail-todo-badge',(r.done?'문제 '+r.left+'개 남음 ↗':'문제 '+r.left+'개 남음')));
   link.append(badges);li.append(link);list.append(li);
  }
- box.append(list);
+ if(narrow){
+  const det=node('details','rail-todo-fold');const sum=node('summary','rail-todo-sum');
+  const n=rows.filter(r=>!(r.done&&r.left===0)).length;
+  sum.textContent=`남은 주제 ${n}개 보기`;det.append(sum,list);box.append(det);
+ }else box.append(list);
 }
 })();
 

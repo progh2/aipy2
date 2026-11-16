@@ -495,3 +495,7 @@ body.hide-header .progress-bar,body.presenting .progress-bar{top:0}
 .review-entry .number{font-size:22px;min-width:48px}
 /* 좁은 화면 메뉴는 한 줄 가로 스크롤(머리 높이를 늘리지 않음) — 뒤쪽 메뉴가 잘려 보이도록 오른쪽에 여백 */
 @media(max-width:760px){.top nav{padding-right:24px;scrollbar-width:none}.top nav::-webkit-scrollbar{display:none}}
+/* 제목·버튼은 단어 중간에서 줄을 바꾸지 않는다(#149) */
+h1,h2,h3,.unit-hero h1,.button,button{word-break:keep-all;overflow-wrap:break-word}
+.rail-todo-fold summary{cursor:pointer;font-size:13px;font-weight:650;color:var(--navy);padding:4px 8px}
+.rail-todo-fold[open] summary{margin-bottom:6px}
